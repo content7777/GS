@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Constitution: Part I & II | SSC CGL Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --bg2: #0f1526;
+    --bg3: #141c32;
+    --surface: #1a2340;
+    --surface2: #1f2b4a;
+    --border: #2a3a60;
+    --text: #c8d6f0;
+    --text-dim: #7a90b8;
+    --text-bright: #e8f0ff;
+    --accent: #4f8ef7;
+    --accent2: #7c5ef7;
+    --fire: #ff6b35;
+    --star: #ffd166;
+    --plus: #06d6a0;
+    --trap: #ff4757;
+    --trap-bg: #1a0a0d;
+    --exam: #7c5ef7;
+    --exam-bg: #0f0a1a;
+    --hook: #06d6a0;
+    --hook-bg: #041a12;
+    --recall: #ffd166;
+    --recall-bg: #1a1200;
+    --glow: rgba(79, 142, 247, 0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  .top-bar {
+    background: rgba(10,14,26,0.95);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .top-bar .logo { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 13px; letter-spacing: 2px; }
+  .top-bar .title { font-size: 14px; color: var(--text-dim); }
+  .layer-nav { display: flex; gap: 6px; flex-wrap: wrap; }
+  .layer-btn {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 11px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .layer-btn:hover, .layer-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* ── LAYOUT ── */
+  .wrapper { max-width: 900px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 48px 20px 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(79,142,247,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero .eyebrow { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 12px; letter-spacing: 3px; margin-bottom: 12px; }
+  .hero h1 { font-size: clamp(24px,4vw,38px); font-weight: 700; color: var(--text-bright); line-height: 1.2; margin-bottom: 10px; }
+  .hero .sub { color: var(--text-dim); font-size: 15px; }
+  .meta-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+  .chip { padding: 4px 14px; border-radius: 20px; font-size: 12px; border: 1px solid; }
+  .chip.blue { border-color: var(--accent); color: var(--accent); background: rgba(79,142,247,0.08); }
+  .chip.purple { border-color: var(--accent2); color: var(--accent2); background: rgba(124,94,247,0.08); }
+  .chip.green { border-color: var(--plus); color: var(--plus); background: rgba(6,214,160,0.08); }
+
+  /* ── SECTIONS ── */
+  .layer { display: none; }
+  .layer.active { display: block; }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin: 40px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2 .ico { font-size: 20px; }
+
+  h3 { font-size: 15px; font-weight: 600; color: var(--accent); margin: 24px 0 10px; letter-spacing: 0.5px; }
+
+  p { margin-bottom: 12px; font-size: 15px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+
+  /* ── ARTICLE BLOCKS ── */
+  .article-block {
+    background: var(--bg3);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .article-block.purple { border-left-color: var(--accent2); }
+  .article-block.green { border-left-color: var(--plus); }
+  .article-block.fire { border-left-color: var(--fire); }
+  .art-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .art-num.purple { color: var(--accent2); }
+  .art-num.green { color: var(--plus); }
+  .art-num.fire { color: var(--fire); }
+  .art-name { font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 6px; }
+  .art-body { font-size: 14px; color: var(--text); }
+
+  /* ── TAGS ── */
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .tag.fire { background: rgba(255,107,53,0.15); color: var(--fire); border: 1px solid rgba(255,107,53,0.3); }
+  .tag.star { background: rgba(255,209,102,0.1); color: var(--star); border: 1px solid rgba(255,209,102,0.3); }
+  .tag.plus { background: rgba(6,214,160,0.1); color: var(--plus); border: 1px solid rgba(6,214,160,0.3); }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: var(--trap-bg);
+    border: 1px solid rgba(255,71,87,0.4);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .trap-box .trap-head {
+    color: var(--trap);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .trap-box ul { padding-left: 18px; }
+  .trap-box li { font-size: 14px; margin-bottom: 6px; color: #ffb3bb; }
+
+  /* ── HOOK BOX ── */
+  .hook-box {
+    background: var(--hook-bg);
+    border: 1px solid rgba(6,214,160,0.3);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    font-style: italic;
+    font-family: 'Crimson Pro', serif;
+    font-size: 16px;
+    color: #a0ffe8;
+  }
+  .hook-box .hook-head {
+    font-family: 'Space Grotesk', sans-serif;
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--hook);
+    margin-bottom: 8px;
+  }
+
+  /* ── PALACE ── */
+  .palace {
+    background: linear-gradient(135deg, #0a0e1a 0%, #0d1520 50%, #0a0f1c 100%);
+    border: 1px solid rgba(124,94,247,0.4);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .palace::before {
+    content: '🏛';
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    font-size: 40px;
+    opacity: 0.12;
+  }
+  .palace-head { color: var(--accent2); font-size: 12px; font-weight: 700; letter-spacing: 2px; margin-bottom: 14px; }
+  .palace-stop {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(42,58,96,0.6);
+  }
+  .palace-stop:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .stop-icon { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+  .stop-text { font-size: 14px; }
+  .stop-text strong { color: var(--text-bright); }
+
+  /* ── RECALL ── */
+  .recall-box {
+    background: var(--recall-bg);
+    border: 1px solid rgba(255,209,102,0.25);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+  .recall-box .q { font-size: 14px; color: var(--star); font-weight: 600; margin-bottom: 6px; }
+  .recall-box .ans { font-size: 13px; color: var(--text-dim); cursor: pointer; border-top: 1px dashed rgba(255,209,102,0.2); padding-top: 6px; margin-top: 6px; }
+  .recall-box .ans.hidden { filter: blur(4px); user-select: none; }
+  .reveal-btn {
+    font-size: 11px;
+    color: var(--star);
+    background: rgba(255,209,102,0.08);
+    border: 1px solid rgba(255,209,102,0.25);
+    border-radius: 20px;
+    padding: 2px 10px;
+    cursor: pointer;
+    margin-left: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* ── EXAM FAVOURITE ── */
+  .exam-box {
+    background: var(--exam-bg);
+    border: 1px solid rgba(124,94,247,0.35);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .exam-box .exam-head { color: var(--exam); font-weight: 700; font-size: 12px; letter-spacing: 1.5px; margin-bottom: 10px; }
+  .exam-box li { font-size: 13px; margin-bottom: 6px; padding-left: 4px; }
+
+  /* ── AMBEDKAR QUOTE ── */
+  .quote-block {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin: 16px 0;
+    position: relative;
+  }
+  .quote-block::before { content: '"'; position: absolute; top: -10px; left: 16px; font-size: 60px; color: var(--accent); opacity: 0.3; font-family: Georgia, serif; line-height: 1; }
+  .quote-text { font-family: 'Crimson Pro', serif; font-size: 18px; color: var(--text-bright); margin-bottom: 6px; }
+  .quote-attr { font-size: 12px; color: var(--text-dim); }
+
+  /* ── COMPARE TABLE ── */
+  .compare { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 14px; }
+  .compare th { background: var(--surface2); color: var(--text-bright); padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; }
+  .compare td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .compare tr:last-child td { border-bottom: none; }
+  .compare tr:nth-child(even) td { background: rgba(26,35,64,0.4); }
+  .compare .india { color: var(--accent); font-weight: 600; }
+  .compare .usa { color: var(--fire); font-weight: 600; }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 18px; }
+  .tl-item::before { content: ''; position: absolute; left: -20px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+  .tl-year { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 12px; font-weight: 500; }
+  .tl-fact { font-size: 14px; color: var(--text); margin-top: 2px; }
+
+  /* ── MNEMONICS ── */
+  .mnemonic {
+    background: linear-gradient(135deg, #0c1420 0%, #0a1218 100%);
+    border: 1px solid rgba(79,142,247,0.3);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+  }
+  .mnemonic-head { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; }
+  .mnemonic-phrase { font-size: 22px; font-weight: 700; color: var(--text-bright); letter-spacing: 2px; margin-bottom: 10px; }
+  .mnemonic-decode { font-size: 14px; color: var(--text-dim); }
+  .mnemonic-decode span { color: var(--text-bright); font-weight: 600; }
+
+  /* ── SUMMARY STRIP ── */
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .strip-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .strip-item .s-num { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; }
+  .strip-item .s-label { font-size: 12px; color: var(--text-dim); }
+
+  /* ── LAST NIGHT ── */
+  .bullet-list { list-style: none; padding: 0; }
+  .bullet-list li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before { content: '→'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+
+  /* ── FAST SHEET ── */
+  .fast-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .fast-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .fast-card h4 { font-size: 12px; color: var(--accent); letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; text-transform: uppercase; }
+  .fast-card li { font-size: 13px; list-style: none; padding: 3px 0; border-bottom: 1px dotted rgba(42,58,96,0.5); }
+  .fast-card li:last-child { border-bottom: none; }
+  .fast-card li::before { content: '▸ '; color: var(--accent); font-size: 10px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* UTILITY */
+  .mt8 { margin-top: 8px; }
+  .highlight { color: var(--star); font-weight: 600; }
+  .note-small { font-size: 12px; color: var(--text-dim); margin-top: 4px; font-style: italic; }
+
+  @media (max-width: 600px) {
+    .top-bar { flex-direction: column; gap: 8px; }
+    .layer-nav { justify-content: center; }
+    .strip { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo">SSC CGL // POLITY</div>
+  <div class="title">Constitution Part I & II</div>
+  <div class="layer-nav">
+    <button class="layer-btn active" onclick="showLayer('L1')">📚 Full Notes</button>
+    <button class="layer-btn" onclick="showLayer('L2')">⚡ High-Yield</button>
+    <button class="layer-btn" onclick="showLayer('L3')">🔁 Ultra-Fast</button>
+    <button class="layer-btn" onclick="showLayer('L4')">⏱ 30-Second</button>
+    <button class="layer-btn" onclick="showLayer('L5')">🌙 Last Night</button>
+    <button class="layer-btn" onclick="showLayer('RECALL')">🧠 Self-Test</button>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <div class="hero">
+    <div class="eyebrow">CONSTITUTION OF INDIA</div>
+    <h1>Part I & II: Union, Territory & Citizenship</h1>
+    <div class="sub">Articles 1–11 · 5-Layer Revision System · SSC CGL Optimised</div>
+    <div class="meta-chips">
+      <div class="chip blue">Articles 1–4: Part I</div>
+      <div class="chip purple">Articles 5–11: Part II</div>
+      <div class="chip green">Citizenship Act 1955</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ LAYER 1 ═══ -->
+  <div id="L1" class="layer active">
+
+    <h2><span class="ico">🗺</span> Big Picture</h2>
+    <p>The Constitution's <strong>first two parts</strong> answer two fundamental questions every nation must answer: <em>"What land is ours?"</em> (Part I, Articles 1–4) and <em>"Who are our people?"</em> (Part II, Articles 5–11). Think of Part I as defining India's body and Part II as defining who belongs to that body.</p>
+
+    <!-- PALACE -->
+    <h2><span class="ico">🏛</span> Chapter Memory Palace</h2>
+    <div class="palace">
+      <div class="palace-head">🧠 MEMORY PALACE: THE GREAT INDIA GATE</div>
+      <div class="palace-stop">
+        <div class="stop-icon">🚪</div>
+        <div class="stop-text"><strong>Gate 1 — The Name Plate (Art. 1):</strong> You see a massive gate with TWO name plates: "INDIA" in English on the left, "BHARAT" in Hindi on the right. Below it says "UNION OF STATES." This is the entrance to India itself.</div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-icon">🏗</div>
+        <div class="stop-text"><strong>Gate 2 — New Wings Being Built (Art. 2):</strong> To the right, workers are building a NEW wing from scratch using FOREIGN bricks (Sikkim bricks, Bangladesh bricks). This wing didn't exist before — brand new territory being added.</div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-icon">🔨</div>
+        <div class="stop-text"><strong>Gate 3 — The Renovation Section (Art. 3):</strong> To the left, workers are RENOVATING existing rooms — knocking down walls (bifurcation), renaming rooms (name change), expanding or shrinking them. These rooms already existed in the building.</div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-icon">📜</div>
+        <div class="stop-text"><strong>Gate 4 — The Admin Office (Art. 4):</strong> The office where they update the master register — Schedules 1 & 4 — after any renovation or new wing. Sign says: "No need for big amendment (368). Simple majority works here."</div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-icon">🪪</div>
+        <div class="stop-text"><strong>Inner Courtyard — The ID Card Counter (Arts. 5–11):</strong> Citizens lining up for ID cards. The rules for who gets a card were only for ONE day — 26 Jan 1950. Now the Citizenship Act 1955 handles everything. Five windows: Birth, Descent, Registration, Naturalization, Territory.</div>
+      </div>
+    </div>
+
+    <!-- PART I -->
+    <h2><span class="ico">🗺</span> Part I: Union and Its Territory (Arts. 1–4)</h2>
+
+    <div class="strip">
+      <div class="strip-item"><div class="s-num">1</div><div class="s-label">Name & Territory</div></div>
+      <div class="strip-item"><div class="s-num">2</div><div class="s-label">New States (External)</div></div>
+      <div class="strip-item"><div class="s-num">3</div><div class="s-label">Reorganise Existing</div></div>
+      <div class="strip-item"><div class="s-num">4</div><div class="s-label">Not Art. 368</div></div>
+    </div>
+
+    <div class="article-block">
+      <div class="art-num">ARTICLE 1 <span class="tag fire">🔥 Must Know</span></div>
+      <div class="art-name">Name and Territory of the Union</div>
+      <div class="art-body">
+        <strong>India, that is Bharat, shall be a union of states.</strong><br><br>
+        Territory includes:<br>
+        &nbsp;&nbsp;① States (listed in 1st Schedule)<br>
+        &nbsp;&nbsp;② Union Territories (listed in 1st Schedule)<br>
+        &nbsp;&nbsp;③ Any territory India may acquire in future
+      </div>
+    </div>
+
+    <!-- AMBEDKAR'S QUOTE -->
+    <div class="quote-block">
+      <div class="quote-text">India is an indestructible union of destructible states.</div>
+      <div class="quote-attr">— Dr. B. R. Ambedkar &nbsp;|&nbsp; USA = indestructible union of indestructible states</div>
+    </div>
+
+    <h3>Why "Union" NOT "Federation"? (Ambedkar's Logic)</h3>
+    <table class="compare">
+      <tr>
+        <th></th>
+        <th>🇮🇳 India (Union)</th>
+        <th>🇺🇸 USA (Federation)</th>
+      </tr>
+      <tr>
+        <td><strong>Origin</strong></td>
+        <td class="india">States exist BECAUSE of India</td>
+        <td class="usa">13 colonies AGREED to form USA</td>
+      </tr>
+      <tr>
+        <td><strong>Agreement</strong></td>
+        <td class="india">No agreement between states</td>
+        <td class="usa">Formal agreement between states</td>
+      </tr>
+      <tr>
+        <td><strong>Right to Leave</strong></td>
+        <td class="india">❌ States CANNOT secede</td>
+        <td class="usa">Theoretically debated historically</td>
+      </tr>
+      <tr>
+        <td><strong>Nature</strong></td>
+        <td class="india">Indestructible Union, Destructible states</td>
+        <td class="usa">Indestructible Union, Indestructible states</td>
+      </tr>
+    </table>
+
+    <div class="article-block purple">
+      <div class="art-num purple">ARTICLE 2 <span class="tag star">⭐ Important</span></div>
+      <div class="art-name">Admission / Establishment of NEW States</div>
+      <div class="art-body">
+        Deals with territory that is <strong>CURRENTLY NOT PART OF INDIA</strong>.<br>
+        Parliament can admit or establish new states on such terms as it thinks fit.<br><br>
+        <strong>Real Example:</strong> Sikkim → admitted via 36th Amendment, 1975<br>
+        <strong>Hypothetical:</strong> If Bangladesh/Pakistan were to join India → Art. 2
+      </div>
+    </div>
+
+    <div class="article-block green">
+      <div class="art-num green">ARTICLE 3 <span class="tag fire">🔥 Must Know</span></div>
+      <div class="art-name">Formation / Alteration of EXISTING States</div>
+      <div class="art-body">
+        Deals with territory <strong>ALREADY PART OF INDIA</strong>. Parliament can:<br>
+        ① Form a new state by separating territory from any state<br>
+        ② Increase/Diminish area of any state<br>
+        ③ Alter boundaries<br>
+        ④ Change the name of any state<br><br>
+        <strong>Real Examples:</strong><br>
+        • Uttarakhand carved from UP<br>
+        • Chhattisgarh carved from MP<br>
+        • Jharkhand carved from Bihar<br>
+        • J&K made a UT in 2019<br><br>
+        <strong>Procedure:</strong><br>
+        → Bill introduced ONLY in Parliament (not state legislature)<br>
+        → President's recommendation required<br>
+        → President refers bill to affected state → State gives opinion<br>
+        → Opinion is ADVISORY, NOT BINDING on President or Parliament<br>
+        → 5th Amendment gave President power to set TIME LIMIT for state's opinion
+      </div>
+    </div>
+
+    <div class="article-block fire">
+      <div class="art-num fire">ARTICLE 4 <span class="tag star">⭐ Important</span></div>
+      <div class="art-name">Not an Amendment under Article 368</div>
+      <div class="art-body">
+        Changes made under Articles 2 & 3 do NOT need constitutional amendment process.<br>
+        Can be done by <strong>SIMPLE MAJORITY</strong> (1/2 + 1 of present and voting).<br><br>
+        Such changes also require updating:<br>
+        • <strong>1st Schedule</strong> → Names & territories of states/UTs<br>
+        • <strong>4th Schedule</strong> → Allocation of Rajya Sabha seats
+      </div>
+    </div>
+
+    <!-- KEY CASE -->
+    <h3>📌 Berubari Union Case, 1959 <span class="tag star">⭐</span></h3>
+    <div class="card">
+      <div class="art-body">
+        <strong>Issue:</strong> Can India give territory to another country by simple majority?<br><br>
+        <strong>SC Ruling:</strong> NO. Giving Indian territory to a foreign country requires <strong>Constitutional Amendment under Article 368</strong> — simple majority is NOT enough.<br><br>
+        <strong>Real Application:</strong> India-Bangladesh Land Boundary Agreement (2014) required <strong>100th Constitutional Amendment</strong> — enclaves were exchanged between India and Bangladesh.
+      </div>
+    </div>
+
+    <!-- LINGUISTIC COMMISSION -->
+    <h2><span class="ico">🗣</span> Linguistic Reorganisation of States</h2>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-year">1948</div>
+        <div class="tl-fact"><strong>Dhar Commission</strong> — Said NO to linguistic basis; recommended administrative convenience</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1948–49</div>
+        <div class="tl-fact"><strong>JVP Committee</strong> (Jawaharlal Nehru + Vallabhbhai Patel + Patta Sitaramayya) — Also said NO to linguistic states</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1952–53</div>
+        <div class="tl-fact"><strong>Potti Sriramalu</strong> fasted unto death for Telugu state — Died after <span class="highlight">56 days</span> — Protests intensified</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1953</div>
+        <div class="tl-fact"><strong>Andhra Pradesh</strong> formed — India's FIRST linguistic state (carved from Tamil-speaking areas)</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1953</div>
+        <div class="tl-fact"><strong>Fazal Ali Commission</strong> set up (Chairman: Fazal Ali; Members: K.M. Panikkar, Hridaynath Kunjru) — Said YES to linguistic basis but REJECTED "one language, one state" theory</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1956</div>
+        <div class="tl-fact"><strong>States Reorganisation Act, 1956</strong> → Created <span class="highlight">14 States + 6 Union Territories</span></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1 Nov 1956</div>
+        <div class="tl-fact">Multiple states gained statehood on this date (Andhra Pradesh became full state, Karnataka, Kerala, MP, Rajasthan etc.)</div>
+      </div>
+    </div>
+
+    <!-- SPECIAL STATUS STATES -->
+    <h3>🏷 Article 371 — Special Status States <span class="tag fire">🔥</span></h3>
+    <div class="mnemonic">
+      <div class="mnemonic-head">🧠 MNEMONIC: "MATA JI KA NAAM AASMA GK"</div>
+      <div class="mnemonic-phrase">MA·TA · N·A·M · A·A·S·M·A · G·K</div>
+      <div class="mnemonic-decode">
+        <span>MA</span> = Maharashtra (371) &nbsp;|&nbsp;
+        <span>TA</span> = Not separate — Gujarat (371)<br>
+        <span>N</span> = Nagaland (371A) &nbsp;|&nbsp;
+        <span>A</span> = Assam (371B) &nbsp;|&nbsp;
+        <span>M</span> = Manipur (371C)<br>
+        <span>A</span> = Andhra Pradesh (371D) &nbsp;|&nbsp;
+        <span>A</span> = (also AP) &nbsp;|&nbsp;
+        <span>S</span> = Sikkim (371F)<br>
+        <span>M</span> = Mizoram (371G) &nbsp;|&nbsp;
+        <span>A</span> = Arunachal (371H)<br>
+        <span>G</span> = Goa (371I) &nbsp;|&nbsp;
+        <span>K</span> = Karnataka (371J)
+      </div>
+    </div>
+    <div class="note-small">Note: Art. 370 (J&K special status) was ABROGATED in 2019. J&K is now governed by J&K Reorganisation Act, 2019.</div>
+
+    <!-- SIKKIM SPECIAL CASE -->
+    <h3>🏔 Sikkim — The Special Case <span class="tag star">⭐</span></h3>
+    <div class="card">
+      <div class="art-body">
+        <strong>Earlier:</strong> Ruled by Chogyal dynasty — NOT part of India<br>
+        <strong>35th Amendment (1974):</strong> Article 2A inserted → Sikkim given status of <em>associate state</em><br>
+        <strong>36th Amendment (1975):</strong> Sikkim given FULL statehood → becomes 22nd state<br>
+        <strong>Key fact:</strong> Nathu La & Jelep La passes in Sikkim (also note India's highest lake is in this region → Gurudongmar Lake)
+      </div>
+    </div>
+
+    <!-- STATE FORMATION DATES -->
+    <h3>📅 State Formation Timeline <span class="tag star">⭐</span></h3>
+    <div class="card">
+      <div class="art-body">
+        • <strong>1960:</strong> Maharashtra & Gujarat (split from Bombay state)<br>
+        • <strong>1975:</strong> Sikkim (36th Amendment)<br>
+        • <strong>1986:</strong> Goa (56th Constitutional Amendment)<br>
+        • <strong>1987:</strong> Arunachal Pradesh & Mizoram (statehood)<br>
+        • <strong>2000:</strong> Uttarakhand (from UP), Chhattisgarh (from MP), Jharkhand (from Bihar)<br>
+        • <strong>2014:</strong> Telangana (from Andhra Pradesh)
+      </div>
+    </div>
+
+    <!-- PART II CITIZENSHIP -->
+    <h2><span class="ico">🪪</span> Part II: Citizenship (Arts. 5–11)</h2>
+
+    <div class="card" style="border-color: var(--fire);">
+      <div class="card-title" style="color:var(--fire);">⚠ CRITICAL POINT</div>
+      Articles 5–11 deal ONLY with citizenship provisions at the <strong>commencement of Constitution (26 Jan 1950)</strong>. They have NO validity after that date. Current citizenship is governed by <strong>Citizenship Act, 1955</strong>.
+    </div>
+
+    <div class="article-block">
+      <div class="art-num">ARTICLE 5</div>
+      <div class="art-name">Citizenship at Commencement</div>
+      <div class="art-body">
+        Must have domicile in India + any ONE of:<br>
+        ① Born in India, OR<br>
+        ② Either parent born in India, OR<br>
+        ③ Resident in India for at least <strong>5 years</strong> before 26 Jan 1950
+      </div>
+    </div>
+
+    <div class="article-block purple">
+      <div class="art-num purple">ARTICLE 6</div>
+      <div class="art-name">Migration FROM Pakistan (Partition)</div>
+      <div class="art-body">
+        • Came before <strong>19 July 1948</strong> → Automatic citizen<br>
+        • Came after 19 July 1948 → Must register
+      </div>
+    </div>
+
+    <div class="article-block green">
+      <div class="art-num green">ARTICLE 7</div>
+      <div class="art-name">Migration TO Pakistan then returned</div>
+      <div class="art-body">
+        • Went to Pakistan BEFORE <strong>1 March 1947</strong> → Can return + get citizenship<br>
+        • Went after → Must get permit; still can acquire citizenship
+      </div>
+    </div>
+
+    <div class="article-block">
+      <div class="art-num">ARTICLE 8</div>
+      <div class="art-name">Indians Residing Outside India (Abroad)</div>
+      <div class="art-body">Persons of Indian origin living outside India (USA, Australia etc.) — their citizenship provisions</div>
+    </div>
+
+    <div class="article-block purple">
+      <div class="art-num purple">ARTICLE 9</div>
+      <div class="art-name">Voluntary Foreign Citizenship = Loss of Indian Citizenship</div>
+      <div class="art-body">If someone voluntarily acquires foreign citizenship → loses Indian citizenship</div>
+    </div>
+
+    <div class="article-block green">
+      <div class="art-num green">ARTICLE 10</div>
+      <div class="art-name">Continuance of Rights</div>
+      <div class="art-body">Once a citizen, your citizenship continues — Parliament cannot take it away arbitrarily</div>
+    </div>
+
+    <div class="article-block fire">
+      <div class="art-num fire">ARTICLE 11 <span class="tag fire">🔥</span></div>
+      <div class="art-name">Parliament's Power Over Citizenship</div>
+      <div class="art-body">
+        <strong>Only Parliament</strong> can make laws on citizenship — State Legislature CANNOT<br>
+        Citizenship is in the <strong>Union List (7th Schedule)</strong>
+      </div>
+    </div>
+
+    <!-- CITIZENSHIP ACT 1955 -->
+    <h2><span class="ico">🏛</span> Citizenship Act, 1955 — HOW TO ACQUIRE & LOSE</h2>
+
+    <h3>5 Ways to ACQUIRE Citizenship <span class="tag fire">🔥 Must Know</span></h3>
+    <div class="card">
+      <div class="art-body">
+        <strong>1. By Birth</strong> — Born in India. BUT: Earlier was <em>Jus Soli</em> (just being born on soil). NOW: at least ONE parent must be Indian. (USA still follows Jus Soli — a tourist's baby born in USA gets US citizenship)<br><br>
+        <strong>2. By Descent</strong> — Born OUTSIDE India but parent is Indian. Must register with Indian Embassy/Consulate within <strong>1 year</strong><br><br>
+        <strong>3. By Registration</strong> — Indian origin (parents were Indian), living outside. Stay in India for <strong>7 years</strong> → can apply<br><br>
+        <strong>4. By Naturalization</strong> — No connection to India. Live in India for <strong>14 years</strong>, of which last <strong>11 years continuous</strong><br><br>
+        <strong>5. By Incorporation of Territory</strong> — When a new territory joins India, its people automatically become Indian citizens (with conditions)
+      </div>
+    </div>
+
+    <h3>3 Ways to LOSE Citizenship <span class="tag star">⭐</span></h3>
+    <div class="card">
+      <div class="art-body">
+        <strong>1. Renunciation</strong> — You voluntarily give up Indian citizenship<br>
+        <strong>2. Termination</strong> — Government terminates because you acquired foreign citizenship without informing (since we don't allow dual citizenship)<br>
+        <strong>3. Deprivation</strong> — Government strips citizenship if obtained through fraud / wrong documents
+      </div>
+    </div>
+
+    <!-- DUAL CITIZENSHIP NOTE -->
+    <h3>Single vs Dual Citizenship <span class="tag fire">🔥</span></h3>
+    <table class="compare">
+      <tr><th>Country</th><th>Type</th><th>Notes</th></tr>
+      <tr><td>🇮🇳 India</td><td class="india">Single Citizenship</td><td>Cannot hold two citizenships simultaneously</td></tr>
+      <tr><td>🇬🇧 UK</td><td class="india">Single Citizenship</td><td>Same as India (Alia Bhatt is UK citizen)</td></tr>
+      <tr><td>🇺🇸 USA</td><td class="usa">Dual Citizenship Allowed</td><td>Baby born in USA = auto US citizen even if parents are foreign</td></tr>
+    </table>
+
+    <!-- SMART HOOKS -->
+    <h2><span class="ico">🧠</span> Smart Memory Hooks</h2>
+
+    <div class="hook-box">
+      <div class="hook-head">🪝 HOOK 1: ARTICLE 2 vs ARTICLE 3</div>
+      Art. 2 = OUTSIDE guest coming IN (new person joining the party) 🚶→🏠<br>
+      Art. 3 = INSIDE renovation (rearranging the rooms already in the house) 🔨🏠
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-head">🪝 HOOK 2: AMBEDKAR'S INDIA vs USA</div>
+      India = A joint family where children exist because of the family — they can't just leave 🇮🇳<br>
+      USA = 13 friends who agreed to share a flat together — they came by choice 🇺🇸
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-head">🪝 HOOK 3: POTTI SRIRAMALU</div>
+      Imagine a man in Andhra Pradesh so passionate about Telugu language that he fasted for 56 days and died. His death literally created a new state (Andhra Pradesh). "56 days → 1st linguistic state" 🌶️
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-head">🪝 HOOK 4: NATURALIZATION NUMBERS — 14/11</div>
+      Think of a foreign friend who wants to become Indian: he spends 14 cricket seasons watching matches, last 11 seasons without leaving India. 14 years → 11 continuous → naturalized Indian 🏏
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-head">🪝 HOOK 5: BERUBARI CASE — "GIVING AWAY NEEDS A BIG KEY"</div>
+      Taking territory in = small key (simple majority). Giving territory OUT = big key (constitutional amendment 368). Berubari case established: you need Article 368 to give away Indian land.
+    </div>
+
+    <!-- CONCEPT CONNECTIONS -->
+    <h2><span class="ico">🔗</span> Concept Connections</h2>
+    <div class="card">
+      <div class="art-body">
+        <strong>Art. 2 → 1st Schedule:</strong> New state added → 1st Schedule updated<br>
+        <strong>Art. 3 → 1st & 4th Schedule:</strong> Existing state changed → 1st Schedule (territory) + 4th Schedule (RS seats)<br>
+        <strong>Art. 4 → Not Art. 368:</strong> These changes need only simple majority, NOT full constitutional amendment<br>
+        <strong>Art. 11 → 7th Schedule (Union List):</strong> Citizenship is Union List subject → only Parliament legislates<br>
+        <strong>Citizenship Act 1955 → Art. 11:</strong> The Act is Parliament exercising its power under Art. 11<br>
+        <strong>Jus Soli abandoned → Single citizenship:</strong> India moved away from soil-based citizenship to maintain tighter control
+      </div>
+    </div>
+
+    <!-- EXAM TRAPS -->
+    <h2><span class="ico">⚠</span> Exam Traps</h2>
+
+    <div class="trap-box">
+      <div class="trap-head">🔴 TRAP 1: Article 2 vs Article 3</div>
+      <ul>
+        <li>Art. 2 = FOREIGN territory joining India (Sikkim, hypothetical Pakistan)</li>
+        <li>Art. 3 = EXISTING Indian territory being reorganized (Uttarakhand from UP)</li>
+        <li>❌ Students often reverse this</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">🔴 TRAP 2: Union vs Federation</div>
+      <ul>
+        <li>India is NOT a federation — it's a UNION of states</li>
+        <li>Ambedkar deliberately avoided "federation" word</li>
+        <li>States have NO right to secede from Indian Union</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">🔴 TRAP 3: State's Opinion on Art. 3 Bill</div>
+      <ul>
+        <li>State's opinion is ADVISORY, NOT BINDING</li>
+        <li>State CANNOT block Parliament from changing its territory/name</li>
+        <li>Parliament is supreme here</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">🔴 TRAP 4: Citizenship Articles 5–11</div>
+      <ul>
+        <li>These articles are NOT applicable today</li>
+        <li>They were only for 26 Jan 1950 commencement period</li>
+        <li>Current citizenship → Citizenship Act, 1955</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">🔴 TRAP 5: Dates in Art. 6 & 7</div>
+      <ul>
+        <li>Art. 6: Magic date = <strong>19 July 1948</strong> (Pakistan migration)</li>
+        <li>Art. 7: Magic date = <strong>1 March 1947</strong> (went to Pakistan before this)</li>
+        <li>❌ Students often mix these two dates up</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">🔴 TRAP 6: Naturalization Timing</div>
+      <ul>
+        <li>Naturalization = 14 years total, 11 years CONTINUOUS (recent)</li>
+        <li>NOT 11 total and 14 continuous — it's the opposite!</li>
+        <li>Registration (Indian-origin, living abroad) = 7 years stay in India</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">🔴 TRAP 7: JVP Committee Full Form</div>
+      <ul>
+        <li>J = Jawaharlal Nehru</li>
+        <li>V = Vallabhbhai Patel</li>
+        <li>P = Patta Sitaramayya (NOT Potti Sriramalu — Potti was the fasting man!)</li>
+      </ul>
+    </div>
+
+    <!-- EXAMINER'S FAVOURITES -->
+    <h2><span class="ico">🎯</span> Examiner's Favourite Questions</h2>
+
+    <div class="exam-box">
+      <div class="exam-head">🎯 HIGH PROBABILITY QUESTIONS</div>
+      <ul>
+        <li>"India, that is Bharat, shall be a ___ of states" → Union</li>
+        <li>Which article deals with admission of new states? → Art. 2</li>
+        <li>Uttarakhand was formed using which article? → Art. 3</li>
+        <li>Changes under Arts. 2 & 3 require which majority? → Simple majority</li>
+        <li>Fazal Ali Commission recommended states be reorganised on which basis? → Linguistic basis (but rejected one-language-one-state)</li>
+        <li>Potti Sriramalu died after how many days of fast? → 56 days</li>
+        <li>India's first linguistic state? → Andhra Pradesh (1953)</li>
+        <li>Citizenship in India is a subject of which list? → Union List (7th Schedule)</li>
+        <li>Only which body can make laws on citizenship? → Parliament</li>
+        <li>For naturalization, how many years must one live in India? → 14 years total, 11 continuous</li>
+        <li>Which amendment gave Sikkim full statehood? → 36th Amendment, 1975</li>
+        <li>India-Bangladesh Land Boundary Agreement → Which amendment? → 100th Constitutional Amendment (2014)</li>
+      </ul>
+    </div>
+
+    <div class="exam-box">
+      <div class="exam-head">🎯 STATEMENT-BASED / ASSERTION-REASON TRAPS</div>
+      <ul>
+        <li>A: India is a federation. R: All states agreed to form India. → BOTH FALSE</li>
+        <li>A: State legislature can make laws on citizenship. → FALSE (only Parliament)</li>
+        <li>A: Berubari case said giving territory needs simple majority. → FALSE (needs Art. 368)</li>
+        <li>A: Article 370 gives special status to J&K. → FALSE (abrogated 2019)</li>
+      </ul>
+    </div>
+
+  </div><!-- /L1 -->
+
+  <!-- ═══════════════════════════════════════ LAYER 2 ═══ -->
+  <div id="L2" class="layer">
+    <h2><span class="ico">⚡</span> High-Yield Revision Notes</h2>
+
+    <h3>Part I: Articles 1–4 — The 4 Pillars</h3>
+    <div class="fast-grid">
+      <div class="fast-card">
+        <h4>Art. 1 — Identity</h4>
+        <ul>
+          <li>India = Bharat = Union of States</li>
+          <li>Territory: States + UTs + Future acquisitions</li>
+          <li>NOT Federation of States</li>
+        </ul>
+      </div>
+      <div class="fast-card">
+        <h4>Art. 2 — NEW Territory</h4>
+        <ul>
+          <li>FOREIGN territory → India</li>
+          <li>Parliament's power</li>
+          <li>Example: Sikkim (1975)</li>
+        </ul>
+      </div>
+      <div class="fast-card">
+        <h4>Art. 3 — EXISTING States</h4>
+        <ul>
+          <li>Bifurcate, resize, rename</li>
+          <li>Only Parliament can do it</li>
+          <li>State's opinion = advisory only</li>
+        </ul>
+      </div>
+      <div class="fast-card">
+        <h4>Art. 4 — Simple Majority</h4>
+        <ul>
+          <li>NOT Art. 368 amendment</li>
+          <li>Update Schedule 1 + 4</li>
+          <li>Giving territory ABROAD = Art. 368</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Linguistic Commissions — Quick Fire</h3>
+    <div class="fast-card" style="margin-bottom:14px">
+      <h4>Chronology</h4>
+      <ul>
+        <li>1948 → Dhar Commission → NO linguistic states</li>
+        <li>1948-49 → JVP (Nehru+Patel+Sitaramayya) → NO</li>
+        <li>1953 → Potti Sriramalu dies → Andhra Pradesh born</li>
+        <li>1953 → Fazal Ali Commission → YES but no 1-language-1-state</li>
+        <li>1956 → States Reorganisation Act → 14 states + 6 UTs</li>
+      </ul>
+    </div>
+
+    <h3>Citizenship Act 1955 — Numbers to Remember</h3>
+    <table class="compare">
+      <tr><th>Method</th><th>Key Number</th></tr>
+      <tr><td>By Birth</td><td>At least 1 parent must be Indian</td></tr>
+      <tr><td>By Descent</td><td>Register within 1 year at Embassy</td></tr>
+      <tr><td>By Registration</td><td>Stay 7 years in India</td></tr>
+      <tr><td>By Naturalization</td><td>14 years total, 11 continuous</td></tr>
+      <tr><td>Territory Incorporation</td><td>Automatic (with conditions)</td></tr>
+    </table>
+
+    <div class="trap-box">
+      <div class="trap-head">🔴 TOP 3 TRAPS — BURN THESE IN MEMORY</div>
+      <ul>
+        <li><strong>Art. 2 = New (foreign), Art. 3 = Existing (Indian)</strong></li>
+        <li><strong>Art. 6 magic date = 19 July 1948 | Art. 7 magic date = 1 March 1947</strong></li>
+        <li><strong>Naturalization = 14 total, 11 continuous (NOT the other way)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ LAYER 3 ═══ -->
+  <div id="L3" class="layer">
+    <h2><span class="ico">🔁</span> Ultra-Fast Revision Sheet</h2>
+
+    <div class="fast-grid">
+      <div class="fast-card">
+        <h4>Art. 1</h4>
+        <ul>
+          <li>India = Bharat = Union of States</li>
+          <li>3 territories in India</li>
+          <li>Indestructible union, destructible states</li>
+        </ul>
+      </div>
+      <div class="fast-card">
+        <h4>Art. 2 vs Art. 3</h4>
+        <ul>
+          <li>2 = OUTSIDE → IN (Sikkim, Bangladesh)</li>
+          <li>3 = INSIDE restructure (Uttarakhand, J&K UT)</li>
+          <li>Both = Parliament only</li>
+        </ul>
+      </div>
+      <div class="fast-card">
+        <h4>Art. 4</h4>
+        <ul>
+          <li>Simple majority (1/2+1 of present+voting)</li>
+          <li>NOT Art. 368</li>
+          <li>Schedule 1 & 4 updated</li>
+        </ul>
+      </div>
+      <div class="fast-card">
+        <h4>Linguistic States</h4>
+        <ul>
+          <li>Dhar (1948) → NO</li>
+          <li>JVP → NO</li>
+          <li>Potti Sriramalu → 56 days → AP born</li>
+          <li>Fazal Ali (1953) → YES (no 1L1S)</li>
+          <li>SRA 1956 → 14+6</li>
+        </ul>
+      </div>
+      <div class="fast-card">
+        <h4>Art. 5–11 (Citizenship)</h4>
+        <ul>
+          <li>Only for 26 Jan 1950</li>
+          <li>Art. 11 = Only Parliament</li>
+          <li>Citizenship = Union List</li>
+        </ul>
+      </div>
+      <div class="fast-card">
+        <h4>Citizenship Act 1955</h4>
+        <ul>
+          <li>Birth: parent must be Indian</li>
+          <li>Descent: 1 yr embassy</li>
+          <li>Registration: 7 yrs</li>
+          <li>Naturalization: 14 total, 11 continuous</li>
+          <li>Lose: Renounce/Terminate/Deprive</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mnemonic">
+      <div class="mnemonic-head">SPECIAL STATUS STATES — MATA JI KA NAAM AASMA GK</div>
+      <div class="mnemonic-decode">
+        MA=Maharashtra | Gujarat | N=Nagaland(A) | A=Assam(B) | M=Manipur(C) | A=Andhra(D) | A=AP | S=Sikkim(F) | M=Mizoram(G) | A=Arunachal(H) | G=Goa(I) | K=Karnataka(J)
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ LAYER 4 ═══ -->
+  <div id="L4" class="layer">
+    <h2><span class="ico">⏱</span> 30-Second Revision Sheet</h2>
+
+    <ul class="bullet-list">
+      <li>Art 1 → India = Bharat = Union of States (NOT federation)</li>
+      <li>Art 2 → NEW/FOREIGN territory joins India</li>
+      <li>Art 3 → EXISTING state restructured (Parliament only, state opinion advisory)</li>
+      <li>Art 4 → Simple majority, NOT Art 368; update Schedule 1 & 4</li>
+      <li>Giving territory ABROAD → Art 368 (Berubari case 1959)</li>
+      <li>100th Amendment (2014) → India-Bangladesh Land Boundary Agreement</li>
+      <li>Potti Sriramalu → 56 days fast → AP = 1st linguistic state (1953)</li>
+      <li>Fazal Ali Commission (1953) → States Reorganisation Act 1956 → 14+6</li>
+      <li>Art 371 special states → MATA JI NAAM AASMA GK</li>
+      <li>Sikkim → 35th Amend 1974 (associate) → 36th Amend 1975 (full state)</li>
+      <li>Arts 5–11 → only for 26 Jan 1950 commencement period</li>
+      <li>Art 11 → Only Parliament makes citizenship laws (Union List)</li>
+      <li>Citizenship Act 1955 → Acquire: 5 ways | Lose: 3 ways</li>
+      <li>Naturalization → 14 years total, 11 continuous</li>
+      <li>India = Single citizenship | USA = Dual citizenship allowed</li>
+      <li>Art 6 date: 19 July 1948 | Art 7 date: 1 March 1947</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════ LAYER 5 ═══ -->
+  <div id="L5" class="layer">
+    <h2><span class="ico">🌙</span> Last-Night-Before-Exam Sheet</h2>
+
+    <div class="card" style="border-color: var(--fire);">
+      <div class="card-title" style="color:var(--fire)">🔥 BURN THESE 10 FACTS</div>
+      <ul class="bullet-list">
+        <li><strong>India = Union of States</strong> (NOT federation) — Ambedkar</li>
+        <li><strong>Art. 2 = New foreign territory | Art. 3 = Existing state changes</strong></li>
+        <li><strong>Art. 3 Bill</strong> — needs President's recommendation, state opinion advisory</li>
+        <li><strong>Art. 4</strong> — Simple majority, NOT Art. 368</li>
+        <li><strong>Giving territory abroad</strong> = Art. 368 (Berubari 1959, 100th Amendment 2014)</li>
+        <li><strong>1st linguistic state</strong> = Andhra Pradesh (1953) — Potti Sriramalu died after 56 days</li>
+        <li><strong>Fazal Ali Commission 1953</strong> → SRA 1956 → 14 states + 6 UTs</li>
+        <li><strong>Art. 370 ABROGATED 2019</strong> | Art. 371 = special status still exists</li>
+        <li><strong>Citizenship Act 1955</strong>: Naturalization = 14 yrs total, 11 continuous; Registration = 7 yrs</li>
+        <li><strong>Only Parliament</strong> makes citizenship law (Union List, 7th Schedule)</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ LAST-MINUTE TRAPS — DON'T FALL FOR THESE</div>
+      <ul>
+        <li>JVP's P = Patta Sitaramayya (NOT Potti Sriramalu)</li>
+        <li>Art. 6 = 19 July 1948 | Art. 7 = 1 March 1947 (don't mix!)</li>
+        <li>Naturalization = 14 total, 11 continuous (NOT 11 total, 14 continuous)</li>
+        <li>State's opinion on Art. 3 = ADVISORY, NOT BINDING</li>
+        <li>Arts 5–11 = DEAD after 26 Jan 1950 (only Citizenship Act 1955 matters now)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ RECALL ═══ -->
+  <div id="RECALL" class="layer">
+    <h2><span class="ico">🧠</span> Self-Test — Active Recall</h2>
+    <p style="color:var(--text-dim); font-size:13px; margin-bottom:20px;">Click "Show" to reveal the answer. Try to answer first!</p>
+
+    <div class="recall-box">
+      <div class="q">❓ "India, that is Bharat, shall be a ___ of states." Which article says this?</div>
+      <div class="ans hidden" id="a1">Union of States — Article 1</div>
+      <button class="reveal-btn" onclick="reveal('a1')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Uttarakhand was carved from UP in 2000. Which article was used?</div>
+      <div class="ans hidden" id="a2">Article 3 — deals with reorganisation of EXISTING states</div>
+      <button class="reveal-btn" onclick="reveal('a2')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Sikkim joined India through which article? Which amendments were involved?</div>
+      <div class="ans hidden" id="a3">Article 2 (new territory). 35th Amendment 1974 → associate state. 36th Amendment 1975 → full statehood.</div>
+      <button class="reveal-btn" onclick="reveal('a3')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Can India give territory to a foreign country by simple majority? What is the authority?</div>
+      <div class="ans hidden" id="a4">NO. Needs constitutional amendment under Article 368. Established by Berubari Union Case (1959). India-Bangladesh LBA used 100th Amendment (2014).</div>
+      <button class="reveal-btn" onclick="reveal('a4')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Why did Ambedkar use "Union of States" instead of "Federation of States"?</div>
+      <div class="ans hidden" id="a5">Two reasons: (1) States exist because of India, not by agreement among themselves (unlike USA's 13 colonies). (2) States have NO right to secede from the Union.</div>
+      <button class="reveal-btn" onclick="reveal('a5')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Who died fasting for linguistic reorganisation? How many days? Which state was born?</div>
+      <div class="ans hidden" id="a6">Potti Sriramalu — 56 days — Andhra Pradesh (1953) — India's first linguistic state</div>
+      <button class="reveal-btn" onclick="reveal('a6')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Full form of JVP Committee?</div>
+      <div class="ans hidden" id="a7">J = Jawaharlal Nehru | V = Vallabhbhai Patel | P = Patta Sitaramayya</div>
+      <button class="reveal-btn" onclick="reveal('a7')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ States Reorganisation Act 1956 created how many states and UTs?</div>
+      <div class="ans hidden" id="a8">14 States + 6 Union Territories</div>
+      <button class="reveal-btn" onclick="reveal('a8')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Under Citizenship Act 1955, what is the residence requirement for naturalization?</div>
+      <div class="ans hidden" id="a9">14 years total, of which last 11 years must be continuous residence in India</div>
+      <button class="reveal-btn" onclick="reveal('a9')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ What is the critical date in Article 6 (migration from Pakistan)?</div>
+      <div class="ans hidden" id="a10">19 July 1948 — came before = automatic citizen; came after = must register</div>
+      <button class="reveal-btn" onclick="reveal('a10')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ What is the critical date in Article 7 (went to Pakistan)?</div>
+      <div class="ans hidden" id="a11">1 March 1947 — went before this date can return and get citizenship</div>
+      <button class="reveal-btn" onclick="reveal('a11')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Name the 3 members of Fazal Ali Commission.</div>
+      <div class="ans hidden" id="a12">Fazal Ali (Chairman), K.M. Panikkar, Hridaynath Kunjru</div>
+      <button class="reveal-btn" onclick="reveal('a12')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Article 370 — current status? What replaced it?</div>
+      <div class="ans hidden" id="a13">Article 370 was ABROGATED in 2019. J&K is now governed by the J&K Reorganisation Act, 2019. J&K and Ladakh are now Union Territories.</div>
+      <button class="reveal-btn" onclick="reveal('a13')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ FILL IN THE BLANK: "India is an ___ union of ___ states." — Ambedkar</div>
+      <div class="ans hidden" id="a14">Indestructible union of Destructible states</div>
+      <button class="reveal-btn" onclick="reveal('a14')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ Which amendment gave Goa statehood? In which year?</div>
+      <div class="ans hidden" id="a15">56th Constitutional Amendment — 1987 (statehood in 1987, amendment 1986)</div>
+      <button class="reveal-btn" onclick="reveal('a15')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ RAPID FIRE: 5 ways to acquire Indian citizenship (Citizenship Act 1955)?</div>
+      <div class="ans hidden" id="a16">1. Birth | 2. Descent | 3. Registration | 4. Naturalization | 5. Incorporation of Territory</div>
+      <button class="reveal-btn" onclick="reveal('a16')">Show</button>
+    </div>
+
+    <div class="recall-box">
+      <div class="q">❓ RAPID FIRE: 3 ways to LOSE Indian citizenship?</div>
+      <div class="ans hidden" id="a17">1. Renunciation (voluntary) | 2. Termination (took foreign citizenship) | 3. Deprivation (fraud/wrong documents)</div>
+      <button class="reveal-btn" onclick="reveal('a17')">Show</button>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+  function showLayer(id) {
+    document.querySelectorAll('.layer').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+    window.scrollTo({ top: 120, behavior: 'smooth' });
+  }
+
+  function reveal(id) {
+    const el = document.getElementById(id);
+    if (el.classList.contains('hidden')) {
+      el.classList.remove('hidden');
+      el.previousElementSibling.textContent = 'Hide';
+    } else {
+      el.classList.add('hidden');
+      el.previousElementSibling.textContent = 'Show';
+    }
+  }
+</script>
+
+</body>
+</html>
