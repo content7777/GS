@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fundamental Rights — SSC CGL High-Retention Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1f2e;
+    --border: #252b3b;
+    --accent: #6c8fff;
+    --accent2: #ff6b6b;
+    --accent3: #ffd93d;
+    --accent4: #6bcb77;
+    --accent5: #c77dff;
+    --text: #e2e8f0;
+    --text-muted: #8892a4;
+    --text-dim: #556070;
+    --fire: #ff6b35;
+    --star: #ffd93d;
+    --plus: #6bcb77;
+    --trap: #ff4757;
+    --glow: rgba(108,143,255,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,15,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    height: 52px;
+  }
+  .topbar .logo { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; white-space: nowrap; }
+  .nav-links { display: flex; gap: 4px; overflow-x: auto; flex: 1; }
+  .nav-links::-webkit-scrollbar { height: 0; }
+  .nav-links a {
+    color: var(--text-muted); text-decoration: none; font-size: 11px; font-weight: 500;
+    padding: 5px 10px; border-radius: 6px; white-space: nowrap; letter-spacing: 0.3px;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { background: var(--glow); color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #111827 50%, #0d1117 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(108,143,255,0.12), transparent);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(108,143,255,0.12); border: 1px solid rgba(108,143,255,0.3);
+    color: var(--accent); font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; padding: 4px 14px; border-radius: 20px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; letter-spacing: -0.5px;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #e2e8f0, #6c8fff 60%, #c77dff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 0.75rem;
+  }
+  .hero-sub { color: var(--text-muted); font-size: 14px; max-width: 500px; margin: 0 auto 2rem; }
+  .hero-stats { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat .n { font-family: 'JetBrains Mono', monospace; font-size: 1.6rem; font-weight: 600; color: var(--accent); }
+  .stat .l { font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 5rem; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 3rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon { font-size: 1.2rem; }
+  .section-title { font-size: 1.2rem; font-weight: 700; letter-spacing: -0.2px; }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); margin-left: auto; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+  }
+  .card-title { font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px; }
+  .card p { color: var(--text-muted); font-size: 14px; }
+
+  /* ── ARTICLE GRID ── */
+  .art-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+  .art-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.2rem 1.4rem;
+    border-left: 3px solid var(--accent);
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .art-card:hover { transform: translateY(-2px); border-left-color: var(--accent5); }
+  .art-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); font-weight: 600; margin-bottom: 4px; }
+  .art-name { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .art-body { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+  .art-body strong { color: var(--text); }
+
+  /* ── PRIORITY TAGS ── */
+  .tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; margin-left: 6px; }
+  .tag-fire { background: rgba(255,107,53,0.15); color: var(--fire); border: 1px solid rgba(255,107,53,0.3); }
+  .tag-star { background: rgba(255,217,61,0.12); color: var(--star); border: 1px solid rgba(255,217,61,0.25); }
+  .tag-plus { background: rgba(107,203,119,0.12); color: var(--plus); border: 1px solid rgba(107,203,119,0.25); }
+
+  /* ── MEMORY PALACE ── */
+  .palace {
+    background: linear-gradient(135deg, #13161e, #1a1025);
+    border: 1px solid rgba(199,125,255,0.3);
+    border-radius: 16px; padding: 2rem;
+  }
+  .palace-title { font-size: 1rem; font-weight: 700; color: var(--accent5); margin-bottom: 1rem; }
+  .palace-body { font-family: 'Crimson Pro', serif; font-size: 17px; line-height: 1.8; color: #c9d4e8; }
+  .palace-body strong { color: var(--accent5); }
+  .palace-rooms { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; margin-top: 1.5rem; }
+  .palace-room {
+    background: rgba(199,125,255,0.06); border: 1px solid rgba(199,125,255,0.15);
+    border-radius: 10px; padding: 0.85rem 1rem;
+  }
+  .room-loc { font-size: 10px; color: var(--accent5); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .room-fact { font-size: 13px; color: var(--text-muted); }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: rgba(255,71,87,0.06); border: 1px solid rgba(255,71,87,0.25);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .trap-title { color: var(--trap); font-weight: 700; font-size: 1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .trap-item {
+    background: rgba(255,71,87,0.05); border-left: 3px solid var(--trap);
+    border-radius: 0 8px 8px 0; padding: 0.6rem 1rem; margin-bottom: 0.6rem; font-size: 13.5px;
+  }
+  .trap-item strong { color: #ff8e9e; }
+
+  /* ── EXAMINER BOX ── */
+  .exam-box {
+    background: rgba(107,203,119,0.05); border: 1px solid rgba(107,203,119,0.2);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .exam-q { padding: 0.6rem 0; border-bottom: 1px solid rgba(107,203,119,0.1); font-size: 13.5px; }
+  .exam-q:last-child { border-bottom: none; }
+  .exam-q .qt { color: var(--text-dim); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; }
+
+  /* ── RECALL SECTION ── */
+  .recall-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  @media(max-width: 540px) { .recall-grid { grid-template-columns: 1fr; } }
+  .recall-card {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 0.9rem 1.1rem; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .recall-card:hover { background: rgba(108,143,255,0.06); }
+  .recall-q { font-size: 13.5px; font-weight: 500; }
+  .recall-a {
+    font-size: 13px; color: var(--accent4); margin-top: 0.5rem;
+    display: none; padding-top: 0.4rem; border-top: 1px dashed var(--border);
+  }
+  .recall-a.show { display: block; }
+  .reveal-hint { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ── HOOK BOX ── */
+  .hook {
+    background: rgba(255,217,61,0.05); border: 1px solid rgba(255,217,61,0.2);
+    border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 0.85rem;
+  }
+  .hook-label { font-size: 10px; color: var(--star); font-weight: 600; letter-spacing: 1px; margin-bottom: 4px; }
+  .hook-body { font-size: 13.5px; color: var(--text-muted); }
+  .hook-body strong { color: var(--text); }
+
+  /* ── CONNECTION ── */
+  .conn { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 0.75rem; font-size: 13.5px; }
+  .conn-arrow { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 12px; margin-top: 3px; flex-shrink: 0; }
+
+  /* ── REVISION LAYERS ── */
+  .layer-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.2rem; }
+  .layer-tab {
+    padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .layer-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .layer-content { display: none; }
+  .layer-content.active { display: block; }
+
+  /* ── LAST NIGHT SHEET ── */
+  .ln-sheet {
+    background: linear-gradient(135deg, #0d1117, #13161e);
+    border: 2px solid var(--accent3); border-radius: 16px; padding: 2rem;
+  }
+  .ln-title { font-size: 1.1rem; font-weight: 700; color: var(--accent3); margin-bottom: 1.5rem; }
+  .ln-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .ln-chip {
+    background: rgba(255,217,61,0.08); border: 1px solid rgba(255,217,61,0.2);
+    border-radius: 8px; padding: 0.4rem 0.85rem; font-size: 13px; font-family: 'JetBrains Mono', monospace;
+  }
+  .ln-chip strong { color: var(--accent3); }
+  .ln-divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+
+  /* ── CODE/FORMULA ── */
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* ── SAMRO BOX ── */
+  .samro {
+    background: linear-gradient(135deg, rgba(108,143,255,0.08), rgba(199,125,255,0.05));
+    border: 1px solid rgba(108,143,255,0.25); border-radius: 12px; padding: 1.5rem;
+  }
+  .samro-row { display: flex; align-items: center; gap: 12px; margin-bottom: 0.5rem; }
+  .samro-letter { font-size: 2rem; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; width: 40px; flex-shrink: 0; }
+  .samro-word { font-size: 13.5px; }
+  .samro-word strong { color: var(--text); } .samro-word span { color: var(--text-muted); }
+
+  /* ── WRIT TABLE ── */
+  .writ-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 0.85rem; }
+  .writ-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.2rem;
+    border-top: 3px solid var(--accent5);
+  }
+  .writ-name { font-weight: 700; font-size: 13.5px; color: var(--accent5); margin-bottom: 4px; }
+  .writ-meaning { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; font-style: italic; }
+  .writ-when { font-size: 12.5px; color: var(--text-muted); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.4s, transform 0.4s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar { position: fixed; top: 0; left: 0; height: 2px; background: var(--accent); z-index: 200; transition: width 0.1s; }
+
+  /* ── SCROLLTOP ── */
+  .scroll-top {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100;
+    background: var(--accent); color: #fff; border: none; border-radius: 50%;
+    width: 40px; height: 40px; font-size: 1.1rem; cursor: pointer;
+    opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center;
+  }
+  .scroll-top.show { opacity: 1; }
+
+  /* ── MISC ── */
+  ul.bullets { padding-left: 1.2rem; margin-top: 0.5rem; }
+  ul.bullets li { font-size: 13.5px; color: var(--text-muted); margin-bottom: 4px; }
+  ul.bullets li strong { color: var(--text); }
+  .highlight { background: rgba(108,143,255,0.12); border-radius: 4px; padding: 1px 5px; color: var(--accent); font-weight: 500; }
+  .case { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent2); background: rgba(255,107,107,0.08); padding: 2px 7px; border-radius: 4px; }
+  .amendment { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent4); background: rgba(107,203,119,0.08); padding: 2px 7px; border-radius: 4px; }
+
+  @media(max-width:600px) {
+    .hero { padding: 2rem 1.2rem 2rem; }
+    .art-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="pgbar"></div>
+
+<nav class="topbar">
+  <div class="logo">FR ⚡ SSC</div>
+  <div class="nav-links">
+    <a href="#bigpicture">Big Picture</a>
+    <a href="#palace">Memory Palace</a>
+    <a href="#notes">Full Notes</a>
+    <a href="#hooks">Hooks</a>
+    <a href="#connections">Connections</a>
+    <a href="#traps">⚠ Traps</a>
+    <a href="#examiner">Examiner</a>
+    <a href="#recall">Active Recall</a>
+    <a href="#revision">Revision Layers</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">PART III · ARTICLES 12–35 · SSC CGL POLITY</div>
+  <h1>Fundamental Rights</h1>
+  <p class="hero-sub">The Magna Carta of India — High-Retention Notes for 20–100 Revisions</p>
+  <div class="hero-stats">
+    <div class="stat"><div class="n">6</div><div class="l">Rights Now</div></div>
+    <div class="stat"><div class="n">24</div><div class="l">Articles (12–35)</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">Writs</div></div>
+    <div class="stat"><div class="n">#1</div><div class="l">Most Imp. Topic</div></div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════ BIG PICTURE ════════════════════════════════ -->
+<section class="section reveal" id="bigpicture">
+  <div class="section-header">
+    <span class="section-icon">🌐</span>
+    <span class="section-title">Big Picture</span>
+  </div>
+  <div class="card">
+    <p style="font-family:'Crimson Pro',serif;font-size:17px;line-height:1.8;color:#c9d4e8;">
+      Fundamental Rights are India's constitutional guarantee that the state cannot trample on its citizens. They are the <strong style="color:var(--text)">shield</strong> citizens carry against government overreach. Without them, democracy is just a word. Without Article 32, they are just words on paper. The entire chapter is a tension between <em>freedom</em> and <em>reasonable restriction</em> — a balance every question exploits.
+    </p>
+  </div>
+  <div class="art-grid" style="margin-top:0.5rem">
+    <div class="art-card"><div class="art-num">SOURCE</div><div class="art-name">Borrowed From USA</div><div class="art-body">Fundamental Rights taken from <strong>US Constitution</strong>. Magna Carta (UK) inspired the concept but FR are NOT borrowed from UK.</div></div>
+    <div class="art-card"><div class="art-num">NATURE</div><div class="art-name">Qualified, Not Absolute</div><div class="art-body">FR have <strong>reasonable restrictions</strong>. They are <strong>not sacrosanct</strong> — can be amended/deleted. Originally 7, now <strong>6</strong>.</div></div>
+    <div class="art-card"><div class="art-num">JUSTICIABLE</div><div class="art-name">Enforceable in Court</div><div class="art-body">FR are <strong>justiciable</strong> (vad-yoga) — you can go to court if violated. DPSP are non-justiciable.</div></div>
+    <div class="art-card"><div class="art-num">PURPOSE</div><div class="art-name">Political Democracy</div><div class="art-body">FR seek to establish <strong>political democracy</strong>. DPSP seek to establish economic democracy.</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ MEMORY PALACE ════════════════════════════════ -->
+<section class="section reveal" id="palace">
+  <div class="section-header">
+    <span class="section-icon">🧠</span>
+    <span class="section-title">Chapter Memory Palace</span>
+    <span class="section-num">STORY METHOD</span>
+  </div>
+  <div class="palace">
+    <div class="palace-title">🏛 The Constitution Building — A Walk Through 6 Floors</div>
+    <p class="palace-body">
+      Imagine walking into a grand <strong>6-floor building</strong> called "The Constitution Tower." Each floor is a Fundamental Right. As you enter the gate, a <strong>security guard (Article 12)</strong> stops you and asks "who are you?" You say "I am Equal — Article 14!" and walk in.
+    </p>
+    <div class="palace-rooms" style="margin-top:1.5rem">
+      <div class="palace-room"><div class="room-loc">🚪 GATE (Art. 12–13)</div><div class="room-fact">Guard defines STATE. Notice: "No illegal law allowed" (Judicial Review)</div></div>
+      <div class="palace-room"><div class="room-loc">1st Floor (Art. 14–18)</div><div class="room-fact">⚖️ RIGHT TO EQUALITY — scales hang everywhere. Ambani & vendor can't demand same treatment!</div></div>
+      <div class="palace-room"><div class="room-loc">2nd Floor (Art. 19–22)</div><div class="room-fact">🕊️ RIGHT TO FREEDOM — windows open everywhere. SAMRO sign on the wall. Police box at the end (Art.22)</div></div>
+      <div class="palace-room"><div class="room-loc">3rd Floor (Art. 23–24)</div><div class="room-fact">🚫 RIGHT AGAINST EXPLOITATION — chains broken, children studying not working</div></div>
+      <div class="palace-room"><div class="room-loc">4th Floor (Art. 25–28)</div><div class="room-fact">🕌 RIGHT TO RELIGION — multiple temples, mosques, churches. No forced conversion allowed.</div></div>
+      <div class="palace-room"><div class="room-loc">5th Floor (Art. 29–30)</div><div class="room-fact">📚 CULTURAL & EDU RIGHTS — books in 100 scripts, minority school building</div></div>
+      <div class="palace-room"><div class="room-loc">ROOFTOP (Art. 32)</div><div class="room-fact">❤️ RIGHT TO CONSTITUTIONAL REMEDIES — Ambedkar at the top. "Heart & Soul" banner. 5 magic writ keys hanging.</div></div>
+      <div class="palace-room"><div class="room-loc">ATTIC (Art. 33–35)</div><div class="room-fact">⚔️ SPECIAL RULES — Army loses some rights. Martial law (AFSPA). Parliament makes FR laws.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ COMPLETE NOTES ════════════════════════════════ -->
+<section class="section reveal" id="notes">
+  <div class="section-header">
+    <span class="section-icon">📖</span>
+    <span class="section-title">Complete Revision Notes</span>
+  </div>
+
+  <!-- PRE-FUNDAMENTALS -->
+  <p style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin-bottom:0.75rem;">— ART. 12 & 13: GATEWAY ARTICLES —</p>
+  <div class="art-grid">
+    <div class="art-card">
+      <div class="art-num">ART. 12 <span class="tag tag-fire">🔥 Must Know</span></div>
+      <div class="art-name">Definition of STATE</div>
+      <div class="art-body">
+        STATE = Central Govt + State Govts + Parliament + State Legislatures + Local Bodies (Panchayat, Municipality) + All bodies working under Govt (LIC, ONGC etc.).<br><br>
+        <strong>NOT STATE:</strong> BCCI (SC ruling), Zee Media (SC ruling).<br><br>
+        <strong>Exam tip:</strong> If "All of the above" is an option in a State-definition question — pick it. 99% correct.
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 13 <span class="tag tag-fire">🔥 Must Know</span></div>
+      <div class="art-name">Judicial Review + Void Laws</div>
+      <div class="art-body">
+        Any law <strong>inconsistent with Fundamental Rights → NULL & VOID</strong>.<br>
+        This is <strong>Judicial Review</strong> — borrowed from <strong>USA</strong>.<br><br>
+        Parliament/State Legislature makes laws → If violates FR → Judiciary can strike it down.<br><br>
+        <strong>Also borrowed from USA:</strong> Judicial Independence.
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT 1: EQUALITY -->
+  <p style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin:1.5rem 0 0.75rem;">— RIGHT 1: RIGHT TO EQUALITY (ART. 14–18) —</p>
+  <div class="art-grid">
+    <div class="art-card">
+      <div class="art-num">ART. 14 <span class="tag tag-fire">🔥</span></div>
+      <div class="art-name">Equality Before Law + Equal Protection</div>
+      <div class="art-body">
+        <strong>Equality before law</strong> (from UK): Rich or poor — same law applies to all.<br><br>
+        <strong>Equal protection of law</strong> (from USA): Like should be treated alike. Ambani ≠ handcart vendor; can't demand same treatment. But all Ambanis treated equally, all vendors treated equally.<br><br>
+        <strong>Exceptions:</strong> President & Governor — no <em>criminal</em> proceedings while in office. MLAs/MPs — no <em>civil</em> proceedings without 2-month notice.
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 15 <span class="tag tag-fire">🔥</span></div>
+      <div class="art-name">No Discrimination (5 grounds)</div>
+      <div class="art-body">
+        State shall NOT discriminate on: <strong>Religion, Race, Caste, Sex, Place of birth</strong>.<br><br>
+        <strong>Clause 2:</strong> Public places (shops, restaurants, cinema halls) — no discrimination, even by private persons.<br>
+        <strong>Clause 3:</strong> Special provisions for Women & Children ✅ (not violation).<br>
+        <strong>Clause 4:</strong> Special provisions for Backward classes ✅.<br><br>
+        <span class="case">Champakam Durai Rajan Case 1950</span> → SC said caste-based reservation violated Art.15 → Led to <strong>Clause 4 being added</strong>.
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 16 <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">Equality in Public Employment</div>
+      <div class="art-body">
+        No discrimination in govt jobs on: Religion, Race, Caste, Sex, Place of birth, <strong>Descent</strong> (note: Descent added here, not in Art. 15).<br><br>
+        <strong>Clause 3:</strong> Parliament can set residence as eligibility.<br>
+        <strong>Clause 4:</strong> Reservation for backward classes.<br>
+        <strong>Clause 5:</strong> Reservation for SC/ST including in promotions.<br><br>
+        <span class="case">1st Backward Class Commission</span>: Kaka Kalelkar | <span class="case">2nd = Mandal Commission</span>: B.P. Mandal — 27% OBC reservation.<br>
+        <span class="case">Indira Sawhney Case (Mandal Case)</span>: SC said reservation <strong>cannot exceed 50%</strong>. EWS 10% struck down (later restored by <span class="amendment">103rd Amendment</span>).
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 17 <span class="tag tag-fire">🔥</span></div>
+      <div class="art-name">Abolition of Untouchability</div>
+      <div class="art-body">Untouchability is <strong>abolished</strong>. Practice of untouchability is a punishable offence.</div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 18 <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">Abolition of Titles</div>
+      <div class="art-body">
+        State CANNOT confer any title.<br>
+        <strong>Exceptions:</strong> Military distinctions, Academic honours (meritocracy).<br><br>
+        Indian accepting foreign title → needs <strong>President's permission</strong>.<br>
+        Foreigner living in India + foreign title → also needs President's permission.
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT 2: FREEDOM -->
+  <p style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin:1.5rem 0 0.75rem;">— RIGHT 2: RIGHT TO FREEDOM (ART. 19–22) —</p>
+
+  <div class="samro" style="margin-bottom:1rem">
+    <p style="font-size:11px;color:var(--accent);font-weight:600;letter-spacing:1px;margin-bottom:1rem;">ART. 19 CLAUSE 1 — THE SAMRO TRICK (Sub-clauses A,B,C,D,E,G — no F!)</p>
+    <div class="samro-row"><div class="samro-letter">S</div><div class="samro-word"><strong>Sub-clause A</strong> — <span>Speech & Expression (includes media, RTI, memes, cartoons)</span></div></div>
+    <div class="samro-row"><div class="samro-letter">A</div><div class="samro-word"><strong>Sub-clause B</strong> — <span>Assemble Peacefully Without Arms</span></div></div>
+    <div class="samro-row"><div class="samro-letter">M</div><div class="samro-word"><strong>Sub-clause C</strong> — <span>form associations and unions (Movement — Association)</span></div></div>
+    <div class="samro-row"><div class="samro-letter">R</div><div class="samro-word"><strong>Sub-clause D</strong> — <span>Move freely throughout India</span></div></div>
+    <div class="samro-row"><div class="samro-letter">O</div><div class="samro-word"><strong>Sub-clause E</strong> — <span>Reside & settle anywhere in India</span></div></div>
+    <div class="samro-row"><div class="samro-letter">🚫F</div><div class="samro-word"><span style="color:var(--trap)">Sub-clause F DELETED by <span class="amendment">44th Amendment 1978</span> (Right to Property removed)</span></div></div>
+    <div class="samro-row"><div class="samro-letter">G</div><div class="samro-word"><strong>Sub-clause G</strong> — <span>Occupation/Profession/Trade/Business</span></div></div>
+  </div>
+
+  <div class="card"><div class="card-title">Art. 19 Clause 2 — Reasonable Restrictions <span class="tag tag-fire">🔥</span></div>
+    <p>On Speech: no defamation, no threats to sovereignty, no breach of public order/morality. Example: India's Got Latent controversy = breach of morality. Rahul Gandhi "all Modis are thieves" = defamation case. Gaurav Taneja gathering outside metro = disturbed public order.</p>
+  </div>
+
+  <div class="art-grid">
+    <div class="art-card">
+      <div class="art-num">ART. 20 <span class="tag tag-fire">🔥</span></div>
+      <div class="art-name">Protection Against Conviction</div>
+      <div class="art-body">
+        <strong>3 Protections:</strong><br>
+        1. <strong>No ex-post facto law</strong> — Punished only under law existing at time of crime. (Nirbhaya minor: 2012 law = juvenile home, can't apply 2016 law retroactively).<br>
+        2. <strong>No double jeopardy</strong> — Can't be punished twice for same crime. (Doesn't mean you can murder again!)<br>
+        3. <strong>No self-incrimination</strong> — Can't be forced to testify against yourself. But: blood sample, thumbprint, handwriting CAN be taken (these don't change under pressure).
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 21 <span class="tag tag-fire">🔥🔥</span></div>
+      <div class="art-name">Right to Life & Personal Liberty</div>
+      <div class="art-body">
+        "No person shall be deprived of his life or personal liberty except according to <strong>procedure established by law</strong>" — from <strong>Japan's Constitution</strong>.<br><br>
+        <strong>Most implicit right</strong> — hides dozens of rights:<br>
+        Right to health, right to sleep, right against delayed justice, right against public hanging, right to travel abroad, right to pollution-free environment, right to privacy (KS Puttaswamy/Aadhaar case 2016).<br><br>
+        <span class="case">AK Gopalan Case</span>: Narrow view — just follow procedure.<br>
+        <span class="case">ADM Jabalpur vs Shivkant Shukla</span>: Same narrow view.<br>
+        <span class="case">Maneka Gandhi Case 1978</span>: SC said we'll also check <strong>due process of law</strong> (USA concept) — is the law fair/just?
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 21A <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">Right to Education</div>
+      <div class="art-body">
+        Free & compulsory education for children <strong>6–14 years</strong>.<br>
+        Added by <span class="amendment">86th Constitutional Amendment 2002</span>. Not originally in constitution.
+      </div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 22 <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">Protection Against Arrest</div>
+      <div class="art-body">
+        Two types: <strong>Punitive</strong> (after crime) & <strong>Preventive</strong> (before crime, suspicion).<br><br>
+        <strong>Common rights in both:</strong><br>
+        ① Must be told reason for arrest.<br>
+        ② Right to legal practitioner of choice.<br><br>
+        <strong>Punitive only:</strong> Presented before magistrate within <strong>24 hours</strong>.<br><br>
+        <strong>Preventive only:</strong> Detention NOT more than <strong>3 months</strong> unless High Court advisory board approves extension.
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT 3: EXPLOITATION -->
+  <p style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin:1.5rem 0 0.75rem;">— RIGHT 3: RIGHT AGAINST EXPLOITATION (ART. 23–24) —</p>
+  <div class="art-grid">
+    <div class="art-card">
+      <div class="art-num">ART. 23 <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">Prohibition of Human Trafficking & Forced Labour</div>
+      <div class="art-body">Forced labour (work without pay) = prohibited.<br><br><strong>Exception:</strong> Compulsory military service during attack/emergency — state can call people; cannot refuse.</div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 24 <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">Prohibition of Child Labour</div>
+      <div class="art-body">No child in <strong>hazardous</strong> work (mines, factories, etc.).<br><br>Children <strong>16–18 years</strong> CAN work in <strong>non-hazardous</strong> work (grocery shop, sewing buttons, etc.).</div>
+    </div>
+  </div>
+
+  <!-- RIGHT 4: RELIGION -->
+  <p style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin:1.5rem 0 0.75rem;">— RIGHT 4: RIGHT TO RELIGION (ART. 25–28) —</p>
+  <div class="art-grid">
+    <div class="art-card">
+      <div class="art-num">ART. 25 <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">Freedom of Conscience & Religion (Individual)</div>
+      <div class="art-body">You can profess, practice, propagate any religion. Light incense, ring bells, organize kirtans — all fine.<br><br><strong>NO right to FORCEFUL conversion.</strong></div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 26 <span class="tag tag-plus">➕</span></div>
+      <div class="art-name">Manage Religious Affairs (Group)</div>
+      <div class="art-body">Religious groups can manage their own affairs. E.g., Akshardham temple = no jeans rule. Their space, their rules.</div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 27 <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">No Tax for One Religion</div>
+      <div class="art-body">State CANNOT levy tax to promote any ONE religion. Tax money must promote ALL religions equally. → India follows <strong>positive secularism</strong> (state can interfere in religion, unlike USA's strict separation).</div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 28 <span class="tag tag-plus">➕</span></div>
+      <div class="art-name">Religious Instruction in Schools</div>
+      <div class="art-body">
+        <strong>Fully govt-funded:</strong> NO religious instruction at all.<br>
+        <strong>State-administered (partial aid):</strong> Religious instruction on voluntary basis.<br>
+        <strong>Private trust-built (own funds):</strong> Can set their own religious rules.
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT 5: CULTURAL -->
+  <p style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin:1.5rem 0 0.75rem;">— RIGHT 5: CULTURAL & EDUCATIONAL RIGHTS (ART. 29–30) —</p>
+  <div class="art-grid">
+    <div class="art-card">
+      <div class="art-num">ART. 29 <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">Protection of Interests of Any Section</div>
+      <div class="art-body"><strong>Any section</strong> of citizens (not just minorities!) with distinct language/script/culture → right to protect it.<br><br><strong>Clause 2:</strong> No one can be denied admission in state-funded educational institution on grounds of religion, race, caste, sex or language.</div>
+    </div>
+    <div class="art-card">
+      <div class="art-num">ART. 30 <span class="tag tag-star">⭐</span></div>
+      <div class="art-name">Minorities' Right to Establish Schools</div>
+      <div class="art-body"><strong>Only for minorities</strong> (religious or linguistic).<br>They can establish AND administer their own educational institutions.<br><br><strong>Note:</strong> The word "minority" is <strong>NOT defined</strong> anywhere in the Constitution!</div>
+    </div>
+  </div>
+
+  <!-- RIGHT 6: CONSTITUTIONAL REMEDIES -->
+  <p style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin:1.5rem 0 0.75rem;">— RIGHT 6: RIGHT TO CONSTITUTIONAL REMEDIES (ART. 32) —</p>
+  <div class="card" style="border-color:rgba(108,143,255,0.4);">
+    <div class="card-title" style="color:var(--accent);">Art. 32 — The Heart & Soul of the Constitution 🔥🔥🔥</div>
+    <p style="margin-bottom:0.75rem">Called the <strong>"Heart and Soul"</strong> by Dr. Ambedkar. You can DIRECTLY approach the Supreme Court for FR violation. SC has original jurisdiction — cannot REFUSE to issue a writ when FR is violated. This is itself a Fundamental Right.</p>
+    <p><strong>Art. 226:</strong> High Court writs — NOT a fundamental right, so HC <em>can</em> refuse. BUT HC has WIDER jurisdiction: can issue writs for both FR AND legal right violations (e.g., right to property). SC only does FR.</p>
+  </div>
+
+  <div class="writ-grid" style="margin-top:1rem">
+    <div class="writ-card"><div class="writ-name">Habeas Corpus</div><div class="writ-meaning">"To have the body"</div><div class="writ-when">Used when someone is unlawfully detained/arrested. Bring the person before the court.</div></div>
+    <div class="writ-card"><div class="writ-name">Mandamus</div><div class="writ-meaning">"We command"</div><div class="writ-when">When a govt body is NOT doing its compulsory duty. Can't be issued against President/Governor or private individuals.</div></div>
+    <div class="writ-card"><div class="writ-name">Prohibition</div><div class="writ-meaning">"To prohibit"</div><div class="writ-when">Superior court → Inferior court: "Stop going beyond your limits." Issued when case is ONGOING.</div></div>
+    <div class="writ-card"><div class="writ-name">Certiorari</div><div class="writ-meaning">"To be certified"</div><div class="writ-when">Superior court → Inferior court: quash the order & transfer the case. Issued AFTER a decision is made.</div></div>
+    <div class="writ-card"><div class="writ-name">Quo Warranto</div><div class="writ-meaning">"By what authority?"</div><div class="writ-when">Person holding public office WITHOUT eligibility. Court asks: by what right are you here?</div></div>
+  </div>
+
+  <!-- REMAINING ARTICLES -->
+  <p style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;margin:1.5rem 0 0.75rem;">— ART. 33–35: SPECIAL PROVISIONS —</p>
+  <div class="art-grid">
+    <div class="art-card"><div class="art-num">ART. 33</div><div class="art-name">Rights of Armed Forces</div><div class="art-body">Only <strong>Parliament</strong> can restrict FR of armed forces/CAPF. Example: BSF jawan complained about food → dismissed (can't use Art. 19 freedom).</div></div>
+    <div class="art-card"><div class="art-num">ART. 34</div><div class="art-name">Martial Law</div><div class="art-body">When martial law imposed (e.g., AFSPA in Northeast), FR can be suspended. Armed forces get protection for acts done during martial law.</div></div>
+    <div class="art-card"><div class="art-num">ART. 35</div><div class="art-name">Parliament's Exclusive Power</div><div class="art-body">Only <strong>Parliament</strong> (not state legislatures) can make laws for certain FR. State legislatures have NO power here.</div></div>
+  </div>
+
+  <!-- CITIZENS VS FOREIGNERS -->
+  <div class="card" style="margin-top:1rem;border-color:rgba(255,217,61,0.3)">
+    <div class="card-title" style="color:var(--star)">🌍 Rights Only for Citizens (NOT Foreigners) — 15, 16, 19, 29, 30 <span class="tag tag-fire">🔥</span></div>
+    <p>Remember: <strong>15-16-19-29-30</strong> = ONLY Indians. All others (14, 17, 18, 20, 21, 22, 23, 24, 25...) = available to foreigners too.<br><br>
+    Quick check: "Is right to public employment available to foreigners?" → Art. 16 → In the list 15,16,19,29,30 → NO, only Indians.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ MEMORY HOOKS ════════════════════════════════ -->
+<section class="section reveal" id="hooks">
+  <div class="section-header">
+    <span class="section-icon">🔗</span>
+    <span class="section-title">Smart Memory Hooks</span>
+  </div>
+  <div class="hook">
+    <div class="hook-label">HOOK 1 — WHY 6 NOT 7?</div>
+    <div class="hook-body">Picture 7 kids in a classroom. One day, <strong>Right to Property</strong> (the richest kid) gets expelled by the <strong>44th Amendment 1978</strong> (Morarji Desai as PM). He moves to Article 300A's house — now just a "legal right," not a fundamental right. 6 kids remain.</div>
+  </div>
+  <div class="hook">
+    <div class="hook-label">HOOK 2 — SAMRO TRICK FOR ART. 19</div>
+    <div class="hook-body">Imagine shouting <strong>"SAMRO KARKE!"</strong> while exercising your rights: <strong>S</strong>peech, <strong>A</strong>ssemble, <strong>M</strong>ove (Association), <strong>R</strong>eside, <strong>O</strong>ccupation. Sub-clause F is missing from your SAMRO sequence — it was kicked out in 1978!</div>
+  </div>
+  <div class="hook">
+    <div class="hook-label">HOOK 3 — AMBANI vs. VENDOR (Art. 14)</div>
+    <div class="hook-body">Ambani demands same subsidy as handcart vendor = ABSURD. That's why <strong>Equal protection ≠ same treatment</strong>. Likes must be treated alike. Ambani can't be compared with vendor.</div>
+  </div>
+  <div class="hook">
+    <div class="hook-label">HOOK 4 — MANEKA GANDHI CASE (Art. 21)</div>
+    <div class="hook-body">Maneka Gandhi = Gandhi family + passport confiscated. She fought for her right to travel abroad. SC in 1978 said: we won't just check IF a procedure exists — we'll check if it's <strong>fair, just, reasonable</strong> (due process). That's how Art. 21 expanded from "one right" to "100 rights."</div>
+  </div>
+  <div class="hook">
+    <div class="hook-label">HOOK 5 — AMBEDKAR'S "HEART & SOUL"</div>
+    <div class="hook-body">Without Art. 32, your rights are like ₹1 lakh you can never spend. Art. 32 is the ATM card. Ambedkar = the bank manager who made sure the ATM works. That's why he called it the "heart and soul."</div>
+  </div>
+  <div class="hook">
+    <div class="hook-label">HOOK 6 — PROHIBITION vs. CERTIORARI</div>
+    <div class="hook-body">Think of a <strong>match being played</strong>: Prohibition = referee blows whistle DURING the game (case ongoing). Certiorari = referee REVIEWS the recorded footage AFTER the game and overturns the decision.</div>
+  </div>
+  <div class="hook">
+    <div class="hook-label">HOOK 7 — NIRBHAYA CASE for Art. 20</div>
+    <div class="hook-body">The juvenile in Nirbhaya case (2012) escaped death penalty because the law at that time (2012) didn't allow it for minors. Even though 2016 amendment changed this, you CAN'T apply it retroactively. That's <strong>no ex-post facto law</strong>.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CONNECTIONS ════════════════════════════════ -->
+<section class="section reveal" id="connections">
+  <div class="section-header">
+    <span class="section-icon">🕸️</span>
+    <span class="section-title">Concept Connections</span>
+  </div>
+  <div class="card">
+    <div class="conn"><div class="conn-arrow">→</div><div>Champakam Durai Rajan Case (1950) <strong>→</strong> SC said caste reservation violated Art.15 <strong>→</strong> Govt added Art.15 Clause 4 (backward class reservation allowed)</div></div>
+    <div class="conn"><div class="conn-arrow">→</div><div>Mandal Commission (27% OBC) <strong>→</strong> Indira Sawhney Case <strong>→</strong> SC: 50% cap + EWS 10% struck down <strong>→</strong> 103rd Amendment: EWS 10% restored</div></div>
+    <div class="conn"><div class="conn-arrow">→</div><div>Art. 32 (FR) applies to SC → SC CANNOT refuse writs | Art. 226 (not FR) applies to HC → HC CAN refuse but has WIDER scope</div></div>
+    <div class="conn"><div class="conn-arrow">→</div><div>AK Gopalan + ADM Jabalpur = Narrow Art.21 <strong>→</strong> Maneka Gandhi 1978 = Expanded Art.21 (due process check)</div></div>
+    <div class="conn"><div class="conn-arrow">→</div><div>Art. 12 defines STATE → Art. 13 makes FR-violating laws void → Arts. 14–32 give actual rights → Art. 32 enforces them all</div></div>
+    <div class="conn"><div class="conn-arrow">→</div><div>Art. 25 = individual freedom of religion | Art. 26 = group management | Art. 27 = no religious tax | Art. 28 = no religious instruction in fully-funded schools</div></div>
+    <div class="conn"><div class="conn-arrow">→</div><div>Art. 29 = ANY section can protect culture | Art. 30 = only MINORITIES can establish & administer schools</div></div>
+    <div class="conn"><div class="conn-arrow">→</div><div>Right to Property (Art.19F + Art.31) deleted by <span class="amendment">44th Amendment 1978</span> (PM Morarji Desai) → Now only legal right under Art. 300A in Part 12</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ EXAM TRAPS ════════════════════════════════ -->
+<section class="section reveal" id="traps">
+  <div class="section-header">
+    <span class="section-icon">⚠️</span>
+    <span class="section-title">Exam Traps</span>
+  </div>
+  <div class="trap-box">
+    <div class="trap-title">⚠️ EXAM TRAPS — What Students Get Wrong</div>
+
+    <div class="trap-item"><strong>TRAP 1:</strong> FR borrowed from <strong>USA</strong>, NOT UK. (Magna Carta is UK but FR source = USA Constitution.)</div>
+    <div class="trap-item"><strong>TRAP 2:</strong> Originally 7 FRs, now <strong>6</strong>. Right to Property removed by <strong>44th Amendment 1978</strong>, PM was <strong>Morarji Desai</strong>, now in Art. 300A as legal right.</div>
+    <div class="trap-item"><strong>TRAP 3:</strong> Art. 12 State includes LIC, ONGC, Panchayats. But <strong>BCCI and Zee Media are NOT</strong> state.</div>
+    <div class="trap-item"><strong>TRAP 4:</strong> Art. 14 — <em>Equality before law</em> from <strong>UK</strong>, <em>Equal protection of law</em> from <strong>USA</strong>. These are two different things!</div>
+    <div class="trap-item"><strong>TRAP 5:</strong> Art. 15 has 5 grounds. Art. 16 has 6 grounds (adds <strong>Descent</strong>). Don't confuse!</div>
+    <div class="trap-item"><strong>TRAP 6:</strong> 1st Backward Class Commission = <strong>Kaka Kalelkar</strong>. Mandal Commission = <strong>B.P. Mandal</strong>. Don't mix the chairmen!</div>
+    <div class="trap-item"><strong>TRAP 7:</strong> Art. 19 Sub-clause F is <strong>deleted</strong>. The sequence goes A,B,C,D,E,G. No F!</div>
+    <div class="trap-item"><strong>TRAP 8:</strong> Art. 21's "procedure established by law" taken from <strong>Japan</strong> (NOT USA). Due process of law concept = USA, but NOT written in Indian constitution.</div>
+    <div class="trap-item"><strong>TRAP 9:</strong> Prohibition writ = case still ONGOING. Certiorari = after DECISION is given. Students mix these two up constantly!</div>
+    <div class="trap-item"><strong>TRAP 10:</strong> Art. 32 (SC writs) = Fundamental Right → SC CANNOT refuse. Art. 226 (HC writs) = NOT fundamental right → HC CAN refuse. But HC has WIDER jurisdiction.</div>
+    <div class="trap-item"><strong>TRAP 11:</strong> Art. 29 = for <strong>ANY section</strong> of citizens (not just minorities). Art. 30 = exclusively for <strong>minorities</strong> (religious/linguistic).</div>
+    <div class="trap-item"><strong>TRAP 12:</strong> The word <strong>"minority" is NOT defined</strong> anywhere in the Constitution. If question asks "is it clearly defined?" → Answer: NO.</div>
+    <div class="trap-item"><strong>TRAP 13:</strong> President & Governor → no <strong>CRIMINAL</strong> proceedings while in office. MLAs/MPs → no <strong>CIVIL</strong> proceedings without 2-month notice. Don't swap criminal/civil!</div>
+    <div class="trap-item"><strong>TRAP 14:</strong> 15, 16, 19, 29, 30 = only for CITIZENS. All others (14, 17, 18, 20, 21, 22, 23, 24, 25...) = foreigners too.</div>
+    <div class="trap-item"><strong>TRAP 15:</strong> Art. 21A (Right to Education) = age <strong>6 to 14</strong>, added by <strong>86th Amendment 2002</strong>. Don't confuse with 6-18 or other age groups.</div>
+    <div class="trap-item"><strong>TRAP 16:</strong> EWS 10% reservation was struck down in <span class="case">Indira Sawhney case</span>. Later restored by <span class="amendment">103rd Constitutional Amendment</span>. Many students don't know it was struck down first.</div>
+    <div class="trap-item"><strong>TRAP 17:</strong> Mandamus cannot be issued against <strong>President or Governor</strong>, and not against <strong>private individuals</strong>. Only govt bodies with public duties.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ EXAMINER FAVOURITES ════════════════════════════════ -->
+<section class="section reveal" id="examiner">
+  <div class="section-header">
+    <span class="section-icon">🎯</span>
+    <span class="section-title">Examiner's Favourite Questions</span>
+  </div>
+  <div class="exam-box">
+    <div class="exam-q"><div class="qt">🎯 DIRECT FACT</div>Fundamental Rights are contained in which Part and Articles? → <strong>Part III, Articles 12–35</strong></div>
+    <div class="exam-q"><div class="qt">🎯 DIRECT FACT</div>FR are called the ___ of Indian Constitution? → <strong>Magna Carta</strong></div>
+    <div class="exam-q"><div class="qt">🎯 SOURCE</div>FR borrowed from which country's constitution? → <strong>USA</strong></div>
+    <div class="exam-q"><div class="qt">🎯 AMENDMENT</div>Which amendment removed Right to Property from FR? → <strong>44th Amendment, 1978</strong></div>
+    <div class="exam-q"><div class="qt">🎯 PM</div>Who was PM when Right to Property was removed? → <strong>Morarji Desai</strong></div>
+    <div class="exam-q"><div class="qt">🎯 ARTICLE</div>Right to Property is now under which article? → <strong>Article 300A (Part 12)</strong></div>
+    <div class="exam-q"><div class="qt">🎯 LANDMARK CASE</div>Which case expanded Article 21 to include due process? → <strong>Maneka Gandhi Case, 1978</strong></div>
+    <div class="exam-q"><div class="qt">🎯 LANDMARK CASE</div>Right to Privacy added to Art. 21 by which case? → <strong>K.S. Puttaswamy Case, 2016 (Aadhaar Case)</strong></div>
+    <div class="exam-q"><div class="qt">🎯 ARTICLE SOURCE</div>Art. 21 — "procedure established by law" taken from → <strong>Japan's Constitution</strong></div>
+    <div class="exam-q"><div class="qt">🎯 AMBEDKAR QUOTE</div>Which article was called "Heart and Soul of the Constitution"? → <strong>Article 32</strong></div>
+    <div class="exam-q"><div class="qt">🎯 WRITS</div>Which writ is used for unlawful detention? → <strong>Habeas Corpus</strong></div>
+    <div class="exam-q"><div class="qt">🎯 WRITS</div>Quo Warranto is issued when? → <strong>Person holds public office without eligibility</strong></div>
+    <div class="exam-q"><div class="qt">🎯 COMMISSION</div>Who chaired the Mandal Commission? → <strong>B.P. Mandal</strong>. What % reservation? → <strong>27% for OBCs</strong></div>
+    <div class="exam-q"><div class="qt">🎯 CASE</div>Indira Sawhney case held reservation cannot exceed? → <strong>50%</strong></div>
+    <div class="exam-q"><div class="qt">🎯 AMENDMENT</div>EWS 10% reservation restored by? → <strong>103rd Constitutional Amendment</strong></div>
+    <div class="exam-q"><div class="qt">🎯 AMENDMENT</div>Right to Education (Art. 21A) added by? → <strong>86th Amendment, 2002</strong>. Age group? → <strong>6–14 years</strong></div>
+    <div class="exam-q"><div class="qt">🎯 EXCLUSIVE RIGHTS</div>Which FRs are available ONLY to citizens, not foreigners? → <strong>15, 16, 19, 29, 30</strong></div>
+    <div class="exam-q"><div class="qt">🎯 DEFINITION</div>Is "minority" defined in the Constitution? → <strong>NO, it is not defined anywhere</strong></div>
+    <div class="exam-q"><div class="qt">🎯 DIFFERENCE</div>What is extra power of HC over SC in writs? → <strong>HC can also issue writs for legal right violations (not just FR)</strong></div>
+    <div class="exam-q"><div class="qt">🎯 EXCEPTION</div>Which FR is available against private individuals too? → <strong>Art. 17 (untouchability) and Art. 15 Cl.2 (public places)</strong></div>
+    <div class="exam-q"><div class="qt">🎯 SECULARISM</div>India follows ___ secularism? → <strong>Positive secularism</strong> (state can interfere in religion)</div>
+    <div class="exam-q"><div class="qt">🎯 PREVENTIVE DETENTION</div>Max detention without HC advisory board approval? → <strong>3 months</strong></div>
+    <div class="exam-q"><div class="qt">🎯 SELF INCRIMINATION</div>Which specimens CAN be forcibly taken? → <strong>Blood sample, thumbprint, handwriting</strong> (these don't change under pressure)</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ ACTIVE RECALL ════════════════════════════════ -->
+<section class="section reveal" id="recall">
+  <div class="section-header">
+    <span class="section-icon">🧪</span>
+    <span class="section-title">Active Recall Section</span>
+    <span class="section-num">TAP TO REVEAL</span>
+  </div>
+  <p style="font-size:12px;color:var(--text-dim);margin-bottom:1rem">Click any card to reveal the answer. Test yourself before peeking!</p>
+  <div class="recall-grid" id="recallGrid">
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: FR are in Part ___ between Articles ___ to ___?</div>
+      <div class="recall-a">Part III · Articles 12 to 35</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: Originally there were ___ FRs. Now there are ___?</div>
+      <div class="recall-a">Originally 7 → Now 6 (Right to Property removed)</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: SAMRO stands for? Which sub-clause is missing?</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+      <div class="recall-a">S=Speech(A), A=Assemble(B), M=association(C), R=Move(D), O=Reside(E), G=Occupation(G). Missing: F (property).</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: Which article is called "Heart and Soul" by Ambedkar?</div>
+      <div class="recall-a">Article 32 — Right to Constitutional Remedies</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: 5 writs issued by SC under Art. 32?</div>
+      <div class="recall-a">Habeas Corpus, Mandamus, Prohibition, Certiorari, Quo Warranto</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: "Procedure established by law" in Art. 21 — source?</div>
+      <div class="recall-a">Japan's Constitution</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: Which FR rights are ONLY for Indian citizens?</div>
+      <div class="recall-a">15, 16, 19, 29, 30 — rest also available to foreigners</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: Champakam Durai Rajan Case → what happened?</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+      <div class="recall-a">SC said reservation violated Art.15 → Govt added Clause 4 to Art.15 (backward class reservation allowed)</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: What is positive secularism?</div>
+      <div class="recall-a">State CAN interfere in religious matters (unlike USA where state and religion are strictly separate)</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: Difference between Prohibition and Certiorari writs?</div>
+      <div class="recall-a">Prohibition = during ongoing case (stop now). Certiorari = after decision made (quash the order).</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: Who chaired 1st & 2nd Backward Class Commissions?</div>
+      <div class="recall-a">1st = Kaka Kalelkar | 2nd = B.P. Mandal (Mandal Commission → 27% OBC)</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+    <div class="recall-card" onclick="toggleRecall(this)">
+      <div class="recall-q">Q: Under Art. 22, how soon must an arrested person be presented before magistrate?</div>
+      <div class="recall-a">Within 24 hours (not DM, but judicial magistrate)</div>
+      <div class="reveal-hint">tap to reveal ↓</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ REVISION LAYERS ════════════════════════════════ -->
+<section class="section reveal" id="revision">
+  <div class="section-header">
+    <span class="section-icon">📚</span>
+    <span class="section-title">Multi-Layer Revision System</span>
+  </div>
+
+  <div class="layer-tabs">
+    <div class="layer-tab active" onclick="switchLayer(this,'l1')">Layer 1: Full Notes</div>
+    <div class="layer-tab" onclick="switchLayer(this,'l2')">Layer 2: High-Yield</div>
+    <div class="layer-tab" onclick="switchLayer(this,'l3')">Layer 3: Ultra-Fast</div>
+    <div class="layer-tab" onclick="switchLayer(this,'l4')">Layer 4: 30-Second</div>
+    <div class="layer-tab" onclick="switchLayer(this,'l5')">🌙 Last Night</div>
+  </div>
+
+  <div id="l1" class="layer-content active">
+    <div class="card"><p>Full revision notes are above (Complete Revision Notes section). This layer = entire document.</p></div>
+  </div>
+
+  <div id="l2" class="layer-content">
+    <div class="card">
+      <div class="card-title">High-Yield Revision (5–10 min read)</div>
+      <ul class="bullets">
+        <li><strong>Part III, Arts 12–35</strong> = Fundamental Rights. Source: USA. Magna Carta of India.</li>
+        <li><strong>7→6 FRs</strong>: Right to Property removed by <strong>44th Amendment 1978</strong> (PM Morarji Desai). Now Art. 300A.</li>
+        <li><strong>Art. 12</strong>: State = Central + State Govts + Parliament + State Legislature + Local Bodies + Govt undertakings. NOT BCCI/Zee.</li>
+        <li><strong>Art. 13</strong>: FR-violating law = null & void. Judicial Review from USA.</li>
+        <li><strong>Art. 14</strong>: Equality before law (UK) + Equal protection (USA). Ambani ≠ vendor.</li>
+        <li><strong>Art. 15</strong>: No discrimination on 5 grounds. Cl.3 = Women/children exception. Cl.4 = backward class exception.</li>
+        <li><strong>Art. 16</strong>: Public employment. 6 grounds (+ Descent). Mandal = 27% OBC. Max 50% reservation. 103rd Amendment = EWS 10%.</li>
+        <li><strong>Art. 17</strong>: Abolish untouchability. <strong>Art. 18</strong>: No titles (exceptions: military, academic).</li>
+        <li><strong>Art. 19</strong>: SAMRO (A,B,C,D,E,G — no F). Reasonable restrictions in Cl.2.</li>
+        <li><strong>Art. 20</strong>: No ex-post facto, no double jeopardy, no self-incrimination (but blood/thumbprint/handwriting can be taken).</li>
+        <li><strong>Art. 21</strong>: Most implicit right. From Japan. Maneka Gandhi 1978 = due process added. K.S. Puttaswamy 2016 = right to privacy.</li>
+        <li><strong>Art. 21A</strong>: Education 6–14 yrs. 86th Amendment 2002.</li>
+        <li><strong>Art. 22</strong>: Punitive (post-crime) + Preventive detention. Reasons must be told. Lawyer right. 24hr magistrate. 3-month max preventive.</li>
+        <li><strong>Art. 23–24</strong>: No forced labour (exception: national emergency service). No child in hazardous work. 16–18 in non-hazardous OK.</li>
+        <li><strong>Art. 25–28</strong>: Individual religion right (no forced conversion). Group rights. No religious tax. No instruction in fully-funded schools.</li>
+        <li><strong>Art. 29–30</strong>: Art.29 = any section. Art.30 = minorities only (undefined). Only minorities can establish+administer schools.</li>
+        <li><strong>Art. 32</strong>: Heart & Soul (Ambedkar). SC writs (FR only). 5 writs: HC, Mandamus, Prohibition, Certiorari, Quo Warranto. Art.226 = HC (wider but can refuse).</li>
+        <li><strong>Citizens only</strong>: 15, 16, 19, 29, 30.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="l3" class="layer-content">
+    <div class="card">
+      <div class="card-title">Ultra-Fast Revision (2–3 min)</div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:13px;line-height:2;color:#b0bcd0">
+        FR = Part III · Arts 12–35 · USA source · 7→6 (44th Amend 1978, Morarji Desai)<br>
+        Art12=State def | Art13=Judicial Review | Art14=Equality(14=EBL/UK+EPL/USA)<br>
+        Art15=5grounds(+Cl3Women+Cl4Backward) | Art16=6grounds+Descent+50%cap+103rd=EWS<br>
+        Art17=Untouchability | Art18=No titles<br>
+        Art19=SAMRO(A-G no F) | Art20=ExPost+DoubleJ+SelfIncrim | Art21=Japan+Maneka1978+Puttaswamy2016<br>
+        Art21A=6-14yrs+86thAmend2002 | Art22=Punitive+Preventive(24hr+3months)<br>
+        Art23=NoForcedLabour | Art24=NoChildHazardous(16-18nonhaz✓)<br>
+        Art25=IndividualReligion(noForcedConversion) | Art26=GroupReligion | Art27=NoReligiousTax | Art28=NoInstructionFullyAided<br>
+        Art29=AnySection | Art30=MinoritiesOnly(Undefined!) | Art32=HeartSoul+5Writs | Art226=HC(wider)<br>
+        CitizenOnly=15,16,19,29,30 | 5Writs=HC+Mand+Prohib+Cert+QuoW
+      </p>
+    </div>
+  </div>
+
+  <div id="l4" class="layer-content">
+    <div class="card">
+      <div class="card-title">30-Second Revision</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:0.5rem">
+        <span class="ln-chip"><strong>Part III</strong> Arts 12–35</span>
+        <span class="ln-chip"><strong>USA</strong> source</span>
+        <span class="ln-chip"><strong>7→6</strong> 44th Amend</span>
+        <span class="ln-chip"><strong>Morarji Desai</strong> PM</span>
+        <span class="ln-chip"><strong>SAMRO</strong> no F</span>
+        <span class="ln-chip"><strong>Art21</strong> Japan</span>
+        <span class="ln-chip"><strong>Maneka1978</strong> due process</span>
+        <span class="ln-chip"><strong>Art32</strong> Heart&Soul</span>
+        <span class="ln-chip"><strong>5 writs</strong> HC/Mand/Proh/Cert/QW</span>
+        <span class="ln-chip"><strong>50% cap</strong> reservation</span>
+        <span class="ln-chip"><strong>103rd</strong> EWS 10%</span>
+        <span class="ln-chip"><strong>86th</strong> Art21A 6-14yrs</span>
+        <span class="ln-chip"><strong>Citizens only:</strong> 15,16,19,29,30</span>
+        <span class="ln-chip"><strong>Minority undefined</strong> in Const.</span>
+        <span class="ln-chip"><strong>Art32=SC</strong> cannot refuse</span>
+        <span class="ln-chip"><strong>Art226=HC</strong> can refuse, wider</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="l5" class="layer-content">
+    <div class="ln-sheet">
+      <div class="ln-title">🌙 Last Night Before Exam — Absolute Essentials</div>
+      <div class="ln-row">
+        <span class="ln-chip"><strong>Part III</strong> · 12–35</span>
+        <span class="ln-chip">Source: <strong>USA</strong></span>
+        <span class="ln-chip">Now: <strong>6 FRs</strong> (was 7)</span>
+        <span class="ln-chip"><strong>44th Amend 1978</strong> = Property gone (PM: Morarji)</span>
+      </div>
+      <hr class="ln-divider">
+      <div class="ln-row">
+        <span class="ln-chip"><strong>Art.12</strong> NOT: BCCI, Zee</span>
+        <span class="ln-chip"><strong>Art.13</strong> = Judicial Review</span>
+        <span class="ln-chip"><strong>Art.14</strong> EBL(UK) + EPL(USA)</span>
+      </div>
+      <div class="ln-row">
+        <span class="ln-chip"><strong>Art.15</strong> 5 grounds</span>
+        <span class="ln-chip"><strong>Art.16</strong> 6 grounds + Descent</span>
+        <span class="ln-chip"><strong>50% cap</strong> reservation</span>
+        <span class="ln-chip"><strong>103rd Amend</strong> = EWS 10%</span>
+      </div>
+      <hr class="ln-divider">
+      <div class="ln-row">
+        <span class="ln-chip"><strong>SAMRO</strong> A,B,C,D,E,G (no F!)</span>
+        <span class="ln-chip"><strong>Art.20</strong>: ExPost + NoDoubleJ + NoSelfIncrim</span>
+      </div>
+      <div class="ln-row">
+        <span class="ln-chip"><strong>Art.21</strong> = Japan · Maneka1978 · Puttaswamy2016</span>
+        <span class="ln-chip"><strong>Art.21A</strong> = 6–14 yrs · 86th Amend 2002</span>
+        <span class="ln-chip"><strong>Art.22</strong> = 24hr + 3months</span>
+      </div>
+      <hr class="ln-divider">
+      <div class="ln-row">
+        <span class="ln-chip"><strong>Art.29</strong> = Any section</span>
+        <span class="ln-chip"><strong>Art.30</strong> = Minorities (UNDEFINED)</span>
+        <span class="ln-chip"><strong>Art.32</strong> = Heart & Soul · SC writs</span>
+      </div>
+      <div class="ln-row">
+        <span class="ln-chip">5 Writs: <strong>HC · Mandamus · Prohibition · Certiorari · QuoWarranto</strong></span>
+      </div>
+      <div class="ln-row">
+        <span class="ln-chip">Art.32 (SC) = FR only, CANNOT refuse | Art.226 (HC) = FR+Legal, CAN refuse</span>
+      </div>
+      <hr class="ln-divider">
+      <div class="ln-row">
+        <span class="ln-chip" style="background:rgba(255,71,87,0.12);border-color:rgba(255,71,87,0.3);color:#ff8e9e">⚠ Citizen ONLY: <strong>15, 16, 19, 29, 30</strong></span>
+        <span class="ln-chip" style="background:rgba(255,71,87,0.12);border-color:rgba(255,71,87,0.3);color:#ff8e9e">⚠ Prohibition=ongoing | Certiorari=after decision</span>
+        <span class="ln-chip" style="background:rgba(255,71,87,0.12);border-color:rgba(255,71,87,0.3);color:#ff8e9e">⚠ Minority = NOT defined in Const.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const scroll = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('pgbar').style.width = (scroll / total * 100) + '%';
+  document.getElementById('scrollTop').classList.toggle('show', scroll > 400);
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.05});
+reveals.forEach(r => io.observe(r));
+
+// Active recall toggle
+function toggleRecall(el) {
+  el.querySelector('.recall-a').classList.toggle('show');
+  el.querySelector('.reveal-hint').style.display = el.querySelector('.recall-a').classList.contains('show') ? 'none' : 'block';
+}
+
+// Layer tabs
+function switchLayer(tab, id) {
+  document.querySelectorAll('.layer-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.layer-content').forEach(c => c.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// Nav active state on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if(window.scrollY >= s.offsetTop - 80) current = s.id; });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>
