@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Constitutional Amendments — SSC CGL Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0c10;
+    --bg-card: #111318;
+    --bg-elevated: #181c24;
+    --bg-highlight: #1e2330;
+    --border: #252b38;
+    --border-glow: #2e3a55;
+
+    --text-primary: #e8eaf0;
+    --text-secondary: #9aa3b8;
+    --text-muted: #5a6278;
+
+    --fire: #ff6b35;
+    --fire-dim: #3a1a0a;
+    --gold: #f5c842;
+    --gold-dim: #2e2500;
+    --teal: #38d9c0;
+    --teal-dim: #0a2420;
+    --blue: #4a9eff;
+    --blue-dim: #0a1a30;
+    --red: #ff4757;
+    --red-dim: #2a0a0e;
+    --purple: #a855f7;
+    --purple-dim: #1a0a2e;
+    --green: #22c55e;
+    --green-dim: #0a1e12;
+
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: var(--border-glow); border-radius: 3px; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0a0c10 0%, #0f1525 50%, #0a0c10 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 200px;
+    background: radial-gradient(ellipse, rgba(74,158,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--blue); }
+  .hero-sub {
+    color: var(--text-secondary);
+    font-size: 14px;
+    max-width: 500px;
+    margin: 0 auto 28px;
+  }
+
+  /* ── LAYER TABS ── */
+  .layer-nav {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px 16px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .layer-btn {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .layer-btn:hover, .layer-btn.active {
+    background: var(--blue-dim);
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  /* ── LAYER SECTIONS ── */
+  .layer { display: none; }
+  .layer.active { display: block; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  /* ── SECTION HEADERS ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 40px 0 20px;
+  }
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .section-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+
+  /* ── AMENDMENT CARDS ── */
+  .amend-grid {
+    display: grid;
+    gap: 12px;
+  }
+  .amend-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--blue);
+    border-radius: 8px;
+    padding: 16px 20px;
+    transition: border-left-color 0.2s;
+  }
+  .amend-card:hover { border-left-color: var(--teal); }
+  .amend-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .amend-num {
+    background: var(--blue-dim);
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .amend-title {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .amend-year {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .amend-body { color: var(--text-secondary); font-size: 14px; }
+  .amend-body ul { list-style: none; padding: 0; }
+  .amend-body li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .amend-body li:last-child { border-bottom: none; }
+  .amend-body li::before {
+    content: '›';
+    position: absolute; left: 0;
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .tag-fire { background: var(--fire-dim); color: var(--fire); border: 1px solid var(--fire); }
+  .tag-gold { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold); }
+  .tag-plus { background: var(--teal-dim); color: var(--teal); border: 1px solid var(--teal); }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: var(--red-dim);
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .trap-box .trap-title {
+    font-weight: 700;
+    color: var(--red);
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .trap-box p, .trap-box li {
+    font-size: 13px;
+    color: #ffaab0;
+  }
+  .trap-box ul { list-style: none; }
+  .trap-box li { padding: 3px 0 3px 14px; position: relative; }
+  .trap-box li::before { content: '!'; position: absolute; left: 0; color: var(--red); font-weight: 700; }
+
+  /* ── MEMORY HOOKS ── */
+  .hook-box {
+    background: var(--purple-dim);
+    border: 1px solid var(--purple);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .hook-title {
+    font-weight: 700;
+    color: var(--purple);
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .hook-box p { font-size: 14px; color: #d4aaff; line-height: 1.6; }
+
+  /* ── PALACE ── */
+  .palace-box {
+    background: linear-gradient(135deg, #0d1a2e, #1a0d2e);
+    border: 1px solid var(--blue);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .palace-stop {
+    display: flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .palace-stop:last-child { border-bottom: none; }
+  .palace-num {
+    background: var(--blue);
+    color: #000;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 11px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .palace-content strong { color: var(--text-primary); font-size: 14px; }
+  .palace-content p { color: var(--text-secondary); font-size: 13px; margin-top: 2px; }
+
+  /* ── CONNECTIONS ── */
+  .conn-box {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .conn-arrow { color: var(--teal); font-weight: 700; margin: 0 8px; }
+
+  /* ── EXAMINER QUESTIONS ── */
+  .q-box {
+    background: var(--bg-card);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  .q-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .q-text { font-size: 14px; color: var(--text-primary); }
+
+  /* ── ACTIVE RECALL ── */
+  .recall-q {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .recall-q:hover { border-color: var(--teal); }
+  .recall-question { font-size: 14px; color: var(--text-primary); font-weight: 500; }
+  .recall-answer {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-glow);
+    font-size: 13px;
+    color: var(--teal);
+    font-family: var(--font-mono);
+    line-height: 1.5;
+  }
+  .recall-answer.visible { display: block; }
+  .tap-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ── PROCEDURE TABLE ── */
+  .proc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .proc-table th {
+    background: var(--bg-elevated);
+    padding: 10px 14px;
+    text-align: left;
+    color: var(--blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    border: 1px solid var(--border);
+  }
+  .proc-table td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+  .proc-table tr:nth-child(even) td { background: var(--bg-elevated); }
+
+  /* ── HIGH YIELD LAYER ── */
+  .hy-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .hy-row:last-child { border-bottom: none; }
+  .hy-num {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--blue);
+    min-width: 40px;
+    font-size: 13px;
+    padding-top: 1px;
+  }
+  .hy-text { color: var(--text-secondary); line-height: 1.5; }
+  .hy-text strong { color: var(--text-primary); }
+
+  /* ── FAST SHEET ── */
+  .fast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+  .fast-cell {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .fast-cell .fc-num {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--fire);
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .fast-cell .fc-text { color: var(--text-secondary); line-height: 1.4; }
+  .fast-cell .fc-text strong { color: var(--text-primary); }
+
+  /* ── 30 SEC SHEET ── */
+  .sec30 {
+    display: grid;
+    gap: 8px;
+  }
+  .sec30-item {
+    background: var(--bg-elevated);
+    border-left: 3px solid var(--fire);
+    padding: 8px 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .sec30-item strong { color: var(--fire); font-family: var(--font-mono); }
+
+  /* ── LAST NIGHT SHEET ── */
+  .last-night {
+    background: linear-gradient(135deg, #0f0a00, #1a1000);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .last-night h3 {
+    font-family: var(--font-display);
+    color: var(--gold);
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .ln-block {
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed rgba(245,200,66,0.2);
+  }
+  .ln-block:last-child { border-bottom: none; margin-bottom: 0; }
+  .ln-block h4 {
+    color: var(--gold);
+    font-size: 13px;
+    font-family: var(--font-mono);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ln-block p, .ln-block li {
+    font-size: 13px;
+    color: #d4b800;
+    line-height: 1.6;
+  }
+  .ln-block ul { list-style: none; }
+  .ln-block li::before { content: '★ '; color: var(--gold); }
+
+  /* ── PROCEDURE SECTION ── */
+  .proc-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 640px) { .proc-visual { grid-template-columns: 1fr; } }
+  .proc-col {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .proc-col h4 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .proc-col ul { list-style: none; }
+  .proc-col li {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding: 4px 0 4px 14px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .proc-col li:last-child { border-bottom: none; }
+  .proc-col li::before { content: '·'; position: absolute; left: 0; color: var(--teal); font-weight: 900; font-size: 18px; line-height: 1; top: 6px; }
+
+  .blue-h { color: var(--blue); }
+  .gold-h { color: var(--gold); }
+  .fire-h { color: var(--fire); }
+  .teal-h { color: var(--teal); }
+  .red-h { color: var(--red); }
+  .green-h { color: var(--green); }
+  .purple-h { color: var(--purple); }
+
+  .info-box {
+    background: var(--blue-dim);
+    border: 1px solid var(--blue);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: #a0c4ff;
+  }
+  .info-box strong { color: var(--blue); }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  /* LANG TIMELINE */
+  .lang-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .lang-item {
+    display: flex;
+    gap: 16px;
+    padding: 10px 0;
+    border-left: 2px solid var(--border-glow);
+    margin-left: 12px;
+    padding-left: 20px;
+    position: relative;
+  }
+  .lang-item::before {
+    content: '';
+    position: absolute;
+    left: -5px; top: 16px;
+    width: 8px; height: 8px;
+    background: var(--teal);
+    border-radius: 50%;
+  }
+  .lang-amend { font-family: var(--font-mono); color: var(--teal); font-weight: 700; min-width: 80px; font-size: 13px; }
+  .lang-langs { color: var(--text-secondary); font-size: 14px; }
+
+  .small-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">SSC CGL • Polity • High-Retention Revision System</div>
+  <h1>Constitutional <span>Amendments</span></h1>
+  <p class="hero-sub">All important amendments + procedure. Engineered for 20–100 revisions. Built to be unforgettable.</p>
+</div>
+
+<!-- LAYER NAV -->
+<nav class="layer-nav">
+  <button class="layer-btn active" onclick="showLayer('l1')">📚 Complete Notes</button>
+  <button class="layer-btn" onclick="showLayer('l2')">⚡ High-Yield</button>
+  <button class="layer-btn" onclick="showLayer('l3')">🚀 Ultra-Fast</button>
+  <button class="layer-btn" onclick="showLayer('l4')">⏱ 30-Second</button>
+  <button class="layer-btn" onclick="showLayer('l5')">🌙 Last Night</button>
+  <button class="layer-btn" onclick="showLayer('l6')">❓ Active Recall</button>
+  <button class="layer-btn" onclick="showLayer('l7')">⚠ Exam Traps</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LAYER 1: COMPLETE NOTES -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="l1" class="layer active">
+<div class="container">
+
+  <!-- BIG PICTURE -->
+  <div class="section-header">
+    <span class="section-icon">🌐</span>
+    <h2>Big Picture</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="card">
+    <p style="font-size:15px; color:var(--text-secondary); line-height:1.8;">
+      This chapter is the story of <strong style="color:var(--text-primary)">how India's Constitution evolves</strong>. Every amendment is a reaction — to a court ruling, a political crisis, a social need, or an international agreement. Understanding the <em>WHY</em> behind each amendment makes the numbers unforgettable. Think of amendments like chapters of Indian political history, not random numbers.
+    </p>
+  </div>
+
+  <!-- MEMORY PALACE -->
+  <div class="section-header">
+    <span class="section-icon">🧠</span>
+    <h2>Chapter Memory Palace — The Constitutional Railway</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="palace-box">
+    <p style="font-size:13px; color:var(--text-secondary); margin-bottom:16px;">Imagine a train journey. Each station = an era of amendments. Walk through it mentally every time you revise.</p>
+    <div class="palace-stop">
+      <div class="palace-num">1</div>
+      <div class="palace-content">
+        <strong>🚉 Station NEHRU (1951–56): Land & States</strong>
+        <p>Nehru is at the platform handing over land to farmers (1st Amend). He then reshuffles the carriage labels from A/B/C/D to proper state names (7th Amend). He signs a paper with Pakistan's PM Noon to hand over Berubari (9th Amend).</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">2</div>
+      <div class="palace-content">
+        <strong>🚉 Station INTEGRATION (1960–74): Bringing India Together</strong>
+        <p>Dadra joins (10th), Goa kicks out Portuguese with Operation Vijay (12th/14th), Nagaland gets a VIP badge 371A (13th), Sindhi language boards the train (21st), HC judges get 2 extra years (15th), Sikkim sits in the waiting room as Associate State (35th).</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">3</div>
+      <div class="palace-content">
+        <strong>🚉 Station INDIRA (1971–76): Power Plays</strong>
+        <p>Indira fires the privy purse kings (26th), Parliament fights back against Golaknath and wins via 24th, adds 31C shield for DPSPs (25th). Then Emergency hits — 42nd is a STORM: preamble changes, duties added, President caged, states lose subjects.</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">4</div>
+      <div class="palace-content">
+        <strong>🚉 Station JANATA REPAIR (1978): Fixing the Storm</strong>
+        <p>44th amendment: cage broken (President can send advice back once), Right to Property thrown off the train (now just a legal right at Article 300A), "Armed Rebellion" replaces "Internal Disturbance", Special Majority needed for Emergency now.</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">5</div>
+      <div class="palace-content">
+        <strong>🚉 Station DEMOCRACY (1985–92): People Power</strong>
+        <p>52nd: Anti-defection law added (10th Schedule). 61st: Voting age drops from 21 → 18. 65th: SC/ST gets multi-member commission. 69th: Delhi gets Legislative Assembly as NCT. 71st: Konkani, Nepali, Manipuri board the 8th schedule train.</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">6</div>
+      <div class="palace-content">
+        <strong>🚉 Station GRASSROOTS (1992): 73rd & 74th</strong>
+        <p>Two giant stations: Panchayati Raj (Part IX, Art 243–243O, 11th Schedule) and Municipalities (Part IXA, Art 243P–243ZG, 12th Schedule). Democracy reaches the village.</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">7</div>
+      <div class="palace-content">
+        <strong>🚉 Station MODERN INDIA (2002–2023): Rights & Reforms</strong>
+        <p>86th: Education becomes FR (Art 21A). 89th: SC & ST get separate commissions (338 & 338A). 91st: Cabinet size capped at 15%. 92nd: Bodo, Dogri, Maithili, Santhali join 8th schedule. 99th: NJAC fails in court. 100th: Bangladesh land deal. 101st: GST arrives. 103rd: EWS 10% quota. 104th: Anglo-Indian nomination ends. 106th: Women get 33% seats (not yet active).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCEDURE -->
+  <div class="section-header">
+    <span class="section-icon">⚙️</span>
+    <h2>Amendment Procedure — Article 368</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="info-box">
+    <strong>Source:</strong> Borrowed from <strong>South Africa</strong> | <strong>Article:</strong> 368 | <strong>Part:</strong> XX | KC Wheare called this procedure <em>"Vice but rarely found"</em> (quasi-rigid)
+  </div>
+
+  <div class="proc-visual">
+    <div class="proc-col">
+      <h4 class="blue-h">Simple Majority</h4>
+      <ul>
+        <li>2nd Schedule, 3rd Schedule</li>
+        <li>Rules of procedure of Parliament</li>
+        <li>Citizenship provisions</li>
+        <li>Creating/abolishing Legislative Council</li>
+        <li>New states (Art 2 & 3) — NOT under Art 368</li>
+        <li>Flexible part of Constitution</li>
+      </ul>
+    </div>
+    <div class="proc-col">
+      <h4 class="gold-h">Special Majority</h4>
+      <ul>
+        <li>Majority of <em>total membership</em> of House</li>
+        <li>PLUS 2/3 of members present & voting</li>
+        <li>(Whichever is higher prevails)</li>
+        <li>Fundamental Rights</li>
+        <li>DPSPs</li>
+        <li>Most provisions of Constitution</li>
+      </ul>
+    </div>
+    <div class="proc-col">
+      <h4 class="fire-h">Special + State Ratification</h4>
+      <ul>
+        <li>Special majority in Parliament</li>
+        <li>PLUS simple majority in ≥ 14 states (half of 28)</li>
+        <li>Supreme Court / High Court provisions</li>
+        <li>President's election</li>
+        <li>7th Schedule</li>
+        <li>Article 368 itself</li>
+        <li>State representation in Parliament</li>
+      </ul>
+    </div>
+  </div>
+
+  <table class="proc-table">
+    <tr>
+      <th>Key Rule</th>
+      <th>Detail</th>
+    </tr>
+    <tr>
+      <td>Bill introduction</td>
+      <td>Can be introduced in <strong>either</strong> Lok Sabha or Rajya Sabha (NOT State Legislature)</td>
+    </tr>
+    <tr>
+      <td>Joint sitting?</td>
+      <td><strong>NO</strong> — Joint sitting not allowed for Constitutional Amendment Bills (also not for Money Bills)</td>
+    </tr>
+    <tr>
+      <td>President's prior recommendation?</td>
+      <td><strong>NOT required</strong> (unlike Money Bills & Art. 3 bills)</td>
+    </tr>
+    <tr>
+      <td>President's assent?</td>
+      <td><strong>MANDATORY</strong> — President CANNOT use veto power (made mandatory by 24th Amendment)</td>
+    </tr>
+    <tr>
+      <td>Joint sitting provision</td>
+      <td>Article 108 (borrowed from Australia)</td>
+    </tr>
+  </table>
+
+  <div class="hook-box">
+    <div class="hook-title">🧠 MEMORY HOOK — Special Majority Calculation</div>
+    <p>Rajya Sabha has 245 members. Special majority = BOTH conditions must be met: (1) majority of 245 = 123+, AND (2) 2/3 of those present & voting. WHICHEVER number comes out BIGGER — that's your special majority threshold. It's a safety net with double locks.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- AMENDMENTS 1-25 -->
+  <div class="section-header">
+    <span class="section-icon">📜</span>
+    <h2>Important Amendments — Complete Notes</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="amend-grid">
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">1st</div>
+        <div>
+          <div class="amend-title">Land Reforms & 9th Schedule <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">1951 | Jawaharlal Nehru</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>9th Schedule</strong> to Constitution — laws inside it cannot be judicially reviewed (if added pre-1973)</li>
+          <li>Added <strong>Article 15(4)</strong> — reservation for backward classes not violative of Art 15 [Champakam Durai Rajan Case → Tamil Nadu]</li>
+          <li>Added <strong>Article 19(3) & 19(6)</strong> — additional reasonable restrictions on freedom of speech & occupation</li>
+          <li>Purpose: protect land reform laws from courts. Landlords were taking govt to court</li>
+          <li><strong>IR Coelho Case:</strong> 9th Schedule laws added after 1973 can be reviewed by courts</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">5th</div>
+        <div>
+          <div class="amend-title">President's Time Limit Power</div>
+          <div class="amend-year">For state reorganization bills (Art 2 & 3)</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>President can now <strong>prescribe a time limit</strong> for state legislatures to give their recommendation on state-related bills</li>
+          <li>State legislature's recommendation is <strong>NOT binding</strong> on Parliament</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">7th</div>
+        <div>
+          <div class="amend-title">State Reorganisation <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">1956</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Abolished A, B, C, D grouping of states — removed <strong>Part VII</strong> of Constitution</li>
+          <li>Created <strong>14 States & 6 Union Territories</strong></li>
+          <li>Allowed <strong>common High Court</strong> for two or more states (e.g., Maharashtra & Goa share a HC)</li>
+          <li>Allowed <strong>common Governor</strong> for two or more states</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">9th</div>
+        <div>
+          <div class="amend-title">Nehru-Noon Agreement — Berubari <span class="tag tag-gold">⭐ Important</span></div>
+          <div class="amend-year">1960</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Implemented <strong>Nehru-Noon Agreement</strong> with Pakistan (PM Firoz Khan Noon)</li>
+          <li>Transferred <strong>Berubari Union</strong> to Pakistan</li>
+          <li><strong>Berubari Case (1960):</strong> SC said you can TAKE territory by simple majority (Art 4), but to GIVE territory you need a Constitutional Amendment</li>
+          <li>Bangladesh at that time = East Pakistan</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">10th</div>
+        <div>
+          <div class="amend-title">Dadra & Nagar Haveli incorporated as UT</div>
+          <div class="amend-year">1961</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Dadra and Nagar Haveli became part of Indian Union as a <strong>Union Territory</strong></li>
+          <li>Ruled by Portuguese earlier. Operation Vijay (1961) removed them.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">12th</div>
+        <div>
+          <div class="amend-title">Goa, Daman & Diu as UT <span class="tag tag-gold">⭐ Important</span></div>
+          <div class="amend-year">1962</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Incorporated <strong>Goa, Daman & Diu</strong> as Union Territory</li>
+          <li>Goa was NOT yet a state — it became full state only via <strong>56th Amendment (1987)</strong></li>
+          <li>Daman & Diu still remains a UT (now merged with Dadra & Nagar Haveli)</li>
+          <li>Portuguese expelled by <strong>Operation Vijay (1961)</strong> — "Portuguese: first to come, last to go"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">13th</div>
+        <div>
+          <div class="amend-title">Nagaland — Article 371A</div>
+          <div class="amend-year">1962</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>Article 371A</strong> — gave special status/provisions to Nagaland</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">14th</div>
+        <div>
+          <div class="amend-title">Puducherry into Indian Union</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Incorporated <strong>Puducherry</strong> into Indian Union (was under French rule)</li>
+          <li>Enabled UTs of Himachal, Manipur, Tripura, Goa, Daman-Diu, Puducherry to have <strong>Legislature & Council of Ministers</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">15th</div>
+        <div>
+          <div class="amend-title">HC Judge Retirement Age: 60 → 62</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Increased retirement age of High Court judges from <strong>60 to 62</strong></li>
+          <li>Supreme Court judges retire at 65 (unchanged)</li>
+          <li>No minimum age prescribed for SC/HC judges</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">19th</div>
+        <div>
+          <div class="amend-title">Election Tribunals Abolished <span class="tag tag-fire">🔥 Exam Trap!</span></div>
+          <div class="amend-year">1966</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Abolished <strong>Election Tribunals</strong></li>
+          <li>⚠️ TRAP: Students often confuse this with Privy Purse abolition — Privy Purse was 26th, NOT 19th!</li>
+          <li>This came up in NTPC exam!</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">21st</div>
+        <div>
+          <div class="amend-title">Sindhi added to 8th Schedule <span class="tag tag-gold">⭐ Important</span></div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>Sindhi</strong> to the 8th Schedule</li>
+          <li>First language to be added after the original 14 (Constitution had 14 languages originally)</li>
+          <li>8th Schedule now has <strong>22 languages</strong> total</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">24th</div>
+        <div>
+          <div class="amend-title">Parliament CAN Amend FRs + President Must Give Assent <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">1971</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li><strong>Trigger:</strong> Golaknath Case — SC said Parliament CANNOT amend Fundamental Rights</li>
+          <li><strong>Parliament's reaction:</strong> 24th Amendment declared Parliament HAS power to amend any FR</li>
+          <li>Made it <strong>mandatory for President to give assent</strong> to Constitutional Amendment Bills — no veto power (cannot return, withhold, or pocket)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">25th</div>
+        <div>
+          <div class="amend-title">Article 31C — DPSP Shield</div>
+          <div class="amend-year">1971</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>Article 31C</strong></li>
+          <li>Implementing DPSPs of Art 39(B) & 39(C) shall NOT be violative of Art 14, 19, and 31</li>
+          <li>Also said judiciary cannot review — but Kesavananda Bharati Case (1973) struck down this judicial review bar</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">26th</div>
+        <div>
+          <div class="amend-title">Privy Purse Abolished <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">1971 | Indira Gandhi</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li><strong>Privy Purse</strong> = annual payment given to princely state rulers to convince them to join India (Sardar Patel's deal)</li>
+          <li>Indira Gandhi abolished this payment system in 1971</li>
+          <li>⚠️ TRAP: NTPC had a question where the answer "Privy Purse" was placed under 19th Amendment — WRONG! It was the 26th Amendment!</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">35th & 36th</div>
+        <div>
+          <div class="amend-title">Sikkim — From Guest to Full Member <span class="tag tag-gold">⭐ Important</span></div>
+          <div class="amend-year">35th: 1974 | 36th: 1975</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li><strong>35th Amendment (1974):</strong> Sikkim given status of <strong>Associate State</strong> (via Article 2A)</li>
+          <li><strong>36th Amendment (1975):</strong> Sikkim made <strong>full-fledged state</strong>, Article 2A removed</li>
+          <li>Earlier ruled by the <strong>Chogyaal dynasty</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">42nd</div>
+        <div>
+          <div class="amend-title">"Mini Constitution" <span class="tag tag-fire">🔥 Must Know — Biggest Amendment</span></div>
+          <div class="amend-year">1976 | Indira Gandhi (Emergency Era)</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Emergency declared in 1975 (grounds: internal disturbance), President = Fakhruddin Ali Ahmed</li>
+          <li><strong>Preamble:</strong> Added 3 words — <span class="teal-h">SOCIALIST, SECULAR, INTEGRITY</span></li>
+          <li><strong>4 new DPSPs added:</strong> Art 39F (children's protection), 39A (free legal aid), 43A (worker participation in industry mgmt), 48A (environment protection)</li>
+          <li><strong>Fundamental Duties</strong> added — Part IVA, Article 51A (earlier NO fundamental duties existed)</li>
+          <li>Made President bound by Cabinet advice (no power to return advice)</li>
+          <li>Provided for <strong>Administrative Tribunals</strong> — Part XIV-A added</li>
+          <li>Transferred 5 subjects: <strong>Education, Forest, Weights & Measures, Justice Admin, Wild Animals</strong> from State List → Concurrent List</li>
+          <li>Union List: 97 → <strong>100</strong> | State List: 66 → <strong>61</strong> | Concurrent: 47 → <strong>52</strong></li>
+          <li>Extended 42nd's DPSP shield from only Art 39B/C to <strong>ALL DPSPs</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">44th</div>
+        <div>
+          <div class="amend-title">Undoing the Emergency Damage <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">1978 | Janata Government</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li><strong>"Cabinet" word</strong> added to the Constitution for the first time</li>
+          <li>President can now <strong>return Cabinet advice ONCE</strong> (but must accept it the second time)</li>
+          <li><strong>Right to Property</strong> removed from Fundamental Rights (Part III) → moved to <strong>Article 300A</strong> (Part XII) as a mere <em>legal right</em></li>
+          <li>Emergency now requires <strong>Special Majority</strong> (not simple majority)</li>
+          <li><strong>"Internal Disturbance"</strong> replaced by <strong>"Armed Rebellion"</strong> in Art 352 (grounds for National Emergency)</li>
+          <li>Restored fundamental rights that were curtailed during Emergency</li>
+          <li>Note: Art 300A legal rights → writs issued by High Court (HC has wider jurisdiction than SC on this)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">52nd</div>
+        <div>
+          <div class="amend-title">Anti-Defection Law — 10th Schedule <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">1985</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>10th Schedule</strong> — Anti-Defection Law</li>
+          <li>Defection = leaving your party to join another</li>
+          <li><strong>Independent member</strong> joining any party = disqualified</li>
+          <li><strong>Nominated member</strong> (Rajya Sabha) joining any party after 6 months = disqualified</li>
+          <li><strong>Exception (91st Amend):</strong> If ≥ 2/3rd of party members leave together = called MERGER (not split), defection doesn't apply</li>
+          <li>Disqualification decided by <strong>Presiding Officer</strong> (Speaker for LS, Chairman for RS)</li>
+          <li>Presiding Officer's decision is subject to <strong>judicial review</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">56th</div>
+        <div>
+          <div class="amend-title">Goa becomes Full State</div>
+          <div class="amend-year">1987</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Goa granted full statehood (was UT since 12th Amendment, 1962)</li>
+          <li>Daman & Diu remained a separate UT</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">61st</div>
+        <div>
+          <div class="amend-title">Voting Age 21 → 18 <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">1988</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Reduced <strong>voting age from 21 to 18</strong></li>
+          <li>After this, Election Commission of India became a <strong>multi-member body</strong> for the first time</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">65th</div>
+        <div>
+          <div class="amend-title">SC/ST Commission becomes Multi-Member</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Earlier: Single special officer for SC/ST</li>
+          <li>65th: Converted into <strong>multi-member National Commission for SC/ST</strong></li>
+          <li>⚠️ Don't confuse with 89th: 89th came later and SPLIT this into two separate commissions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">69th</div>
+        <div>
+          <div class="amend-title">Delhi = National Capital Territory <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">1991</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Delhi became <strong>National Capital Territory (NCT)</strong> with Legislative Assembly</li>
+          <li>Added <strong>Article 239AA & 239AB</strong></li>
+          <li>Only 3 UTs with Legislature: <span class="teal-h">Delhi, Puducherry, Jammu & Kashmir</span></li>
+          <li>Union can make laws on <strong>Land, Police, Public Order</strong> for Delhi (even though these are State List subjects)</li>
+          <li>Delhi's Council of Ministers capped at <strong>10%</strong> of Legislative Assembly (by 69th Amend, not 91st)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">71st</div>
+        <div>
+          <div class="amend-title">Konkani, Nepali, Manipuri added to 8th Schedule</div>
+          <div class="amend-year">1992</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>Konkani, Nepali, Manipuri</strong> (KNM) to 8th Schedule</li>
+          <li>Memory: "KoNeMa joined the schedule in 1992"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">73rd & 74th</div>
+        <div>
+          <div class="amend-title">Panchayati Raj & Municipalities <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">1992</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li><strong>73rd:</strong> Added Part IX (Art 243 to 243O) + 11th Schedule (29 subjects) — Panchayati Raj (three-tier system mandatory)</li>
+          <li><strong>74th:</strong> Added Part IXA (Art 243P to 243ZG) + 12th Schedule — Municipalities (Urban Local Bodies)</li>
+          <li>Women get <strong>1/3 reservation</strong> in Panchayat & Nagarpalika</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">86th</div>
+        <div>
+          <div class="amend-title">Right to Education — Article 21A <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">2002</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>Article 21A</strong> — Free & Compulsory Education for children 6-14 years = Fundamental Right</li>
+          <li>Added duty in <strong>Article 51A</strong> for parents/guardians to educate their children</li>
+          <li>Changed <strong>Article 45 (DPSP)</strong>: Earlier it had right to education → now it covers early childhood care for 0-6 years</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">89th</div>
+        <div>
+          <div class="amend-title">SC & ST Commissions Separated</div>
+          <div class="amend-year">2003</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Split the combined SC/ST commission into two:</li>
+          <li><strong>Article 338:</strong> National Commission for Scheduled Castes (also looks after Anglo-Indians)</li>
+          <li><strong>Article 338A:</strong> National Commission for Scheduled Tribes</li>
+          <li>OBC Commission was statutory (not constitutional) — got constitutional status via 102nd Amendment (2018) → Article 338B</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">91st</div>
+        <div>
+          <div class="amend-title">Cabinet Size Capped at 15% <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">2003</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>Art 75(1A):</strong> Council of Ministers at Centre cannot exceed <strong>15% of Lok Sabha</strong></li>
+          <li>Added <strong>Art 164(1A):</strong> State Council of Ministers cannot exceed 15% of State Legislative Assembly (min 12 ministers)</li>
+          <li>Delhi exception: 10% cap (via 69th Amendment)</li>
+          <li>Also added Art 75(1B): Member disqualified for defection also disqualified from becoming a Minister</li>
+          <li>Merger exception: if ≥ 2/3 members leave a party together = MERGER, not defection</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">92nd</div>
+        <div>
+          <div class="amend-title">Bodo, Dogri, Maithili, Santhali added to 8th Schedule <span class="tag tag-gold">⭐ Important</span></div>
+          <div class="amend-year">2003</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>Bodo, Dogri, Maithili, Santhali</strong> to 8th Schedule</li>
+          <li>Memory: "BDMS joined in 2003"</li>
+          <li>8th Schedule now has 22 languages total (original 14 + 8 added via 21st, 71st, 92nd)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">93rd</div>
+        <div>
+          <div class="amend-title">Reservation in Private Educational Institutions</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Provided for <strong>reservation in private unaided educational institutions</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">95th</div>
+        <div>
+          <div class="amend-title">SC/ST + Anglo-Indian Reservation Extended</div>
+          <div class="amend-year">2009</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Extended SC/ST seat reservation in Lok Sabha (Art 330) and Legislative Assemblies (Art 332) for 10 more years</li>
+          <li>Also extended Anglo-Indian nomination for 10 years</li>
+          <li>In 2019: SC/ST reservation extended again BUT Anglo-Indian nomination ENDED (104th Amendment)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">96th</div>
+        <div>
+          <div class="amend-title">Oriya → Odia (Name Change Only!) <span class="tag tag-fire">🔥 Trap!</span></div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Changed name spelling from "Oriya" to "<strong>Odia</strong>" in 8th Schedule</li>
+          <li>⚠️ NO new language was added — only spelling change!</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">97th</div>
+        <div>
+          <div class="amend-title">Cooperative Societies — Constitutional Status <span class="tag tag-gold">⭐ Important</span></div>
+          <div class="amend-year">2012</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Added <strong>Part IXB</strong> (Art 243ZH to 243ZT) — deals with Cooperative Societies</li>
+          <li>Added right to form cooperative society in <strong>Art 19(1)(c)</strong></li>
+          <li>Added <strong>Art 43B</strong> (DPSP): State shall promote cooperative societies</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">99th</div>
+        <div>
+          <div class="amend-title">NJAC — Declared Unconstitutional! <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">2014 (declared unconstitutional 2015)</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Replaced <strong>Collegium System</strong> with <strong>NJAC (National Judicial Appointments Commission)</strong></li>
+          <li>Collegium System: CJI + 4 senior judges recommend judges to President</li>
+          <li>Supreme Court in the <strong>Four Judges Case</strong> declared 99th Amendment <strong>unconstitutional</strong></li>
+          <li>Collegium System was <strong>restored</strong></li>
+          <li>No woman has been CJI till date</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">100th</div>
+        <div>
+          <div class="amend-title">Land Exchange with Bangladesh <span class="tag tag-gold">⭐ Important</span></div>
+          <div class="amend-year">2015</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Exchange of <strong>enclave territories with Bangladesh</strong> under Land Boundary Agreement</li>
+          <li>Similar to 9th Amendment (Nehru-Noon/Berubari) — giving territory requires a constitutional amendment (Berubari case principle)</li>
+          <li>Taking territory = simple majority (Art 4). Giving territory = amendment needed</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">101st</div>
+        <div>
+          <div class="amend-title">GST — Goods & Services Tax <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">2016</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Introduced <strong>GST</strong> — required Special Majority + ratification from at least half of states (14 states)</li>
+          <li>Why state ratification? GST changed the states' share of taxes — federal structure affected</li>
+          <li>State ratification requires only <strong>simple majority</strong> (not special)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">102nd</div>
+        <div>
+          <div class="amend-title">OBC Commission gets Constitutional Status</div>
+          <div class="amend-year">2018</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>OBC Commission was statutory (by law) — now got constitutional status</li>
+          <li><strong>Article 338B</strong>: National Commission for Backward Classes</li>
+          <li>Order: SC (338) → ST (338A) → OBC (338B)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">103rd</div>
+        <div>
+          <div class="amend-title">EWS — 10% Reservation <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">2019</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Provided <strong>10% reservation for Economically Weaker Sections (EWS)</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">104th</div>
+        <div>
+          <div class="amend-title">Anglo-Indian Nomination Ended <span class="tag tag-gold">⭐ Important</span></div>
+          <div class="amend-year">2019</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Ended nomination of Anglo-Indians in Lok Sabha (Art 331 — 2 members) and State Assemblies (Art 333 — 1 member)</li>
+          <li>SC/ST reservation in Lok Sabha & Assemblies extended for 10 more years (till 2030)</li>
+          <li>Anglo-Indian nomination had been extended every 10 years since independence — now permanently ended</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">105th</div>
+        <div>
+          <div class="amend-title">States can maintain own OBC Lists</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Restored power of <strong>state governments to identify and maintain their own OBC lists</strong> (socially and educationally backward classes)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="amend-card">
+      <div class="amend-header">
+        <div class="amend-num">106th</div>
+        <div>
+          <div class="amend-title">33% Women Reservation — Nari Shakti Vandan <span class="tag tag-fire">🔥 Must Know</span></div>
+          <div class="amend-year">2023</div>
+        </div>
+      </div>
+      <div class="amend-body">
+        <ul>
+          <li>Reserved <strong>33% seats for women in Lok Sabha and State Legislative Assemblies</strong></li>
+          <li>⚠️ NOT in Rajya Sabha or Vidhan Parishad</li>
+          <li>⚠️ NOT yet implemented — will be implemented after next Census + Delimitation Commission</li>
+          <li>Currently women have reservation only in <strong>Panchayat & Nagarpalika</strong> (1/3 = 33.3%)</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- amend-grid -->
+
+  <!-- 8th SCHEDULE LANGUAGES -->
+  <div class="section-header">
+    <span class="section-icon">🗣️</span>
+    <h2>8th Schedule Languages — Addition Timeline</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Original 14 → Now 22 Languages (8 added)</div>
+    <div class="lang-timeline">
+      <div class="lang-item">
+        <span class="lang-amend">Original</span>
+        <span class="lang-langs">14 languages when Constitution was made</span>
+      </div>
+      <div class="lang-item">
+        <span class="lang-amend">21st</span>
+        <span class="lang-langs"><strong>Sindhi</strong> — First language added to 8th Schedule</span>
+      </div>
+      <div class="lang-item">
+        <span class="lang-amend">71st (1992)</span>
+        <span class="lang-langs"><strong>Konkani, Nepali, Manipuri</strong> (KNM = Ko-Ne-Ma)</span>
+      </div>
+      <div class="lang-item">
+        <span class="lang-amend">92nd (2003)</span>
+        <span class="lang-langs"><strong>Bodo, Dogri, Maithili, Santhali</strong> (BDMS)</span>
+      </div>
+      <div class="lang-item">
+        <span class="lang-amend">96th</span>
+        <span class="lang-langs">Only spelling changed: Oriya → <strong>Odia</strong>. No new language!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT CONNECTIONS -->
+  <div class="section-header">
+    <span class="section-icon">🔗</span>
+    <h2>Concept Connections</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="conn-box">Golaknath Case (SC says FR can't be amended) <span class="conn-arrow">→</span> Parliament's reaction = <strong>24th Amendment</strong> (Parliament CAN amend FRs)
+  </div>
+  <div class="conn-box">Champakam Durai Rajan Case (Art 15 violated by reservation) <span class="conn-arrow">→</span> <strong>1st Amendment</strong> adds Art 15(4) to save reservation</div>
+  <div class="conn-box">Nehru-Noon Agreement (give Berubari to Pakistan) <span class="conn-arrow">→</span> Berubari Case (SC says need amendment to give territory) <span class="conn-arrow">→</span> <strong>9th Amendment</strong></div>
+  <div class="conn-box">Big landlords challenge land reform in courts <span class="conn-arrow">→</span> <strong>1st Amendment</strong> creates 9th Schedule (laws shielded from review)</div>
+  <div class="conn-box">Emergency 1975 (42nd Amendment causes damage) <span class="conn-arrow">→</span> <strong>44th Amendment</strong> undoes it (restores FRs, cabinet word, armed rebellion, special majority for emergency)</div>
+  <div class="conn-box">Collegium system (judges appoint judges) <span class="conn-arrow">→</span> <strong>99th Amendment</strong> tries to replace with NJAC <span class="conn-arrow">→</span> Four Judges Case strikes it down <span class="conn-arrow">→</span> Collegium restored</div>
+  <div class="conn-box">Nehru-Noon Agreement / 9th Amend (give Berubari) <span class="conn-arrow">→</span> Same principle applies to <strong>100th Amendment</strong> (land exchange with Bangladesh)</div>
+
+</div><!-- container -->
+</div><!-- layer 1 -->
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LAYER 7: EXAM TRAPS (shown early for importance) -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="l7" class="layer">
+<div class="container">
+  <div class="section-header">
+    <span class="section-icon">⚠️</span>
+    <h2>Exam Traps — What Students Always Get Wrong</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 1: Privy Purse vs Election Tribunals</div>
+    <p><strong>19th Amendment (1966)</strong> abolished Election Tribunals — NOT Privy Purse!</p>
+    <p><strong>26th Amendment (1971)</strong> abolished Privy Purse — NOT 19th!</p>
+    <p>📌 NTPC exam had a question where Privy Purse was given as an option for 19th Amendment. Many fell for it.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 2: Goa's Amendment History</div>
+    <ul>
+      <li>12th Amendment (1962) → Goa incorporated as UT</li>
+      <li>56th Amendment (1987) → Goa became full State</li>
+      <li>Daman & Diu remained a separate UT (now merged with Dadra & Nagar Haveli)</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 3: SC/ST Commission — 65th vs 89th</div>
+    <ul>
+      <li>65th Amendment → Single officer CONVERTED to multi-member commission</li>
+      <li>89th Amendment (2003) → The one commission SPLIT into TWO: 338 (SC) and 338A (ST)</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 4: Simple vs Special Majority Confusion</div>
+    <ul>
+      <li>Simple majority = more than 50% of members present & voting (normal bills)</li>
+      <li>Special majority = majority of TOTAL membership AND 2/3 of present & voting (whichever is higher)</li>
+      <li>Simple majority provisions are NOT counted as amendments under Article 368</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 5: Joint Sitting — Which Bills Are Excluded?</div>
+    <ul>
+      <li>Joint Sitting (Art 108, borrowed from Australia) is NOT allowed for:</li>
+      <li>1. Constitutional Amendment Bills</li>
+      <li>2. Money Bills</li>
+      <li>These are the two exceptions — know both!</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 6: 96th Amendment — No New Language!</div>
+    <ul>
+      <li>96th Amendment only changed "Oriya" → "Odia" (spelling only)</li>
+      <li>No new language was added by the 96th Amendment</li>
+      <li>8th Schedule has 22 languages (additions by 21st, 71st, 92nd)</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 7: 106th Amendment (Women's Reservation) — NOT YET ACTIVE</div>
+    <ul>
+      <li>106th Amendment reserved 33% for women in LS & State Assemblies</li>
+      <li>NOT in Rajya Sabha or Vidhan Parishad</li>
+      <li>Will be implemented ONLY AFTER: Census + Delimitation Commission</li>
+      <li>Currently women have reservation ONLY in Panchayat & Nagarpalika (1/3)</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 8: 99th Amendment — NJAC Declared Unconstitutional</div>
+    <ul>
+      <li>99th Amendment created NJAC to replace collegium system</li>
+      <li>Supreme Court (Four Judges Case) struck it down — unconstitutional</li>
+      <li>Collegium system was RESTORED (CJI + 4 senior judges recommend to President)</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 9: Which Amendment Made President's Assent Mandatory?</div>
+    <ul>
+      <li>Answer: 24th Amendment — NOT 42nd!</li>
+      <li>42nd made President bound by Cabinet advice</li>
+      <li>44th allowed President to return Cabinet advice ONCE</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 10: "Internal Disturbance" vs "Armed Rebellion"</div>
+    <ul>
+      <li>Original Art 352: "War, External Aggression, Internal Disturbance"</li>
+      <li>44th Amendment: "Internal Disturbance" REPLACED by "Armed Rebellion"</li>
+      <li>The 42nd Amendment had Internal Disturbance — Indira used it to justify Emergency</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 11: Right to Property — Article Number</div>
+    <ul>
+      <li>Right to Property was a Fundamental Right under Art 31 (Part III)</li>
+      <li>44th Amendment (1978) removed it from Part III</li>
+      <li>Now it's a Legal Right under Art 300A (Part XII)</li>
+      <li>Writs for legal rights issued by HIGH COURT (not SC) — HC has wider jurisdiction here</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 12: Sikkim — 35th vs 36th</div>
+    <ul>
+      <li>35th Amendment (1974): Sikkim = Associate State (Article 2A added)</li>
+      <li>36th Amendment (1975): Sikkim = Full State (Article 2A REMOVED)</li>
+      <li>Ruled by Chogyaal dynasty before joining India</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 13: Delhi's Council of Ministers Cap</div>
+    <ul>
+      <li>All states: 15% of Legislative Assembly (91st Amendment)</li>
+      <li>Delhi: 10% of Delhi Assembly (69th Amendment — different amendment!)</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠️ TRAP 14: Wakf Amendment ≠ Constitutional Amendment</div>
+    <ul>
+      <li>Wakf Amendment Act (Umeed Act 2025) is NOT a Constitutional Amendment</li>
+      <li>Don't call it 107th Constitutional Amendment</li>
+      <li>It replaced the Wakf Act 1995 — it's a regular parliamentary act</li>
+    </ul>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LAYER 2: HIGH YIELD -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="l2" class="layer">
+<div class="container">
+  <div class="section-header">
+    <span class="section-icon">⚡</span>
+    <h2>High-Yield Revision Notes</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Procedure Essentials</div>
+    <div class="hy-row"><span class="hy-num">Art 368</span><span class="hy-text">Amendment procedure. <strong>Part XX.</strong> Borrowed from <strong>South Africa</strong>. KC Wheare: "Vice but rarely found"</span></div>
+    <div class="hy-row"><span class="hy-num">Types</span><span class="hy-text">Under Art 368: <strong>(1) Special Majority</strong> | <strong>(2) Special Majority + ≥50% State Ratification</strong>. Simple majority = flexible, NOT Art 368</span></div>
+    <div class="hy-row"><span class="hy-num">S.M.</span><span class="hy-text">Special Majority = <strong>majority of total membership</strong> AND <strong>2/3 of present & voting</strong> — whichever is higher</span></div>
+    <div class="hy-row"><span class="hy-num">States</span><span class="hy-text">State ratification needed for: SC/HC, President's election, 7th Schedule, Art 368 itself, state representation in Parliament. Only <strong>simple majority</strong> needed in states</span></div>
+    <div class="hy-row"><span class="hy-num">No JS</span><span class="hy-text">Joint Sitting <strong>NOT allowed</strong> for Amendment Bills or Money Bills. Joint Sitting = Art 108, from Australia</span></div>
+    <div class="hy-row"><span class="hy-num">Assent</span><span class="hy-text">President <strong>MUST give assent</strong> — no veto. Made mandatory by <strong>24th Amendment</strong></span></div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="card-title">Amendment Quick Reference</div>
+    <div class="hy-row"><span class="hy-num">1st (1951)</span><span class="hy-text"><strong>9th Schedule</strong> added. Art 15(4) reservation clause. Art 19(3)/(6) restrictions. Champakam case trigger.</span></div>
+    <div class="hy-row"><span class="hy-num">7th (1956)</span><span class="hy-text">Removed A/B/C/D state groups. Part VII deleted. <strong>14 states, 6 UTs</strong>. Common HC & Governor possible.</span></div>
+    <div class="hy-row"><span class="hy-num">9th (1960)</span><span class="hy-text">Nehru-Noon Agreement. <strong>Berubari Union → Pakistan</strong>. Berubari Case: need amendment to give territory.</span></div>
+    <div class="hy-row"><span class="hy-num">12th (1962)</span><span class="hy-text">Goa, Daman & Diu as UT. Operation Vijay (1961). Portuguese = first to come, last to go.</span></div>
+    <div class="hy-row"><span class="hy-num">19th (1966)</span><span class="hy-text"><strong>Election Tribunals abolished.</strong> NOT Privy Purse! (NTPC trap)</span></div>
+    <div class="hy-row"><span class="hy-num">21st</span><span class="hy-text"><strong>Sindhi</strong> → 8th Schedule. First language added after original 14.</span></div>
+    <div class="hy-row"><span class="hy-num">24th (1971)</span><span class="hy-text">Parliament CAN amend FRs (reply to Golaknath). President <strong>MUST give assent</strong>.</span></div>
+    <div class="hy-row"><span class="hy-num">26th (1971)</span><span class="hy-text"><strong>Privy Purse abolished</strong>. Indira Gandhi. Princely states lost annual payments.</span></div>
+    <div class="hy-row"><span class="hy-num">42nd (1976)</span><span class="hy-text"><strong>Mini Constitution.</strong> Preamble: Socialist, Secular, Integrity. Fundamental Duties (51A). 4 DPSPs. 5 subjects State→Concurrent. Lists: Union 100, State 61, Concurrent 52.</span></div>
+    <div class="hy-row"><span class="hy-num">44th (1978)</span><span class="hy-text">"Cabinet" word added. President can return advice ONCE. Right to Property → Art 300A (legal right). <strong>Armed Rebellion</strong> replaces Internal Disturbance. Emergency needs special majority.</span></div>
+    <div class="hy-row"><span class="hy-num">52nd (1985)</span><span class="hy-text"><strong>10th Schedule</strong> = Anti-Defection Law. Merger exception: 2/3 members leave = merger, not defection.</span></div>
+    <div class="hy-row"><span class="hy-num">61st (1988)</span><span class="hy-text">Voting age <strong>21 → 18</strong>.</span></div>
+    <div class="hy-row"><span class="hy-num">69th (1991)</span><span class="hy-text">Delhi = NCT. Art 239AA/239AB. Union controls land/police/public order in Delhi. Cabinet: 10%.</span></div>
+    <div class="hy-row"><span class="hy-num">71st (1992)</span><span class="hy-text"><strong>Konkani, Nepali, Manipuri</strong> → 8th Schedule.</span></div>
+    <div class="hy-row"><span class="hy-num">73rd/74th</span><span class="hy-text">Panchayati Raj (Part IX, 11th Schedule) + Municipalities (Part IXA, 12th Schedule). Women: 1/3 reservation.</span></div>
+    <div class="hy-row"><span class="hy-num">86th (2002)</span><span class="hy-text">Art <strong>21A</strong>: Education FR for 6-14 yrs. Art 51A duty for parents. Art 45 DPSP: 0-6 yr childhood care.</span></div>
+    <div class="hy-row"><span class="hy-num">89th (2003)</span><span class="hy-text">SC Commission (338) & ST Commission (338A) separated.</span></div>
+    <div class="hy-row"><span class="hy-num">91st (2003)</span><span class="hy-text">Cabinet ≤ 15% of LS/State Assembly. Min 12 ministers in state. Defection = disqualified from ministry.</span></div>
+    <div class="hy-row"><span class="hy-num">92nd (2003)</span><span class="hy-text"><strong>Bodo, Dogri, Maithili, Santhali</strong> → 8th Schedule. Total: 22 languages.</span></div>
+    <div class="hy-row"><span class="hy-num">96th</span><span class="hy-text">Oriya → <strong>Odia</strong>. Only spelling change, NO new language added.</span></div>
+    <div class="hy-row"><span class="hy-num">99th (2014)</span><span class="hy-text">NJAC created — declared <strong>unconstitutional</strong> by SC (Four Judges Case). Collegium restored.</span></div>
+    <div class="hy-row"><span class="hy-num">100th (2015)</span><span class="hy-text">Land exchange with Bangladesh (enclave territories).</span></div>
+    <div class="hy-row"><span class="hy-num">101st (2016)</span><span class="hy-text"><strong>GST</strong>. Special majority + 14 states ratification.</span></div>
+    <div class="hy-row"><span class="hy-num">102nd (2018)</span><span class="hy-text">OBC Commission (338B) = constitutional status.</span></div>
+    <div class="hy-row"><span class="hy-num">103rd (2019)</span><span class="hy-text"><strong>10% EWS reservation.</strong></span></div>
+    <div class="hy-row"><span class="hy-num">104th (2019)</span><span class="hy-text">Anglo-Indian nomination ENDED (Art 331/333). SC/ST reservation extended till 2030.</span></div>
+    <div class="hy-row"><span class="hy-num">106th (2023)</span><span class="hy-text"><strong>33% Women reservation</strong> in LS & State Assemblies. NOT RS. NOT yet active (needs Census + Delimitation).</span></div>
+  </div>
+
+  <!-- EXAMINER'S FAVOURITE QUESTIONS -->
+  <div class="section-header">
+    <span class="section-icon">🎯</span>
+    <h2>Examiner's Favourite Questions</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="q-box"><div class="q-tag">🔥 CGL Main 2023</div><div class="q-text">Which amendment made the Cabinet's advice binding on the President? → <strong>42nd Amendment</strong> (44th allowed returning it once)</div></div>
+  <div class="q-box"><div class="q-tag">🎯 Frequently Asked</div><div class="q-text">Which amendment added "Socialist, Secular, Integrity" to the Preamble? → <strong>42nd Amendment (1976)</strong></div></div>
+  <div class="q-box"><div class="q-tag">🎯 NTPC Trap Question</div><div class="q-text">What was removed by the 19th Amendment? → <strong>Election Tribunals</strong> (NOT Privy Purse)</div></div>
+  <div class="q-box"><div class="q-tag">🎯 Statement Based</div><div class="q-text">Which amendment created the 9th Schedule? → <strong>1st Amendment (1951)</strong></div></div>
+  <div class="q-box"><div class="q-tag">🎯 Match Following</div><div class="q-text">Anti-Defection Law → <strong>10th Schedule, 52nd Amendment (1985)</strong></div></div>
+  <div class="q-box"><div class="q-tag">🎯 Frequently Asked</div><div class="q-text">Which amendment added Fundamental Duties? → <strong>42nd Amendment</strong> | Article 51A | Part IVA</div></div>
+  <div class="q-box"><div class="q-tag">🎯 Assertion-Reason</div><div class="q-text">A: Right to Property is no longer a Fundamental Right. R: It was removed by the 44th Amendment. → <strong>Both A and R are correct, and R is the correct explanation</strong></div></div>
+  <div class="q-box"><div class="q-tag">🎯 Chronology</div><div class="q-text">Order: Sikkim Associate State (35th, 1974) → Full State (36th, 1975) → Previous Chogyaal dynasty rule</div></div>
+  <div class="q-box"><div class="q-tag">🎯 Frequently Asked</div><div class="q-text">Voting age reduced from 21 to 18 by which amendment? → <strong>61st Amendment (1988)</strong></div></div>
+  <div class="q-box"><div class="q-tag">🎯 Frequently Asked</div><div class="q-text">Which amendment is called "Mini Constitution"? → <strong>42nd Amendment (1976)</strong></div></div>
+  <div class="q-box"><div class="q-tag">🎯 Frequently Asked</div><div class="q-text">How many languages in 8th Schedule? → <strong>22</strong> | Original 14 + Sindhi (21st) + KNM (71st) + BDMS (92nd)</div></div>
+  <div class="q-box"><div class="q-tag">🎯 Trap Question</div><div class="q-text">Which amendment created NJAC? → 99th | But NJAC was declared unconstitutional — Collegium system restored</div></div>
+  <div class="q-box"><div class="q-tag">🎯 Frequently Asked</div><div class="q-text">33% women reservation in Lok Sabha by which amendment? → <strong>106th (2023)</strong> | Not yet implemented</div></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LAYER 3: ULTRA FAST -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="l3" class="layer">
+<div class="container">
+  <div class="section-header">
+    <span class="section-icon">🚀</span>
+    <h2>Ultra-Fast Revision Sheet</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="fast-grid">
+    <div class="fast-cell"><div class="fc-num">1st (1951)</div><div class="fc-text"><strong>9th Schedule</strong> + Art 15(4) + Art 19(3)(6). Land reform shield from courts.</div></div>
+    <div class="fast-cell"><div class="fc-num">5th</div><div class="fc-text">President can set <strong>time limit</strong> for state recommendation on state-related bills.</div></div>
+    <div class="fast-cell"><div class="fc-num">7th (1956)</div><div class="fc-text">Ended A/B/C/D grouping. <strong>14 States + 6 UTs</strong>. Common HC + Common Governor allowed.</div></div>
+    <div class="fast-cell"><div class="fc-num">9th (1960)</div><div class="fc-text">Nehru-Noon: <strong>Berubari → Pakistan</strong>. Need amendment to GIVE territory.</div></div>
+    <div class="fast-cell"><div class="fc-num">10th</div><div class="fc-text"><strong>Dadra & Nagar Haveli</strong> → UT.</div></div>
+    <div class="fast-cell"><div class="fc-num">12th (1962)</div><div class="fc-text"><strong>Goa + Daman & Diu</strong> → UT. Operation Vijay expelled Portuguese (1961).</div></div>
+    <div class="fast-cell"><div class="fc-num">13th (1962)</div><div class="fc-text">Nagaland → <strong>Art 371A</strong> special status.</div></div>
+    <div class="fast-cell"><div class="fc-num">14th</div><div class="fc-text"><strong>Puducherry</strong> → Indian Union. French ruled earlier.</div></div>
+    <div class="fast-cell"><div class="fc-num">15th</div><div class="fc-text">HC judge retirement: <strong>60 → 62 years</strong>. SC = 65.</div></div>
+    <div class="fast-cell"><div class="fc-num">19th (1966)</div><div class="fc-text"><strong>Election Tribunals abolished</strong>. NOT Privy Purse! (NTPC trap)</div></div>
+    <div class="fast-cell"><div class="fc-num">21st</div><div class="fc-text"><strong>Sindhi</strong> → 8th Schedule. First language added.</div></div>
+    <div class="fast-cell"><div class="fc-num">24th (1971)</div><div class="fc-text">Parliament CAN amend FRs (Golaknath reply). President <strong>MUST give assent</strong>.</div></div>
+    <div class="fast-cell"><div class="fc-num">25th (1971)</div><div class="fc-text">Art 31C: DPSP of 39B/C won't violate Art 14, 19, 31.</div></div>
+    <div class="fast-cell"><div class="fc-num">26th (1971)</div><div class="fc-text"><strong>Privy Purse abolished</strong>. Indira Gandhi.</div></div>
+    <div class="fast-cell"><div class="fc-num">35th (1974)</div><div class="fc-text">Sikkim = <strong>Associate State</strong> (Art 2A).</div></div>
+    <div class="fast-cell"><div class="fc-num">36th (1975)</div><div class="fc-text">Sikkim = <strong>Full State</strong>. Art 2A removed.</div></div>
+    <div class="fast-cell"><div class="fc-num">42nd (1976)</div><div class="fc-text"><strong>MINI CONSTITUTION</strong>. Preamble: Socialist+Secular+Integrity. Fundamental Duties (51A). 4 DPSPs. Lists: Union 100, State 61, Concurrent 52.</div></div>
+    <div class="fast-cell"><div class="fc-num">44th (1978)</div><div class="fc-text">"Cabinet" word added. Property → Art 300A. <strong>Armed Rebellion</strong> replaces Internal Disturbance. Emergency needs Special Majority. President returns advice once.</div></div>
+    <div class="fast-cell"><div class="fc-num">52nd (1985)</div><div class="fc-text"><strong>10th Schedule</strong> = Anti-Defection Law.</div></div>
+    <div class="fast-cell"><div class="fc-num">56th (1987)</div><div class="fc-text">Goa = <strong>Full State</strong>.</div></div>
+    <div class="fast-cell"><div class="fc-num">61st (1988)</div><div class="fc-text">Voting age: <strong>21 → 18</strong>.</div></div>
+    <div class="fast-cell"><div class="fc-num">65th</div><div class="fc-text">SC/ST = <strong>multi-member commission</strong> (from single officer).</div></div>
+    <div class="fast-cell"><div class="fc-num">69th (1991)</div><div class="fc-text">Delhi = <strong>NCT</strong>. Art 239AA. Union: Land/Police/Public Order in Delhi. Cabinet: 10%.</div></div>
+    <div class="fast-cell"><div class="fc-num">71st (1992)</div><div class="fc-text"><strong>Konkani, Nepali, Manipuri</strong> → 8th Schedule.</div></div>
+    <div class="fast-cell"><div class="fc-num">73rd/74th</div><div class="fc-text">Panchayati Raj (Part IX, 11th Sch) + Municipalities (Part IXA, 12th Sch). Women 1/3.</div></div>
+    <div class="fast-cell"><div class="fc-num">86th (2002)</div><div class="fc-text">Art <strong>21A</strong> = RTE (6-14 yrs FR). Art 45 = 0-6 yr care.</div></div>
+    <div class="fast-cell"><div class="fc-num">89th (2003)</div><div class="fc-text">SC (338) + ST (338A) — <strong>separated</strong>.</div></div>
+    <div class="fast-cell"><div class="fc-num">91st (2003)</div><div class="fc-text">Cabinet ≤ <strong>15%</strong> of LS/Assembly. Min 12 in states. 2/3 leave = merger.</div></div>
+    <div class="fast-cell"><div class="fc-num">92nd (2003)</div><div class="fc-text"><strong>Bodo, Dogri, Maithili, Santhali</strong> → 8th Schedule. Total = 22.</div></div>
+    <div class="fast-cell"><div class="fc-num">96th</div><div class="fc-text">Oriya → <strong>Odia</strong>. ONLY spelling. No new language!</div></div>
+    <div class="fast-cell"><div class="fc-num">97th (2012)</div><div class="fc-text">Cooperative Societies = Part IXB (243ZH–243ZT). Art 19(1)(c) + Art 43B.</div></div>
+    <div class="fast-cell"><div class="fc-num">99th (2014)</div><div class="fc-text">NJAC created → <strong>struck down</strong> (Four Judges Case). Collegium restored.</div></div>
+    <div class="fast-cell"><div class="fc-num">100th (2015)</div><div class="fc-text">Land exchange with <strong>Bangladesh</strong> (enclaves).</div></div>
+    <div class="fast-cell"><div class="fc-num">101st (2016)</div><div class="fc-text"><strong>GST</strong>. Needed State ratification (federal change).</div></div>
+    <div class="fast-cell"><div class="fc-num">102nd (2018)</div><div class="fc-text">OBC = Art <strong>338B</strong> (constitutional status).</div></div>
+    <div class="fast-cell"><div class="fc-num">103rd (2019)</div><div class="fc-text"><strong>10% EWS</strong> reservation.</div></div>
+    <div class="fast-cell"><div class="fc-num">104th (2019)</div><div class="fc-text">Anglo-Indian nomination <strong>ENDED</strong> (Art 331/333). SC/ST till 2030.</div></div>
+    <div class="fast-cell"><div class="fc-num">105th</div><div class="fc-text">States can maintain own <strong>OBC lists</strong>.</div></div>
+    <div class="fast-cell"><div class="fc-num">106th (2023)</div><div class="fc-text"><strong>33% Women</strong> in LS + State Assemblies. NOT RS. NOT yet active.</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LAYER 4: 30-SECOND SHEET -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="l4" class="layer">
+<div class="container">
+  <div class="section-header">
+    <span class="section-icon">⏱️</span>
+    <h2>30-Second Revision Sheet</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Absolute essentials only. Read once before entering the exam hall.</p>
+  <div class="sec30">
+    <div class="sec30-item"><strong>Art 368 | Part XX | S. Africa</strong> — Amendment procedure. Special Majority = total membership majority + 2/3 present-voting. No Joint Sitting. President MUST give assent (24th).</div>
+    <div class="sec30-item"><strong>1st (1951)</strong> — 9th Schedule. Art 15(4). Land reform shield.</div>
+    <div class="sec30-item"><strong>7th (1956)</strong> — Ended A/B/C/D. 14 States, 6 UTs. Common HC + Governor.</div>
+    <div class="sec30-item"><strong>9th (1960)</strong> — Berubari → Pakistan (Nehru-Noon). Need amendment to GIVE territory.</div>
+    <div class="sec30-item"><strong>12th → 56th</strong> — Goa: UT (1962) → State (1987). Portuguese: last to go. Operation Vijay 1961.</div>
+    <div class="sec30-item"><strong>19th (1966)</strong> — Election Tribunals abolished. NOT Privy Purse! (Privy Purse = 26th)</div>
+    <div class="sec30-item"><strong>24th (1971)</strong> — Parliament CAN amend FRs. President MUST give assent.</div>
+    <div class="sec30-item"><strong>26th (1971)</strong> — Privy Purse abolished by Indira Gandhi.</div>
+    <div class="sec30-item"><strong>42nd (1976) = MINI CONSTITUTION</strong> — Socialist + Secular + Integrity in Preamble. Fundamental Duties (51A). Union 100 / State 61 / Concurrent 52.</div>
+    <div class="sec30-item"><strong>44th (1978)</strong> — "Cabinet" added. Right to Property → Art 300A. Armed Rebellion (not Internal Disturbance). Emergency needs special majority.</div>
+    <div class="sec30-item"><strong>52nd (1985)</strong> — 10th Schedule = Anti-Defection. 2/3 leave = Merger (not defection).</div>
+    <div class="sec30-item"><strong>61st (1988)</strong> — Voting age 21 → 18.</div>
+    <div class="sec30-item"><strong>69th (1991)</strong> — Delhi = NCT. Art 239AA. Union: Land/Police/Public Order. Cabinet 10%.</div>
+    <div class="sec30-item"><strong>73rd/74th (1992)</strong> — Panchayati Raj (Part IX, 11th Sch) + Municipalities (Part IXA, 12th Sch). Women 1/3.</div>
+    <div class="sec30-item"><strong>8th Schedule Languages</strong> — 14 → 22 | Sindhi (21st) | KNM (71st, 1992) | BDMS (92nd, 2003) | Odia = spelling change only (96th)</div>
+    <div class="sec30-item"><strong>86th (2002)</strong> — Art 21A = Right to Education (6-14 yrs). Art 45 → 0-6 yr care.</div>
+    <div class="sec30-item"><strong>89th (2003)</strong> — SC (338) and ST (338A) commissions separated. OBC (338B) = 102nd.</div>
+    <div class="sec30-item"><strong>91st (2003)</strong> — Cabinet max 15% of LS/Assembly. Delhi = 10% (69th).</div>
+    <div class="sec30-item"><strong>99th (2014)</strong> — NJAC → Struck down by SC (Four Judges Case). Collegium restored.</div>
+    <div class="sec30-item"><strong>101st (2016)</strong> — GST. Needed state ratification.</div>
+    <div class="sec30-item"><strong>103rd (2019)</strong> — 10% EWS. | <strong>104th (2019)</strong> — Anglo-Indian nomination ended.</div>
+    <div class="sec30-item"><strong>106th (2023)</strong> — 33% Women in LS + State Assemblies. NOT RS. NOT yet active (awaits Census + Delimitation).</div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LAYER 5: LAST NIGHT SHEET -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="l5" class="layer">
+<div class="container">
+  <div class="last-night">
+    <h3>🌙 Last Night Before Exam — Constitutional Amendments</h3>
+
+    <div class="ln-block">
+      <h4>The Railway Journey (Memory Palace Recall)</h4>
+      <p>NEHRU ERA → INTEGRATION → INDIRA → JANATA REPAIR → DEMOCRACY → GRASSROOTS → MODERN INDIA</p>
+    </div>
+
+    <div class="ln-block">
+      <h4>Art 368 Procedure (Non-Negotiable Facts)</h4>
+      <ul>
+        <li>Source: South Africa | Part XX | KC Wheare: "Vice but rarely found"</li>
+        <li>Initiated in: Either House (NOT state legislature)</li>
+        <li>Special Majority = Total Membership Majority + 2/3 Present & Voting (higher one wins)</li>
+        <li>No Joint Sitting (also no JS for Money Bills) | JS = Art 108 from Australia</li>
+        <li>No President's prior recommendation needed</li>
+        <li>President MUST give assent (24th Amendment — no veto)</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h4>The 5 Most Tested Amendments</h4>
+      <ul>
+        <li><strong>42nd:</strong> Mini Constitution. Preamble (SSI). FDs (51A). Lists (100/61/52). President caged.</li>
+        <li><strong>44th:</strong> Cabinet word. Property → 300A. Armed Rebellion. Special majority for Emergency.</li>
+        <li><strong>1st:</strong> 9th Schedule. Art 15(4). Land reforms.</li>
+        <li><strong>24th:</strong> FR can be amended. President MUST assent.</li>
+        <li><strong>52nd:</strong> 10th Schedule. Anti-Defection. 2/3 = Merger.</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h4>Language Additions to 8th Schedule</h4>
+      <ul>
+        <li>Original: 14 | Now: 22 | Total added: 8</li>
+        <li>21st → Sindhi (first addition)</li>
+        <li>71st (1992) → Konkani, Nepali, Manipuri</li>
+        <li>92nd (2003) → Bodo, Dogri, Maithili, Santhali</li>
+        <li>96th → Oriya renamed Odia (NO new language!)</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h4>Top Exam Traps — Read These Slowly</h4>
+      <ul>
+        <li>19th = Election Tribunals (NOT Privy Purse). Privy Purse = 26th.</li>
+        <li>Goa = UT (12th, 1962) → State (56th, 1987)</li>
+        <li>65th = single officer → commission. 89th = commission split (SC=338, ST=338A)</li>
+        <li>42nd made President bound by Cabinet advice. 44th allowed President to return advice ONCE.</li>
+        <li>99th = NJAC. SC declared it unconstitutional. Collegium restored.</li>
+        <li>106th = 33% women. NOT in RS. NOT yet active.</li>
+        <li>Delhi cabinet = 10% (69th). All others = 15% (91st).</li>
+        <li>Right to Property = Art 300A = Legal Right. Writs by HC (not SC) for legal rights.</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h4>Commission Articles (338, 338A, 338B)</h4>
+      <ul>
+        <li>338 → National Commission for Scheduled Castes (also covers Anglo-Indians)</li>
+        <li>338A → National Commission for Scheduled Tribes</li>
+        <li>338B → National Commission for Backward Classes (102nd Amendment, 2018)</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h4>Latest Critical Facts</h4>
+      <ul>
+        <li>103rd (2019) = 10% EWS reservation</li>
+        <li>104th (2019) = Anglo-Indian nomination ended (Art 331/333). SC/ST extended to 2030.</li>
+        <li>106th (2023) = 33% women in LS + State Assemblies only. Needs Census + Delimitation to activate.</li>
+        <li>Wakf Amendment = NOT a Constitutional Amendment. It's just an Act (don't call it 107th CA).</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LAYER 6: ACTIVE RECALL -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div id="l6" class="layer">
+<div class="container">
+  <div class="section-header">
+    <span class="section-icon">❓</span>
+    <h2>Active Recall — Tap to Reveal Answer</h2>
+    <div class="section-line"></div>
+  </div>
+  <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Tap/click each question to reveal the answer. Test yourself before looking!</p>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q1. From which country did India borrow the Constitutional Amendment procedure?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">South Africa | Article 368 | Part XX</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q2. What is Special Majority? How is it different from Simple Majority?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">Special Majority = (1) Majority of TOTAL membership of House + (2) 2/3 of members present & voting. Whichever number is higher = the threshold. Simple majority = just more than 50% of present & voting.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q3. Name 5 things added by the 42nd Amendment (Mini Constitution).</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">1. Preamble: Socialist, Secular, Integrity | 2. Fundamental Duties (Art 51A, Part IVA) | 3. 4 new DPSPs (39F, 39A, 43A, 48A) | 4. Transferred Education/Forest/etc to Concurrent List | 5. President bound by Cabinet advice | 6. Administrative Tribunals (Part XIV-A)</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q4. What did the 44th Amendment do to 'Right to Property'?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">Removed it from Fundamental Rights (Part III). Made it a Legal Right under Article 300A (Part XII). High Court (not SC) issues writs for legal rights.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">⭐ Q5. What was abolished by the 19th Amendment (1966)?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">ELECTION TRIBUNALS — NOT Privy Purse! Privy Purse was abolished by 26th Amendment (1971).</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">⭐ Q6. What is the 'Merger Exception' in Anti-Defection Law?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">If 2/3 or more members of a political party leave together, it is called a MERGER (not split/defection). Anti-defection law does NOT apply to mergers. (Added by 91st Amendment)</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q7. Which amendment added 'Socialist', 'Secular', and 'Integrity' to the Preamble?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">42nd Amendment (1976) — during Emergency period, President was Fakhruddin Ali Ahmed.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">⭐ Q8. How many languages are in the 8th Schedule? Which amendments added them?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">22 languages. Original = 14. Added by: 21st (Sindhi) + 71st/1992 (Konkani, Nepali, Manipuri) + 92nd/2003 (Bodo, Dogri, Maithili, Santhali). 96th = only Oriya → Odia (spelling change, NO new language).</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q9. What happened to NJAC? Which case? Which amendment?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">99th Amendment created NJAC to replace Collegium System. Supreme Court declared 99th Amendment UNCONSTITUTIONAL in the Four Judges Case. Collegium System was RESTORED.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q10. Fill in: SC Commission = Art ___, ST Commission = Art ___, OBC Commission = Art ___</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">SC = Art 338 | ST = Art 338A | OBC = Art 338B (102nd Amendment, 2018). SC Commission also covers Anglo-Indians.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">⭐ Q11. What does 'Internal Disturbance' have to do with Constitutional Amendments?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">42nd Amendment: Indira Gandhi justified Emergency on grounds of "Internal Disturbance" (Art 352). 44th Amendment (1978) REPLACED "Internal Disturbance" with "Armed Rebellion" to prevent misuse.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">⭐ Q12. Goa was incorporated as UT by which amendment? When did it become a full state?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">12th Amendment (1962) → UT. 56th Amendment (1987) → Full State. Portuguese expelled by Operation Vijay (1961). "Portuguese = first to come, last to go from India."</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q13. Which amendment deals with Panchayati Raj? What part and schedule was added?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">73rd Amendment (1992). Added Part IX (Articles 243 to 243O) and 11th Schedule (29 subjects). Three-tier system mandatory. Women get 1/3 reservation.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">⭐ Q14. What is the ONLY bill type where President is BOUND to give assent?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">Constitutional Amendment Bills (made mandatory by 24th Amendment). For all other bills, President has some veto options. For CA Bills: no return, no withholding, no pocket veto.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q15. 106th Amendment (Women 33%) — what are the 3 key limitations to remember?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">1. NOT in Rajya Sabha or Vidhan Parishad — only Lok Sabha + State Assemblies. 2. NOT yet active/implemented. 3. Will be activated only after next Census AND Delimitation Commission formation.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">➕ Q16. What is the Collegium System? How many judges?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">CJI + 4 senior-most judges of SC recommend judges to President. President is bound by their advice. Emerged from Second Judges Case. No woman has been CJI of India yet.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">⭐ Q17. Which amendment made Delhi a National Capital Territory? What special restrictions apply?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">69th Amendment (1991). Added Art 239AA and 239AB. Delhi gets Legislative Assembly. BUT Union (Centre) can make laws on Land, Police, and Public Order (State List subjects) for Delhi. Delhi Cabinet max = 10% of Assembly.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">🔥 Q18. Which amendment is called "Mini Constitution" and why?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">42nd Amendment (1976). Called Mini Constitution because it made the most changes to the Constitution: changed Preamble, added Fundamental Duties, added DPSPs, shifted subjects to Concurrent List, caged the President, gave power to administrative tribunals, etc.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">⭐ Q19. Reverse Question: The word "Cabinet" appears in the Constitution. Which amendment added it?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">44th Amendment (1978). Before this, the word "Cabinet" did not appear anywhere in the Constitution.</div>
+  </div>
+
+  <div class="recall-q" onclick="toggleAnswer(this)">
+    <div class="recall-question">➕ Q20. What does KC Wheare say about the Indian Constitution's amendment procedure?</div>
+    <div class="tap-hint">Tap to reveal</div>
+    <div class="recall-answer">KC Wheare called the Indian amendment procedure "Vice but rarely found" (meaning rigid but with a flexible element). He also called Indian federalism "Quasi-Federal."</div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function showLayer(id) {
+  document.querySelectorAll('.layer').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const idx = ['l1','l2','l3','l4','l5','l6','l7'].indexOf(id);
+  document.querySelectorAll('.layer-btn')[idx].classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function toggleAnswer(el) {
+  const ans = el.querySelector('.recall-answer');
+  const hint = el.querySelector('.tap-hint');
+  ans.classList.toggle('visible');
+  hint.style.display = ans.classList.contains('visible') ? 'none' : 'block';
+}
+</script>
+
+</body>
+</html>
