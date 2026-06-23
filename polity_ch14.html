@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polity: Constitutional & Non-Constitutional Bodies | SSC CGL Revision</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg: #0a0c10;
+    --bg2: #10131a;
+    --bg3: #151921;
+    --bg4: #1c2130;
+    --border: #252d3f;
+    --border2: #2e3a52;
+    --text: #c8d4e8;
+    --text2: #8fa3c0;
+    --text3: #5a7090;
+    --accent: #4f9cf9;
+    --accent2: #7b5ea7;
+    --gold: #f0c040;
+    --fire: #ff6b35;
+    --green: #3ecf8e;
+    --red: #ff4757;
+    --cyan: #00d4ff;
+    --purple: #a855f7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,12,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .topbar-title { font-size: 13px; font-weight: 600; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+  .topbar-nav { display: flex; gap: 6px; flex-wrap: wrap; }
+  .topbar-nav a {
+    font-size: 11px; font-weight: 600; color: var(--text3);
+    text-decoration: none; padding: 4px 10px; border-radius: 4px;
+    border: 1px solid transparent; transition: all 0.2s;
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .topbar-nav a:hover { color: var(--accent); border-color: var(--accent); background: rgba(79,156,249,0.07); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 60px 24px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-eyebrow { font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; }
+  .hero-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: #e8f0ff;
+    margin-bottom: 16px;
+  }
+  .hero-title span { color: var(--accent); }
+  .hero-sub { color: var(--text2); font-size: 16px; max-width: 680px; }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+  .hero-tag {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 20px; border: 1px solid;
+  }
+  .tag-fire { color: var(--fire); border-color: rgba(255,107,53,0.35); background: rgba(255,107,53,0.07); }
+  .tag-gold { color: var(--gold); border-color: rgba(240,192,64,0.35); background: rgba(240,192,64,0.07); }
+  .tag-green { color: var(--green); border-color: rgba(62,207,142,0.35); background: rgba(62,207,142,0.07); }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+  section { margin-bottom: 64px; }
+  .section-label {
+    font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.15em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  h2 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 28px; font-weight: 600; color: #dce8ff;
+    margin-bottom: 20px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 15px; font-weight: 600; color: var(--accent);
+    margin: 24px 0 10px; letter-spacing: 0.04em; text-transform: uppercase;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border2); }
+  .card-title {
+    font-size: 16px; font-weight: 700; color: #dce8ff;
+    margin-bottom: 4px; display: flex; align-items: center; gap: 10px;
+  }
+  .card-art { font-size: 22px; }
+  .card-sub { font-size: 13px; color: var(--text3); margin-bottom: 12px; font-family: 'JetBrains Mono', monospace; }
+  .card p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
+  .card p:last-child { margin-bottom: 0; }
+
+  /* ── TABLE ── */
+  .tbl-wrap { overflow-x: auto; margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    background: var(--bg4); color: var(--accent);
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border2);
+  }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text2); }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: rgba(79,156,249,0.04); }
+  td strong { color: var(--text); }
+  td .tag-fire, td .tag-gold, td .tag-green { font-size: 10px; padding: 2px 8px; }
+
+  /* ── MEMORY PALACE ── */
+  .palace {
+    background: linear-gradient(135deg, #0e1220 0%, #131826 100%);
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--purple);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .palace-title { font-size: 14px; font-weight: 700; color: var(--purple); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .palace p { font-size: 14px; color: var(--text2); margin-bottom: 8px; line-height: 1.8; }
+  .palace-step { display: flex; gap: 12px; margin-bottom: 12px; }
+  .palace-num { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--purple); min-width: 28px; margin-top: 2px; }
+  .palace-text { font-size: 14px; color: var(--text2); }
+
+  /* ── HOOKS ── */
+  .hook {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .hook-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
+  .hook p { font-size: 14px; color: var(--text2); }
+
+  /* ── TRAP BOX ── */
+  .trap {
+    background: rgba(255,71,87,0.05);
+    border: 1px solid rgba(255,71,87,0.25);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .trap-header { font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .trap p, .trap li { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
+  .trap ul { padding-left: 20px; }
+  .trap li::marker { color: var(--red); }
+
+  /* ── EXAM Q ── */
+  .examq {
+    background: rgba(79,156,249,0.05);
+    border: 1px solid rgba(79,156,249,0.2);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .examq-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+  .examq p { font-size: 14px; color: var(--text2); margin-bottom: 6px; }
+  .examq p:last-child { margin-bottom: 0; }
+
+  /* ── RECALL ── */
+  .recall-q {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .recall-q .q-text { font-size: 14px; color: var(--text); font-weight: 500; }
+  .recall-q .a-text {
+    font-size: 14px; color: var(--green);
+    margin-top: 8px; display: none;
+    padding-top: 8px; border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .recall-q.open .a-text { display: block; }
+  .recall-q .toggle-hint { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+  /* ── PRIORITY BADGE ── */
+  .must { color: var(--fire); font-weight: 700; }
+  .imp { color: var(--gold); font-weight: 600; }
+  .good { color: var(--green); }
+
+  /* ── QUICK FACTS ── */
+  .qf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .qf {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .qf-key { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .qf-val { font-size: 15px; font-weight: 600; color: #dce8ff; }
+  .qf-val span { font-size: 12px; color: var(--text2); font-weight: 400; }
+
+  /* ── LAST NIGHT SHEET ── */
+  .last-night {
+    background: linear-gradient(135deg, #0d1520, #111828);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 28px;
+  }
+  .last-night h3 { color: var(--cyan); margin-top: 16px; margin-bottom: 8px; }
+  .last-night ul { list-style: none; padding: 0; }
+  .last-night li { font-size: 14px; color: var(--text2); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; gap: 10px; }
+  .last-night li::before { content: '▸'; color: var(--accent); flex-shrink: 0; }
+  .last-night li strong { color: var(--text); }
+
+  /* ── LAYERS ── */
+  .layers { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+  .layer-btn {
+    font-size: 12px; font-weight: 600; padding: 6px 16px; border-radius: 6px;
+    border: 1px solid var(--border); background: var(--bg3); color: var(--text2);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .layer-btn.active, .layer-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .layer-content { display: none; }
+  .layer-content.active { display: block; }
+
+  /* ── MONO CODE ── */
+  code { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--cyan); background: rgba(0,212,255,0.08); padding: 1px 6px; border-radius: 3px; }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border); margin: 32px 0; }
+
+  /* ── BODY TYPE SCALE ── */
+  p { font-size: 14px; color: var(--text2); margin-bottom: 8px; }
+  li { font-size: 14px; color: var(--text2); }
+  ul, ol { padding-left: 20px; margin-bottom: 12px; }
+  ul li { margin-bottom: 4px; }
+  strong { color: var(--text); font-weight: 600; }
+  em { color: var(--gold); font-style: normal; font-weight: 600; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .topbar-nav { display: none; }
+    .qf-grid { grid-template-columns: 1fr 1fr; }
+    .hero { padding: 40px 16px 28px; }
+    .page { padding: 28px 16px 60px; }
+  }
+
+  /* ── CONNECTIONS ── */
+  .conn { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 14px; color: var(--text2); }
+  .conn-arrow { color: var(--accent); font-weight: 700; flex-shrink: 0; margin-top: 2px; font-family: 'JetBrains Mono'; font-size: 12px; }
+
+  /* ── FLASH STRIP ── */
+  .flash { background: rgba(240,192,64,0.06); border: 1px solid rgba(240,192,64,0.2); border-radius: 6px; padding: 10px 16px; margin-bottom: 10px; font-size: 13px; color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topbar">
+  <div class="topbar-title">⚡ Polity — Bodies</div>
+  <div class="topbar-nav">
+    <a href="#palace">🧠 Palace</a>
+    <a href="#notes">📋 Full Notes</a>
+    <a href="#traps">⚠️ Traps</a>
+    <a href="#examq">🎯 Exam Q</a>
+    <a href="#recall">🔁 Recall</a>
+    <a href="#sheets">📄 Sheets</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">SSC CGL · Polity · Chapter</div>
+  <h1 class="hero-title">Constitutional &amp; <span>Non-Constitutional</span> Bodies</h1>
+  <p class="hero-sub">Everything you need to never confuse an AG with an AG again. Built for 20–100 revisions. Optimized to survive your brain at 11 PM before the exam.</p>
+  <div class="hero-tags">
+    <span class="hero-tag tag-fire">🔥 High Yield</span>
+    <span class="hero-tag tag-gold">⭐ SSC CGL Core</span>
+    <span class="hero-tag tag-green">✓ All Articles Covered</span>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- BIG PICTURE -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="bigpicture">
+  <div class="section-label">Big Picture</div>
+  <h2>What This Chapter Is Really About</h2>
+
+  <p>India's governance runs on <strong>three kinds of bodies</strong>. The Constitution either created them directly, Parliament gave them birth through Acts, or the government just issued an order. That simple 3-way split decides: <em>how they're created, how hard they are to kill, and how independent they are.</em></p>
+
+  <div class="qf-grid" style="margin-top:20px">
+    <div class="qf">
+      <div class="qf-key">Constitutional Bodies</div>
+      <div class="qf-val">Article in Constitution <span>(hardest to remove)</span></div>
+    </div>
+    <div class="qf">
+      <div class="qf-key">Statutory Bodies</div>
+      <div class="qf-val">Created by Parliament's Act <span>(moderately protected)</span></div>
+    </div>
+    <div class="qf">
+      <div class="qf-key">Executive Bodies</div>
+      <div class="qf-val">Govt. Order / Resolution <span>(easiest to kill)</span></div>
+    </div>
+  </div>
+
+  <div class="flash" style="margin-top:16px">
+    💡 <strong>Master Key Insight:</strong> NITI Aayog replaced Planning Commission. Both were Executive bodies — that's WHY Modi could dissolve Planning Commission in a single day, no Parliament needed.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- MEMORY PALACE -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="palace">
+  <div class="section-label">Chapter Memory Palace</div>
+  <h2>🧠 The Supreme Court Courthouse Journey</h2>
+
+  <div class="palace">
+    <div class="palace-title">🏛️ Walk through the Courthouse of India's Governance</div>
+
+    <div class="palace-step"><div class="palace-num">Gate</div><div class="palace-text"><strong>The Attorney General (76)</strong> stands at the gate in a lawyer's robe — he's the <em>gatekeeper lawyer</em> of the entire government. No fixed tenure, serves at President's pleasure.</div></div>
+    <div class="palace-step"><div class="palace-num">Lobby</div><div class="palace-text"><strong>CAG (148–151)</strong> sits in the lobby counting money from a huge purse labelled "Public Purse." He's the <em>guardian of the public purse</em>. Alone — no deputy — single-member body. Term: 6 yrs or 65 yrs.</div></div>
+    <div class="palace-step"><div class="palace-num">Courtroom</div><div class="palace-text"><strong>Election Commission (324–329)</strong> is in Courtroom 15 (Part 15!). 1 Chief + 2 Commissioners sit on the bench. They control ALL elections except Panchayat/Municipality.</div></div>
+    <div class="palace-step"><div class="palace-num">Treasury</div><div class="palace-text"><strong>Finance Commission (280)</strong> is in the Treasury room: 1 Chairman + 4 Members deciding how to split the nation's tax money between Centre and States.</div></div>
+    <div class="palace-step"><div class="palace-num">HR Dept</div><div class="palace-text"><strong>UPSC (315–323)</strong> is in the HR Department — they hire people for India Inc. Part 14 of the building. Term: 6 yrs or 65 yrs, resign to President.</div></div>
+    <div class="palace-step"><div class="palace-num">SC/ST Wing</div><div class="palace-text"><strong>National Commissions (338, 338A, 338B)</strong> — three offices in one wing. SC→338, ST→338A, OBC→338B. Each separated by constitutional amendments.</div></div>
+    <div class="palace-step"><div class="palace-num">Outside</div><div class="palace-text"><strong>NHRC, CVC, CBI, NITI Aayog</strong> are outside the building. No constitutional article, created by Act (NHRC, CVC) or executive order (CBI, NITI Aayog).</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- COMPLETE NOTES -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="notes">
+  <div class="section-label">Complete Revision Notes</div>
+  <h2>📋 All Constitutional Bodies</h2>
+
+  <!-- ATTORNEY GENERAL -->
+  <h3>1. Attorney General of India (AG)</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">⚖️</span> Attorney General · <em>Mahanyayvadi</em></div>
+    <div class="card-sub">Article 76 · Part V · Chapter I (Union Executive)</div>
+    <p><span class="must">🔥</span> <strong>Highest Law Officer</strong> of India — the Central Government's lawyer</p>
+    <p><span class="must">🔥</span> <strong>Appointed by President</strong> · Serves at President's pleasure · <em>NO fixed tenure</em></p>
+    <p><span class="imp">⭐</span> <strong>Qualification:</strong> Must be eligible to be a Supreme Court judge (HC advocate 5 yrs OR HC judge 5 yrs OR HC advocate 10 yrs OR distinguished jurist)</p>
+    <p><span class="must">🔥</span> <strong>Rights:</strong> Audience in ALL courts in India · Can participate in Parliament (both houses) — <em>can speak, CANNOT vote</em></p>
+    <p><span class="imp">⭐</span> Gets all <strong>Parliamentary Privileges & Immunities</strong> of an MP</p>
+    <p><span class="good">➕</span> Salary determined by <strong>President</strong></p>
+    <p><span class="must">🔥</span> <strong>First AG:</strong> M.C. Setalvad (also chairman of first post-independence Law Commission 1955)</p>
+    <p><span class="must">🔥</span> <strong>Current AG:</strong> R. Venkataramani</p>
+    <p><span class="imp">⭐</span> Assisted by <strong>Solicitor General</strong> (NOT a constitutional body) · Current SG: Tushar Mehta (appointed June 2023)</p>
+    <p><span class="must">🔥</span> <strong>State equivalent:</strong> Advocate General → <code>Article 165</code> (76 + 89 = 165 trick!)</p>
+  </div>
+
+  <!-- CAG -->
+  <h3>2. Comptroller & Auditor General (CAG)</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">🔍</span> CAG · <em>Niyantrak Evam Mahalekhapareekshak</em></div>
+    <div class="card-sub">Articles 148–151 · Part V · Chapter V (last chapter)</div>
+    <p><span class="must">🔥</span> <strong>Single-member body</strong> (no deputy CAG, no assistant commissioners — unlike ECI/UPSC)</p>
+    <p><span class="must">🔥</span> Guardian of the <strong>Public Purse</strong> (= Consolidated Fund of India, Art. 266)</p>
+    <p><span class="imp">⭐</span> <strong>Guide & Philosopher</strong> of the <em>Public Accounts Committee (PAC)</em></p>
+    <p><span class="must">🔥</span> Appointed by <strong>President</strong></p>
+    <p><span class="must">🔥</span> <strong>Term:</strong> 6 years OR 65 years of age, whichever is earlier</p>
+    <p><span class="must">🔥</span> <strong>Removal:</strong> Same as Supreme Court judge (Judges Inquiry Act 1968) — Lok Sabha: 100 members, Rajya Sabha: 50 members → 3-member committee → Special majority (2/3 total members) → President removes</p>
+    <p><span class="must">🔥</span> <strong>NOT eligible for reappointment</strong></p>
+    <p><span class="imp">⭐</span> Salary determined by <strong>Parliament</strong></p>
+    <p><span class="good">➕</span> Head of Indian Audit and Accounts Department</p>
+    <p><span class="must">🔥</span> <strong>First CAG:</strong> V. Narhari Rao</p>
+    <p><span class="imp">⭐</span> Current CAG: appointed to audit WHO data; from same state as President of India</p>
+    <div class="divider"></div>
+    <p style="font-size:13px; color:var(--text3)">Article duties: <strong>149</strong> = duties by Parliament · <strong>150</strong> = accounts kept as prescribed by President on CAG's advice · <strong>151</strong> = Audit report → President (central) / Governor (state) → tabled in Parliament/Legislature</p>
+    <p style="font-size:13px; color:var(--text3)">Compiles & maintains <strong>State Government accounts</strong> (Central accounts removed by 42nd Amendment 1976)</p>
+    <p style="font-size:13px; color:var(--text3)">CAG's advice to President is <strong>NOT binding</strong> on President</p>
+  </div>
+
+  <!-- ELECTION COMMISSION -->
+  <h3>3. Election Commission of India (ECI)</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">🗳️</span> Election Commission of India</div>
+    <div class="card-sub">Articles 324–329 · Part XV (15)</div>
+    <p><span class="must">🔥</span> <strong>Permanent & Independent</strong> body (independence reduced by 2023 amendment — see below)</p>
+    <p><span class="must">🔥</span> <strong>Composition:</strong> 1 + 2 (Chief Election Commissioner + 2 Election Commissioners)</p>
+    <p><span class="must">🔥</span> Was <strong>single-member</strong> at formation → became multi-member first time in <strong>1989</strong> (after 61st Amendment reduced voting age 21→18 in 1988, enforced 1989)</p>
+    <p><span class="imp">⭐</span> <strong>Appointment:</strong> President (now via Selection Committee: PM + Cabinet Minister + Leader of Opposition)</p>
+    <p><span class="must">🔥</span> <strong>Term:</strong> 6 years OR 65 years</p>
+    <p><span class="imp">⭐</span> Salary earlier = SC judge; now = <strong>Cabinet Minister</strong> (Parliament can change)</p>
+    <p><span class="must">🔥</span> <strong>NOT eligible for reappointment</strong></p>
+    <p><span class="must">🔥</span> Conducts: Lok Sabha · Rajya Sabha · State Assemblies · Legislative Councils · <strong>President & Vice President elections</strong></p>
+    <p><span class="good">➕</span> State Election Commission → Panchayats & Municipalities (separate)</p>
+    <p><span class="must">🔥</span> Powers: Administrative + Advisory + <em>Quasi-judicial</em></p>
+    <p><span class="must">🔥</span> <strong>First Chief Election Commissioner:</strong> Sukumar Sen</p>
+    <p><span class="imp">⭐</span> Current CEC: Rajiv Kumar · Commissioners: Gyanesh Kumar + Sukhbir Singh Sandhu (SSS hint)</p>
+    <div class="divider"></div>
+    <p style="font-size:13px; color:var(--text3)"><strong>Key Articles:</strong> 324 = Superintendence, direction & control · 325 = No exclusion from electoral roll (religion/race/sex/birth) · 326 = LS + Legislative Assembly elections · 329 = Bar to court interference in electoral matters</p>
+  </div>
+
+  <!-- FINANCE COMMISSION -->
+  <h3>4. Finance Commission of India</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">💰</span> Finance Commission</div>
+    <div class="card-sub">Article 280 · Quasi-judicial powers</div>
+    <p><span class="must">🔥</span> <strong>Composition:</strong> 1 + 4 (1 Chairman + 4 Members)</p>
+    <p><span class="must">🔥</span> Constituted by <strong>President</strong></p>
+    <p><span class="imp">⭐</span> <strong>Eligible for reappointment</strong> (unlike CAG, ECI, UPSC)</p>
+    <p><span class="imp">⭐</span> Qualification of Chairman = knowledge of public affairs (determined by Parliament)</p>
+    <p><span class="must">🔥</span> Recommendations to President → <strong>NOT binding</strong></p>
+    <p><span class="must">🔥</span> Functions: Distribution of net tax proceeds between Centre & States · Grants-in-aid to states · How consolidated fund of states should ensure adequate funds for Panchayats & Municipalities</p>
+    <p><span class="imp">⭐</span> <strong>First Chairman:</strong> K.C. Niyogi</p>
+    <p><span class="imp">⭐</span> <strong>15th Finance Commission:</strong> Headed by N.K. Singh</p>
+    <p><span class="must">🔥</span> <strong>16th Finance Commission:</strong> Headed by <em>Arvind Panagariya</em> (from 2026)</p>
+  </div>
+
+  <!-- NCSC/ST/OBC -->
+  <h3>5. National Commissions for SC / ST / OBC</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">🏛️</span> National Commissions (SC/ST/OBC)</div>
+    <div class="card-sub">Articles 338, 338A, 338B</div>
+    <p><span class="must">🔥</span> Originally = <strong>Special Officer</strong> → <em>65th Amendment</em> converted it to a Commission (SC+ST together)</p>
+    <p><span class="must">🔥</span> <em>89th Amendment</em> (2002? No — check: Article 21A, Art 45 subject changed, Art 51A sub-k added... 86th was education, <strong>89th separated SC & ST</strong>) → National Commission for SC went to Art <strong>338</strong>, National Commission for ST went to Art <strong>338A</strong></p>
+    <p><span class="must">🔥</span> <strong>338B</strong> = National Commission for Backward Classes → created by <em>102nd Constitutional Amendment</em> (previously statutory)</p>
+    <p><span class="imp">⭐</span> Composition: Chairman + Vice Chairman + 3 other members · Appointed by <strong>President</strong></p>
+    <p><span class="good">➕</span> <strong>106th Amendment</strong> = 1/3 seats reserved in Parliament & State Legislature for <strong>Women</strong></p>
+  </div>
+
+  <!-- UPSC -->
+  <h3>6. Public Service Commission (UPSC / State PSC)</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">📝</span> UPSC & State PSC</div>
+    <div class="card-sub">Articles 315–323 · Part XIV</div>
+    <p><span class="must">🔥</span> <strong>JPSC (Joint PSC)</strong> = NOT constitutional → created by Parliament through an Act (Statutory body)</p>
+    <p><span class="must">🔥</span> <strong>Term:</strong> 6 years OR <em>65 years</em> for UPSC/JPSC · 6 years OR <em>62 years</em> for State PSC</p>
+    <p><span class="imp">⭐</span> Resignation: UPSC/JPSC → to <strong>President</strong> · State PSC → to <strong>Governor</strong></p>
+    <p><span class="must">🔥</span> <strong>Removal: Only President</strong> can remove (even State PSC members!)</p>
+    <p><span class="imp">⭐</span> Grounds for removal: Bankrupt · Paid employment · Misbehaviour · Incapacity · Insanity</p>
+    <p><span class="must">🔥</span> After retirement: CANNOT hold any office of PSC or any lower post (anti-favouritism rule)</p>
+    <p><span class="good">➕</span> Can become Chairman of UPSC from Member. Cannot go to same or lower post.</p>
+    <p><span class="imp">⭐</span> Expenses from CFI (UPSC/JPSC) or CFS (State PSC) — Article 322</p>
+    <p><span class="good">➕</span> Reports: UPSC → President · State PSC / JPSC → Governor (Article 323)</p>
+    <p style="font-size:13px; color:var(--text3)">Article 315 = Appointment · 317 = Removal · 318 = Regulations · 319 = Prohibition after retirement · 320 = Functions · 321 = Extension of functions · 322 = Expenses · 323 = Reports</p>
+  </div>
+
+  <!-- INTERSTATE COUNCIL -->
+  <h3>7. Inter-State Council & Zonal Councils</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">🤝</span> Inter-State Council</div>
+    <div class="card-sub">Article 263 · Constitutional (President establishes)</div>
+    <p><span class="must">🔥</span> <strong>Chairman:</strong> Prime Minister</p>
+    <p><span class="imp">⭐</span> Members: CMs of all states + CMs of UTs with Assemblies (Delhi, Puducherry) + LGs where no CM + 6 Cabinet-rank Union Ministers (nominated by PM)</p>
+    <p><span class="imp">⭐</span> Sarkaria Commission (1988) recommended making it a <strong>permanent body</strong></p>
+    <p><span class="good">➕</span> Punchhi Commission (2007) also gave recommendations on interstate relations & Governor's role</p>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="card-art">🗺️</span> Zonal Councils</div>
+    <div class="card-sub">States Reorganisation Act, 1956 · NOT in Constitution</div>
+    <p><span class="must">🔥</span> Total = <strong>5 Zonal Councils</strong> (North, South, East, West, Central)</p>
+    <p><span class="must">🔥</span> <strong>Chairman:</strong> Home Minister (same for all 5)</p>
+    <p><span class="imp">⭐</span> Vice-Chairman: CM on rotational basis</p>
+    <p><span class="must">🔥</span> <strong>North-East Council:</strong> Separate — created by <em>North Eastern Council Act, 1972</em></p>
+    <p><span class="good">➕</span> States Reorganisation Act 1956 → established 14 states & 6 Union Territories (after Fazal Ali Commission / States Reorganisation Commission)</p>
+  </div>
+
+  <div class="divider"></div>
+  <h2>📋 Non-Constitutional Bodies</h2>
+
+  <!-- NHRC -->
+  <h3>1. NHRC — National Human Rights Commission</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">⚖️</span> NHRC · Statutory Body</div>
+    <div class="card-sub">Protection of Human Rights Act, 1993</div>
+    <p><span class="must">🔥</span> <strong>Composition:</strong> 1 + 5 (Chairperson + 5 members, who are ex-officio chairs of NCW, NCSC, NCST, Minorities Commission)</p>
+    <p><span class="imp">⭐</span> Appointment by <strong>President</strong></p>
+    <p><span class="good">➕</span> National Commission for Women: established 1992, Act passed 1990 (gap of 2 years!)</p>
+  </div>
+
+  <!-- CIC -->
+  <h3>2. Central Information Commission (CIC)</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">📂</span> CIC · Statutory Body</div>
+    <div class="card-sub">Right to Information Act, 2005</div>
+    <p><span class="must">🔥</span> RTI is a Fundamental Right under <strong>Article 19</strong></p>
+    <p><span class="imp">⭐</span> Term: 5 years OR 65 years · <strong>NOT eligible for reappointment</strong></p>
+    <p><span class="imp">⭐</span> Appointment: <strong>President</strong></p>
+    <p><span class="good">➕</span> State equivalent: State Information Commission → appointment by Governor</p>
+  </div>
+
+  <!-- CVC -->
+  <h3>3. Central Vigilance Commission (CVC)</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">👁️</span> CVC · Statutory Body (since 2003)</div>
+    <div class="card-sub">CVC Act, 2003 (established 1963 as executive body)</div>
+    <p><span class="must">🔥</span> Was Executive body (1963) → became Statutory body (CVC Act 2003)</p>
+    <p><span class="imp">⭐</span> <strong>Composition:</strong> 1 + 2 (same as ECI!)</p>
+    <p><span class="must">🔥</span> <strong>Term:</strong> 4 years OR 65 years (note: unlike most others which are 6 years!)</p>
+    <p><span class="imp">⭐</span> Anti-corruption agency — only about corruption (unlike CBI)</p>
+  </div>
+
+  <!-- LOKPAL -->
+  <h3>4. Lokpal & Lokayukta</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">🏛️</span> Lokpal · Statutory Body</div>
+    <div class="card-sub">Lokpal & Lokayukta Act, 2013</div>
+    <p><span class="must">🔥</span> Anna Hazare movement: 2011–12 → Act passed: 2013</p>
+    <p><span class="must">🔥</span> <strong>Composition:</strong> 1 + 8 (Chairperson + 8 members)</p>
+    <p><span class="imp">⭐</span> Chairperson = retired Chief Justice of India or judge</p>
+    <p><span class="imp">⭐</span> Of 8 members: half from SC/ST/OBC + half judicial members</p>
+    <p><span class="must">🔥</span> Can investigate up to <strong>Prime Minister's office</strong> level</p>
+    <p><span class="must">🔥</span> Lokayukta: at state level, can go up to <strong>Chief Minister</strong></p>
+    <p><span class="good">➕</span> <strong>First Lokpal:</strong> Piraki Chandra Ghosh</p>
+    <p><span class="good">➕</span> <strong>Current Lokpal:</strong> Ajay Manik Rao Khanvilkar</p>
+    <p><span class="good">➕</span> Maharashtra = first state to establish Lokayukta (1973) — not mandatory then</p>
+    <p><span class="good">➕</span> First Lokayukta in India: Nagaur, Rajasthan (2 Oct 1959)</p>
+  </div>
+
+  <!-- CBI -->
+  <h3>5. CBI — Central Bureau of Investigation</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">🔎</span> CBI · Executive Body</div>
+    <div class="card-sub">Established 1964 · Derives power from Delhi Special Police Establishment Act, 1946</div>
+    <p><span class="must">🔥</span> Executive body — no act of its own, derives power from <strong>DSPE Act 1946</strong></p>
+    <p><span class="imp">⭐</span> Earlier under Ministry of Home Affairs → now under <strong>Ministry of Personnel</strong></p>
+    <p><span class="good">➕</span> Handles not just corruption — also other crimes (rape cases, etc.)</p>
+  </div>
+
+  <!-- LAW COMMISSION -->
+  <h3>6. Law Commission of India</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">📜</span> Law Commission · Executive Body</div>
+    <div class="card-sub">No constitutional article, no act</div>
+    <p><span class="imp">⭐</span> <strong>Pre-independence (1833):</strong> First Law Commission → Chairman: <em>Thomas Babington Macaulay</em></p>
+    <p><span class="must">🔥</span> <strong>Post-independence (1955):</strong> Established → First Chairman: <em>M.C. Setalvad</em> (also first AG!)</p>
+    <p><span class="imp">⭐</span> <strong>Current (23rd Law Commission):</strong> Headed by <em>Dinesh Maheshwari</em></p>
+  </div>
+
+  <!-- NITI AAYOG -->
+  <h3>7. NITI Aayog</h3>
+  <div class="card">
+    <div class="card-title"><span class="card-art">🚀</span> NITI Aayog · Executive Body</div>
+    <div class="card-sub">National Institution for Transforming India · Est. 1 Jan 2015</div>
+    <p><span class="must">🔥</span> Replaced <strong>Planning Commission</strong> (also executive — that's why it was easy to abolish)</p>
+    <p><span class="must">🔥</span> <strong>Chairman:</strong> Prime Minister (ex-officio)</p>
+    <p><span class="imp">⭐</span> <strong>Vice Chairperson:</strong> Appointed by PM · Current: <em>Suman K. Beri</em></p>
+    <p><span class="imp">⭐</span> Vice Chairperson enjoys rank of <strong>Cabinet Minister</strong></p>
+    <p><span class="imp">⭐</span> <strong>CEO:</strong> <em>BVR Subramaniam</em></p>
+    <p><span class="good">➕</span> Governing Council: All CMs + CMs of UTs with assemblies + LGs of other UTs</p>
+    <p><span class="good">➕</span> Planning Commission brought 5-Year Plans; NITI Aayog does NOT bring 5-Year Plans</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- MEMORY HOOKS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="hooks">
+  <div class="section-label">Smart Memory Hooks</div>
+  <h2>🪝 Memory Hooks That Fight Forgetting</h2>
+
+  <div class="hook">
+    <div class="hook-label">Hook 1 · Article Number Trick</div>
+    <p><strong>Part V (Central) + 89 = Part VI (State equivalent)</strong><br>
+    Attorney General Art 76 → Advocate General Art <em>76+89=165</em> ✓<br>
+    Money Bill Art 110 → State Money Bill Art <em>110+89=199</em> ✓<br>
+    Memorize Part V articles, get Part VI FREE.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 2 · The "6 and 65" Pattern</div>
+    <p>CAG, ECI, UPSC (Central), Finance Commission → all follow <strong>6 years OR 65 years</strong><br>
+    State PSC → <strong>6 years OR 62 years</strong> (state = 62, centre = 65)<br>
+    CVC is the rebel → <strong>4 years OR 65 years</strong><br>
+    CIC → <strong>5 years OR 65 years</strong></p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 3 · Who Removes State PSC Members?</div>
+    <p>Appointment of State PSC = Governor · But Removal = <strong>President always</strong><br>
+    Think: "The Governor can hire but can't fire — only the President can fire."</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 4 · Home Minister vs Prime Minister</div>
+    <p><strong>Zonal Council Chairman = HOME MINISTER</strong> (5 councils, 1 HM chairs all)<br>
+    <strong>Inter-State Council Chairman = PRIME MINISTER</strong><br>
+    Hook: Zones are internal HOME affairs → Home Minister. Interstate = national → PM.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 5 · Who is Reappointable?</div>
+    <p><strong>CANNOT</strong> be reappointed: CAG, ECI Commissioners, CIC Members, UPSC/State PSC members (same or lower post)<br>
+    <strong>CAN</strong> be reappointed: Finance Commission members<br>
+    Hook: Finance Commission is the <em>exception</em> — money people can come back!</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 6 · The 89th Amendment Split</div>
+    <p>Think "89 = split" → 89th Amendment <em>split</em> SC+ST Commission into two:<br>
+    <strong>338</strong> = SC (Scheduled <strong>C</strong>aste) · <strong>338A</strong> = ST (Scheduled <strong>T</strong>ribe) · <strong>338B</strong> = OBC (Backward = Beyond, 102nd amendment)</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 7 · NCW Timeline Confusion Buster</div>
+    <p>NCW <strong>Act</strong> = 1990 · NCW <strong>Established</strong> = 1992 · Remember: "Act before establishment" by 2 years.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 8 · Single vs Multi Member Bodies</div>
+    <p><strong>Single member:</strong> CAG (alone with the public purse)<br>
+    <strong>Multi-member:</strong> ECI (1+2), Finance Commission (1+4), NHRC (1+5), Lokpal (1+8), UPSC (Chair + members)<br>
+    Remember CAG is the only loner among constitutional bodies.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- CONNECTIONS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="connections">
+  <div class="section-label">Concept Connections</div>
+  <h2>🔗 How Facts Connect</h2>
+
+  <div class="conn"><div class="conn-arrow">61st ▶</div><div>61st Amendment (1988): Voting age 21→18 → more voters → needed more help → ECI became multi-member body in 1989</div></div>
+  <div class="conn"><div class="conn-arrow">65th ▶</div><div>65th Amendment: Special Officer for SC/ST → Commission for SC+ST</div></div>
+  <div class="conn"><div class="conn-arrow">89th ▶</div><div>89th Amendment: Split SC+ST Commission → separate 338 & 338A</div></div>
+  <div class="conn"><div class="conn-arrow">102nd ▶</div><div>102nd Amendment: OBC Commission (338B) got constitutional status (was statutory before)</div></div>
+  <div class="conn"><div class="conn-arrow">106th ▶</div><div>106th Amendment: 1/3 reservation for women in Parliament + State Legislatures</div></div>
+  <div class="conn"><div class="conn-arrow">42nd ▶</div><div>42nd Amendment (1976): Removed CAG's duty to compile Central Govt accounts · Also made Council of Ministers' advice to President binding</div></div>
+  <div class="conn"><div class="conn-arrow">44th ▶</div><div>44th Amendment: President can return advice ONCE (modified 42nd's absolute binding)</div></div>
+  <div class="conn"><div class="conn-arrow">Planning ▶</div><div>Planning Commission (Executive) → abolished by Modi → NITI Aayog (Executive) replaced it. Easy because both were Executive bodies.</div></div>
+  <div class="conn"><div class="conn-arrow">CVC ▶</div><div>CVC: 1963 (Executive) → 2003 CVC Act → Statutory. Example of Executive body gaining statutory status.</div></div>
+  <div class="conn"><div class="conn-arrow">NcBC ▶</div><div>Backward Class Commission: Statutory → 102nd Amendment → Constitutional (338B). Example of statutory body gaining constitutional status.</div></div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- EXAM TRAPS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="traps">
+  <div class="section-label">Exam Traps</div>
+  <h2>⚠️ Exam Traps</h2>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ AG vs Advocate General</div>
+    <ul>
+      <li>AG = Central Govt lawyer → Article <strong>76</strong></li>
+      <li>Advocate General = State Govt lawyer → Article <strong>165</strong></li>
+      <li>Trap: Examiners ask "highest law officer of state" → Advocate General NOT AG!</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ Solicitor General — Not Constitutional!</div>
+    <ul>
+      <li>SG assists AG but is <strong>NOT a constitutional body</strong></li>
+      <li>SSC JE actually asked about new SG appointment — always current affairs trap</li>
+      <li>Current SG: Tushar Mehta</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ CAG vs ECI — Removal Confusion</div>
+    <ul>
+      <li>Both removed like Supreme Court judge (Special majority, etc.)</li>
+      <li>But CAG salary → <strong>Parliament</strong> · AG salary → <strong>President</strong></li>
+      <li>CAG = single member · ECI = 1+2 multi-member</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ JPSC — Most Students Think It's Constitutional</div>
+    <ul>
+      <li>UPSC → Constitutional · State PSC → Constitutional · <strong>JPSC → NOT Constitutional (Statutory!)</strong></li>
+      <li>JPSC is created by Parliament through an Act as per states' needs</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ Age Confusion: 62 vs 65</div>
+    <ul>
+      <li>UPSC/JPSC = 65 years · <strong>State PSC = 62 years</strong></li>
+      <li>CVC = 4 yrs OR 65 (NOT 6 yrs!) · CIC = 5 yrs OR 65</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ NCW Act Year vs Establishment Year</div>
+    <ul>
+      <li>NCW <strong>Act</strong> = 1990 · NCW <strong>Established</strong> = 1992</li>
+      <li>Students always mix these up!</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ ECI Conducting Elections — What It Does NOT Do</div>
+    <ul>
+      <li>ECI conducts: Lok Sabha, Rajya Sabha, State Assembly, Council, President, Vice President</li>
+      <li><strong>ECI does NOT conduct: Panchayat & Municipality elections</strong> → State Election Commission does!</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ Finance Commission — Eligible for Reappointment!</div>
+    <ul>
+      <li>CAG → NOT eligible · ECI → NOT eligible · UPSC → NOT eligible</li>
+      <li><strong>Finance Commission → IS eligible for reappointment</strong> (the only major exception!)</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ 86th vs 89th Amendment</div>
+    <ul>
+      <li><strong>86th Amendment (2002):</strong> Right to Education (Art 21A), changed Art 45 subject, added Art 51A(k)</li>
+      <li><strong>89th Amendment:</strong> Split SC+ST Commission</li>
+      <li>Examiners love to swap these!</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ Zonal Council vs Inter-State Council Chairman</div>
+    <ul>
+      <li>Inter-State Council → <strong>PM is Chairman</strong></li>
+      <li>Zonal Council → <strong>HOME MINISTER is Chairman</strong></li>
+      <li>North-East Council → separate act (1972), NOT part of States Reorganisation Act</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ CVI vs CBI</div>
+    <ul>
+      <li>CVC → Statutory (2003) · Anti-corruption only</li>
+      <li>CBI → <strong>Executive</strong> · Derives from DSPE Act 1946, not its own act · Handles multiple crime types</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-header">⚠️ Art 329 — Courts Cannot Interfere in Elections</div>
+    <ul>
+      <li>Article 329 bars court interference in electoral matters</li>
+      <li>This is why SC/HC appear "silent" on election commission decisions during elections</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- EXAMINER'S QUESTIONS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="examq">
+  <div class="section-label">Examiner's Favourite Questions</div>
+  <h2>🎯 How Examiners Will Attack This Chapter</h2>
+
+  <div class="examq">
+    <div class="examq-label">🎯 Most Probable Questions</div>
+    <p>Q: Who is considered the highest law officer of India? → <strong>Attorney General</strong></p>
+    <p>Q: Under which article is the CAG mentioned? → <strong>148–151</strong></p>
+    <p>Q: Which body is called the "guardian of the public purse"? → <strong>CAG</strong></p>
+    <p>Q: Who conducts elections for Panchayats and Municipalities? → <strong>State Election Commission</strong></p>
+    <p>Q: What was the term of NITI Aayog when it replaced the Planning Commission? → <strong>1 January 2015</strong></p>
+    <p>Q: Which amendment separated the National Commission for SC and ST? → <strong>89th Amendment</strong></p>
+    <p>Q: The 16th Finance Commission is headed by whom? → <strong>Arvind Panagariya</strong></p>
+  </div>
+
+  <div class="examq">
+    <div class="examq-label">🎯 Match The Following — Common Pairs</div>
+    <p>Article 76 → Attorney General</p>
+    <p>Article 148 → CAG</p>
+    <p>Article 165 → Advocate General</p>
+    <p>Article 280 → Finance Commission</p>
+    <p>Article 263 → Inter-State Council</p>
+    <p>Article 324 → ECI Superintendence, Direction & Control</p>
+    <p>Article 329 → Bar to court interference in electoral matters</p>
+    <p>Article 338 → National Commission for SC</p>
+    <p>Article 338A → National Commission for ST</p>
+    <p>Article 338B → National Commission for OBC</p>
+    <p>Article 315–323 → Public Service Commission (Part XIV)</p>
+  </div>
+
+  <div class="examq">
+    <div class="examq-label">🎯 Statement-Based Traps</div>
+    <p>Statement: "JPSC is a constitutional body" → <strong>FALSE</strong> (Statutory)</p>
+    <p>Statement: "Finance Commission members cannot be reappointed" → <strong>FALSE</strong> (they can)</p>
+    <p>Statement: "ECI conducts Panchayat elections" → <strong>FALSE</strong> (State EC does)</p>
+    <p>Statement: "CAG is a multi-member body" → <strong>FALSE</strong> (Single member)</p>
+    <p>Statement: "NITI Aayog was created by an Act of Parliament" → <strong>FALSE</strong> (Executive resolution)</p>
+    <p>Statement: "The State PSC members are removed by the Governor" → <strong>FALSE</strong> (President removes)</p>
+  </div>
+
+  <div class="examq">
+    <div class="examq-label">🎯 Assertion-Reason Type</div>
+    <p>A: Planning Commission was abolished overnight.<br>R: It was an executive body, requiring no constitutional amendment or act repeal. → <strong>Both A and R are true, R is the correct explanation</strong></p>
+    <p>A: The Election Commission is no longer fully independent.<br>R: Its salary is now equivalent to Cabinet Minister (Parliament can change) and a Selection Committee was formed for appointment. → <strong>Both true, R explains A</strong></p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- ACTIVE RECALL -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="recall">
+  <div class="section-label">Active Recall</div>
+  <h2>🔁 Test Yourself — Click to Reveal</h2>
+  <p style="margin-bottom:20px; color:var(--text3); font-size:13px">Click any question to reveal the answer. Hide it before reading the next one!</p>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">What is the article number for the Attorney General? What is his state equivalent and article?</div>
+    <div class="a-text">AG = Article 76 · Advocate General (state) = Article 165 · Trick: 76 + 89 = 165</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">What is the tenure of CAG? Can he be reappointed?</div>
+    <div class="a-text">6 years OR 65 years (whichever earlier) · NOT eligible for reappointment</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Who was the first Chief Election Commissioner of India?</div>
+    <div class="a-text">Sukumar Sen</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">When and why did ECI become a multi-member body for the first time?</div>
+    <div class="a-text">1989 · Because 61st Amendment (1988) reduced voting age from 21 to 18 → more voters needed more administration support</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Who is the Chairman of NITI Aayog? What is the full form?</div>
+    <div class="a-text">Prime Minister · National Institution for Transforming India · Established: 1 Jan 2015</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Which amendment gave constitutional status to OBC Commission? Which article?</div>
+    <div class="a-text">102nd Constitutional Amendment · Article 338B</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">JPSC is constitutional / statutory / executive?</div>
+    <div class="a-text">STATUTORY — created by Parliament through an Act · (Not constitutional like UPSC/State PSC)</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Name the three types of bodies with one example each.</div>
+    <div class="a-text">Constitutional (article in Constitution) → ECI, CAG · Statutory (created by act) → NHRC, CVC · Executive (govt resolution) → NITI Aayog, CBI, Law Commission</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">What does Article 329 say? Why is it important?</div>
+    <div class="a-text">Bar to court interference in electoral matters · Courts cannot interfere in election processes — that's why SC/HC stay silent during elections</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Who chairs the Zonal Councils? Who chairs the Inter-State Council?</div>
+    <div class="a-text">Zonal Councils → Home Minister · Inter-State Council → Prime Minister</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Name: First AG · First CAG · First CEC · First Law Commission Chairman (pre-independence) · First Law Commission Chairman (post-independence)</div>
+    <div class="a-text">First AG: M.C. Setalvad · First CAG: V. Narhari Rao · First CEC: Sukumar Sen · Pre-independence LC Chair: Thomas Babington Macaulay · Post-independence LC Chair: M.C. Setalvad</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Which Act was the North-East Council created under? What year?</div>
+    <div class="a-text">North Eastern Council Act, 1972 · (Others created under States Reorganisation Act, 1956)</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Who removes UPSC, State PSC, and JPSC members? Any exceptions?</div>
+    <div class="a-text">Only the PRESIDENT can remove all of them — even State PSC members (even though Governor appoints them!)</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">First & current Lokpal?</div>
+    <div class="a-text">First: Piraki Chandra Ghosh · Current: Ajay Manik Rao Khanvilkar</div>
+    <div class="toggle-hint">tap to reveal</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- REVISION SHEETS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="sheets">
+  <div class="section-label">Multi-Layer Revision System</div>
+  <h2>📄 Revision Sheets</h2>
+
+  <div class="layers">
+    <button class="layer-btn active" onclick="showLayer('l2')">⭐ High-Yield</button>
+    <button class="layer-btn" onclick="showLayer('l3')">⚡ Ultra-Fast</button>
+    <button class="layer-btn" onclick="showLayer('l4')">🕐 30-Second</button>
+    <button class="layer-btn" onclick="showLayer('l5')">🌙 Last Night</button>
+  </div>
+
+  <!-- HIGH YIELD -->
+  <div class="layer-content active" id="l2">
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Body</th><th>Type</th><th>Article / Act</th><th>Composition</th><th>Term</th><th>Reappoint?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Attorney General</strong></td><td>Constitutional</td><td>Art 76</td><td>Single</td><td>President's pleasure</td><td>—</td></tr>
+        <tr><td><strong>CAG</strong></td><td>Constitutional</td><td>Arts 148–151</td><td>Single</td><td>6 yr / 65 yr</td><td>❌ No</td></tr>
+        <tr><td><strong>ECI</strong></td><td>Constitutional</td><td>Arts 324–329 (Part XV)</td><td>1+2</td><td>6 yr / 65 yr</td><td>❌ No</td></tr>
+        <tr><td><strong>Finance Commission</strong></td><td>Constitutional</td><td>Art 280</td><td>1+4</td><td>By President</td><td>✅ Yes</td></tr>
+        <tr><td><strong>UPSC</strong></td><td>Constitutional</td><td>Arts 315–323 (Part XIV)</td><td>Chair + members</td><td>6 yr / 65 yr</td><td>❌ No (same/lower)</td></tr>
+        <tr><td><strong>State PSC</strong></td><td>Constitutional</td><td>Arts 315–323</td><td>Chair + members</td><td>6 yr / 62 yr</td><td>❌ No</td></tr>
+        <tr><td><strong>JPSC</strong></td><td><em style="color:var(--fire)">Statutory</em></td><td>Parliament's Act</td><td>—</td><td>6 yr / 65 yr</td><td>—</td></tr>
+        <tr><td><strong>NHRC</strong></td><td>Statutory</td><td>PHR Act 1993</td><td>1+5</td><td>—</td><td>—</td></tr>
+        <tr><td><strong>CIC</strong></td><td>Statutory</td><td>RTI Act 2005</td><td>—</td><td>5 yr / 65 yr</td><td>❌ No</td></tr>
+        <tr><td><strong>CVC</strong></td><td>Statutory</td><td>CVC Act 2003</td><td>1+2</td><td>4 yr / 65 yr</td><td>—</td></tr>
+        <tr><td><strong>Lokpal</strong></td><td>Statutory</td><td>Lokpal Act 2013</td><td>1+8</td><td>—</td><td>—</td></tr>
+        <tr><td><strong>CBI</strong></td><td>Executive</td><td>DSPE Act 1946 (derived)</td><td>—</td><td>—</td><td>—</td></tr>
+        <tr><td><strong>NITI Aayog</strong></td><td>Executive</td><td>Exec Resolution 2015</td><td>PM chairs</td><td>—</td><td>—</td></tr>
+        <tr><td><strong>Law Commission</strong></td><td>Executive</td><td>No act/article</td><td>—</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- ULTRA FAST -->
+  <div class="layer-content" id="l3">
+    <div class="card">
+      <p>🔥 3 types: Constitutional (article) → Statutory (act) → Executive (govt resolution)</p>
+      <p>🔥 AG = Art 76 · No tenure · President appoints/removes · Can speak in Parliament, CANNOT vote</p>
+      <p>🔥 CAG = Arts 148–151 · Single member · 6yr/65yr · NOT reappointable · Removed like SC judge · Salary by Parliament</p>
+      <p>🔥 ECI = Arts 324–329 (Part XV) · 1+2 · 6yr/65yr · First CEC = Sukumar Sen · Art 329 = courts can't interfere</p>
+      <p>🔥 Finance Commission = Art 280 · 1+4 · President constitutes · Reappointable · 15th = N.K. Singh · 16th = Arvind Panagariya (2026)</p>
+      <p>🔥 UPSC = Part XIV (315–323) · JPSC = Statutory · State PSC = 62yr (not 65!) · Only President removes ALL PSC members</p>
+      <p>🔥 338=SC, 338A=ST (89th amend split), 338B=OBC (102nd amend)</p>
+      <p>🔥 Inter-State Council = Art 263, Chair=PM · Zonal Council = 5 councils, Chair=Home Minister · NE Council = 1972 Act (separate)</p>
+      <p>🔥 CVC = 4yr/65yr (not 6yr!) · CBI = Executive · NITI Aayog = Executive · PM chairs NITI</p>
+      <p>🔥 Lokpal: 1+8, Act 2013, First=Piraki Chandra Ghosh, Current=Ajay Manik Rao Khanvilkar</p>
+    </div>
+  </div>
+
+  <!-- 30 SECOND -->
+  <div class="layer-content" id="l4">
+    <div class="card">
+      <p><strong>AG=76, CAG=148–151, ECI=324–329(Part15), Finance=280, PSC=315–323(Part14)</strong></p>
+      <p><strong>338=SC, 338A=ST, 338B=OBC</strong></p>
+      <p><strong>Single member: CAG · 1+2: ECI, CVC · 1+4: Finance · 1+5: NHRC · 1+8: Lokpal</strong></p>
+      <p><strong>Reappointable: Finance Commission ONLY</strong></p>
+      <p><strong>State PSC age=62 (others=65) · CVC term=4yr (others=6yr)</strong></p>
+      <p><strong>Zonal Chair=HM · Interstate Chair=PM · NITI Chair=PM</strong></p>
+      <p><strong>JPSC=Statutory · CBI=Executive · NITI Aayog=Executive</strong></p>
+    </div>
+  </div>
+
+  <!-- LAST NIGHT -->
+  <div class="layer-content" id="l5">
+    <div class="last-night">
+      <h3>⚡ LAST NIGHT BEFORE EXAM</h3>
+      <ul>
+        <li>AG=<strong>Art 76</strong>, Advocate General=<strong>Art 165</strong> (76+89=165)</li>
+        <li>CAG=<strong>single member</strong>, 6yr/65yr, NOT reappointable, salary=Parliament</li>
+        <li>ECI=<strong>Part XV</strong>, 1+2, first multi-member=<strong>1989</strong>, First CEC=<strong>Sukumar Sen</strong></li>
+        <li>Art <strong>329</strong>=courts can't interfere in elections</li>
+        <li>Finance Commission = <strong>ONLY body eligible for reappointment</strong>, 16th=Arvind Panagariya</li>
+        <li><strong>JPSC=Statutory</strong> (NOT constitutional!)</li>
+        <li>State PSC age=<strong>62</strong> (not 65!), removal=<strong>President always</strong></li>
+        <li>338=SC, 338A=ST (<strong>89th amend</strong>), 338B=OBC (<strong>102nd amend</strong>)</li>
+        <li>Inter-State Council=<strong>PM chairs</strong> · Zonal Council=<strong>HM chairs</strong></li>
+        <li>NE Council=<strong>1972 Act</strong> (separate from other 5 zonal councils)</li>
+        <li>CVC=<strong>4yr/65yr</strong> (not 6yr) · CBI=Executive body</li>
+        <li>NITI Aayog=<strong>1 Jan 2015</strong>, PM chairs, VC=Suman K. Beri, CEO=BVR Subramaniam</li>
+        <li>Lokpal: <strong>1+8</strong>, Act 2013, First=Piraki Chandra Ghosh</li>
+        <li>NCW Act=<strong>1990</strong>, Established=<strong>1992</strong></li>
+        <li>ECI does NOT do Panchayat elections → <strong>State Election Commission</strong> does</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<script>
+  function showLayer(id) {
+    document.querySelectorAll('.layer-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.layer-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
