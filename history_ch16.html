@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gupta Empire — Revision Vault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1015;
+  --bg-soft:#13161d;
+  --card:#171b24;
+  --card-2:#1d222d;
+  --line:#2a3040;
+  --text:#e8e9ee;
+  --text-dim:#9aa1b2;
+  --text-faint:#666e82;
+  --gold:#d4a843;
+  --gold-soft:#9c7f3f;
+  --gold-glow:rgba(212,168,67,0.15);
+  --crimson:#e8696b;
+  --crimson-glow:rgba(232,105,107,0.12);
+  --teal:#5fc9c0;
+  --teal-glow:rgba(95,201,192,0.12);
+  --lavender:#a98fe0;
+  --lavender-glow:rgba(169,143,224,0.12);
+  --green:#7cc282;
+  --green-glow:rgba(124,194,130,0.12);
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -5%, rgba(212,168,67,0.07), transparent),
+    radial-gradient(ellipse 700px 500px at 100% 10%, rgba(169,143,224,0.05), transparent),
+    var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:80px;
+}
+::selection{background:var(--gold-glow);color:var(--gold);}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:var(--gold-soft);}
+
+/* ===== Top coin strip / hero ===== */
+.hero{
+  position:relative;
+  padding:56px 24px 36px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 38px, rgba(212,168,67,0.05) 38px 39px);
+  opacity:0.5;
+  pointer-events:none;
+}
+.coin-row{
+  display:flex; justify-content:center; gap:10px; margin-bottom:22px; flex-wrap:wrap;
+}
+.coin{
+  width:34px; height:34px; border-radius:50%;
+  border:1.5px solid var(--gold-soft);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Lora',serif; font-weight:600; font-size:11px; color:var(--gold);
+  background:radial-gradient(circle at 35% 30%, rgba(212,168,67,0.18), transparent 70%);
+  opacity:0.85;
+}
+.eyebrow{
+  font-family:'JetBrains Mono',monospace; letter-spacing:0.18em; font-size:12px;
+  color:var(--gold); text-transform:uppercase; margin-bottom:14px;
+}
+h1.title{
+  font-family:'Lora',serif; font-weight:700; font-size:clamp(32px,6vw,56px);
+  margin:0; color:#f3eedf;
+  text-shadow:0 0 30px rgba(212,168,67,0.18);
+}
+.subtitle{
+  font-style:italic; font-family:'Lora',serif; color:var(--text-dim);
+  font-size:17px; margin-top:10px;
+}
+.era-band{
+  display:inline-flex; align-items:center; gap:10px; margin-top:22px;
+  padding:8px 20px; border:1px solid var(--line); border-radius:30px;
+  font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-dim);
+  background:var(--bg-soft);
+}
+.era-band b{color:var(--gold); font-weight:600;}
+
+/* ===== Sticky nav ===== */
+.nav-wrap{
+  position:sticky; top:0; z-index:50;
+  background:rgba(14,16,21,0.92); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav{
+  max-width:1080px; margin:0 auto;
+  display:flex; gap:6px; overflow-x:auto; padding:10px 16px;
+  scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none;}
+.nav a{
+  flex:none; padding:8px 14px; border-radius:8px;
+  font-size:13px; font-weight:600; color:var(--text-dim); text-decoration:none;
+  white-space:nowrap; border:1px solid transparent; transition:all .15s;
+}
+.nav a:hover{background:var(--card); color:var(--text); border-color:var(--line);}
+
+/* ===== Layout ===== */
+.wrap{max-width:1080px; margin:0 auto; padding:40px 20px 0;}
+section{margin-bottom:54px;}
+.section-head{
+  display:flex; align-items:baseline; gap:14px; margin-bottom:18px;
+  padding-bottom:12px; border-bottom:1px solid var(--line);
+}
+.section-num{
+  font-family:'JetBrains Mono',monospace; color:var(--gold-soft); font-size:13px;
+}
+.section-head h2{
+  font-family:'Lora',serif; font-size:26px; margin:0; color:#f3eedf; font-weight:600;
+}
+.section-desc{
+  color:var(--text-faint); font-size:14px; margin:-10px 0 18px; font-style:italic;
+}
+
+/* ===== Cards ===== */
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  padding:22px 24px; margin-bottom:16px;
+}
+.card h3{
+  font-family:'Lora',serif; font-size:19px; margin:0 0 12px; color:var(--gold);
+  display:flex; align-items:center; gap:8px;
+}
+.card p{margin:0 0 10px; color:var(--text);}
+.card ul, .card ol{margin:0 0 8px; padding-left:22px;}
+.card li{margin-bottom:6px;}
+.card li:last-child{margin-bottom:0;}
+
+/* ===== Priority tags ===== */
+.tag{
+  display:inline-flex; align-items:center; gap:4px;
+  font-size:11px; font-weight:700; padding:2px 9px; border-radius:6px;
+  font-family:'JetBrains Mono',monospace; letter-spacing:0.02em; margin-right:6px;
+  vertical-align:middle;
+}
+.tag-must{background:var(--crimson-glow); color:var(--crimson); border:1px solid rgba(232,105,107,0.35);}
+.tag-imp{background:var(--gold-glow); color:var(--gold); border:1px solid rgba(212,168,67,0.35);}
+.tag-good{background:var(--teal-glow); color:var(--teal); border:1px solid rgba(95,201,192,0.35);}
+
+/* ===== Memory Palace ===== */
+.palace{
+  background:linear-gradient(160deg, rgba(169,143,224,0.08), rgba(169,143,224,0.02));
+  border:1px solid rgba(169,143,224,0.3); border-radius:var(--radius);
+  padding:26px 26px; position:relative;
+}
+.palace::before{
+  content:"🧠 MEMORY PALACE";
+  position:absolute; top:-12px; left:20px; background:var(--bg);
+  padding:2px 10px; font-family:'JetBrains Mono',monospace; font-size:11px;
+  letter-spacing:0.1em; color:var(--lavender); border:1px solid rgba(169,143,224,0.4); border-radius:6px;
+}
+.palace h3{color:var(--lavender); font-family:'Lora',serif;}
+.palace-room{
+  margin:14px 0; padding:14px 16px; background:rgba(255,255,255,0.02);
+  border-left:3px solid var(--lavender); border-radius:0 8px 8px 0;
+}
+.palace-room b{color:#cdbcf0;}
+
+/* ===== Exam traps ===== */
+.trap{
+  background:linear-gradient(160deg, rgba(232,105,107,0.09), rgba(232,105,107,0.02));
+  border:1px solid rgba(232,105,107,0.35); border-radius:var(--radius);
+  padding:18px 22px; margin-bottom:14px;
+}
+.trap-head{
+  font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--crimson);
+  letter-spacing:0.08em; margin-bottom:8px; font-weight:700;
+}
+.trap table{width:100%; border-collapse:collapse; margin-top:6px;}
+.trap td, .trap th{padding:8px 10px; border-bottom:1px solid rgba(232,105,107,0.15); font-size:14px;}
+.trap th{color:var(--crimson); text-align:left; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.05em;}
+.trap td:first-child{color:var(--gold); font-weight:600; white-space:nowrap;}
+
+/* ===== Tables (general) ===== */
+.datatable{width:100%; border-collapse:collapse; margin:10px 0;}
+.datatable th{
+  background:var(--card-2); color:var(--gold); text-align:left; padding:9px 12px;
+  font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.05em;
+  border-bottom:1px solid var(--line);
+}
+.datatable td{padding:9px 12px; border-bottom:1px solid var(--line); font-size:14px;}
+.datatable tr:last-child td{border-bottom:none;}
+.datatable tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* ===== Hook boxes ===== */
+.hook{
+  background:var(--card-2); border:1px dashed var(--gold-soft); border-radius:10px;
+  padding:14px 16px; margin:12px 0; font-size:14.5px;
+}
+.hook b{color:var(--gold);}
+.hook-label{
+  font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold-soft);
+  letter-spacing:0.08em; margin-bottom:6px; display:block;
+}
+
+/* ===== Connections ===== */
+.flow{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  background:var(--card-2); border-radius:10px; padding:14px 16px; margin:10px 0;
+  font-size:14.5px;
+}
+.flow .node{background:rgba(255,255,255,0.04); padding:5px 12px; border-radius:7px; border:1px solid var(--line);}
+.flow .arrow{color:var(--gold); font-weight:700;}
+
+/* ===== Active recall ===== */
+.qa{
+  border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;
+  background:var(--card-2);
+}
+.qa summary{
+  cursor:pointer; padding:13px 16px; font-weight:600; color:var(--teal);
+  list-style:none; display:flex; gap:10px; align-items:flex-start;
+}
+.qa summary::-webkit-details-marker{display:none;}
+.qa summary::before{content:"❓"; flex-shrink:0;}
+.qa[open] summary::before{content:"✅";}
+.qa .answer{padding:0 16px 14px 40px; color:var(--text-dim); font-size:14.5px;}
+
+/* ===== Collapsible chapter blocks ===== */
+details.block{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+  margin-bottom:14px; overflow:hidden;
+}
+details.block summary{
+  cursor:pointer; padding:16px 20px; font-family:'Lora',serif; font-weight:600;
+  font-size:17px; color:var(--text); list-style:none; display:flex;
+  justify-content:space-between; align-items:center; gap:10px;
+}
+details.block summary::-webkit-details-marker{display:none;}
+details.block summary::after{
+  content:"+"; font-family:'JetBrains Mono',monospace; font-size:20px; color:var(--gold-soft);
+  transition:transform .2s; flex-shrink:0;
+}
+details.block[open] summary::after{transform:rotate(45deg);}
+details.block .block-body{padding:0 20px 20px;}
+details.block summary:hover{background:var(--card-2);}
+
+/* ===== Speed layers (4/5) ===== */
+.speed-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px;}
+.speed-card{
+  background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px;
+}
+.speed-card h4{margin:0 0 10px; font-family:'Lora',serif; color:var(--gold); font-size:16px;}
+.speed-card ul{margin:0; padding-left:18px; font-size:13.5px; color:var(--text-dim);}
+.speed-card li{margin-bottom:5px;}
+
+.lastnight{
+  background:linear-gradient(160deg, rgba(212,168,67,0.1), rgba(212,168,67,0.02));
+  border:1.5px solid var(--gold-soft); border-radius:var(--radius); padding:26px;
+}
+.lastnight h3{color:var(--gold); font-family:'Lora',serif; margin-top:0;}
+.lastnight .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+@media (max-width:640px){.lastnight .grid2{grid-template-columns:1fr;}}
+.lastnight ul{padding-left:20px; font-size:14px;}
+.lastnight li{margin-bottom:6px;}
+
+/* ===== Misc ===== */
+.timeline-strip{
+  display:flex; overflow-x:auto; gap:0; margin:16px 0; padding-bottom:8px;
+}
+.tl-item{
+  flex:none; min-width:150px; padding:14px 16px; border-right:1px dashed var(--line);
+  position:relative;
+}
+.tl-item:first-child{border-left:1px dashed var(--line);}
+.tl-year{font-family:'JetBrains Mono',monospace; color:var(--gold); font-weight:700; font-size:14px;}
+.tl-event{font-size:13px; color:var(--text-dim); margin-top:4px;}
+
+.pill{display:inline-block; padding:3px 10px; border-radius:20px; background:var(--card-2); border:1px solid var(--line); font-size:12px; color:var(--text-dim); margin:2px;}
+
+footer{
+  text-align:center; padding:40px 20px; color:var(--text-faint); font-size:13px;
+  font-family:'JetBrains Mono',monospace; border-top:1px solid var(--line); margin-top:60px;
+}
+footer .om{color:var(--gold); font-size:18px; margin-bottom:8px; display:block;}
+
+.toggle-all{
+  display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;
+}
+.toggle-all button{
+  background:var(--card-2); border:1px solid var(--line); color:var(--text-dim);
+  font-family:'JetBrains Mono',monospace; font-size:12px; padding:7px 14px; border-radius:8px;
+  cursor:pointer; transition:all .15s;
+}
+.toggle-all button:hover{border-color:var(--gold-soft); color:var(--gold);}
+
+@media (max-width:640px){
+  .hero{padding:40px 16px 28px;}
+  .wrap{padding:30px 14px 0;}
+  .card{padding:18px;}
+  .section-head h2{font-size:21px;}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="coin-row">
+    <div class="coin">𑂍</div><div class="coin">𑂧</div><div class="coin">𑂩</div><div class="coin">𑂩</div><div class="coin">𑂧</div>
+  </div>
+  <div class="eyebrow">FRB 2.0 · Ancient History Revision Vault</div>
+  <h1 class="title">The Gupta Empire</h1>
+  <div class="subtitle">"Suvarna Yuga" — The Golden Age, told as one unbroken story</div>
+  <div class="era-band">📅 <b>319/320 AD</b> — <b>550 AD</b> &nbsp;|&nbsp; 4th – 6th Century &nbsp;|&nbsp; <b>Gupta Era starts 320 AD</b></div>
+</div>
+
+<div class="nav-wrap">
+  <div class="nav">
+    <a href="#big-picture">Big Picture</a>
+    <a href="#palace">Memory Palace</a>
+    <a href="#complete">Complete Notes</a>
+    <a href="#hooks">Memory Hooks</a>
+    <a href="#connections">Connections</a>
+    <a href="#traps">Exam Traps</a>
+    <a href="#examiner">Examiner's Eye</a>
+    <a href="#recall">Active Recall</a>
+    <a href="#highyield">High-Yield</a>
+    <a href="#ultrafast">Ultra-Fast</a>
+    <a href="#thirtysec">30-Sec Sheet</a>
+    <a href="#lastnight">Last Night</a>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ===================== BIG PICTURE ===================== -->
+<section id="big-picture">
+  <div class="section-head"><span class="section-num">01</span><h2>Big Picture</h2></div>
+  <div class="card">
+    <p>The Gupta Empire (4th–6th century AD) is the <b>"sequel"</b> to the Mauryan Empire — except this time, instead of one giant centralized machine, you get a <b>decentralized golden age</b>: gold coins everywhere, Sanskrit literature flowering, Nalanda being built, Aryabhata-style science blooming, and one family tree across 5 generations doing almost everything right (except Ramgupta, the family embarrassment).</p>
+    <p><span class="tag tag-must">MUST KNOW</span>Think of this chapter as <b>ONE long family saga</b> — a royal lineage from Shrigupta → Ghatotkach → Chandragupta I → Samudragupta → Chandragupta II → Kumargupta I → Skandagupta. Once the family tree is locked in your head, every title, war, and marriage just hangs off a branch.</p>
+    <p>Two side-plots matter just as much as the main family: the <b>Vakatakas</b> (Gupta in-laws down south) and the <b>Hun invasions</b> (the empire's slow death by a thousand cuts, starting under Kumargupta I, peaking under Skandagupta).</p>
+  </div>
+</section>
+
+<!-- ===================== MEMORY PALACE ===================== -->
+<section id="palace">
+  <div class="section-head"><span class="section-num">02</span><h2>Chapter Memory Palace</h2></div>
+  <p class="section-desc">Walk through this palace in your head before the exam — every room holds one part of the chapter.</p>
+
+  <div class="palace">
+    <h3>🏛️ The Gupta Palace — A Five-Room Walkthrough</h3>
+    <p>You're walking into a grand sandstone palace built by a river. Five rooms, five generations. You enter through the <b>Coronation Hall</b> and exit through the <b>War Room</b>.</p>
+
+    <div class="palace-room">
+      <b>ROOM 1 — The Coronation Hall (Chandragupta I)</b><br>
+      A throne room with a banner reading "Maharajadhiraj." Beside the throne stands <b>Kumari Devi</b>, a Lichchhavi princess — her wedding portrait hangs on the wall, because this marriage is why every later king proudly calls himself "Lichchhavi-Dauhitra" (grandson of the Lichchhavis). A calendar on the wall flips to <b>320 AD</b> — the Gupta Era begins here, like a stamp resetting time itself.
+    </div>
+
+    <div class="palace-room">
+      <b>ROOM 2 — The War Trophy Room (Samudragupta)</b><br>
+      Walls covered in <b>24 battle trophies</b> — none of them losses. A stone tablet (the <b>Prayag Prashasti</b>, engraved by court poet <b>Harisen</b>) lists every victory. A bust labeled "Napoleon of India" — that's a British historian, <b>V.A. Smith</b>, admiring the wall. In the corner, a gold coin shows the king <b>playing a veena</b> — the warrior who also loves music.
+    </div>
+
+    <div class="palace-room">
+      <b>ROOM 3 — The Hall of Mirrors (Chandragupta II / Vikramaditya)</b><br>
+      Two mirrors face each other — one shows <b>Ramgupta</b> (the cowardly brother who surrendered his wife <b>Dhruvadevi</b> to the Shakas), the other shows <b>Chandragupta II</b> charging in, killing the Shaka king, rescuing Dhruvadevi, and marrying her himself after deposing his own brother. This room is the <b>widest room in the palace</b> — symbolizing the empire's <b>highest water mark</b> (maximum territorial extent) under him. A side door leads to the <b>Navratna Court</b> — nine glowing pedestals, each holding one gem-courtier (Kalidasa, Amarasimha, Dhanvantari, Varahamihira, etc). A Chinese visitor, <b>Fa-Hien</b>, sketches the room in his travel journal.
+    </div>
+
+    <div class="palace-room">
+      <b>ROOM 4 — The Library (Kumaragupta I)</b><br>
+      Endless bookshelves — this is <b>Nalanda University</b>, founded here in Bihar. But through the library window, you see dark clouds gathering on the horizon — the first <b>Hun riders</b> appearing in the distance.
+    </div>
+
+    <div class="palace-room">
+      <b>ROOM 5 — The War Room (Skandagupta)</b><br>
+      The clouds from Room 4 have arrived — Hun warriors banging on the gates. Skandagupta stands at the door, pushing them back successfully. Behind him, the throne has been dragged — the <b>capital has shifted from Saket to Ayodhya</b>, a retreat under pressure. On a side table sits a repaired dam model — the <b>Sudarshan Lake</b>, fixed yet again (after Rudradaman and earlier kings), with his name freshly carved into the Girnar rock beside it.
+    </div>
+
+    <p style="margin-top:16px;"><b>🚪 Exit corridor:</b> As you leave the palace, you pass a <b>decentralized village square</b> (Bhukti → Vishaya → Vithi → Grama, each with its own officer), then step outside into the <b>Ajanta–Ellora cave complex</b> carved into a cliff nearby — Buddhist monks chanting in Ajanta, three religions co-existing peacefully in Ellora.</p>
+  </div>
+</section>
+
+<!-- ===================== COMPLETE REVISION NOTES ===================== -->
+<section id="complete">
+  <div class="section-head"><span class="section-num">03</span><h2>Complete Revision Notes</h2></div>
+  <div class="toggle-all">
+    <button onclick="document.querySelectorAll('#complete details').forEach(d=>d.open=true)">⊕ Expand all</button>
+    <button onclick="document.querySelectorAll('#complete details').forEach(d=>d.open=false)">⊖ Collapse all</button>
+  </div>
+
+  <details class="block" open>
+    <summary>1. Founding & Chandragupta I <span class="tag tag-must">MUST KNOW</span></summary>
+    <div class="block-body">
+      <ul>
+        <li><b>Founder:</b> Shrigupta → son <b>Ghatotkacha</b> → son <b>Chandragupta I</b> (NOT the other way — a common trap).</li>
+        <li><b>Chandragupta I</b> ruled <b>319/320 AD – 335 AD</b> (lecture says ~334 AD).</li>
+        <li>Core territory: <b>Madhya Desh</b> — roughly Uttar Pradesh and surrounding region.</li>
+        <li>Title taken: <b>Maharajadhiraja</b> ("King of Kings") — first Gupta king to take a grand title.</li>
+        <li>Married <b>Kumaradevi</b>, a <b>Lichchhavi princess</b>. This marriage matters for generations — later kings proudly call themselves <i>Lichchhavi-Dauhitra</i> (grandson of Lichchhavis).</li>
+        <li>Started the <b>Gupta Era in 320 AD</b> — his coronation became the "Year Zero" for Gupta-period dating, just like AD starts from Christ's birth and the Saka Era starts from Kanishka's coronation (78 AD).</li>
+        <li>Issued gold coins called <b>Dinara</b>.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="block">
+    <summary>2. Gold Coins — The Recurring Trap Topic <span class="tag tag-must">MUST KNOW</span></summary>
+    <div class="block-body">
+      <table class="datatable">
+        <tr><th>Superlative</th><th>Dynasty/Group</th></tr>
+        <tr><td>First gold coins in India</td><td>Indo-Greeks</td></tr>
+        <tr><td>Coins with king's portrait/name attributed</td><td>Indo-Greeks</td></tr>
+        <tr><td>Purest gold coins</td><td>Kushans (esp. Kanishka's reign)</td></tr>
+        <tr><td>Largest <b>hoard</b> (single find) of gold coins</td><td>Kushans</td></tr>
+        <tr><td>Largest <b>number/variety</b> of gold coins issued overall</td><td><b>Gupta Dynasty</b></td></tr>
+      </table>
+      <p>This exact table is repeated <b>twice</b> in the lecture — that itself is a signal it's exam-favorite.</p>
+    </div>
+  </details>
+
+  <details class="block">
+    <summary>3. Samudragupta — "Napoleon of India" <span class="tag tag-must">MUST KNOW</span></summary>
+    <div class="block-body">
+      <ul>
+        <li>Ruled <b>335 AD – 380 AD</b>. Son of Chandragupta I.</li>
+        <li>Did <b>not</b> start any era — but considered the <b>greatest Gupta ruler</b>, "never defeated."</li>
+        <li>Source: <b>Prayag Prashasti</b> (Allahabad Pillar Inscription), composed by court poet <b>Harisen</b> — records <b>24 victorious battles</b>, zero defeats.</li>
+        <li>Title <b>"Napoleon of India"</b> given by historian <b>V.A. (Vincent Arthur) Smith</b> after reading the inscription.</li>
+        <li>Other titles: <b>Kaviraja</b>, <b>Parama-Bhagavata</b>, <b>Lichchhavi-Dauhitra</b>, <b>Sarva-rajochchetta</b> ("uprooter of all kings").</li>
+        <li>Coin type: shown <b>playing the Veena</b> (the warrior-musician image).</li>
+        <li>Performed the <b>Ashvamedha Yajna</b> (horse sacrifice — symbol of supreme sovereignty).</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="block">
+    <summary>4. Chandragupta II "Vikramaditya" — The Golden Peak <span class="tag tag-must">MUST KNOW</span></summary>
+    <div class="block-body">
+      <ul>
+        <li>Ruled <b>380 AD – 414/415 AD</b>. Son of Samudragupta.</li>
+        <li><b>The Ramgupta episode:</b> His elder brother <b>Ramgupta</b> was defeated by the Shakas and, in humiliation, agreed to hand over his wife <b>Dhruvadevi</b> to the Shaka king. Chandragupta II disapproved, went and <b>killed the Shaka ruler</b>, deposed Ramgupta, and then <b>married Dhruvadevi</b> himself (his own former sister-in-law).</li>
+        <li>Title: <b>Vikramaditya</b> — borrowed prestige from the earlier legendary Vikramaditya who defeated the Shakas in 57 BC and started the Vikram Samvat.</li>
+        <li><b>Highest water mark:</b> the Gupta Empire reached its <b>maximum territorial extent</b> under him.</li>
+        <li><b>Matrimonial alliance:</b> married his daughter <b>Prabhavati Gupta</b> to <b>Rudrasena II</b>, the Vakataka prince. Rudrasena II died young → Prabhavati Gupta ruled as regent → Guptas gained <b>indirect control over the Vakataka kingdom</b>.</li>
+        <li>His court housed the legendary <b>Navratnas</b> (Nine Gems) — see dedicated table below.</li>
+        <li><b>Fa-Hien</b> (Chinese Buddhist traveller) visited India during his reign — the <b>first Chinese traveller</b> to India.</li>
+        <li>Literary work of the era: <b>Mrichchhakatika</b> ("The Little Clay Cart") by <b>Shudraka</b> — love story of <b>Charudatta and Vasantasena</b>.</li>
+      </ul>
+
+      <h3 style="margin-top:18px;">The Navaratnas (Nine Gems) of Chandragupta II's Court</h3>
+      <table class="datatable">
+        <tr><th>Name</th><th>Specialization</th></tr>
+        <tr><td>Amarasimha</td><td>Lexicographer (compiled dictionary/thesaurus)</td></tr>
+        <tr><td>Dhanvantari</td><td>Physician</td></tr>
+        <tr><td>Harisena</td><td>Court poet</td></tr>
+        <tr><td>Kalidasa</td><td>Poet/dramatist — "Shakespeare of India"</td></tr>
+        <tr><td>Varahamihira</td><td>Astronomer (lecture mentions "grammarian" role too — cross-check)</td></tr>
+        <tr><td>Vararuchi</td><td>Grammarian/linguist</td></tr>
+        <tr><td>Vetala Bhatta</td><td>Astrologer</td></tr>
+        <tr><td>Shanku</td><td>Architect/astronomer (lecture: mathematician/architect)</td></tr>
+        <tr><td>Kshapanaka</td><td>Astrologer</td></tr>
+      </table>
+      <div class="hook">
+        <span class="hook-label">⚠ NAME COLLISION TRAP</span>
+        There are <b>TWO different Harisens</b> in this chapter — do not confuse them:
+        <ul>
+          <li><b>Harisena (court poet)</b> → wrote the <b>Prayag Prashasti</b> for <b>Samudragupta</b>.</li>
+          <li><b>Harishena (Vakataka king)</b> → patron under whom the <b>Ajanta caves</b> (rock-cut Buddhist viharas/chaityas) were built.</li>
+        </ul>
+      </div>
+
+      <h3 style="margin-top:18px;">Kalidasa's Works</h3>
+      <ul>
+        <li><b>Abhijnanashakuntalam</b> — play (Shakuntala's story)</li>
+        <li><b>Malavikagnimitram</b> — love story of Agnimitra (son of Pushyamitra Shunga, founder of Shunga dynasty after killing the last Mauryan king Brihadratha)</li>
+        <li><b>Raghuvamsham</b> — epic poem</li>
+        <li><b>Meghadutam</b> — lyric poem (the "Cloud Messenger")</li>
+        <li><b>Kumarasambhavam</b> — epic poem</li>
+        <li><b>Ritusamharam</b> — poem on seasons</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="block">
+    <summary>5. Kumaragupta I & Skandagupta — Cracks Begin <span class="tag tag-imp">IMPORTANT</span></summary>
+    <div class="block-body">
+      <ul>
+        <li><b>Kumaragupta I</b> ruled <b>415 AD – 455 AD</b>. Founded <b>Nalanda University</b> (Bihar). <b>Hun attacks began</b> during his reign.</li>
+        <li><b>Skandagupta</b> succeeded him. <b>Successfully repelled the Huns</b> — last strong Gupta ruler in military terms.</li>
+        <li>Shifted the capital from <b>Saket to Ayodhya</b> — a defensive retreat, signalling pressure on the empire.</li>
+        <li>Got the <b>Sudarshan Lake</b> (in Girnar, Gujarat) <b>repaired again</b> — same lake earlier repaired by Pushyagupta Vaishya (under Chandragupta Maurya) and by Rudradaman I (Shaka ruler). Each repairer inscribed his name on the Girnar Rock.</li>
+      </ul>
+      <div class="hook">
+        <span class="hook-label">🔗 Sudarshan Lake — repaired 3 times</span>
+        <b>Built:</b> Pushyagupta Vaishya (Chandragupta Maurya's governor) → <b>Repaired:</b> Rudradaman I (Shaka ruler, also wrote the famous Junagadh inscription) → <b>Repaired again:</b> Skandagupta (Gupta). All three inscriptions found at <b>Girnar Hills, Gujarat</b>.
+      </div>
+    </div>
+  </details>
+
+  <details class="block">
+    <summary>6. Administration — Decentralized System <span class="tag tag-imp">IMPORTANT</span></summary>
+    <div class="block-body">
+      <p>Unlike the highly centralized Mauryan administration, the Gupta administration was <b>decentralized</b> — power flowed down to local/village units, similar in spirit to how the 73rd & 74th Amendments (1992) gave constitutional status to Panchayats/Municipalities in modern India.</p>
+      <table class="datatable">
+        <tr><th>Unit (largest → smallest)</th><th>Head/Officer</th></tr>
+        <tr><td>Bhukti (≈ Province/State)</td><td>Uparika</td></tr>
+        <tr><td>Vishaya (≈ District)</td><td>Vishayapati</td></tr>
+        <tr><td>Vithi (≈ Sub-division)</td><td>Nagarpati</td></tr>
+        <tr><td>Grama (Village)</td><td>Gramika</td></tr>
+      </table>
+      <h3 style="margin-top:14px;">Key Officers</h3>
+      <table class="datatable">
+        <tr><th>Officer</th><th>Role</th></tr>
+        <tr><td>Kumaramatya</td><td>Important provincial officer</td></tr>
+        <tr><td>Mahadandanayaka</td><td>Officer in charge of punishment/justice ("danda" = punishment)</td></tr>
+        <tr><td>Sandhivigrahika</td><td>Officer of War & Peace (treaties, diplomacy, punishment)</td></tr>
+        <tr><td>Nagara-Shreshthi</td><td>Chief Banker — most important of the four</td></tr>
+      </table>
+      <div class="hook">
+        <span class="hook-label">⚠ EXAM-ASKED FACT</span>
+        <b>Harisena held three offices</b> — Kumaramatya, Mahadandanayaka, Sandhivigrahika — but <b>NOT</b> Nagara-Shreshthi (Chief Banker). This exact distinction has been asked before.
+      </div>
+      <h3 style="margin-top:14px;">Taxes</h3>
+      <table class="datatable">
+        <tr><th>Tax</th><th>Meaning</th></tr>
+        <tr><td>Bhaga</td><td>1/6th of agricultural produce (standard land tax)</td></tr>
+        <tr><td>Bhoga</td><td>Periodic supply of fruits/flowers to the king</td></tr>
+        <tr><td>Bali</td><td>A voluntary/occasional tax</td></tr>
+        <tr><td>Uparikara</td><td>Extra tax (compare to modern "surcharge" — tax on tax for high earners)</td></tr>
+        <tr><td>Vishti</td><td>Forced labour</td></tr>
+        <tr><td>Halivakara</td><td>Tax paid by plough owners ("hala" = plough)</td></tr>
+        <tr><td>Udranga / Udaka-bhaga</td><td>Water tax</td></tr>
+        <tr><td>Hiranya</td><td>Tax for special purposes (compare to modern "cess")</td></tr>
+        <tr><td>Senabhaktam</td><td>Villages had to bear expenses of army passing through</td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details class="block">
+    <summary>7. Art, Architecture & Culture <span class="tag tag-imp">IMPORTANT</span></summary>
+    <div class="block-body">
+      <table class="datatable">
+        <tr><th>Site</th><th>Location</th><th>Key Fact</th></tr>
+        <tr><td>Udayagiri Caves</td><td>Vidisha, Madhya Pradesh</td><td>Vishnu depicted as <b>Varaha (Boar) avatar</b> — protecting Earth; relevant to the 10-avatar list ending in Kalki</td></tr>
+        <tr><td>Udayagiri & Khandagiri Caves</td><td>Odisha (different from above!)</td><td>Built by <b>Kharavela</b>, king of Kalinga</td></tr>
+        <tr><td>Bagh Caves</td><td>Madhya Pradesh</td><td>Buddhist caves</td></tr>
+        <tr><td>Karle & Kanheri Caves</td><td>Maharashtra</td><td>Built by the <b>Satavahanas</b></td></tr>
+        <tr><td>Dashavatara Temple</td><td>Deogarh, Lalitpur (UP), near Jhansi</td><td>Dedicated to Vishnu's 10 avatars</td></tr>
+        <tr><td>Bhitargaon Temple</td><td>Kanpur, UP</td><td><b>Oldest brick temple</b> in India; dedicated to Krishna</td></tr>
+        <tr><td>Eran Pillar Inscription</td><td>Eran, Madhya Pradesh</td><td><b>First evidence of Sati practice</b> in India</td></tr>
+      </table>
+      <div class="hook">
+        <span class="hook-label">🔗 Chalcolithic Connection</span>
+        Eran (MP) also appears in the <b>Chalcolithic (Copper Age)</b> chapter — site of Eran culture. Compare: Ahar-Banas & Gilund (Rajasthan), Eran & Kayatha (MP), Jorwe (Maharashtra) cultures.
+      </div>
+    </div>
+  </details>
+
+  <details class="block">
+    <summary>8. The Vakatakas & Ajanta-Ellora <span class="tag tag-imp">IMPORTANT</span></summary>
+    <div class="block-body">
+      <ul>
+        <li>Vakatakas ruled <b>Central & Southern India</b>, were <b>contemporaries of the Guptas</b>, and succeeded the <b>Satavahanas</b> as feudatories in that region.</li>
+        <li>Religion: followed <b>Brahmanism</b> but <b>patronized Buddhism</b> too.</li>
+        <li>Called <b>"Vindhyakas"</b> in the Puranas. Founder: <b>Vindhyashakti</b> (named after the Vindhya range, which sits opposite the Satpura range — the rivers Tapi/Tapti, Narmada, and Damodar flow through this rift valley region).</li>
+        <li>Damodar river is called the <b>"Sorrow of Bengal"</b> (compare: Kosi = "Sorrow of Bihar").</li>
+        <li>Last prominent Vakataka ruler: <b>Prabhavati Gupta</b> (after husband Rudrasena II's death — she was Chandragupta II's daughter).</li>
+        <li><b>Ajanta Caves</b> — rock-cut Buddhist <b>Viharas</b> (residences) and <b>Chaityas</b> (worship halls), construction <b>started under the Satavahanas</b>, significant work continued under Vakataka king <b>Harishena</b>. Exclusively <b>Mahayana Buddhist</b> — features image worship of Buddha and the <b>Bodhisattva</b> concept (one who delays own nirvana to help others attain it).</li>
+        <li><b>Ellora Caves</b> — unique for housing <b>Buddhist, Jain, AND Hindu</b> caves together, showing religious co-existence.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ===================== MEMORY HOOKS ===================== -->
+<section id="hooks">
+  <div class="section-head"><span class="section-num">04</span><h2>Smart Memory Hooks</h2></div>
+
+  <div class="hook">
+    <span class="hook-label">👑 FAMILY TREE HOOK</span>
+    <b>Shri → Ghato → Chandra I → Samudra → Chandra II → Kumara → Skanda</b><br>
+    Picture a <b>river (Samudra = ocean) flowing between two mountains (Chandra = moon, twice)</b>, with a <b>child (Kumara)</b> playing on the bank, and a final guardian <b>(Skanda)</b> — Lord Kartikeya's name — standing watch against invaders. The river-and-mountains image mirrors the actual rise (mountain), peak (ocean), fall start (child), and last defense (warrior-god) of the dynasty.
+  </div>
+
+  <div class="hook">
+    <span class="hook-label">🪙 GOLD COIN HOOK</span>
+    Picture <b>4 jars</b> on a shelf: <b>Indo-Greek jar</b> labeled "FIRST" (oldest, dusty), <b>Kushan jar</b> labeled "PUREST & BIGGEST HOARD" (shiniest, heaviest), and a giant <b>Gupta sack</b> overflowing with coins labeled "MOST IN NUMBER" (quantity, not purity). The jars get less pure but more numerous as you move Indo-Greek → Kushan → Gupta.
+  </div>
+
+  <div class="hook">
+    <span class="hook-label">⚔️ RAMGUPTA-CHANDRAGUPTA II HOOK</span>
+    Think of it like a <b>Bollywood plot twist</b>: weak elder brother loses a bet (battle) and is forced to give up his wife. Younger brother storms in, kills the villain, dethrones his own coward brother, and marries the rescued queen. <b>"Vikramaditya" wasn't born a hero — he became one mid-story.</b>
+  </div>
+
+  <div class="hook">
+    <span class="hook-label">💍 PRABHAVATI GUPTA HOOK</span>
+    A wedding connects two kingdoms: <b>Gupta bride + Vakataka groom</b>. Groom dies young → bride becomes regent → her father's kingdom (Gupta) quietly absorbs influence over her late husband's kingdom (Vakataka). <b>Marriage as a soft-power weapon</b> — no war needed.
+  </div>
+
+  <div class="hook">
+    <span class="hook-label">🏛️ NAVRATNA HOOK</span>
+    Imagine <b>9 chairs around a round table</b>, each with a labeled nameplate and a tool in front of it: a <b>dictionary</b> (Amarasimha), a <b>medicine jar</b> (Dhanvantari), a <b>quill</b> (Harisena/Kalidasa), a <b>telescope</b> (Varahamihira), a <b>crystal ball</b> (Vetala Bhatta/Kshapanaka). Walking around this table = recalling all nine.
+  </div>
+
+  <div class="hook">
+    <span class="hook-label">🌊 SUDARSHAN LAKE HOOK</span>
+    Picture <b>one dam wall with three name-plaques stacked on top of each other</b>: bottom plaque "Pushyagupta Vaishya — built it," middle plaque "Rudradaman — repaired it," top plaque "Skandagupta — repaired it again." <b>Same dam, three different empires taking credit over centuries.</b>
+  </div>
+</section>
+
+<!-- ===================== CONCEPT CONNECTIONS ===================== -->
+<section id="connections">
+  <div class="section-head"><span class="section-num">05</span><h2>Concept Connections</h2></div>
+
+  <div class="flow">
+    <span class="node">Chandragupta I marries Kumaradevi (Lichchhavi)</span>
+    <span class="arrow">→</span>
+    <span class="node">Title "Lichchhavi-Dauhitra" used by descendants</span>
+    <span class="arrow">→</span>
+    <span class="node">Samudragupta proudly inherits this title</span>
+  </div>
+
+  <div class="flow">
+    <span class="node">Ramgupta defeated by Shakas, surrenders wife</span>
+    <span class="arrow">→</span>
+    <span class="node">Chandragupta II kills Shaka king, deposes Ramgupta</span>
+    <span class="arrow">→</span>
+    <span class="node">Marries Dhruvadevi, takes title "Vikramaditya"</span>
+    <span class="arrow">→</span>
+    <span class="node">Empire reaches highest water mark</span>
+  </div>
+
+  <div class="flow">
+    <span class="node">Chandragupta II marries daughter to Vakataka prince Rudrasena II</span>
+    <span class="arrow">→</span>
+    <span class="node">Rudrasena II dies young</span>
+    <span class="arrow">→</span>
+    <span class="node">Prabhavati Gupta rules as regent</span>
+    <span class="arrow">→</span>
+    <span class="node">Indirect Gupta control over Vakataka kingdom</span>
+  </div>
+
+  <div class="flow">
+    <span class="node">Hun attacks begin (Kumaragupta I)</span>
+    <span class="arrow">→</span>
+    <span class="node">Attacks intensify (Skandagupta)</span>
+    <span class="arrow">→</span>
+    <span class="node">Skandagupta repels Huns but shifts capital Saket → Ayodhya</span>
+    <span class="arrow">→</span>
+    <span class="node">Signals long-term weakening of empire</span>
+  </div>
+
+  <div class="flow">
+    <span class="node">Satavahanas start Ajanta caves</span>
+    <span class="arrow">→</span>
+    <span class="node">Vakataka king Harishena continues/expands work</span>
+    <span class="arrow">→</span>
+    <span class="node">Become exclusively Mahayana Buddhist site</span>
+  </div>
+
+  <div class="flow">
+    <span class="node">Centralized Mauryan model</span>
+    <span class="arrow">→</span>
+    <span class="node">Decentralized Gupta model (Bhukti→Vishaya→Vithi→Grama)</span>
+    <span class="arrow">→</span>
+    <span class="node">Modern parallel: 73rd/74th Amendment (1992) → Panchayati Raj</span>
+  </div>
+</section>
+
+<!-- ===================== EXAM TRAPS ===================== -->
+<section id="traps">
+  <div class="section-head"><span class="section-num">06</span><h2>⚠ Exam Traps</h2></div>
+
+  <div class="trap">
+    <div class="trap-head">TRAP 1 — FOUNDER vs. FIRST KING</div>
+    <table>
+      <tr><th>Wrong assumption</th><th>Correct fact</th></tr>
+      <tr><td>Shrigupta's son was Chandragupta I</td><td>Shrigupta's son was <b>Ghatotkacha</b>; Chandragupta I was <b>Ghatotkacha's son</b></td></tr>
+    </table>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">TRAP 2 — GOLD COIN SUPERLATIVES (most-asked trap in this chapter)</div>
+    <table>
+      <tr><th>If question says...</th><th>Answer</th></tr>
+      <tr><td>"First to introduce gold coins"</td><td>Indo-Greeks</td></tr>
+      <tr><td>"Largest hoard / treasure trove found"</td><td>Kushans</td></tr>
+      <tr><td>"Purest gold coins"</td><td>Kushans</td></tr>
+      <tr><td>"Largest number/variety issued" (no specific ruler named)</td><td>Gupta Dynasty</td></tr>
+    </table>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">TRAP 3 — TWO HARISENAS</div>
+    <table>
+      <tr><th>Name</th><th>Identity</th><th>Work</th></tr>
+      <tr><td>Harisena (1)</td><td>Court poet of Samudragupta</td><td>Composed Prayag Prashasti</td></tr>
+      <tr><td>Harishena (2)</td><td>Vakataka king</td><td>Patron of Ajanta cave excavation</td></tr>
+    </table>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">TRAP 4 — TWO UDAYAGIRIS</div>
+    <table>
+      <tr><th>Site</th><th>State</th><th>Associated with</th></tr>
+      <tr><td>Udayagiri Caves</td><td>Vidisha, Madhya Pradesh</td><td>Varaha (Boar) avatar of Vishnu</td></tr>
+      <tr><td>Udayagiri & Khandagiri Caves</td><td>Odisha</td><td>Built by Kharavela</td></tr>
+    </table>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">TRAP 5 — RUDRADAMAN vs RUDRASENA</div>
+    <table>
+      <tr><th>Name</th><th>Identity</th><th>Fact</th></tr>
+      <tr><td>Rudradaman I</td><td>Shaka (Western Satrap) ruler</td><td>Repaired Sudarshan Lake; wrote Junagadh inscription</td></tr>
+      <tr><td>Rudrasena II</td><td>Vakataka prince</td><td>Married Prabhavati Gupta; died young</td></tr>
+    </table>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">TRAP 6 — HARISENA'S OFFICES (specific, exam-asked)</div>
+    <table>
+      <tr><th>Held by Harisena?</th><th>Office</th></tr>
+      <tr><td>✅ Yes</td><td>Kumaramatya, Mahadandanayaka, Sandhivigrahika</td></tr>
+      <tr><td>❌ No</td><td>Nagara-Shreshthi (Chief Banker)</td></tr>
+    </table>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">TRAP 7 — ERA STARTERS (don't mix up who started which era)</div>
+    <table>
+      <tr><th>Era</th><th>Started by</th><th>Year</th></tr>
+      <tr><td>Vikram Samvat</td><td>Vikramaditya (Parmar), defeated Shaka ruler</td><td>57 BC</td></tr>
+      <tr><td>Saka Era</td><td>Kanishka (Kushan, 3rd ruler)</td><td>78 AD</td></tr>
+      <tr><td>Gupta Era</td><td>Chandragupta I</td><td>320 AD</td></tr>
+      <tr><td><i>Samudragupta</i></td><td><i>Did NOT start any era</i></td><td>—</td></tr>
+    </table>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">TRAP 8 — "SORROW OF" RIVERS</div>
+    <table>
+      <tr><th>River</th><th>Nicknamed</th></tr>
+      <tr><td>Damodar</td><td>Sorrow of Bengal</td></tr>
+      <tr><td>Kosi</td><td>Sorrow of Bihar</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== EXAMINER'S FAVOURITE QUESTIONS ===================== -->
+<section id="examiner">
+  <div class="section-head"><span class="section-num">07</span><h2>Examiner's Favourite Questions</h2></div>
+
+  <div class="card">
+    <h3>🎯 Chronology Questions</h3>
+    <p>Arrange in order: Shrigupta → Ghatotkacha → Chandragupta I → Samudragupta → Chandragupta II → Kumaragupta I → Skandagupta.</p>
+    <p>Arrange eras: Vikram Samvat (57 BC) → Saka Era (78 AD) → Gupta Era (320 AD).</p>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Match the Following (high probability)</h3>
+    <ul>
+      <li>Ruler ↔ Title (Chandragupta I–Maharajadhiraja; Samudragupta–Napoleon of India; Chandragupta II–Vikramaditya)</li>
+      <li>Navratna ↔ Specialization</li>
+      <li>Cave site ↔ State/Builder (Udayagiri-Odisha–Kharavela vs Udayagiri-MP–Varaha)</li>
+      <li>Tax name ↔ Meaning (Bhaga, Bhoga, Bali, Hiranya, Vishti...)</li>
+      <li>Administrative unit ↔ Head officer (Bhukti–Uparika, Vishaya–Vishayapati...)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Statement-Based / Assertion-Reason</h3>
+    <ul>
+      <li>"Samudragupta started the Gupta Era." → <b>FALSE</b> (Chandragupta I did).</li>
+      <li>"The Gupta dynasty issued the purest gold coins in ancient India." → <b>FALSE</b> (Kushans did; Guptas issued the largest number).</li>
+      <li>"Harisena was both Samudragupta's court poet and a Vakataka king." → <b>FALSE</b> — two different people with similar names.</li>
+      <li>"Ajanta caves represent Hinayana Buddhism." → <b>FALSE</b> — Mahayana, with image worship and Bodhisattva concept.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Confusing/Frequently Misread Facts</h3>
+    <ul>
+      <li>Vincent A. Smith gave Samudragupta the title "Napoleon of India" — a <b>modern historian's label</b>, not a title Samudragupta used himself.</li>
+      <li>"Highest water mark" = territorial extent, not a literal water-related achievement — applies to <b>Chandragupta II</b>, not Samudragupta (despite Samudragupta's military record).</li>
+      <li>Capital shift was Saket → <b>Ayodhya</b> (not the reverse) under Skandagupta.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== ACTIVE RECALL ===================== -->
+<section id="recall">
+  <div class="section-head"><span class="section-num">08</span><h2>Active Recall Section</h2></div>
+  <p class="section-desc">Click each question to reveal the answer. Try to answer in your head FIRST.</p>
+
+  <details class="qa"><summary>Who founded the Gupta Empire, and who was his grandson?</summary><div class="answer">Shrigupta founded it; his grandson (via son Ghatotkacha) was Chandragupta I.</div></details>
+
+  <details class="qa"><summary>In which year did the Gupta Era begin, and who started it?</summary><div class="answer">320 AD, started by Chandragupta I upon his coronation.</div></details>
+
+  <details class="qa"><summary>Who gave Samudragupta the title "Napoleon of India," and based on what source?</summary><div class="answer">Historian V.A. (Vincent Arthur) Smith, based on the Prayag Prashasti (Allahabad Pillar Inscription) composed by Harisena, which records 24 undefeated battles.</div></details>
+
+  <details class="qa"><summary>Fill in the blank: The purest gold coins were issued by the ______ dynasty, but the largest number of gold coins were issued by the ______ dynasty.</summary><div class="answer">Kushan; Gupta.</div></details>
+
+  <details class="qa"><summary>What happened to Ramgupta's wife, and who rescued her?</summary><div class="answer">Dhruvadevi was to be surrendered to the Shakas after Ramgupta's defeat; Chandragupta II killed the Shaka king, deposed Ramgupta, and married Dhruvadevi himself.</div></details>
+
+  <details class="qa"><summary>Which Vakataka prince married Prabhavati Gupta, and what happened after his death?</summary><div class="answer">Rudrasena II. After his death, Prabhavati Gupta became regent, giving the Guptas indirect control over the Vakataka kingdom.</div></details>
+
+  <details class="qa"><summary>One-liner: Who built Nalanda University and where?</summary><div class="answer">Kumaragupta I, in Bihar.</div></details>
+
+  <details class="qa"><summary>Reverse question: This ruler successfully drove out the Huns but had to shift his capital from Saket to Ayodhya. Who is he?</summary><div class="answer">Skandagupta.</div></details>
+
+  <details class="qa"><summary>Rapid fire: Name 3 of the Navratnas and their specializations.</summary><div class="answer">Any three of: Amarasimha (lexicographer), Dhanvantari (physician), Harisena (court poet), Kalidasa (poet-dramatist), Varahamihira (astronomer), Vararuchi (grammarian), Vetala Bhatta (astrologer), Shanku (architect), Kshapanaka (astrologer).</div></details>
+
+  <details class="qa"><summary>Which Chinese traveller visited India during Chandragupta II's reign, and what's notable about him?</summary><div class="answer">Fa-Hien — the first Chinese traveller to visit India.</div></details>
+
+  <details class="qa"><summary>Fill in the blank: The administrative unit Bhukti was headed by the ______, Vishaya by the ______, and the village by the ______.</summary><div class="answer">Uparika; Vishayapati; Gramika.</div></details>
+
+  <details class="qa"><summary>What tax was equivalent to a modern "surcharge," and what was equivalent to a modern "cess"?</summary><div class="answer">Uparikara = surcharge (extra tax); Hiranya = cess (tax for special purposes).</div></details>
+
+  <details class="qa"><summary>Which inscription gives the first evidence of Sati practice in India, and where is it located?</summary><div class="answer">The Eran Pillar Inscription, located in Madhya Pradesh.</div></details>
+
+  <details class="qa"><summary>Name the three offices Harisena held — and the one he did NOT hold.</summary><div class="answer">Held: Kumaramatya, Mahadandanayaka, Sandhivigrahika. Did NOT hold: Nagara-Shreshthi (Chief Banker).</div></details>
+
+  <details class="qa"><summary>What distinguishes Ajanta caves from Ellora caves religiously?</summary><div class="answer">Ajanta is exclusively Mahayana Buddhist; Ellora has Buddhist, Jain, AND Hindu caves together.</div></details>
+
+  <details class="qa"><summary>Who built the Sudarshan Lake, and who repaired it (in order)?</summary><div class="answer">Built by Pushyagupta Vaishya (under Chandragupta Maurya); repaired by Rudradaman I (Shaka ruler); repaired again by Skandagupta (Gupta).</div></details>
+</section>
+
+<!-- ===================== HIGH YIELD ===================== -->
+<section id="highyield">
+  <div class="section-head"><span class="section-num">09</span><h2>High-Yield Revision Notes</h2></div>
+  <div class="card">
+    <h3>The skeleton you must never forget</h3>
+    <ol>
+      <li><b>Shrigupta</b> — founder (title-less)</li>
+      <li><b>Ghatotkacha</b> — Shrigupta's son (skip-link, rarely asked)</li>
+      <li><b>Chandragupta I</b> (320–335 AD) — Maharajadhiraja; married Kumaradevi (Lichchhavi); started Gupta Era 320 AD</li>
+      <li><b>Samudragupta</b> (335–380 AD) — "Napoleon of India" (V.A. Smith); Prayag Prashasti by Harisena; 24 victories; Ashvamedha Yajna</li>
+      <li><b>Ramgupta</b> — weak interlude; lost wife Dhruvadevi to Shakas</li>
+      <li><b>Chandragupta II "Vikramaditya"</b> (380–414 AD) — killed Shaka king, married Dhruvadevi; highest water mark; Navratnas; Fa-Hien visited; daughter Prabhavati married into Vakatakas</li>
+      <li><b>Kumaragupta I</b> (415–455 AD) — founded Nalanda; Hun attacks begin</li>
+      <li><b>Skandagupta</b> — repelled Huns; shifted capital Saket→Ayodhya; repaired Sudarshan Lake</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3>Other high-yield blocks</h3>
+    <ul>
+      <li>Gold coin hierarchy: First=Indo-Greek, Purest/Largest hoard=Kushan, Most in number=Gupta</li>
+      <li>Administration: Bhukti(Uparika)→Vishaya(Vishayapati)→Vithi(Nagarpati)→Grama(Gramika)</li>
+      <li>Taxes: Bhaga(1/6th), Bhoga, Bali, Uparikara(surcharge), Vishti(labour), Hiranya(cess), Senabhaktam</li>
+      <li>Vakatakas: contemporaries of Guptas, called "Vindhyakas" in Puranas, founder Vindhyashakti, last ruler Prabhavati Gupta</li>
+      <li>Ajanta=Mahayana Buddhist only; Ellora=Buddhist+Jain+Hindu</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== ULTRA FAST ===================== -->
+<section id="ultrafast">
+  <div class="section-head"><span class="section-num">10</span><h2>Ultra-Fast Revision Sheet</h2></div>
+  <div class="speed-grid">
+    <div class="speed-card">
+      <h4>Rulers & Dates</h4>
+      <ul>
+        <li>Chandragupta I: 320–335</li>
+        <li>Samudragupta: 335–380</li>
+        <li>Chandragupta II: 380–414</li>
+        <li>Kumaragupta I: 415–455</li>
+        <li>Skandagupta: 455 onward</li>
+      </ul>
+    </div>
+    <div class="speed-card">
+      <h4>Titles</h4>
+      <ul>
+        <li>Chandragupta I → Maharajadhiraja</li>
+        <li>Samudragupta → Napoleon of India</li>
+        <li>Chandragupta II → Vikramaditya</li>
+      </ul>
+    </div>
+    <div class="speed-card">
+      <h4>Gold Coins</h4>
+      <ul>
+        <li>First: Indo-Greek</li>
+        <li>Purest + hoard: Kushan</li>
+        <li>Most in number: Gupta</li>
+      </ul>
+    </div>
+    <div class="speed-card">
+      <h4>Key Sources</h4>
+      <ul>
+        <li>Prayag Prashasti → Harisena</li>
+        <li>Eran Pillar → first Sati evidence</li>
+        <li>Girnar rock → Sudarshan Lake repairs</li>
+      </ul>
+    </div>
+    <div class="speed-card">
+      <h4>Caves</h4>
+      <ul>
+        <li>Ajanta → Mahayana only</li>
+        <li>Ellora → Buddhist+Jain+Hindu</li>
+        <li>Udayagiri (Odisha) → Kharavela</li>
+        <li>Udayagiri (MP) → Varaha avatar</li>
+      </ul>
+    </div>
+    <div class="speed-card">
+      <h4>Hun Timeline</h4>
+      <ul>
+        <li>Begin: Kumaragupta I</li>
+        <li>Repelled: Skandagupta</li>
+        <li>Capital: Saket → Ayodhya</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 30 SEC SHEET ===================== -->
+<section id="thirtysec">
+  <div class="section-head"><span class="section-num">11</span><h2>30-Second Revision Sheet</h2></div>
+  <div class="card" style="font-size:15px;">
+    <p><b>Gupta = 320–550 AD.</b> Founder Shrigupta → Chandragupta I (320 era, Maharajadhiraja, Kumaradevi-Lichchhavi) → Samudragupta (Napoleon of India, 24 wars, Prayag Prashasti/Harisena) → Chandragupta II Vikramaditya (highest water mark, killed Shaka king, Navratnas, Fa-Hien) → Kumaragupta I (Nalanda, Huns begin) → Skandagupta (Huns repelled, Saket→Ayodhya).</p>
+    <p><b>Coins:</b> First=Indo-Greek, Purest/Hoard=Kushan, Most=Gupta. <b>Admin:</b> Bhukti→Vishaya→Vithi→Grama. <b>Vakatakas</b> = Gupta in-laws, Prabhavati Gupta regent. <b>Ajanta</b>=Mahayana only; <b>Ellora</b>=all 3 religions.</p>
+  </div>
+</section>
+
+<!-- ===================== LAST NIGHT ===================== -->
+<section id="lastnight">
+  <div class="section-head"><span class="section-num">12</span><h2>Last-Night-Before-Exam Sheet</h2></div>
+  <div class="lastnight">
+    <h3>🔥 If you remember ONLY this, remember this:</h3>
+    <div class="grid2">
+      <div>
+        <ul>
+          <li><b>320 AD</b> = Gupta Era begins (Chandragupta I)</li>
+          <li><b>Samudragupta</b> = Napoleon of India, never lost a battle</li>
+          <li><b>Chandragupta II</b> = Vikramaditya, biggest empire, killed a Shaka king for his brother's honour</li>
+          <li><b>Gold coins:</b> First-Indo Greek, Purest-Kushan, Most-Gupta</li>
+        </ul>
+      </div>
+      <div>
+        <ul>
+          <li><b>Nalanda</b> = Kumaragupta I</li>
+          <li><b>Huns repelled</b> = Skandagupta (capital moved to Ayodhya)</li>
+          <li><b>Two Harisenas</b>: poet ≠ Vakataka king</li>
+          <li><b>Ajanta</b> = Mahayana only; <b>Ellora</b> = all religions</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:14px; color:var(--text-dim); font-style:italic;">Walk through the five-room palace one last time before you sleep. Coronation Hall → War Trophy Room → Hall of Mirrors → Library → War Room. That's the whole chapter.</p>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <span class="om">𑂍 𑂧 𑂩 𑂩 𑂧</span>
+  Gupta Empire Revision Vault — built for repeated revision, not one-time reading.
+</footer>
+
+</body>
+</html>

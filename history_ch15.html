@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sangam Age — Elite Revision Notes | SSC CGL</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Fraunces:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1e2a;
+    --border: #252a38;
+    --accent-gold: #f5c842;
+    --accent-teal: #3ecfb2;
+    --accent-red: #ff5e5e;
+    --accent-blue: #5b9cf6;
+    --accent-purple: #a78bfa;
+    --text: #d4d8e8;
+    --text-dim: #7a8099;
+    --text-bright: #eef0f8;
+    --fire: #ff7a2f;
+    --star: #f5c842;
+    --plus: #3ecfb2;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,15,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 0; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav a {
+    color: var(--text-dim); text-decoration: none; font-size: 11px;
+    font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    padding: 1rem .85rem; white-space: nowrap; border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  nav a:hover, nav a.active { color: var(--accent-gold); border-color: var(--accent-gold); }
+  .nav-brand {
+    font-family: 'Fraunces', serif; font-size: 14px; color: var(--accent-gold);
+    margin-right: 1.5rem; white-space: nowrap; border-bottom: none !important;
+    padding-left: 0 !important;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #141a2e 50%, #0e1320 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 2rem 3rem;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(245,200,66,.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--accent-teal); font-weight: 600; margin-bottom: .75rem;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 700; color: var(--text-bright); line-height: 1.15;
+    margin-bottom: .75rem;
+  }
+  .hero h1 span { color: var(--accent-gold); }
+  .hero-sub { color: var(--text-dim); font-size: 14px; max-width: 500px; margin: 0 auto; }
+  .hero-tags { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem; }
+  .htag {
+    padding: .25rem .7rem; border-radius: 100px; font-size: 11px; font-weight: 600;
+    letter-spacing: .05em;
+  }
+  .htag-gold { background: rgba(245,200,66,.12); color: var(--accent-gold); border: 1px solid rgba(245,200,66,.25); }
+  .htag-teal { background: rgba(62,207,178,.1); color: var(--accent-teal); border: 1px solid rgba(62,207,178,.2); }
+  .htag-red  { background: rgba(255,94,94,.1);  color: var(--accent-red);  border: 1px solid rgba(255,94,94,.2); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+  .section { margin-bottom: 3rem; }
+
+  /* ── SECTION HEADERS ── */
+  .sec-head {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem; padding-bottom: .75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .sec-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .sec-icon-gold { background: rgba(245,200,66,.12); }
+  .sec-icon-teal { background: rgba(62,207,178,.1); }
+  .sec-icon-red  { background: rgba(255,94,94,.1); }
+  .sec-icon-blue { background: rgba(91,156,246,.1); }
+  .sec-icon-purple { background: rgba(167,139,250,.1); }
+  .sec-head h2 {
+    font-family: 'Fraunces', serif; font-size: 1.35rem; font-weight: 700;
+    color: var(--text-bright);
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.25rem 1.4rem; margin-bottom: 1rem;
+  }
+  .card-title {
+    font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    margin-bottom: .6rem;
+  }
+  .card-gold .card-title { color: var(--accent-gold); }
+  .card-teal .card-title { color: var(--accent-teal); }
+  .card-red  .card-title { color: var(--accent-red); }
+  .card-blue .card-title { color: var(--accent-blue); }
+  .card-purple .card-title { color: var(--accent-purple); }
+  .card-gold { border-left: 3px solid var(--accent-gold); }
+  .card-teal { border-left: 3px solid var(--accent-teal); }
+  .card-red  { border-left: 3px solid var(--accent-red); }
+  .card-blue { border-left: 3px solid var(--accent-blue); }
+  .card-purple { border-left: 3px solid var(--accent-purple); }
+
+  /* ── PALACE ── */
+  .palace {
+    background: linear-gradient(135deg, #141a2a, #1a1430);
+    border: 1px solid rgba(167,139,250,.25); border-radius: 12px;
+    padding: 1.5rem 1.75rem; position: relative; overflow: hidden;
+  }
+  .palace::before {
+    content: '🧠';
+    position: absolute; right: 1rem; top: 1rem; font-size: 3rem; opacity: .08;
+  }
+  .palace-stop {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: .75rem 0; border-bottom: 1px solid rgba(167,139,250,.1);
+  }
+  .palace-stop:last-child { border-bottom: none; }
+  .palace-num {
+    width: 28px; height: 28px; border-radius: 50%; background: rgba(167,139,250,.2);
+    color: var(--accent-purple); font-weight: 700; font-size: 12px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .palace-loc { font-weight: 600; color: var(--text-bright); font-size: 13px; }
+  .palace-fact { color: var(--text-dim); font-size: 13px; }
+
+  /* ── TABLES ── */
+  .rev-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: .5rem 0; }
+  .rev-table th {
+    background: var(--bg3); color: var(--accent-gold); font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase; font-size: 11px;
+    padding: .6rem .85rem; text-align: left; border-bottom: 2px solid var(--border);
+  }
+  .rev-table td { padding: .6rem .85rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .rev-table tr:hover td { background: var(--bg3); }
+  .rev-table tr:last-child td { border-bottom: none; }
+  .rev-table .hl { color: var(--accent-teal); font-weight: 600; }
+
+  /* ── TAG PILLS ── */
+  .pill {
+    display: inline-block; padding: .15rem .5rem; border-radius: 100px;
+    font-size: 11px; font-weight: 700; margin-right: .3rem;
+  }
+  .pill-fire { background: rgba(255,122,47,.15); color: var(--fire); }
+  .pill-star { background: rgba(245,200,66,.12); color: var(--star); }
+  .pill-plus { background: rgba(62,207,178,.1); color: var(--plus); }
+
+  /* ── HOOK BOX ── */
+  .hook {
+    background: linear-gradient(135deg, #141e1a, #0f1a1e);
+    border: 1px solid rgba(62,207,178,.2); border-radius: 10px;
+    padding: 1.1rem 1.4rem; margin-bottom: .85rem;
+  }
+  .hook-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent-teal); margin-bottom: .4rem;
+  }
+
+  /* ── TRAP BOX ── */
+  .trap {
+    background: rgba(255,94,94,.05); border: 1px solid rgba(255,94,94,.25);
+    border-radius: 10px; padding: 1.1rem 1.4rem; margin-bottom: .85rem;
+  }
+  .trap-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent-red); margin-bottom: .4rem;
+  }
+
+  /* ── QUESTION BOX ── */
+  .qbox {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 10px;
+    padding: 1rem 1.3rem; margin-bottom: .75rem; cursor: pointer;
+  }
+  .qbox-q { font-weight: 600; color: var(--text-bright); font-size: 13.5px; margin-bottom: .3rem; }
+  .qbox-a {
+    color: var(--accent-teal); font-size: 13px; font-weight: 500;
+    display: none; margin-top: .4rem; padding-top: .4rem; border-top: 1px solid var(--border);
+  }
+  .qbox.open .qbox-a { display: block; }
+  .qbox-hint { font-size: 11px; color: var(--text-dim); margin-top: .25rem; }
+  .reveal-btn {
+    font-size: 11px; color: var(--accent-blue); border: none; background: none;
+    cursor: pointer; font-family: inherit; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; padding: 0; margin-top: .4rem;
+  }
+
+  /* ── LAYER SHEETS ── */
+  .layer {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden; margin-bottom: 1.25rem;
+  }
+  .layer-head {
+    background: var(--bg3); padding: .75rem 1.25rem;
+    display: flex; align-items: center; gap: .75rem;
+  }
+  .layer-badge {
+    padding: .2rem .6rem; border-radius: 100px; font-size: 10px; font-weight: 700; letter-spacing: .08em;
+  }
+  .lb1 { background: rgba(91,156,246,.15); color: var(--accent-blue); }
+  .lb2 { background: rgba(167,139,250,.15); color: var(--accent-purple); }
+  .lb3 { background: rgba(245,200,66,.12); color: var(--accent-gold); }
+  .lb4 { background: rgba(255,122,47,.12); color: var(--fire); }
+  .lb5 { background: rgba(255,94,94,.12); color: var(--accent-red); }
+  .layer-title { font-weight: 700; color: var(--text-bright); font-size: 13px; }
+  .layer-body { padding: 1.1rem 1.25rem; font-size: 13.5px; }
+  .layer-body ul { padding-left: 1.25rem; }
+  .layer-body li { margin-bottom: .35rem; color: var(--text); }
+  .layer-body li strong { color: var(--text-bright); }
+
+  /* ── MONO ── */
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  /* ── FLEX GRIDS ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media(max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ── FACT ROW ── */
+  .fact-row {
+    display: flex; align-items: baseline; gap: .6rem;
+    padding: .45rem 0; border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .fact-row:last-child { border-bottom: none; }
+  .fact-key { color: var(--text-dim); font-size: 12px; min-width: 120px; flex-shrink: 0; }
+  .fact-val { color: var(--text-bright); font-weight: 500; }
+
+  /* ── SCROLL TOP ── */
+  #scrolltop {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--accent-gold); color: #0d0f14;
+    border: none; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .3s;
+    z-index: 200;
+  }
+  #scrolltop.visible { opacity: 1; pointer-events: auto; }
+
+  /* highlight */
+  .hl-gold { color: var(--accent-gold); font-weight: 600; }
+  .hl-teal { color: var(--accent-teal); font-weight: 600; }
+  .hl-red  { color: var(--accent-red);  font-weight: 600; }
+  .hl-blue { color: var(--accent-blue); font-weight: 600; }
+  p { margin-bottom: .65rem; }
+  strong { color: var(--text-bright); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="#">⚔ Sangam Age</a>
+  <a href="#bigpicture">Big Picture</a>
+  <a href="#palace">Memory Palace</a>
+  <a href="#notes">Full Notes</a>
+  <a href="#hooks">Hooks</a>
+  <a href="#traps">Traps</a>
+  <a href="#examiner">Examiner</a>
+  <a href="#recall">Self-Test</a>
+  <a href="#highyield">High-Yield</a>
+  <a href="#ultrafast">Ultra-Fast</a>
+  <a href="#30sec">30-Second</a>
+  <a href="#lastnight">Last Night</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">SSC CGL · Ancient Indian History</div>
+  <h1>Sangam <span>Age</span></h1>
+  <div class="hero-sub">South India's earliest literary civilization — three kingdoms, three assemblies, one exam-ready brain.</div>
+  <div class="hero-tags">
+    <span class="htag htag-gold">🔥 Must Know</span>
+    <span class="htag htag-teal">~1000 BC – 300 AD</span>
+    <span class="htag htag-red">High Frequency in SSC</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════ BIG PICTURE ═══════════════════════════════════ -->
+<section class="section" id="bigpicture">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-gold">🗺</div>
+    <h2>Big Picture</h2>
+  </div>
+  <div class="card card-gold">
+    <div class="card-title">What is this chapter really about?</div>
+    <p>Sangam Age = <strong>South India's story</strong> while North India was busy with Mauryas and Guptas. Three kingdoms — <span class="hl-gold">Chera, Chola, Pandya</span> — rose from five geographical zones (Thinai), hosted three legendary poet assemblies (Sangams), created Tamil literature, and traded with Rome. The chapter is <em>small but trap-heavy</em>. SSC loves mixing up capitals, ports, emblems, rulers, and Sangam locations.</p>
+  </div>
+  <div class="card card-teal">
+    <div class="card-title">Timeline Anchor</div>
+    <div class="fact-row"><span class="fact-key">~1000 BC</span><span class="fact-val">Megaliths in South India (big stones around graves)</span></div>
+    <div class="fact-row"><span class="fact-key">1000–500 BC</span><span class="fact-val">Megalithic culture dominates</span></div>
+    <div class="fact-row"><span class="fact-key">~300 BC – 300 AD</span><span class="fact-val">Sangam Age — Chera, Chola, Pandya active</span></div>
+    <div class="fact-row"><span class="fact-key">9th century AD</span><span class="fact-val">Imperial (Later) Cholas rise — separate study</span></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ MEMORY PALACE ═══════════════════════════════════ -->
+<section class="section" id="palace">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-purple">🧠</div>
+    <h2>Chapter Memory Palace</h2>
+  </div>
+  <p style="margin-bottom:1rem; color:var(--text-dim); font-size:13px;">Walk through a <strong>Southern Marketplace</strong>. Each stall you visit locks in a cluster of facts permanently.</p>
+  <div class="palace">
+    <div class="palace-stop">
+      <div class="palace-num">1</div>
+      <div>
+        <div class="palace-loc">🪨 Entrance — Giant Stone Gate (Megalith)</div>
+        <div class="palace-fact">You enter through enormous stone slabs placed like a door. <em>Megaliths = big stones around graves, ~1000 BC, South India's pre-Sangam era.</em></div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">2</div>
+      <div>
+        <div class="palace-loc">🗺 Courtyard — Five Districts Board (Thinai)</div>
+        <div class="palace-fact">A painted signboard shows 5 zones: <em>Mountain (Kurinji) · Forest (Mullai) · Agricultural (Marutam) · Coastal (Natal) · Desert (Palai).</em> Each zone has a different flag and chief (Muvendar).</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">3</div>
+      <div>
+        <div class="palace-loc">🏹 Left Wing — Chera Armoury</div>
+        <div class="palace-fact">Walls decorated with <strong>bow and arrows</strong>. Capital city name "Vanji" carved on the door (also "Karur"). Two port signs: <em>Muzris</em> and <em>Tondi</em>. A Roman coin on the table (Roman trade). A statue of Kannagi (goddess of chastity). Greatest king: <strong>Senguttuvan</strong> = Red Chera.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">4</div>
+      <div>
+        <div class="palace-loc">🐯 Centre Hall — Chola Tiger Den</div>
+        <div class="palace-fact">A tiger roars in the middle. Capital: <em>Uraiyur</em>. Port: <em>Puhad / Kaveripattinam</em> (on Kaveri river). Cotton cloth bales everywhere (main trade). Greatest early ruler: <strong>Elara</strong> — won Battle of One, beat Chera + Pandya combined.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">5</div>
+      <div>
+        <div class="palace-loc">🐟 Right Wing — Pandya Pearl Stall</div>
+        <div class="palace-fact">Pearl necklaces hanging everywhere. Capital: <em>Madurai</em> (on Vaigai River). Port: <em>Korkai / Kokai</em>. Emblem: <strong>Fish</strong>. First mention: Megasthenes' Indica. Romans traded for pearls here.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">6</div>
+      <div>
+        <div class="palace-loc">📚 Upper Gallery — Three Sangam Assembly Halls</div>
+        <div class="palace-fact"><strong>Hall 1</strong>: Madurai — Agastya Muni presides. <strong>Hall 2</strong>: Kapatapuram — Tolkappiyer presides → <em>Tolkappiyam</em> (oldest Tamil grammar text). <strong>Hall 3</strong>: Madurai — Nakkeerar presides. Halls 1 and 3 flooded, no texts survive. All three Halls = <em>Muchi Sangam</em>. Patron: Pandyas.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">7</div>
+      <div>
+        <div class="palace-loc">🎭 Theatre — Silappadikaram & Manimekalai</div>
+        <div class="palace-fact">Stage shows the love triangle: <em>Kovalan ↔ Kannagi ↔ Madhavi</em>. Play 1 = <strong>Silappadikaram</strong> by Ilango Adigal. Play 2 = <strong>Manimekalai</strong> by Chaturanar (about Kovalan-Madhavi's daughter Manimekalai).</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">8</div>
+      <div>
+        <div class="palace-loc">👑 Rooftop — Social Hierarchy Observation Deck</div>
+        <div class="palace-fact"><em>Arasar</em> (kings) at the top. Below: <em>Muvendar</em> (chief/wealthy landholder). Ground level: <em>Uzhavar</em> (plowman). Basement: <em>Adimai / Kadaisiyar</em> (slave/landless labourer).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ COMPLETE NOTES ═══════════════════════════════════ -->
+<section class="section" id="notes">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-blue">📖</div>
+    <h2>Complete Revision Notes</h2>
+  </div>
+
+  <!-- Pre-Sangam -->
+  <div class="card card-blue">
+    <div class="card-title"><span class="pill pill-fire">🔥 Must Know</span> Pre-Sangam: Megaliths</div>
+    <div class="fact-row"><span class="fact-key">What</span><span class="fact-val">Large stones placed around graves = <strong>Megaliths</strong></span></div>
+    <div class="fact-row"><span class="fact-key">Where</span><span class="fact-val">South India</span></div>
+    <div class="fact-row"><span class="fact-key">When</span><span class="fact-val">~1000 BC (around Harappan decline in North)</span></div>
+    <div class="fact-row"><span class="fact-key">Significance</span><span class="fact-val">Earliest archaeological evidence of South Indian culture</span></div>
+  </div>
+
+  <!-- Thinai -->
+  <div class="card card-gold">
+    <div class="card-title"><span class="pill pill-fire">🔥 Must Know</span> Five Thinai (Geographical Zones)</div>
+    <table class="rev-table">
+      <tr><th>Thinai</th><th>Type</th><th>Memory Hook</th></tr>
+      <tr><td class="hl">Kurinji</td><td>Mountainous region</td><td>Kurinji → KuRi = Kurious mountains</td></tr>
+      <tr><td class="hl">Mullai</td><td>Forest region</td><td>Mullai → MuLLai = Mullberry forest</td></tr>
+      <tr><td class="hl">Marutam</td><td>Agricultural land</td><td>Marutam → sounds like "Marutha" (farmer)</td></tr>
+      <tr><td class="hl">Natal</td><td>Coastal / Sea area</td><td>Natal → near the sea (fishermen)</td></tr>
+      <tr><td class="hl">Palai</td><td>Arid / Desert land</td><td>Palai → Parched (dry = desert)</td></tr>
+    </table>
+    <div style="margin-top:.75rem; font-size:12px; color:var(--text-dim);">Each Thinai had a chief called <strong style="color:var(--accent-gold)">Muvendar</strong>. Wealthy landowner = <strong style="color:var(--accent-gold)">Mudavellan / Muvendavillan</strong>.</div>
+  </div>
+
+  <!-- Sangam -->
+  <div class="card card-purple">
+    <div class="card-title"><span class="pill pill-fire">🔥 Must Know</span> Three Sangams (Muchi Sangam)</div>
+    <table class="rev-table">
+      <tr><th>#</th><th>Location</th><th>President/Leader</th><th>Key Text</th></tr>
+      <tr><td>1st</td><td class="hl">Madurai</td><td>Agastya Muni</td><td>No surviving text (lost in floods)</td></tr>
+      <tr><td>2nd</td><td class="hl">Kapatapuram</td><td>Tolkappiyer</td><td><strong>Tolkappiyam</strong> (oldest Tamil grammar)</td></tr>
+      <tr><td>3rd</td><td class="hl">Madurai</td><td>Nakkeerar</td><td>Melkanakku + Kilkanakku works</td></tr>
+    </table>
+    <div style="margin-top:.85rem; padding:.7rem; background:rgba(167,139,250,.07); border-radius:6px; font-size:13px;">
+      <strong style="color:var(--accent-purple)">Patron:</strong> Pandyas &nbsp;|&nbsp;
+      <strong style="color:var(--accent-purple)">Collective name:</strong> Muchi Sangam &nbsp;|&nbsp;
+      <strong style="color:var(--accent-purple)">Texts lost:</strong> 1st and 3rd Sangam texts
+    </div>
+  </div>
+
+  <!-- Literature -->
+  <div class="card card-teal">
+    <div class="card-title"><span class="pill pill-star">⭐ Important</span> Sangam Literature Structure</div>
+    <div class="fact-row"><span class="fact-key">Melkanakku</span><span class="fact-val">Narrative/lyrical poetry — 8 major works (Ettuthokai) + 10 idylls</span></div>
+    <div class="fact-row"><span class="fact-key">Kilkanakku</span><span class="fact-val">Didactic/moral poetry — 18 minor works</span></div>
+    <div class="fact-row"><span class="fact-key">Akam</span><span class="fact-val">Love themes (personal/inner)</span></div>
+    <div class="fact-row"><span class="fact-key">Puram</span><span class="fact-val">War/heroic themes (external/public)</span></div>
+    <div class="fact-row"><span class="fact-key">Tolkappiyam</span><span class="fact-val">Oldest Tamil text — grammar book — 2nd Sangam — by Tolkappiyer</span></div>
+  </div>
+
+  <!-- Epic Texts -->
+  <div class="card card-gold">
+    <div class="card-title"><span class="pill pill-fire">🔥 Must Know</span> Two Epic Tamil Texts</div>
+    <div class="grid-2">
+      <div>
+        <strong class="hl-gold">Silappadikaram</strong><br>
+        <div class="fact-row" style="border-bottom:none; padding:.2rem 0;"><span class="fact-key">Author</span><span class="fact-val">Ilango Adigal</span></div>
+        <div class="fact-row" style="border-bottom:none; padding:.2rem 0;"><span class="fact-key">Story</span><span class="fact-val">Kovalan, Kannagi, Madhavi love triangle</span></div>
+        <div class="fact-row" style="border-bottom:none; padding:.2rem 0;"><span class="fact-key">Theme</span><span class="fact-val">Kannagi = goddess of chastity</span></div>
+      </div>
+      <div>
+        <strong class="hl-teal">Manimekalai</strong><br>
+        <div class="fact-row" style="border-bottom:none; padding:.2rem 0;"><span class="fact-key">Author</span><span class="fact-val">Chaturanar (also Sattanar)</span></div>
+        <div class="fact-row" style="border-bottom:none; padding:.2rem 0;"><span class="fact-key">Story</span><span class="fact-val">About Manimekalai, daughter of Kovalan & Madhavi</span></div>
+        <div class="fact-row" style="border-bottom:none; padding:.2rem 0;"><span class="fact-key">Theme</span><span class="fact-val">Buddhist influence, sequel to Silappadikaram</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Three Kingdoms -->
+  <div class="card card-red">
+    <div class="card-title"><span class="pill pill-fire">🔥 Must Know</span> Three Kingdoms Comparison</div>
+    <table class="rev-table">
+      <tr><th>Feature</th><th style="color:#ff5e5e">Chera</th><th style="color:#f5c842">Chola</th><th style="color:#3ecfb2">Pandya</th></tr>
+      <tr><td>Region</td><td>Kerala + W. Tamil Nadu</td><td>NE of Pandyas</td><td>Southern Tamil Nadu</td></tr>
+      <tr><td>Capital</td><td class="hl">Vanji (= Karur)</td><td class="hl">Uraiyur + Puhad</td><td class="hl">Madurai</td></tr>
+      <tr><td>River</td><td>—</td><td>Between Pennar & Velar</td><td>Vaigai</td></tr>
+      <tr><td>Port</td><td class="hl">Muzris + Tondi</td><td class="hl">Puhad / Kaveripattinam</td><td class="hl">Korkai (Kokai)</td></tr>
+      <tr><td>Emblem</td><td class="hl">Bow & Arrow 🏹</td><td class="hl">Tiger 🐯</td><td class="hl">Fish 🐟</td></tr>
+      <tr><td>Trade</td><td>Roman trade</td><td>Cotton cloth</td><td>Pearls, Roman trade</td></tr>
+      <tr><td>Greatest Ruler</td><td>Senguttuvan (Red Chera)</td><td>Elara (Karikala)</td><td>—</td></tr>
+      <tr><td>Special</td><td>Worshipped Kannagi; Augustus Temple at Muzris</td><td>Beat Chera + Pandya in Battle of One</td><td>First mention in Megasthenes' Indica</td></tr>
+    </table>
+  </div>
+
+  <!-- Social Structure -->
+  <div class="card card-blue">
+    <div class="card-title"><span class="pill pill-star">⭐ Important</span> Social Classes (Sangam Society)</div>
+    <table class="rev-table">
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td class="hl">Arasar</td><td>Ruling class / Kings</td></tr>
+      <tr><td class="hl">Muvendar</td><td>Chief of Thinai</td></tr>
+      <tr><td class="hl">Mudavellan (Muvendavillan)</td><td>Rich / wealthy landowner</td></tr>
+      <tr><td class="hl">Uzhavar</td><td>Ordinary plowman / farmer</td></tr>
+      <tr><td class="hl">Adimai / Kadaisiyar</td><td>Slave / landless labourer</td></tr>
+    </table>
+  </div>
+
+  <!-- Ashokan mention -->
+  <div class="card card-teal">
+    <div class="card-title"><span class="pill pill-star">⭐ Important</span> Ashokan Inscriptions Mention</div>
+    <div class="fact-row"><span class="fact-key">Chera</span><span class="fact-val"><strong>Keralaputra</strong> — mentioned as Keralaputra in Ashoka's inscriptions</span></div>
+    <div class="fact-row"><span class="fact-key">Chola</span><span class="fact-val"><strong>Chola Mandalam</strong> — mentioned as Chola Mandalam</span></div>
+    <div class="fact-row"><span class="fact-key">Pandya</span><span class="fact-val"><strong>Pandya</strong> — mentioned directly as Pandya</span></div>
+    <div class="fact-row"><span class="fact-key">Bindusara</span><span class="fact-val">Called "conqueror of land between two seas" — may have conquered this region</span></div>
+    <div class="fact-row"><span class="fact-key">Satyaputra</span><span class="fact-val">Also mentioned alongside Cheras in Ashokan inscriptions</span></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ MEMORY HOOKS ═══════════════════════════════════ -->
+<section class="section" id="hooks">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-teal">🧲</div>
+    <h2>Smart Memory Hooks</h2>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🏹 Chera = Kerala's Archer</div>
+    Imagine a <strong>Kerala archer</strong> standing at <em>Vanji</em> (= Karur) firing arrows into the sea at <em>Muzris</em>. He's trading with a <strong>Roman</strong> soldier and behind him stands a temple of <strong>Kannagi</strong>. His red shirt = "Red Chera" = <strong>Senguttuvan</strong>.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🐯 Chola = Tiger in Cotton Fields</div>
+    A <strong>tiger</strong> lounging in a <strong>cotton field</strong> near <em>Uraiyur</em>. The tiger has a boat docked at <em>Kaveripattinam</em> (also called Puhad) loaded with cotton. The tiger's greatest victory = beating <em>both Chera AND Pandya</em> in ONE battle (Elara).
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🐟 Pandya = Pearl Fisher in Madurai</div>
+    A <strong>fish</strong> wearing a pearl necklace swimming in the <em>Vaigai River</em> near <em>Madurai</em>. At the port of <em>Korkai</em>, Greeks (Megasthenes) are writing notes about how amazing these pearl fishers are. The fish hosts the Sangam poetry club.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">📚 3 Sangams — "MM Kapatapuram"</div>
+    <strong>1st = Madurai (Agastya)</strong> → got flooded 🌊<br>
+    <strong>2nd = Kapatapuram (Tolkappiyer)</strong> → Tolkappiyam born here 📖<br>
+    <strong>3rd = Madurai (Nakkeerar)</strong> → got flooded 🌊<br>
+    Hook: "Mad → Kap → Mad" = <em>The Sangam bounced like a ball between Madurai and Kapatapuram.</em>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">💔 Kovalan's Love Triangle → 2 Books</div>
+    <strong>Kovalan loved Kannagi → married Madhavi → abandoned → returned to Kannagi.</strong><br>
+    Book 1 = <em>Silappadikaram</em> = "Kovalan & Kannagi" story → Ilango Adigal wrote it.<br>
+    Book 2 = <em>Manimekalai</em> = "Their daughter Manimekalai" → Chaturanar wrote it.<br>
+    <em>Sila → Ilango. Mani → Chatur (4). Manimekalai is the daughter (2nd generation → 2nd book).</em>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🗺 Thinai Memory: "King Manages Nice Peaceful Areas"</div>
+    <strong>K</strong>urinji (mountain) · <strong>M</strong>ullai (forest) · <strong>M</strong>arutam (agri) · <strong>N</strong>atal (coastal) · <strong>P</strong>alai (desert)<br>
+    <em>"<strong>K</strong>ings <strong>M</strong>ake <strong>M</strong>ighty <strong>N</strong>ations <strong>P</strong>rosper"</em>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">👑 Social Hierarchy Ladder</div>
+    Top → Bottom: <strong>Arasar</strong> (king) → <strong>Muvendar</strong> (chief) → <strong>Mudavellan</strong> (rich farmer) → <strong>Uzhavar</strong> (plowman) → <strong>Adimai</strong> (slave)<br>
+    <em>Memory: "A King Must Use All" — A·K·M·U·A</em>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ CONCEPT CONNECTIONS ═══════════════════════════════════ -->
+<section class="section">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-gold">🔗</div>
+    <h2>Concept Connections</h2>
+  </div>
+  <div class="card card-gold">
+    <div class="card-title">Cause → Effect Chains</div>
+    <div class="fact-row"><span class="fact-key">Harappan Decline ↓</span><span class="fact-val">→ Megalithic culture rises in South India (~1000 BC)</span></div>
+    <div class="fact-row"><span class="fact-key">5 Thinai zones ↓</span><span class="fact-val">→ Evolve into 3 kingdoms: Chera, Chola, Pandya</span></div>
+    <div class="fact-row"><span class="fact-key">Pandya patronage ↓</span><span class="fact-val">→ 3 Sangams held → Tamil literature born</span></div>
+    <div class="fact-row"><span class="fact-key">2nd Sangam at Kapatapuram ↓</span><span class="fact-val">→ Tolkappiyam created → Oldest Tamil grammar</span></div>
+    <div class="fact-row"><span class="fact-key">Kannagi story ↓</span><span class="fact-val">→ Silappadikaram written → Kannagi worshipped as goddess</span></div>
+    <div class="fact-row"><span class="fact-key">Chola-Roman trade ↓</span><span class="fact-val">→ Cotton cloth exported → Kaveripattinam thrived</span></div>
+    <div class="fact-row"><span class="fact-key">Pandya-Roman trade ↓</span><span class="fact-val">→ Pearls exported from Korkai</span></div>
+    <div class="fact-row"><span class="fact-key">Ashoka's inscriptions ↓</span><span class="fact-val">→ First historical reference to all 3 kingdoms</span></div>
+  </div>
+  <div class="card card-blue">
+    <div class="card-title">Compare: Buddhist Councils vs Sangams</div>
+    <p>Both are <strong>assemblies patronized by rulers</strong>, with a leader presiding. Buddhist Councils: <em>Ajatashatru, Kalasoka, Ashoka, Kanishka</em> (AKAK). Sangams: <em>Pandyas</em>. This parallel helps recall that Sangams = "South India's Buddhist Councils."</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ EXAM TRAPS ═══════════════════════════════════ -->
+<section class="section" id="traps">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-red">⚠️</div>
+    <h2>Exam Traps</h2>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 1 — Chola Capitals (2 of them!)</div>
+    Chola had <strong>TWO capitals</strong>: <span class="hl-gold">Uraiyur</span> (main) and <span class="hl-gold">Puhad/Kaveripattinam</span> (port). Examiner will try to make you pick just one. Both are correct. Puhad = Kaveripattinam = port city on Kaveri River.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 2 — Vanji vs Madurai</div>
+    <strong>Vanji</strong> = Chera capital (also called Karur). <strong>Madurai</strong> = Pandya capital. Both sound like old Tamil cities. Don't mix them. Madurai is on the <em>Vaigai River</em>. Vanji is in Kerala region.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 3 — Silappadikaram Author vs Manimekalai Author</div>
+    <span class="hl-gold">Silappadikaram</span> → <strong>Ilango Adigal</strong> (uncle of a Chera king)<br>
+    <span class="hl-teal">Manimekalai</span> → <strong>Chaturanar / Sattanar</strong><br>
+    SSC will swap the authors. Remember: <em>Sila-Ilango, Mani-Chatura</em>.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 4 — 1st and 3rd Sangam both in Madurai</div>
+    Only the <strong>2nd Sangam</strong> was at Kapatapuram. 1st and 3rd were BOTH at Madurai. Examiner will say "3rd Sangam at Kapatapuram" — that is WRONG.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 5 — Emblem Confusion</div>
+    <strong>Chera = Bow & Arrow 🏹</strong> (not fish, not tiger)<br>
+    <strong>Chola = Tiger 🐯</strong> (not arrow)<br>
+    <strong>Pandya = Fish 🐟</strong> (not pearl, not bow)<br>
+    Classic MCQ will say "Pandya's emblem was bow and arrow" — WRONG.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 6 — Early Chola vs Imperial (Later) Chola</div>
+    <strong>Early Cholas</strong> = Sangam Age (~300 BC–2nd century AD). <strong>Imperial/Later Cholas</strong> = 9th century AD onwards (Rajaraja, Rajendra etc.). Examiner will mention Elara under Later Cholas — WRONG. Elara belongs to Early Cholas.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 7 — Keralaputra in Ashoka's Inscription</div>
+    "Keralaputra" = <strong>Chera</strong>, NOT Kerala as a modern state. Examiner may phrase as "Ashoka's inscription mentions Kerala" — partially correct but the actual term is Keralaputra.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 8 — Who Patronized the Sangams?</div>
+    Sangams were patronized by <strong>Pandyas</strong>, NOT Cheras or Cholas. Yet Pandya capital (Madurai) hosted 1st and 3rd Sangams, which is why Pandyas are the literary patrons.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 9 — Tolkappiyam is Grammar, Not Literature</div>
+    <strong>Tolkappiyam</strong> = Tamil <em>grammar</em> book (oldest Tamil text). It's NOT a story or poem collection. It was composed during the <em>2nd Sangam</em> by <strong>Tolkappiyer</strong>.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ TRAP 10 — Muzris vs Korkai vs Tondi</div>
+    <strong>Muzris</strong> = Chera port (+ Augustus Temple here). <strong>Tondi</strong> = also Chera port. <strong>Korkai / Kokai</strong> = Pandya port. <strong>Kaveripattinam / Puhad</strong> = Chola port.
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ EXAMINER'S FAV QUESTIONS ═══════════════════════════════════ -->
+<section class="section" id="examiner">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-gold">🎯</div>
+    <h2>Examiner's Favourite Questions</h2>
+  </div>
+
+  <div class="card card-gold">
+    <div class="card-title">🎯 High Probability Direct Questions</div>
+    <ul style="padding-left:1.25rem; font-size:13.5px; line-height:2;">
+      <li>Capital of Pandya kingdom → <span class="hl-teal">Madurai</span></li>
+      <li>Emblem of Chola dynasty → <span class="hl-teal">Tiger</span></li>
+      <li>Who wrote Tolkappiyam? → <span class="hl-teal">Tolkappiyer</span></li>
+      <li>Which Sangam was held at Kapatapuram? → <span class="hl-teal">2nd Sangam</span></li>
+      <li>Who authored Silappadikaram? → <span class="hl-teal">Ilango Adigal</span></li>
+      <li>Port city of Pandyas → <span class="hl-teal">Korkai</span></li>
+      <li>Oldest Tamil text → <span class="hl-teal">Tolkappiyam</span></li>
+      <li>Sangams were patronized by → <span class="hl-teal">Pandyas</span></li>
+    </ul>
+  </div>
+
+  <div class="card card-red">
+    <div class="card-title">🎯 Statement-Based (True/False Style) Questions</div>
+    <ul style="padding-left:1.25rem; font-size:13.5px; line-height:2.1;">
+      <li><span class="hl-red">FALSE:</span> "The 3rd Sangam was held at Kapatapuram" → It was the <em>2nd</em></li>
+      <li><span class="hl-red">FALSE:</span> "Manimekalai was written by Ilango Adigal" → Written by <em>Chaturanar</em></li>
+      <li><span class="hl-red">FALSE:</span> "Chola's emblem was bow and arrow" → That's <em>Chera's</em> emblem</li>
+      <li><span class="hl-red">FALSE:</span> "Vanji was the capital of Pandyas" → Vanji = <em>Chera</em> capital</li>
+      <li><span class="hl-gold">TRUE:</span> "First mention of Pandyas is in Megasthenes' Indica"</li>
+      <li><span class="hl-gold">TRUE:</span> "Kannagi is worshipped as the goddess of chastity in Kerala"</li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <div class="card-title">🎯 Match-the-Following (High Yield)</div>
+    <table class="rev-table">
+      <tr><th>Dynasty</th><th>Capital</th><th>Port</th><th>Emblem</th></tr>
+      <tr><td>Chera</td><td class="hl">Vanji</td><td class="hl">Muzris / Tondi</td><td class="hl">Bow & Arrow</td></tr>
+      <tr><td>Chola</td><td class="hl">Uraiyur</td><td class="hl">Puhad / Kaveripattinam</td><td class="hl">Tiger</td></tr>
+      <tr><td>Pandya</td><td class="hl">Madurai</td><td class="hl">Korkai</td><td class="hl">Fish</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-purple">
+    <div class="card-title">🎯 Author ↔ Book ↔ Subject Match</div>
+    <table class="rev-table">
+      <tr><th>Book</th><th>Author</th><th>About</th></tr>
+      <tr><td class="hl">Tolkappiyam</td><td>Tolkappiyer</td><td>Tamil grammar (oldest)</td></tr>
+      <tr><td class="hl">Silappadikaram</td><td>Ilango Adigal</td><td>Kovalan-Kannagi-Madhavi</td></tr>
+      <tr><td class="hl">Manimekalai</td><td>Chaturanar</td><td>Daughter of Kovalan & Madhavi</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-blue">
+    <div class="card-title">🎯 Assertion-Reason Style Possibilities</div>
+    <p><strong>A:</strong> Pandyas patronized the three Sangams.<br><strong>R:</strong> Two of the three Sangams were held in Madurai, the Pandya capital.<br><span class="hl-teal">→ Both A and R are true, and R correctly explains A.</span></p>
+    <hr class="divider" style="margin:1rem 0;">
+    <p><strong>A:</strong> Kannagi is worshipped as a goddess in Kerala.<br><strong>R:</strong> She remained loyal and chaste to Kovalan despite his infidelity.<br><span class="hl-teal">→ Both A and R are true, and R correctly explains A.</span></p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ ACTIVE RECALL ═══════════════════════════════════ -->
+<section class="section" id="recall">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-teal">❓</div>
+    <h2>Active Recall Section</h2>
+  </div>
+  <p style="color:var(--text-dim); font-size:13px; margin-bottom:1rem;">Click each question to reveal the answer. Test yourself before revealing!</p>
+
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">1. What does "Sangam" literally mean?</div>
+    <div class="qbox-a">Assembly of great poets/literates. Three such assemblies = Muchi Sangam, patronized by Pandyas.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">2. Name the five Thinai and their types.</div>
+    <div class="qbox-a">Kurinji (mountain), Mullai (forest), Marutam (agriculture), Natal (coastal), Palai (desert).</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">3. Which Sangam produced Tolkappiyam and where was it held?</div>
+    <div class="qbox-a">2nd Sangam, held at Kapatapuram, led by Tolkappiyer.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">4. Capital, port, and emblem of all three kingdoms — rapid fire.</div>
+    <div class="qbox-a">Chera: Vanji | Muzris+Tondi | 🏹. Chola: Uraiyur | Kaveripattinam | 🐯. Pandya: Madurai | Korkai | 🐟.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">5. Who wrote Silappadikaram? What is it about?</div>
+    <div class="qbox-a">Ilango Adigal. Story of Kovalan, Kannagi (his wife), and Madhavi (courtesan). Kannagi became the goddess of chastity.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">6. Who is Manimekalai and who wrote her story?</div>
+    <div class="qbox-a">Manimekalai = daughter of Kovalan and Madhavi. Book written by Chaturanar (also Sattanar).</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">7. How are Cheras referred to in Ashokan inscriptions?</div>
+    <div class="qbox-a">Keralaputra (also Satyaputra mentioned alongside them).</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">8. What is Adimai and what is Uzhavar?</div>
+    <div class="qbox-a">Adimai / Kadaisiyar = slave / landless labourer. Uzhavar = ordinary plowman/farmer.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">9. Where is the first historical mention of the Pandyas found?</div>
+    <div class="qbox-a">Megasthenes' Indica — he was a Greek ambassador at Chandragupta Maurya's court.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">10. What was the greatest Chera ruler's name and nickname?</div>
+    <div class="qbox-a">Senguttuvan = "Red Chera."</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">11. Fill in the blank: Puhad is also known as _____ and was a port city of _____.</div>
+    <div class="qbox-a">Kaveripattinam. Cholas.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">12. Why is Tolkappiyam historically important?</div>
+    <div class="qbox-a">It is the OLDEST surviving Tamil text, and it is a grammar book — not literature or poetry.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">13. Reverse Question: This kingdom traded in cotton cloth, had Elara as earliest ruler, and their emblem was a tiger. Name it.</div>
+    <div class="qbox-a">Cholas.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">14. Rapid Fire — Which Thinai is the arid/desert region?</div>
+    <div class="qbox-a">Palai.</div>
+  </div>
+  <div class="qbox" onclick="this.classList.toggle('open')">
+    <div class="qbox-q">15. What are Akam and Puram in Sangam literature?</div>
+    <div class="qbox-a">Akam = love themes (inner). Puram = war/heroic themes (outer/public).</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ HIGH YIELD ═══════════════════════════════════ -->
+<section class="section" id="highyield">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-gold">⭐</div>
+    <h2>High-Yield Revision Notes</h2>
+  </div>
+  <div class="layer">
+    <div class="layer-head">
+      <span class="layer-badge lb2">LAYER 2</span>
+      <span class="layer-title">High-Yield — 5-Minute Revision</span>
+    </div>
+    <div class="layer-body">
+      <ul>
+        <li><strong>Sangam = Assembly of Poets</strong> | 3 Sangams = <em>Muchi Sangam</em> | Patron = <em>Pandyas</em></li>
+        <li><strong>1st Sangam:</strong> Madurai | Agastya Muni | No text (lost)</li>
+        <li><strong>2nd Sangam:</strong> Kapatapuram | Tolkappiyer | <em>Tolkappiyam</em> (oldest Tamil grammar)</li>
+        <li><strong>3rd Sangam:</strong> Madurai | Nakkeerar | Melkanakku + Kilkanakku works</li>
+        <li><strong>Chera:</strong> Vanji (capital) | Muzris + Tondi (ports) | Bow & Arrow | Senguttuvan | Roman trade | Kannagi worship</li>
+        <li><strong>Chola:</strong> Uraiyur (capital) | Kaveripattinam/Puhad (port) | Tiger | Cotton trade | Elara (greatest ruler)</li>
+        <li><strong>Pandya:</strong> Madurai on Vaigai (capital) | Korkai (port) | Fish | Pearls | Megasthenes' Indica (1st mention)</li>
+        <li><strong>Silappadikaram:</strong> Ilango Adigal | Kovalan-Kannagi-Madhavi story</li>
+        <li><strong>Manimekalai:</strong> Chaturanar | Kovalan-Madhavi's daughter Manimekalai</li>
+        <li><strong>Ashokan refs:</strong> Chera = Keralaputra | Chola = Chola Mandalam | Pandya = Pandya</li>
+        <li><strong>Thinai:</strong> Kurinji(mountain) Mullai(forest) Marutam(agri) Natal(coastal) Palai(desert)</li>
+        <li><strong>Social:</strong> Arasar(king) → Muvendar(chief) → Mudavellan(rich farmer) → Uzhavar(plowman) → Adimai(slave)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ ULTRA-FAST ═══════════════════════════════════ -->
+<section class="section" id="ultrafast">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-blue">⚡</div>
+    <h2>Ultra-Fast Revision Sheet</h2>
+  </div>
+  <div class="layer">
+    <div class="layer-head">
+      <span class="layer-badge lb3">LAYER 3</span>
+      <span class="layer-title">Ultra-Fast — 2-Minute Revision</span>
+    </div>
+    <div class="layer-body">
+      <table class="rev-table">
+        <tr><th>Item</th><th>Answer</th></tr>
+        <tr><td>3 Sangams collective name</td><td class="hl">Muchi Sangam</td></tr>
+        <tr><td>Sangam patron</td><td class="hl">Pandyas</td></tr>
+        <tr><td>2nd Sangam location</td><td class="hl">Kapatapuram</td></tr>
+        <tr><td>Oldest Tamil text</td><td class="hl">Tolkappiyam (Tolkappiyer)</td></tr>
+        <tr><td>Silappadikaram author</td><td class="hl">Ilango Adigal</td></tr>
+        <tr><td>Manimekalai author</td><td class="hl">Chaturanar</td></tr>
+        <tr><td>Chera capital / port / emblem</td><td class="hl">Vanji / Muzris+Tondi / Bow&Arrow</td></tr>
+        <tr><td>Chola capital / port / emblem</td><td class="hl">Uraiyur / Kaveripattinam / Tiger</td></tr>
+        <tr><td>Pandya capital / port / emblem</td><td class="hl">Madurai / Korkai / Fish</td></tr>
+        <tr><td>1st mention of Pandyas</td><td class="hl">Megasthenes' Indica</td></tr>
+        <tr><td>Kannagi = ?</td><td class="hl">Goddess of chastity (Chera worship)</td></tr>
+        <tr><td>Adimai</td><td class="hl">Slave / landless labourer</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ 30 SECOND ═══════════════════════════════════ -->
+<section class="section" id="30sec">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-purple">🔥</div>
+    <h2>30-Second Revision Sheet</h2>
+  </div>
+  <div class="layer">
+    <div class="layer-head">
+      <span class="layer-badge lb4">LAYER 4</span>
+      <span class="layer-title">30 Seconds — Peak Pressure Mode</span>
+    </div>
+    <div class="layer-body">
+      <p>
+        🏹 <strong>Chera</strong> = Vanji | Muzris | Bow&Arrow | Senguttuvan | Kannagi worship<br>
+        🐯 <strong>Chola</strong> = Uraiyur | Kaveripattinam | Tiger | Cotton | Elara<br>
+        🐟 <strong>Pandya</strong> = Madurai (Vaigai) | Korkai | Fish | Pearls | Indica mention<br>
+        📖 <strong>Tolkappiyam</strong> = Tolkappiyer = 2nd Sangam = Oldest Tamil grammar<br>
+        📚 <strong>Sila</strong> = Ilango Adigal | <strong>Mani</strong> = Chaturanar = daughter of Kovalan+Madhavi<br>
+        3 Sangams = <strong>Mad → Kap → Mad</strong> | Patron = <strong>Pandyas</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════ LAST NIGHT ═══════════════════════════════════ -->
+<section class="section" id="lastnight">
+  <div class="sec-head">
+    <div class="sec-icon sec-icon-red">🌙</div>
+    <h2>Last-Night-Before-Exam Sheet</h2>
+  </div>
+  <div class="layer">
+    <div class="layer-head">
+      <span class="layer-badge lb5">LAYER 5</span>
+      <span class="layer-title">The Night Before — Absolute Minimum</span>
+    </div>
+    <div class="layer-body" style="font-size:14.5px; line-height:2.2;">
+      <p>
+        <span class="hl-gold">Chera</span> = <strong>Vanji</strong> | <strong>Muzris</strong> | <strong>🏹</strong> &nbsp;&nbsp;
+        <span class="hl-gold">Chola</span> = <strong>Uraiyur</strong> | <strong>Kaveripattinam</strong> | <strong>🐯</strong> &nbsp;&nbsp;
+        <span class="hl-gold">Pandya</span> = <strong>Madurai</strong> | <strong>Korkai</strong> | <strong>🐟</strong>
+      </p>
+      <p>
+        <span class="hl-teal">2nd Sangam = Kapatapuram</span> → <strong>Tolkappiyam</strong> (oldest Tamil text, grammar)<br>
+        <span class="hl-teal">Silappadikaram</span> → <strong>Ilango Adigal</strong> &nbsp;|&nbsp; <span class="hl-teal">Manimekalai</span> → <strong>Chaturanar</strong><br>
+        Sangam patron = <strong>Pandyas</strong> &nbsp;|&nbsp; 1st+3rd Sangam = <strong>Madurai</strong> (texts lost)
+      </p>
+      <p style="color:var(--accent-red); font-weight:700;">
+        ⚠ DON'T FORGET: 2nd Sangam = Kapatapuram (NOT Madurai) | Chola emblem = Tiger (NOT bow) | Manimekalai author = Chaturanar (NOT Ilango)
+      </p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<button id="scrolltop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Scroll top visibility
+window.addEventListener('scroll', () => {
+  document.getElementById('scrolltop').classList.toggle('visible', window.scrollY > 400);
+});
+
+// Nav active state
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      navLinks.forEach(a => a.classList.remove('active'));
+      const match = document.querySelector(`nav a[href="#${e.target.id}"]`);
+      if(match) match.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delhi Sultanate — Elite Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1e28;
+    --bg4: #222738;
+    --border: #2a2f42;
+    --text: #d4d8e8;
+    --text-dim: #7b82a0;
+    --text-bright: #eef0f8;
+    --gold: #f0b429;
+    --gold-dim: #8a6610;
+    --red: #e05c5c;
+    --red-dim: #5c1a1a;
+    --green: #4caf82;
+    --green-dim: #1a3d2e;
+    --blue: #5b9cf6;
+    --blue-dim: #1a2e58;
+    --purple: #a78bfa;
+    --purple-dim: #2d1f5e;
+    --orange: #fb923c;
+    --orange-dim: #4a1f0a;
+    --teal: #2dd4bf;
+    --teal-dim: #0a3530;
+    --accent: #f0b429;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: rgba(13,15,20,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    height: 52px; z-index: 100;
+    overflow-x: auto; white-space: nowrap;
+  }
+  nav a {
+    color: var(--text-dim); text-decoration: none;
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    text-transform: uppercase; padding: 4px 0;
+    transition: color .2s;
+  }
+  nav a:hover { color: var(--gold); }
+  nav .logo {
+    color: var(--gold); font-weight: 700;
+    font-size: 13px; margin-right: .5rem;
+    flex-shrink: 0;
+  }
+  nav .sep { color: var(--border); flex-shrink: 0; }
+
+  /* ── LAYOUT ── */
+  main { max-width: 900px; margin: 0 auto; padding: 72px 1.5rem 5rem; }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center; padding: 3rem 0 2.5rem;
+    border-bottom: 1px solid var(--border); margin-bottom: 3rem;
+  }
+  .hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--gold); letter-spacing: .2em;
+    text-transform: uppercase; margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: var(--text-bright); font-weight: 600;
+    line-height: 1.15; margin-bottom: .75rem;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p { color: var(--text-dim); max-width: 520px; margin: 0 auto; }
+  .tag-row { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; margin-top: 1.25rem; }
+  .tag {
+    font-size: 10px; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 20px;
+    border: 1px solid;
+  }
+  .tag-fire { color: var(--red); border-color: var(--red-dim); background: rgba(224,92,92,.08); }
+  .tag-star { color: var(--gold); border-color: var(--gold-dim); background: rgba(240,180,41,.08); }
+  .tag-plus { color: var(--green); border-color: var(--green-dim); background: rgba(76,175,130,.08); }
+
+  /* ── SECTION ── */
+  section { margin-bottom: 3.5rem; scroll-margin-top: 64px; }
+  .section-header {
+    display: flex; align-items: center; gap: .75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .section-header h2 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.6rem; color: var(--text-bright); font-weight: 600;
+  }
+  .section-header .badge {
+    margin-left: auto; font-size: 10px; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--text-dim); flex-shrink: 0;
+  }
+
+  /* ── MEMORY PALACE ── */
+  .palace {
+    background: linear-gradient(135deg, #0d1422 0%, #141b2e 100%);
+    border: 1px solid #1e3060; border-radius: 12px;
+    padding: 1.75rem; position: relative; overflow: hidden;
+  }
+  .palace::before {
+    content: '🏰';
+    position: absolute; right: -10px; top: -10px;
+    font-size: 80px; opacity: .06;
+  }
+  .palace-intro {
+    font-family: 'Crimson Pro', serif; font-style: italic;
+    color: #8ab4ff; margin-bottom: 1.25rem; font-size: 1.05rem;
+  }
+  .palace-stop {
+    display: flex; gap: 1rem; margin-bottom: 1rem;
+    padding: .9rem 1rem; border-radius: 8px;
+    background: rgba(255,255,255,.03); border-left: 3px solid;
+  }
+  .palace-stop .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem; font-weight: 700; flex-shrink: 0;
+    line-height: 1.5;
+  }
+  .palace-stop .content strong { display: block; color: var(--text-bright); margin-bottom: .2rem; }
+
+  /* ── RULER CARD ── */
+  .ruler-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; margin-bottom: 1.25rem;
+    overflow: hidden;
+  }
+  .ruler-header {
+    padding: .9rem 1.25rem;
+    display: flex; align-items: center; gap: .75rem;
+    cursor: pointer; user-select: none;
+  }
+  .ruler-header:hover { background: rgba(255,255,255,.02); }
+  .ruler-name {
+    font-size: 1.05rem; font-weight: 700; color: var(--text-bright);
+  }
+  .ruler-dates {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text-dim);
+    margin-left: auto; flex-shrink: 0;
+  }
+  .ruler-body { padding: .25rem 1.25rem 1.25rem; }
+
+  /* ── FACT ROW ── */
+  .facts { display: flex; flex-direction: column; gap: .5rem; }
+  .fact {
+    display: flex; gap: .75rem; align-items: flex-start;
+    padding: .55rem .8rem; border-radius: 6px;
+    background: rgba(255,255,255,.025);
+  }
+  .fact .icon { flex-shrink: 0; font-size: .9rem; margin-top: 1px; }
+  .fact .label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .1em; color: var(--text-dim);
+    min-width: 90px; flex-shrink: 0; padding-top: 2px;
+  }
+  .fact .val { color: var(--text); }
+  .fact .val strong { color: var(--gold); }
+  .fire { background: rgba(224,92,92,.06) !important; }
+  .star { background: rgba(240,180,41,.05) !important; }
+
+  /* ── TABLE ── */
+  .tbl-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; min-width: 500px; }
+  th {
+    background: var(--bg3); padding: .65rem 1rem;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--text-dim);
+    text-align: left;
+  }
+  td {
+    padding: .6rem 1rem; border-top: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  tr:hover td { background: rgba(255,255,255,.02); }
+  td strong { color: var(--gold); }
+  td .chip {
+    display: inline-block; font-size: 9px; font-weight: 700;
+    padding: 2px 6px; border-radius: 10px; margin-left: 4px;
+    text-transform: uppercase; letter-spacing: .08em;
+  }
+  .chip-r { background: var(--red-dim); color: var(--red); }
+  .chip-g { background: var(--green-dim); color: var(--green); }
+  .chip-b { background: var(--blue-dim); color: var(--blue); }
+
+  /* ── HOOK BOX ── */
+  .hook {
+    background: linear-gradient(135deg, var(--purple-dim), rgba(42,29,94,.3));
+    border: 1px solid #4c3d8a; border-radius: 10px;
+    padding: 1.25rem 1.4rem; margin-bottom: 1rem;
+  }
+  .hook .hook-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .15em; color: var(--purple); margin-bottom: .5rem;
+  }
+  .hook p { color: #c4b5fd; line-height: 1.65; }
+  .hook p strong { color: #e0d7ff; }
+
+  /* ── TRAP BOX ── */
+  .trap {
+    background: rgba(224,92,92,.07);
+    border: 1px solid rgba(224,92,92,.25); border-radius: 10px;
+    padding: 1.1rem 1.3rem; margin-bottom: .75rem;
+  }
+  .trap .trap-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .15em; color: var(--red); margin-bottom: .4rem;
+  }
+  .trap p { color: #fca5a5; font-size: 13.5px; }
+  .trap p strong { color: #fecaca; }
+
+  /* ── CONNECTION ── */
+  .conn {
+    display: flex; align-items: flex-start; gap: .5rem;
+    padding: .7rem 1rem; border-radius: 8px;
+    background: rgba(45,212,191,.06);
+    border-left: 3px solid var(--teal);
+    margin-bottom: .6rem;
+  }
+  .conn .arrow { color: var(--teal); flex-shrink: 0; font-weight: 700; }
+  .conn p { font-size: 13.5px; color: var(--text); }
+  .conn p strong { color: var(--teal); }
+
+  /* ── Q BOX ── */
+  .q-block {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.25rem 1.4rem;
+    margin-bottom: .75rem;
+  }
+  .q-block .q { color: var(--blue); font-weight: 600; margin-bottom: .4rem; }
+  .q-block .a {
+    color: var(--text-dim); font-size: 13px;
+    padding-top: .4rem; border-top: 1px solid var(--border);
+  }
+  .q-block .a strong { color: var(--gold); }
+  .q-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .12em; color: var(--text-dim); margin-bottom: 1rem;
+  }
+
+  /* ── RAPID FIRE ── */
+  .rf { display: grid; gap: .5rem; }
+  .rf-item {
+    display: flex; align-items: center; gap: .75rem;
+    padding: .6rem .9rem; border-radius: 6px;
+    background: var(--bg3); border: 1px solid var(--border);
+    cursor: pointer; transition: background .15s;
+  }
+  .rf-item:hover { background: var(--bg4); }
+  .rf-item .rf-q { flex: 1; font-size: 13px; }
+  .rf-item .rf-a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--gold); font-weight: 600;
+    text-align: right;
+  }
+  .rf-item .reveal-btn {
+    font-size: 10px; color: var(--text-dim);
+    cursor: pointer; flex-shrink: 0;
+  }
+
+  /* ── SPEED CARDS ── */
+  .speed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media(max-width: 600px) { .speed-grid { grid-template-columns: 1fr; } }
+  .speed-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.1rem; font-size: 13px;
+  }
+  .speed-card h4 {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .12em; color: var(--text-dim); margin-bottom: .7rem;
+  }
+  .speed-card li { list-style: none; padding: .2rem 0; border-top: 1px solid var(--border); }
+  .speed-card li:first-of-type { border-top: none; }
+  .speed-card li strong { color: var(--gold); }
+
+  /* ── LAST NIGHT ── */
+  .lastnight {
+    background: linear-gradient(135deg, #0d1f0f, #101a12);
+    border: 1px solid #2d5a33; border-radius: 12px; padding: 1.75rem;
+  }
+  .lastnight h3 {
+    font-family: 'Crimson Pro', serif; font-size: 1.4rem;
+    color: var(--green); margin-bottom: 1.1rem;
+  }
+  .ln-row {
+    padding: .45rem 0; border-top: 1px solid rgba(255,255,255,.05);
+    font-size: 13px; display: flex; gap: .75rem; align-items: flex-start;
+  }
+  .ln-row .dot { color: var(--green); flex-shrink: 0; margin-top: 2px; }
+
+  /* ── DYNASTY TIMELINE ── */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 0; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--gold), var(--purple));
+  }
+  .tl-item { position: relative; margin-bottom: 1.5rem; }
+  .tl-dot {
+    position: absolute; left: -2rem; top: 4px;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--bg);
+  }
+  .tl-item h4 { font-size: 1rem; font-weight: 700; color: var(--text-bright); }
+  .tl-item .tl-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--text-dim);
+  }
+  .tl-item p { font-size: 13.5px; color: var(--text); margin-top: .3rem; }
+
+  /* ── HIGHLIGHT CHIPS ── */
+  .hl { color: var(--gold); font-weight: 600; }
+  .hl-r { color: var(--red); font-weight: 600; }
+  .hl-g { color: var(--green); font-weight: 600; }
+  .hl-b { color: var(--blue); font-weight: 600; }
+  .hl-p { color: var(--purple); font-weight: 600; }
+  .hl-t { color: var(--teal); font-weight: 600; }
+
+  /* ── FILL BLANK ── */
+  .blank {
+    display: inline-block; min-width: 100px; background: var(--bg3);
+    border-bottom: 2px solid var(--gold); color: transparent;
+    cursor: pointer; border-radius: 3px; padding: 0 4px;
+    user-select: none; transition: color .2s, background .2s;
+  }
+  .blank.revealed { color: var(--gold); background: rgba(240,180,41,.12); }
+
+  /* ── DIVIDER ── */
+  .div { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  /* ── EXAM Q ── */
+  .exam-q {
+    display: flex; gap: .75rem; padding: .9rem 1rem;
+    border-radius: 8px; background: rgba(91,156,246,.07);
+    border-left: 3px solid var(--blue); margin-bottom: .6rem;
+  }
+  .exam-q .eq-icon { flex-shrink: 0; }
+  .exam-q p { font-size: 13.5px; }
+  .exam-q p strong { color: var(--blue); }
+
+  /* ── SCROLL TOP ── */
+  #top-btn {
+    position: fixed; bottom: 2rem; right: 2rem;
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text-dim); width: 40px; height: 40px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 1.1rem; z-index: 50;
+    text-decoration: none; transition: background .2s;
+  }
+  #top-btn:hover { background: var(--bg4); color: var(--gold); }
+
+  /* ── PRINT ── */
+  @media print {
+    nav, #top-btn { display: none; }
+    main { padding-top: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">⚔️ DSN</span>
+  <span class="sep">|</span>
+  <a href="#palace">Memory Palace</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#khilji">Khilji</a>
+  <a href="#tughlaq">Tughlaq</a>
+  <a href="#syed">Syed</a>
+  <a href="#lodhi">Lodhi</a>
+  <a href="#admin">Admin</a>
+  <a href="#hooks">Hooks</a>
+  <a href="#traps">Traps ⚠</a>
+  <a href="#examq">Exam Q</a>
+  <a href="#recall">Recall</a>
+  <a href="#flash">Flash</a>
+  <a href="#lastnight">Last Night</a>
+</nav>
+
+<main>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="eyebrow">SSC CGL · High-Retention Revision System · Delhi Sultanate</div>
+  <h1>Delhi Sultanate<br><span>Khilji → Tughlaq → Syed → Lodhi</span></h1>
+  <p>Built to be revised 20–100 times. Every fact, every trick, every trap — in one place.</p>
+  <div class="tag-row">
+    <span class="tag tag-fire">🔥 Must Know</span>
+    <span class="tag tag-star">⭐ Important</span>
+    <span class="tag tag-plus">➕ Good to Know</span>
+  </div>
+</div>
+
+<!-- ── BIG PICTURE ── -->
+<section id="bigpicture">
+  <div class="section-header">
+    <span class="section-icon">🌍</span>
+    <h2>Big Picture</h2>
+    <span class="badge">Chapter Overview</span>
+  </div>
+  <p>Delhi Sultanate is the story of <strong class="hl">Islamic rule in India (1206–1526)</strong>. After Ghori's invasion, his slave Qutubuddin Aibak founded it. Five dynasties ruled in sequence: <strong class="hl">Slave → Khilji → Tughlaq → Syed → Lodhi</strong>. It ends when Ibrahim Lodi loses the First Battle of Panipat to Babur in 1526, beginning Mughal rule.</p>
+  <br>
+  <p>For SSC CGL, the <strong class="hl-r">most important rulers</strong> are: <span class="hl">Alauddin Khilji</span>, then <span class="hl">Balban</span>, then <span class="hl">Iltutmish</span>, then <span class="hl">Mohammad Bin Tughlaq</span>. Everything else is supporting cast.</p>
+</section>
+
+<!-- ── MEMORY PALACE ── -->
+<section id="palace">
+  <div class="section-header">
+    <span class="section-icon">🧠</span>
+    <h2>Chapter Memory Palace</h2>
+    <span class="badge">Story Framework</span>
+  </div>
+  <div class="palace">
+    <div class="palace-intro">Walk through a grand royal court. Each room = one dynasty. Each object = a ruler. Let your feet carry you through history.</div>
+
+    <div class="palace-stop" style="border-color: var(--gold);">
+      <div class="num">🚪</div>
+      <div class="content">
+        <strong>Gate: Jalaluddin Khilji (1290–1296)</strong>
+        An old man (Malik Firoz) stands at the gate. He just stabbed the previous gatekeeper (<span class="hl">Kaiqubad</span>, Balban's grandson). He's the founder. Not important. Walk past.
+      </div>
+    </div>
+
+    <div class="palace-stop" style="border-color: var(--red);">
+      <div class="num">👑</div>
+      <div class="content">
+        <strong>Throne Room: Alauddin Khilji (1296–1316) — THE MOST IMPORTANT ROOM</strong>
+        You see a general on the throne. His original name tag says "Ali Gurshaspi". He bought his best soldier from a Gujarat market for <span class="hl">1000 dinars (Hazar Dinari = Malik Kafur)</span>. On the walls: maps of Gujarat, Ranthambore, Mewar, Malwa, Jalore. On the table: 3 market scrolls and 3 tax books.
+      </div>
+    </div>
+
+    <div class="palace-stop" style="border-color: var(--purple);">
+      <div class="num">🎵</div>
+      <div class="content">
+        <strong>Music Room: Amir Khusro</strong>
+        A parrot sits here singing qawwali. Alauddin called him <span class="hl">Tute-Hind (Parrot of India)</span>. Khusro called Alauddin <span class="hl">Sultan Jahan</span>. He started Qawwali.
+      </div>
+    </div>
+
+    <div class="palace-stop" style="border-color: var(--blue);">
+      <div class="num">🏛️</div>
+      <div class="content">
+        <strong>Architecture Hall: Alauddin's Buildings</strong>
+        You see: <span class="hl">Alai Fort</span>, a door that says <span class="hl">Alai Darwaza</span> (leads to Qutub Minar), a palace with 1000 columns (<span class="hl">Hazar Sutun</span>), a big tank (<span class="hl">Hauz Khas</span>), and a city sign that says <span class="hl">SIRI</span> (2nd city of Delhi).
+      </div>
+    </div>
+
+    <div class="palace-stop" style="border-color: var(--orange);">
+      <div class="num">🤔</div>
+      <div class="content">
+        <strong>Chaos Corridor: Mohammad Bin Tughlaq (1325–1351) — The Wisest Fool</strong>
+        A brilliant man is writing 10 plans on paper. Each plan starts perfect, then burns. Shifting capital Delhi→Daulatabad→Delhi (everyone walks back and forth). Bronze coins fly everywhere (token currency fail). Ibn Batuta from Morocco stands watching and writing in his book <span class="hl">Rihla</span>.
+      </div>
+    </div>
+
+    <div class="palace-stop" style="border-color: var(--green);">
+      <div class="num">📜</div>
+      <div class="content">
+        <strong>Tax Room: Firoz Shah Tughlaq</strong>
+        Four tax books on a shelf: <span class="hl">Kharaj, Zakat, Jaziya, Khamz</span> (from the Quran). A notice board: "Soldiers get land, not cash." A sign: <span class="hl">Darul Shifa</span> (hospital). PM of this room: <span class="hl">Khane Jahan Maqbool</span>.
+      </div>
+    </div>
+
+    <div class="palace-stop" style="border-color: var(--teal);">
+      <div class="num">🏕️</div>
+      <div class="content">
+        <strong>Exit: Syed &amp; Lodhi (1414–1526)</strong>
+        Cone-hat men (Kule Daran = Syed) leave through one door. Afghan fighters (Lodhi) enter from Punjab. Last man standing: <span class="hl">Ibrahim Lodi</span> — falls at Panipat 1526 to Babur. End of Delhi Sultanate.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DYNASTY TIMELINE ── -->
+<section id="timeline">
+  <div class="section-header">
+    <span class="section-icon">📅</span>
+    <h2>Dynasty Timeline</h2>
+    <span class="badge">Chronology</span>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot" style="background: var(--text-dim);"></div>
+      <div class="tl-date">1206–1290</div>
+      <h4>Slave Dynasty</h4>
+      <p>Founded by Qutubuddin Aibak (slave of Ghori). Key rulers: Iltutmish, Balban. Ends with Kaiqubad (Balban's grandson).</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background: var(--gold);"></div>
+      <div class="tl-date">1290–1320 <span class="hl">🔥</span></div>
+      <h4>Khilji Dynasty</h4>
+      <p>Jalaluddin Khilji → Alauddin Khilji (the most important ruler). Ended when Ghiyasuddin Tughlaq kills Khusro Khan.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background: var(--blue);"></div>
+      <div class="tl-date">1320–1414 <span class="hl">🔥</span></div>
+      <h4>Tughlaq Dynasty</h4>
+      <p>Ghiyasuddin → Mohammad Bin Tughlaq (wisest fool) → Firoz Shah Tughlaq → Mahmud Shah Tughlaq (Timur attacks). Largest kingdom.</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background: var(--purple);"></div>
+      <div class="tl-date">1414–1451</div>
+      <h4>Syed Dynasty</h4>
+      <p>Founded by Khizr Khan (put by Timur's commander). Only ~37 years. Rulers: Khizr → Mubarak → Mohammad → Alam Shah. Known as Kule Daran (cone hat wearers).</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="background: var(--red);"></div>
+      <div class="tl-date">1451–1526</div>
+      <h4>Lodhi Dynasty</h4>
+      <p>Afghan. Bahlul Lodhi founder. Sikandar Lodi built Agra (1504). Ibrahim Lodi: last ruler of Delhi Sultanate. Died at First Battle of Panipat (1526) to Babur.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── KHILJI ── -->
+<section id="khilji">
+  <div class="section-header">
+    <span class="section-icon">⚔️</span>
+    <h2>Khilji Dynasty (1290–1320)</h2>
+    <span class="badge">🔥 Highest Weightage</span>
+  </div>
+
+  <div class="ruler-card">
+    <div class="ruler-header">
+      <span>👴</span>
+      <span class="ruler-name">Jalaluddin Khilji</span>
+      <span class="ruler-dates">1290–1296 · 6 years</span>
+    </div>
+    <div class="ruler-body">
+      <div class="facts">
+        <div class="fact star"><span class="icon">🏷️</span><span class="label">Original Name</span><span class="val"><strong>Malik Firoz</strong></span></div>
+        <div class="fact"><span class="icon">🗡️</span><span class="label">Killed</span><span class="val">Kaiqubad (Balban's grandson) → became founder of Khilji dynasty</span></div>
+        <div class="fact"><span class="icon">ℹ️</span><span class="label">Importance</span><span class="val">LOW — just remember name, dates, and who he killed</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ruler-card">
+    <div class="ruler-header">
+      <span>👑</span>
+      <span class="ruler-name">Alauddin Khilji</span>
+      <span class="ruler-dates">1296–1316 · 🔥 MOST IMPORTANT</span>
+    </div>
+    <div class="ruler-body">
+      <div class="facts">
+        <div class="fact fire"><span class="icon">🏷️</span><span class="label">Original Name</span><span class="val"><strong>Ali Gurshaspi</strong> (nephew + son-in-law of Jalaluddin)</span></div>
+        <div class="fact fire"><span class="icon">🗺️</span><span class="label">Conquests</span><span class="val">Gujarat 1298 · Ranthambore 1301 · Mewar 1303 · Malwa 1305 · Jalore 1311</span></div>
+        <div class="fact fire"><span class="icon">⚔️</span><span class="label">Malik Kafur</span><span class="val"><strong>Hazar Dinari</strong> — bought from Gujarat market for 1000 dinars. Top military commander. Led ALL South India campaigns.</span></div>
+        <div class="fact star"><span class="icon">🏛️</span><span class="label">South India</span><span class="val">Defeated: Yadavas (Devagiri, King Ramchandra) · Kakatiyas (Warangal, Rudradeva) · Hoysala (Dwarasamudra, Veer Ballal III) · Pandyas (Veer Pandya)</span></div>
+        <div class="fact fire"><span class="icon">📊</span><span class="label">Taxes (3)</span><span class="val"><strong>Ghar</strong> (house) · <strong>Charai</strong> (pastoral) · <strong>Kharaj</strong> (land) — BCC asked this! Answer = 3 types</span></div>
+        <div class="fact star"><span class="icon">🏪</span><span class="label">Markets (3)</span><span class="val">Food grains · Clothes (Sarai Adil) · Horse/Cattle</span></div>
+        <div class="fact star"><span class="icon">👮</span><span class="label">Market Officers</span><span class="val"><strong>Shahna-e-Mandi</strong> (food grain controller) · <strong>Diwan-e-Riyasat</strong> · Spies = <strong>Munaiya &amp; Barid</strong></span></div>
+        <div class="fact star"><span class="icon">🐴</span><span class="label">Military</span><span class="val"><strong>Daag</strong> = branding of horses (anti-duplicate stamp) · <strong>Chehra</strong> = descriptive roll of soldiers</span></div>
+        <div class="fact star"><span class="icon">💰</span><span class="label">Revenue</span><span class="val"><strong>Mustakhraj</strong> = new department for revenue collection (by Alauddin)</span></div>
+        <div class="fact star"><span class="icon">🏗️</span><span class="label">Architecture</span><span class="val">Alai Fort · <strong>Alai Darwaza</strong> (entrance to Qutub Minar) · Hazar Sutun (1000 pillar palace) · Hauz Khas (tank) · <strong>SIRI</strong> (2nd city of Delhi)</span></div>
+        <div class="fact fire"><span class="icon">🦜</span><span class="label">Amir Khusro</span><span class="val">Court poet. Alauddin called him <strong>Tute-Hind (Parrot of India)</strong>. Khusro called Alauddin <strong>Sultan Jahan</strong>. Started <strong>Qawwali</strong>.</span></div>
+        <div class="fact"><span class="icon">📖</span><span class="label">Padmavat</span><span class="val">Written by <strong>Malik Mohammad Jayasi</strong> (not a court person of Alauddin)</span></div>
+        <div class="fact"><span class="icon">🔄</span><span class="label">After Death</span><span class="val">Malik Kafur made Umar (younger son) king → Mubarak Khan killed Malik Kafur + Umar → Khusro Khan killed Mubarak Khan → Ghiyasuddin Tughlaq killed Khusro Khan</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TUGHLAQ ── -->
+<section id="tughlaq">
+  <div class="section-header">
+    <span class="section-icon">🏯</span>
+    <h2>Tughlaq Dynasty (1320–1414)</h2>
+    <span class="badge">🔥 High Weightage</span>
+  </div>
+
+  <div class="ruler-card">
+    <div class="ruler-header">
+      <span>🗡️</span>
+      <span class="ruler-name">Ghiyasuddin Tughlaq</span>
+      <span class="ruler-dates">1320 — Founder</span>
+    </div>
+    <div class="ruler-body">
+      <div class="facts">
+        <div class="fact star"><span class="icon">🏷️</span><span class="label">Original Name</span><span class="val"><strong>Ghaz Malik</strong> → title: Ghiyasuddin Tughlaq</span></div>
+        <div class="fact"><span class="icon">🏙️</span><span class="label">Built</span><span class="val">City of <strong>Tughlaqabad</strong> + Tughlaqabad Fort</span></div>
+        <div class="fact"><span class="icon">👶</span><span class="label">Son</span><span class="val">Jauna / Uluq Khan → later known as <strong>Mohammad Bin Tughlaq</strong></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ruler-card">
+    <div class="ruler-header">
+      <span>🤯</span>
+      <span class="ruler-name">Mohammad Bin Tughlaq</span>
+      <span class="ruler-dates">1325–1351 · 🔥 Important</span>
+    </div>
+    <div class="ruler-body">
+      <div class="facts">
+        <div class="fact fire"><span class="icon">🏷️</span><span class="label">Nickname</span><span class="val"><strong>"Wisest Fool"</strong> — coined by <strong>Kaifi Khan</strong>. Big plans, failed execution.</span></div>
+        <div class="fact fire"><span class="icon">🗺️</span><span class="label">Kingdom</span><span class="val"><strong>Largest ever in Delhi Sultanate</strong> during his reign</span></div>
+        <div class="fact fire"><span class="icon">❌</span><span class="label">Failed Plans</span><span class="val">
+          1. <strong>Doab Tax</strong> — taxed land between two rivers → failed<br>
+          2. <strong>Capital shift Delhi → Daulatabad (Devagiri)</strong> → then shifted back (Tughlaq Farman)<br>
+          3. <strong>Khurasan Expedition (1329)</strong> — raised army, then disbanded it<br>
+          4. <strong>Karachi Expedition</strong> — failed<br>
+          5. <strong>Token Currency</strong> — bronze coins with high face value → people minted fakes at home → failed
+        </span></div>
+        <div class="fact star"><span class="icon">🌍</span><span class="label">Emerged During</span><span class="val"><strong>Vijayanagar Kingdom</strong> &amp; <strong>Bahmani Kingdom</strong> emerged in South India during his rule</span></div>
+        <div class="fact fire"><span class="icon">✈️</span><span class="label">Ibn Batuta</span><span class="val">Traveler from <strong>Morocco</strong>. Visited during his reign. Book = <strong>Rihla</strong> (NOT Rihal — exam trap!)</span></div>
+        <div class="fact star"><span class="icon">📚</span><span class="label">Ziauddin Barani</span><span class="val">Wrote <strong>Tarikh-e-Ferozshahi</strong> &amp; <strong>Tarikh-e-Jahandari</strong>. Described Mohammad's appointment of cooks/gardeners/wine sellers as high officers.</span></div>
+        <div class="fact"><span class="icon">💰</span><span class="label">Wajeha</span><span class="val">Soldiers paid in <strong>land revenue assignments</strong> (not cash). Continued by Firoz Shah.</span></div>
+        <div class="fact star"><span class="icon">🏛️</span><span class="label">Diwan</span><span class="val">Established <strong>Diwan-e-Kohi</strong> (Department of Agriculture)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ruler-card">
+    <div class="ruler-header">
+      <span>📜</span>
+      <span class="ruler-name">Firoz Shah Tughlaq</span>
+      <span class="ruler-dates">1351–1388 · ⭐ Important</span>
+    </div>
+    <div class="ruler-body">
+      <div class="facts">
+        <div class="fact fire"><span class="icon">💸</span><span class="label">4 Taxes</span><span class="val"><strong>Kharaj</strong> (1/10 of land produce) · <strong>Zakat</strong> (2% on property, on Muslims) · <strong>Jaziya</strong> (on non-Muslims) · <strong>Khamz</strong> (1/5 of war booty) — from the Quran</span></div>
+        <div class="fact star"><span class="icon">💧</span><span class="label">Water Taxes</span><span class="val"><strong>Hak-e-Sharb</strong> &amp; <strong>Hasil-e-Sharb</strong> — imposed on irrigation water</span></div>
+        <div class="fact star"><span class="icon">🏙️</span><span class="label">Cities Built</span><span class="val">Fatehabad · Hisar · <strong>Jaunpur</strong> (in memory of Jauna Khan = Mohammad Bin Tughlaq) · Firozabad</span></div>
+        <div class="fact star"><span class="icon">🏛️</span><span class="label">Departments</span><span class="val"><strong>Diwan-e-Kharat</strong> (donations) · <strong>Diwan-e-Bandgan</strong> (slaves)</span></div>
+        <div class="fact star"><span class="icon">🏥</span><span class="label">Hospital</span><span class="val"><strong>Darul Shifa</strong> — PM: <strong>Khane Jahan Maqbool</strong></span></div>
+        <div class="fact"><span class="icon">💰</span><span class="label">Pay System</span><span class="val">Soldiers paid via <strong>Wajeha</strong> (land revenue assignment, not cash) — treasury was empty</span></div>
+        <div class="fact"><span class="icon">👥</span><span class="label">Jaziya</span><span class="val">Made Jaziya a <strong>separate tax</strong> (standalone)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ruler-card">
+    <div class="ruler-header">
+      <span>⚡</span>
+      <span class="ruler-name">Mahmud Shah Tughlaq</span>
+      <span class="ruler-dates">Last Tughlaq</span>
+    </div>
+    <div class="ruler-body">
+      <div class="facts">
+        <div class="fact fire"><span class="icon">🏇</span><span class="label">Timur Attack</span><span class="val"><strong>Timur</strong> (Mongol) attacked India during his reign → weakened Tughlaq dynasty. Timur placed his military commander who founded Syed Dynasty.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SYED ── -->
+<section id="syed">
+  <div class="section-header">
+    <span class="section-icon">🎩</span>
+    <h2>Syed Dynasty (1414–1451)</h2>
+    <span class="badge">Low Weightage</span>
+  </div>
+  <div class="facts">
+    <div class="fact star"><span class="icon">👑</span><span class="label">Founder</span><span class="val"><strong>Khizr Khan</strong> — placed by Timur's commander · ruled 1414–1421</span></div>
+    <div class="fact"><span class="icon">📋</span><span class="label">Rulers</span><span class="val">Khizr Khan → Mubarak Shah → Mohammad Shah → <strong>Alam Shah</strong> (last)</span></div>
+    <div class="fact star"><span class="icon">🎩</span><span class="label">Nickname</span><span class="val"><strong>Kule Daran</strong> — wore cone-shaped hats (like birthday cones)</span></div>
+    <div class="fact"><span class="icon">📅</span><span class="label">Duration</span><span class="val">~37 years only (shortest among major dynasties)</span></div>
+  </div>
+</section>
+
+<!-- ── LODHI ── -->
+<section id="lodhi">
+  <div class="section-header">
+    <span class="section-icon">🏹</span>
+    <h2>Lodhi Dynasty (1451–1526)</h2>
+    <span class="badge">⭐ Important</span>
+  </div>
+  <div class="facts">
+    <div class="fact fire"><span class="icon">👑</span><span class="label">Founder</span><span class="val"><strong>Bahlul Lodhi</strong> (1451–1488) — Afghan chieftain, first established in Punjab</span></div>
+    <div class="fact star"><span class="icon">📏</span><span class="label">Sikandar Lodi</span><span class="val">Built <strong>Agra city in 1504</strong> → shifted capital Delhi→Agra. Pen name: <strong>Gulrukhi</strong> (wrote Persian poetry). Created <strong>Gaz-e-Sikandari</strong> (measuring unit).</span></div>
+    <div class="fact fire"><span class="icon">⚔️</span><span class="label">Ibrahim Lodi</span><span class="val">Last ruler of Lodhi dynasty AND Delhi Sultanate. Lost <strong>First Battle of Panipat (1526)</strong> to <strong>Babur</strong>.</span></div>
+    <div class="fact star"><span class="icon">🤝</span><span class="label">Who Invited Babur?</span><span class="val"><strong>Daulat Khan Lodi</strong> — governor appointed by Ibrahim Lodi. Invited Babur. (Daulat Khan was like an uncle figure to Ibrahim.)</span></div>
+    <div class="fact star"><span class="icon">🏛️</span><span class="label">Architecture</span><span class="val">Famous for <strong>Double Dome Architecture</strong>. Best example: <strong>Maut ki Masjid</strong>, Delhi.</span></div>
+  </div>
+</section>
+
+<!-- ── CENTRAL ADMIN ── -->
+<section id="admin">
+  <div class="section-header">
+    <span class="section-icon">🏛️</span>
+    <h2>Central Administration — Diwan (Departments)</h2>
+    <span class="badge">🔥 Exam Favourite</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Diwan / Department</th>
+          <th>Function</th>
+          <th>Established By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Diwan-e-Wazarat</strong></td><td>Finance Department</td><td>—</td></tr>
+        <tr><td><strong>Diwan-e-Arz</strong></td><td>Military Department</td><td><strong>Balban</strong> <span class="chip chip-r">🔥</span></td></tr>
+        <tr><td><strong>Diwan-e-Insha</strong></td><td>Correspondence (letters)</td><td>—</td></tr>
+        <tr><td><strong>Diwan-e-Risalat</strong></td><td>Department of Appeals</td><td>—</td></tr>
+        <tr><td><strong>Diwan-e-Riyasat</strong></td><td>Market/Commerce Control</td><td><strong>Alauddin Khilji</strong> <span class="chip chip-r">🔥</span></td></tr>
+        <tr><td><strong>Mustakhraj</strong></td><td>Revenue Collection (arrears)</td><td><strong>Alauddin Khilji</strong> <span class="chip chip-r">🔥</span></td></tr>
+        <tr><td><strong>Diwan-e-Kohi</strong></td><td>Agriculture Department</td><td><strong>Mohammad Bin Tughlaq</strong> <span class="chip chip-b">⭐</span></td></tr>
+        <tr><td><strong>Diwan-e-Kharat</strong></td><td>Donations Department</td><td><strong>Firoz Shah Tughlaq</strong> <span class="chip chip-b">⭐</span></td></tr>
+        <tr><td><strong>Diwan-e-Bandgan</strong></td><td>Slaves Department</td><td><strong>Firoz Shah Tughlaq</strong> <span class="chip chip-b">⭐</span></td></tr>
+        <tr><td><strong>Diwan-e-Ishtia</strong></td><td>Pension Department</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <p style="font-size: 13px; color: var(--text-dim);">💡 Memory cue: <span class="hl">Balban = Army · Alauddin = Market/Revenue · Mohammad Tughlaq = Agriculture · Firoz Tughlaq = Donations &amp; Slaves</span></p>
+</section>
+
+<!-- ── MALIK KAFUR SOUTH INDIA TABLE ── -->
+<section>
+  <div class="section-header">
+    <span class="section-icon">🗺️</span>
+    <h2>Malik Kafur's South India Campaigns</h2>
+    <span class="badge">⭐ Match-The-Following</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Kingdom</th><th>Capital/Region</th><th>King Defeated</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Yadavas</strong></td><td>Devagiri</td><td>Ramchandra</td></tr>
+        <tr><td><strong>Kakatiyas</strong></td><td>Warangal</td><td>Rudradeva</td></tr>
+        <tr><td><strong>Hoysalas</strong></td><td>Dwarasamudra / Hallel Beedu</td><td>Veer Ballal III</td></tr>
+        <tr><td><strong>Pandyas</strong></td><td>—</td><td>Veer Pandya</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── MEMORY HOOKS ── -->
+<section id="hooks">
+  <div class="section-header">
+    <span class="section-icon">🧲</span>
+    <h2>Smart Memory Hooks</h2>
+    <span class="badge">Retention Tricks</span>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🦜 Amir Khusro Double Title Hook</div>
+    <p>Think of a parrot (Tute-Hind) in a court. <strong>Alauddin gave the parrot its name</strong> (Tute-Hind). <strong>The parrot praised back its owner</strong> (Khusro called Alauddin "Sultan Jahan"). Two-way exchange. The parrot also sang qawwali. Done. Never forget.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">💰 Hazar Dinari Hook</div>
+    <p>Picture a market stall in Gujarat. A man is sold for exactly <strong>1000 gold coins (Hazar Dinari)</strong>. The buyer is Alauddin. The slave becomes his greatest general who conquers ALL of South India. The price tag of 1000 = the name forever.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🤡 Wisest Fool Hook</div>
+    <p>Imagine a genius professor in class: <strong>"I will solve poverty, shift the capital, conquer Khurasan, and create a new currency!"</strong> Then one by one, each plan flops. Students laugh. He's not dumb — he's the <strong>Wisest Fool</strong>. Kaifi Khan gave him this tag. And his book? Ibn Batuta = <strong>Rihla</strong> (not Rihal).</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🎩 Kule Daran Hook</div>
+    <p>Syed Dynasty rulers wore <strong>cone-shaped birthday hats</strong>. So they were called Kule Daran. Short dynasty, short hats. Founder = Khizr Khan. Last = Alam Shah. Think: birthday party of 37 years that ended when Lodhi arrived.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🏟️ 7 Cities of Delhi Hook</div>
+    <p>Delhi has <strong>7 historical cities</strong>. First = Tomar dynasty. Second = <strong>Siri by Alauddin Khilji</strong>. That's all you need to know for the exam: Alauddin built SIRI, the 2nd city.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">📊 Alauddin's 3 Markets → Sarai Adil</div>
+    <p>Market 1 = Food. Market 2 = Cloth = <strong>Sarai Adil</strong> (remember: "Adil" sounds like "textile deal"). Market 3 = Horses &amp; Cattle. The cloth market has the special name. Examiners love this.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">⚔️ Power Succession Hook (End of Khilji)</div>
+    <p>Think of it like a relay race of betrayals:<br>
+    <strong>Alauddin dies → Kafur makes Umar king → Mubarak Khan kills Kafur &amp; Umar → Khusro Khan kills Mubarak → Ghiyasuddin kills Khusro → Tughlaq dynasty begins.</strong><br>
+    Each person in the relay kills the one before them.</p>
+  </div>
+</section>
+
+<!-- ── CONCEPT CONNECTIONS ── -->
+<section>
+  <div class="section-header">
+    <span class="section-icon">🔗</span>
+    <h2>Concept Connections</h2>
+    <span class="badge">Mental Network</span>
+  </div>
+
+  <div class="conn">
+    <span class="arrow">→</span>
+    <p><strong>Alauddin's low soldier pay</strong> + <strong>strict market control</strong> = soldiers could still live well because prices were kept artificially low. That's why 3 markets + Shahna + Daag/Chehra were all one system.</p>
+  </div>
+  <div class="conn">
+    <span class="arrow">→</span>
+    <p><strong>Token currency (Mohammad Tughlaq) failed</strong> because bronze itself was cheap → people minted fake coins at home → economy collapsed. Compare: Alauddin succeeded because he controlled prices, not money supply.</p>
+  </div>
+  <div class="conn">
+    <span class="arrow">→</span>
+    <p><strong>Timur's attack</strong> → Tughlaq dynasty weakened → <strong>Timur's commander placed Khizr Khan</strong> → Syed Dynasty began. The Syed dynasty was essentially a puppet of Timur's legacy.</p>
+  </div>
+  <div class="conn">
+    <span class="arrow">→</span>
+    <p><strong>Firoz Shah Tughlaq's empty treasury</strong> (inherited from Mohammad's failed schemes) forced him to use <strong>Wajeha</strong> (land payment instead of cash) and impose 4 Quranic taxes to maintain Muslim court support.</p>
+  </div>
+  <div class="conn">
+    <span class="arrow">→</span>
+    <p><strong>Daulat Khan Lodi</strong> invited Babur → <strong>First Battle of Panipat (1526)</strong> → Ibrahim Lodi died → Delhi Sultanate ended → Mughal Empire began.</p>
+  </div>
+  <div class="conn">
+    <span class="arrow">→</span>
+    <p><strong>Vijayanagar &amp; Bahmani kingdoms</strong> emerged during <strong>Mohammad Bin Tughlaq's</strong> reign — because his failed policies weakened central control, allowing regional kingdoms to rise.</p>
+  </div>
+</section>
+
+<!-- ── EXAM TRAPS ── -->
+<section id="traps">
+  <div class="section-header">
+    <span class="section-icon">⚠️</span>
+    <h2>Exam Traps</h2>
+    <span class="badge">Common Mistakes</span>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 1 — Rihla vs Rihal</div>
+    <p>Ibn Batuta's book is <strong>Rihla</strong> — NOT "Rihal". Common misspelling. The teacher explicitly warned about this.</p>
+  </div>
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 2 — 3 taxes vs 4 taxes</div>
+    <p><strong>Alauddin imposed 3 taxes</strong>: Ghar, Charai, Kharaj. <strong>Firoz Shah imposed 4 taxes</strong>: Kharaj, Zakat, Jaziya, Khamz. Don't mix them. BCC already asked about Alauddin's = 3.</p>
+  </div>
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 3 — Diwan-e-Riyasat vs Diwan-e-Risalat</div>
+    <p><strong>Riyasat</strong> = Market control (Alauddin). <strong>Risalat</strong> = Appeals Department. They sound almost identical. Riyasat = market (think "retail"). Risalat = appeal (think "resolution").</p>
+  </div>
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 4 — Uluq Khan (Multiple Rulers)</div>
+    <p><strong>Uluq Khan</strong> is the original name of BOTH Balban AND Mohammad Bin Tughlaq. Don't let the exam confuse you with this.</p>
+  </div>
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 5 — Tute-Hind direction</div>
+    <p><strong>Alauddin gave Khusro the title Tute-Hind</strong>. Khusro gave Alauddin the title <strong>Sultan Jahan</strong>. Students often reverse this. Remember: the KING gave the cool parrot name. The POET praised the king.</p>
+  </div>
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 6 — Who built Jaunpur?</div>
+    <p>Jaunpur was built by <strong>Firoz Shah Tughlaq</strong> in memory of Jauna Khan (= Mohammad Bin Tughlaq). Not by Mohammad himself.</p>
+  </div>
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 7 — Capital Shift to Agra</div>
+    <p>Agra was built (1504) and capital was shifted there by <strong>Sikandar Lodi</strong>, NOT Bahlul Lodi. Don't mix the two Lodhis.</p>
+  </div>
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 8 — Daulatabad = Devagiri</div>
+    <p>When Mohammad Tughlaq shifted capital to <strong>Daulatabad</strong>, it was the SAME PLACE as <strong>Devagiri</strong> (previously the Yadava capital). Daulatabad was its renamed version. Examiners use both names.</p>
+  </div>
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 9 — Padmavat Author</div>
+    <p>Padmavat was written by <strong>Malik Mohammad Jayasi</strong> — NOT Amir Khusro. Amir Khusro was Alauddin's court poet, but Jayasi wrote the Padmavat poem much later.</p>
+  </div>
+  <div class="trap">
+    <div class="trap-label">⚠ Trap 10 — Sarai Adil</div>
+    <p><strong>Sarai Adil</strong> was the CLOTH market (not food, not horses). The cloth market had a special name. The food grain market's controller was called Shahna-e-Mandi.</p>
+  </div>
+</section>
+
+<!-- ── EXAMINER'S QUESTIONS ── -->
+<section id="examq">
+  <div class="section-header">
+    <span class="section-icon">🎯</span>
+    <h2>Examiner's Favourite Questions</h2>
+    <span class="badge">High Probability</span>
+  </div>
+
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>How many types of taxes did Alauddin Khilji impose? → <strong>3</strong> (Ghar, Charai, Kharaj) <em>BCC asked this</em></p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who was called <strong>Hazar Dinari</strong>? → Malik Kafur (bought for 1000 dinars)</p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who gave Amir Khusro the title <strong>Tute-Hind</strong>? → Alauddin Khilji</p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>What is the name of Ibn Batuta's book? → <strong>Rihla</strong></p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who was known as the <strong>Wisest Fool</strong>? → Mohammad Bin Tughlaq (by Kaifi Khan)</p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Which was the cloth market established by Alauddin? → <strong>Sarai Adil</strong></p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who established Diwan-e-Arz? → <strong>Balban</strong></p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who built Agra? → <strong>Sikandar Lodi</strong> (in 1504)</p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who started <strong>Qawwali</strong>? → Amir Khusro</p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>4 taxes of Firoz Shah Tughlaq? → <strong>Kharaj, Zakat, Jaziya, Khamz</strong></p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Lodhi dynasty is famous for what architecture? → <strong>Double Dome</strong></p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who founded Syed Dynasty? → <strong>Khizr Khan</strong></p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who invited Babur to India? → <strong>Daulat Khan Lodi</strong></p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who established Diwan-e-Kohi? → <strong>Mohammad Bin Tughlaq</strong></p></div>
+  <div class="exam-q"><span class="eq-icon">🎯</span><p>Who wrote Padmavat? → <strong>Malik Mohammad Jayasi</strong></p></div>
+</section>
+
+<!-- ── ACTIVE RECALL ── -->
+<section id="recall">
+  <div class="section-header">
+    <span class="section-icon">❓</span>
+    <h2>Active Recall Section</h2>
+    <span class="badge">Force Retrieval</span>
+  </div>
+
+  <p class="q-label">Fill in the Blanks — click the blank to reveal</p>
+
+  <div class="q-block">
+    <div class="q">Alauddin Khilji's original name was <span class="blank" onclick="this.classList.toggle('revealed')">Ali Gurshaspi</span> and he was the <span class="blank" onclick="this.classList.toggle('revealed')">nephew + son-in-law</span> of Jalaluddin Khilji.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q">Malik Kafur was bought from the <span class="blank" onclick="this.classList.toggle('revealed')">Gujarat</span> market for <span class="blank" onclick="this.classList.toggle('revealed')">1000 dinars</span>, which is why he was called <span class="blank" onclick="this.classList.toggle('revealed')">Hazar Dinari</span>.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q">The cloth market established by Alauddin was called <span class="blank" onclick="this.classList.toggle('revealed')">Sarai Adil</span>. The spy network used <span class="blank" onclick="this.classList.toggle('revealed')">Munaiya and Barid</span>.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q">Alauddin's 3 taxes: <span class="blank" onclick="this.classList.toggle('revealed')">Ghar (house)</span>, <span class="blank" onclick="this.classList.toggle('revealed')">Charai (pastoral)</span>, <span class="blank" onclick="this.classList.toggle('revealed')">Kharaj (land)</span>.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q">Ibn Batuta came from <span class="blank" onclick="this.classList.toggle('revealed')">Morocco</span> and wrote the book <span class="blank" onclick="this.classList.toggle('revealed')">Rihla</span>.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q">Mohammad Bin Tughlaq was called "Wisest Fool" by <span class="blank" onclick="this.classList.toggle('revealed')">Kaifi Khan</span>. He shifted capital from Delhi to <span class="blank" onclick="this.classList.toggle('revealed')">Daulatabad (Devagiri)</span>.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q">Firoz Shah Tughlaq built city of <span class="blank" onclick="this.classList.toggle('revealed')">Jaunpur</span> in memory of <span class="blank" onclick="this.classList.toggle('revealed')">Jauna Khan (Mohammad Bin Tughlaq)</span>.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q">Syed dynasty rulers were called Kule Daran because they wore <span class="blank" onclick="this.classList.toggle('revealed')">cone-shaped hats</span>. Founder = <span class="blank" onclick="this.classList.toggle('revealed')">Khizr Khan</span>.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q">Agra was built in <span class="blank" onclick="this.classList.toggle('revealed')">1504</span> by <span class="blank" onclick="this.classList.toggle('revealed')">Sikandar Lodi</span>, who had the pen name <span class="blank" onclick="this.classList.toggle('revealed')">Gulrukhi</span>.</div>
+  </div>
+
+  <br>
+  <p class="q-label">Rapid-Fire Questions</p>
+
+  <div class="rf">
+    <div class="rf-item"><span class="rf-q">Who started Qawwali?</span><span class="rf-a">Amir Khusro</span></div>
+    <div class="rf-item"><span class="rf-q">Alai Darwaza is the entrance to which monument?</span><span class="rf-a">Qutub Minar</span></div>
+    <div class="rf-item"><span class="rf-q">Which was the 2nd city of Delhi?</span><span class="rf-a">SIRI (by Alauddin)</span></div>
+    <div class="rf-item"><span class="rf-q">Diwan-e-Arz = ?</span><span class="rf-a">Military (Balban)</span></div>
+    <div class="rf-item"><span class="rf-q">Diwan-e-Kohi = ?</span><span class="rf-a">Agriculture (Mohammad Tughlaq)</span></div>
+    <div class="rf-item"><span class="rf-q">Daag means?</span><span class="rf-a">Branding of horses</span></div>
+    <div class="rf-item"><span class="rf-q">Chehra means?</span><span class="rf-a">Descriptive roll of soldiers</span></div>
+    <div class="rf-item"><span class="rf-q">Largest Delhi Sultanate kingdom was under?</span><span class="rf-a">Mohammad Bin Tughlaq</span></div>
+    <div class="rf-item"><span class="rf-q">Lodhi dynasty famous for?</span><span class="rf-a">Double Dome Architecture</span></div>
+    <div class="rf-item"><span class="rf-q">First Battle of Panipat (1526)?</span><span class="rf-a">Babur vs Ibrahim Lodi</span></div>
+    <div class="rf-item"><span class="rf-q">Hospital Darul Shifa's PM?</span><span class="rf-a">Khane Jahan Maqbool</span></div>
+    <div class="rf-item"><span class="rf-q">Khamz = ?</span><span class="rf-a">1/5 of war booty (Firoz Shah)</span></div>
+    <div class="rf-item"><span class="rf-q">Token currency failed because?</span><span class="rf-a">People minted fake bronze coins at home</span></div>
+    <div class="rf-item"><span class="rf-q">Ghiyasuddin Tughlaq's original name?</span><span class="rf-a">Ghaz Malik</span></div>
+    <div class="rf-item"><span class="rf-q">Who wrote Tarikh-e-Ferozshahi?</span><span class="rf-a">Ziauddin Barani</span></div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ── HIGH YIELD NOTES ── -->
+<section id="flash">
+  <div class="section-header">
+    <span class="section-icon">⚡</span>
+    <h2>High-Yield Revision Sheet</h2>
+    <span class="badge">Layer 2</span>
+  </div>
+
+  <div class="speed-grid">
+    <div class="speed-card">
+      <h4>🔥 Alauddin Khilji Must-Know</h4>
+      <ul>
+        <li>Original name: <strong>Ali Gurshaspi</strong></li>
+        <li>Malik Kafur = <strong>Hazar Dinari</strong></li>
+        <li>3 taxes: <strong>Ghar, Charai, Kharaj</strong></li>
+        <li>3 markets; cloth = <strong>Sarai Adil</strong></li>
+        <li>Daag = horse branding; Chehra = soldier roll</li>
+        <li>Amir Khusro = <strong>Tute-Hind</strong></li>
+        <li>Built: <strong>SIRI</strong> (2nd Delhi city)</li>
+        <li>Built: <strong>Alai Darwaza</strong> (Qutub Minar gate)</li>
+      </ul>
+    </div>
+    <div class="speed-card">
+      <h4>🤯 Mohammad Bin Tughlaq Must-Know</h4>
+      <ul>
+        <li>"Wisest Fool" — by <strong>Kaifi Khan</strong></li>
+        <li>Largest kingdom in Delhi Sultanate</li>
+        <li>Capital: Delhi → Daulatabad → Delhi</li>
+        <li>Token currency → <strong>failed</strong></li>
+        <li>Ibn Batuta visited; book = <strong>Rihla</strong></li>
+        <li>Ziauddin Barani wrote <strong>Tarikh-e-Ferozshahi</strong></li>
+        <li>Diwan-e-Kohi (Agriculture)</li>
+        <li>Vijayanagar &amp; Bahmani emerged during his rule</li>
+      </ul>
+    </div>
+    <div class="speed-card">
+      <h4>📜 Firoz Shah Tughlaq Must-Know</h4>
+      <ul>
+        <li>4 taxes: <strong>Kharaj, Zakat, Jaziya, Khamz</strong></li>
+        <li>Water taxes: Hak-e-Sharb, Hasil-e-Sharb</li>
+        <li>Wajeha = soldiers paid in land</li>
+        <li>Built: <strong>Jaunpur</strong> (for Mohammad Tughlaq)</li>
+        <li>Hospital: <strong>Darul Shifa</strong></li>
+        <li>Diwan-e-Kharat + Diwan-e-Bandgan</li>
+        <li>Jaziya = separate tax</li>
+      </ul>
+    </div>
+    <div class="speed-card">
+      <h4>🏹 Lodhi + Syed Must-Know</h4>
+      <ul>
+        <li>Syed founder: <strong>Khizr Khan</strong></li>
+        <li>Syed = Kule Daran (cone hats)</li>
+        <li>Lodhi founder: <strong>Bahlul Lodhi</strong></li>
+        <li>Agra built 1504: <strong>Sikandar Lodi</strong> (Gulrukhi)</li>
+        <li>Timur placed Khizr Khan → Syed dynasty</li>
+        <li>Daulat Khan Lodi invited Babur</li>
+        <li>Ibrahim Lodi lost Panipat 1526</li>
+        <li>Lodhi = <strong>Double Dome Architecture</strong></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── 30 SECOND SHEET ── -->
+<section>
+  <div class="section-header">
+    <span class="section-icon">⏱️</span>
+    <h2>30-Second Revision Sheet</h2>
+    <span class="badge">Layer 4 — Ultra Fast</span>
+  </div>
+  <div style="background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem; font-size: 13.5px; line-height: 2;">
+    <span class="hl">KHILJI (1290–1320):</span> Jalaluddin (killed Kaiqubad) → Alauddin (Ali Gurshaspi | Malik Kafur=Hazar Dinari | 3 taxes | 3 markets | Sarai Adil | Daag+Chehra | Tute-Hind=Khusro | SIRI city | Alai Darwaza)<br>
+    <span class="hl">TUGHLAQ (1320–1414):</span> Ghiyasuddin (Ghaz Malik) → Mohammad Bin Tughlaq (Wisest Fool, Kaifi Khan | Rihla by Ibn Batuta | token currency fail | Diwan-e-Kohi) → Firoz Shah (4 taxes: Kharaj+Zakat+Jaziya+Khamz | Darul Shifa | Jaunpur | Diwan-e-Kharat+Bandgan) → Mahmud Shah (Timur attacks)<br>
+    <span class="hl">SYED (1414–1451):</span> Khizr Khan (founder by Timur's man) → Kule Daran → Alam Shah (last)<br>
+    <span class="hl">LODHI (1451–1526):</span> Bahlul → Sikandar (Agra 1504, Gulrukhi) → Ibrahim (lost Panipat 1526 to Babur, invited by Daulat Khan) | Double Dome Architecture
+  </div>
+</section>
+
+<!-- ── LAST NIGHT ── -->
+<section id="lastnight">
+  <div class="section-header">
+    <span class="section-icon">🌙</span>
+    <h2>Last-Night-Before-Exam Sheet</h2>
+    <span class="badge">Layer 5 — Final</span>
+  </div>
+  <div class="lastnight">
+    <h3>🌙 10-Minute Final Blast</h3>
+    <div class="ln-row"><span class="dot">▸</span><span>Alauddin Khilji = Ali Gurshaspi | Malik Kafur = Hazar Dinari | Amir Khusro = Tute-Hind | 3 taxes | Sarai Adil = cloth</span></div>
+    <div class="ln-row"><span class="dot">▸</span><span>Daag = horse branding | Chehra = soldier roll | Mustakhraj = revenue | SIRI = 2nd Delhi city</span></div>
+    <div class="ln-row"><span class="dot">▸</span><span>Mohammad Bin Tughlaq = Wisest Fool (Kaifi Khan) | Rihla (Ibn Batuta, Morocco) | Token currency failed | Diwan-e-Kohi (Agriculture)</span></div>
+    <div class="ln-row"><span class="dot">▸</span><span>Firoz Shah = 4 taxes (Kharaj, Zakat, Jaziya, Khamz) | Jaunpur for Jauna Khan | Darul Shifa hospital | Wajeha = land pay</span></div>
+    <div class="ln-row"><span class="dot">▸</span><span>Syed = Kule Daran | Founder = Khizr Khan | Timur → Syed started</span></div>
+    <div class="ln-row"><span class="dot">▸</span><span>Lodhi = Double Dome | Sikandar = Agra 1504 (Gulrukhi) | Daulat Khan invited Babur | 1526 = Panipat = End</span></div>
+    <div class="ln-row"><span class="dot">▸</span><span>Departments: Balban=Arz(military), Alauddin=Riyasat(market)+Mustakhraj(revenue), Mohammad Tughlaq=Kohi(agri), Firoz=Kharat+Bandgan</span></div>
+    <div class="ln-row"><span class="dot">▸</span><span>TRAPS: Rihla not Rihal | 3 taxes (Alauddin) vs 4 taxes (Firoz) | Riyasat≠Risalat | Uluq Khan = both Balban and Mohammad Tughlaq</span></div>
+  </div>
+</section>
+
+</main>
+
+<a href="#" id="top-btn" title="Back to top">↑</a>
+
+</body>
+</html>

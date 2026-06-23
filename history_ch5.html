@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bengal Partition — SSC CGL Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d14;
+    --surface: #111520;
+    --surface2: #161b28;
+    --surface3: #1c2235;
+    --border: #252d42;
+    --border2: #2e3a54;
+    --accent: #f5a623;
+    --accent2: #e05c5c;
+    --accent3: #4ecdc4;
+    --accent4: #a78bfa;
+    --fire: #ff6b35;
+    --star: #ffd700;
+    --plus: #6ee7b7;
+    --text: #e2e8f0;
+    --muted: #8899aa;
+    --dim: #4a5568;
+    --trap: #ff4757;
+    --tip: #2ed573;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,13,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-brand {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 1rem 1.5rem 1rem 0;
+    border-right: 1px solid var(--border);
+    margin-right: 1rem;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 1.1rem 0.9rem;
+    white-space: nowrap;
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+  nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 4rem 2rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.15;
+    background: linear-gradient(135deg, #f5a623 0%, #e05c5c 50%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+  .hero-sub {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 600px;
+    margin-bottom: 2rem;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .pill {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 100px;
+    padding: 0.3rem 0.9rem;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ── LAYOUT ── */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  section {
+    padding-top: 4rem;
+  }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin: 1.8rem 0 0.7rem;
+    letter-spacing: 0.02em;
+  }
+
+  p { margin-bottom: 0.9rem; color: var(--text); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1rem;
+  }
+  .card.accent-left { border-left: 3px solid var(--accent); }
+  .card.accent-red  { border-left: 3px solid var(--accent2); }
+  .card.accent-teal { border-left: 3px solid var(--accent3); }
+  .card.accent-purple { border-left: 3px solid var(--accent4); }
+
+  /* ── GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  @media(max-width: 700px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+    margin-right: 0.4rem;
+    letter-spacing: 0.05em;
+    vertical-align: middle;
+  }
+  .tag-fire  { background: rgba(255,107,53,0.2); color: var(--fire); border: 1px solid rgba(255,107,53,0.3); }
+  .tag-star  { background: rgba(255,215,0,0.15); color: var(--star); border: 1px solid rgba(255,215,0,0.3); }
+  .tag-plus  { background: rgba(110,231,183,0.1); color: var(--plus); border: 1px solid rgba(110,231,183,0.25); }
+  .tag-trap  { background: rgba(255,71,87,0.15); color: var(--trap); border: 1px solid rgba(255,71,87,0.3); }
+  .tag-tip   { background: rgba(46,213,115,0.12); color: var(--tip); border: 1px solid rgba(46,213,115,0.25); }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent4), var(--accent2));
+    border-radius: 2px;
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -1.65rem;
+    top: 1.1rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .tl-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .tl-text { font-size: 14px; color: var(--text); }
+
+  /* ── MEMORY PALACE ── */
+  .palace {
+    background: linear-gradient(135deg, #0f1829, #1a1030);
+    border: 1px solid #2a2050;
+    border-radius: 14px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .palace::before {
+    content: '🧠';
+    position: absolute;
+    right: 1.5rem;
+    top: 1.2rem;
+    font-size: 3rem;
+    opacity: 0.15;
+  }
+  .palace .room {
+    background: rgba(167,139,250,0.07);
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  .palace .room-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--accent4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: rgba(255,71,87,0.07);
+    border: 1px solid rgba(255,71,87,0.3);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1rem;
+  }
+  .trap-box h4 {
+    color: var(--trap);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+  }
+
+  /* ── HOOK BOX ── */
+  .hook-box {
+    background: rgba(245,166,35,0.07);
+    border: 1px solid rgba(245,166,35,0.25);
+    border-radius: 12px;
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1rem;
+  }
+  .hook-box .hook-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── QUESTIONS ── */
+  .q-box {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 1rem 1.3rem;
+    margin-bottom: 0.7rem;
+  }
+  .q-box .q { font-weight: 600; font-size: 14px; margin-bottom: 0.3rem; }
+  .q-box .a {
+    color: var(--muted);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+    display: none;
+  }
+  .q-box:hover .a { display: block; }
+  .q-hint { font-size: 11px; color: var(--dim); font-family: 'Space Mono', monospace; margin-bottom: 1rem; }
+
+  /* ── REVISION LAYERS ── */
+  .layer-tabs {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .ltab {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    color: var(--muted);
+    transition: all 0.2s;
+    font-family: 'Space Mono', monospace;
+  }
+  .ltab:hover, .ltab.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+  }
+  .layer-content { display: none; }
+  .layer-content.active { display: block; }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.2rem;
+    font-size: 13.5px;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--border2);
+  }
+  td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text);
+  }
+  tr:hover td { background: var(--surface2); }
+
+  /* ── CONNECT ARROWS ── */
+  .connect-chain {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .connect-node {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 0.7rem 1.1rem;
+    font-size: 13.5px;
+  }
+  .connect-arrow {
+    text-align: center;
+    font-size: 18px;
+    color: var(--accent);
+    padding: 0.1rem 0;
+    line-height: 1;
+  }
+
+  /* ── FLASH CARDS ── */
+  .flashcard {
+    background: linear-gradient(135deg, var(--surface), var(--surface2));
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+  }
+  .flashcard:hover { transform: scale(1.01); border-color: var(--accent); }
+  .flashcard .front { font-weight: 600; font-size: 14px; }
+  .flashcard .back { display: none; color: var(--accent); font-size: 14px; margin-top: 0.5rem; }
+  .flashcard:hover .back { display: block; }
+  .flashcard:hover .front { color: var(--muted); font-size: 12px; }
+
+  /* ── ULTRA FAST / 30SEC SHEET ── */
+  .ultra-sheet {
+    background: linear-gradient(135deg, #0d1520, #0a1a10);
+    border: 1px solid #1a3a25;
+    border-radius: 14px;
+    padding: 2rem;
+  }
+  .ultra-row {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .ultra-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--accent3);
+    min-width: 50px;
+    font-weight: 700;
+    padding-top: 1px;
+  }
+  .ultra-fact { font-size: 13.5px; color: var(--text); }
+
+  /* ── LAST NIGHT SHEET ── */
+  .last-night {
+    background: linear-gradient(135deg, #1a0a0a, #20080a);
+    border: 2px solid rgba(255,71,87,0.4);
+    border-radius: 14px;
+    padding: 2rem;
+  }
+  .ln-item {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .ln-bullet { color: var(--trap); font-weight: 700; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 2rem;
+    color: var(--dim);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+  }
+
+  /* ── SCROLL-IN ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  strong { color: var(--accent); font-weight: 600; }
+  code {
+    font-family: 'Space Mono', monospace;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.1em 0.4em;
+    font-size: 12.5px;
+    color: var(--accent3);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">SSC·CGL</div>
+  <a href="#big-picture">Overview</a>
+  <a href="#palace">Memory Palace</a>
+  <a href="#complete">Full Notes</a>
+  <a href="#hooks">Memory Hooks</a>
+  <a href="#connections">Connections</a>
+  <a href="#traps">⚠ Traps</a>
+  <a href="#examiner">Examiner's Q</a>
+  <a href="#recall">Self-Test</a>
+  <a href="#layers">Revision Layers</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Modern History · Bengal</div>
+  <h1>The Bengal Partition</h1>
+  <p class="hero-sub">A complete high-retention revision system for SSC CGL — from Curzon's 1905 decision to the 1911 annulment, revolutionary movements and beyond.</p>
+  <div class="hero-pills">
+    <span class="pill">1905 Partition</span>
+    <span class="pill">1905–1907 Movements</span>
+    <span class="pill">Revolutionary Orgs</span>
+    <span class="pill">1911 Annulment</span>
+    <span class="pill">Home Rule League</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ── BIG PICTURE ── -->
+<section id="big-picture" class="fade-in">
+  <div class="section-label">Section 01</div>
+  <h2>Big Picture — What This Chapter Is Really About</h2>
+  <div class="card accent-left">
+    <p>Bengal Partition (1905) is the <strong>pivot point</strong> of Indian nationalism. Before it: scattered regional efforts. After it: mass national movements — Swadeshi, Boycott, revolutionary orgs — and the eventual birth of Muslim League. It tells the story of how one British blunder lit the entire nationalist fire.</p>
+    <p style="margin-bottom:0;"><strong>Chain reaction:</strong> Curzon's Partition → mass protests → Swadeshi/Boycott → Congress splits (Surat 1907) → Morley-Minto reforms 1909 → Delhi Durbar 1911 → Annulment.</p>
+  </div>
+  <div class="grid3" style="margin-top:1rem;">
+    <div class="card">
+      <div style="font-size:1.5rem;margin-bottom:0.4rem;">🔥</div>
+      <strong>Why British did it</strong>
+      <p style="font-size:13px;margin:0.5rem 0 0;color:var(--muted);">Official reason: administrative convenience. Real reason: divide-and-rule, break Bengal's nationalist unity.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.5rem;margin-bottom:0.4rem;">⚡</div>
+      <strong>What it triggered</strong>
+      <p style="font-size:13px;margin:0.5rem 0 0;color:var(--muted);">Swadeshi Movement, Boycott, National Education, Congress split, revolutionary secret societies.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.5rem;margin-bottom:0.4rem;">🏛</div>
+      <strong>How it ended</strong>
+      <p style="font-size:13px;margin:0.5rem 0 0;color:var(--muted);">Annulled in 1911 at Delhi Durbar (Hardinge II's era) — British admitted defeat; capital shifted to Delhi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── MEMORY PALACE ── -->
+<section id="palace" class="fade-in">
+  <div class="section-label">Section 02</div>
+  <h2>🧠 Chapter Memory Palace</h2>
+  <p style="color:var(--muted);margin-bottom:1.5rem;font-size:14px;">Imagine you are walking through a grand colonial building. Each room holds a memory.</p>
+  <div class="palace">
+    <div class="room">
+      <div class="room-title">🚪 Room 1 — The Governor's Office (Curzon's desk)</div>
+      You see Curzon signing papers at his desk. He signs 4 acts first: <strong>Corporation Act (1899), Official Secrets Act (1904), Universities Act (1904)</strong>. Then the big one: <strong>Bengal Partition — Announced July 1905, Enforced Oct 1905</strong>. His knife cuts the map in two: East (Muslims + Assam) and West (Hindus + Bihar + Orissa).
+    </div>
+    <div class="room">
+      <div class="room-title">📜 Room 2 — The Congress Hall (Banaras 1905 → Calcutta 1906 → Surat 1907)</div>
+      Gokhale chairs 1905 session → anti-partition approved. Dadabhai Naoroji chairs 1906 → 4 resolutions (Swaraj, Swadeshi, Boycott, Nat. Ed.). Then in Surat 1907 (Raj Ras Bihari Ghosh presides) the hall breaks in two: <em>Moderates on left (Gokhale, Mehta)</em> vs <em>Extremists on right (Lal-Bal-Pal)</em>.
+    </div>
+    <div class="room">
+      <div class="room-title">🏭 Room 3 — The Swadeshi Factory</div>
+      Chidambaram Pillai runs a ship (Swadeshi Steam Navigation Co.) in Madras. Syed Haider Raza operates from Delhi. Lajpat Rai fuels Punjab. Tilak hosts Ganpati festival in Pune. Valentine Chirol stands at the gate with a sign: "Father of Indian Unrest."
+    </div>
+    <div class="room">
+      <div class="room-title">💣 Room 4 — The Secret Basement (Revolutionary Orgs)</div>
+      Walk downstairs: Vasudev Phadke's <strong>Ramosi (1879)</strong> → Chapekar brothers shooting plague commissioner (1897) → Savarkar's Mitra Mela → Abhinav Bharat (1904) → Anushilan Samiti (1902 Bengal) → India House in London (Shyamji Krishna Verma, 1905) → Alipore Bomb Case (1908) → Gadar Party in San Francisco (1913) → Komagata Maru ship (1914).
+    </div>
+    <div class="room">
+      <div class="room-title">🕌 Room 5 — The Durbar Tent (1911 Delhi)</div>
+      King George V sits on throne. Hardinge II announces: "Bengal is reunited! Capital moves from Calcutta to Delhi!" Muslims get appeased because Muslim League was born in 1906 (Dhaka, Aga Khan + Nawab Salimullah). Capital officially moves in 1912.
+    </div>
+    <div class="room">
+      <div class="room-title">📰 Room 6 — The Newspaper Room</div>
+      Tilak reads Maratha (English) and Kesari (Marathi). Surendra Nath Banerjee prints <em>The Bengalee</em>. Dwijendra Nath Tagore runs Hitabadi. Krishna Kumar Mitra writes Sanjivani.
+    </div>
+  </div>
+</section>
+
+<!-- ── COMPLETE NOTES ── -->
+<section id="complete" class="fade-in">
+  <div class="section-label">Section 03</div>
+  <h2>Complete Revision Notes</h2>
+
+  <h3>📌 Background — Viceroy Curzon's Pre-Partition Acts</h3>
+  <div class="card accent-purple">
+    <span class="tag tag-fire">🔥 MUST KNOW</span> Curzon was the Viceroy (not Governor General at this stage — British India used the term Viceroy).
+    <table style="margin-top:1rem;">
+      <tr><th>Act / Event</th><th>Year</th><th>Key Point</th></tr>
+      <tr><td>Corporation Act</td><td>1899</td><td>Municipal power curtailed</td></tr>
+      <tr><td>Official Secrets Act</td><td>1904</td><td>Restricted information flow</td></tr>
+      <tr><td>Indian Universities Act</td><td>1904</td><td>British control over universities</td></tr>
+      <tr><td><strong>Bengal Partition Announced</strong></td><td>July 1905</td><td>Announced formally</td></tr>
+      <tr><td><strong>Bengal Partition Enforced</strong></td><td>Oct 1905</td><td>Came into effect on ground</td></tr>
+    </table>
+  </div>
+
+  <h3>📌 Why Was Bengal Partitioned?</h3>
+  <div class="grid2">
+    <div class="card accent-teal">
+      <strong>Official British Reason</strong>
+      <p style="font-size:13.5px;margin-top:0.5rem;">Administrative convenience — Bengal housed 1/4th of British India's population, too large to govern efficiently.</p>
+    </div>
+    <div class="card accent-red">
+      <strong>Real Reason</strong>
+      <p style="font-size:13.5px;margin-top:0.5rem;">Bengal was the nerve centre of nationalist/anti-British activity. Divide it along Hindu–Muslim lines = weaken united resistance.</p>
+      <p style="font-size:13px;color:var(--muted);margin:0;"><em>East Bengal (Muslim-majority) + Assam | West Bengal + Bihar + Orissa (Hindu-majority)</em></p>
+    </div>
+  </div>
+
+  <h3>📌 Congress Sessions — Key Chain</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1905 — Banaras Session</div>
+      <div class="tl-text">Presided by <strong>Gopal Krishna Gokhale</strong>. Anti-partition movement gets approval. Swadeshi movement approved. <span class="tag tag-fire">🔥</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1906 — Calcutta Session</div>
+      <div class="tl-text">Presided by <strong>Dadabhai Naoroji</strong>. Four resolutions adopted: <strong>Swaraj, Swadeshi, Boycott, National Education</strong>. National Education Council formed. <span class="tag tag-fire">🔥</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1907 — Surat Session</div>
+      <div class="tl-text">Presided by <strong>Raj Ras Bihari Ghosh</strong>. Congress splits into <strong>Moderates vs Extremists</strong>. <span class="tag tag-fire">🔥</span></div>
+    </div>
+  </div>
+
+  <h3>📌 Dadabhai Naoroji — Quick Profile</h3>
+  <div class="card accent-left">
+    <span class="tag tag-star">⭐ IMPORTANT</span>
+    <ul style="list-style:none;margin-top:0.8rem;">
+      <li>📖 Wrote <strong>Poverty and Un-British Rule in India</strong> → <strong>Drain of Wealth Theory</strong></li>
+      <li>📰 Founded <em>Rast Goftar</em> newspaper</li>
+      <li>🏛 Formed <strong>East India Association (1866)</strong></li>
+      <li>🔱 Formed <strong>Rahnumai Mazdan Sabha (1851)</strong></li>
+      <li>🏛 First British-Indian Member of Parliament</li>
+      <li>🏆 Presided Congress 3 times: <strong>1886, 1893, 1906</strong></li>
+    </ul>
+  </div>
+
+  <h3>📌 Moderates vs Extremists</h3>
+  <table>
+    <tr><th>Aspect</th><th>Moderates</th><th>Extremists</th></tr>
+    <tr><td>Method</td><td>Prayer, Petition, Protest (3Ps)</td><td>Direct action, mass agitation</td></tr>
+    <tr><td>Goal</td><td>Limited reforms, keep movement within Bengal</td><td>All-India spread, complete British uprooting</td></tr>
+    <tr><td>Leaders</td><td>Gokhale, Dadabhai, Firoz Shah Mehta, A.M. Bose, Surendra Nath Banerjee</td><td>Lal (Lajpat Rai), Bal (Tilak), Pal (Bipin Chandra)</td></tr>
+    <tr><td>Tone</td><td>Constitutional, calm</td><td>Aggressive, confrontational</td></tr>
+  </table>
+
+  <h3>📌 Swadeshi Movement — Key Leaders by Region</h3>
+  <table>
+    <tr><th>Leader</th><th>Region</th><th>Notable Act</th></tr>
+    <tr><td>V.O. Chidambaram Pillai</td><td>Madras</td><td>Founded Swadeshi Steam Navigation Co.</td></tr>
+    <tr><td>Syed Haider Raza</td><td>Delhi</td><td>Led movement from Delhi</td></tr>
+    <tr><td>Lala Lajpat Rai</td><td>Punjab</td><td>Punjab's face of Swadeshi</td></tr>
+    <tr><td>Bal Gangadhar Tilak</td><td>Pune & Bombay</td><td>Organised Ganpati & Shivaji festivals to mobilise youth</td></tr>
+  </table>
+
+  <h3>📌 Bal Gangadhar Tilak — Key Facts</h3>
+  <div class="card accent-left">
+    <ul style="list-style:none;">
+      <li>📰 <strong>Maratha</strong> (English) + <strong>Kesari</strong> (Marathi) — both his newspapers</li>
+      <li>🎭 Organised Ganpati festival (1890) and Shivaji festival — youth mobilisation strategy</li>
+      <li>👑 Title: <strong>Lokmanya</strong></li>
+      <li>📚 Valentine Chirol's book <em>Indian Unrest</em> → called Tilak <strong>"Father of Indian Unrest"</strong></li>
+      <li>🏛 Founded Home Rule League in Pune (April 1916)</li>
+      <li>💀 Died 1920 → his Home Rule League converted to Swaraj Sabha by Gandhi</li>
+    </ul>
+  </div>
+
+  <h3>📌 Newspapers of the Era</h3>
+  <table>
+    <tr><th>Newspaper</th><th>Publisher/Founder</th><th>Language/Note</th></tr>
+    <tr><td>Hitabadi</td><td>Dwijendra Nath Tagore</td><td>Bengali</td></tr>
+    <tr><td>Sanjivani</td><td>Krishna Kumar Mitra</td><td>Bengali</td></tr>
+    <tr><td>The Bengalee</td><td>Surendra Nath Banerjee & Girish Chandra Ghosh</td><td>English</td></tr>
+    <tr><td>Maratha</td><td>Bal Gangadhar Tilak</td><td>English</td></tr>
+    <tr><td>Kesari</td><td>Bal Gangadhar Tilak</td><td>Marathi</td></tr>
+  </table>
+
+  <h3>📌 Revolutionary Organisations — Full Timeline</h3>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1879 — Ramosi Peasants Force</div>
+      <div class="tl-text">Founded in Maharashtra by <strong>Vasudev Balwant Phadke</strong></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1890 — Shivaji & Ganpati Festivals</div>
+      <div class="tl-text">Organised by Tilak for youth mobilisation</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1897 — Chapekar Brothers Attack</div>
+      <div class="tl-text"><strong>Damodar Chapekar & Balkrishna Chapekar</strong> killed <strong>W.C. Rand</strong>, Plague Commissioner of Pune</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1899 — Mitra Mela</div>
+      <div class="tl-text">Founded in Pune by <strong>Savarkar Brothers</strong>. Later merged with Abhinav Bharat Society in 1904.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1902 — Anushilan Samiti (Bengal)</div>
+      <div class="tl-text">Founded by <strong>Satish Chandra Basu + Jatindranath Banerjee + Varindra Kumar Ghosh</strong>. (Patna branch: Sachin Sanyal)</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1904 — Abhinav Bharat Society</div>
+      <div class="tl-text">Founded by <strong>V.D. Savarkar</strong>. Merged with Mitra Mela.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1905 — India House & Indian Home Rule Society</div>
+      <div class="tl-text">Founded in <strong>London</strong> by <strong>Shyamji Krishna Verma</strong></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1907 — First Flag Hoisting on Foreign Soil</div>
+      <div class="tl-text"><strong>Madam Bhikaji Cama</strong> hoisted Indian flag in <strong>Stuttgart, Germany</strong>. Flag smuggled to India by <strong>Indulal Yagnik</strong>.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1908 — Alipore Bomb Conspiracy Case</div>
+      <div class="tl-text">Also called <strong>Maniktola Bomb Conspiracy</strong>. Bomb thrown at Muzaffarpur magistrate. Khudiram Bose hanged. Prafulla Chaki shot himself. Aurobindo Ghosh acquitted. Kanai Lal Dutta destroyed evidence. <span class="tag tag-trap">⚠ TRAP</span></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1909 — Murders</div>
+      <div class="tl-text">Madan Lal Dhingra killed <strong>Curzon Willey</strong>. AMT Jackson killed by <strong>Anand Laxman Kanare</strong>.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1913 — Ghadar Party</div>
+      <div class="tl-text">Founded in <strong>San Francisco, USA</strong>. Founders: <strong>Lala Hardayal, Sohan Singh Bhakna, Barkatullah, Bhai Parmanand, Kartar Singh</strong>.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1914 — Komagata Maru Incident</div>
+      <div class="tl-text">Japanese ship. Route: Singapore → Hong Kong → <strong>Vancouver, Canada</strong>. Indians deported. Associated with Ghadar Party.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1915 — Berlin Committee</div>
+      <div class="tl-text">Founded in <strong>Berlin, Germany</strong> by <strong>Virendra Nath Chattopadhyay</strong>. Defence of India Act 1915 passed to counter revolutionaries during WW1.</div>
+    </div>
+  </div>
+
+  <h3>📌 Muslim League & Delhi Durbar</h3>
+  <div class="card accent-purple">
+    <table>
+      <tr><th>Event</th><th>Year</th><th>Detail</th></tr>
+      <tr><td>All India Muslim League formed</td><td>1906</td><td>In Dhaka (present Bangladesh). Founders: <strong>Aga Khan + Nawab Salimullah</strong></td></tr>
+      <tr><td>Morley-Minto Reforms</td><td>1909</td><td>Separate electorate for Muslims. First Indian in Viceroy's Exec Council: <strong>Satyendra Prasad Sinha</strong>. Legislative Council: 16 → 60 members.</td></tr>
+      <tr><td>Delhi Durbar #1</td><td>1877</td><td>During Lytton's time</td></tr>
+      <tr><td>Delhi Durbar #2</td><td>1903</td><td>During Curzon's time</td></tr>
+      <tr><td>Delhi Durbar #3</td><td>1911</td><td>During <strong>Hardinge II's</strong> time (George V). Bengal Partition annulled. Capital shifted to Delhi (official: 1912).</td></tr>
+    </table>
+  </div>
+
+  <h3>📌 Home Rule Leagues (1916)</h3>
+  <div class="grid2">
+    <div class="card accent-teal">
+      <strong>Pune — Bal Gangadhar Tilak</strong>
+      <p style="font-size:13px;margin-top:0.5rem;color:var(--muted);">April 1916. Fewer branches. Later converted to Swaraj Sabha by Gandhi (after Tilak died in 1920).</p>
+    </div>
+    <div class="card accent-purple">
+      <strong>Madras — Annie Besant</strong>
+      <p style="font-size:13px;margin-top:0.5rem;color:var(--muted);">September 1916. More branches. Formed second but had wider reach.</p>
+    </div>
+  </div>
+
+  <h3>📌 WW1 Stance of Indians (1914–1918)</h3>
+  <div class="card">
+    <table>
+      <tr><th>Group</th><th>Position</th><th>Reason</th></tr>
+      <tr><td>Moderates</td><td>Supported British</td><td>Felt it was their duty</td></tr>
+      <tr><td>Extremists</td><td>Supported British</td><td>Hoped British would reciprocate with reforms</td></tr>
+      <tr><td>Revolutionaries</td><td>Opposed British / saw opportunity</td><td>"Time to hit the six while Britain is distracted"</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ── MEMORY HOOKS ── -->
+<section id="hooks" class="fade-in">
+  <div class="section-label">Section 04</div>
+  <h2>Smart Memory Hooks</h2>
+
+  <div class="hook-box">
+    <div class="hook-label">🔥 Hook — The 4 Resolutions of 1906</div>
+    <p><strong>Imagine a Shopping Bill (S-S-B-N):</strong> You went shopping and bought <strong>S</strong>weater (Swaraj), <strong>S</strong>hoes (Swadeshi), a <strong>B</strong>ag (Boycott), and a <strong>N</strong>otepad (National Education). Four items, one bill. That's the 1906 Calcutta session.</p>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-label">🔥 Hook — Lal-Bal-Pal Trio</div>
+    <p>Three colours of a <strong>lal-gul-pal</strong> (red-yellow-green traffic light): <strong>Lal</strong>a Lajpat Rai (Punjab), <strong>Bal</strong> Gangadhar Tilak (Maharashtra), <strong>Pal</strong> Bipin Chandra Pal (Bengal). Traffic was stopped for the British!</p>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-label">⭐ Hook — Dadabhai's 3 Sessions</div>
+    <p>Dadabhai Naoroji presided Congress 3 times: <strong>1886, 1893, 1906</strong>. Remember: 7-year intervals. 86 → 93 (7 yrs) → 06 (13 yrs with 1906 being the Calcutta landmark). Or: "Old man returns every few years."</p>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-label">⭐ Hook — Tilak's Two Papers</div>
+    <p><strong>Maratha speaks English, Kesari speaks Marathi.</strong> Maratha = warrior name = sounds English/royal. Kesari = lion (Marathi). Lion roars in Marathi. Warrior writes in English.</p>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-label">🔥 Hook — 3 Delhi Durbars</div>
+    <p>Remember: <strong>1877 (Lytton) → 1903 (Curzon) → 1911 (Hardinge II)</strong>. Each is approximately 26-28 years apart. Or: L-C-H = "Lord C Has" → Lytton, Curzon, Hardinge.</p>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-label">⭐ Hook — Alipore Bomb Case People</div>
+    <p>Remember 4 names with 4 fates:<br>
+    → <strong>Khudiram Bose</strong> = Hanged (K for Killed)<br>
+    → <strong>Prafulla Chaki</strong> = Shot himself (P for Personal bullet)<br>
+    → <strong>Aurobindo Ghosh</strong> = Acquitted → went to Pondicherry for spiritual journey<br>
+    → <strong>Kanai Lal Dutta</strong> = Destroyed evidence (K = Kaafi clever)</p>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-label">➕ Hook — Ghadar Party Founders</div>
+    <p><strong>"Lala Sohan Bhai Parmanand Kartar"</strong> → Lala Hardayal + Sohan Singh Bhakna + Barkatullah + Bhai Parmanand + Kartar Singh. Picture 5 people on a ship in San Francisco harbour flying the Ghadar flag.</p>
+  </div>
+</section>
+
+<!-- ── CONCEPT CONNECTIONS ── -->
+<section id="connections" class="fade-in">
+  <div class="section-label">Section 05</div>
+  <h2>Concept Connections</h2>
+
+  <h3>Chain 1 — Why Partition Happened → What It Caused</h3>
+  <div class="connect-chain">
+    <div class="connect-node">Bengal = nerve centre of nationalism (anti-British activities originated here)</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">Curzon decides to divide Bengal on Hindu-Muslim lines (1905)</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">Massive protests → Swadeshi + Boycott Movement emerges</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">Congress sessions approve movements → Surat Split (1907) between Moderates & Extremists</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">Muslims form their own party — All India Muslim League (1906, Dhaka)</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">British appease Muslims → Separate electorate (Morley-Minto 1909)</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">Delhi Durbar 1911: Bengal Partition annulled. Capital shifts to Delhi (1912).</div>
+  </div>
+
+  <h3>Chain 2 — Swadeshi → Industries</h3>
+  <div class="connect-chain">
+    <div class="connect-node">Boycott of British goods called</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">Need to produce Indian goods → Swadeshi factories, ashrams built locally</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">V.O. Chidambaram Pillai launches Swadeshi Steam Navigation Co. to compete with British ships</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">National Education Council formed for Indian-controlled education</div>
+  </div>
+
+  <h3>Chain 3 — Ghadar Party → WW1 Connection</h3>
+  <div class="connect-chain">
+    <div class="connect-node">Indians abroad form Ghadar Party in San Francisco (1913)</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">Komagata Maru Indians turned back from Canada (1914) → radicalised diaspora</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">WW1 starts (1914) → British pass Defence of India Act (1915) to deport revolutionaries</div>
+    <div class="connect-arrow">↓</div>
+    <div class="connect-node">Berlin Committee (1915) formed abroad to continue pressure</div>
+  </div>
+</section>
+
+<!-- ── EXAM TRAPS ── -->
+<section id="traps" class="fade-in">
+  <div class="section-label">Section 06</div>
+  <h2>⚠️ Exam Traps</h2>
+
+  <div class="trap-box">
+    <h4>TRAP 1 — Alipore vs Maniktola</h4>
+    Both are names for the SAME 1908 bomb case. Alipore = where the trial happened. Maniktola = where the bomb factory was. <strong>Both names are correct. Don't pick one as wrong.</strong>
+  </div>
+
+  <div class="trap-box">
+    <h4>TRAP 2 — Khudiram Bose vs Aurobindo Ghosh</h4>
+    In a recent RRB NTPC paper, the "guilty" in Alipore Bomb Case was listed as Aurobindo — but he was <strong>ACQUITTED</strong>. Khudiram Bose was hanged. Aurobindo was released. Examiners will try to flip these. Always remember: Aurobindo → spiritual journey after acquittal.
+  </div>
+
+  <div class="trap-box">
+    <h4>TRAP 3 — Partition Announced vs Enforced</h4>
+    Announced: <strong>July 1905</strong>. Enforced/implemented: <strong>October 1905</strong>. Two different dates. Exam will give one and ask about the other.
+  </div>
+
+  <div class="trap-box">
+    <h4>TRAP 4 — Home Rule League Founders Swapped</h4>
+    Tilak's in <strong>Pune</strong> (April 1916), Annie Besant's in <strong>Madras</strong> (September 1916). Students often swap cities. Also: Madras league had MORE branches. Tilak's league was formed FIRST.
+  </div>
+
+  <div class="trap-box">
+    <h4>TRAP 5 — Muslim League Founded: Dhaka or Delhi?</h4>
+    Founded in <strong>Dhaka</strong> (present Bangladesh) in 1906. NOT Delhi. By Aga Khan + Nawab Salimullah.
+  </div>
+
+  <div class="trap-box">
+    <h4>TRAP 6 — Mitra Mela vs Abhinav Bharat Society</h4>
+    Mitra Mela (1899) came first. Abhinav Bharat Society (1904) formed later by V.D. Savarkar. Mitra Mela was then merged INTO Abhinav Bharat. Don't say Abhinav Bharat came first.
+  </div>
+
+  <div class="trap-box">
+    <h4>TRAP 7 — Komagata Maru Ship Nationality</h4>
+    It was a <strong>Japanese</strong> ship (NOT Indian). It carried Indian passengers. Destination was Vancouver, Canada — where they were turned back.
+  </div>
+
+  <div class="trap-box">
+    <h4>TRAP 8 — India House Location</h4>
+    India House was in <strong>London</strong>, NOT India. Founded by Shyamji Krishna Verma in 1905.
+  </div>
+
+  <div class="trap-box">
+    <h4>TRAP 9 — Anushilan Samiti Founders</h4>
+    Multiple Anushilan Samitis existed in Bengal. Bengal (1902): Satish Chandra Basu + Jatindranath Banerjee + Varindra Kumar Ghosh. Patna branch: Sachin Sanyal. Don't mix them.
+  </div>
+
+  <div class="trap-box">
+    <h4>TRAP 10 — Surat Session Presided by Whom?</h4>
+    1907 Surat Session was presided by <strong>Raj Ras Bihari Ghosh</strong> — NOT Tilak or Gokhale. Examiners love this.
+  </div>
+</section>
+
+<!-- ── EXAMINER'S FAVOURITE QUESTIONS ── -->
+<section id="examiner" class="fade-in">
+  <div class="section-label">Section 07</div>
+  <h2>Examiner's Favourite Questions</h2>
+  <div class="card accent-red" style="margin-bottom:1rem;">
+    <p style="font-size:13px;color:var(--muted);margin:0;">These are high-probability question patterns. Recognise them before entering the hall.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">🎯 Who presided the 1906 Congress session? <br><strong style="color:var(--accent3);">→ Dadabhai Naoroji</strong></div>
+    <div class="card">🎯 Who presided the 1907 Surat session? <br><strong style="color:var(--accent3);">→ Raj Ras Bihari Ghosh</strong></div>
+    <div class="card">🎯 Where was India House? <br><strong style="color:var(--accent3);">→ London (by Shyamji Krishna Verma, 1905)</strong></div>
+    <div class="card">🎯 Who hoisted Indian flag on foreign soil first? <br><strong style="color:var(--accent3);">→ Madam Bhikaji Cama, Stuttgart 1907</strong></div>
+    <div class="card">🎯 Ghadar Party founded where & when? <br><strong style="color:var(--accent3);">→ San Francisco, 1913</strong></div>
+    <div class="card">🎯 Komagata Maru destination? <br><strong style="color:var(--accent3);">→ Vancouver, Canada (Japanese ship)</strong></div>
+    <div class="card">🎯 Annie Besant's Home Rule League — city? <br><strong style="color:var(--accent3);">→ Madras (September 1916)</strong></div>
+    <div class="card">🎯 First Indian in Viceroy's Exec Council? <br><strong style="color:var(--accent3);">→ Satyendra Prasad Sinha (1909)</strong></div>
+    <div class="card">🎯 Who gave Tilak the title "Father of Indian Unrest"? <br><strong style="color:var(--accent3);">→ Valentine Chirol (in book: Indian Unrest)</strong></div>
+    <div class="card">🎯 Alipore Case — who was acquitted? <br><strong style="color:var(--accent3);">→ Aurobindo Ghosh (went to Pondicherry)</strong></div>
+    <div class="card">🎯 4 resolutions of 1906 Calcutta session? <br><strong style="color:var(--accent3);">→ Swaraj, Swadeshi, Boycott, National Education</strong></div>
+    <div class="card">🎯 Delhi Durbar 1911 — who was Viceroy? <br><strong style="color:var(--accent3);">→ Hardinge II (King: George V)</strong></div>
+  </div>
+
+  <h3>Statement-Based &amp; Assertion-Reason Patterns</h3>
+  <div class="card">
+    <p><strong>A:</strong> Bengal was partitioned in 1905 primarily for administrative reasons.<br>
+    <strong>R:</strong> Bengal was the nerve centre of nationalist activities and the British wanted to weaken it.<br>
+    <em style="color:var(--accent3);">→ A is incorrect (it's the official reason, not the real one). R is correct. This is a classic Assertion-Reason trap.</em></p>
+  </div>
+  <div class="card">
+    <p><strong>Statement:</strong> Aurobindo Ghosh was convicted in the Alipore Bomb Case.<br>
+    <em style="color:var(--trap);">→ FALSE. He was acquitted. Khudiram Bose was hanged.</em></p>
+  </div>
+</section>
+
+<!-- ── ACTIVE RECALL ── -->
+<section id="recall" class="fade-in">
+  <div class="section-label">Section 08</div>
+  <h2>Active Recall — Self-Test</h2>
+  <p class="q-hint">👆 Hover over each card to reveal the answer</p>
+
+  <div class="grid3" style="margin-bottom:1.5rem;">
+    <div class="flashcard">
+      <div class="front">When was Bengal Partition announced vs enforced?</div>
+      <div class="back">Announced: July 1905<br>Enforced: October 1905</div>
+    </div>
+    <div class="flashcard">
+      <div class="front">Who founded the Ghadar Party?</div>
+      <div class="back">Lala Hardayal, Sohan Singh Bhakna, Barkatullah, Bhai Parmanand, Kartar Singh — San Francisco, 1913</div>
+    </div>
+    <div class="flashcard">
+      <div class="front">What are Tilak's two newspapers?</div>
+      <div class="back">Maratha (English) + Kesari (Marathi)</div>
+    </div>
+    <div class="flashcard">
+      <div class="front">Who was first Indian in Viceroy's Executive Council?</div>
+      <div class="back">Satyendra Prasad Sinha (Morley-Minto Reforms, 1909)</div>
+    </div>
+    <div class="flashcard">
+      <div class="front">Where was All India Muslim League founded?</div>
+      <div class="back">Dhaka, 1906 — by Aga Khan + Nawab Salimullah</div>
+    </div>
+    <div class="flashcard">
+      <div class="front">Who was killed in Alipore Bomb Case?</div>
+      <div class="back">Khudiram Bose (hanged). Prafulla Chaki (shot himself). Aurobindo ACQUITTED.</div>
+    </div>
+  </div>
+
+  <h3>Fill in the Blanks</h3>
+  <div class="q-box">
+    <div class="q">1. The 1907 Surat Session of Congress was presided by ________.</div>
+    <div class="a">Raj Ras Bihari Ghosh</div>
+  </div>
+  <div class="q-box">
+    <div class="q">2. Madam Bhikaji Cama hoisted the Indian flag in ________ (country) in 1907.</div>
+    <div class="a">Stuttgart, Germany</div>
+  </div>
+  <div class="q-box">
+    <div class="q">3. The Abhinav Bharat Society was founded by ________ in ________.</div>
+    <div class="a">V.D. Savarkar, 1904</div>
+  </div>
+  <div class="q-box">
+    <div class="q">4. The Komagata Maru was a ________ ship that carried Indians to ________ (city), Canada.</div>
+    <div class="a">Japanese ship; Vancouver</div>
+  </div>
+  <div class="q-box">
+    <div class="q">5. The Berlin Committee was founded by ________ in 1915.</div>
+    <div class="a">Virendra Nath Chattopadhyay</div>
+  </div>
+  <div class="q-box">
+    <div class="q">6. Annie Besant formed Home Rule League in ________ in ________ 1916.</div>
+    <div class="a">Madras, September 1916</div>
+  </div>
+  <div class="q-box">
+    <div class="q">7. Dadabhai Naoroji's theory is called ________ and is in his book ________.</div>
+    <div class="a">Drain of Wealth Theory; "Poverty and Un-British Rule in India"</div>
+  </div>
+  <div class="q-box">
+    <div class="q">8. The Swadeshi Steam Navigation Company was started by ________.</div>
+    <div class="a">V.O. Chidambaram Pillai (Madras)</div>
+  </div>
+  <p class="q-hint" style="margin-top:0.5rem;">👆 Hover each card to check your answer</p>
+</section>
+
+<!-- ── REVISION LAYERS ── -->
+<section id="layers" class="fade-in">
+  <div class="section-label">Section 09</div>
+  <h2>Multi-Layer Revision System</h2>
+  <p style="color:var(--muted);font-size:14px;margin-bottom:1.5rem;">Choose your revision speed. Layer 1 = full deep dive. Layer 5 = last-minute burn.</p>
+
+  <div class="layer-tabs">
+    <button class="ltab active" onclick="showLayer(1)">Layer 1 — High-Yield</button>
+    <button class="ltab" onclick="showLayer(2)">Layer 2 — Ultra-Fast</button>
+    <button class="ltab" onclick="showLayer(3)">Layer 3 — 30-Second</button>
+    <button class="ltab" onclick="showLayer(4)">Layer 4 — Last Night</button>
+  </div>
+
+  <!-- Layer 1 -->
+  <div id="layer1" class="layer-content active">
+    <h3>High-Yield Revision Notes</h3>
+    <div class="card">
+      <ul style="list-style:none;font-size:14px;line-height:2.1;">
+        <li>🔥 Curzon's pre-partition acts: Corporation (1899), Official Secrets (1904), Universities (1904)</li>
+        <li>🔥 Partition: Announced July 1905 | Enforced Oct 1905</li>
+        <li>🔥 Real reason: Break Bengal's nationalist dominance by Hindu-Muslim division</li>
+        <li>🔥 Banaras 1905 = Gokhale | Calcutta 1906 = Dadabhai Naoroji | Surat 1907 = Raj Ras Bihari Ghosh</li>
+        <li>🔥 1906: 4 resolutions — Swaraj, Swadeshi, Boycott, National Education</li>
+        <li>🔥 Lal-Bal-Pal = extremists | Gokhale-Naoroji-Mehta = moderates</li>
+        <li>🔥 Tilak = Lokmanya | Maratha (Eng) + Kesari (Marathi)</li>
+        <li>🔥 "Father of Indian Unrest" = Valentine Chirol's title for Tilak</li>
+        <li>🔥 Muslim League 1906 = Dhaka = Aga Khan + Nawab Salimullah</li>
+        <li>🔥 Morley-Minto 1909 = separate electorate + Satyendra Prasad Sinha (first Indian in Viceroy's council)</li>
+        <li>🔥 Delhi Durbar 1911 = Hardinge II = George V = Bengal reunited + capital to Delhi</li>
+        <li>🔥 India House = London = Shyamji Krishna Verma (1905)</li>
+        <li>🔥 Abhinav Bharat = V.D. Savarkar (1904)</li>
+        <li>🔥 Alipore Bomb 1908: Khudiram Bose hanged, Prafulla Chaki suicide, Aurobindo ACQUITTED</li>
+        <li>🔥 Ghadar Party = San Francisco 1913 = Lala Hardayal + Sohan Singh Bhakna (main leaders)</li>
+        <li>🔥 Komagata Maru = Japanese ship = Vancouver, Canada, 1914</li>
+        <li>🔥 Home Rule League: Tilak = Pune (April 1916), Annie Besant = Madras (Sep 1916)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Layer 2 -->
+  <div id="layer2" class="layer-content">
+    <div class="ultra-sheet">
+      <div class="ultra-row"><span class="ultra-year">1899</span><span class="ultra-fact">Corporation Act (Curzon)</span></div>
+      <div class="ultra-row"><span class="ultra-year">1904</span><span class="ultra-fact">Official Secrets Act + Universities Act + Abhinav Bharat (Savarkar)</span></div>
+      <div class="ultra-row"><span class="ultra-year">Jul 1905</span><span class="ultra-fact">Bengal Partition ANNOUNCED | India House London (Shyamji)</span></div>
+      <div class="ultra-row"><span class="ultra-year">Oct 1905</span><span class="ultra-fact">Bengal Partition ENFORCED | Banaras Congress (Gokhale)</span></div>
+      <div class="ultra-row"><span class="ultra-year">1906</span><span class="ultra-fact">Calcutta Congress (Naoroji) — 4 resolutions | Muslim League in Dhaka (Aga Khan + Salimullah)</span></div>
+      <div class="ultra-row"><span class="ultra-year">1907</span><span class="ultra-fact">Surat Split (Raj Ras Bihari Ghosh presides) | Bhikaji Cama flag — Stuttgart</span></div>
+      <div class="ultra-row"><span class="ultra-year">1908</span><span class="ultra-fact">Alipore Bomb: Khudiram hanged, Chaki suicide, Aurobindo acquitted</span></div>
+      <div class="ultra-row"><span class="ultra-year">1909</span><span class="ultra-fact">Morley-Minto: separate electorate, Satyendra Prasad Sinha (1st Indian in exec council)</span></div>
+      <div class="ultra-row"><span class="ultra-year">1911</span><span class="ultra-fact">Delhi Durbar (Hardinge II, George V) → Bengal reunited, capital → Delhi</span></div>
+      <div class="ultra-row"><span class="ultra-year">1913</span><span class="ultra-fact">Ghadar Party — San Francisco (Lala Hardayal + Sohan Singh Bhakna)</span></div>
+      <div class="ultra-row"><span class="ultra-year">1914</span><span class="ultra-fact">WW1 starts | Komagata Maru → Vancouver, Canada (Japanese ship)</span></div>
+      <div class="ultra-row"><span class="ultra-year">1915</span><span class="ultra-fact">Berlin Committee (Virendra Nath Chattopadhyay) | Defence of India Act</span></div>
+      <div class="ultra-row"><span class="ultra-year">Apr 1916</span><span class="ultra-fact">Tilak's Home Rule League — Pune</span></div>
+      <div class="ultra-row"><span class="ultra-year">Sep 1916</span><span class="ultra-fact">Annie Besant's Home Rule League — Madras</span></div>
+    </div>
+  </div>
+
+  <!-- Layer 3 -->
+  <div id="layer3" class="layer-content">
+    <div class="card" style="font-size:14px;line-height:2.2;">
+      <p>🔥 <strong>1905:</strong> Partition (Jul announced, Oct enforced) | Gokhale chairs Banaras session</p>
+      <p>🔥 <strong>1906:</strong> Naoroji chairs Calcutta (SSBN resolutions) | Muslim League formed Dhaka</p>
+      <p>🔥 <strong>1907:</strong> Surat Split (Raj Ras Bihari Ghosh) | Lal-Bal-Pal vs Moderates</p>
+      <p>🔥 <strong>1908:</strong> Alipore Bomb → Khudiram hanged, Aurobindo acquitted</p>
+      <p>🔥 <strong>1909:</strong> Morley-Minto → separate electorate, Satyendra Prasad Sinha</p>
+      <p>🔥 <strong>1911:</strong> Delhi Durbar (Hardinge II) → partition annulled, Delhi capital</p>
+      <p>🔥 <strong>1913:</strong> Ghadar Party, San Francisco</p>
+      <p>🔥 <strong>1916:</strong> Tilak (Pune, Apr) + Besant (Madras, Sep) Home Rule Leagues</p>
+    </div>
+  </div>
+
+  <!-- Layer 4 -->
+  <div id="layer4" class="layer-content">
+    <div class="last-night">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--trap);letter-spacing:0.15em;margin-bottom:1.2rem;">🔴 LAST NIGHT — BURN THESE IN</div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>Partition ANNOUNCED Jul 1905, ENFORCED Oct 1905</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>1906 Calcutta: Swaraj, Swadeshi, Boycott, National Education (Dadabhai Naoroji)</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>Surat 1907 = Raj Ras Bihari Ghosh presided | Congress splits</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>Alipore 1908: Khudiram HANGED, Aurobindo ACQUITTED</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>Muslim League = 1906, Dhaka = Aga Khan + Nawab Salimullah</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>Delhi Durbar 1911 = Hardinge II = Bengal reunited + capital Delhi</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>Ghadar Party = 1913, San Francisco = Lala Hardayal</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>Komagata Maru = Japanese ship → Vancouver, Canada (1914)</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>Tilak = Pune Home Rule (Apr 1916) | Besant = Madras (Sep 1916)</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>India House = London, Shyamji Krishna Verma (1905)</span></div>
+      <div class="ln-item"><span class="ln-bullet">→</span><span>Bhikaji Cama = Stuttgart, Germany, 1907 — first Indian flag on foreign soil</span></div>
+      <div style="margin-top:1.2rem;padding:0.8rem;background:rgba(255,71,87,0.1);border-radius:8px;font-size:13px;color:var(--trap);">
+        ⚠ TRAP REPEATS: Aurobindo = ACQUITTED not hanged. Surat chair = Raj Ras Bihari Ghosh. Komagata = Japanese ship. Muslim League = Dhaka NOT Delhi.
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  Bengal Partition — SSC CGL Revision System &nbsp;|&nbsp; Revise 100×, forget 0×
+</footer>
+
+<script>
+  // Layer switching
+  function showLayer(n) {
+    document.querySelectorAll('.layer-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.ltab').forEach(el => el.classList.remove('active'));
+    document.getElementById('layer' + n).classList.add('active');
+    document.querySelectorAll('.ltab')[n-1].classList.add('active');
+  }
+
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

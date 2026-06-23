@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Early Medieval | Tripartite Struggle &amp; Chola Empire — Revision System</title>
+<style>
+  :root{
+    --bg: #0a0d12;
+    --bg-soft: #10141b;
+    --panel: #131820;
+    --panel-2: #161c26;
+    --border: #232b38;
+    --gold: #d4af6a;
+    --gold-dim: #9c8155;
+    --rust: #c1502e;
+    --rust-soft: #3a2420;
+    --sage: #7da592;
+    --sage-soft: #1d2922;
+    --sky: #6f9bc4;
+    --sky-soft: #1a2530;
+    --ink: #e8e6df;
+    --ink-dim: #a8aab0;
+    --ink-faint: #6c7079;
+    --serif: "Spectral", Georgia, "Times New Roman", serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* texture */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(circle at 15% 10%, rgba(212,175,106,0.05), transparent 40%),
+      radial-gradient(circle at 85% 0%, rgba(111,155,196,0.05), transparent 40%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  a{color:var(--gold);}
+
+  /* ===== HEADER / HERO ===== */
+  .hero{
+    position:relative;
+    padding:64px 24px 40px;
+    text-align:center;
+    border-bottom:1px solid var(--border);
+    background:
+      linear-gradient(180deg, rgba(212,175,106,0.06), transparent 70%),
+      var(--bg);
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; left:50%; bottom:0;
+    width:1px; height:40px;
+    background:linear-gradient(to bottom, var(--gold-dim), transparent);
+    transform:translateX(-50%);
+  }
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:12px;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--gold-dim);
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(28px, 5vw, 48px);
+    margin:0 0 8px;
+    color:var(--ink);
+    letter-spacing:0.01em;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--gold);
+  }
+  .hero .sub{
+    font-size:15px;
+    color:var(--ink-dim);
+    max-width:560px;
+    margin:0 auto;
+  }
+  .hero .meta-row{
+    display:flex; justify-content:center; gap:10px; flex-wrap:wrap;
+    margin-top:22px;
+  }
+  .pill{
+    font-size:12px;
+    border:1px solid var(--border);
+    padding:6px 14px;
+    border-radius:999px;
+    color:var(--ink-dim);
+    background:var(--panel);
+  }
+
+  /* ===== STICKY NAV ===== */
+  .nav-wrap{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,13,18,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+    padding:10px 16px;
+    max-width:1100px;
+    margin:0 auto;
+    scrollbar-width:thin;
+  }
+  .nav::-webkit-scrollbar{height:4px;}
+  .nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+  .nav a{
+    flex:0 0 auto;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    text-decoration:none;
+    padding:7px 12px;
+    border-radius:7px;
+    white-space:nowrap;
+    border:1px solid transparent;
+    transition:all .15s ease;
+  }
+  .nav a:hover{ background:var(--panel-2); color:var(--gold); border-color:var(--border); }
+
+  /* ===== LAYOUT ===== */
+  .wrap{ max-width:880px; margin:0 auto; padding:40px 20px 100px; position:relative; z-index:1; }
+
+  section{ margin-bottom:56px; scroll-margin-top:64px; }
+
+  .section-head{
+    display:flex; align-items:baseline; gap:12px;
+    margin-bottom:18px;
+    border-bottom:1px solid var(--border);
+    padding-bottom:12px;
+  }
+  .section-head .num{
+    font-family:var(--serif);
+    font-size:13px;
+    color:var(--gold-dim);
+    letter-spacing:0.1em;
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-size:24px;
+    font-weight:600;
+    margin:0;
+    color:var(--ink);
+  }
+  .section-head .icon{font-size:20px;}
+
+  p{ color:var(--ink-dim); margin:0 0 12px; }
+  strong{ color:var(--ink); }
+
+  /* ===== TAGS ===== */
+  .tag{
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:11px; font-weight:600;
+    padding:2px 8px; border-radius:5px;
+    margin-right:6px; white-space:nowrap;
+  }
+  .tag-must{ background:var(--rust-soft); color:#e8927a; }
+  .tag-imp{ background:var(--sky-soft); color:#9bc2e8; }
+  .tag-good{ background:var(--sage-soft); color:#a9cdba; }
+
+  /* ===== CARDS ===== */
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:18px 20px;
+    margin-bottom:14px;
+  }
+  .card h3{
+    font-family:var(--serif);
+    font-size:17px;
+    margin:0 0 8px;
+    color:var(--gold);
+  }
+  .card h4{
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    color:var(--ink-faint);
+    margin:14px 0 6px;
+  }
+  .card ul, .card ol{ margin:6px 0; padding-left:20px; color:var(--ink-dim); }
+  .card li{ margin-bottom:5px; }
+  .card li::marker{ color:var(--gold-dim); }
+
+  /* ===== TIMELINE / MEMORY PALACE ===== */
+  .palace{
+    background:linear-gradient(160deg, var(--panel-2), var(--panel));
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:24px 22px;
+    position:relative;
+  }
+  .palace-title{
+    font-family:var(--serif);
+    font-size:19px;
+    color:var(--gold);
+    margin:0 0 14px;
+  }
+  .stop{
+    display:flex; gap:14px;
+    padding:12px 0;
+    border-bottom:1px dashed var(--border);
+  }
+  .stop:last-child{ border-bottom:none; }
+  .stop-marker{
+    flex:0 0 34px; height:34px;
+    border-radius:50%;
+    background:var(--bg-soft);
+    border:1px solid var(--gold-dim);
+    display:flex; align-items:center; justify-content:center;
+    font-size:16px;
+  }
+  .stop-body h4{ margin:0 0 4px; font-size:14.5px; color:var(--ink); text-transform:none; letter-spacing:0; }
+  .stop-body p{ margin:0; font-size:13.5px; }
+
+  /* ===== TABLE ===== */
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:13.5px;
+    margin:10px 0;
+  }
+  th, td{
+    border:1px solid var(--border);
+    padding:8px 10px;
+    text-align:left;
+    color:var(--ink-dim);
+  }
+  th{
+    background:var(--panel-2);
+    color:var(--gold);
+    font-weight:600;
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+  }
+  tr:nth-child(even) td{ background:rgba(255,255,255,0.015); }
+  td strong{ color:var(--ink); }
+
+  /* ===== TRAPS ===== */
+  .trap{
+    background:var(--rust-soft);
+    border:1px solid #5a2e25;
+    border-left:3px solid var(--rust);
+    border-radius:8px;
+    padding:14px 16px;
+    margin-bottom:10px;
+  }
+  .trap h4{
+    margin:0 0 6px; font-size:14px; color:#e8927a;
+    text-transform:none; letter-spacing:0;
+  }
+  .trap p{ margin:0; font-size:13.5px; color:#d9b3a6; }
+
+  /* ===== ACCORDION (active recall) ===== */
+  .qa{
+    border:1px solid var(--border);
+    border-radius:10px;
+    margin-bottom:8px;
+    overflow:hidden;
+    background:var(--panel);
+  }
+  .qa summary{
+    cursor:pointer;
+    padding:12px 16px;
+    font-size:14px;
+    color:var(--ink);
+    list-style:none;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .qa summary::-webkit-details-marker{ display:none; }
+  .qa summary::after{
+    content:"+";
+    font-size:18px; color:var(--gold-dim);
+    margin-left:10px;
+  }
+  .qa[open] summary::after{ content:"–"; }
+  .qa .ans{
+    padding:0 16px 14px;
+    font-size:13.5px;
+    color:var(--sage);
+    border-top:1px solid var(--border);
+    padding-top:10px;
+    margin-top:2px;
+  }
+
+  /* ===== HIGH YIELD GRID ===== */
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  @media (max-width:640px){ .grid2{ grid-template-columns:1fr; } }
+
+  /* ===== LAYER BANNERS (3,4,5) ===== */
+  .layer-banner{
+    display:flex; align-items:center; gap:10px;
+    padding:10px 16px;
+    border-radius:8px;
+    font-size:12.5px;
+    color:var(--ink-faint);
+    margin-bottom:14px;
+    border:1px solid var(--border);
+  }
+
+  .fast-list{
+    columns:2;
+    column-gap:24px;
+    font-size:13.5px;
+    color:var(--ink-dim);
+  }
+  @media (max-width:640px){ .fast-list{ columns:1; } }
+  .fast-list li{ margin-bottom:8px; break-inside:avoid; }
+
+  .ultra-card{
+    background:var(--bg-soft);
+    border:1px solid var(--gold-dim);
+    border-radius:12px;
+    padding:18px;
+  }
+  .ultra-card div{ font-size:13.5px; padding:6px 0; border-bottom:1px solid var(--border); }
+  .ultra-card div:last-child{ border-bottom:none; }
+  .ultra-card b{ color:var(--gold); }
+
+  .last-night{
+    background:linear-gradient(135deg, var(--rust-soft), var(--bg-soft));
+    border:1px solid var(--rust);
+    border-radius:14px;
+    padding:22px;
+  }
+  .last-night h3{ font-family:var(--serif); color:#e8927a; margin-top:0; }
+  .last-night li{ color:#e8d9d4; margin-bottom:8px; }
+
+  hr.divider{
+    border:none; border-top:1px solid var(--border);
+    margin:32px 0;
+  }
+
+  .footer-note{
+    text-align:center;
+    color:var(--ink-faint);
+    font-size:12px;
+    padding:30px 20px 10px;
+    border-top:1px solid var(--border);
+  }
+
+  code{
+    background:var(--panel-2);
+    padding:1px 6px;
+    border-radius:4px;
+    font-size:12.5px;
+    color:var(--gold);
+  }
+
+  /* print */
+  @media print{
+    .nav-wrap{ display:none; }
+    body{ background:white; color:black; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">FRB 2.0 · Ancient &amp; Early Medieval India</div>
+  <h1>Tripartite Struggle <em>&amp;</em> Chola Empire</h1>
+  <p class="sub">A high-retention revision system built to survive 100 revisions — from full notes down to the last-night cheat sheet.</p>
+  <div class="meta-row">
+    <span class="pill">🏛 Gurjara-Pratihara · Pala · Rashtrakuta</span>
+    <span class="pill">🐯 Sangam &amp; Imperial Cholas</span>
+    <span class="pill">🛕 Temple Architecture</span>
+  </div>
+</header>
+
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="#big-picture">Big Picture</a>
+    <a href="#palace">Memory Palace</a>
+    <a href="#complete">Complete Notes</a>
+    <a href="#hooks">Memory Hooks</a>
+    <a href="#connections">Connections</a>
+    <a href="#traps">Exam Traps</a>
+    <a href="#examiner">Examiner's Mind</a>
+    <a href="#recall">Active Recall</a>
+    <a href="#highyield">High-Yield</a>
+    <a href="#ultrafast">Ultra-Fast</a>
+    <a href="#thirty">30-Sec Sheet</a>
+    <a href="#lastnight">Last Night</a>
+  </nav>
+</div>
+
+<div class="wrap">
+
+  <!-- BIG PICTURE -->
+  <section id="big-picture">
+    <div class="section-head"><span class="num">01</span><h2>🗺️ Big Picture</h2></div>
+    <p>This chapter has <strong>two unrelated empires fighting for two different things</strong> — keep them in separate mental boxes:</p>
+    <div class="grid2">
+      <div class="card">
+        <h3>North India — Tripartite Struggle</h3>
+        <p><strong>Three powers, one prize: Kannauj.</strong> Gurjara-Pratiharas, Palas, and Rashtrakutas spent the 8th–9th century AD fighting over Kannauj because whoever held it controlled the Gangetic heartland — the ancient "seat of power" since Harshavardhana's Vardhana dynasty.</p>
+      </div>
+      <div class="card">
+        <h3>South India — Chola Empire</h3>
+        <p><strong>Two Chola lives.</strong> Sangam-age Cholas (3rd c. BC–3rd c. AD, minor power, squeezed out by Chera &amp; Pandya) <em>die out</em> — then re-emerge in the 9th century AD as Imperial/Later Cholas, who go on to build a genuine empire stretching to Sri Lanka, Maldives, and even raid Southeast Asia.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMORY PALACE -->
+  <section id="palace">
+    <div class="section-head"><span class="num">02</span><h2>🧠 Chapter Memory Palace</h2></div>
+
+    <div class="palace">
+      <p class="palace-title">🏯 THE BATTLE FOR KANNAUJ — "The City With Three Doors"</p>
+      <p style="margin-bottom:18px;">Picture <strong>Kannauj as a fortress city with three gates</strong> — North Gate, West Gate, East Gate. Three armies are marching toward it from three directions. Walk through the gates in order:</p>
+
+      <div class="stop">
+        <div class="stop-marker">🗡️</div>
+        <div class="stop-body">
+          <h4>West Gate — Gurjara-Pratiharas (from Bhinmal)</h4>
+          <p>Founder <strong>Nagabhatta I</strong> marches in first and briefly grabs Kannauj. His descendant <strong>Nagabhatta II</strong> holds it longer — until the Rashtrakuta king <strong>Govinda III</strong> rides up from the south and humiliates him.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-marker">📿</div>
+        <div class="stop-body">
+          <h4>East Gate — Palas (from Bengal)</h4>
+          <p><strong>Gopala</strong> founds the dynasty and builds <strong>Odantapuri University</strong>. His son <strong>Dharmapala</strong> builds the more famous <strong>Vikramashila University</strong> and briefly plants the Pala flag on Kannauj. Generations later, weak king <strong>Mahipala</strong> is beaten down by Rashtrakuta <strong>Indra III</strong>.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-marker">⛰️</div>
+        <div class="stop-body">
+          <h4>South Gate — Rashtrakutas (the "referee" from the Deccan)</h4>
+          <p>They never permanently hold Kannauj themselves — <strong>they just keep beating up whoever does.</strong> Think of them as the strongest wrestler in the ring who keeps throwing both other fighters out, but never sits on the throne himself. (Founder Dantidurga, builder of Kailasa Temple = Krishna I.)</p>
+        </div>
+      </div>
+
+      <p style="margin-top:18px; font-size:13.5px; color:var(--sage);">🎬 <strong>Mental Movie:</strong> Two men (Pratihara &amp; Pala) are fighting over a crown at the gate of Kannauj — and a giant strongman (Rashtrakuta) keeps walking in, knocking BOTH of them down, taking nothing, and walking back to the Deccan. That's the whole Tripartite Struggle in one image.</p>
+    </div>
+
+    <div class="palace" style="margin-top:18px;">
+      <p class="palace-title">🐅 THE TIGER'S TWO LIVES — Chola Memory Palace</p>
+      <p style="margin-bottom:18px;">Picture a <strong>tiger flag</strong> (Chola emblem) being lowered in 300 AD... and raised again 600 years later, bigger and fiercer. Walk the tiger's journey:</p>
+
+      <div class="stop">
+        <div class="stop-marker">🐯</div>
+        <div class="stop-body">
+          <h4>Life 1: The Sangam Cub (3rd c. BC – 3rd c. AD)</h4>
+          <p>Capital <strong>Uraiyur</strong>/Tanjore, port <strong>Puhar (Kaveripattinam)</strong>. Squeezed between Chera (bow &amp; arrow, capital Vanji) and Pandya (fish emblem, capital Madurai) until it fades out.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-marker">🦁</div>
+        <div class="stop-body">
+          <h4>Life 2 begins: Vijayalaya steals back Tanjore (9th c. AD)</h4>
+          <p><strong>Vijayalaya</strong>, a Pallava feudatory, founds the Imperial Cholas, snatching Tanjore from the Muttaraiyars and building a temple to <strong>Nishumbasudani</strong> there.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-marker">👑</div>
+        <div class="stop-body">
+          <h4>Raja Raja I — the Builder-Conqueror</h4>
+          <p>Defeats Cheras (Trivandrum) and Pandyas (takes Madurai), <em>invades</em> (does not fully conquer) Sri Lanka's capital Anuradhapura, touches the Maldives, and builds the <strong>Brihadeshwara Temple</strong> at Thanjavur — hence also called <strong>Rajarajeshwara Temple</strong>.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-marker">🌊</div>
+        <div class="stop-body">
+          <h4>Rajendra I — the "Napoleon of South India"</h4>
+          <p>Son of Raja Raja I. <strong>Fully</strong> conquers Anuradhapura (Sri Lanka). Crosses the Ganga, defeats Pala kings there, takes the title <strong>Gangaikonda Chola</strong> ("conqueror of the Ganga") and builds new capital <strong>Gangaikonda Cholapuram</strong> with its own Brihadeshwara temple. Also raids the Buddhist <strong>Srivijaya Empire</strong> (Shailendra dynasty, modern Indonesia) — once a friend, now a target.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-marker">📜</div>
+        <div class="stop-body">
+          <h4>Administration Room — Uttaramerur Inscription</h4>
+          <p>A village in Chingleput district, Tamil Nadu, that records Chola local self-government: <strong>Ur</strong> (commoners' assembly) and <strong>Sabha</strong> (learned Brahmins' assembly), 3-year terms, property-owners only could contest. Taxes: <strong>Vetti</strong> (forced/bonded labour) and <strong>Kadamai</strong> (land revenue).</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-marker">🌅</div>
+        <div class="stop-body">
+          <h4>Sunset — 13th century decline</h4>
+          <p>Cholas fade; <strong>Pandyas</strong> and <strong>Hoysalas</strong> take their place in the south, while <strong>Yadavas</strong> (Devagiri) and <strong>Kakatiyas</strong> (Warangal) replace the Later Chalukyas in the Deccan — both later raided by Alauddin Khilji's general <strong>Malik Kafur</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLETE REVISION NOTES -->
+  <section id="complete">
+    <div class="section-head"><span class="num">03</span><h2>📖 Complete Revision Notes</h2></div>
+
+    <div class="card">
+      <h3>🗡️ A. Tripartite Struggle (Kannauj Triangle) — <span class="tag tag-must">Must Know</span></h3>
+      <p><strong>What:</strong> A 3-way fight for control of Kannauj between the Gurjara-Pratiharas, Palas, and Rashtrakutas, c. <strong>8th–9th century AD</strong> (commonly dated from ~790 AD).</p>
+      <p><strong>Why Kannauj mattered:</strong> Earlier called <strong>Kanyakubja</strong>. Originally the capital of the <strong>Maukharis</strong>, then became the capital of <strong>Harshavardhana's Vardhana dynasty</strong> — making it the symbolic seat of North Indian imperial power.</p>
+
+      <h4>Rashtrakutas (Deccan) — the "spoilers"</h4>
+      <ul>
+        <li>Founder: <strong>Dantidurga</strong> — defeated <strong>Kirtivarman II</strong> (last Chalukya of Badami).</li>
+        <li><strong>Krishna I</strong> built the monolithic rock-cut <strong>Kailasa Temple, Ellora</strong> (Maharashtra) — <em>not</em> the Kailasanatha Temple of Tamil Nadu, which was built by <strong>Narasimhavarman II (Pallava)</strong>.</li>
+        <li><strong>Govinda III</strong> defeated Gurjara-Pratihara king <strong>Nagabhatta II</strong>.</li>
+        <li><strong>Indra III</strong> defeated Pala king <strong>Mahipala</strong>.</li>
+        <li>Rashtrakutas never permanently kept Kannauj — they intervened, won battles, and withdrew to the Deccan.</li>
+      </ul>
+
+      <h4>Gurjara-Pratiharas (West/Rajasthan)</h4>
+      <ul>
+        <li>Founder: <strong>Nagabhatta I</strong>, capital <strong>Bhinmal</strong>; first captured Kannauj briefly.</li>
+        <li><strong>Nagabhatta II</strong> held Kannauj later but was defeated by Rashtrakuta Govinda III.</li>
+        <li>Later disintegration gave rise to Rajput clans: <strong>Pratiharas → Parmars, Chandelas, Chauhans</strong> emerge from this collapse.</li>
+        <li>The <strong>Tomars</strong> were the first Rajput rulers of Delhi, succeeded by the <strong>Chauhans</strong> (covered later in Medieval History).</li>
+      </ul>
+
+      <h4>Palas (Bengal)</h4>
+      <ul>
+        <li>Founder: <strong>Gopala</strong> — established <strong>Odantapuri University</strong>.</li>
+        <li><strong>Dharmapala</strong> (Gopala's son) founded the more famous <strong>Vikramashila University</strong>; briefly held Kannauj.</li>
+        <li>Order of rulers: <strong>Gopala → Dharmapala → Devapala → Mahipala → Rampala...</strong></li>
+        <li>Religion: Followers of <strong>Mahayana Buddhism</strong>; ruled the Bengal region.</li>
+        <li><strong>Mahipala</strong> defeated by Rashtrakuta Indra III.</li>
+        <li>Succeeded eventually by the <strong>Sena dynasty</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🐅 B. Chola Empire — Phase 1: Sangam Age Cholas <span class="tag tag-imp">Important</span></h3>
+      <p>Period: <strong>3rd century BC – 3rd century AD.</strong> Dissolved before the 3rd c. AD due to pressure from neighbours Chera and Pandya.</p>
+      <table>
+        <tr><th>Dynasty</th><th>Capital</th><th>Port City</th><th>Emblem</th></tr>
+        <tr><td><strong>Chera</strong></td><td>Vanji</td><td>Muziris, Tondi</td><td>Bow &amp; Arrow</td></tr>
+        <tr><td><strong>Pandya</strong></td><td>Madurai</td><td>Korkai</td><td>Fish</td></tr>
+        <tr><td><strong>Chola</strong></td><td>Uraiyur (also Tanjore)</td><td>Puhar (Kaveripattinam)</td><td>Tiger</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🦁 C. Chola Empire — Phase 2: Imperial / Later Cholas (from 9th c. AD)</h3>
+      <p>Self-styled descendants of the old Cholas. Founder: <strong>Vijayalaya</strong> — originally a feudatory (subordinate) of the Pallavas.</p>
+
+      <h4>Background: the Pallava connection</h4>
+      <ul>
+        <li>Pallava founder: <strong>Simhavishnu</strong>; capital <strong>Kanchipuram</strong>.</li>
+        <li><strong>Pulakeshin II</strong> (Chalukya) defeated Pallava king <strong>Mahendravarman I</strong>.</li>
+        <li>Mahendravarman I's son <strong>Narasimhavarman I</strong> avenged this — defeated Pulakeshin II and took the title <strong>"Vatapikonda."</strong></li>
+        <li>Narasimhavarman I captured <strong>Tanjore (Thanjavur)</strong> from the <strong>Muttaraiyars</strong> (who ruled it as Pallava subordinates) and built a temple to <strong>Nishumbasudani Devi</strong> there.</li>
+      </ul>
+
+      <h4>Rise of the Imperial Cholas (9th century AD)</h4>
+      <ul>
+        <li>Defeated the Pandyas at <strong>Vellore</strong>, but lost to Rashtrakuta king <strong>Krishna III</strong>.</li>
+      </ul>
+
+      <h4>🔥 Raja Raja I</h4>
+      <ul>
+        <li>Defeated Cheras at <strong>Trivandrum</strong>.</li>
+        <li>Defeated Pandyas; conquered their capital <strong>Madurai</strong>.</li>
+        <li><strong>Invaded</strong> (not fully conquered) Sri Lanka, then called <strong>Ceylon</strong> — attacked capital <strong>Anuradhapura</strong>.</li>
+        <li>Sent his son and daughter to Sri Lanka to spread <strong>Buddhism</strong>.</li>
+        <li>Conquered the <strong>Maldives</strong>.</li>
+        <li>Built the <strong>Brihadeshwara Temple</strong> at Thanjavur, also called <strong>Rajarajeshwara Temple</strong> after him.</li>
+      </ul>
+
+      <h4>🔥 Rajendra I (son of Raja Raja I)</h4>
+      <ul>
+        <li>Approx. period: <strong>1014 AD onward</strong> (reign roughly 1014–1044 AD-ish window mentioned in lecture).</li>
+        <li>Contemporary of <strong>Mahmud Ghazni</strong>.</li>
+        <li>Known as the <strong>"Napoleon of South India."</strong></li>
+        <li><strong>Fully and completely conquered</strong> Sri Lanka's capital <strong>Anuradhapura</strong> (Raja Raja I had only invaded it).</li>
+        <li>Overran/defeated the Cheras and Pandyas.</li>
+        <li>Crossed the <strong>Ganga river</strong>, defeated local kings including those of the <strong>Pala dynasty</strong>.</li>
+        <li>Took the title <strong>"Gangaikonda Chola"</strong> ("conqueror of the Ganga") and built the new capital city <strong>Gangaikonda Cholapuram</strong>, with its own Brihadeshwara Temple.</li>
+        <li>Attacked the <strong>Srivijaya Empire</strong> (Shailendra dynasty, Buddhist, in present-day <strong>Indonesia</strong>) — relations had soured despite earlier cordial ties.</li>
+      </ul>
+
+      <h4>Conflict with the Deccan &amp; Decline</h4>
+      <ul>
+        <li>Constant wars with the <strong>Chalukyas of Kalyani</strong> (Later/Western Chalukyas).</li>
+        <li>Chola Chalukya lineage: <strong>Badami Chalukyas</strong> (capital Vatapi) → <strong>Eastern Chalukyas</strong> (capital Vengi, founder Vishnuvardhan) → <strong>Later Chalukyas of Kalyani</strong> (capital Kalyani).</li>
+        <li>Chola Empire began declining in the <strong>early 13th century</strong>.</li>
+        <li>Replaced in the south by <strong>Pandyas</strong> and <strong>Hoysalas</strong> (capital <strong>Dwarasamudra/Halebidu</strong>; famous for star-shaped temples — <strong>Chennakeshava Temple</strong> for Vishnu, <strong>Hoysaleswara Temple</strong> for Shiva).</li>
+        <li>Later Chalukyas replaced by <strong>Yadavas</strong> (capital <strong>Devagiri</strong>) and <strong>Kakatiyas</strong> (capital <strong>Warangal</strong>) — later raided by Alauddin Khilji's commander <strong>Malik Kafur</strong>.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🏛️ D. Chola Administration — <span class="tag tag-must">Must Know</span></h3>
+      <h4>Land Grants (types)</h4>
+      <table>
+        <tr><th>Grant</th><th>Given To</th></tr>
+        <tr><td><strong>Brahmadeya</strong></td><td>Brahmins</td></tr>
+        <tr><td><strong>Devadana</strong></td><td>Temples</td></tr>
+        <tr><td><strong>Palli-chchandam</strong></td><td>Jain community</td></tr>
+        <tr><td><strong>Shalabhoga</strong></td><td>Schools</td></tr>
+      </table>
+      <p style="font-size:13px;">⭐ Reminder: the <strong>Satavahanas</strong> (dynasty name starts with "S", capital starts with "P" — <strong>Pratishthana</strong>) were the <em>first</em> to introduce land grants to Brahmins, and the first to issue lead coins — a separate fact, don't confuse with Chola land grants.</p>
+
+      <h4>Local Self-Government</h4>
+      <ul>
+        <li><strong>Ur</strong> — assembly of common people.</li>
+        <li><strong>Sabha</strong> — assembly of learned Brahmins.</li>
+        <li>Village affairs managed by <strong>executive committees</strong>; elections held; members served <strong>3-year terms</strong>; only <strong>property owners</strong> could contest elections.</li>
+        <li>Source: <strong>Uttaramerur Inscription</strong>, Chingleput district, Tamil Nadu.</li>
+      </ul>
+
+      <h4>Taxation</h4>
+      <ul>
+        <li><strong>Vetti</strong> — tax paid as forced/bonded labour.</li>
+        <li><strong>Kadamai</strong> — tax in the form of land revenue.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🛕 E. Temple Architecture Recap <span class="tag tag-good">Good to Know</span></h3>
+      <table>
+        <tr><th>Style</th><th>Region</th><th>Main Structure</th><th>Key Feature</th></tr>
+        <tr><td><strong>Nagara</strong></td><td>North India</td><td>Shikhara (with a vase/kalasha on top)</td><td>Nandi placed inside temple; Panchayatan layout common</td></tr>
+        <tr><td><strong>Dravida</strong></td><td>South India</td><td>Vimana</td><td>Gopuram (tall gateway); Nandi placed outside; credit to Pallavas for developing it</td></tr>
+        <tr><td><strong>Vesara</strong></td><td>Deccan (mix)</td><td>Mix of Nagara + Dravida</td><td>Developed/refined by the Chalukyas; built on elliptical plan, known as <strong>Gajaprishtha</strong> (elephant-back shape)</td></tr>
+      </table>
+
+      <h4>Great Living Chola Temples (Brihadeshwara group)</h4>
+      <table>
+        <tr><th>Temple</th><th>Built By</th><th>Location</th></tr>
+        <tr><td><strong>Brihadeshwara / Rajarajeshwara Temple</strong></td><td>Raja Raja I</td><td>Thanjavur</td></tr>
+        <tr><td><strong>Brihadeshwara Temple</strong> (2nd one)</td><td>Rajendra I</td><td>Gangaikonda Cholapuram</td></tr>
+        <tr><td><strong>Airavatesvara Temple</strong></td><td>Rajaraja II (Rajadhiraja II per lecture)</td><td>Tamil Nadu</td></tr>
+      </table>
+      <p style="font-size:13px;">All three dedicated to <strong>Shiva</strong> (Shaivite temples). At Thanjavur, the Vimana's capstone weighs <strong>~90 tonnes</strong> — believed to have been raised using an inclined ramp.</p>
+      <p style="font-size:13px;"><strong>Kandariya Mahadev Temple</strong> — part of the <strong>Khajuraho Group of Temples</strong> (Madhya Pradesh, near Kalinjar), built by the <strong>Chandela dynasty</strong>. <em>Not</em> a Chola temple — Nagara style, not Dravida.</p>
+      <p style="font-size:13px;"><strong>Nataraja bronze</strong> (dancing Shiva/Tandava) — iconic Chola bronze sculpture, made using the <strong>lost-wax technique</strong> (clay model → wax coating → heated till wax melts/"lost" → molten bronze poured in → clay broken away to reveal bronze image).</p>
+    </div>
+  </section>
+
+  <!-- MEMORY HOOKS -->
+  <section id="hooks">
+    <div class="section-head"><span class="num">04</span><h2>🪝 Smart Memory Hooks</h2></div>
+
+    <div class="card">
+      <h3>Hook 1 — The Two Universities of Bengal</h3>
+      <p><strong>Gopala = Grandfather, builds the older house (Odantapuri).</strong> <strong>Dharmapala = son, builds the bigger, more famous house (Vikramashila).</strong> Alphabetically: <strong>G</strong>opala → <strong>O</strong>dantapuri (both come "first"); <strong>D</strong>harmapala → Vikramashila is the "famous one," like a son outshining his father.</p>
+    </div>
+    <div class="card">
+      <h3>Hook 2 — Kailasa Temple: Don't Mix Your Krishnas</h3>
+      <p>Picture two temples both called "Kailash/Kailasanatha" — one in <strong>Maharashtra</strong> carved by <strong>Krishna I (Rashtrakuta)</strong> at <strong>Ellora</strong> (a rock-cut monolith, carved top-down like a sculpture, not built brick by brick), and one in <strong>Tamil Nadu</strong> built by <strong>Narasimhavarman II (Pallava)</strong>. Mental tag: <strong>"Ellora's Krishna carves rock; Tamil Nadu's Narasimha builds stone."</strong></p>
+    </div>
+    <div class="card">
+      <h3>Hook 3 — "Konda" = Conquered</h3>
+      <p>Two Chola kings, two "Konda" titles: <strong>Narasimhavarman I → "Vatapikonda"</strong> (conqueror of Vatapi, the Chalukya capital). <strong>Rajendra I → "Gangaikonda Chola"</strong> (conqueror of the Ganga). Whenever you see <strong>"-konda"</strong> in a Tamil-dynasty title, it always means <strong>"who conquered ___."</strong></p>
+    </div>
+    <div class="card">
+      <h3>Hook 4 — Invaded vs Conquered (Sri Lanka)</h3>
+      <p><strong>Raja Raja I = "knocked on the door" (invaded Anuradhapura).</strong> <strong>Rajendra I = "walked in and took the house" (fully conquered Anuradhapura).</strong> Father started it, son finished it — same pattern as the Ganga campaign being completed by Rajendra.</p>
+    </div>
+    <div class="card">
+      <h3>Hook 5 — Vetti vs Kadamai</h3>
+      <p><strong>Vetti</strong> sounds like "sweat" — forced <strong>labour</strong> tax (you sweat with your body). <strong>Kadamai</strong> sounds like "cut from my land" — land revenue tax (you pay from your land's produce).</p>
+    </div>
+    <div class="card">
+      <h3>Hook 6 — Ur vs Sabha (link to Vedic Age)</h3>
+      <p>Just like Early Vedic <strong>Sabha</strong> (elite) and <strong>Samiti</strong> (commoners), Chola villages had <strong>Sabha</strong> (learned Brahmins) and <strong>Ur</strong> (common people). Same two-tier idea, 1,500+ years apart — humans keep reinventing the same village democracy.</p>
+    </div>
+  </section>
+
+  <!-- CONNECTIONS -->
+  <section id="connections">
+    <div class="section-head"><span class="num">05</span><h2>🔗 Concept Connections</h2></div>
+    <div class="card">
+      <table>
+        <tr><th>Cause / Event</th><th>Effect / Consequence</th></tr>
+        <tr><td>Kannauj was the old capital of Harsha's Vardhana dynasty</td><td>It became the symbolic prize → triggered the Tripartite Struggle</td></tr>
+        <tr><td>Gurjara-Pratihara empire disintegrates</td><td>Rajput clans emerge: Parmars, Chandelas, Chauhans; Tomars become first Delhi rulers</td></tr>
+        <tr><td>Rashtrakutas defeat both Pratiharas (Govinda III) and Palas (Indra III)</td><td>Neither northern power can dominate → power stays fragmented, paving way for later Turkic invasions</td></tr>
+        <tr><td>Pallava king Narasimhavarman I avenges his father, takes Tanjore from Muttaraiyars</td><td>Tanjore becomes available later for Vijayalaya to seize and make the new Chola capital</td></tr>
+        <tr><td>Raja Raja I only invades (doesn't fully hold) Anuradhapura</td><td>Rajendra I finishes the job — full conquest of Sri Lanka</td></tr>
+        <tr><td>Chola-Srivijaya relations sour</td><td>Rajendra I attacks the once-friendly Buddhist Srivijaya (Shailendra) Empire</td></tr>
+        <tr><td>Chola decline begins (13th c.)</td><td>Pandyas &amp; Hoysalas rise in south; Yadavas &amp; Kakatiyas rise in Deccan</td></tr>
+        <tr><td>Yadava (Devagiri) &amp; Kakatiya (Warangal) weakness</td><td>Malik Kafur (Alauddin Khilji's commander) raids both — bridge into Medieval History</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- EXAM TRAPS -->
+  <section id="traps">
+    <div class="section-head"><span class="num">06</span><h2>⚠️ Exam Traps</h2></div>
+
+    <div class="trap">
+      <h4>Kailasa Temple — TWO different temples, TWO different builders</h4>
+      <p>Kailasa Temple, <strong>Ellora (Maharashtra)</strong> → built by <strong>Krishna I, Rashtrakuta</strong>. Kailasanatha Temple, <strong>Tamil Nadu</strong> → built by <strong>Narasimhavarman II, Pallava</strong>. SSC loves swapping these two.</p>
+    </div>
+    <div class="trap">
+      <h4>Two Brihadeshwara Temples</h4>
+      <p>One at <strong>Thanjavur</strong> by <strong>Raja Raja I</strong> (also called Rajarajeshwara). One at <strong>Gangaikonda Cholapuram</strong> by <strong>Rajendra I</strong>. Don't assign both to the same king.</p>
+    </div>
+    <div class="trap">
+      <h4>Kandariya Mahadev ≠ Chola Temple</h4>
+      <p>It's part of the <strong>Khajuraho Group</strong>, built by the <strong>Chandela dynasty</strong> in Madhya Pradesh — Nagara style. A favourite "odd one out" trap question among Chola/Dravida temples.</p>
+    </div>
+    <div class="trap">
+      <h4>Pandyas vs Pandavas</h4>
+      <p>Easy misread under exam pressure — Cholas fought the <strong>Pandyas</strong> (dynasty), not the Pandavas (Mahabharata).</p>
+    </div>
+    <div class="trap">
+      <h4>Invaded vs Conquered — Sri Lanka</h4>
+      <p>Raja Raja I <strong>invaded</strong> Anuradhapura (did not fully hold it). Rajendra I <strong>fully conquered</strong> it. A classic statement-based trap: "Raja Raja I conquered Sri Lanka" = FALSE.</p>
+    </div>
+    <div class="trap">
+      <h4>Gopala vs Dharmapala — who built which university</h4>
+      <p><strong>Gopala</strong> → Odantapuri. <strong>Dharmapala</strong> (his son) → Vikramashila. Frequently swapped in MCQs.</p>
+    </div>
+    <div class="trap">
+      <h4>Who defeated whom — Rashtrakuta wins</h4>
+      <p><strong>Govinda III</strong> defeated <strong>Nagabhatta II</strong> (Pratihara). <strong>Indra III</strong> defeated <strong>Mahipala</strong> (Pala). Don't cross these wires — match the right Rashtrakuta king to the right victim.</p>
+    </div>
+    <div class="trap">
+      <h4>Three Chalukya branches — similar names, different capitals</h4>
+      <p><strong>Badami Chalukyas</strong> (capital Vatapi) → <strong>Eastern Chalukyas</strong> (capital Vengi) → <strong>Later/Western Chalukyas of Kalyani</strong> (capital Kalyani). The Cholas fought the <em>Kalyani</em> branch specifically.</p>
+    </div>
+    <div class="trap">
+      <h4>Vatapikonda vs Gangaikonda</h4>
+      <p><strong>Narasimhavarman I (Pallava)</strong> → "Vatapikonda." <strong>Rajendra I (Chola)</strong> → "Gangaikonda Chola." Different dynasties, similar-sounding "-konda" titles.</p>
+    </div>
+    <div class="trap">
+      <h4>Hoysaleswara vs Chennakeshava</h4>
+      <p><strong>Chennakeshava Temple</strong> = Vishnu. <strong>Hoysaleswara Temple</strong> = Shiva. Both at Halebidu/Dwarasamudra (Hoysala capital) — easy to flip the deity.</p>
+    </div>
+    <div class="trap">
+      <h4>Land grant types — similar-sounding Sanskrit terms</h4>
+      <p><strong>Brahmadeya</strong> (Brahmins) vs <strong>Devadana</strong> (temples) vs <strong>Palli-chchandam</strong> (Jains) vs <strong>Shalabhoga</strong> (schools) — all start differently but sound similar in a hurried read. Also don't confuse this Chola practice with the <strong>Satavahanas</strong>, who were the first to grant land to Brahmins historically.</p>
+    </div>
+  </section>
+
+  <!-- EXAMINER'S FAVOURITE QUESTIONS -->
+  <section id="examiner">
+    <div class="section-head"><span class="num">07</span><h2>🎯 Examiner's Favourite Questions</h2></div>
+    <div class="card">
+      <h4>Match the Following (high probability)</h4>
+      <ul>
+        <li>Kingdom ↔ Emblem (Chera–Bow&amp;Arrow, Pandya–Fish, Chola–Tiger)</li>
+        <li>King ↔ Title ("Vatapikonda" – Narasimhavarman I; "Gangaikonda Chola" – Rajendra I; "Napoleon of South India" – Rajendra I)</li>
+        <li>Temple ↔ Builder (Brihadeshwara Thanjavur–Raja Raja I; Brihadeshwara Gangaikonda Cholapuram–Rajendra I; Kandariya Mahadev–Chandelas; Kailasa Ellora–Krishna I)</li>
+        <li>Dynasty ↔ Founder (Pala–Gopala; Rashtrakuta–Dantidurga; Gurjara-Pratihara–Nagabhatta I; Imperial Chola–Vijayalaya)</li>
+        <li>Land grant type ↔ Recipient (Brahmadeya–Brahmins; Devadana–temples; Palli-chchandam–Jains; Shalabhoga–schools)</li>
+      </ul>
+      <h4>Statement-Based / Assertion-Reason</h4>
+      <ul>
+        <li>"Raja Raja I completely conquered Sri Lanka" — FALSE (he invaded; Rajendra I conquered fully).</li>
+        <li>"The Kailasa Temple at Ellora was built by a Pallava king" — FALSE (Rashtrakuta Krishna I; Pallava Narasimhavarman II built the Tamil Nadu one).</li>
+        <li>"Uttaramerur inscription tells us about Pallava local government" — FALSE (it's Chola).</li>
+        <li>"Vetti was a land revenue tax" — FALSE (Vetti = forced labour; Kadamai = land revenue).</li>
+      </ul>
+      <h4>Chronology Questions</h4>
+      <ul>
+        <li>Order of Pala rulers: Gopala → Dharmapala → Devapala → Mahipala → Rampala.</li>
+        <li>Order of events: Sangam Cholas decline (by 3rd c. AD) → Imperial Cholas rise (9th c. AD, Vijayalaya) → Raja Raja I → Rajendra I → decline (13th c.) → Pandya/Hoysala/Yadava/Kakatiya rise.</li>
+        <li>Chalukya branches in order: Badami → Eastern (Vengi) → Later/Kalyani.</li>
+      </ul>
+      <h4>Confusing / Frequently Misread Facts</h4>
+      <ul>
+        <li>Two kings named "Krishna" across dynasties — Krishna I (Rashtrakuta, Kailasa Temple) vs Krishna III (Rashtrakuta, defeated Imperial Cholas at one point) — same dynasty, different kings, don't merge their achievements.</li>
+        <li>Pandyas (dynasty) vs Pandavas (epic) — spelling trap under time pressure.</li>
+        <li>"Konda" suffix appears in titles of both Pallava and Chola kings — read carefully which dynasty the question is about.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ACTIVE RECALL -->
+  <section id="recall">
+    <div class="section-head"><span class="num">08</span><h2>❓ Active Recall Section</h2></div>
+    <p style="margin-bottom:14px; font-size:13px;">Cover the answer. Say it out loud before clicking.</p>
+
+    <details class="qa"><summary>Who were the three parties in the Tripartite Struggle?</summary><div class="ans">Gurjara-Pratiharas, Palas, and Rashtrakutas.</div></details>
+    <details class="qa"><summary>What was Kannauj's earlier name?</summary><div class="ans">Kanyakubja.</div></details>
+    <details class="qa"><summary>Who founded the Pala dynasty and what university did he build?</summary><div class="ans">Gopala; built Odantapuri University.</div></details>
+    <details class="qa"><summary>Who built Vikramashila University?</summary><div class="ans">Dharmapala, son of Gopala.</div></details>
+    <details class="qa"><summary>Which Rashtrakuta king defeated Nagabhatta II?</summary><div class="ans">Govinda III.</div></details>
+    <details class="qa"><summary>Which Rashtrakuta king defeated Mahipala (Pala)?</summary><div class="ans">Indra III.</div></details>
+    <details class="qa"><summary>Who built the Kailasa Temple at Ellora?</summary><div class="ans">Krishna I (Rashtrakuta).</div></details>
+    <details class="qa"><summary>Fill in the blank: The Kailasanatha Temple in Tamil Nadu was built by ______.</summary><div class="ans">Narasimhavarman II (Pallava).</div></details>
+    <details class="qa"><summary>What was the emblem of the Sangam-age Cholas? Of the Pandyas? Of the Cheras?</summary><div class="ans">Chola — Tiger; Pandya — Fish; Chera — Bow &amp; Arrow.</div></details>
+    <details class="qa"><summary>Who founded the Imperial/Later Cholas, and whose feudatory was he?</summary><div class="ans">Vijayalaya; feudatory of the Pallavas.</div></details>
+    <details class="qa"><summary>From whom did the Pallavas/Cholas take Tanjore, and who took it first?</summary><div class="ans">From the Muttaraiyars; first taken by Pallava king Narasimhavarman I.</div></details>
+    <details class="qa"><summary>Reverse question: Which title means "the one who conquered Vatapi"?</summary><div class="ans">Vatapikonda — taken by Narasimhavarman I (Pallava).</div></details>
+    <details class="qa"><summary>What title did Rajendra I take after crossing the Ganga, and what city did he build?</summary><div class="ans">"Gangaikonda Chola"; built Gangaikonda Cholapuram.</div></details>
+    <details class="qa"><summary>Who is known as the "Napoleon of South India"?</summary><div class="ans">Rajendra I.</div></details>
+    <details class="qa"><summary>Which Chola king only invaded Sri Lanka, and which one fully conquered it?</summary><div class="ans">Raja Raja I invaded; Rajendra I fully conquered (Anuradhapura).</div></details>
+    <details class="qa"><summary>What is the other name for the Brihadeshwara Temple at Thanjavur, and why?</summary><div class="ans">Rajarajeshwara Temple — because it was built by Raja Raja I.</div></details>
+    <details class="qa"><summary>Who built the Airavatesvara Temple?</summary><div class="ans">Rajaraja II / Rajadhiraja II (per lecture).</div></details>
+    <details class="qa"><summary>Which dynasty and king built the Kandariya Mahadev Temple?</summary><div class="ans">Chandela dynasty; part of the Khajuraho Group of Temples (Madhya Pradesh).</div></details>
+    <details class="qa"><summary>What does the Uttaramerur Inscription tell us about, and which district/state is it in?</summary><div class="ans">Chola local self-government (Ur and Sabha assemblies); Chingleput district, Tamil Nadu.</div></details>
+    <details class="qa"><summary>What is the difference between Vetti and Kadamai?</summary><div class="ans">Vetti = tax as forced/bonded labour; Kadamai = tax as land revenue.</div></details>
+    <details class="qa"><summary>Match: Brahmadeya, Devadana, Palli-chchandam, Shalabhoga — to whom were these land grants given?</summary><div class="ans">Brahmadeya–Brahmins; Devadana–temples; Palli-chchandam–Jain community; Shalabhoga–schools.</div></details>
+    <details class="qa"><summary>What technique was used to make the Nataraja bronze, and roughly how does it work?</summary><div class="ans">Lost-wax technique — a clay/wax model is heated so the wax melts and is lost, then molten bronze is poured in and the clay mould broken away.</div></details>
+    <details class="qa"><summary>Rapid fire: Capital of Yadavas? Capital of Kakatiyas?</summary><div class="ans">Yadavas — Devagiri; Kakatiyas — Warangal.</div></details>
+    <details class="qa"><summary>Rapid fire: Who replaced the Cholas in the south, and who replaced the Later Chalukyas in the Deccan?</summary><div class="ans">South: Pandyas and Hoysalas. Deccan: Yadavas and Kakatiyas.</div></details>
+    <details class="qa"><summary>Which Mughal-era invader's commander raided Devagiri and Warangal?</summary><div class="ans">Alauddin Khilji's commander Malik Kafur (bridges into Medieval History).</div></details>
+    <details class="qa"><summary>Which empire/dynasty did Rajendra I attack in present-day Indonesia, and what was its religion?</summary><div class="ans">Srivijaya Empire, ruled by the Shailendra dynasty; followed Buddhism.</div></details>
+  </section>
+
+  <!-- HIGH YIELD -->
+  <section id="highyield">
+    <div class="section-head"><span class="num">09</span><h2>⭐ High-Yield Revision Notes</h2></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>North — Tripartite Struggle</h3>
+        <ul>
+          <li><span class="tag tag-must">Must</span> 3 powers: Pratihara, Pala, Rashtrakuta over Kannauj (8th–9th c. AD)</li>
+          <li><span class="tag tag-must">Must</span> Gopala→Odantapuri; Dharmapala→Vikramashila</li>
+          <li><span class="tag tag-must">Must</span> Govinda III beat Nagabhatta II; Indra III beat Mahipala</li>
+          <li><span class="tag tag-imp">Imp</span> Krishna I built Kailasa Temple, Ellora</li>
+          <li><span class="tag tag-good">Good</span> Pratihara collapse → Parmars, Chandelas, Chauhans; Tomars first in Delhi</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>South — Chola Empire</h3>
+        <ul>
+          <li><span class="tag tag-must">Must</span> Sangam Cholas (3rd BC–3rd AD) vs Imperial Cholas (9th c. AD onward, founder Vijayalaya)</li>
+          <li><span class="tag tag-must">Must</span> Raja Raja I — invaded Sri Lanka, built Brihadeshwara/Rajarajeshwara Temple</li>
+          <li><span class="tag tag-must">Must</span> Rajendra I — fully conquered Sri Lanka, "Gangaikonda Chola," "Napoleon of South India"</li>
+          <li><span class="tag tag-imp">Imp</span> Uttaramerur Inscription — Ur &amp; Sabha; Vetti &amp; Kadamai taxes</li>
+          <li><span class="tag tag-good">Good</span> Decline (13th c.) → Pandyas/Hoysalas; Yadavas/Kakatiyas in Deccan</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ULTRA FAST -->
+  <section id="ultrafast">
+    <div class="section-head"><span class="num">10</span><h2>⚡ Ultra-Fast Revision Sheet</h2></div>
+    <div class="ultra-card">
+      <div><b>Tripartite Struggle:</b> Pratihara + Pala + Rashtrakuta fight over Kannauj, 8th–9th c. AD</div>
+      <div><b>Pratihara founder:</b> Nagabhatta I (capital Bhinmal) · beaten king: Nagabhatta II</div>
+      <div><b>Pala founder:</b> Gopala (Odantapuri) → son Dharmapala (Vikramashila) · beaten king: Mahipala</div>
+      <div><b>Rashtrakuta:</b> Dantidurga (founder) → Krishna I (Kailasa, Ellora) → Govinda III (beat Pratihara) → Indra III (beat Pala) → Krishna III</div>
+      <div><b>Sangam Cholas:</b> Uraiyur/Tanjore, Tiger emblem, port Puhar, 3rd c. BC–3rd c. AD</div>
+      <div><b>Imperial Cholas founder:</b> Vijayalaya (Pallava feudatory)</div>
+      <div><b>Raja Raja I:</b> invaded Sri Lanka, built Brihadeshwara (Thanjavur) = Rajarajeshwara</div>
+      <div><b>Rajendra I:</b> fully conquered Sri Lanka, "Gangaikonda Chola," built Gangaikonda Cholapuram, "Napoleon of South India," attacked Srivijaya</div>
+      <div><b>Admin:</b> Ur (commoners) + Sabha (Brahmins) — Uttaramerur Inscription</div>
+      <div><b>Tax:</b> Vetti = forced labour · Kadamai = land revenue</div>
+      <div><b>Grants:</b> Brahmadeya–Brahmins · Devadana–temples · Palli-chchandam–Jains · Shalabhoga–schools</div>
+      <div><b>Decline (13th c.):</b> Pandyas/Hoysalas (south) · Yadavas (Devagiri)/Kakatiyas (Warangal) replace Chalukyas</div>
+      <div><b>Architecture:</b> Nagara (Shikhara, north) · Dravida (Vimana+Gopuram, south, Pallava credit) · Vesara (mix, Chalukya, Gajaprishtha plan)</div>
+    </div>
+  </section>
+
+  <!-- 30 SECOND -->
+  <section id="thirty">
+    <div class="section-head"><span class="num">11</span><h2>⏱️ 30-Second Revision Sheet</h2></div>
+    <div class="layer-banner">📌 Read this, close your eyes, and recall the full chapter from memory.</div>
+    <div class="card" style="text-align:center; padding:28px;">
+      <p style="color:var(--gold); font-size:16px; margin-bottom:6px;"><strong>Kannauj fight:</strong> Pratihara + Pala + Rashtrakuta (8th–9th c.)</p>
+      <p style="color:var(--ink); font-size:15px;">Rashtrakuta = referee, beats both, keeps neither.</p>
+      <hr style="border-color:var(--border); margin:16px 0;">
+      <p style="color:var(--gold); font-size:16px; margin-bottom:6px;"><strong>Chola = two lives:</strong> Sangam (Tiger, 3rd BC–3rd AD) → dies → Imperial (Vijayalaya, 9th c. AD)</p>
+      <p style="color:var(--ink); font-size:15px;">Raja Raja I invades Lanka, builds Brihadeshwara. Rajendra I conquers Lanka fully, crosses Ganga = "Gangaikonda Chola," Napoleon of South India.</p>
+      <hr style="border-color:var(--border); margin:16px 0;">
+      <p style="color:var(--ink-dim); font-size:14px;">Admin: Ur+Sabha (Uttaramerur) · Vetti+Kadamai · Decline → Pandya/Hoysala, Yadava/Kakatiya</p>
+    </div>
+  </section>
+
+  <!-- LAST NIGHT -->
+  <section id="lastnight">
+    <div class="section-head"><span class="num">12</span><h2>🌙 Last-Night-Before-Exam Sheet</h2></div>
+    <div class="last-night">
+      <h3>If you remember NOTHING else, remember this:</h3>
+      <ol>
+        <li><strong>Kannauj = 3-way fight</strong> → Pratihara, Pala, Rashtrakuta. Rashtrakuta never keeps it — just beats up the other two.</li>
+        <li><strong>Gopala = Odantapuri. Dharmapala (his son) = Vikramashila.</strong></li>
+        <li><strong>Krishna I (Rashtrakuta) = Kailasa Temple, Ellora.</strong> Not the Tamil Nadu one (that's Narasimhavarman II, Pallava).</li>
+        <li><strong>Chola tiger flag:</strong> Sangam version dies out (3rd c. AD) → Imperial version born under <strong>Vijayalaya</strong> (9th c. AD).</li>
+        <li><strong>Raja Raja I = invades</strong> Sri Lanka, builds Brihadeshwara/Rajarajeshwara at Thanjavur.</li>
+        <li><strong>Rajendra I (his son) = fully conquers</strong> Sri Lanka, crosses Ganga → "<strong>Gangaikonda Chola</strong>," builds Gangaikonda Cholapuram, called "<strong>Napoleon of South India.</strong>"</li>
+        <li><strong>Uttaramerur Inscription</strong> = Chola local government (<strong>Ur</strong> = commoners, <strong>Sabha</strong> = Brahmins).</li>
+        <li><strong>Vetti</strong> = forced labour tax. <strong>Kadamai</strong> = land revenue tax.</li>
+        <li><strong>After Cholas:</strong> Pandyas + Hoysalas (south); Yadavas (Devagiri) + Kakatiyas (Warangal) in Deccan — later hit by Malik Kafur.</li>
+        <li><strong>Architecture:</strong> Nagara = Shikhara (north); Dravida = Vimana + Gopuram (south, Pallava credit); Vesara = mix (Chalukya).</li>
+      </ol>
+      <p style="margin-top:14px; font-size:13px; color:#d9b3a6;">Breathe. You know this chapter. Walk through the Memory Palace one more time if you have 2 minutes.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="footer-note">
+  Built for spaced repetition · FRB 2.0 · Early Medieval — Tripartite Struggle &amp; Chola Empire
+</div>
+
+</body>
+</html>

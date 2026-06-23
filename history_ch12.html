@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahajanapadas — Revision Vault</title>
+<style>
+:root{
+  --bg-void:#0d0a07;
+  --bg-stone:#16110c;
+  --bg-panel:#1c1510;
+  --bg-panel-raised:#231a13;
+  --copper:#c9874a;
+  --copper-bright:#e8a35e;
+  --gold:#d4af6a;
+  --ember:#d6603a;
+  --ember-soft:#a8492f;
+  --parchment:#e8ddc7;
+  --parchment-dim:#a89a80;
+  --ink-faint:#6b5d4a;
+  --jade:#5a8a72;
+  --jade-bright:#7fb89a;
+  --border-soft:#2e2419;
+  --border-glow:#3d2f1f;
+  --danger:#c4533e;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:radial-gradient(ellipse 1200px 800px at 50% -10%, #1f1610 0%, var(--bg-void) 55%), var(--bg-void);
+  background-attachment:fixed;
+  color:var(--parchment);
+  font-family:'Georgia','Iowan Old Style','Palatino Linotype',serif;
+  line-height:1.65;
+  min-height:100vh;
+  padding-bottom:80px;
+}
+
+/* texture overlay */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, transparent 1px, transparent 2px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.008) 0px, transparent 1px, transparent 3px);
+  pointer-events:none;
+  z-index:0;
+}
+
+.wrap{max-width:920px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+/* ============ HERO ============ */
+.hero{
+  text-align:center;
+  padding:64px 24px 40px;
+  position:relative;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  bottom:0;left:50%;
+  transform:translateX(-50%);
+  width:280px;height:1px;
+  background:linear-gradient(90deg, transparent, var(--copper), transparent);
+}
+.eyebrow{
+  font-family:'Trebuchet MS',sans-serif;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  font-size:11px;
+  color:var(--copper);
+  margin-bottom:18px;
+}
+.hero h1{
+  font-size:52px;
+  color:var(--gold);
+  font-weight:400;
+  letter-spacing:1px;
+  text-shadow:0 0 30px rgba(212,175,106,0.25);
+  margin-bottom:10px;
+}
+.hero .sub{
+  color:var(--parchment-dim);
+  font-size:16px;
+  font-style:italic;
+  margin-bottom:22px;
+}
+.hero .num16{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-family:'Trebuchet MS',sans-serif;
+  font-size:12px;
+  letter-spacing:2px;
+  color:var(--jade-bright);
+  border:1px solid var(--border-glow);
+  padding:7px 18px;
+  border-radius:30px;
+  background:rgba(90,138,114,0.08);
+}
+
+/* ============ NAV ============ */
+.navbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(13,10,7,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border-soft);
+  padding:12px 0;
+}
+.navbar .wrap{display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;padding:0 24px;}
+.navbar a{
+  flex:none;
+  font-family:'Trebuchet MS',sans-serif;
+  font-size:11.5px;
+  letter-spacing:0.5px;
+  color:var(--parchment-dim);
+  text-decoration:none;
+  padding:7px 13px;
+  border-radius:6px;
+  white-space:nowrap;
+  border:1px solid transparent;
+  transition:all .2s;
+}
+.navbar a:hover{color:var(--gold);border-color:var(--border-glow);background:rgba(201,135,74,0.08);}
+
+/* ============ SECTION SHELL ============ */
+section{padding:50px 0 10px;}
+.section-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  margin-bottom:26px;
+  border-bottom:1px solid var(--border-soft);
+  padding-bottom:14px;
+}
+.section-head .icon{font-size:24px;line-height:1;}
+.section-head h2{
+  font-size:26px;
+  color:var(--gold);
+  font-weight:400;
+  letter-spacing:0.3px;
+}
+.section-head .tag{
+  font-family:'Trebuchet MS',sans-serif;
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--ink-faint);
+  margin-left:auto;
+}
+
+.lead{color:var(--parchment-dim);font-size:15px;margin-bottom:20px;font-style:italic;}
+
+/* ============ CARDS ============ */
+.card{
+  background:linear-gradient(160deg, var(--bg-panel) 0%, var(--bg-panel-raised) 100%);
+  border:1px solid var(--border-soft);
+  border-radius:10px;
+  padding:22px 24px;
+  margin-bottom:18px;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:"";
+  position:absolute;top:0;left:0;bottom:0;width:3px;
+  background:var(--copper);
+  opacity:0.6;
+}
+.card.jade::before{background:var(--jade);}
+.card.ember::before{background:var(--ember);}
+.card h3{
+  font-size:17px;color:var(--copper-bright);font-weight:600;margin-bottom:10px;
+  font-family:'Trebuchet MS',sans-serif;letter-spacing:0.2px;
+}
+.card p, .card li{font-size:14.5px;color:var(--parchment);}
+.card ul{margin-left:18px;margin-top:6px;}
+.card li{margin-bottom:5px;}
+
+/* priority tags */
+.tag-pill{
+  display:inline-block;
+  font-family:'Trebuchet MS',sans-serif;
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:0.5px;
+  padding:2px 9px;
+  border-radius:20px;
+  margin-right:6px;
+  vertical-align:middle;
+}
+.must{background:rgba(196,83,62,0.18);color:#e8836e;border:1px solid rgba(196,83,62,0.4);}
+.imp{background:rgba(212,175,106,0.15);color:var(--gold);border:1px solid rgba(212,175,106,0.4);}
+.good{background:rgba(90,138,114,0.15);color:var(--jade-bright);border:1px solid rgba(90,138,114,0.4);}
+
+/* ============ MEMORY PALACE ============ */
+.palace-box{
+  background:radial-gradient(ellipse at top left, rgba(201,135,74,0.08), transparent 60%), var(--bg-panel);
+  border:1px solid var(--border-glow);
+  border-radius:14px;
+  padding:30px;
+  margin-bottom:20px;
+}
+.palace-box h3{color:var(--copper-bright);font-size:19px;margin-bottom:14px;font-family:'Trebuchet MS',sans-serif;}
+.palace-stop{
+  display:flex;gap:16px;
+  padding:14px 0;
+  border-bottom:1px dashed var(--border-soft);
+}
+.palace-stop:last-child{border-bottom:none;}
+.palace-stop .stop-num{
+  flex:none;width:34px;height:34px;border-radius:50%;
+  background:var(--bg-void);border:1px solid var(--copper);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Trebuchet MS',sans-serif;font-size:13px;color:var(--copper-bright);font-weight:700;
+}
+.palace-stop .stop-text strong{color:var(--gold);}
+.palace-stop .stop-text{font-size:14.5px;color:var(--parchment);padding-top:4px;}
+
+/* ============ TABLE ============ */
+.table-wrap{overflow-x:auto;margin-bottom:20px;border-radius:10px;border:1px solid var(--border-soft);}
+table{width:100%;border-collapse:collapse;font-size:13.8px;min-width:600px;}
+thead th{
+  background:var(--bg-panel-raised);
+  color:var(--gold);
+  font-family:'Trebuchet MS',sans-serif;
+  font-size:11.5px;
+  letter-spacing:0.8px;
+  text-transform:uppercase;
+  text-align:left;
+  padding:12px 14px;
+  border-bottom:2px solid var(--copper);
+  position:sticky;top:0;
+}
+tbody td{
+  padding:11px 14px;
+  border-bottom:1px solid var(--border-soft);
+  color:var(--parchment);
+}
+tbody tr:nth-child(even){background:rgba(255,255,255,0.015);}
+tbody tr:hover{background:rgba(201,135,74,0.07);}
+tbody td strong{color:var(--copper-bright);}
+
+/* ============ EXAM TRAPS ============ */
+.trap{
+  background:linear-gradient(160deg, rgba(196,83,62,0.10), rgba(28,21,16,0.4));
+  border:1px solid rgba(196,83,62,0.35);
+  border-radius:10px;
+  padding:18px 22px;
+  margin-bottom:14px;
+}
+.trap-head{
+  display:flex;align-items:center;gap:8px;
+  font-family:'Trebuchet MS',sans-serif;
+  color:var(--danger);
+  font-weight:700;
+  font-size:14.5px;
+  margin-bottom:8px;
+}
+.trap p{font-size:14px;color:var(--parchment);}
+.trap .correct{color:var(--jade-bright);font-weight:600;}
+.trap .wrong{color:var(--danger);text-decoration:line-through;opacity:0.8;}
+
+/* ============ Q&A / EXAMINER ============ */
+.qbox{
+  background:var(--bg-panel);
+  border:1px solid var(--border-soft);
+  border-left:3px solid var(--gold);
+  border-radius:8px;
+  padding:16px 20px;
+  margin-bottom:12px;
+}
+.qbox .qtype{
+  font-family:'Trebuchet MS',sans-serif;
+  font-size:10px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:6px;display:block;
+}
+.qbox .qtext{font-size:14.5px;color:var(--parchment);margin-bottom:6px;}
+.qbox .qans{font-size:13.5px;color:var(--jade-bright);font-style:italic;}
+
+/* ============ ACTIVE RECALL (flip cards) ============ */
+.recall-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px;}
+@media(max-width:680px){.recall-grid{grid-template-columns:1fr;}}
+.flip-card{
+  background:var(--bg-panel);
+  border:1px solid var(--border-soft);
+  border-radius:10px;
+  padding:18px 20px;
+  cursor:pointer;
+  position:relative;
+  min-height:78px;
+  transition:border-color .2s, background .2s;
+}
+.flip-card:hover{border-color:var(--copper);}
+.flip-card .q{font-size:14px;color:var(--parchment);font-weight:600;}
+.flip-card .a{
+  font-size:13.5px;color:var(--jade-bright);
+  margin-top:10px;
+  display:none;
+  border-top:1px dashed var(--border-soft);
+  padding-top:10px;
+}
+.flip-card.open .a{display:block;}
+.flip-card .hint{
+  font-family:'Trebuchet MS',sans-serif;font-size:10px;color:var(--ink-faint);
+  position:absolute;top:14px;right:16px;letter-spacing:0.5px;
+}
+
+/* ============ FILL BLANK ============ */
+.fib{font-size:14.5px;color:var(--parchment);margin-bottom:10px;line-height:2;}
+.blank{
+  border:none;border-bottom:2px solid var(--copper);
+  background:rgba(201,135,74,0.07);
+  color:var(--gold);
+  font-family:inherit;font-size:14px;
+  padding:2px 6px;width:140px;text-align:center;border-radius:3px;
+}
+.blank:focus{outline:none;background:rgba(201,135,74,0.18);}
+.reveal-btn{
+  font-family:'Trebuchet MS',sans-serif;
+  font-size:11px;letter-spacing:0.5px;
+  background:none;border:1px solid var(--copper);color:var(--copper-bright);
+  padding:7px 16px;border-radius:20px;cursor:pointer;margin-top:10px;
+  transition:all .2s;
+}
+.reveal-btn:hover{background:var(--copper);color:var(--bg-void);}
+.fib-answers{display:none;margin-top:14px;padding-top:14px;border-top:1px dashed var(--border-soft);color:var(--jade-bright);font-size:13.5px;}
+.fib-answers.show{display:block;}
+
+/* ============ SPEED SHEETS ============ */
+.speed-sheet{
+  background:linear-gradient(160deg, var(--bg-panel-raised), var(--bg-panel));
+  border:1px solid var(--border-glow);
+  border-radius:14px;
+  padding:26px 28px;
+  margin-bottom:20px;
+}
+.speed-sheet h3{color:var(--gold);font-family:'Trebuchet MS',sans-serif;font-size:16px;margin-bottom:14px;}
+.speed-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 24px;}
+@media(max-width:600px){.speed-grid{grid-template-columns:1fr;}}
+.speed-row{display:flex;gap:8px;font-size:13.5px;padding:6px 0;border-bottom:1px solid var(--border-soft);}
+.speed-row .k{color:var(--copper-bright);font-weight:700;min-width:90px;}
+.speed-row .v{color:var(--parchment);}
+
+.final-sheet{
+  background:radial-gradient(ellipse at center, rgba(212,175,106,0.06), transparent 70%), var(--bg-stone);
+  border:2px solid var(--gold);
+  border-radius:16px;
+  padding:30px;
+  text-align:left;
+}
+.final-sheet .ftitle{
+  text-align:center;color:var(--gold);font-family:'Trebuchet MS',sans-serif;
+  letter-spacing:2px;font-size:13px;text-transform:uppercase;margin-bottom:20px;
+}
+.final-line{
+  font-size:14px;padding:8px 0;border-bottom:1px dotted var(--border-soft);
+  color:var(--parchment);
+}
+.final-line b{color:var(--ember);}
+
+/* connections diagram */
+.flow{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  font-family:'Trebuchet MS',sans-serif;font-size:13px;margin-bottom:14px;
+}
+.flow .node{
+  background:var(--bg-panel-raised);border:1px solid var(--copper);color:var(--copper-bright);
+  padding:8px 14px;border-radius:8px;font-weight:600;
+}
+.flow .arrow{color:var(--ink-faint);font-size:16px;}
+
+/* divider ornament */
+.ornament{text-align:center;color:var(--copper);opacity:0.5;font-size:13px;letter-spacing:6px;margin:36px 0;}
+
+footer{
+  text-align:center;padding:50px 24px;color:var(--ink-faint);font-size:12px;font-family:'Trebuchet MS',sans-serif;
+  border-top:1px solid var(--border-soft);margin-top:40px;
+}
+
+.toggle-all{
+  font-family:'Trebuchet MS',sans-serif;font-size:11px;letter-spacing:0.5px;
+  background:none;border:1px solid var(--border-glow);color:var(--parchment-dim);
+  padding:6px 14px;border-radius:20px;cursor:pointer;margin-bottom:16px;
+}
+.toggle-all:hover{border-color:var(--copper);color:var(--copper-bright);}
+
+mark{background:rgba(212,175,106,0.22);color:var(--gold);padding:0 3px;border-radius:3px;}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="wrap">
+    <a href="#bigpicture">Big Picture</a>
+    <a href="#palace">Memory Palace</a>
+    <a href="#complete">Complete Notes</a>
+    <a href="#hooks">Memory Hooks</a>
+    <a href="#connections">Connections</a>
+    <a href="#traps">Exam Traps</a>
+    <a href="#examiner">Examiner's Qs</a>
+    <a href="#recall">Active Recall</a>
+    <a href="#highyield">High-Yield</a>
+    <a href="#ultrafast">Ultra-Fast</a>
+    <a href="#thirtysec">30-Sec Sheet</a>
+    <a href="#lastnight">Last Night</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">SSC CGL · Ancient History · Revision Vault</div>
+  <h1>Mahajanapadas</h1>
+  <div class="sub">From scattered tribes to sixteen great kingdoms — and how Magadha ate them all</div>
+  <div class="num16">⬡ 16 MAHAJANAPADAS &nbsp;·&nbsp; 1 WINNER: MAGADHA</div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ BIG PICTURE ============ -->
+<section id="bigpicture">
+  <div class="section-head"><span class="icon">🏛️</span><h2>Big Picture</h2><span class="tag">Why this chapter exists</span></div>
+  <div class="card">
+    <p>This is the story of <strong style="color:var(--gold)">political Darwinism in ancient India</strong>. Aryan tribes invade → settle into small foot-print territories (<em>Jana</em> = tribe, <em>pada</em> = feet → <strong>Janapadas</strong>) → these merge and grow into 16 super-states (<strong>Mahajanapadas</strong>) → one state — <strong style="color:var(--ember)">Magadha</strong> — out-competes all 15 others through geography, resources, diplomacy and ruthless dynasties → Magadha becomes the seed of the Mauryan Empire.</p>
+    <p style="margin-top:12px;">Everything in this chapter is building toward one answer: <mark>why did Magadha win?</mark> Every fact — capitals, rivers, dynasties, kings — is either backstory or evidence for that final victory.</p>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ MEMORY PALACE ============ -->
+<section id="palace">
+  <div class="section-head"><span class="icon">🧠</span><h2>Chapter Memory Palace</h2><span class="tag">The Royal Road Trip</span></div>
+  <div class="palace-box">
+    <h3>🛣️ The Royal Road Trip — from Ang to Magadha's Throne</h3>
+    <p style="color:var(--parchment-dim);font-size:14px;margin-bottom:18px;">Picture yourself driving a chariot from the <strong>easternmost</strong> kingdom toward the <strong>winner's capital</strong>. Each stop is a Mahajanapada. You physically travel west-to-center, then the road forks into republics and monarchies, and finally arrives at Magadha's throne room where four dynasties take turns sitting down.</p>
+
+    <div class="palace-stop">
+      <div class="stop-num">1</div>
+      <div class="stop-text"><strong>Start at ANG</strong> (near Bengal, Munger-Bhagalpur) — you see <strong>Karna from Mahabharata</strong>, called "Angraj," standing at the gate. He's the easternmost guard of your journey.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">2</div>
+      <div class="stop-text">Drive west — your servant boy runs up: <strong>"Sir, bring me sweet lime juice!"</strong> → <strong>Sweet-lime = Kaushambi</strong>, capital of <strong>Vatsa</strong>.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">3</div>
+      <div class="stop-text">Next stop — temple bells, <strong>Lord Ram</strong> waving from Ayodhya → his kingdom <strong>Kaushal</strong>, capital <strong>Shravasti</strong>.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">4</div>
+      <div class="stop-text">Music plays — someone's chanting <strong>"Radha Radha"</strong> at <strong>Mathura</strong> → capital of <strong>Surasena</strong>.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">5</div>
+      <div class="stop-text">A wedding tent — <strong>Panchal</strong>-i-tra (Panchali = Draupadi!) → capital <strong>Ahichhatra/Kampilya</strong>.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">6</div>
+      <div class="stop-text"><strong>Virat Kohli</strong> is fiercely guarding his mother → "Virat" Nagar, capital of <strong>Matsya</strong> (near Jaipur).</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">7</div>
+      <div class="stop-text"><strong>Kuru</strong> — Indraprastha (near Meerut/Delhi) — the Kauravas' home turf, right next to Matsya on your map.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">8</div>
+      <div class="stop-text">A grumpy old man named <strong>"Chedi guy"</strong> sits at a fort in Bundelkhand → capital <strong>Shuktimati/Sotthivati-nagar</strong>.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">9</div>
+      <div class="stop-text">A rival kingdom glowing on the hill — <strong>Avanti</strong>, capital <strong>Ujjaini</strong> (and Mahishmati), Magadha's #2 rival.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">10</div>
+      <div class="stop-text">Far west — <strong>Gandhar</strong> (capital Takshila, today's Rawalpindi) and <strong>Kamboj</strong> (capital Poonch / Rajapura) mark the border.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">11</div>
+      <div class="stop-text">South — <strong>Assaka/Asmaka</strong>, capital <strong>Pratishthan (Paithan)</strong>, the lone Mahajanapada south of the Vindhyas.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">12</div>
+      <div class="stop-text">The "Republic Cluster" — <strong>Vajji</strong> (capital Vaishali) and <strong>Malla</strong> (capital Kushinagar) — these are the rebel towns where there's no single king.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">13</div>
+      <div class="stop-text"><strong>FINAL STOP — MAGADHA'S THRONE ROOM.</strong> Capital <strong>Rajgir</strong> (ringed by 5 hills, unconquerable) then <strong>Pataliputra</strong> (at the Ganga-Son river junction). Four dynasties walk in one after another and sit on the same throne: <strong>Haryanka → Shishunaga → Nanda → (Maurya begins)</strong>.</div>
+    </div>
+
+    <p style="margin-top:16px;color:var(--parchment-dim);font-size:13.5px;"><strong style="color:var(--gold)">Walk this road in your head</strong> during the exam — each landmark physically pulls the capital name with it.</p>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ COMPLETE REVISION NOTES ============ -->
+<section id="complete">
+  <div class="section-head"><span class="icon">📜</span><h2>Complete Revision Notes</h2><span class="tag">Nothing skipped</span></div>
+
+  <div class="card">
+    <h3>1. Origins — How Janapadas Were Born <span class="tag-pill imp">IMPORTANT</span></h3>
+    <ul>
+      <li><strong>Aryans</strong> were a migrating/invading tribe. <strong>Bal Gangadhar Tilak</strong> wrote <em>"Arctic Home in the Vedas"</em> proposing an Aryan origin theory.</li>
+      <li><strong>Battle of Ten Kings (Dasarajna Yuddha)</strong> — fought on the banks of the <strong>Ravi River</strong> (ancient name: <strong>Purushni</strong>).</li>
+      <li>10 kings (a federation/confederacy) fought against the <strong>Bharata tribe</strong>, led by King <strong>Sudas</strong> — Sudas won.</li>
+      <li><strong>Jana</strong> = tribe, <strong>Pada</strong> = feet/footprint → wherever a tribe settled, that area was named a <strong>Janapada</strong>.</li>
+      <li>Janapadas gradually consolidated → grew into <strong>Mahajanapadas</strong> (16 total).</li>
+    </ul>
+  </div>
+
+  <div class="card jade">
+    <h3>2. Monarchy vs Republic <span class="tag-pill must">MUST KNOW</span></h3>
+    <ul>
+      <li><strong>Monarchical</strong> = single ruler.</li>
+      <li><strong>Republic (Gana-Sangha)</strong> here means <strong>multiple decision-makers</strong> — NOT the modern Polity/Preamble definition (elected head of state). Example: UK has an elected-ish system but is not a "republic"; India is. Don't confuse the ancient meaning with the modern Constitutional meaning.</li>
+      <li><strong>Republics:</strong> Kuru, Kamboj, Vajji, Malla, Assaka (Asmaka).</li>
+      <li>All remaining 11 Mahajanapadas were <strong>monarchies</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>3. Literary Sources for Mahajanapadas <span class="tag-pill must">MUST KNOW</span></h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Text</th><th>Author / Tradition</th><th>What it says</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Ashtadhyayi</strong></td><td>Panini (oldest Sanskrit grammar text)</td><td>Mentions ~40 Janapadas</td></tr>
+          <tr><td><strong>Anguttar Nikaya</strong></td><td>Buddhist literature</td><td>Mentions <strong>16 Mahajanapadas</strong></td></tr>
+          <tr><td><strong>Digha Nikaya</strong></td><td>Buddhist literature</td><td>Mentions <strong>12 Mahajanapadas</strong></td></tr>
+          <tr><td><strong>Bhagwati Sutra</strong></td><td>Jain literature</td><td>Also lists Mahajanapadas</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card ember">
+    <h3>4. The 16 Mahajanapadas — Capitals & Modern Location <span class="tag-pill must">MUST KNOW · HIGH FREQUENCY</span></h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Mahajanapada</th><th>Capital</th><th>Modern Location</th><th>Type</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><strong>Anga</strong></td><td>Champa</td><td>Munger & Bhagalpur (Bihar)</td><td>Monarchy</td></tr>
+          <tr><td>2</td><td><strong>Magadha</strong></td><td>Rajgir → Pataliputra</td><td>Gaya & Patna (Bihar)</td><td>Monarchy</td></tr>
+          <tr><td>3</td><td><strong>Kashi</strong></td><td>Varanasi</td><td>Varanasi (UP)</td><td>Monarchy</td></tr>
+          <tr><td>4</td><td><strong>Vatsa</strong></td><td>Kaushambi</td><td>Allahabad (UP)</td><td>Monarchy</td></tr>
+          <tr><td>5</td><td><strong>Kaushal</strong></td><td>Shravasti</td><td>Ayodhya region (UP)</td><td>Monarchy</td></tr>
+          <tr><td>6</td><td><strong>Surasena</strong></td><td>Mathura</td><td>Eastern UP</td><td>Monarchy</td></tr>
+          <tr><td>7</td><td><strong>Panchal</strong></td><td>Ahichhatra / Kampilya</td><td>Western UP</td><td>Monarchy</td></tr>
+          <tr><td>8</td><td><strong>Kuru</strong></td><td>Indraprastha</td><td>Meerut region</td><td>Republic</td></tr>
+          <tr><td>9</td><td><strong>Matsya</strong></td><td>Viratnagar</td><td>Jaipur region (Rajasthan)</td><td>Monarchy</td></tr>
+          <tr><td>10</td><td><strong>Chedi</strong></td><td>Shuktimati / Sotthivati-nagar</td><td>Bundelkhand region</td><td>Monarchy</td></tr>
+          <tr><td>11</td><td><strong>Avanti</strong></td><td>Ujjaini / Mahishmati</td><td>Malwa region (MP)</td><td>Monarchy</td></tr>
+          <tr><td>12</td><td><strong>Gandhar</strong></td><td>Takshila</td><td>Rawalpindi (Pakistan)</td><td>Monarchy</td></tr>
+          <tr><td>13</td><td><strong>Kamboj</strong></td><td>Poonch / Rajapura</td><td>Poonch region</td><td>Republic</td></tr>
+          <tr><td>14</td><td><strong>Assaka (Asmaka)</strong></td><td>Pratishthan (Paithan)</td><td>South of Vindhyas (only one south)</td><td>Monarchy</td></tr>
+          <tr><td>15</td><td><strong>Vajji</strong></td><td>Vaishali</td><td>North Bihar</td><td>Republic (confederacy of 8 clans incl. Lichchhavi, Videha)</td></tr>
+          <tr><td>16</td><td><strong>Malla</strong></td><td>Kushinagar</td><td>Eastern UP</td><td>Republic</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:10px;"><strong>Vajji</strong> = a confederacy of 8 clans (Ashta-kula), including Lichchhavi & Videha (Janaka's kingdom).</p>
+  </div>
+
+  <div class="card">
+    <h3>5. Why Magadha Became the Most Powerful <span class="tag-pill must">MUST KNOW — Conceptual core of chapter</span></h3>
+    <ul>
+      <li><strong>Geographic advantage:</strong> Magadha sat deep enough that an invader had to cross many other kingdoms first (compare: in an India-Pakistan war, Pakistan would target Mumbai/Delhi/Kolkata first because they're accessible — Magadha was the "deep interior," hard to reach).</li>
+      <li><strong>Rajgir (early capital)</strong> was surrounded by <strong>5 hills</strong> → naturally fortified, very hard to attack.</li>
+      <li><strong>Pataliputra (later capital)</strong> sat at the <strong>confluence of the Ganga and Son rivers</strong> → strategic and economically powerful riverine location.</li>
+      <li><strong>Large number of elephants</strong> available — military advantage.</li>
+      <li><strong>Capable/ambitious dynasties and leaders</strong> (Haryanka, Shishunaga, Nanda).</li>
+      <li><strong>Abundant iron mines nearby</strong> (Jharkhand region close by) — iron had already been discovered by the Later Vedic Age (Harappans and Early Vedic people did NOT know iron).</li>
+    </ul>
+  </div>
+
+  <div class="card jade">
+    <h3>6. Haryanka Dynasty <span class="tag-pill must">MUST KNOW</span></h3>
+    <ul>
+      <li><strong>Bimbisara</strong> — founder of Haryanka dynasty; considered the <strong>first ruler of Magadha</strong> (as per available info). Took the title <strong>"Seniya."</strong></li>
+      <li>Defeated <strong>Anga</strong>.</li>
+      <li>Expanded empire via <strong>matrimonial alliances</strong> — he had 3 wives:
+        <ul>
+          <li>Sister of <strong>Prasenjit</strong> (king of Kaushal) — daughter of the Kaushal king</li>
+          <li><strong>Chellana</strong>, a Lichchhavi princess (from Vaishali/Vajji)</li>
+          <li><strong>Khema</strong></li>
+        </ul>
+      </li>
+      <li>His physician was <strong>Jeevak</strong>, sent to treat King <strong>Pradyota</strong> of Ujjain (Avanti) — shows diplomatic relations despite rivalry; Avanti was the <strong>2nd strongest Mahajanapada</strong> after Magadha.</li>
+      <li>Son with Chellana = <strong>Ajatashatru</strong>.</li>
+      <li><strong>Ajatashatru:</strong>
+        <ul>
+          <li>Believed to have <strong>killed his father Bimbisara</strong> → hence the title <strong>"Ajatashatru"</strong> (one with no enemy yet/unborn enemy).</li>
+          <li>Defeated <strong>Lichchhavi</strong> (his own maternal relatives — Vaishali) using <strong>catapults/siege weaponry</strong>.</li>
+          <li>Defeated <strong>Kaushal</strong> and married the daughter of that king.</li>
+          <li>Patronized the <strong>First Buddhist Council</strong> at <strong>Rajgriha</strong>.</li>
+        </ul>
+      </li>
+      <li>Son of Ajatashatru = <strong>Udayin (Udain)</strong> — shifted the capital from <strong>Rajgriha to Pataliputra</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>7. Shishunaga Dynasty</h3>
+    <ul>
+      <li>Founded by <strong>Shishunaga</strong>.</li>
+      <li>Biggest achievement: <strong>defeated Avanti</strong> (2nd strongest Mahajanapada, capital Ujjaini/Mahishmati) and merged it into Magadha.</li>
+      <li>Son <strong>Kalashoka</strong> patronized the <strong>Second Buddhist Council</strong> (held at Vaishali).</li>
+    </ul>
+  </div>
+
+  <div class="card ember">
+    <h3>8. Nanda Dynasty <span class="tag-pill must">MUST KNOW</span></h3>
+    <ul>
+      <li>Founder: <strong>Mahapadma Nanda</strong> — took title <strong>"Ekrat"</strong> (sole sovereign/empire builder); known as a "propagator/destroyer of Kshatriyas" (eliminator of rival Kshatriya clans).</li>
+      <li>Last ruler: <strong>Dhanananda</strong> — founder's line ends with him.</li>
+      <li><strong>Alexander's invasion context:</strong> Alexander the Great (ruler of Greece/Macedon) invaded India but did not cover all of it.</li>
+      <li><strong>Battle of Hydaspes</strong> — fought on the banks of the <strong>Jhelum River</strong> (Hydaspes = Greek name for Jhelum; Jhelum also called <strong>Vitasta</strong>).
+        <ul>
+          <li>Fought between Alexander and local ruler <strong>Porus</strong> — NOT Dhanananda.</li>
+          <li>Result debated: officially "Alexander won," but historically inconsistent — Alexander <strong>returned Porus's territory</strong> to him after the battle, which some historians read as Alexander actually being checked/defeated in practice.</li>
+        </ul>
+      </li>
+      <li><strong>Chandragupta Maurya</strong> killed <strong>Dhanananda</strong> with the help of <strong>Kautilya (Vishnugupta/Chanakya)</strong> → founded the <strong>Mauryan dynasty</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>9. Society & Economy of the Mahajanapada Period <span class="tag-pill imp">IMPORTANT</span></h3>
+    <ul>
+      <li><strong>Pottery sequence (chronological):</strong> Ochre Coloured Pottery (OCP) → Painted Grey Ware (PGW) → <strong>Northern Black Polished Ware (NBPW)</strong> — NBPW belongs to this period.</li>
+      <li><strong>Coinage:</strong> Punch-marked silver coins, also called <strong>Nishka</strong> or <strong>Karshapana</strong>.</li>
+      <li><strong>Artisans/merchants</strong> organized into <strong>guilds (Shreni)</strong>.</li>
+      <li><strong>Crafts were hereditary</strong> — son inherited father's craft/trade.</li>
+      <li><strong>Iron ploughshare</strong> used for agriculture → led to agricultural surplus (iron already discovered by this period).</li>
+      <li>This period is considered <strong>"Second Urbanization"</strong> after the Harappan (Indus Valley) urbanization.</li>
+      <li><strong>Bali (tax/tribute to king)</strong> was originally <strong>voluntary</strong>, not compulsory — became compulsory only later.</li>
+      <li><strong>Social/administrative roles:</strong>
+        <ul>
+          <li><strong>Grihapati</strong> — rich peasants/big farmers and landowners.</li>
+          <li>Peasants paid <strong>1/6th of produce</strong> as tax.</li>
+          <li><strong>Bhojaka / Gramini</strong> — village headman.</li>
+          <li><strong>Shaulkika / Shulka-Adhyaksha</strong> — toll-tax collector (Shulka = toll, Adhyaksha = officer/collector).</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card jade">
+    <h3>10. Side-fact Connections (Geography & Culture woven in) <span class="tag-pill good">GOOD TO KNOW</span></h3>
+    <ul>
+      <li><strong>Kalinjar Fort</strong> is in the <strong>Bundelkhand region</strong> (UP-MP border) — builder unknown for certain, but multiple dynasties (Gupta, Chandela) are associated with it. Mythological link: Lord Shiva drank the poison from the churning of the ocean ("Samudra Manthan") here — <em>Kal</em> = time, <em>Jar</em> = defeat → "one who conquered/defeated time (death)."</li>
+      <li><strong>Narmada River</strong> divides the Peninsular Plateau into two: the <strong>Malwa Plateau</strong> (also loosely called Mewar/Marwar Plateau region in the lecture) and further on, <strong>Bundelkhand</strong> and <strong>Baghelkhand</strong>.</li>
+      <li><strong>Jhelum River:</strong> originates from <strong>Verinag</strong>; meanders in its youthful stage; dams at <strong>Uri, Tulbul, Kishanganga</strong>; feeds into <strong>Wular Lake</strong> (largest freshwater lake in India).</li>
+    </ul>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ MEMORY HOOKS ============ -->
+<section id="hooks">
+  <div class="section-head"><span class="icon">💡</span><h2>Smart Memory Hooks</h2><span class="tag">One image, many facts</span></div>
+
+  <div class="card">
+    <h3>🍋 "Bring me sweet lime juice" → Vatsa</h3>
+    <p>Picture a servant boy bringing a glass of sweet-lime juice. <strong>Sweet lime = Mausambi</strong> sounds like <strong>Kaushambi</strong>, the capital of <strong>Vatsa</strong>. Whenever "Vatsa" appears, taste the sweet lime.</p>
+  </div>
+
+  <div class="card jade">
+    <h3>🎶 "Radha Radha" chant → Surasena/Mathura</h3>
+    <p>Imagine standing in Mathura hearing devotees chant "Radha Radha." That instantly tags <strong>Mathura = Surasena's capital</strong>.</p>
+  </div>
+
+  <div class="card ember">
+    <h3>🏏 Virat Kohli guards his mother → Matsya</h3>
+    <p>Virat Kohli fiercely protecting "Mata-ji" (mother) = <strong>Viratnagar</strong>, capital of <strong>Matsya</strong>. The name overlap (Virat–Viratnagar) does the heavy lifting.</p>
+  </div>
+
+  <div class="card">
+    <h3>🏹 Karna the "Angraj" → Anga</h3>
+    <p>Karna from the Mahabharata is called <strong>Angraj</strong> ("king of Anga") because he belonged to the <strong>Anga</strong> Mahajanapada (capital Champa, near Bengal). One nickname, one location locked in.</p>
+  </div>
+
+  <div class="card jade">
+    <h3>🎴 Panchali (Draupadi) → Panchal</h3>
+    <p>Draupadi is called <strong>Panchali</strong> because she's the princess of <strong>Panchal</strong> (capital Ahichhatra/Kampilya). The Mahabharata connection makes this stick instantly.</p>
+  </div>
+
+  <div class="card">
+    <h3>👑 "Ajatashatru" = the man with no enemy</h3>
+    <p>Two completely different men in Indian history earned the title "Ajatashatru": the ancient Magadhan king (believed to have killed his own father Bimbisara) — AND, informally, a freedom-fighter era leader of modern India is sometimes referenced with the same title. <strong>Don't confuse the two contexts</strong> — in this chapter, Ajatashatru = son of Bimbisara & Chellana.</p>
+  </div>
+
+  <div class="card ember">
+    <h3>☠️ Kalinjar = "Conqueror of Time"</h3>
+    <p>Shiva drinks the poison from Samudra Manthan at Kalinjar → <em>Kal</em> (time/death) + <em>Jar</em> (to defeat) = "the one who defeated death." A fort named after surviving the un-survivable — hard to forget once you picture Shiva's blue throat.</p>
+  </div>
+
+  <div class="card">
+    <h3>🇮🇳 Pakistan attacks the capital, not the border villages → Magadha's safety logic</h3>
+    <p>Use the modern India-Pakistan analogy: an enemy always strikes the <strong>capital/major cities</strong> (Mumbai, Delhi, Kolkata) to claim victory — not remote villages. Magadha, sitting deep behind 15 other kingdoms with Rajgir's 5-hill fortress, was simply too far in to strike easily. <strong>Depth = defense.</strong></p>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ CONCEPT CONNECTIONS ============ -->
+<section id="connections">
+  <div class="section-head"><span class="icon">🔗</span><h2>Concept Connections</h2><span class="tag">Nothing stands alone</span></div>
+
+  <div class="card">
+    <h3>Tribe → Settlement → State (the foundational chain)</h3>
+    <div class="flow">
+      <div class="node">Aryan migration</div><div class="arrow">→</div>
+      <div class="node">Battle of Ten Kings</div><div class="arrow">→</div>
+      <div class="node">Janapadas form</div><div class="arrow">→</div>
+      <div class="node">Mahajanapadas (16)</div>
+    </div>
+  </div>
+
+  <div class="card jade">
+    <h3>Resource → Power (why Magadha wins)</h3>
+    <div class="flow">
+      <div class="node">Iron discovered</div><div class="arrow">→</div>
+      <div class="node">Iron ploughshare</div><div class="arrow">→</div>
+      <div class="node">Agricultural surplus</div><div class="arrow">→</div>
+      <div class="node">Wealth + Army</div><div class="arrow">→</div>
+      <div class="node">Magadhan dominance</div>
+    </div>
+    <div class="flow">
+      <div class="node">5 hills around Rajgir</div><div class="arrow">→</div>
+      <div class="node">Natural fortress</div><div class="arrow">→</div>
+      <div class="node">Hard to invade</div><div class="arrow">→</div>
+      <div class="node">Long-term stability</div>
+    </div>
+  </div>
+
+  <div class="card ember">
+    <h3>Dynasty relay race (who beat whom, who took over)</h3>
+    <div class="flow">
+      <div class="node">Haryanka<br><small>(Bimbisara → Ajatashatru → Udayin)</small></div><div class="arrow">→</div>
+      <div class="node">Shishunaga<br><small>(defeats Avanti)</small></div><div class="arrow">→</div>
+      <div class="node">Nanda<br><small>(Mahapadma → Dhanananda)</small></div><div class="arrow">→</div>
+      <div class="node">Maurya<br><small>(Chandragupta + Chanakya kill Dhanananda)</small></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Cause → Effect: Marriage as Foreign Policy</h3>
+    <p><strong>Problem:</strong> Bimbisara wants to expand Magadha without constant war.<br>
+    <strong>Solution:</strong> Marries into Kaushal (sister of Prasenjit) and into Lichchhavi/Vajji (Chellana) → gains alliances, territory, and influence diplomatically.<br>
+    <strong>Consequence:</strong> Produces Ajatashatru, who later <em>does</em> go to war — ironically against his own mother's clan (Lichchhavi) and his uncle Prasenjit's kingdom (Kaushal).</p>
+  </div>
+
+  <div class="card jade">
+    <h3>Pottery timeline = a dating tool</h3>
+    <div class="flow">
+      <div class="node">OCP</div><div class="arrow">→</div>
+      <div class="node">PGW</div><div class="arrow">→</div>
+      <div class="node">NBPW <small>(Mahajanapada era)</small></div>
+    </div>
+    <p>Whenever a question mentions NBPW, it's pointing at the <strong>Mahajanapada/2nd urbanization</strong> period — link the pottery directly to the era.</p>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ EXAM TRAPS ============ -->
+<section id="traps">
+  <div class="section-head"><span class="icon">⚠️</span><h2>Exam Traps</h2><span class="tag">Where students lose marks</span></div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ Bimbisara vs Bindusara</div>
+    <p><span class="wrong">Bindusara</span> is a completely different Mauryan king (son of Chandragupta Maurya, father of Ashoka) who comes <strong>much later</strong>. <span class="correct">Bimbisara</span> is the Haryanka dynasty founder, much earlier. Names look almost identical — read carefully in MCQs.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ "Republic" — Ancient meaning vs Modern Polity meaning</div>
+    <p>In this chapter, "republic" = <span class="correct">multiple decision-makers (Gana-Sangha)</span>, NOT the Preamble/Constitutional definition of "elected head of state." Don't import your Polity definition here — the UK/India example from the lecture exists exactly to break this false equivalence.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ Anguttar Nikaya (16) vs Digha Nikaya (12)</div>
+    <p>Both are Buddhist texts listing Mahajanapadas but with <strong>different counts</strong>. <span class="correct">Anguttar Nikaya → 16</span> (the standard number used everywhere) <span class="correct">Digha Nikaya → 12</span>. Exams may test "which text gives the count of 16?"</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ Udayin missing from options</div>
+    <p>SSC has actually asked: "Who shifted the capital from Rajgriha to Pataliputra?" with <strong>Udayin NOT listed</strong> as an option. In such a trap, the "best available" answer becomes <span class="correct">Ajatashatru</span> (his father, under whom the move is sometimes loosely attributed in some option sets) — read the option list carefully before panicking.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ Battle of Hydaspes — Alexander vs Dhanananda? NO.</div>
+    <p>A very common trap: assuming Alexander fought <span class="wrong">Dhanananda</span>. He did NOT. The Battle of Hydaspes was fought against <span class="correct">Porus</span>, a local king on the Jhelum. Dhanananda was a separate, contemporaneous ruler of Magadha — Alexander never reached Magadha.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ Jhelum's three names</div>
+    <p>Jhelum = <span class="correct">Vitasta</span> (Sanskrit) = <span class="correct">Hydaspes</span> (Greek, used for the famous battle). Exams may ask "the Battle of Hydaspes was fought on which present-day river?" → Answer: Jhelum.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ Shishunaga dynasty's "biggest win" — Avanti, not Magadha's rival in general</div>
+    <p>Don't generalize "Shishunaga expanded the empire" vaguely — the <strong>specific, exam-relevant fact</strong> is that they defeated and merged <span class="correct">Avanti</span> (capital Ujjaini/Mahishmati) specifically, the 2nd-strongest Mahajanapada.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ Mahapadma Nanda vs Dhanananda — founder vs last ruler</div>
+    <p><span class="correct">Mahapadma Nanda</span> = founder of Nanda dynasty (title: Ekrat). <span class="correct">Dhanananda</span> = last ruler, killed by Chandragupta Maurya & Chanakya. Don't swap these roles.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ Bali was voluntary first — easy to assume it was always compulsory</div>
+    <p>Many students assume taxation in ancient India was always mandatory. In this period, <span class="correct">Bali started as a voluntary gift/offering</span> to the king and only became compulsory later. A classic "always true vs sometimes true" trap.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-head">⚠ Rajgir vs Pataliputra — which capital, which advantage</div>
+    <p><span class="correct">Rajgir</span> = early capital, advantage = 5 surrounding hills (defense). <span class="correct">Pataliputra</span> = later capital, advantage = confluence of Ganga & Son rivers (trade/strategy). Don't mix up which advantage belongs to which capital.</p>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ EXAMINER'S FAVOURITE QUESTIONS ============ -->
+<section id="examiner">
+  <div class="section-head"><span class="icon">🎯</span><h2>Examiner's Favourite Questions</h2><span class="tag">How they'll attack this topic</span></div>
+
+  <div class="qbox">
+    <span class="qtype">Match the Following</span>
+    <p class="qtext">Match Mahajanapada with Capital: Anga, Kashi, Avanti, Gandhar</p>
+    <p class="qans">Champa · Varanasi · Ujjaini · Takshila</p>
+  </div>
+
+  <div class="qbox">
+    <span class="qtype">Statement-Based</span>
+    <p class="qtext">"Statement I: Magadha's early capital Rajgir was surrounded by hills. Statement II: This made the capital vulnerable to attack." Which is correct?</p>
+    <p class="qans">Statement I is correct; Statement II is wrong — the hills made it HARD to attack, i.e. a defensive advantage.</p>
+  </div>
+
+  <div class="qbox">
+    <span class="qtype">Chronology</span>
+    <p class="qtext">Arrange the Magadhan dynasties in chronological order: Nanda, Shishunaga, Haryanka, Maurya</p>
+    <p class="qans">Haryanka → Shishunaga → Nanda → Maurya</p>
+  </div>
+
+  <div class="qbox">
+    <span class="qtype">Assertion-Reason</span>
+    <p class="qtext">Assertion: Ajatashatru is known by that title. Reason: He never fought any wars.</p>
+    <p class="qans">Assertion is true, Reason is false — the title relates to the belief that he killed his own father, and he did fight wars (against Vaishali/Lichchhavi and Kaushal). The reason given does NOT correctly explain the assertion.</p>
+  </div>
+
+  <div class="qbox">
+    <span class="qtype">Confusing Pairs</span>
+    <p class="qtext">Which Buddhist text mentions 16 Mahajanapadas, and which mentions 12?</p>
+    <p class="qans">Anguttar Nikaya → 16; Digha Nikaya → 12</p>
+  </div>
+
+  <div class="qbox">
+    <span class="qtype">One-word Recall</span>
+    <p class="qtext">Title taken by Bimbisara? Title taken by Mahapadma Nanda?</p>
+    <p class="qans">Bimbisara → Seniya; Mahapadma Nanda → Ekrat</p>
+  </div>
+
+  <div class="qbox">
+    <span class="qtype">Tricky Application</span>
+    <p class="qtext">Which river is associated with the Battle of Hydaspes, and what is its other ancient name?</p>
+    <p class="qans">Jhelum River; ancient name — Vitasta</p>
+  </div>
+
+  <div class="qbox">
+    <span class="qtype">Frequently Misread</span>
+    <p class="qtext">Who actually fought Alexander at the Battle of Hydaspes?</p>
+    <p class="qans">Porus (local ruler) — not Dhanananda</p>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ ACTIVE RECALL ============ -->
+<section id="recall">
+  <div class="section-head"><span class="icon">❓</span><h2>Active Recall Section</h2><span class="tag">Tap to test yourself</span></div>
+  <p class="lead">Tap any card to flip and check your answer. Don't peek before answering in your head first!</p>
+  <button class="toggle-all" onclick="toggleAllFlip()">Reveal / Hide All</button>
+
+  <div class="recall-grid" id="flipgrid">
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Capital of Magadha (early) and (later)?</div><div class="a">Rajgir (early) → Pataliputra (later)</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Founder of Haryanka dynasty?</div><div class="a">Bimbisara</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Who is believed to have killed Bimbisara?</div><div class="a">His own son, Ajatashatru</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Which dynasty defeated Avanti and merged it with Magadha?</div><div class="a">Shishunaga dynasty</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Founder & last ruler of Nanda dynasty?</div><div class="a">Founder: Mahapadma Nanda · Last: Dhanananda</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Who fought Alexander at Hydaspes?</div><div class="a">Porus (not Dhanananda)</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">River known as Hydaspes / Vitasta?</div><div class="a">Jhelum</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Who killed Dhanananda, with whose help?</div><div class="a">Chandragupta Maurya, with help of Kautilya/Chanakya</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">5 republics among the 16 Mahajanapadas?</div><div class="a">Kuru, Kamboj, Vajji, Malla, Assaka</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Capital of Vatsa? (memory hook: sweet lime)</div><div class="a">Kaushambi</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Buddhist texts and their Mahajanapada counts?</div><div class="a">Anguttar Nikaya = 16; Digha Nikaya = 12</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Pottery type associated with this period?</div><div class="a">NBPW (Northern Black Polished Ware)</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Title taken by Bimbisara?</div><div class="a">Seniya</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Punch-marked silver coins also called?</div><div class="a">Nishka or Karshapana</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Tax rate paid by peasants on produce?</div><div class="a">1/6th</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Village headman known as?</div><div class="a">Bhojaka or Gramini</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Toll-tax collector known as?</div><div class="a">Shaulkika / Shulka-Adhyaksha</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Battle fought on banks of Ravi River?</div><div class="a">Battle of Ten Kings (ancient name of Ravi: Purushni)</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Who won the Battle of Ten Kings?</div><div class="a">King Sudas of the Bharata tribe</div></div>
+    <div class="flip-card" onclick="this.classList.toggle('open')"><span class="hint">tap</span><div class="q">Author of Ashtadhyayi, and what it covers?</div><div class="a">Panini; oldest Sanskrit grammar text, mentions ~40 Janapadas</div></div>
+  </div>
+
+  <div class="ornament" style="margin:30px 0;">✦</div>
+
+  <h3 style="color:var(--gold);font-family:'Trebuchet MS',sans-serif;margin-bottom:14px;">Fill in the Blanks</h3>
+  <div class="fib">
+    1. The first ruler of Magadha was <input class="blank" type="text" id="b1"> who took the title of <input class="blank" type="text" id="b2">.<br>
+    2. <input class="blank" type="text" id="b3"> shifted the capital from Rajgriha to Pataliputra.<br>
+    3. The Battle of Hydaspes was fought on the banks of the <input class="blank" type="text" id="b4"> river.<br>
+    4. Mahapadma Nanda took the title of <input class="blank" type="text" id="b5">.<br>
+    5. Punch-marked silver coins were also called <input class="blank" type="text" id="b6"> or <input class="blank" type="text" id="b7">.<br>
+    6. The pottery type of this era is called <input class="blank" type="text" id="b8">.<br>
+    7. Rajgir was surrounded by <input class="blank" type="text" id="b9"> hills.
+  </div>
+  <button class="reveal-btn" onclick="document.getElementById('fibans').classList.toggle('show')">Reveal Answers</button>
+  <div class="fib-answers" id="fibans">
+    1. Bimbisara, Seniya &nbsp;|&nbsp; 2. Udayin (Udain) &nbsp;|&nbsp; 3. Jhelum &nbsp;|&nbsp; 4. Ekrat &nbsp;|&nbsp; 5. Nishka, Karshapana &nbsp;|&nbsp; 6. NBPW (Northern Black Polished Ware) &nbsp;|&nbsp; 7. Five (5)
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ HIGH YIELD ============ -->
+<section id="highyield">
+  <div class="section-head"><span class="icon">⭐</span><h2>High-Yield Revision Notes</h2><span class="tag">Layer 2 — condensed</span></div>
+  <div class="speed-sheet">
+    <h3>The Skeleton — everything else hangs off this</h3>
+    <div class="speed-grid">
+      <div class="speed-row"><span class="k">16 Mahajanapadas</span><span class="v">Anguttar Nikaya (Buddhist)</span></div>
+      <div class="speed-row"><span class="k">12 count</span><span class="v">Digha Nikaya</span></div>
+      <div class="speed-row"><span class="k">Republics (5)</span><span class="v">Kuru, Kamboj, Vajji, Malla, Assaka</span></div>
+      <div class="speed-row"><span class="k">Magadha capitals</span><span class="v">Rajgir → Pataliputra</span></div>
+      <div class="speed-row"><span class="k">Rajgir's edge</span><span class="v">Ringed by 5 hills</span></div>
+      <div class="speed-row"><span class="k">Pataliputra's edge</span><span class="v">Ganga–Son confluence</span></div>
+      <div class="speed-row"><span class="k">Dynasty order</span><span class="v">Haryanka → Shishunaga → Nanda → Maurya</span></div>
+      <div class="speed-row"><span class="k">Bimbisara</span><span class="v">Founder, title "Seniya," defeated Anga</span></div>
+      <div class="speed-row"><span class="k">Ajatashatru</span><span class="v">Killed father; defeated Vaishali & Kaushal</span></div>
+      <div class="speed-row"><span class="k">Udayin</span><span class="v">Moved capital to Pataliputra</span></div>
+      <div class="speed-row"><span class="k">Shishunaga's win</span><span class="v">Defeated Avanti (Ujjaini)</span></div>
+      <div class="speed-row"><span class="k">Mahapadma Nanda</span><span class="v">Founder, title "Ekrat"</span></div>
+      <div class="speed-row"><span class="k">Dhanananda</span><span class="v">Last Nanda, killed by Chandragupta+Chanakya</span></div>
+      <div class="speed-row"><span class="k">Hydaspes Battle</span><span class="v">Alexander vs Porus, on Jhelum</span></div>
+      <div class="speed-row"><span class="k">Pottery</span><span class="v">OCP → PGW → NBPW</span></div>
+      <div class="speed-row"><span class="k">Coins</span><span class="v">Punch-marked = Nishka/Karshapana</span></div>
+      <div class="speed-row"><span class="k">Tax</span><span class="v">1/6th of produce; Bali was voluntary first</span></div>
+      <div class="speed-row"><span class="k">Headman</span><span class="v">Bhojaka/Gramini</span></div>
+      <div class="speed-row"><span class="k">Toll collector</span><span class="v">Shaulkika</span></div>
+      <div class="speed-row"><span class="k">Era tag</span><span class="v">"Second Urbanization" after Harappa</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ ULTRA-FAST ============ -->
+<section id="ultrafast">
+  <div class="section-head"><span class="icon">⚡</span><h2>Ultra-Fast Revision Sheet</h2><span class="tag">Layer 3 — 90 seconds</span></div>
+  <div class="speed-sheet">
+    <div class="final-line">16 Mahajanapadas → <b>Anguttar Nikaya</b>; 12 → <b>Digha Nikaya</b></div>
+    <div class="final-line">5 Republics → <b>Kuru, Kamboj, Vajji, Malla, Assaka</b></div>
+    <div class="final-line">Magadha capitals → <b>Rajgir (5 hills)</b> → <b>Pataliputra (Ganga-Son)</b></div>
+    <div class="final-line">Dynasties → <b>Haryanka → Shishunaga → Nanda → Maurya</b></div>
+    <div class="final-line">Bimbisara (Seniya) → defeated <b>Anga</b>; 3 wives: Kaushal princess, <b>Chellana</b>, Khema</div>
+    <div class="final-line">Ajatashatru → killed father; beat <b>Vaishali</b> & <b>Kaushal</b>; 1st Buddhist Council</div>
+    <div class="final-line"><b>Udayin</b> → moved capital to Pataliputra</div>
+    <div class="final-line">Shishunaga → beat <b>Avanti</b>; son Kalashoka → 2nd Buddhist Council</div>
+    <div class="final-line">Mahapadma Nanda (Ekrat) → <b>Dhanananda</b> (last) killed by Chandragupta + Chanakya</div>
+    <div class="final-line">Hydaspes Battle → Alexander vs <b>Porus</b>, on river <b>Jhelum (Vitasta)</b></div>
+    <div class="final-line">Pottery: OCP → PGW → <b>NBPW</b> | Coins: <b>Nishka/Karshapana</b></div>
+    <div class="final-line">Tax: <b>1/6th</b> produce | Bali: voluntary first | "<b>2nd Urbanization</b>"</div>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ 30 SECOND ============ -->
+<section id="thirtysec">
+  <div class="section-head"><span class="icon">⏱️</span><h2>30-Second Revision Sheet</h2><span class="tag">Layer 4 — glance and go</span></div>
+  <div class="final-sheet">
+    <div class="ftitle">The Bare Minimum</div>
+    <div class="final-line">16 MJP → <b>Anguttar Nikaya</b> | Republics → <b>Kuru-Kamboj-Vajji-Malla-Assaka</b></div>
+    <div class="final-line">Magadha: <b>Rajgir → Pataliputra</b> | Dynasties: <b>Haryanka→Shishunaga→Nanda→Maurya</b></div>
+    <div class="final-line"><b>Bimbisara</b> (Seniya, beats Anga) → <b>Ajatashatru</b> (kills father, beats Vaishali+Kaushal) → <b>Udayin</b> (shifts capital)</div>
+    <div class="final-line"><b>Shishunaga</b> beats Avanti | <b>Mahapadma Nanda</b> (Ekrat) → <b>Dhanananda</b> (killed by Chandragupta+Chanakya)</div>
+    <div class="final-line">Hydaspes = Alexander vs <b>Porus</b> on <b>Jhelum</b> (NOT Dhanananda)</div>
+    <div class="final-line">Pottery → <b>NBPW</b> | Coins → <b>Karshapana</b> | Tax → <b>1/6th</b></div>
+  </div>
+</section>
+
+<div class="ornament">⚜ ⚜ ⚜</div>
+
+<!-- ============ LAST NIGHT ============ -->
+<section id="lastnight">
+  <div class="section-head"><span class="icon">🌙</span><h2>Last-Night-Before-Exam Sheet</h2><span class="tag">Layer 5 — five lines, no more</span></div>
+  <div class="final-sheet" style="border-color:var(--ember);">
+    <div class="ftitle" style="color:var(--ember-soft);">If you remember NOTHING else</div>
+    <div class="final-line"><b>16</b> → Anguttar Nikaya | <b>12</b> → Digha Nikaya</div>
+    <div class="final-line">Magadha wins because: <b>5 hills (Rajgir)</b> + <b>river confluence (Pataliputra)</b> + <b>iron & elephants</b></div>
+    <div class="final-line">Dynasty order: <b>Haryanka → Shishunaga → Nanda → Maurya</b></div>
+    <div class="final-line">Bimbisara → Ajatashatru (kills dad) → Udayin (moves capital) | Shishunaga beats Avanti | Nanda ends with Dhanananda</div>
+    <div class="final-line">Hydaspes = Alexander vs <b>Porus</b> (not Dhanananda!), river = <b>Jhelum</b></div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  Crafted as a Revision Vault · Mahajanapadas · SSC CGL Ancient History &nbsp;·&nbsp; Walk the Royal Road before you sleep tonight.
+</footer>
+
+<script>
+function toggleAllFlip(){
+  const cards = document.querySelectorAll('.flip-card');
+  const anyClosed = Array.from(cards).some(c => !c.classList.contains('open'));
+  cards.forEach(c => anyClosed ? c.classList.add('open') : c.classList.remove('open'));
+}
+</script>
+
+</body>
+</html>

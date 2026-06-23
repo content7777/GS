@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern History 1924–1930 | Elite Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0d14;
+    --bg-card: #111622;
+    --bg-card2: #161c2d;
+    --bg-surface: #1a2235;
+    --border: #1f2d4a;
+    --accent-gold: #f5c842;
+    --accent-orange: #ff7c3a;
+    --accent-red: #ff4444;
+    --accent-green: #3dffa0;
+    --accent-blue: #5b9aff;
+    --accent-purple: #a374ff;
+    --accent-cyan: #38d9f5;
+    --text-primary: #e8edf8;
+    --text-secondary: #8a9bc0;
+    --text-muted: #4a5978;
+    --fire: #ff6b2b;
+    --star: #f5c842;
+    --plus: #3dffa0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: linear-gradient(135deg, #0d1220 0%, #111a2e 50%, #0d1220 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 500px; height: 200px;
+    background: radial-gradient(ellipse, rgba(91,154,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .chapter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+  .chapter-title {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, #e8edf8, #5b9aff, #f5c842);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .chapter-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 1rem 1.5rem;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-tab {
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-tab:hover, .nav-tab.active {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: #fff;
+  }
+
+  /* MAIN LAYOUT */
+  .main-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .section {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .section.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTION HEADINGS */
+  .sec-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    border-left: 3px solid var(--accent-gold);
+    padding-left: 0.8rem;
+    margin: 2rem 0 1rem;
+  }
+  .sec-title:first-child { margin-top: 0; }
+
+  .sub-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+    margin: 1.5rem 0 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .sub-title::before {
+    content: '';
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    flex-shrink: 0;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .card-gold { border-left: 3px solid var(--accent-gold); }
+  .card-blue { border-left: 3px solid var(--accent-blue); }
+  .card-green { border-left: 3px solid var(--accent-green); }
+  .card-red { border-left: 3px solid var(--accent-red); }
+  .card-purple { border-left: 3px solid var(--accent-purple); }
+  .card-orange { border-left: 3px solid var(--accent-orange); }
+
+  /* FACT ROWS */
+  .fact-row {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .fact-row:last-child { border-bottom: none; }
+  .fact-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .tag-fire { background: rgba(255,107,43,0.2); color: var(--fire); border: 1px solid rgba(255,107,43,0.3); }
+  .tag-star { background: rgba(245,200,66,0.15); color: var(--star); border: 1px solid rgba(245,200,66,0.25); }
+  .tag-plus { background: rgba(61,255,160,0.12); color: var(--plus); border: 1px solid rgba(61,255,160,0.2); }
+
+  .fact-text { color: var(--text-primary); font-size: 14px; line-height: 1.6; }
+  .fact-text b { color: var(--accent-gold); }
+  .fact-text em { color: var(--accent-cyan); font-style: normal; font-weight: 500; }
+
+  /* MEMORY HOOK */
+  .memory-hook {
+    background: linear-gradient(135deg, rgba(163,116,255,0.1), rgba(91,154,255,0.08));
+    border: 1px solid rgba(163,116,255,0.25);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    margin: 1rem 0;
+  }
+  .memory-hook-label {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-purple);
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+  .memory-hook p {
+    color: var(--text-primary);
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+  .memory-hook p b { color: var(--accent-purple); font-family: 'Space Grotesk', sans-serif; }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border);
+    margin: 1rem 0;
+  }
+  .timeline-item {
+    position: relative;
+    padding: 0.6rem 0 0.6rem 1.2rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.65rem;
+    top: 1rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+    border: 2px solid var(--bg-base);
+  }
+  .timeline-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-gold);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  .timeline-event { color: var(--text-primary); font-size: 14px; }
+  .timeline-event b { color: var(--accent-cyan); }
+
+  /* TRAP BOX */
+  .trap-box {
+    background: rgba(255,68,68,0.07);
+    border: 1px solid rgba(255,68,68,0.25);
+    border-radius: 12px;
+    padding: 1.1rem 1.4rem;
+    margin: 0.8rem 0;
+  }
+  .trap-label {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-red);
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+  }
+  .trap-box p, .trap-box li {
+    font-size: 13.5px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .trap-box b { color: var(--accent-red); }
+  .trap-box ul { padding-left: 1.2rem; }
+  .trap-box ul li { margin-bottom: 0.3rem; }
+
+  /* QUESTION BOX */
+  .q-box {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    margin: 0.7rem 0;
+  }
+  .q-box .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent-green);
+    margin-bottom: 0.3rem;
+  }
+  .q-box .q-text { font-size: 14px; color: var(--text-primary); }
+  .q-box .q-ans {
+    margin-top: 0.5rem;
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .q-box .q-ans b { color: var(--accent-green); }
+  .reveal-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    margin-top: 0.4rem;
+    transition: all 0.2s;
+  }
+  .reveal-btn:hover { border-color: var(--accent-green); color: var(--accent-green); }
+  .hidden { display: none; }
+
+  /* QUICK TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.8rem 0;
+    font-size: 13.5px;
+  }
+  th {
+    background: var(--bg-surface);
+    color: var(--accent-gold);
+    padding: 0.6rem 0.9rem;
+    text-align: left;
+    border: 1px solid var(--border);
+    font-weight: 600;
+  }
+  td {
+    padding: 0.55rem 0.9rem;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  td b { color: var(--accent-cyan); }
+
+  /* PALACE */
+  .palace-room {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem 1.4rem;
+    margin: 0.7rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .palace-room::before {
+    content: attr(data-room);
+    position: absolute;
+    right: 1rem; top: 0.8rem;
+    font-size: 28px;
+    opacity: 0.15;
+  }
+  .palace-room-title {
+    font-size: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-orange);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+  .palace-room p { font-size: 14px; color: var(--text-primary); line-height: 1.65; }
+  .palace-room p b { color: var(--accent-orange); }
+
+  /* CONNECTION */
+  .conn-chain {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.8rem;
+    background: var(--bg-card2);
+    border-radius: 10px;
+    margin: 0.6rem 0;
+    font-size: 13px;
+  }
+  .conn-node {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 13px;
+  }
+  .conn-arrow { color: var(--accent-gold); font-size: 16px; font-weight: bold; }
+
+  /* ULTRA FAST SHEET */
+  .ultra-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0.8rem;
+  }
+  .ultra-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem;
+  }
+  .ultra-card .uc-title {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-cyan);
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+  }
+  .ultra-card ul {
+    list-style: none;
+    padding: 0;
+  }
+  .ultra-card ul li {
+    font-size: 13px;
+    color: var(--text-primary);
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.5;
+  }
+  .ultra-card ul li b { color: var(--accent-gold); }
+  .ultra-card ul li:last-child { border-bottom: none; }
+
+  /* LAST NIGHT */
+  .ln-box {
+    background: linear-gradient(135deg, rgba(245,200,66,0.06), rgba(255,107,43,0.06));
+    border: 1px solid rgba(245,200,66,0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+  .ln-row {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 14px;
+    align-items: flex-start;
+  }
+  .ln-row:last-child { border-bottom: none; }
+  .ln-key {
+    min-width: 80px;
+    color: var(--accent-gold);
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding-top: 2px;
+  }
+  .ln-val { color: var(--text-primary); }
+  .ln-val b { color: var(--accent-orange); }
+
+  /* BIG PICTURE */
+  .big-picture {
+    background: linear-gradient(135deg, rgba(91,154,255,0.08), rgba(163,116,255,0.05));
+    border: 1px solid rgba(91,154,255,0.2);
+    border-radius: 14px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .big-picture p {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+  }
+  .big-picture p b { color: var(--accent-blue); font-family: 'Space Grotesk', sans-serif; }
+
+  /* PRIORITY LEGEND */
+  .priority-legend {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-size: 12px;
+  }
+  .pl-item { display: flex; align-items: center; gap: 0.4rem; color: var(--text-secondary); }
+
+  /* EXAM Q BADGE */
+  .exam-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge-cgl { background: rgba(245,200,66,0.15); color: var(--star); border: 1px solid rgba(245,200,66,0.3); }
+  .badge-trap { background: rgba(255,68,68,0.15); color: var(--accent-red); border: 1px solid rgba(255,68,68,0.3); }
+
+  /* FILL BLANK */
+  .fill-blank {
+    display: inline-block;
+    border-bottom: 2px solid var(--accent-blue);
+    min-width: 80px;
+    color: transparent;
+    background: rgba(91,154,255,0.1);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    padding: 0 4px;
+    font-size: 13px;
+  }
+  .fill-blank.revealed { color: var(--accent-green); background: rgba(61,255,160,0.1); border-color: var(--accent-green); }
+
+  @media (max-width: 640px) {
+    .nav-tabs { padding: 0.8rem 1rem; }
+    .main-content { padding: 1.5rem 1rem; }
+    table { font-size: 12px; }
+    .ultra-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div class="chapter-label">Modern History · FRB 2.0 · Elite Revision System</div>
+  <div class="chapter-title">India 1924–1930<br>Rise, Revolt & Civil Disobedience</div>
+  <div class="chapter-subtitle">Socialism · HRA · Simon Commission · Dandi March · Round Table Conferences</div>
+</div>
+
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="showSection('bigpicture')">🌍 Big Picture</button>
+  <button class="nav-tab" onclick="showSection('palace')">🧠 Memory Palace</button>
+  <button class="nav-tab" onclick="showSection('notes')">📖 Full Notes</button>
+  <button class="nav-tab" onclick="showSection('hooks')">🎯 Memory Hooks</button>
+  <button class="nav-tab" onclick="showSection('connections')">🔗 Connections</button>
+  <button class="nav-tab" onclick="showSection('traps')">⚠️ Exam Traps</button>
+  <button class="nav-tab" onclick="showSection('examq')">🎓 Examiner's Qs</button>
+  <button class="nav-tab" onclick="showSection('recall')">❓ Active Recall</button>
+  <button class="nav-tab" onclick="showSection('highyield')">⚡ High-Yield</button>
+  <button class="nav-tab" onclick="showSection('ultrafast')">🚀 Ultra-Fast</button>
+  <button class="nav-tab" onclick="showSection('lastnight')">🌙 Last Night</button>
+</nav>
+
+<div class="main-content">
+
+<!-- ===== BIG PICTURE ===== -->
+<div id="bigpicture" class="section active">
+  <div class="big-picture">
+    <p>
+      This chapter covers the <b>most turbulent decade</b> before Gandhi's great Salt revolt. It's the era when <b>Indian nationalism split into two streams</b>: the <em>constitutional path</em> (Nehru Report, Round Tables) and the <em>revolutionary path</em> (HRA, bomb attacks, Chittagong raid). Socialism arrived from Russia, caste movements challenged social order, and the British fumbled with the Simon Commission — an all-white committee that accidentally ignited the very freedom they hoped to manage. The chapter ends with <b>Dandi March 1930</b> — Gandhi's master stroke that made salt a symbol of sovereignty.
+    </p>
+  </div>
+
+  <div class="priority-legend">
+    <div class="pl-item"><span class="fact-tag tag-fire">🔥 MUST KNOW</span> Exam-critical facts</div>
+    <div class="pl-item"><span class="fact-tag tag-star">⭐ IMPORTANT</span> High-probability</div>
+    <div class="pl-item"><span class="fact-tag tag-plus">➕ GOOD TO KNOW</span> Bonus marks</div>
+  </div>
+
+  <div class="sec-title">Chapter at a Glance — Timeline</div>
+  <div class="card card-gold">
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-year">1920</div><div class="timeline-event"><b>CPI founded</b> by MN Roy (Tashkent) · <b>AITUC</b> formed (NM Joshi, LLR, Joseph Baptista)</div></div>
+      <div class="timeline-item"><div class="timeline-year">1924</div><div class="timeline-event"><b>Kanpur Bolshevik Conspiracy Case</b> · <b>HRA</b> formed (Bismil, Sachin Sanyal, Jogesh Chatterjee) · <b>Self Respect Movement</b> (Periyar)</div></div>
+      <div class="timeline-item"><div class="timeline-year">1925</div><div class="timeline-event"><b>CPI formalised in Kanpur</b></div></div>
+      <div class="timeline-item"><div class="timeline-year">1926</div><div class="timeline-event"><b>Kakori Train Robbery</b> (Bismil, Ashfaqullah, Roshan Singh, Rajendra Lahiri)</div></div>
+      <div class="timeline-item"><div class="timeline-year">1927</div><div class="timeline-event"><b>Simon Commission formed</b> · <b>Mahad Satyagraha</b> by Ambedkar · <b>HSRA formed</b> at Feroz Shah Kotla (Azad, Bhagat Singh, Sukhdev)</div></div>
+      <div class="timeline-item"><div class="timeline-year">1928</div><div class="timeline-event"><b>Saunders killed</b> by Bhagat Singh, Sukhdev, Rajguru · <b>Nehru Report</b> · <b>Madras Congress Session</b> boycotts Simon</div></div>
+      <div class="timeline-item"><div class="timeline-year">1929</div><div class="timeline-event"><b>Bomb thrown in Central Legislature</b> (Bhagat Singh & BK Dutt) · <b>Lahore Session</b> — Poorna Swaraj declared · Nehru presides</div></div>
+      <div class="timeline-item"><div class="timeline-year">1930</div><div class="timeline-event"><b>1st Independence Day</b> (26 Jan) · <b>Dandi March</b> (12 Mar → 6 Apr) · <b>1st RTC London</b> · <b>Chittagong Armoury Raid</b> (Surya Sen)</div></div>
+      <div class="timeline-item"><div class="timeline-year">1931</div><div class="timeline-event"><b>Gandhi-Irwin Pact</b> · <b>Karachi Session</b> · 23 March — <b>Bhagat Singh, Sukhdev, Rajguru hanged</b> · <b>2nd RTC London</b></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MEMORY PALACE ===== -->
+<div id="palace" class="section">
+  <div class="sec-title">🧠 Chapter Memory Palace — "The Revolutionary Hotel"</div>
+  <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:14px;">Imagine a grand old hotel called <em>"India 1924"</em> with different rooms, each holding major events. Walk through it before every exam.</p>
+
+  <div class="palace-room" data-room="🏨">
+    <div class="palace-room-title">HOTEL LOBBY — Socialism Arrives</div>
+    <p>As you enter, a Russian soldier stands at the door — he represents the <b>Russian Revolution bringing Socialism</b>. He hands you a card: <em>"MN Roy, Tashkent, 1920"</em> — <b>CPI founded</b>. A board inside reads: <em>Kanpur 1925 — CPI formalised</em>. Near the reception is a big union sign: <b>AITUC 1920</b> — three men run it: <b>NM Joshi (the Joshi from Junction)</b>, <b>Lala Lajpat Rai (Lion of Punjab)</b>, and <b>Joseph Baptista (the Baptism priest)</b>. The Father of Unions poster shows <b>NM Lokhande</b>.</p>
+  </div>
+
+  <div class="palace-room" data-room="⚖️">
+    <div class="palace-room-title">ROOM 1 — Caste Movements</div>
+    <p>Inside Room 1, a giant poster of Periyar in Tamil Nadu: <b>Self Respect Movement 1924</b> — led by <b>EV Ramaswamy Nayakar (Periyar)</b>, started by the <em>Ezhava community in Kerala</em>. On the wall: Ambedkar breaking a pot of water at <b>Mahad (1927) — Mahad Satyagraha</b>. And a temple gate: <b>Kalaram Temple 1930 — Temple Entry Movement by Ambedkar</b>.</p>
+  </div>
+
+  <div class="palace-room" data-room="💣">
+    <div class="palace-room-title">ROOM 2 — The Revolutionaries' Den</div>
+    <p>Three beds: Bismil, Sachin Sanyal, Jogesh Chatterjee — they formed <b>HRA in 1924</b>. On the table: a train model labelled <b>Kakori 1926</b> — <em>Ashfaqullah Khan, Roshan Singh, Ram Prasad Bismil, Rajendra Lahiri</em> raided it. After the British crackdown, they rebranded — a new flag on the wall reads <b>HSRA</b>, formed at <em>Feroz Shah Kotla, Delhi</em> with <b>Chandrashekhar Azad, Bhagat Singh, Sukhdev</b>.</p>
+  </div>
+
+  <div class="palace-room" data-room="👮">
+    <div class="palace-room-title">ROOM 3 — The Simon Fiasco & Saunders</div>
+    <p>A British officer sits alone at a round table — 7 white men, <b>zero Indians</b> — that's the <b>Simon Commission 1927</b>. Banners: <em>"Simon Go Back"</em> — coined by <b>Yusuf Meher Ali</b>. Lala Lajpat Rai is hit by James Scott with a baton — <em>he dies of injuries</em>. Bhagat Singh, Sukhdev, and Rajguru rush in and shoot — but they get the wrong man: <b>Saunders instead of Scott</b>. Hanging date: <b>23 March 1931</b>.</p>
+  </div>
+
+  <div class="palace-room" data-room="📜">
+    <div class="palace-room-title">HOTEL CONFERENCE HALL — Reports & Sessions</div>
+    <p>A report on the table: <b>Nehru Report 1928</b> — chairman <em>Motilal Nehru</em> (NOT Jawaharlal). Muslim League counter: <b>Delhi Proposals</b>. Jinnah's page: <em>14 Points</em>. The hall hosts the <b>Lahore Session 1929</b> — <em>Jawaharlal Nehru presides</em>, <b>Poorna Swaraj declared</b>, 26 Jan 1930 set as First Independence Day. <em>That's why Constitution was enforced on 26 Jan 1950</em>.</p>
+  </div>
+
+  <div class="palace-room" data-room="🧂">
+    <div class="palace-room-title">ROOFTOP — Dandi March</div>
+    <p>Gandhi stands at the top with salt in hand. He left <b>Sabarmati on 12 March 1930</b> with <em>78 followers</em>, walked <em>240 miles</em>, reached <b>Dandi on 6 April 1930</b>, made salt — breaking the Salt Law. He's arrested on 4 May. Sarojini Naidu and Manilal carry on. Around the rooftop: Rajagopalachari (Trichinopoly → Vedraniyam), Khan Abdul Ghaffar Khan (Frontier Gandhi), Surya Sen (Chittagong), Rani Gaidinliu (Manipur).</p>
+  </div>
+
+  <div class="palace-room" data-room="🤝">
+    <div class="palace-room-title">HOTEL EXIT — Pacts & Conferences</div>
+    <p>At the exit: Gandhi and Irwin shake hands — <b>Gandhi-Irwin Pact 1931</b>. Gandhi gets: release of non-violent prisoners, return of unsold property, right to make salt. Gandhi gives: suspend CDM, attend <b>2nd Round Table Conference</b>. Three RTC signs on the door: <em>1930 London (Congress absent)</em>, <em>1931 London (Gandhi attends)</em>, <em>1932 London (Congress absent again)</em>. Ambedkar attends all three.</p>
+  </div>
+</div>
+
+<!-- ===== COMPLETE NOTES ===== -->
+<div id="notes" class="section">
+
+  <!-- SOCIALISM -->
+  <div class="sec-title">1. Socialism & Its Spread in India</div>
+  <div class="card card-blue">
+    <div class="sub-title">What is Socialism?</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Philosophy: abolish the ruling class; power to the people. Opposite of <b>capitalism</b> (few own everything). Sibling of <b>communism</b>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Socialism in India arrived via the <b>Russian Revolution</b>.</div></div>
+
+    <div class="sub-title">Communist Party of India (CPI)</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Founded <b>1920</b> by <b>Manindra Nath Roy (MN Roy)</b> in <em>Tashkent, Uzbekistan</em>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Formalised in <b>Kanpur in 1925</b>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text"><b>Kanpur Bolshevik Conspiracy Case 1924</b> — involved Muzaffar Ahmed, Shaukat Usmani (same person).</div></div>
+
+    <div class="sub-title">All India Trade Union Congress (AITUC)</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Founded <b>1920</b> by <b>Narayan Malhar Joshi</b>, <b>Lala Lajpat Rai</b>, <b>Joseph Baptista</b>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>Father of Trade Unions in India</b> = <em>NM Lokhande</em> (not the founders of AITUC!).</div></div>
+  </div>
+
+  <!-- CASTE MOVEMENTS -->
+  <div class="sec-title">2. Caste Movements</div>
+  <div class="card card-purple">
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>Self Respect Movement 1924</b> — started by <b>EV Ramaswamy Nayakar (Periyar)</b>. Ezhava community in Kerala region.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>Mahad Satyagraha 1927</b> — led by <b>Dr. BR Ambedkar</b>. Right to drink water from public tank.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>Temple Entry Movement</b> — Ambedkar from <b>Kalaram Temple, 1930</b>.</div></div>
+  </div>
+
+  <!-- BOOKS -->
+  <div class="sec-title">3. Important Books of the Era</div>
+  <div class="card card-green">
+    <table>
+      <tr><th>Book</th><th>Author</th><th>Relevance</th></tr>
+      <tr><td><b>Bandi Jeevan</b></td><td>Sachin Sanyal</td><td><span class="exam-badge badge-cgl">CGL Mains</span></td></tr>
+      <tr><td><b>Patha Dabhi</b></td><td>Sharat Chandra Chatterjee</td><td><span class="exam-badge badge-cgl">CGL Mains</span></td></tr>
+      <tr><td><b>Philosophy of Bomb</b></td><td>Bipin Chandra Borah</td><td><span class="exam-badge badge-cgl">CGL Mains</span></td></tr>
+    </table>
+  </div>
+
+  <!-- HRA & HSRA -->
+  <div class="sec-title">4. HRA → HSRA: The Revolutionary Arc</div>
+  <div class="card card-orange">
+    <div class="sub-title">Hindustan Republican Association (HRA) — 1924</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Founded by <b>Ram Prasad Bismil</b>, <b>Jogesh Chandra Chatterjee</b>, <b>Sachin Sanyal</b>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">Sachin Sanyal also connected to Anushilan Samiti (Patna).</div></div>
+
+    <div class="sub-title">Kakori Train Robbery / Incident — 1926</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Stopped a train carrying arms near <b>Lucknow</b>. Participants: <b>Ashfaqullah Khan, Roshan Singh, Ram Prasad Bismil, Rajendra Lahiri</b>. Many were <em>hanged</em> by the British.</div></div>
+
+    <div class="sub-title">Hindustan Socialist Republican Association (HSRA) — 1928</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Formed at <b>Feroz Shah Kotla, Delhi</b>. Founded mainly by <b>Chandrashekhar Azad</b>. Also: <b>Bhagat Singh, Sukhdev</b>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>Saunders killed 1928</b> by Bhagat Singh, Sukhdev, Rajguru — to avenge <b>Lala Lajpat Rai's death</b> (beaten by James Scott during Simon protest).</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>Bomb in Central Legislative Assembly 1929</b> — Bhagat Singh + Batukeshwar Dutt. Purpose: NOT to kill, but to protest <em>Trade Disputes Bill</em>. "Make the deaf hear."</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Bhagat Singh, Sukhdev, Rajguru hanged <b>23 March 1931</b> = Martyrs' Day.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-plus">➕</span><div class="fact-text">Gandhiji's assassination 30 Jan = also Martyrs' Day.</div></div>
+  </div>
+
+  <!-- CHITTAGONG -->
+  <div class="sec-title">5. Chittagong Armoury Raid</div>
+  <div class="card card-blue">
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Raid on army armoury in <b>Chittagong</b> (now Bangladesh). Led by <b>Surya Sen</b> (also known as <em>Master Da</em>).</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">Notable for <b>high women participation</b> — Bina Dutt, Suniti Chanderi, Preeti, Lata Waddedar (Surya Sen's students).</div></div>
+  </div>
+
+  <!-- SIMON COMMISSION -->
+  <div class="sec-title">6. Simon Commission</div>
+  <div class="card card-red">
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Background: GOI Act 1919 (Montagu-Chelmsford Reforms) had provision for review after <em>10 years</em>. But commission came in <b>1927 — 8 years later</b> (not 10!).</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Chairman: <b>John Simon</b>. <b>7 members — ALL British, 0 Indians</b>. Called <em>"White Commission."</em></div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Report published in <b>1928</b> as a <em>White Paper</em>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Slogan <b>"Simon Go Back"</b> coined by <b>Yusuf Meher Ali</b>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">Almost all parties boycotted it. <b>Hindu Mahasabha did NOT oppose it</b> — exam trap!</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text"><b>Madras Session 1928</b> — Congress gave official approval to boycott Simon Commission (special session, not a regular annual session).</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Lala Lajpat Rai beaten by <b>James Scott</b> during protest. Died of injuries → avenged by killing of Saunders.</div></div>
+  </div>
+
+  <!-- RESPONSES -->
+  <div class="sec-title">7. Responses to Simon Commission</div>
+  <div class="card card-gold">
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>Nehru Report 1928</b> — Chairman: <em>Motilal Nehru</em> (NOT Jawaharlal!). Formed by Congress.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text"><b>Delhi Proposals</b> — by <em>Muslim League</em>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text"><b>Jinnah's 14 Points</b> — Jinnah's counter to Nehru Report.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-plus">➕</span><div class="fact-text"><b>Delhi Manifesto</b> — by Congress (separately).</div></div>
+  </div>
+
+  <!-- LAHORE SESSION -->
+  <div class="sec-title">8. Lahore Session 1929 — Poorna Swaraj</div>
+  <div class="card card-green">
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Presided by <b>Jawaharlal Nehru</b> (the younger leaders demanded complete independence).</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Goal: <b>Poorna Swaraj (Complete Independence)</b> — upgraded from earlier demand of Dominion Status.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>26 January 1930</b> declared as First Independence Day. Constitution enforced 26 Jan 1950 for this reason.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">Tricolour hoisted on banks of <b>Ravi River</b> on 31 December 1930.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">Resolution to boycott <b>1st Round Table Conference</b>. CDM approved.</div></div>
+  </div>
+
+  <!-- DANDI MARCH -->
+  <div class="sec-title">9. Civil Disobedience Movement & Dandi March</div>
+  <div class="card card-gold">
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Started: <b>12 March 1930</b> from <em>Sabarmati Ashram</em>. Ended: <b>6 April 1930</b> at <em>Dandi</em>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Distance: <b>240 miles</b>. Followers: <b>78 delegates</b>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Gandhi arrested: <b>4 May 1930</b>. He violated the Salt Law (you couldn't make your own salt).</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">After Gandhi's arrest: <b>Manilal (Gandhi's son)</b> and <b>Sarojini Naidu</b> continued the work.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">Sarojini Naidu + Kamala Devi Chattopadhyay pushed for <b>women's inclusion</b> in the movement.</div></div>
+
+    <div class="sub-title">CDM Leaders by Region</div>
+    <table>
+      <tr><th>Region</th><th>Leader</th><th>Place/Note</th></tr>
+      <tr><td>Tamil Nadu</td><td><b>Rajagopalachari (C. Rajaji)</b></td><td>Trichinopoly → Vedraniyam march</td></tr>
+      <tr><td>Malabar</td><td>Kappan</td><td></td></tr>
+      <tr><td>Orissa</td><td>Gopal Bandhu Chaudhary</td><td></td></tr>
+      <tr><td>Bihar</td><td>Ambikant Sinha</td><td>Nakhas Pond (site)</td></tr>
+      <tr><td>NWFP (Peshawar)</td><td><b>Khan Abdul Ghaffar Khan</b></td><td>Frontier Gandhi / Seemant Gandhi <span class="exam-badge badge-cgl">🔥</span></td></tr>
+      <tr><td>Darsana</td><td><b>Sarojini Naidu</b></td><td>After Gandhi arrested</td></tr>
+      <tr><td>Manipur & Nagaland</td><td><b>Rani Gaidinliu</b></td><td></td></tr>
+    </table>
+
+    <div class="fact-row" style="margin-top:0.6rem"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Khan Abdul Ghaffar Khan = <b>Frontier Gandhi / Seemant Gandhi</b>. Founded <b>Khudai Khidmatgar</b> (Servants of God) + <em>Red Shirt Movement (Lal Kurti Movement)</em>. One of only <em>two non-Indians to receive Bharat Ratna</em>.</div></div>
+  </div>
+
+  <!-- GANDHI IRWIN PACT -->
+  <div class="sec-title">10. Gandhi-Irwin Pact 1931</div>
+  <div class="card card-blue">
+    <div class="sub-title">Gandhi's Demands (Accepted by Irwin)</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Release prisoners NOT convicted of violence.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">Return property not sold to third parties.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Right to produce salt for personal consumption.</div></div>
+    <div class="sub-title">Gandhi's Concessions</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Suspend CDM temporarily. Attend <b>2nd Round Table Conference</b>.</div></div>
+
+    <div class="sub-title">Karachi Session 1931</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text">Regular Congress session. <b>Gandhi-Irwin Pact endorsed/adopted</b>. Led by <b>Sardar Patel</b>.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">First time meaning of <b>Poorna Swaraj explained</b>. Two resolutions: (1) Fundamental Rights, (2) National Economic Policy.</div></div>
+  </div>
+
+  <!-- RTC -->
+  <div class="sec-title">11. Round Table Conferences (RTCs)</div>
+  <div class="card card-purple">
+    <div class="fact-row"><span class="fact-tag tag-plus">➕</span><div class="fact-text">Held in <b>London</b> to discuss Simon Commission's White Paper. Kings, princes, party reps all invited.</div></div>
+    <table>
+      <tr><th>RTC</th><th>Year</th><th>Congress?</th><th>Ambedkar?</th></tr>
+      <tr><td>1st</td><td>1930</td><td><b>Boycotted</b></td><td>✅ Attended</td></tr>
+      <tr><td>2nd</td><td>1931</td><td>✅ Gandhi attended</td><td>✅ Attended</td></tr>
+      <tr><td>3rd</td><td>1932</td><td><b>Absent</b></td><td>✅ Attended</td></tr>
+    </table>
+    <div class="fact-row" style="margin-top:0.5rem"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>Ambedkar attended ALL 3</b>. Gandhi/Congress only the <em>2nd</em>.</div></div>
+  </div>
+</div>
+
+<!-- ===== MEMORY HOOKS ===== -->
+<div id="hooks" class="section">
+  <div class="sec-title">🎯 Smart Memory Hooks</div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 1 — CPI Founders</div>
+    <p>Imagine <b>MN Roy</b> as a Russian spy (<em>M</em>ister <em>N</em>ight Roy) whispering secrets in <b>Tashkent (a Uzbek tea shop)</b>. He's sipping chai and founding a party. Then in <b>1925</b>, he opens a proper office in <b>Kanpur</b> — "Kanpur ka daftar."</p>
+  </div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 2 — AITUC vs Father of Trade Unions</div>
+    <p>AITUC founded by <b>NM Joshi + Lala + Baptista</b> → think <em>"Three Men in a Union"</em>: a <em>Joshi (the organiser)</em>, a <em>Lion (Lala Lajpat Rai)</em>, and a <em>priest doing a Baptism (Baptista)</em>. But the <b>Father</b> is <b>NM Lokhande</b> — he came earlier, he's the <em>grandfather</em> of them all.</p>
+  </div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 3 — HRA Founders</div>
+    <p>Three names to remember: <b>Bismil + Sachin Sanyal + Jogesh Chatterjee</b>. Imagine them as <em>BSJ = Bharat Swatantra Jodis</em> — best freedom trio. Bismil writes poetry (<em>Sarfaroshi ki Tamanna</em>), Sachin runs a Samiti, Jogesh plays chess. Together they start HRA 1924 in Bihar/UP/Punjab.</p>
+  </div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 4 — Kakori 4 Names</div>
+    <p>The <b>Kakori 4</b>: <em>A-R-A-R</em> = <b>Ashfaq</b>ullah, <b>R</b>oshan Singh, <b>A</b>shfaqullah wait… → <b>A</b>shfaqullah Khan, <b>R</b>am Prasad Bismil, <b>R</b>oshan Singh, <b>R</b>ajendra Lahiri = <em>"AR3"</em>. Picture 4 rebels stopping a train near Lucknow and stealing British guns. The British hang them — which creates the martyr fuel for Bhagat Singh.</p>
+  </div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 5 — Simon Commission (White & Wrong)</div>
+    <p>7 white men → 0 Indians → <em>"All White, All Wrong."</em> Slogan: <b>"Simon Go Back"</b> = coined by <b>Yusuf Meher Ali</b> (remember: the Ali who sent Simon back). Came in 1927 — remember: <em>"8 not 10" — Simon came early to insult Indians early.</em></p>
+  </div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 6 — Nehru Report Confusion Buster</div>
+    <p>Students always confuse which Nehru. <em>"The REPORT was from the FATHER, not the SON."</em> <b>Motilal Nehru</b> = father = chairman of Nehru Committee 1928. Jawaharlal = son = presided Lahore Session 1929. <em>Father made the report, Son declared independence.</em></p>
+  </div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 7 — Dandi March Numbers</div>
+    <p><b>12-3-1930 to 6-4-1930</b> → March 12 to April 6. Distance: <b>240 miles</b>. Followers: <b>78</b>. Memory: <em>"2-4-0 and 7-8"</em> → "two for zero Indians had to walk 78 miles each... no wait, 240 miles with 78 people." Just lock: <em>240 miles, 78 followers.</em></p>
+  </div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 8 — Frontier Gandhi</div>
+    <p><b>Khan Abdul Ghaffar Khan</b> = red-shirted Pashtun warrior who was actually a Gandhian pacifist. Picture a fierce-looking Pashtun chieftain wearing a Gandhi cap and a red shirt — that's the Khudai Khidmatgar. His nickname "Frontier Gandhi" = he was the Gandhi of the frontier/border region. <b>One of 2 non-Indians with Bharat Ratna.</b> (Who is the other? Research it!)</p>
+  </div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 9 — Bomb in Assembly (Context)</div>
+    <p>Bhagat Singh didn't throw to kill. He threw to <em>make the deaf hear</em>. Target: <b>Trade Disputes Bill</b> which hurt workers. The bomb made noise, Bhagat Singh and BK Dutt waited to be arrested — they wanted a platform to speak. Remember: <em>"Deaf Parliament + Worker's Bill = Bomb for attention."</em></p>
+  </div>
+
+  <div class="memory-hook">
+    <div class="memory-hook-label">🧠 Hook 10 — RTC Attendance Formula</div>
+    <p>Ambedkar = <em>Perfect Attendance Award</em> (all 3 RTCs). Gandhi = <em>"Came once, left unsatisfied"</em> (only 2nd). Congress boycotted 1st and 3rd. <em>Think: Gandhi came to the middle conference — the 2nd one in 1931 — and left empty-handed. That's why CDM resumed.</em></p>
+  </div>
+</div>
+
+<!-- ===== CONNECTIONS ===== -->
+<div id="connections" class="section">
+  <div class="sec-title">🔗 Concept Connections</div>
+
+  <div class="sub-title">Chain 1: Russian Revolution → CDM</div>
+  <div class="conn-chain">
+    <span class="conn-node">Russian Revolution</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Socialism spreads</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">CPI formed 1920</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Trade Union movement</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Trade Disputes Bill opposed</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Bomb in Assembly 1929</span>
+  </div>
+
+  <div class="sub-title">Chain 2: GOI Act 1919 → CDM</div>
+  <div class="conn-chain">
+    <span class="conn-node">GOI Act 1919</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">10-yr review provision</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Simon Commission 1927 (8 yrs)</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">All Indian boycott</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">LLR death</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Saunders killed</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Nehru Report</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Lahore Session Poorna Swaraj</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">CDM + Dandi March 1930</span>
+  </div>
+
+  <div class="sub-title">Chain 3: Dandi March → Gandhi-Irwin Pact</div>
+  <div class="conn-chain">
+    <span class="conn-node">Lahore 1929 — CDM approved</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Dandi March Mar-Apr 1930</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Gandhi arrested 4 May</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">CDM spreads nationwide</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">British pressured</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Gandhi-Irwin Pact 1931</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Karachi Session endorses it</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Gandhi attends 2nd RTC</span>
+  </div>
+
+  <div class="sub-title">Chain 4: Saunders Killing — Who Targeted Whom</div>
+  <div class="conn-chain">
+    <span class="conn-node">Simon Commission protests</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">James Scott beats LLR</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">LLR dies of injuries</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Plan: Kill James Scott</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Mistake: killed Saunders instead</span>
+    <span class="conn-arrow">→</span>
+    <span class="conn-node">Bhagat Singh, Sukhdev, Rajguru hanged 1931</span>
+  </div>
+
+  <div class="card card-gold" style="margin-top:1.5rem">
+    <div class="sub-title">Key Parallels to Remember</div>
+    <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><div class="fact-text"><b>26 Jan 1930</b> = First Independence Day (Lahore Session declaration) → <b>26 Jan 1950</b> = Constitution enforcement date (same reason).</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text"><b>23 March 1931</b> = Hanging of Bhagat Singh trio = Martyrs' Day. <b>30 January</b> = Gandhi's assassination = also Martyrs' Day.</div></div>
+    <div class="fact-row"><span class="fact-tag tag-star">⭐</span><div class="fact-text">Session of 1906: demand = <em>Swaraj</em>. Session of 1929 (Lahore): demand = <em>Poorna Swaraj</em>. Upgrade from dominion status to complete independence.</div></div>
+  </div>
+</div>
+
+<!-- ===== EXAM TRAPS ===== -->
+<div id="traps" class="section">
+  <div class="sec-title">⚠️ EXAM TRAPS — Where Students Lose Marks</div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 1 — Which Nehru?</div>
+    <p><b>Nehru Report 1928</b> = Chairman was <b>MOTILAL Nehru</b> (father). NOT Jawaharlal. But <b>Lahore Session 1929</b> was presided by <b>JAWAHARLAL Nehru</b> (son). Confusing them is the #1 mistake.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 2 — James Scott vs Saunders</div>
+    <p>James Scott BEAT Lala Lajpat Rai (not killed directly). Bhagat Singh's group INTENDED to kill James Scott but ACCIDENTALLY killed <b>Saunders</b> instead. Examiners love asking "who was killed by Bhagat Singh?"</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 3 — Simon Commission: 8 years not 10</div>
+    <p>GOI Act 1919 said review after 10 years (= 1929). But Simon Commission was formed in <b>1927 — 8 years early</b>. Students write 1929. Answer: 1927 (formed), 1928 (report).</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 4 — Who boycotted Simon Commission?</div>
+    <p>Almost ALL parties boycotted, EXCEPT: <b>Hindu Mahasabha did NOT boycott / oppose it</b>. This is frequently asked in statement-based questions.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 5 — CPI Founded vs Formalised</div>
+    <p>CPI <b>founded 1920</b> by MN Roy in <b>Tashkent</b>. CPI <b>formalised 1925</b> in <b>Kanpur</b>. Don't mix up year+place.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 6 — Father of Trade Unions vs AITUC Founders</div>
+    <p>AITUC founders = NM Joshi, Lala Lajpat Rai, Joseph Baptista (1920). Father of Trade Unions = <b>NM Lokhande</b> (different person, earlier). Do NOT say NM Joshi = Father of Trade Unions.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 7 — Bomb in Assembly Purpose</div>
+    <p>Bhagat Singh and BK Dutt threw bomb in Central Legislative Assembly <b>NOT to kill</b> anyone but to protest the <b>Trade Disputes Bill</b>. Examiners ask: purpose = "to make the deaf hear" / protest against Trade Disputes Bill.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 8 — Round Table Conference Attendance</div>
+    <p>Ambedkar attended <b>ALL 3</b>. Gandhi/Congress attended only <b>2nd (1931)</b>. Students often mark Gandhi at 1st or 3rd.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 9 — Dandi March Dates</div>
+    <ul>
+      <li>Start: <b>12 March 1930</b></li>
+      <li>End/Salt making: <b>6 April 1930</b></li>
+      <li>Gandhi arrested: <b>4 May 1930</b></li>
+      <li>Distance: <b>240 miles</b> (not km, not 340, not 250)</li>
+      <li>Followers: <b>78</b></li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 10 — Martyrs' Day Dates</div>
+    <p>TWO Martyrs' Days: <b>23 March</b> (Bhagat Singh, Sukhdev, Rajguru, 1931) and <b>30 January</b> (Gandhi assassination, 1948). Both are official. Don't get confused which is which.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 11 — HSRA Formation Location</div>
+    <p>HSRA formed at <b>Feroz Shah Kotla, Delhi</b> (not Lahore, not Lucknow). Main founder = <b>Chandrashekhar Azad</b>.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ TRAP 12 — Self Respect Movement Geography</div>
+    <p>Movement was started by <b>Periyar (EV Ramaswamy Nayakar)</b>. Led by Ezhava community. Location is <b>Kerala/South India region</b>. Started in <b>1924</b>.</p>
+  </div>
+</div>
+
+<!-- ===== EXAMINER'S QUESTIONS ===== -->
+<div id="examq" class="section">
+  <div class="sec-title">🎓 Examiner's Favourite Questions</div>
+
+  <div class="card card-gold">
+    <div class="sub-title">🎯 High Probability Direct Questions</div>
+    <div class="q-box"><div class="q-num">Q1 — CGL/CHSL Level</div><div class="q-text">Who founded the Communist Party of India and where?</div><div class="q-ans"><b>MN Roy, Tashkent (1920)</b> — Formalised in Kanpur 1925</div></div>
+    <div class="q-box"><div class="q-num">Q2 — CGL Level</div><div class="q-text">Who coined the slogan "Simon Go Back"?</div><div class="q-ans"><b>Yusuf Meher Ali</b></div></div>
+    <div class="q-box"><div class="q-num">Q3 — CGL Mains</div><div class="q-text">Match the books: Bandi Jeevan / Patha Dabhi / Philosophy of Bomb</div><div class="q-ans"><b>Sachin Sanyal / Sharat Chandra Chatterjee / Bipin Chandra Borah</b></div></div>
+    <div class="q-box"><div class="q-num">Q4 — CGL Level</div><div class="q-text">The Nehru Report (1928) was chaired by whom?</div><div class="q-ans"><b>Motilal Nehru</b> (NOT Jawaharlal Nehru)</div></div>
+    <div class="q-box"><div class="q-num">Q5 — CGL Level</div><div class="q-text">What was the distance covered during Dandi March and how many followers?</div><div class="q-ans"><b>240 miles, 78 followers</b></div></div>
+    <div class="q-box"><div class="q-num">Q6 — CGL Level</div><div class="q-text">Khan Abdul Ghaffar Khan is associated with which movement and organisation?</div><div class="q-ans"><b>Red Shirt Movement / Lal Kurti Movement + Khudai Khidmatgar (Servants of God)</b>. Also known as Frontier Gandhi / Seemant Gandhi.</div></div>
+    <div class="q-box"><div class="q-num">Q7 — CGL Level</div><div class="q-text">Who presided over the Lahore Session of Congress 1929?</div><div class="q-ans"><b>Jawaharlal Nehru</b></div></div>
+    <div class="q-box"><div class="q-num">Q8 — CGL Level</div><div class="q-text">HSRA was formed at which place and by whom?</div><div class="q-ans"><b>Feroz Shah Kotla, Delhi</b>. Main founder: <b>Chandrashekhar Azad</b></div></div>
+  </div>
+
+  <div class="card card-blue">
+    <div class="sub-title">🎯 Statement-Based (True/False type)</div>
+    <div class="q-box"><div class="q-num">S1</div><div class="q-text">Statement: The Simon Commission had no Indian member. Reason: That's why it was called the "White Commission."</div><div class="q-ans">Both statement and reason are <b>correct</b>. Reason explains statement.</div></div>
+    <div class="q-box"><div class="q-num">S2</div><div class="q-text">Statement: All parties boycotted the Simon Commission.</div><div class="q-ans"><b>FALSE</b> — Hindu Mahasabha did NOT boycott it.</div></div>
+    <div class="q-box"><div class="q-num">S3</div><div class="q-text">Statement: Bhagat Singh threw the bomb in the assembly to kill British officers.</div><div class="q-ans"><b>FALSE</b> — Purpose was to protest Trade Disputes Bill, not kill anyone.</div></div>
+    <div class="q-box"><div class="q-num">S4</div><div class="q-text">Statement: The Constitution was implemented on 26 Jan 1950 because of the Lahore Session 1929.</div><div class="q-ans"><b>TRUE</b> — Lahore declared 26 Jan as First Independence Day (1930), hence 26 Jan was chosen for Constitution enforcement in 1950.</div></div>
+  </div>
+
+  <div class="card card-purple">
+    <div class="sub-title">🎯 Match-the-Following Possibilities</div>
+    <table>
+      <tr><th>Column A</th><th>Column B</th></tr>
+      <tr><td>Kakori Incident participants</td><td>Ashfaqullah, Bismil, Roshan Singh, Rajendra Lahiri</td></tr>
+      <tr><td>Founders of HRA</td><td>Bismil, Sachin Sanyal, Jogesh Chatterjee</td></tr>
+      <tr><td>Founders of AITUC</td><td>NM Joshi, Lala Lajpat Rai, Joseph Baptista</td></tr>
+      <tr><td>CDM leader — NWFP</td><td>Khan Abdul Ghaffar Khan</td></tr>
+      <tr><td>Chittagong Armoury Raid</td><td>Surya Sen (Master Da)</td></tr>
+      <tr><td>Karachi Session 1931</td><td>Presided by Sardar Vallabhbhai Patel</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-orange">
+    <div class="sub-title">🎯 Chronology Questions</div>
+    <div class="q-box"><div class="q-num">C1</div><div class="q-text">Arrange in order: (a) Lahore Session (b) Dandi March (c) Gandhi-Irwin Pact (d) Simon Commission formed</div><div class="q-ans"><b>d → a → b → c</b> (1927 → 1929 → 1930 → 1931)</div></div>
+    <div class="q-box"><div class="q-num">C2</div><div class="q-text">Which RTC did Gandhi attend?</div><div class="q-ans"><b>2nd Round Table Conference (1931)</b></div></div>
+  </div>
+</div>
+
+<!-- ===== ACTIVE RECALL ===== -->
+<div id="recall" class="section">
+  <div class="sec-title">❓ Active Recall — Test Yourself</div>
+
+  <div class="card card-blue">
+    <div class="sub-title">Fill in the Blanks (Click to Reveal)</div>
+    <p style="font-size:14px; line-height:2.2; color: var(--text-primary);">
+      1. CPI was founded in <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='1920, Tashkent'">1920, Tashkent</span> by <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='MN Roy'">MN Roy</span>.<br>
+      2. Father of Trade Unions in India = <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='NM Lokhande'">NM Lokhande</span>.<br>
+      3. Simon Commission had <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='7 British, 0 Indian'">7 British, 0 Indian</span> members.<br>
+      4. "Simon Go Back" coined by <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='Yusuf Meher Ali'">Yusuf Meher Ali</span>.<br>
+      5. Dandi March: <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='240 miles'">240 miles</span> with <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='78 followers'">78 followers</span>.<br>
+      6. HSRA formed at <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='Feroz Shah Kotla, Delhi'">Feroz Shah Kotla, Delhi</span> mainly by <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='Chandrashekhar Azad'">Chandrashekhar Azad</span>.<br>
+      7. Gandhi-Irwin Pact signed in year <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='1931'">1931</span>.<br>
+      8. Nehru Report 1928 chaired by <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='Motilal Nehru'">Motilal Nehru</span>.<br>
+      9. Lahore Session 1929 presided by <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='Jawaharlal Nehru'">Jawaharlal Nehru</span>.<br>
+      10. Chittagong Armoury Raid led by <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='Surya Sen / Master Da'">Surya Sen / Master Da</span>.<br>
+      11. Bhagat Singh + <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='Batukeshwar Dutt'">Batukeshwar Dutt</span> threw bomb in Assembly.<br>
+      12. Bhagat Singh hanged on <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='23 March 1931'">23 March 1931</span>.<br>
+      13. Karachi Session 1931 presided by <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='Sardar Patel'">Sardar Patel</span>.<br>
+      14. Ambedkar attended <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent='all 3'">all 3</span> Round Table Conferences.
+    </p>
+  </div>
+
+  <div class="card card-green">
+    <div class="sub-title">Rapid-Fire Reverse Questions</div>
+    <div class="q-box"><div class="q-num">RQ1</div><div class="q-text">Who is Periyar?</div><div class="q-ans"><b>EV Ramaswamy Nayakar</b> — started Self Respect Movement 1924</div></div>
+    <div class="q-box"><div class="q-num">RQ2</div><div class="q-text">What is Khudai Khidmatgar?</div><div class="q-ans"><b>"Servants of God"</b> — organisation by Khan Abdul Ghaffar Khan (Frontier Gandhi) in NWFP</div></div>
+    <div class="q-box"><div class="q-num">RQ3</div><div class="q-text">Who is Master Da?</div><div class="q-ans"><b>Surya Sen</b> — led Chittagong Armoury Raid. He was a teacher, hence "Master Da".</div></div>
+    <div class="q-box"><div class="q-num">RQ4</div><div class="q-text">What was Bandi Jeevan?</div><div class="q-ans">Book by <b>Sachin Sanyal</b></div></div>
+    <div class="q-box"><div class="q-num">RQ5</div><div class="q-text">What is the White Paper (in RTC context)?</div><div class="q-ans">The report published by the Simon Commission. RTCs were held in London to discuss it.</div></div>
+    <div class="q-box"><div class="q-num">RQ6</div><div class="q-text">Why was 26 January 1950 chosen for the Constitution?</div><div class="q-ans">Because <b>Lahore Session 1929</b> declared 26 Jan 1930 as First Independence Day. To honour that symbolism, Constitution was enforced on 26 Jan 1950.</div></div>
+    <div class="q-box"><div class="q-num">RQ7</div><div class="q-text">What was the Trade Disputes Bill?</div><div class="q-ans">A bill (1929) that would harm workers. Bhagat Singh and BK Dutt threw a bomb in Central Legislative Assembly to protest it — NOT to kill anyone.</div></div>
+  </div>
+</div>
+
+<!-- ===== HIGH-YIELD ===== -->
+<div id="highyield" class="section">
+  <div class="sec-title">⚡ High-Yield Revision Notes</div>
+  <p style="color:var(--text-secondary); font-size:13px; margin-bottom:1rem;">Everything below is exam-critical. Revise this layer after the Full Notes.</p>
+
+  <div class="card card-gold">
+    <div class="sub-title">🔥 Dates You Must Know</div>
+    <table>
+      <tr><th>Year</th><th>Event</th></tr>
+      <tr><td><b>1920</b></td><td>CPI founded (Tashkent, MN Roy) + AITUC formed</td></tr>
+      <tr><td><b>1924</b></td><td>HRA formed + Self Respect Movement + Kanpur Bolshevik Case</td></tr>
+      <tr><td><b>1925</b></td><td>CPI formalised (Kanpur)</td></tr>
+      <tr><td><b>1926</b></td><td>Kakori Train Robbery (Lucknow)</td></tr>
+      <tr><td><b>1927</b></td><td>Simon Commission formed + Mahad Satyagraha + HSRA formed</td></tr>
+      <tr><td><b>1928</b></td><td>Saunders killed + Nehru Report + Madras Session</td></tr>
+      <tr><td><b>1929</b></td><td>Bomb in Assembly + Lahore Session (Poorna Swaraj)</td></tr>
+      <tr><td><b>12 Mar 1930</b></td><td>Dandi March starts</td></tr>
+      <tr><td><b>6 Apr 1930</b></td><td>Gandhi makes salt at Dandi</td></tr>
+      <tr><td><b>4 May 1930</b></td><td>Gandhi arrested</td></tr>
+      <tr><td><b>1931</b></td><td>Gandhi-Irwin Pact + 23 Mar hangings + Karachi Session + 2nd RTC</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-blue">
+    <div class="sub-title">🔥 Persons & Their Links</div>
+    <table>
+      <tr><th>Person</th><th>Key Fact</th></tr>
+      <tr><td><b>MN Roy</b></td><td>Founded CPI (Tashkent, 1920)</td></tr>
+      <tr><td><b>NM Lokhande</b></td><td>Father of Trade Unions in India</td></tr>
+      <tr><td><b>Periyar (EV Ramaswamy)</b></td><td>Self Respect Movement 1924</td></tr>
+      <tr><td><b>Ram Prasad Bismil</b></td><td>HRA co-founder, Kakori</td></tr>
+      <tr><td><b>Chandrashekhar Azad</b></td><td>Main founder HSRA (Feroz Shah Kotla)</td></tr>
+      <tr><td><b>Surya Sen (Master Da)</b></td><td>Chittagong Armoury Raid</td></tr>
+      <tr><td><b>Yusuf Meher Ali</b></td><td>Coined "Simon Go Back"</td></tr>
+      <tr><td><b>Motilal Nehru</b></td><td>Chairman, Nehru Report 1928</td></tr>
+      <tr><td><b>Jawaharlal Nehru</b></td><td>Presided Lahore Session 1929</td></tr>
+      <tr><td><b>Khan Abdul Ghaffar Khan</b></td><td>Frontier Gandhi, Khudai Khidmatgar, Bharat Ratna</td></tr>
+      <tr><td><b>Sardar Patel</b></td><td>Presided Karachi Session 1931</td></tr>
+      <tr><td><b>Sarojini Naidu</b></td><td>Led Darsana after Gandhi's arrest, women's inclusion</td></tr>
+      <tr><td><b>Rani Gaidinliu</b></td><td>CDM leader — Manipur & Nagaland</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ===== ULTRA FAST ===== -->
+<div id="ultrafast" class="section">
+  <div class="sec-title">🚀 Ultra-Fast Revision Sheet</div>
+
+  <div class="ultra-grid">
+    <div class="ultra-card">
+      <div class="uc-title">CPI FACTS</div>
+      <ul>
+        <li>Founded: <b>1920</b> by <b>MN Roy</b>, Tashkent</li>
+        <li>Formalised: <b>1925</b>, Kanpur</li>
+        <li>Kanpur Bolshevik Case: <b>1924</b></li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">AITUC FACTS</div>
+      <ul>
+        <li>Year: <b>1920</b></li>
+        <li>Founders: <b>NM Joshi, LLR, Joseph Baptista</b></li>
+        <li>Father of Trade Unions: <b>NM Lokhande</b></li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">HRA → HSRA</div>
+      <ul>
+        <li>HRA: <b>1924</b> (Bismil, Sanyal, Jogesh)</li>
+        <li>Kakori: <b>1926</b> (Ashfaq, Bismil, Roshan, Lahiri)</li>
+        <li>HSRA: <b>1928</b>, Feroz Shah Kotla (Azad, Bhagat, Sukhdev)</li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">SIMON COMMISSION</div>
+      <ul>
+        <li>Formed: <b>1927</b> (not 1929)</li>
+        <li>Report: <b>1928</b></li>
+        <li>Members: <b>7 British, 0 Indians</b></li>
+        <li>Boycott: All except <b>Hindu Mahasabha</b></li>
+        <li>"Simon Go Back": <b>Yusuf Meher Ali</b></li>
+        <li>LLR beaten by: <b>James Scott</b></li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">RESPONSES TO SIMON</div>
+      <ul>
+        <li>Nehru Report: <b>Motilal Nehru</b> (NOT Jawaharlal)</li>
+        <li>Delhi Proposals: <b>Muslim League</b></li>
+        <li>14 Points: <b>Jinnah</b></li>
+        <li>Madras Session 1928: boycott approved</li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">LAHORE SESSION 1929</div>
+      <ul>
+        <li>President: <b>Jawaharlal Nehru</b></li>
+        <li>Goal: <b>Poorna Swaraj</b></li>
+        <li>1st Independence Day: <b>26 Jan 1930</b></li>
+        <li>Tricolour: <b>Ravi River, 31 Dec 1930</b></li>
+        <li>Boycott: <b>1st RTC</b></li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">DANDI MARCH</div>
+      <ul>
+        <li>Start: <b>12 Mar 1930</b> (Sabarmati)</li>
+        <li>End: <b>6 Apr 1930</b> (Dandi)</li>
+        <li>Distance: <b>240 miles</b></li>
+        <li>Followers: <b>78</b></li>
+        <li>Gandhi arrested: <b>4 May 1930</b></li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">CDM LEADERS</div>
+      <ul>
+        <li>Tamil Nadu: <b>Rajagopalachari</b></li>
+        <li>NWFP: <b>Khan Abdul Ghaffar Khan</b></li>
+        <li>Darsana: <b>Sarojini Naidu</b></li>
+        <li>Manipur: <b>Rani Gaidinliu</b></li>
+        <li>Bihar: Ambikant Sinha (Nakhas Pond)</li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">GANDHI-IRWIN PACT 1931</div>
+      <ul>
+        <li>Gandhi gets: non-violent prisoners released, property returned, salt right</li>
+        <li>Gandhi gives: suspend CDM, attend 2nd RTC</li>
+        <li>Karachi Session: endorsed by <b>Sardar Patel</b></li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">ROUND TABLE CONF.</div>
+      <ul>
+        <li>1st (1930): Congress absent, Ambedkar ✅</li>
+        <li>2nd (1931): Gandhi ✅, Ambedkar ✅</li>
+        <li>3rd (1932): Congress absent, Ambedkar ✅</li>
+        <li>Ambedkar attended <b>ALL 3</b></li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">KEY HANGS & DAYS</div>
+      <ul>
+        <li>Bhagat Singh, Sukhdev, Rajguru: <b>23 Mar 1931</b></li>
+        <li>Martyrs' Day also: <b>30 Jan</b> (Gandhi)</li>
+        <li>Mahad Satyagraha: <b>Ambedkar, 1927</b></li>
+        <li>Kalaram Temple Entry: <b>Ambedkar, 1930</b></li>
+      </ul>
+    </div>
+    <div class="ultra-card">
+      <div class="uc-title">CASTE & BOOKS</div>
+      <ul>
+        <li>Self Respect Movement: <b>Periyar, 1924</b></li>
+        <li>Bandi Jeevan: <b>Sachin Sanyal</b></li>
+        <li>Patha Dabhi: <b>Sharat Chandra Chatterjee</b></li>
+        <li>Philosophy of Bomb: <b>Bipin Chandra Borah</b></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LAST NIGHT ===== -->
+<div id="lastnight" class="section">
+  <div class="sec-title">🌙 Last-Night-Before-Exam Sheet</div>
+  <p style="color:var(--text-secondary); font-size:13px; margin-bottom:1rem;">Read ONLY this the night before. If you know all of this, you're exam-ready.</p>
+
+  <div class="ln-box">
+    <div class="ln-row"><div class="ln-key">CPI</div><div class="ln-val"><b>MN Roy, 1920, Tashkent</b> → formalised 1925 Kanpur</div></div>
+    <div class="ln-row"><div class="ln-key">AITUC</div><div class="ln-val">NM Joshi + Lala + Baptista (1920). Father = <b>NM Lokhande</b></div></div>
+    <div class="ln-row"><div class="ln-key">Periyar</div><div class="ln-val">Self Respect Movement <b>1924</b></div></div>
+    <div class="ln-row"><div class="ln-key">HRA 1924</div><div class="ln-val">Bismil + Sachin Sanyal + Jogesh Chatterjee</div></div>
+    <div class="ln-row"><div class="ln-key">Kakori</div><div class="ln-val"><b>1926</b> Lucknow · Ashfaq + Bismil + Roshan + Rajendra Lahiri</div></div>
+    <div class="ln-row"><div class="ln-key">HSRA</div><div class="ln-val"><b>Chandrashekhar Azad</b>, Feroz Shah Kotla, Delhi, 1928</div></div>
+    <div class="ln-row"><div class="ln-key">Saunders</div><div class="ln-val">Killed by Bhagat+Sukhdev+Rajguru (meant to kill <b>James Scott</b> who beat LLR)</div></div>
+    <div class="ln-row"><div class="ln-key">Bomb 1929</div><div class="ln-val">Bhagat Singh + <b>BK Dutt</b> · protest Trade Disputes Bill · not to kill</div></div>
+    <div class="ln-row"><div class="ln-key">Hanged</div><div class="ln-val"><b>23 March 1931</b> · Bhagat Singh, Sukhdev, Rajguru</div></div>
+    <div class="ln-row"><div class="ln-key">Chittagong</div><div class="ln-val"><b>Surya Sen (Master Da)</b> · high women participation</div></div>
+    <div class="ln-row"><div class="ln-key">Simon</div><div class="ln-val"><b>1927</b> (8 yrs, not 10) · Report 1928 · 7 British, 0 Indians · "Simon Go Back" = <b>Yusuf Meher Ali</b> · Hindu Mahasabha did NOT boycott</div></div>
+    <div class="ln-row"><div class="ln-key">LLR</div><div class="ln-val">Beaten by <b>James Scott</b> → died → led to killing of Saunders</div></div>
+    <div class="ln-row"><div class="ln-key">Nehru Report</div><div class="ln-val">Chairman = <b>MOTILAL Nehru</b> (1928)</div></div>
+    <div class="ln-row"><div class="ln-key">Delhi Props</div><div class="ln-val">Muslim League · Jinnah = 14 Points</div></div>
+    <div class="ln-row"><div class="ln-key">Lahore 1929</div><div class="ln-val"><b>Jawaharlal presides</b> · Poorna Swaraj · 26 Jan 1930 = First Independence Day → reason for 26 Jan 1950 Constitution</div></div>
+    <div class="ln-row"><div class="ln-key">Dandi</div><div class="ln-val"><b>12 Mar → 6 Apr 1930</b> · 240 miles · 78 followers · Sabarmati → Dandi · arrested 4 May</div></div>
+    <div class="ln-row"><div class="ln-key">CDM Key</div><div class="ln-val">NWFP = <b>Frontier Gandhi</b> (Khudai Khidmatgar) · Darsana = Sarojini Naidu · Manipur = Rani Gaidinliu · TN = Rajagopalachari</div></div>
+    <div class="ln-row"><div class="ln-key">G-I Pact 1931</div><div class="ln-val">Gandhi gets: prisoners, property, salt right. Gandhi gives: suspend CDM, attend 2nd RTC. Karachi Session = <b>Sardar Patel</b> presides, endorses pact</div></div>
+    <div class="ln-row"><div class="ln-key">RTCs</div><div class="ln-val">1930/31/32 in London. Ambedkar = ALL 3. Gandhi = only <b>2nd (1931)</b></div></div>
+    <div class="ln-row"><div class="ln-key">Books</div><div class="ln-val">Bandi Jeevan=Sachin Sanyal · Patha Dabhi=Sharat Chandra · Philosophy of Bomb=Bipin Chandra Borah</div></div>
+    <div class="ln-row"><div class="ln-key">Bharat Ratna</div><div class="ln-val">Khan Abdul Ghaffar Khan = one of 2 non-Indians to receive it</div></div>
+  </div>
+
+  <div class="card card-red" style="margin-top:1rem">
+    <div class="sub-title">⚠️ Never Forget These Traps</div>
+    <div style="font-size:13.5px; line-height:2; color: var(--text-primary);">
+      • Nehru Report = <b>MOTILAL</b>, Lahore Session = <b>JAWAHARLAL</b><br>
+      • Simon came in <b>1927</b>, not 1929 (8 years, not 10)<br>
+      • Hindu Mahasabha did <b>NOT boycott</b> Simon<br>
+      • Saunders killed = <b>mistake</b> (target was James Scott)<br>
+      • Bomb in Assembly = protest <b>Trade Disputes Bill</b>, not to kill<br>
+      • Father of Trade Unions = <b>NM Lokhande</b> (not NM Joshi!)<br>
+      • Ambedkar = <b>ALL 3 RTCs</b>. Gandhi = only <b>2nd</b><br>
+      • 26 Jan 1930 → 26 Jan 1950 connection is real and exam-asked
+    </div>
+  </div>
+</div>
+
+</div><!-- end main-content -->
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jainism & Buddhism — Memory Vault</title>
+<style>
+:root{
+  --void:#0a0e14;
+  --slate:#10151d;
+  --panel:#141a24;
+  --panel-2:#1a212c;
+  --line:#252e3b;
+  --ash:#9aa7b8;
+  --bone:#e8ecf1;
+  --saffron:#e8a33d;
+  --saffron-dim:#7a5a2a;
+  --lotus:#d8567a;
+  --jade:#4fae8e;
+  --indigo:#6e8fd6;
+  --danger:#e15a5a;
+  --gold-glow: rgba(232,163,61,0.18);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -5%, rgba(232,163,61,0.07), transparent 60%),
+    radial-gradient(ellipse 700px 600px at 100% 10%, rgba(110,143,214,0.06), transparent 60%),
+    var(--void);
+  color:var(--bone);
+  font-family:'Iowan Old Style','Palatino Linotype','Georgia',serif;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.sans{font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;}
+
+/* ===== TOP NAV ===== */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(10,14,20,0.88);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  padding:0 18px;
+}
+.topbar-inner{
+  max-width:1180px; margin:0 auto;
+  display:flex; align-items:center; gap:18px;
+  height:58px;
+}
+.brand{
+  font-family:'Iowan Old Style','Georgia',serif;
+  font-weight:700; font-size:17px; color:var(--saffron);
+  letter-spacing:0.3px; white-space:nowrap;
+}
+.brand span{color:var(--ash); font-weight:400; font-size:13px;}
+.navtabs{
+  display:flex; gap:4px; overflow-x:auto; flex:1;
+  font-family:'Avenir Next','Segoe UI',system-ui,sans-serif;
+  scrollbar-width:none;
+}
+.navtabs::-webkit-scrollbar{display:none;}
+.navtab{
+  padding:8px 13px; border-radius:7px; font-size:12.5px; font-weight:600;
+  color:var(--ash); cursor:pointer; white-space:nowrap; border:1px solid transparent;
+  transition:all .15s;
+}
+.navtab:hover{color:var(--bone); background:var(--panel-2);}
+.navtab.active{color:var(--void); background:var(--saffron); border-color:var(--saffron);}
+
+/* ===== LAYOUT ===== */
+.wrap{max-width:880px; margin:0 auto; padding:34px 20px 120px;}
+.layer{display:none;}
+.layer.active{display:block; animation:fadein .35s ease;}
+@keyframes fadein{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+.hero{
+  text-align:center; padding:30px 10px 38px;
+  border-bottom:1px solid var(--line); margin-bottom:36px;
+}
+.hero h1{
+  font-size:clamp(28px,5vw,42px); margin:0 0 8px; color:var(--bone);
+  letter-spacing:0.3px;
+}
+.hero h1 .gold{color:var(--saffron);}
+.hero p{color:var(--ash); font-family:'Avenir Next',sans-serif; font-size:14px; margin:0;}
+
+h2.section-title{
+  font-size:13px; text-transform:uppercase; letter-spacing:2px;
+  color:var(--saffron); font-family:'Avenir Next',sans-serif; font-weight:700;
+  margin:54px 0 18px; display:flex; align-items:center; gap:12px;
+}
+h2.section-title::after{content:''; flex:1; height:1px; background:var(--line);}
+h2.section-title .num{
+  font-size:11px; background:var(--saffron); color:var(--void);
+  width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+
+h3.sub{font-size:19px; color:var(--bone); margin:30px 0 10px; font-weight:700;}
+h4.micro{font-size:14.5px; color:var(--indigo); margin:22px 0 8px; font-weight:700; font-family:'Avenir Next',sans-serif; letter-spacing:0.2px;}
+
+p{color:#cfd6e0; margin:8px 0 14px;}
+.dim{color:var(--ash);}
+
+/* TAGS */
+.tag{
+  display:inline-block; font-family:'Avenir Next',sans-serif; font-size:10.5px; font-weight:800;
+  padding:2px 8px; border-radius:5px; letter-spacing:0.3px; margin-right:6px; vertical-align:middle;
+}
+.tag.must{background:rgba(225,90,90,0.16); color:#f08080; border:1px solid rgba(225,90,90,0.35);}
+.tag.imp{background:rgba(232,163,61,0.16); color:var(--saffron); border:1px solid rgba(232,163,61,0.35);}
+.tag.good{background:rgba(79,174,142,0.16); color:var(--jade); border:1px solid rgba(79,174,142,0.35);}
+
+/* CARDS */
+.card{
+  background:var(--panel); border:1px solid var(--line); border-radius:12px;
+  padding:18px 20px; margin:16px 0;
+}
+.card.glow{box-shadow:0 0 0 1px var(--saffron-dim) inset;}
+.two-col{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+@media(max-width:640px){.two-col{grid-template-columns:1fr;}}
+
+/* TIMELINE / PALACE */
+.palace{
+  background:linear-gradient(160deg, var(--panel-2), var(--panel));
+  border:1px solid var(--line); border-radius:14px; padding:22px 22px 8px;
+  margin:18px 0 26px; position:relative; overflow:hidden;
+}
+.palace::before{
+  content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px;
+  background:radial-gradient(circle, var(--gold-glow), transparent 70%);
+}
+.palace-stop{
+  display:flex; gap:14px; padding:14px 0; border-bottom:1px dashed var(--line);
+}
+.palace-stop:last-child{border-bottom:none;}
+.palace-marker{
+  flex-shrink:0; width:34px; height:34px; border-radius:50%;
+  background:var(--slate); border:1.5px solid var(--saffron);
+  display:flex; align-items:center; justify-content:center; font-size:16px;
+}
+.palace-text b{color:var(--bone);}
+.palace-text{font-size:14.5px; padding-top:3px;}
+
+/* TABLE */
+table{width:100%; border-collapse:collapse; margin:14px 0; font-size:14.5px;}
+th{
+  text-align:left; font-family:'Avenir Next',sans-serif; font-size:11px; text-transform:uppercase;
+  letter-spacing:0.6px; color:var(--ash); padding:8px 10px; border-bottom:1px solid var(--line);
+}
+td{padding:9px 10px; border-bottom:1px solid var(--line); color:#d8dee7; vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* TRAP BOX */
+.trap{
+  border-left:3px solid var(--danger); background:rgba(225,90,90,0.06);
+  border-radius:0 10px 10px 0; padding:13px 16px; margin:14px 0;
+}
+.trap b{color:#f08080;}
+
+/* MEMORY HOOK */
+.hook{
+  border-left:3px solid var(--saffron); background:rgba(232,163,61,0.06);
+  border-radius:0 10px 10px 0; padding:13px 16px; margin:14px 0; font-style:italic; color:#e6d4b0;
+}
+.hook b{color:var(--saffron); font-style:normal;}
+
+/* CONNECTION ARROW LINE */
+.flow{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  font-family:'Avenir Next',sans-serif; font-size:13.5px; margin:10px 0;
+  background:var(--slate); border:1px solid var(--line); border-radius:9px; padding:11px 14px;
+}
+.flow .node{color:var(--bone); font-weight:600;}
+.flow .arrow{color:var(--jade); font-weight:700;}
+
+/* RECALL / FLASHCARD */
+.qa{
+  background:var(--slate); border:1px solid var(--line); border-radius:10px;
+  margin:10px 0; overflow:hidden; cursor:pointer;
+}
+.qa .q{padding:13px 16px; font-weight:600; color:var(--bone); font-size:14.5px; display:flex; justify-content:space-between; align-items:center;}
+.qa .q::after{content:'+'; color:var(--saffron); font-size:18px; font-family:sans-serif;}
+.qa.open .q::after{content:'−';}
+.qa .a{
+  max-height:0; overflow:hidden; transition:max-height .25s ease;
+  padding:0 16px; color:var(--ash); font-size:14px; background:var(--panel);
+}
+.qa.open .a{max-height:400px; padding:0 16px 14px;}
+
+/* FILL BLANK */
+.blank{border-bottom:2px dotted var(--saffron); padding:0 4px; color:transparent; user-select:none;}
+.blank:hover, .blank.reveal{color:var(--saffron); user-select:text;}
+
+/* ULTRA FAST GRID */
+.fastgrid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+@media(max-width:640px){.fastgrid{grid-template-columns:1fr;}}
+.fastitem{
+  background:var(--slate); border:1px solid var(--line); border-radius:8px;
+  padding:9px 12px; font-size:13.5px;
+}
+.fastitem b{color:var(--saffron);}
+
+/* 30 SEC SHEET */
+.sheet30{
+  background:linear-gradient(135deg, rgba(232,163,61,0.08), rgba(110,143,214,0.05));
+  border:1.5px solid var(--saffron-dim); border-radius:14px; padding:22px;
+}
+.sheet30 .row{display:flex; gap:10px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.06); font-size:14.5px;}
+.sheet30 .row:last-child{border-bottom:none;}
+.sheet30 .row .l{color:var(--saffron); font-weight:700; min-width:130px; font-family:'Avenir Next',sans-serif; font-size:12px; text-transform:uppercase; letter-spacing:.4px;}
+
+/* LAST NIGHT SHEET */
+.lastnight{
+  background:var(--panel); border:2px solid var(--danger); border-radius:14px; padding:20px;
+}
+.lastnight h4{color:var(--danger); margin-top:0;}
+
+/* DIVIDER QUOTE */
+.bigpicture{
+  font-size:17px; color:#e3d9c2; background:var(--panel); border-radius:14px;
+  padding:20px 22px; border:1px solid var(--line); margin:14px 0 6px;
+  border-left:4px solid var(--saffron);
+}
+
+/* CHAPTER DIVIDER */
+.chapter-banner{
+  text-align:center; margin:60px 0 30px; padding:20px 0;
+}
+.chapter-banner h2{
+  font-size:26px; color:var(--bone); margin:0; letter-spacing:1px;
+}
+.chapter-banner .sub{color:var(--ash); font-family:'Avenir Next',sans-serif; font-size:13px; margin-top:4px;}
+
+/* PROGRESS DOTS */
+.dot-row{display:flex; gap:6px; justify-content:center; margin:8px 0 0;}
+.dotx{width:7px; height:7px; border-radius:50%; background:var(--line);}
+.dotx.on{background:var(--saffron);}
+
+/* SCROLLTOP */
+.fab{
+  position:fixed; bottom:22px; right:22px; z-index:60;
+  background:var(--saffron); color:var(--void); border:none; border-radius:50%;
+  width:46px; height:46px; font-size:18px; cursor:pointer; box-shadow:0 4px 18px rgba(0,0,0,0.4);
+  display:flex; align-items:center; justify-content:center;
+}
+
+ul{padding-left:20px;}
+li{margin:5px 0; color:#cfd6e0;}
+.kw{color:var(--saffron); font-weight:700;}
+.kw2{color:var(--jade); font-weight:700;}
+.kw3{color:var(--lotus); font-weight:700;}
+
+hr.soft{border:none; border-top:1px solid var(--line); margin:30px 0;}
+
+::selection{background:var(--saffron-dim); color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">☸ Memory Vault <span>· Jainism &amp; Buddhism</span></div>
+    <div class="navtabs" id="navtabs">
+      <div class="navtab active" data-layer="l1">Complete Notes</div>
+      <div class="navtab" data-layer="l2">High-Yield</div>
+      <div class="navtab" data-layer="l3">Ultra-Fast</div>
+      <div class="navtab" data-layer="l4">30-Sec</div>
+      <div class="navtab" data-layer="l5">Last Night</div>
+      <div class="navtab" data-layer="l6">Active Recall</div>
+      <div class="navtab" data-layer="l7">Exam Traps</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<div class="hero">
+  <h1>Jainism <span class="gold">&amp;</span> Buddhism</h1>
+  <p class="sans">SSC CGL high-retention revision system &nbsp;·&nbsp; built to survive 100 revisions &nbsp;·&nbsp; FRB 2.0</p>
+  <div class="dot-row"><div class="dotx on"></div><div class="dotx"></div><div class="dotx"></div><div class="dotx"></div></div>
+</div>
+
+<!-- ================= LAYER 1: COMPLETE REVISION NOTES ================= -->
+<div class="layer active" id="l1">
+
+<div class="bigpicture">
+<b>Big Picture:</b> Two reformist movements rose together in 6th century BC Eastern India, both reacting against Vedic ritualism and Brahmin dominance, both patronized by the same kings (Bimbisara, Ajatashatru), both founded by Kshatriya princes who renounced royal life. Jainism stayed small and intensely ascetic; Buddhism scaled globally and split into schools. Every fact below hangs on this one skeleton: <span class="kw">two parallel lives</span>, <span class="kw">two parallel doctrines</span>, <span class="kw">two parallel councils</span>, <span class="kw">two parallel architectures</span>.
+</div>
+
+<div class="chapter-banner">
+  <h2>🛕 PART A — JAINISM</h2>
+  <div class="sub">24 Tirthankaras → Mahavira → Schism → Architecture</div>
+</div>
+
+<h2 class="section-title"><span class="num">1</span>Chapter Memory Palace — The Jain Monastery Walk</h2>
+<div class="palace">
+  <div class="palace-stop">
+    <div class="palace-marker">🚪</div>
+    <div class="palace-text">You enter the <b>Monastery Gate</b> (Basadi). Carved above it: a long line of <b>24 statues</b> — the Tirthankaras. You notice only two of them have ancient dust on them, as if the Vedas themselves once touched them.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">🐂</div>
+    <div class="palace-text">Statue 1 — a <b>bull</b> at its feet. This is <b>Rishabhdev</b>, born in <b>Ayodhya</b>, founder of Jainism, mentioned in the Vedas.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">🐍</div>
+    <div class="palace-text">Statue 23 — a <b>snake</b> coiled at its base. This is <b>Parshvanath</b>, born in <b>Varanasi</b>.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">🦁</div>
+    <div class="palace-text">Statue 24 — the biggest, a roaring <b>lion</b>. This is <b>Vardhaman Mahavira</b>, the real propagator. Born <b>540 BC, Kundagram, Vaishali (Bihar)</b>.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">👪</div>
+    <div class="palace-text">A small family shrine room: father <b>Siddhartha</b> (Jnatrika clan), mother <b>Trishala</b>, wife <b>Yashoda</b>, daughter <b>Anuja Priyadarshini</b>, son-in-law <b>Jamali</b> (first disciple).</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">🚶</div>
+    <div class="palace-text">A corridor shows him walking out at <b>age 30</b>, beside a companion — <b>Makhali Gosala</b> — who later splits off down a side-corridor to found his own sect: <b>Ajivika</b>.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">🌳</div>
+    <div class="palace-text">A courtyard with a <b>Sal tree</b> beside a river — <b>Rijupalika</b>, village <b>Jrimbhikagrama</b>. Here, age <b>42</b>, he attains <b>Kevalya Jnana</b> (omniscience).</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">📜</div>
+    <div class="palace-text">A pulpit at <b>Pava</b> — his first sermon. A side room marked "exit" — he dies at <b>Pavapuri, age 72, 468 BC</b>.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">⚖</div>
+    <div class="palace-text">The hallway splits into two doors at the end — one with people in <b>white robes</b> (Shwetambara), one with <b>naked ascetics</b> (Digambara). This is the famous schism room.</div>
+  </div>
+</div>
+
+<h3 class="sub">1. The 24 Tirthankaras — Only 4 You Need</h3>
+<table>
+<tr><th>No.</th><th>Name</th><th>Birthplace</th><th>Symbol</th><th>Special Note</th></tr>
+<tr><td>1</td><td><b>Rishabhdev</b></td><td>Ayodhya</td><td>Bull</td><td>Founder; mentioned in <span class="kw">Vedas</span></td></tr>
+<tr><td>22</td><td><b>Aristanemi</b></td><td>—</td><td>—</td><td>Also mentioned in <span class="kw">Vedas</span> (only 2 Tirthankaras get Vedic mention)</td></tr>
+<tr><td>23</td><td><b>Parshvanath</b></td><td>Varanasi</td><td>Snake</td><td>Immediate predecessor of Mahavira</td></tr>
+<tr><td>24</td><td><b>Vardhaman Mahavira</b></td><td>Kundagram, Vaishali</td><td>Lion</td><td><b>Real propagator</b> of Jainism</td></tr>
+</table>
+
+<h3 class="sub">2. Mahavira — Complete Life Profile</h3>
+<div class="two-col">
+  <div class="card">
+    <h4 class="micro">Birth & Death</h4>
+    <ul>
+      <li>Born: <b>540 BC</b>, Kundagram, <b>Vaishali (Bihar)</b></li>
+      <li>Died: <b>468 BC</b>, <b>Pavapuri</b>, near Bihar Sharif</li>
+      <li>Lived to age <b>72</b></li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4 class="micro">Family</h4>
+    <ul>
+      <li>Father: <b>Siddhartha</b> (Jnatrika Kshatriya clan)</li>
+      <li>Mother: <b>Trishala</b></li>
+      <li>Wife: <b>Yashoda</b></li>
+      <li>Daughter: <b>Anuja Priyadarshini</b></li>
+      <li>Son-in-law: <b>Jamali</b> — first disciple</li>
+    </ul>
+  </div>
+</div>
+<div class="two-col">
+  <div class="card">
+    <h4 class="micro">Renunciation → Enlightenment</h4>
+    <ul>
+      <li>Left home at age <b>30</b>, with <b>Makhali Gosala</b></li>
+      <li>Gosala later broke away → founded <b>Ajivika Sect</b> (fatalism + extreme asceticism)</li>
+      <li>Attained <b>Kevalya Jnana</b> at age <b>42</b></li>
+      <li>Place: under a <b>Sal tree</b>, village <b>Jrimbhikagrama</b>, on bank of river <b>Rijupalika</b></li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4 class="micro">Titles & First Acts</h4>
+    <ul>
+      <li>First sermon: at <b>Pava</b></li>
+      <li>Died at: <b>Pavapuri</b> (different from Pava — don't confuse!)</li>
+      <li>Title <b>Jitendra</b> — conqueror of senses</li>
+      <li>Title <b>Kevalin</b> — the omniscient one</li>
+    </ul>
+  </div>
+</div>
+
+<div class="hook"><b>Memory hook — Pava vs Pavapuri:</b> Picture Mahavira giving his <i>first speech</i> at "Pava" (short word, short moment — a quick sermon) and, decades later, walking a few extra steps to "Pava<u>puri</u>" (longer word, longer journey — his final, longest rest, i.e. death). Short name = beginning. Long name = the end of the road.</div>
+
+<h3 class="sub">3. Key Jain Vocabulary</h3>
+<table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td><b>Basadi</b></td><td>Jain monasteries / temples</td></tr>
+<tr><td><b>Triratna of Jainism</b></td><td>Samyak Jnana (right knowledge) + Samyak Darshan (right faith) + Samyak Charitra (right conduct)</td></tr>
+<tr><td><b>Five Mahavratas</b></td><td>Ahimsa (non-violence), Satya (truth), Asteya (non-stealing), Brahmacharya (chastity), Aparigraha (non-attachment)</td></tr>
+<tr><td>Literature language</td><td>Mainly <b>Prakrit</b></td></tr>
+</table>
+
+<div class="hook"><b>Memory hook — Aparigraha's payoff:</b> Imagine a man who owns nothing, so nothing can be taken from him — he can't be made happy by gain or sad by loss. He just floats in one calm, level mood. That flat, unshaken line is what "Samyak Charitra"-style stability feels like — useful for remembering <i>why</i> Aparigraha is on the list, not just that it is.</div>
+
+<h3 class="sub">4. Classical Languages of India — Side Fact</h3>
+<p>Originally <b>6 classical languages</b>: <span class="kw2">Tamil, Sanskrit, Telugu, Kannada, Malayalam, Odia</span>. Later <b>5 more</b> added: <span class="kw2">Pali, Prakrit, Assamese, Bengali, Marathi</span>.</p>
+<div class="hook"><b>Hook:</b> "TaSTe Kalo MaaN" → <b>Ta</b>mil, <b>S</b>anskrit, <b>Te</b>lugu, <b>Ka</b>nnada, Ma<b>l</b>ayalam, Odia(N) — the original six tasted (TaSTe) first. The five latecomers <b>P</b>ali, <b>P</b>rakrit, <b>A</b>ssamese, <b>B</b>engali, <b>M</b>arathi joined later — "PPABM" walked in after the original party (PPABM ≈ think of 5 latecomers knocking — Please Please Allow Bro, Man!).</div>
+
+<h3 class="sub">5. Jain Councils</h3>
+<table>
+<tr><th>Council</th><th>Year</th><th>Place</th><th>Patron (king)</th><th>Presided by</th><th>Result</th></tr>
+<tr><td>1st</td><td><b>298 BC</b></td><td>—</td><td><b>Bindusara</b></td><td><b>Sthulabhadra</b></td><td>12 parts compiled; <b>Digambaras boycotted</b> it</td></tr>
+<tr><td>2nd</td><td><b>512 AD</b></td><td><b>Vallabhi, Gujarat</b></td><td>—</td><td>—</td><td>—</td></tr>
+</table>
+
+<h3 class="sub">6. The Great Schism — Shwetambara vs Digambara</h3>
+<div class="flow"><span class="node">Famine in Magadha</span><span class="arrow">→</span><span class="node">Chandragupta Maurya + commander Bhadrabahu migrate</span><span class="arrow">→</span><span class="node">Shravanabelgola, Karnataka</span><span class="arrow">→</span><span class="node">Bhadrabahu performs Sallekhana (ritual death)</span></div>
+<p>His followers had stopped wearing clothes due to the famine and stayed unclothed in the South → became <b>Digambaras</b> ("sky-clad"). Those who stayed back (under Sthulabhadra) resumed wearing <b>white clothes</b> → became <b>Shwetambaras</b> ("white-clad").</p>
+<table>
+<tr><th></th><th>Digambara</th><th>Shwetambara</th></tr>
+<tr><td>Founder figure</td><td><b>Bhadrabahu</b></td><td><b>Sthulabhadra</b></td></tr>
+<tr><td>Clothing</td><td>None ("sky-clad")</td><td>White clothes</td></tr>
+<tr><td>Region</td><td>Migrated South (Karnataka)</td><td>Stayed North</td></tr>
+<tr><td>Stance on 1st Council</td><td><b>Boycotted</b> it</td><td>Accepted (presided by Sthulabhadra)</td></tr>
+</table>
+<div class="hook"><b>Memory hook:</b> "Di<u>gam</u>bara" — sounds bare, naked, gone-South. "Shwet" literally means white — easy: Shwetambara = white clothes. Once you lock "Shwet=white," Digambara is whatever Shwet is NOT — bare.</div>
+
+<h3 class="sub">7. Jain Architecture</h3>
+<table>
+<tr><th>Site</th><th>Location</th><th>Significance</th></tr>
+<tr><td><b>Gomateshwara Bahubali statue</b></td><td>Shravanabelgola, Karnataka</td><td>Bahubali = son of Rishabhdev (1st Tirthankara); <b>Mahamastakabhisheka</b> festival every <b>12 years</b></td></tr>
+<tr><td><b>Hathigumpha Cave</b></td><td>Udayagiri-Khandagiri, Odisha (Kharavela)</td><td>Jain rock-cut cave architecture</td></tr>
+<tr><td><b>Dilwara Jain Temples</b></td><td>Mount Abu, Rajasthan (Aravalli hills)</td><td>Built by the <b>Vastupala brothers</b></td></tr>
+</table>
+
+<h3 class="sub">8. Royal Patrons of Jainism</h3>
+<p><span class="kw">Chandragupta Maurya</span>, <span class="kw">Bindusara</span>, <span class="kw">Bimbisara</span>, <span class="kw">Ajatashatru</span></p>
+<div class="trap"><b>Don't confuse:</b> <b>Bindusara</b> (Mauryan king, son of Chandragupta Maurya, father of Ashoka — patronized 1st Jain Council) vs <b>Bimbisara</b> (Magadhan king, much earlier in the timeline, contemporary of <i>both</i> Mahavira and Buddha). Same-sounding names, totally different dynasties and eras.</div>
+
+<hr class="soft">
+
+<div class="chapter-banner">
+  <h2>☸ PART B — BUDDHISM</h2>
+  <div class="sub">Gautam Buddha → Four Noble Truths → Sangha → Councils → Stupas</div>
+</div>
+
+<h2 class="section-title"><span class="num">2</span>Chapter Memory Palace — The Buddha's Pilgrimage Road</h2>
+<div class="palace">
+  <div class="palace-stop">
+    <div class="palace-marker">🌸</div>
+    <div class="palace-text"><b>Lumbini, Nepal</b> — birth, <b>563 BC</b>. Symbol carved on the gate: a <b>lotus</b>. Father <b>Suddhodhana</b> (Shakya clan), mother <b>Mahamaya</b> (Koliya tribe), stepmother <b>Mahaprajapati Gautami</b> (later the first Buddhist nun). Childhood name on the cradle: <b>Siddhartha</b>.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">🐎</div>
+    <div class="palace-text">A road leading out of the palace with a <b>horse</b> statue — the <b>Mahabhinishkramana</b> (Great Departure), age <b>29</b>. Wife <b>Yashodhara</b>, son <b>Rahul</b> left behind. First teachers met on this road: <b>Alara Kalama</b>, then <b>Udraka Ramaputra</b>.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">🌳</div>
+    <div class="palace-text"><b>Bodh Gaya</b> (village Uruvela, on the <b>Niranjana river</b>) — under the <b>Bodhi (peepal) tree</b>, enlightenment = <b>Nirvana</b>. Symbol: an empty seat under the tree.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">☸️</div>
+    <div class="palace-text"><b>Sarnath, Varanasi</b> — the <b>Deer Park</b>. First sermon = <b>Dharma Chakra Pravartana</b> ("turning the Wheel of Law"). Symbol: a <b>wheel (chakra)</b>.</div>
+  </div>
+  <div class="palace-stop">
+    <div class="palace-marker">🕊️</div>
+    <div class="palace-text"><b>Kushinagar, UP</b> — death, <b>483 BC</b>, age <b>80</b>. Event = <b>Mahaparinirvana</b>. Symbol: a <b>stupa</b>.</div>
+  </div>
+</div>
+
+<h3 class="sub">9. Gautam Buddha — Complete Life Profile</h3>
+<div class="two-col">
+  <div class="card">
+    <h4 class="micro">Birth & Death</h4>
+    <ul>
+      <li>Born: <b>563 BC</b>, <b>Lumbini, Nepal</b></li>
+      <li>Died: <b>483 BC</b>, <b>Kushinagar</b></li>
+      <li>Childhood name: <b>Siddhartha</b></li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4 class="micro">Family</h4>
+    <ul>
+      <li>Father: <b>Suddhodhana</b> (Shakya clan)</li>
+      <li>Mother: <b>Mahamaya</b> (Koliya tribe)</li>
+      <li>Step-mother: <b>Mahaprajapati Gautami</b> — first Buddhist nun</li>
+      <li>Wife: <b>Yashodhara</b> &nbsp;|&nbsp; Son: <b>Rahul</b></li>
+    </ul>
+  </div>
+</div>
+<div class="two-col">
+  <div class="card">
+    <h4 class="micro">Renunciation → Enlightenment</h4>
+    <ul>
+      <li>Left home (Mahabhinishkramana) at age <b>29</b></li>
+      <li>First teacher: <b>Alara Kalama</b></li>
+      <li>Second teacher: <b>Udraka Ramaputra</b></li>
+      <li>Enlightened at <b>Bodh Gaya</b>, under Bodhi tree, village Uruvela, river Niranjana</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4 class="micro">Sermon & Symbols</h4>
+    <ul>
+      <li>First sermon: <b>Sarnath</b>, Deer Park (Dharma Chakra Pravartana)</li>
+      <li>Birth → <b>Lotus</b></li>
+      <li>Renunciation → <b>Horse</b></li>
+      <li>Enlightenment (Nirvana) → <b>Bodhi tree / empty seat</b></li>
+      <li>First sermon → <b>Wheel (Chakra)</b></li>
+      <li>Death (Mahaparinirvana) → <b>Stupa</b></li>
+    </ul>
+  </div>
+</div>
+
+<div class="trap"><b>Don't confuse Mahavira's family with Buddha's:</b> Both have a daughter named <b>Anuja Priyadarshini</b> and son-in-law/first disciple <b>Jamali</b> in this transcript — that's the exam's favourite trap. Lock it in by clan: Mahavira = <b>Jnatrika</b> Kshatriya; Buddha = <b>Shakya</b> clan. If clan = Jnatrika → Mahavira's family tree. If clan = Shakya → Buddha's.</div>
+
+<h3 class="sub">10. The Four Noble Truths (Arya Satya)</h3>
+<ol>
+<li><b>Dukkha</b> — The world is full of suffering</li>
+<li><b>Samudaya</b> — The cause of suffering is desire (Tanha)</li>
+<li><b>Nirodha</b> — Suffering can be ended</li>
+<li><b>Marga</b> — The path to end suffering is the <b>Eightfold Path (Ashtangika Marga)</b></li>
+</ol>
+<div class="hook"><b>Memory hook — why he discovered this:</b> A prince who was shielded from every sorrow still saw, on one ride outside the palace, a sick man, a dead body, an old man, and a wandering ascetic — the <b>Four Sights</b>. That single ride compresses into the Four Truths: sickness/age/death = "world is full of suffering"; his own restless wanting = "desire is the cause"; the ascetic = proof suffering can be conquered; the path he eventually found = the Eightfold Path.</div>
+
+<h3 class="sub">11. Triratna of Buddhism — different from Jainism!</h3>
+<table>
+<tr><th>Jainism's Triratna</th><th>Buddhism's Triratna</th></tr>
+<tr><td>Samyak Jnana, Samyak Darshan, Samyak Charitra</td><td><b>Buddha, Dhamma, Sangha</b></td></tr>
+</table>
+<div class="trap"><b>Exam trap:</b> "Triratna" appears in BOTH religions but means different things. If the question gives "right knowledge, right faith, right conduct" → Jainism. If it gives "Buddha, Dhamma, Sangha" → Buddhism.</div>
+
+<h3 class="sub">12. Buddhist Texts</h3>
+<table>
+<tr><th>Text</th><th>Language</th><th>Content</th></tr>
+<tr><td><b>Tripitaka</b></td><td>Pali</td><td>Three baskets — collective name for the 3 below</td></tr>
+<tr><td>↳ Sutta Pitaka</td><td>Pali</td><td>Buddha's actual <b>teachings/discourses</b></td></tr>
+<tr><td>↳ Vinaya Pitaka</td><td>Pali</td><td><b>Monastic rules</b> and codes of conduct</td></tr>
+<tr><td>↳ Abhidhamma Pitaka</td><td>Pali</td><td><b>Philosophical interpretation</b> of the Sutta Pitaka</td></tr>
+<tr><td><b>Milinda Panho</b></td><td>Pali</td><td>Dialogue between king <b>Milinda (Menander, Indo-Greek ruler)</b> and monk <b>Nagasena</b>; ends with Milinda converting</td></tr>
+<tr><td><b>Buddhacharita</b></td><td><b>Sanskrit</b></td><td>Biography of Buddha, written by <b>Ashvaghosha</b></td></tr>
+<tr><td><b>Jataka Tales</b></td><td>Pali</td><td>Stories of Buddha's <b>previous births</b></td></tr>
+</table>
+<div class="hook"><b>Hook for the 3 Pitakas:</b> "<b>S</b>peech, <b>V</b>ows, <b>A</b>nalysis" → <b>S</b>utta = what he <i>said</i> (speech/teaching); <b>V</b>inaya = the <i>vows</i> monks follow (rules); <b>A</b>bhidhamma = the deep <i>analysis</i>/commentary on it.</div>
+
+<h3 class="sub">13. Buddhist Councils</h3>
+<table>
+<tr><th>Council</th><th>Year</th><th>Place</th><th>Patron King</th><th>Presided by</th></tr>
+<tr><td>1st</td><td><b>483/480 BC</b></td><td><b>Rajgir</b></td><td><b>Ajatashatru</b></td><td><b>Mahakassapa</b></td></tr>
+<tr><td>2nd</td><td><b>383 BC</b></td><td><b>Vaishali</b></td><td><b>Kalashoka</b></td><td><b>Sabakami</b></td></tr>
+<tr><td>3rd</td><td><b>250 BC</b></td><td><b>Pataliputra</b></td><td><b>Ashoka</b></td><td><b>Moggaliputta Tissa</b></td></tr>
+<tr><td>4th</td><td><b>72 AD</b></td><td><b>Kundalvan, Kashmir</b></td><td><b>Kanishka</b></td><td><b>Vasumitra</b></td></tr>
+</table>
+<div class="hook"><b>Two ready-made hooks from the transcript:</b><br>
+Patron Kings in order: <b>A</b>jatashatru → <b>K</b>alashoka → <b>A</b>shoka → <b>K</b>anishka = "<b>AKAK</b>" (rhythmic, like a drumbeat: A-K-A-K).<br>
+Presiding heads, first letters: Mahakassapa, Sabakami, (Moggaliputta Tissa), Vasumitra = "<b>M S (MT) V</b>" — say it as "MS MV" while remembering Council 3's man has two names (Moggaliputta Tissa), tucked silently in the middle.<br>
+Each council is roughly <b>100 years</b> after the previous (483→383→roughly 250→ then a longer gap to 72 AD when Kanishka revives Buddhism after centuries).</div>
+
+<h3 class="sub">14. The Great Split: Hinayana vs Mahayana</h3>
+<table>
+<tr><th></th><th>Hinayana ("Lesser Vehicle")</th><th>Mahayana ("Greater Vehicle")</th></tr>
+<tr><td>Idol worship</td><td><b>No</b> — Buddha seen as ordinary teacher</td><td><b>Yes</b> — Buddha seen as divine being</td></tr>
+<tr><td>Belief in rebirth of Buddha</td><td>No</td><td><b>Yes</b></td></tr>
+<tr><td>Focus</td><td>Individual enlightenment via personal effort</td><td>Helping others toward enlightenment (Bodhisattva ideal)</td></tr>
+<tr><td>Language</td><td><b>Pali</b></td><td><b>Sanskrit</b></td></tr>
+<tr><td>Region today</td><td>Sri Lanka, Thailand, Cambodia, Vietnam (South/SE Asia)</td><td>China, Korea, Japan</td></tr>
+</table>
+<p><b>Bodhisattva</b> = an enlightened being who <i>postpones</i> their own nirvana to help others attain enlightenment. Examples: <b>Padmapani</b>, <b>Amitabha</b> (not Amitabh Bachchan!).</p>
+<p><b>Tantric Buddhism</b> — developed mainly in <b>North Bengal and Sikkim</b>; tantra-mantra elements merged into Buddhist practice.</p>
+<div class="hook"><b>Hook:</b> "Hina" sounds like "minus/lesser" — lesser vehicle, no idols, just a wise teacher. "Maha" sounds like "mega/grand" — grand vehicle, grand divine Buddha, statues everywhere. The country list follows the same logic: SE Asia kept it simple (Hinayana); East Asia (China/Korea/Japan) built it grand (Mahayana).</div>
+
+<h3 class="sub">15. Buddhist Architecture Vocabulary</h3>
+<table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td><b>Chaitya</b></td><td>Prayer hall</td></tr>
+<tr><td><b>Vihara</b></td><td>Residence/monastery for monks</td></tr>
+<tr><td><b>Dhamma</b></td><td>Religion/law (Buddha's teaching)</td></tr>
+<tr><td><b>Stupa</b></td><td>Mound containing relics of Buddha</td></tr>
+</table>
+
+<h3 class="sub">16. Parts of a Stupa</h3>
+<table>
+<tr><th>Part</th><th>What it is</th></tr>
+<tr><td><b>Anda</b> (egg)</td><td>The hemispherical dome — main body</td></tr>
+<tr><td><b>Harmika</b></td><td>The square railing/box on top of the dome</td></tr>
+<tr><td><b>Chhatra</b></td><td>The umbrella(s) above Harmika — usually <b>three</b>, representing the <b>Triratna</b> (Buddha, Dhamma, Sangha)</td></tr>
+<tr><td><b>Torana</b></td><td>The ornamental gateway</td></tr>
+<tr><td><b>Medhi</b></td><td>The railing around the base / outer boundary</td></tr>
+<tr><td><b>Pradakshina path</b></td><td>The circular path for circumambulation, inside the Medhi</td></tr>
+</table>
+<div class="hook"><b>Hook — bottom to top:</b> Walk up a stupa like climbing a person: feet = <b>Medhi</b> (boundary you walk around first), belly = <b>Anda</b> (the big dome/egg), neck = <b>Harmika</b> (square collar), and head = <b>Chhatra</b> (three umbrellas, like three little crowns) — and you enter through the <b>Torana</b> gate at the very start.</div>
+
+<h3 class="sub">17. Famous Stupas & Monasteries</h3>
+<table>
+<tr><th>Stupa</th><th>Location</th><th>Note</th></tr>
+<tr><td><b>Kesaria Stupa</b></td><td>Bihar</td><td><b>Largest stupa in India</b> (Borobudur, Indonesia, is largest in the world)</td></tr>
+<tr><td><b>Dhamekh Stupa</b></td><td>Sarnath, Varanasi</td><td>Distinctly <b>cylindrical</b> shape</td></tr>
+<tr><td><b>Rambhar Stupa</b></td><td>Kushinagar, UP</td><td>Site of Buddha's death</td></tr>
+<tr><td>Sanchi & Bharhut Stupas</td><td>Madhya Pradesh</td><td>Classic stupa architecture</td></tr>
+<tr><td>Shanti Stupa</td><td>Ladakh</td><td>—</td></tr>
+<tr><td>Chir Top</td><td>Taxila</td><td>—</td></tr>
+<tr><td>Piprahwa Stupa</td><td>Uttar Pradesh</td><td>—</td></tr>
+</table>
+<p><b>Drilling/Drepung-type Monastery</b> mentioned — at <b>Bylakuppe, Karnataka</b> — called the <b>"Golden Temple of South India."</b></p>
+
+<h3 class="sub">18. The Four Holy Sites (directly tied to Buddha's life)</h3>
+<table>
+<tr><th>Site</th><th>Event</th></tr>
+<tr><td><b>Lumbini</b></td><td>Birth</td></tr>
+<tr><td><b>Bodh Gaya</b></td><td>Enlightenment</td></tr>
+<tr><td><b>Sarnath</b> (Deer Park)</td><td>First sermon</td></tr>
+<tr><td><b>Kushinagar</b></td><td>Death</td></tr>
+</table>
+<p>Other important places: <b>Rajgir</b> and <b>Vaishali</b> (also council venues), <b>Shravasti</b> and <b>Sankisa</b> (Buddhist sites/universities).</p>
+
+<h3 class="sub">19. Buddhist Universities</h3>
+<table>
+<tr><th>University</th><th>Location</th><th>Founder</th></tr>
+<tr><td><b>Nalanda</b></td><td>Bihar</td><td><b>Kumaragupta I</b> (Gupta dynasty)</td></tr>
+<tr><td><b>Vikramshila</b></td><td>Bihar</td><td><b>Dharmapala</b> (Pala dynasty)</td></tr>
+<tr><td><b>Odantapuri</b></td><td>Bihar</td><td><b>Gopala</b> (Pala dynasty)</td></tr>
+</table>
+<div class="hook"><b>Hook:</b> Two Pala kings, two universities: "<b>Go</b>pala built <b>O</b>dantapuri" (Go-O, rhymes), "<b>Dharma</b>pala built Vikram<b>shila</b>" — and Nalanda stands apart, the odd one out, founded earlier by a <b>Gupta</b> king (Kumaragupta I), not a Pala king.</div>
+
+</div>
+<!-- ===== END LAYER 1 ===== -->
+
+<!-- ================= LAYER 2: HIGH-YIELD NOTES ================= -->
+<div class="layer" id="l2">
+
+<div class="bigpicture">High-yield = the facts SSC actually rotates questions around. If you only have 20 minutes, read only this.</div>
+
+<h2 class="section-title"><span class="num">1</span>Jainism — High Yield</h2>
+<div class="card glow">
+<p><span class="tag must">MUST</span> Mahavira: born <b>540 BC Kundagram, Vaishali</b>; died <b>468 BC Pavapuri</b>; enlightenment age <b>42</b> under <b>Sal tree</b> on river <b>Rijupalika</b>; left home age <b>30</b> with <b>Makhali Gosala</b> (→ founded Ajivika sect).</p>
+<p><span class="tag must">MUST</span> Symbols: Rishabhdev = <b>Bull</b>; Parshvanath = <b>Snake</b>; Mahavira = <b>Lion</b>.</p>
+<p><span class="tag must">MUST</span> Schism: <b>Digambara</b> (naked, South, founder Bhadrabahu, boycotted 1st council) vs <b>Shwetambara</b> (white clothes, founder Sthulabhadra). Cause: famine in Magadha during Chandragupta Maurya's reign.</p>
+<p><span class="tag imp">IMP</span> 1st Council: <b>298 BC</b>, patron <b>Bindusara</b>, presided <b>Sthulabhadra</b>. 2nd Council: <b>512 AD, Vallabhi, Gujarat</b>.</p>
+<p><span class="tag imp">IMP</span> Triratna: Samyak Jnana + Darshan + Charitra. Five vows: Ahimsa, Satya, Asteya, Brahmacharya, Aparigraha.</p>
+<p><span class="tag imp">IMP</span> Architecture: Gomateshwara Bahubali (<b>Shravanabelgola</b>, every 12 yrs Mahamastakabhisheka), Dilwara Temples (<b>Mount Abu</b>, built by Vastupala brothers), Hathigumpha Cave (Udayagiri-Khandagiri, Odisha).</p>
+<p><span class="tag good">GOOD</span> Patrons: Chandragupta Maurya, Bindusara, Bimbisara, Ajatashatru. Literature in <b>Prakrit</b>.</p>
+</div>
+
+<h2 class="section-title"><span class="num">2</span>Buddhism — High Yield</h2>
+<div class="card glow">
+<p><span class="tag must">MUST</span> Buddha: born <b>563 BC Lumbini</b>; died <b>483 BC Kushinagar</b>; left home age <b>29</b> (Mahabhinishkramana); enlightened at <b>Bodh Gaya</b> under Bodhi tree (river Niranjana, village Uruvela); first sermon at <b>Sarnath</b> (Deer Park).</p>
+<p><span class="tag must">MUST</span> Symbols: Birth = Lotus, Renunciation = Horse, Enlightenment = Bodhi tree, First Sermon = Wheel, Death = Stupa.</p>
+<p><span class="tag must">MUST</span> Four Noble Truths → leads to <b>Eightfold Path (Ashtangika Marga)</b>. Triratna of Buddhism = <b>Buddha, Dhamma, Sangha</b> (different from Jain Triratna!).</p>
+<p><span class="tag must">MUST</span> Four Councils — memorize the AKAK chain: <b>Ajatashatru</b> (Rajgir) → <b>Kalashoka</b> (Vaishali) → <b>Ashoka</b> (Pataliputra) → <b>Kanishka</b> (Kundalvan, Kashmir).</p>
+<p><span class="tag imp">IMP</span> Hinayana (Pali, no idols, S/SE Asia) vs Mahayana (Sanskrit, idol worship, Bodhisattva concept, China/Korea/Japan).</p>
+<p><span class="tag imp">IMP</span> Tripitaka = Sutta + Vinaya + Abhidhamma, in <b>Pali</b>. Buddhacharita (Sanskrit) by <b>Ashvaghosha</b>. Milinda Panho = dialogue of Menander & Nagasena.</p>
+<p><span class="tag imp">IMP</span> Stupa parts: Anda, Harmika, Chhatra (×3 = Triratna), Torana, Medhi. Largest in India = <b>Kesaria, Bihar</b>; cylindrical = <b>Dhamekh, Sarnath</b>.</p>
+<p><span class="tag good">GOOD</span> Universities: Nalanda (Kumaragupta I), Vikramshila (Dharmapala), Odantapuri (Gopala).</p>
+</div>
+
+</div>
+<!-- ===== END LAYER 2 ===== -->
+
+<!-- ================= LAYER 3: ULTRA-FAST ================= -->
+<div class="layer" id="l3">
+<div class="bigpicture">One pass, no explanations — pure fact recall. Use this the morning of a mock test.</div>
+
+<h2 class="section-title"><span class="num">1</span>Jainism — Ultra Fast</h2>
+<div class="fastgrid">
+<div class="fastitem"><b>Founder:</b> Rishabhdev</div>
+<div class="fastitem"><b>Real propagator:</b> Mahavira</div>
+<div class="fastitem"><b>Mahavira birth:</b> 540 BC, Kundagram, Vaishali</div>
+<div class="fastitem"><b>Mahavira death:</b> 468 BC, Pavapuri</div>
+<div class="fastitem"><b>Father / Mother:</b> Siddhartha / Trishala</div>
+<div class="fastitem"><b>Wife / Daughter:</b> Yashoda / Anuja Priyadarshini</div>
+<div class="fastitem"><b>Left home:</b> age 30, with Makhali Gosala</div>
+<div class="fastitem"><b>Enlightenment:</b> age 42, Sal tree, river Rijupalika</div>
+<div class="fastitem"><b>First sermon:</b> Pava</div>
+<div class="fastitem"><b>Symbols:</b> Bull–Snake–Lion (Rishabh–Parshva–Mahavira)</div>
+<div class="fastitem"><b>Triratna:</b> Jnana+Darshan+Charitra</div>
+<div class="fastitem"><b>5 vows:</b> Ahimsa, Satya, Asteya, Brahmacharya, Aparigraha</div>
+<div class="fastitem"><b>1st Council:</b> 298 BC, Bindusara, Sthulabhadra</div>
+<div class="fastitem"><b>2nd Council:</b> 512 AD, Vallabhi</div>
+<div class="fastitem"><b>Digambara founder:</b> Bhadrabahu (naked, South)</div>
+<div class="fastitem"><b>Shwetambara founder:</b> Sthulabhadra (white, North)</div>
+<div class="fastitem"><b>Bahubali statue:</b> Shravanabelgola</div>
+<div class="fastitem"><b>Dilwara temple:</b> Mt Abu, by Vastupala brothers</div>
+<div class="fastitem"><b>Language:</b> Prakrit</div>
+<div class="fastitem"><b>Ajivika founder:</b> Makhali Gosala (fatalism)</div>
+</div>
+
+<h2 class="section-title"><span class="num">2</span>Buddhism — Ultra Fast</h2>
+<div class="fastgrid">
+<div class="fastitem"><b>Birth:</b> 563 BC, Lumbini</div>
+<div class="fastitem"><b>Death:</b> 483 BC, Kushinagar</div>
+<div class="fastitem"><b>Father / Mother:</b> Suddhodhana (Shakya) / Mahamaya (Koliya)</div>
+<div class="fastitem"><b>Step-mother:</b> Mahaprajapati Gautami (1st nun)</div>
+<div class="fastitem"><b>Wife / Son:</b> Yashodhara / Rahul</div>
+<div class="fastitem"><b>Childhood name:</b> Siddhartha</div>
+<div class="fastitem"><b>Left home:</b> age 29, Mahabhinishkramana</div>
+<div class="fastitem"><b>Teachers:</b> Alara Kalama, Udraka Ramaputra</div>
+<div class="fastitem"><b>Enlightenment:</b> Bodh Gaya, Bodhi tree, Niranjana river</div>
+<div class="fastitem"><b>First sermon:</b> Sarnath, Deer Park</div>
+<div class="fastitem"><b>Symbols:</b> Lotus–Horse–Tree–Wheel–Stupa</div>
+<div class="fastitem"><b>Triratna:</b> Buddha, Dhamma, Sangha</div>
+<div class="fastitem"><b>4 Truths → Path:</b> Ashtangika Marga</div>
+<div class="fastitem"><b>Councils:</b> AKAK = Ajatashatru–Kalashoka–Ashoka–Kanishka</div>
+<div class="fastitem"><b>Council places:</b> Rajgir–Vaishali–Pataliputra–Kundalvan(Kashmir)</div>
+<div class="fastitem"><b>Hinayana:</b> Pali, no idols, S/SE Asia</div>
+<div class="fastitem"><b>Mahayana:</b> Sanskrit, idols, Bodhisattva, China/Korea/Japan</div>
+<div class="fastitem"><b>Tripitaka:</b> Sutta+Vinaya+Abhidhamma (Pali)</div>
+<div class="fastitem"><b>Buddhacharita:</b> Ashvaghosha (Sanskrit)</div>
+<div class="fastitem"><b>Milinda Panho:</b> Menander + Nagasena</div>
+<div class="fastitem"><b>Largest stupa (India):</b> Kesaria, Bihar</div>
+<div class="fastitem"><b>Cylindrical stupa:</b> Dhamekh, Sarnath</div>
+<div class="fastitem"><b>Universities:</b> Nalanda(Kumaragupta I), Vikramshila(Dharmapala), Odantapuri(Gopala)</div>
+<div class="fastitem"><b>Tantric Buddhism:</b> N. Bengal & Sikkim</div>
+</div>
+</div>
+<!-- ===== END LAYER 3 ===== -->
+
+<!-- ================= LAYER 4: 30-SECOND SHEET ================= -->
+<div class="layer" id="l4">
+<div class="sheet30">
+<h3 class="sub" style="margin-top:0;">30-Second Revision Sheet</h3>
+<div class="row"><div class="l">Mahavira</div><div>540–468 BC, Vaishali→Pavapuri, age 42 enlightened, Lion symbol</div></div>
+<div class="row"><div class="l">Buddha</div><div>563–483 BC, Lumbini→Kushinagar, Bodh Gaya enlightened, Lotus/Horse/Tree/Wheel/Stupa</div></div>
+<div class="row"><div class="l">Jain split</div><div>Digambara (naked, Bhadrabahu) vs Shwetambara (white, Sthulabhadra)</div></div>
+<div class="row"><div class="l">Buddhist split</div><div>Hinayana (no idols, Pali) vs Mahayana (idols, Sanskrit, Bodhisattva)</div></div>
+<div class="row"><div class="l">Jain Triratna</div><div>Jnana, Darshan, Charitra</div></div>
+<div class="row"><div class="l">Buddhist Triratna</div><div>Buddha, Dhamma, Sangha</div></div>
+<div class="row"><div class="l">Jain Councils</div><div>298 BC Bindusara/Sthulabhadra · 512 AD Vallabhi</div></div>
+<div class="row"><div class="l">Buddhist Councils</div><div>AKAK → Ajatashatru, Kalashoka, Ashoka, Kanishka</div></div>
+<div class="row"><div class="l">Jain architecture</div><div>Shravanabelgola (Bahubali) · Mt Abu (Dilwara)</div></div>
+<div class="row"><div class="l">Stupa parts</div><div>Anda–Harmika–Chhatra(×3)–Torana–Medhi</div></div>
+<div class="row"><div class="l">Largest stupa</div><div>Kesaria (India) / Borobudur (world)</div></div>
+<div class="row"><div class="l">Universities</div><div>Nalanda–Gupta · Vikramshila & Odantapuri–Pala</div></div>
+</div>
+</div>
+<!-- ===== END LAYER 4 ===== -->
+
+<!-- ================= LAYER 5: LAST NIGHT ================= -->
+<div class="layer" id="l5">
+<div class="lastnight">
+<h4>🚨 Last-Night-Before-Exam Sheet — read once, sleep well</h4>
+<p><b>Two princes, two paths:</b> Mahavira (Jnatrika clan, Vaishali) and Buddha (Shakya clan, Lumbini) both renounced royal life, both got enlightened under a tree near a river, both have a "first sermon" location separate from their enlightenment location.</p>
+<p><b>The number that trips everyone:</b> Mahavira left home at <b>30</b>, got enlightened at <b>42</b>. Buddha left home at <b>29</b>, got enlightened... at Bodh Gaya (age not numbered in this transcript — don't invent one).</p>
+<p><b>The clothing trap:</b> Digambara = no clothes = Bhadrabahu = South. Shwetambara = white clothes = Sthulabhadra = North.</p>
+<p><b>The vehicle trap:</b> Hinayana = "lesser," no idols, Pali, spread South/SE Asia. Mahayana = "greater," idols + Bodhisattva, Sanskrit, spread East Asia.</p>
+<p><b>The Triratna trap:</b> Same word, two different lists. Jain = Jnana-Darshan-Charitra. Buddhist = Buddha-Dhamma-Sangha.</p>
+<p><b>The AKAK chain:</b> Ajatashatru → Kalashoka → Ashoka → Kanishka, four kings, four councils, four cities (Rajgir, Vaishali, Pataliputra, Kundalvan/Kashmir).</p>
+<p><b>The family-name trap:</b> "Anuja Priyadarshini" + "Jamali" appear for BOTH Mahavira and Buddha's families in this lecture — check the clan name (Jnatrika vs Shakya) to know which family you're being asked about.</p>
+<p><b>One number to never forget:</b> Mahamastakabhisheka at Shravanabelgola happens every <b>12 years</b>.</p>
+<p style="margin-bottom:0;"><b>Breathe. You already know this.</b> Go in calm — like Mahavira's Aparigraha: don't get shaken by one hard question.</p>
+</div>
+</div>
+<!-- ===== END LAYER 5 ===== -->
+
+<!-- ================= LAYER 6: ACTIVE RECALL ================= -->
+<div class="layer" id="l6">
+<div class="bigpicture">Tap a question to flip it. Don't peek before you try to answer out loud first — that's the whole point of active recall.</div>
+
+<h2 class="section-title"><span class="num">1</span>One-Liner Recall — Jainism</h2>
+<div id="recall-jain"></div>
+
+<h2 class="section-title"><span class="num">2</span>One-Liner Recall — Buddhism</h2>
+<div id="recall-buddh"></div>
+
+<h2 class="section-title"><span class="num">3</span>Fill in the Blanks</h2>
+<div class="card">
+<p>1. Mahavira attained Kevalya Jnana under a <span class="blank">Sal tree</span> on the bank of river <span class="blank">Rijupalika</span> at age <span class="blank">42</span>.</p>
+<p>2. The Digambara sect's founder is <span class="blank">Bhadrabahu</span>, who performed Sallekhana at <span class="blank">Shravanabelgola, Karnataka</span>.</p>
+<p>3. Buddha's first teacher after leaving home was <span class="blank">Alara Kalama</span>, and the second was <span class="blank">Udraka Ramaputra</span>.</p>
+<p>4. The 3rd Buddhist Council was held at <span class="blank">Pataliputra</span> in <span class="blank">250 BC</span>, patronized by <span class="blank">Ashoka</span>, presided by <span class="blank">Moggaliputta Tissa</span>.</p>
+<p>5. The largest stupa in India is <span class="blank">Kesaria</span> in <span class="blank">Bihar</span>; the largest in the world is <span class="blank">Borobudur</span> in <span class="blank">Indonesia</span>.</p>
+<p class="dim sans" style="font-size:12px;">(Tap/hover each dotted line to reveal the answer)</p>
+</div>
+
+<h2 class="section-title"><span class="num">4</span>Reverse Questions</h2>
+<div class="card">
+<p><b>If the answer is "Sthulabhadra" — what could the question be?</b><br><span class="dim">→ Who presided over the 1st Jain Council? / Who founded the Shwetambara sect's textual tradition?</span></p>
+<p><b>If the answer is "483 AD" / "72 AD" — what could the question be?</b><br><span class="dim">→ When was the 4th Buddhist Council held, under Kanishka, at Kundalvan, Kashmir?</span></p>
+<p><b>If the answer is "Ashvaghosha" — what could the question be?</b><br><span class="dim">→ Who wrote the Buddhacharita in Sanskrit?</span></p>
+<p><b>If the answer is "Bodhisattva" — what could the question be?</b><br><span class="dim">→ In Mahayana Buddhism, what term describes an enlightened being who delays their own nirvana to help others?</span></p>
+</div>
+
+<h2 class="section-title"><span class="num">5</span>Rapid-Fire Round</h2>
+<div id="recall-rapid"></div>
+
+</div>
+<!-- ===== END LAYER 6 ===== -->
+
+<!-- ================= LAYER 7: EXAM TRAPS ================= -->
+<div class="layer" id="l7">
+<div class="bigpicture">⚠ This is the section that separates 90-percentile from 99-percentile. Every line below is something the lecture explicitly warned about or that sounds confusingly similar.</div>
+
+<h2 class="section-title"><span class="num">1</span>Name & Spelling Traps</h2>
+<div class="trap"><b>Bindusara ≠ Bimbisara.</b> Bindusara = Mauryan king, son of Chandragupta Maurya, father of Ashoka, patron of 1st <i>Jain</i> Council (298 BC). Bimbisara = Magadhan king, much earlier era, contemporary of <i>both</i> Mahavira and Buddha.</div>
+<div class="trap"><b>Pava ≠ Pavapuri.</b> Mahavira gave his <i>first sermon</i> at Pava. He <i>died</i> at Pavapuri. Easy to swap under exam pressure.</div>
+<div class="trap"><b>Mahakassapa / Sabakami / Moggaliputta Tissa / Vasumitra</b> presided over the four Buddhist councils respectively — easily jumbled with the four <i>patron kings</i> (Ajatashatru, Kalashoka, Ashoka, Kanishka). Question may ask "who presided" vs "who patronized" — read carefully.</div>
+<div class="trap"><b>Milinda ≠ a random king.</b> Milinda is the same person as <b>Menander</b>, an Indo-Greek ruler. Exams may use either name.</div>
+
+<h2 class="section-title"><span class="num">2</span>Similar Concepts, Different Religions</h2>
+<div class="trap"><b>"Triratna" exists in both religions but means different things.</b> Jain Triratna = right knowledge/faith/conduct. Buddhist Triratna = Buddha, Dhamma, Sangha. A question simply saying "Triratna" without naming the religion is testing whether you know both.</div>
+<div class="trap"><b>Both Mahavira and Buddha have a daughter "Anuja Priyadarshini" and son-in-law/first disciple "Jamali" in this lecture's framing.</b> This is the single most dangerous trap in the whole chapter — always verify via clan name (Jnatrika = Mahavira; Shakya = Buddha) before answering.</div>
+<div class="trap"><b>Both founders left home accompanied/guided by a figure who later broke away to form a rival sect with extreme/fatalistic views</b> — for Mahavira this is Makhali Gosala → Ajivika sect. Don't confuse Ajivika (fatalism) with either Digambara or Hinayana.</div>
+
+<h2 class="section-title"><span class="num">3</span>Sect/School Confusions</h2>
+<div class="trap"><b>Digambara vs Shwetambara</b> — remember by clothing literally: Shwet = white (clothes), Digambara = sky-clad (no clothes). Founders: Digambara→Bhadrabahu, Shwetambara→Sthulabhadra.</div>
+<div class="trap"><b>Hinayana vs Mahayana</b> — remember by scale of imagination: Hinayana keeps Buddha human-sized (teacher, no idols, Pali); Mahayana makes Buddha cosmic (divine, idols, Sanskrit, Bodhisattvas). Geography: Hinayana → South/SE Asia; Mahayana → East Asia (China, Korea, Japan).</div>
+
+<h2 class="section-title"><span class="num">4</span>Number & Date Traps</h2>
+<div class="trap"><b>Council date jumps look patterned (~100 years apart): 480→383→250 BC, then a long jump to 72 AD</b> (Kanishka revives Buddhism centuries later under Kushans). Don't assume a fixed 100-year rule applies to the 4th council.</div>
+<div class="trap"><b>Mahamastakabhisheka festival at Shravanabelgola is every 12 years</b> — easily confused with other "12-year cycle" facts from other chapters (e.g., Kumbh Mela). Keep them in separate mental boxes.</div>
+<div class="trap"><b>1st Jain Council = 298 BC; 1st Buddhist Council ≈ 480/483 BC.</b> Don't accidentally merge these two "first councils" into one date.</div>
+
+<h2 class="section-title"><span class="num">5</span>Geography Traps</h2>
+<div class="trap"><b>Largest stupa in India (Kesaria, Bihar) vs largest stupa in the world (Borobudur, Indonesia)</b> — a classic "in India" vs "in the world" qualifier trap.</div>
+<div class="trap"><b>Dhamekh Stupa's distinguishing feature is its cylindrical shape</b> — most other stupas are described as hemispherical domes; this is the outlier shape to remember.</div>
+<div class="trap"><b>Two Pala-dynasty universities (Vikramshila by Dharmapala, Odantapuri by Gopala) vs Nalanda, which is Gupta-dynasty (Kumaragupta I)</b> — don't lump all three under one dynasty.</div>
+
+<h2 class="section-title"><span class="num">6</span>Match-the-Following Bait</h2>
+<table>
+<tr><th>Likely paired column A</th><th>Likely paired column B</th></tr>
+<tr><td>Rishabhdev</td><td>Bull</td></tr>
+<tr><td>Parshvanath</td><td>Snake</td></tr>
+<tr><td>Mahavira</td><td>Lion</td></tr>
+<tr><td>Buddha's Birth</td><td>Lotus</td></tr>
+<tr><td>Buddha's Renunciation</td><td>Horse</td></tr>
+<tr><td>Buddha's First Sermon</td><td>Wheel</td></tr>
+<tr><td>Buddha's Death</td><td>Stupa</td></tr>
+<tr><td>Sutta Pitaka</td><td>Buddha's teachings</td></tr>
+<tr><td>Vinaya Pitaka</td><td>Monastic rules</td></tr>
+<tr><td>Abhidhamma Pitaka</td><td>Philosophical interpretation</td></tr>
+</table>
+
+</div>
+<!-- ===== END LAYER 7 ===== -->
+
+</div>
+
+<button class="fab" id="scrollTop" title="Back to top">↑</button>
+
+<script>
+// ---------- NAV SWITCHING ----------
+const tabs = document.querySelectorAll('.navtab');
+const layers = document.querySelectorAll('.layer');
+tabs.forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    tabs.forEach(t=>t.classList.remove('active'));
+    layers.forEach(l=>l.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.layer).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+// ---------- SCROLL TOP ----------
+document.getElementById('scrollTop').addEventListener('click', ()=>{
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+// ---------- BLANK REVEAL ----------
+document.querySelectorAll('.blank').forEach(b=>{
+  b.addEventListener('click', ()=> b.classList.toggle('reveal'));
+});
+
+// ---------- QA ACCORDIONS ----------
+function makeQA(container, pairs){
+  pairs.forEach(([q,a])=>{
+    const div = document.createElement('div');
+    div.className = 'qa';
+    div.innerHTML = `<div class="q">${q}</div><div class="a">${a}</div>`;
+    div.addEventListener('click', ()=> div.classList.toggle('open'));
+    container.appendChild(div);
+  });
+}
+
+makeQA(document.getElementById('recall-jain'), [
+  ["Who is considered the founder of Jainism, and who is its real propagator?", "Founder: Rishabhdev (1st Tirthankara). Real propagator: Vardhaman Mahavira (24th Tirthankara)."],
+  ["At what age did Mahavira leave home, and who accompanied him?", "Age 30, accompanied by Makhali Gosala (who later founded the Ajivika sect)."],
+  ["Where and at what age did Mahavira attain enlightenment?", "Age 42, under a Sal tree, in village Jrimbhikagrama, on the bank of river Rijupalika."],
+  ["What caused the Digambara–Shwetambara split?", "A famine in Magadha forced Bhadrabahu's followers to migrate south to Shravanabelgola and give up clothing (became Digambara); those who stayed in the north resumed white clothing (became Shwetambara)."],
+  ["Name the five Mahavratas of Jainism.", "Ahimsa (non-violence), Satya (truth), Asteya (non-stealing), Brahmacharya (chastity), Aparigraha (non-attachment)."],
+  ["Who presided over the 1st Jain Council and who patronized it?", "Presided by Sthulabhadra; patronized by King Bindusara, in 298 BC."],
+  ["What is Mahavira's title meaning 'one who has conquered all senses'?", "Jitendra. (Kevalin means the perfectly omniscient one.)"],
+]);
+
+makeQA(document.getElementById('recall-buddh'), [
+  ["What are the Four Noble Truths, in order?", "1) The world is full of suffering (Dukkha) 2) Desire is the cause of suffering (Samudaya) 3) Suffering can be ended (Nirodha) 4) The Eightfold Path ends suffering (Marga)."],
+  ["What symbol represents each event in Buddha's life: birth, renunciation, enlightenment, first sermon, death?", "Birth = Lotus, Renunciation = Horse, Enlightenment = Bodhi tree, First Sermon = Wheel (Chakra), Death = Stupa."],
+  ["What is the Buddhist Triratna, and how is it different from the Jain Triratna?", "Buddhist Triratna = Buddha, Dhamma, Sangha. Jain Triratna = Samyak Jnana, Darshan, Charitra — completely different list, same word 'Triratna'."],
+  ["List the four Buddhist councils with their patron kings and venues.", "1st: Ajatashatru, Rajgir (~480 BC). 2nd: Kalashoka, Vaishali (383 BC). 3rd: Ashoka, Pataliputra (250 BC). 4th: Kanishka, Kundalvan Kashmir (72 AD)."],
+  ["Differentiate Hinayana and Mahayana Buddhism.", "Hinayana: no idol worship, Buddha seen as teacher, Pali language, individual effort, found in South/SE Asia. Mahayana: idol worship, Buddha seen as divine, Sanskrit, Bodhisattva concept, found in China/Korea/Japan."],
+  ["What is a Bodhisattva?", "An enlightened being who postpones their own nirvana in order to help others attain enlightenment — e.g., Padmapani, Amitabha."],
+  ["Name the three Pitakas of the Tripitaka and what each contains.", "Sutta Pitaka = Buddha's teachings. Vinaya Pitaka = monastic rules. Abhidhamma Pitaka = philosophical interpretation of the Sutta Pitaka."],
+  ["Who founded Nalanda, Vikramshila, and Odantapuri universities?", "Nalanda — Kumaragupta I (Gupta dynasty). Vikramshila — Dharmapala (Pala dynasty). Odantapuri — Gopala (Pala dynasty)."],
+]);
+
+makeQA(document.getElementById('recall-rapid'), [
+  ["Mahavira's mother's name?", "Trishala"],
+  ["Buddha's mother's name and her tribe?", "Mahamaya, Koliya tribe"],
+  ["Who became the first Buddhist nun?", "Mahaprajapati Gautami (Buddha's step-mother)"],
+  ["What is 'Basadi'?", "Jain monasteries/temples"],
+  ["What language is most Jain literature written in?", "Prakrit"],
+  ["Where was the 2nd Jain Council held, and when?", "Vallabhi, Gujarat, 512 AD"],
+  ["What is Sallekhana?", "A ritual fast unto death performed by Jain ascetics (Bhadrabahu performed it at Shravanabelgola)"],
+  ["What do 'Chaitya' and 'Vihara' mean?", "Chaitya = prayer hall; Vihara = monk's residence"],
+  ["Where is the Dhamekh Stupa, and what's special about its shape?", "Sarnath, Varanasi — distinctly cylindrical (most stupas are hemispherical domes)"],
+  ["What is the 'Golden Temple of South India' and where is it?", "A Buddhist monastery (Drepung-type) at Bylakuppe, Karnataka"],
+]);
+</script>
+</body>
+</html>

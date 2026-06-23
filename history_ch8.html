@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quit India Movement — SSC CGL Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d14;
+    --bg2: #0f1320;
+    --bg3: #161c2d;
+    --border: #1e2740;
+    --accent-gold: #f5c842;
+    --accent-red: #ff4d4d;
+    --accent-green: #3dffa0;
+    --accent-blue: #5b9cf6;
+    --accent-purple: #b48eff;
+    --accent-orange: #ff8c42;
+    --text: #dce4f5;
+    --text-dim: #7a8ba8;
+    --text-bright: #ffffff;
+    --fire: #ff4d4d;
+    --star: #f5c842;
+    --plus: #3dffa0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,13,20,0.97);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; align-items: center; gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--accent-gold);
+    white-space: nowrap; padding: 14px 20px 14px 0;
+    border-right: 1px solid var(--border);
+    margin-right: 16px;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 18px 14px;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--accent-gold); }
+
+  /* HERO */
+  .hero {
+    margin-top: 52px;
+    padding: 72px 40px 56px;
+    background: linear-gradient(160deg, #0f1320 0%, #0a0d14 60%);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '1942';
+    position: absolute; right: -20px; top: 10px;
+    font-size: 200px; font-weight: 700;
+    color: rgba(245,200,66,0.04);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: var(--accent-gold);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 60px);
+    font-weight: 700;
+    color: var(--text-bright);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--accent-gold); }
+  .hero-sub {
+    color: var(--text-dim);
+    font-size: 14px;
+    max-width: 560px;
+  }
+  .hero-tags {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px;
+  }
+  .hero-tag {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 4px 12px; border-radius: 999px;
+    font-size: 11px; font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+  }
+
+  /* LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 48px 24px 120px; }
+
+  /* SECTIONS */
+  section { margin-bottom: 64px; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .section-title {
+    font-size: 22px; font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .icon { font-size: 20px; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-weight: 700; color: var(--text-bright);
+    margin-bottom: 8px; font-size: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card p, .card li { color: var(--text); font-size: 14px; }
+  .card ul { padding-left: 16px; }
+  .card ul li { margin-bottom: 4px; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute; left: -24px; top: 20px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent-gold);
+    border: 2px solid var(--bg);
+  }
+  .tl-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: var(--accent-gold);
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .tl-title { font-weight: 700; color: var(--text-bright); margin-bottom: 6px; font-size: 14px; }
+  .tl-body { color: var(--text); font-size: 13.5px; }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+    margin-right: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .tag-fire { background: rgba(255,77,77,0.15); color: var(--fire); border: 1px solid rgba(255,77,77,0.3); }
+  .tag-star { background: rgba(245,200,66,0.12); color: var(--star); border: 1px solid rgba(245,200,66,0.3); }
+  .tag-plus { background: rgba(61,255,160,0.1); color: var(--plus); border: 1px solid rgba(61,255,160,0.25); }
+
+  /* MEMORY PALACE */
+  .palace {
+    background: linear-gradient(135deg, #0d1224 0%, #12182e 100%);
+    border: 1px solid #2a3560;
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .palace::before {
+    content: '🏛';
+    position: absolute; right: 24px; top: 20px;
+    font-size: 60px; opacity: 0.1;
+  }
+  .palace-title {
+    color: var(--accent-purple);
+    font-weight: 700; font-size: 16px;
+    margin-bottom: 16px;
+  }
+  .palace-step {
+    display: flex; gap: 14px; margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .palace-num {
+    background: rgba(180,142,255,0.15);
+    color: var(--accent-purple);
+    border: 1px solid rgba(180,142,255,0.3);
+    border-radius: 6px;
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 700;
+    flex-shrink: 0;
+  }
+  .palace-text { font-size: 13.5px; color: var(--text); }
+  .palace-text strong { color: var(--text-bright); }
+
+  /* HOOK */
+  .hook {
+    background: linear-gradient(135deg, #131a10 0%, #0f1a14 100%);
+    border: 1px solid #1e3a28;
+    border-left: 3px solid var(--accent-green);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .hook-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent-green);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .hook p { font-size: 13.5px; font-style: italic; color: var(--text); }
+  .hook strong { color: var(--text-bright); font-style: normal; }
+
+  /* TRAP */
+  .trap {
+    background: linear-gradient(135deg, #1a0f0f 0%, #180d0d 100%);
+    border: 1px solid #3a1e1e;
+    border-left: 3px solid var(--accent-red);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .trap-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent-red);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .trap p { font-size: 13.5px; color: var(--text); }
+  .trap strong { color: #ff7070; }
+
+  /* QUESTION */
+  .q-block {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  .q-text { font-size: 13.5px; color: var(--text-bright); margin-bottom: 8px; }
+  .q-ans {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-green);
+    display: none;
+    padding: 8px 12px;
+    background: rgba(61,255,160,0.07);
+    border-radius: 6px;
+    margin-top: 6px;
+  }
+  .q-btn {
+    font-size: 11px;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 4px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+  .q-btn:hover { border-color: var(--accent-green); color: var(--accent-green); }
+
+  /* RAPID FIRE */
+  .rf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+  .rf-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .rf-q { color: var(--text-dim); margin-bottom: 4px; }
+  .rf-a {
+    color: var(--accent-gold);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    display: none;
+  }
+  .rf-item:hover .rf-a { display: block; }
+
+  /* YIELD / FAST REVISION */
+  .hy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .hy-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .hy-card-title {
+    font-size: 11px; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-blue);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .hy-list li {
+    font-size: 13px; color: var(--text);
+    margin-bottom: 4px;
+    list-style: none;
+    padding-left: 14px;
+    position: relative;
+  }
+  .hy-list li::before {
+    content: '›';
+    position: absolute; left: 0;
+    color: var(--accent-blue);
+  }
+
+  /* SPEED SHEET */
+  .speed-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+  }
+  .speed-table th {
+    background: var(--bg3);
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .speed-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid rgba(30,39,64,0.5);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .speed-table td:first-child {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-gold);
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .speed-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* LAST NIGHT */
+  .ln-panel {
+    background: linear-gradient(135deg, #0d1020 0%, #0a0e1a 100%);
+    border: 2px solid var(--accent-gold);
+    border-radius: 16px;
+    padding: 32px;
+  }
+  .ln-title {
+    text-align: center;
+    font-size: 18px; font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.06em;
+  }
+  .ln-row {
+    display: flex; gap: 8px; margin-bottom: 8px; align-items: flex-start;
+  }
+  .ln-bullet {
+    color: var(--accent-gold);
+    font-weight: 700; flex-shrink: 0;
+    font-size: 14px;
+  }
+  .ln-text { font-size: 13.5px; color: var(--text); }
+  .ln-text strong { color: var(--text-bright); }
+
+  /* 30-SEC */
+  .sec30 {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .sec30-col h4 {
+    font-size: 10px; font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim); letter-spacing: 0.12em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .sec30-col p {
+    font-size: 13px; color: var(--text);
+    margin-bottom: 4px;
+  }
+  .sec30-col strong { color: var(--accent-gold); }
+
+  /* CONNECT */
+  .connect-row {
+    display: flex; gap: 10px; align-items: center;
+    margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .connect-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px; color: var(--text-bright);
+    font-weight: 600;
+  }
+  .connect-arrow {
+    color: var(--accent-blue); font-weight: 700;
+    font-size: 14px;
+  }
+  .connect-result {
+    font-size: 13px; color: var(--text);
+    font-style: italic;
+  }
+
+  /* BACK TO TOP */
+  .top-btn {
+    position: fixed; bottom: 28px; right: 24px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    z-index: 100;
+    transition: all 0.2s;
+  }
+  .top-btn:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
+
+  /* UTILITY */
+  .highlight { color: var(--accent-gold); font-weight: 600; }
+  .red { color: var(--accent-red); font-weight: 600; }
+  .green { color: var(--accent-green); font-weight: 600; }
+  .blue { color: var(--accent-blue); }
+  .purple { color: var(--accent-purple); }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+  b { color: var(--text-bright); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 60px 20px 40px; }
+    .container { padding: 32px 16px 80px; }
+    .sec30 { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">QIM // SSC CGL</div>
+  <a href="#bigpicture">Big Picture</a>
+  <a href="#palace">Palace</a>
+  <a href="#notes">Notes</a>
+  <a href="#hooks">Hooks</a>
+  <a href="#connections">Connections</a>
+  <a href="#traps">⚠ Traps</a>
+  <a href="#examiner">Examiner</a>
+  <a href="#recall">Recall</a>
+  <a href="#highyield">High Yield</a>
+  <a href="#ultrafast">Ultra-Fast</a>
+  <a href="#30sec">30-Sec</a>
+  <a href="#lastnight">Last Night</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">Modern History · Final Chapter</div>
+  <h1>Quit India<br><span>Movement</span></h1>
+  <p class="hero-sub">Complete high-retention revision system for SSC CGL. Optimized for 20–100 revision cycles. Every fact. Unforgettable.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">1932 → 1947</span>
+    <span class="hero-tag">August Revolt</span>
+    <span class="hero-tag">INA Trials</span>
+    <span class="hero-tag">Cabinet Mission</span>
+    <span class="hero-tag">Partition Plan</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- BIG PICTURE -->
+<section id="bigpicture">
+  <div class="section-label">Section 01</div>
+  <div class="section-title"><span class="icon">🌐</span> Big Picture</div>
+  <div class="card">
+    <p>This chapter covers <b>India's final push to freedom</b> — from 1932 to 1947. The story moves through three acts:</p>
+    <br>
+    <p><span class="tag tag-fire">Act 1</span> <b>The Poona Pact Era (1932–39)</b> — Communal Award → Gandhi-Ambedkar clash → Poona Pact → Congress sessions → Forward Bloc.</p>
+    <br>
+    <p><span class="tag tag-fire">Act 2</span> <b>War & Revolt (1939–45)</b> — WWII → Congress resignations → August Offer → Cripps Mission → <span class="highlight">Quit India Movement (9 Aug 1942)</span> → INA under Bose → INA Trials.</p>
+    <br>
+    <p><span class="tag tag-fire">Act 3</span> <b>Transfer of Power (1944–47)</b> — CR Formula → Desai-Liaquat Pact → Wavell Plan → Cabinet Mission → Direct Action Day → Mountbatten Plan → Independence.</p>
+    <br>
+    <p style="color:var(--text-dim); font-size:13px;"><i>The entire arc is: British refuse real freedom → Congress escalates → World War weakens Britain → India forces their hand → Freedom 1947.</i></p>
+  </div>
+</section>
+
+<!-- MEMORY PALACE -->
+<section id="palace">
+  <div class="section-label">Section 02</div>
+  <div class="section-title"><span class="icon">🧠</span> Chapter Memory Palace</div>
+  <div class="palace">
+    <div class="palace-title">🏛 The Freedom Train — A Journey from Pune Jail to Delhi's Red Fort</div>
+    <p style="font-size:13px; color:var(--text-dim); margin-bottom:20px;">Imagine you are riding a train through India, stopping at key stations. Each station = one major event.</p>
+
+    <div class="palace-step">
+      <div class="palace-num">1</div>
+      <div class="palace-text"><strong>Pune Jail (Yerawada)</strong> — Gandhi is locked inside. Outside, MacDonald delivers the <strong>Communal Award</strong> (1932). Gandhi fasts. Ambedkar visits. They shake hands → <strong>Poona Pact</strong>. Malviya signs for Gandhi.</div>
+    </div>
+    <div class="palace-step">
+      <div class="palace-num">2</div>
+      <div class="palace-text"><strong>Lucknow Station (1936)</strong> — A huge Congress crowd. Two new clubs are born: <strong>All India Kisan Sabha</strong> (Sahjanand Saraswati) and <strong>Congress Socialist Party</strong> (JP Narayan, Lohia, Narayan Dev, Masani).</div>
+    </div>
+    <div class="palace-step">
+      <div class="palace-num">3</div>
+      <div class="palace-text"><strong>Haripura Station (1938)</strong> — Subhash Chandra Bose steps off as Congress President. He immediately forms <strong>National Planning Committee</strong>. Chairman? <strong>Nehru</strong>.</div>
+    </div>
+    <div class="palace-step">
+      <div class="palace-num">4</div>
+      <div class="palace-text"><strong>Tripuri Station (1939)</strong> — Bose wins the presidential election beating Gandhi's candidate <strong>Pattabhi Sitaramayya</strong>. Tension rises. Bose resigns → forms <strong>Forward Bloc</strong>.</div>
+    </div>
+    <div class="palace-step">
+      <div class="palace-num">5</div>
+      <div class="palace-text"><strong>Bombay — Gowalia Tank (Aug 1942)</strong> — The train halts. Gandhi gives the "<strong>Do or Die</strong>" speech. <span class="highlight">9th August 1942</span> — Quit India Movement launches. All leaders arrested on Day 1.</div>
+    </div>
+    <div class="palace-step">
+      <div class="palace-num">6</div>
+      <div class="palace-text"><strong>Underground Network</strong> — <strong>Aruna Asaf Ali</strong> hoists the flag. <strong>Usha Mehta</strong> runs secret radio in Bombay. <strong>Chittu Pandey</strong> leads Ballia. Parallel govts: <strong>Jatiya Sarkar</strong> (Tamluk, Bengal) &amp; <strong>Prati Sarkar</strong> (Satara, Maharashtra).</div>
+    </div>
+    <div class="palace-step">
+      <div class="palace-num">7</div>
+      <div class="palace-text"><strong>Singapore → Delhi Red Fort</strong> — Bose forms INA. Three officers tried at Red Fort (1945–46): <strong>Sahgal, Shahnawaz Khan, Dhillon</strong>. Nehru defends them in court. British back off.</div>
+    </div>
+    <div class="palace-step">
+      <div class="palace-num">8</div>
+      <div class="palace-text"><strong>Final Stop — Delhi (1947)</strong> — Mountbatten arrives. Partition Plan. <strong>Indian Independence Act 1947</strong>. India &amp; Pakistan are born. Gandhi is in Noakhali, not Delhi.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPLETE NOTES -->
+<section id="notes">
+  <div class="section-label">Section 03</div>
+  <div class="section-title"><span class="icon">📋</span> Complete Revision Notes</div>
+
+  <!-- 1932 -->
+  <div class="tl-item" style="margin-left:0; padding-left:20px;">
+    <div class="tl-year">1932</div>
+    <div class="tl-title">Communal Award <span class="tag tag-fire">🔥 Must Know</span></div>
+    <div class="tl-body">
+      Given by <b>Ramsay MacDonald</b> (PM of Britain). Extended <b>separate electorate</b> to <b>Depressed Classes</b> (Dalits), women, and Marathi community.
+      <br><br>
+      <b>Background:</b> Separate electorates were first introduced in <b>Indian Councils Act 1909</b> (Morley-Minto Reforms). Expanded in <b>Montagu-Chelmsford Reforms 1919</b> to Anglo-Indians &amp; Christians.
+      <br><br>
+      <b>Gandhi's stance:</b> Opposed — feared permanent separation of Dalits from Hindu society.<br>
+      <b>Ambedkar's stance:</b> Supported — believed Dalits could not be protected within Hindu community.
+    </div>
+  </div>
+
+  <div class="tl-item" style="margin-left:0; padding-left:20px;">
+    <div class="tl-year">1932</div>
+    <div class="tl-title">Poona Pact <span class="tag tag-fire">🔥 Must Know</span></div>
+    <div class="tl-body">
+      Gandhi (in <b>Yerawada Jail, Pune</b>) fasted unto death against Communal Award. Ambedkar compromised.<br><br>
+      <b>Deal:</b> Separate electorates for Depressed Classes <span class="red">given up</span>. In return: <span class="green">increased reserved seats</span> in legislatures.<br><br>
+      <b>Signed on Gandhi's behalf:</b> <span class="highlight">Madan Mohan Malviya</span>.<br><br>
+      <b>Results of Poona Pact era:</b>
+      <ul style="margin-top:8px; padding-left:18px; color:var(--text);">
+        <li>All India <b>Anti-Untouchability League</b> formed (later became <b>Harijan Sevak Sangh</b>, 1932)</li>
+        <li><b>Harijan Weekly</b> published by Gandhi</li>
+        <li><b>Bahishkrit Hitkarini Sabha</b> — formed by <span class="highlight">Ambedkar in 1924</span> (earlier, for depressed classes)</li>
+        <li>Ambedkar <span class="red">hated</span> the term "Harijan" — called it patronizing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tl-item" style="margin-left:0; padding-left:20px;">
+    <div class="tl-year">1934–1939</div>
+    <div class="tl-title">Key Congress Sessions &amp; Formations <span class="tag tag-star">⭐ Important</span></div>
+    <div class="tl-body">
+      <table style="width:100%; font-size:13px; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:6px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-weight:600;">1934</td>
+          <td style="padding:6px 8px;"><b>Congress Socialist Party</b> — JP Narayan, Ram Manohar Lohia, Acharya Narayan Dev, Minoo Masani</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:6px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-weight:600;">1936</td>
+          <td style="padding:6px 8px;">Congress session in <b>Lucknow</b>. <b>All India Kisan Sabha</b> formed by <b>Shahjanand Saraswati</b></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:6px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-weight:600;">1937</td>
+          <td style="padding:6px 8px;">Congress session in <b>Faizpur, Maharashtra</b> — <span class="highlight">FIRST session in a village</span></td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:6px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-weight:600;">1938</td>
+          <td style="padding:6px 8px;">Congress session in <b>Haripura, Gujarat</b>. Bose = President. <b>National Planning Committee</b> formed, Chairman = <b>Nehru</b></td>
+        </tr>
+        <tr>
+          <td style="padding:6px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-weight:600;">1939</td>
+          <td style="padding:6px 8px;">Bose beats Gandhi's candidate <b>Pattabhi Sitaramayya</b>. Resigns due to pressure. Forms <b>Forward Bloc</b></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="tl-item" style="margin-left:0; padding-left:20px;">
+    <div class="tl-year">1939–1940</div>
+    <div class="tl-title">World War II Begins — Congress Responds <span class="tag tag-fire">🔥 Must Know</span></div>
+    <div class="tl-body">
+      <b>Allied Powers:</b> Britain, USA, Russia &nbsp;|&nbsp; <b>Axis Powers:</b> Germany, Italy, Japan<br><br>
+      British declared India's participation in WWII without consulting Congress. Congress <span class="red">resigned from all ministries</span> as protest (Viceroy at this time: <b>Linlithgow / Lingo</b>).<br><br>
+      <b>August Offer 1940</b> (Linlithgow): Offered Dominion Status + expanded Viceroy's Executive Council with Indian majority. <span class="red">Rejected</span> — Congress wanted Purna Swaraj now.<br><br>
+      <b>Response to August Offer:</b> <span class="highlight">Individual Satyagraha</span><br>
+      1st Satyagrahi → <b>Acharya Vinoba Bhave</b><br>
+      2nd → <b>Jawaharlal Nehru</b><br>
+      3rd → <b>Brahmadatta</b>
+    </div>
+  </div>
+
+  <div class="tl-item" style="margin-left:0; padding-left:20px;">
+    <div class="tl-year">1942 (March)</div>
+    <div class="tl-title">Cripps Mission <span class="tag tag-fire">🔥 Must Know</span></div>
+    <div class="tl-body">
+      <b>Sent by:</b> British PM Churchill. <b>Who:</b> Stafford Cripps.<br><br>
+      <b>Proposals:</b> Constituent Assembly, Indian Union with Dominion Status (not Purna Swaraj), new Constitution.<br><br>
+      <b>Gandhi's verdict:</b> <i>"A post-dated cheque on a failing bank"</i><br>
+      <b>Result:</b> <span class="red">Rejected</span>. Led directly to → <span class="highlight">Quit India Movement</span>
+    </div>
+  </div>
+
+  <div class="tl-item" style="margin-left:0; padding-left:20px;">
+    <div class="tl-year">9 August 1942</div>
+    <div class="tl-title">🔥 QUIT INDIA MOVEMENT (August Revolt) <span class="tag tag-fire">🔥 Must Know</span></div>
+    <div class="tl-body">
+      <b>Approved at:</b> <span class="highlight">Gowalia Tank, Bombay</span> (also called August Kranti Maidan today)<br>
+      <b>Gandhi's slogan:</b> "<span class="highlight">Do or Die</span>"<br>
+      <b>Why August Revolt?</b> Started on 9th August.<br><br>
+      <b>Day 1:</b> All major leaders arrested → became a <span class="highlight">leaderless movement</span><br><br>
+      <b>Key Regional Leaders:</b>
+      <ul style="margin-top:8px; padding-left:18px; color:var(--text);">
+        <li><b>Aruna Asaf Ali</b> — hoisted Congress flag at Gowalia Tank, led Congress Working Committee</li>
+        <li><b>Usha Mehta</b> — ran <b>underground radio</b> from Bombay</li>
+        <li><b>Chittu Pandey</b> — led from <b>Ballia</b> (UP)</li>
+        <li><b>Jatiya Sarkar</b> — parallel govt at <b>Tamluk, West Bengal</b></li>
+        <li><b>Prati Sarkar</b> — parallel govt at <b>Satara, Maharashtra</b></li>
+      </ul>
+      <br>
+      <b>Congress Working Committee:</b> A 15-member body formed after Nagpur session 1920.
+    </div>
+  </div>
+
+  <div class="tl-item" style="margin-left:0; padding-left:20px;">
+    <div class="tl-year">1941–1945</div>
+    <div class="tl-title">Indian National Army (INA) — Subhash Chandra Bose <span class="tag tag-fire">🔥 Must Know</span></div>
+    <div class="tl-body">
+      <b>INA Leadership:</b>
+      <ol style="padding-left:18px; color:var(--text); margin-top:8px;">
+        <li>First: <b>Mohan Singh</b> (POW who organized Indian prisoners)</li>
+        <li>Then: <b>Ras Bihari Bose</b></li>
+        <li>Finally: <b>Subhash Chandra Bose</b> (1943)</li>
+      </ol>
+      <br>
+      <b>Bose's earlier activity (1941):</b> Went to Germany, met Hitler. Formed <b>Free India Legion / Tiger Legion</b>. His alias: <span class="highlight">Orlando Mazzota</span>.
+      <br><br>
+      <b>Women's Regiment:</b> Named after <b>Rani Lakshmibai</b>. Led by <b>Lakshmi Sahgal (Captain Lakshmi)</b>.
+      <br><br>
+      <b>INA Trials (1945–46):</b> Conducted at <span class="highlight">Red Fort, Delhi</span>.<br>
+      Three officers tried: <b>Prem Kumar Sahgal</b> (Hindu) + <b>Shahnawaz Khan</b> (Muslim) + <b>Gurbakhsh Singh Dhillon</b> (Sikh).<br>
+      Defence lawyers: <b>Jawaharlal Nehru, Bhulabhai Desai</b>.<br>
+      Result: British released them — didn't want to look bad while leaving.
+    </div>
+  </div>
+
+  <div class="tl-item" style="margin-left:0; padding-left:20px;">
+    <div class="tl-year">1946</div>
+    <div class="tl-title">Royal Indian Navy Mutiny <span class="tag tag-star">⭐ Important</span></div>
+    <div class="tl-body">
+      Ship: <b>HMIS Talwar</b>. Sailors wrote <i>"Britishers Quit India"</i> &amp; <i>"Quit India"</i> on the ship instead of celebrating British victory over Japan. This was the <b>Royal Indian Navy Mutiny</b> (1946).
+    </div>
+  </div>
+
+  <div class="tl-item" style="margin-left:0; padding-left:20px;">
+    <div class="tl-year">1944–1947</div>
+    <div class="tl-title">Plans, Pacts &amp; Partition <span class="tag tag-fire">🔥 Must Know</span></div>
+    <div class="tl-body">
+      <table style="width:100%; font-size:13px; border-collapse:collapse;">
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:7px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-size:12px; white-space:nowrap; font-weight:600;">1944</td>
+          <td style="padding:7px 8px;"><b>CR Formula</b> (C Rajagopalachari). Also called Rajaji Formula. Failed.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:7px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-size:12px; white-space:nowrap; font-weight:600;">1945</td>
+          <td style="padding:7px 8px;"><b>Desai-Liaquat Pact</b> (Bhulabhai Desai + Liaquat Ali Khan). Failed.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:7px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-size:12px; white-space:nowrap; font-weight:600;">1945</td>
+          <td style="padding:7px 8px;"><b>Wavell Plan / Shimla Conference</b> — Viceroy Wavell called all leaders to Shimla. Failed due to Jinnah's Pakistan demand.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:7px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-size:12px; white-space:nowrap; font-weight:600;">1946</td>
+          <td style="padding:7px 8px;"><b>Cabinet Mission Plan</b> — PM: Clement Attlee (Labour). Members: <b>Stafford Cripps, AV Alexander, Pethick Lawrence</b>. Chairman: <b>Pethick Lawrence</b>. Proposed Grouping: Group A, B, C. Both Congress &amp; ML initially accepted, but Nehru rejected compulsory grouping → ML withdrew → <b>Direct Action Day: 16 Aug 1946</b> → Noakhali riots.</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:7px 8px; color:var(--accent-gold); font-family:'JetBrains Mono',monospace; font-size:12px; white-space:nowrap; font-weight:600;">1947</td>
+          <td style="padding:7px 8px;"><b>Mountbatten Plan = Partition Plan</b> → basis of <b>Indian Independence Act 1947</b>. India &amp; Pakistan independent. East Pakistan → Bangladesh in 1971.</td>
+        </tr>
+      </table>
+      <br>
+      <b>Clement Attlee facts:</b> Labour Party leader. Announced British departure by <b>30 June 1948</b> (brought forward to Aug 1947). He was <span class="highlight">ALSO a member of Simon Commission 1928</span>.
+    </div>
+  </div>
+
+</section>
+
+<!-- MEMORY HOOKS -->
+<section id="hooks">
+  <div class="section-label">Section 04</div>
+  <div class="section-title"><span class="icon">🪝</span> Smart Memory Hooks</div>
+
+  <div class="hook">
+    <div class="hook-label">Hook — Poona Pact Signatories</div>
+    <p>Gandhi is in <strong>jail</strong> fasting. He can't sign. So <strong>Madan Mohan Malviya</strong> signs FOR him. Picture Malviya as Gandhi's "pen hand from outside the jail bars." → <strong>Malviya = Gandhi's proxy.</strong></p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook — Individual Satyagraha Order</div>
+    <p>Remember: <strong>VJB</strong> — <strong>V</strong>inoba Bhave (1st) → <strong>J</strong>awaharlal Nehru (2nd) → <strong>B</strong>rahmadatta (3rd). Think: "Vinoba was the <em>Very</em> <em>Junior</em> <em>Beginner</em> who went first."</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook — INA Order of Leadership</div>
+    <p>Picture a relay race baton passing: <strong>Mohan Singh</strong> (starts, captured) passes to <strong>Ras Bihari Bose</strong> (senior, sets up), who passes to <strong>Subhash Bose</strong> (the star runner). <em>MRS</em> — Mohan, Ras Bihari, Subhash.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook — INA Trial Officers (One Hindu, One Muslim, One Sikh)</div>
+    <p>The British accidentally created India's most powerful unity symbol. <strong>S-K-D:</strong> <strong>S</strong>ahgal (Hindu) + sha<strong>h</strong>nawaz <strong>K</strong>han (Muslim) + <strong>D</strong>hillon (Sikh). India united to defend all three → British retreated.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook — Cabinet Mission Members</div>
+    <p><strong>SCALP</strong>: <strong>S</strong>tafford Cripps + <strong>A</strong>V Alexander + <strong>P</strong>ethick <strong>L</strong>awrence (chairman). Cabinet mission "scalped" the two-nation theory initially but couldn't hold.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook — Clement Attlee's Double Role</div>
+    <p>Attlee came to India in 1928 as <strong>Simon Commission member</strong> (hated by Indians). He came back in 1946 as <strong>PM</strong> to give India freedom. Full circle — the man Indians burnt in effigy in 1928 is the man who freed them in 1947.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook — Parallel Govts Location</div>
+    <p><strong>Tamluk = Bengal</strong> (Jatiya Sarkar — "Jatio" sounds Bengali). <strong>Satara = Maharashtra</strong> (Prati Sarkar — "Prati" sounds like protest in Marathi culture). East = Tamluk, West = Satara.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook — Bose's alias in Germany</div>
+    <p>In Germany, Bose called himself <strong>Orlando Mazzota</strong> — an Italian-sounding name to avoid detection. Picture Bose in a trench coat with an Italian coffee, trying to sound European.</p>
+  </div>
+
+</section>
+
+<!-- CONCEPT CONNECTIONS -->
+<section id="connections">
+  <div class="section-label">Section 05</div>
+  <div class="section-title"><span class="icon">🔗</span> Concept Connections</div>
+
+  <div class="connect-row">
+    <div class="connect-box">Communal Award 1932</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">Gandhi's Fast</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">Poona Pact</div>
+    <div class="connect-arrow">→</div>
+    <span class="connect-result">Separate electorates dropped, reserved seats increased</span>
+  </div>
+
+  <div class="connect-row">
+    <div class="connect-box">Congress resigns from ministries (1939)</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">August Offer (1940)</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">Individual Satyagraha</div>
+  </div>
+
+  <div class="connect-row">
+    <div class="connect-box">Cripps Mission fails (1942)</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">QIM launches (9 Aug 1942)</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">Leaderless movement</div>
+  </div>
+
+  <div class="connect-row">
+    <div class="connect-box">Japan surrenders (1945)</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">INA Trials begin</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">National uproar</div>
+    <div class="connect-arrow">→</div>
+    <span class="connect-result">British realize time to leave</span>
+  </div>
+
+  <div class="connect-row">
+    <div class="connect-box">Cabinet Mission accepted</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">Nehru rejects grouping</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">Direct Action Day</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">Noakhali riots</div>
+  </div>
+
+  <div class="connect-row">
+    <div class="connect-box">Mountbatten Plan</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">Indian Independence Act 1947</div>
+    <div class="connect-arrow">→</div>
+    <div class="connect-box">India + Pakistan</div>
+    <div class="connect-arrow">→</div>
+    <span class="connect-result">East Pakistan → Bangladesh 1971</span>
+  </div>
+
+  <hr class="divider">
+
+  <div class="card">
+    <div class="card-title">📌 Key Difference: Dominion Status vs Purna Swaraj</div>
+    <p><b>Dominion Status:</b> Self-rule BUT under British Crown authority. (Like Canada, Australia)</p>
+    <p style="margin-top:6px;"><b>Purna Swaraj:</b> Complete independence. No British Crown. Full sovereign nation.</p>
+    <p style="margin-top:6px; color:var(--text-dim); font-size:13px;"><i>Congress demanded Purna Swaraj from 1929 (Lahore session). Every British offer of Dominion Status was therefore rejected.</i></p>
+  </div>
+</section>
+
+<!-- EXAM TRAPS -->
+<section id="traps">
+  <div class="section-label">Section 06</div>
+  <div class="section-title"><span class="icon">⚠️</span> Exam Traps</div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 1 — Stafford Cripps appeared TWICE</div>
+    <p><strong>Cripps Mission (1942)</strong> → came alone with Dominion Status offer. <strong>Cabinet Mission (1946)</strong> → came as ONE of THREE members. Don't confuse the two. In 1946, Cripps ≠ chairman (Lawrence was).</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 2 — Bose vs Bose</div>
+    <p><strong>Subhash Chandra Bose</strong> → Forward Bloc (1939), INA (1943), Free India Legion in Germany. <strong>Ras Bihari Bose</strong> → led INA BEFORE Subhash. Don't mix them up in leadership sequence questions.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 3 — Bahishkrit Hitkarini Sabha vs Harijan Sevak Sangh</div>
+    <p><strong>Bahishkrit Hitkarini Sabha</strong> → formed by <strong>Ambedkar in 1924</strong>. <strong>Harijan Sevak Sangh</strong> → formed by <strong>Gandhi in 1932</strong> (grew from Anti-Untouchability League). Two different organisations, two different founders.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 4 — CR Formula ≠ "Clement Reed Formula"</div>
+    <p><strong>CR Formula</strong> = <strong>C. Rajagopalachari</strong> formula (1944). Some students confuse "CR" with Clement Reed. CR stands for <strong>Chakravarti Rajagopalachari</strong> only.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 5 — INA Trials Location</div>
+    <p>INA Trials were held at <strong>Red Fort, Delhi</strong>. NOT in Pune, NOT in Bombay. Red Fort = where INA officers were tried AND where India's independence was later declared.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 6 — Gandhi's Location on 15th August 1947</div>
+    <p>Gandhi was <strong>NOT</strong> at Red Fort for Independence celebrations. He was in <strong>Noakhali</strong> (now Bangladesh), trying to stop the communal violence triggered by Direct Action Day.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 7 — Faizpur Session (1937)</div>
+    <p>Faizpur is in <strong>Maharashtra</strong>, NOT some northern city. It's famous for being the FIRST Congress session held in a <strong>village</strong>. Don't confuse with Faizabad (UP).</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 8 — Viceroy during QIM</div>
+    <p>During Quit India Movement (1942), Viceroy was <strong>Linlithgow (Lingo)</strong>. Wavell came later. Irwin was much earlier (Gandhi-Irwin Pact 1931).</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 9 — Clement Attlee's Simon Commission link</div>
+    <p>Attlee was a <strong>member</strong> of Simon Commission (1928) — not its chairman. Chairman was <strong>John Simon</strong>. Attlee later became PM and announced India's independence.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 10 — National Planning Committee Chairman</div>
+    <p>Bose formed the National Planning Committee in 1938 at Haripura, but the chairman was <strong>Nehru</strong>, not Bose. Bose was the Congress President who created it.</p>
+  </div>
+
+</section>
+
+<!-- EXAMINER'S QUESTIONS -->
+<section id="examiner">
+  <div class="section-label">Section 07</div>
+  <div class="section-title"><span class="icon">🎯</span> Examiner's Favourite Questions</div>
+
+  <div class="hy-grid">
+    <div class="hy-card">
+      <div class="hy-card-title">🎯 High Probability</div>
+      <ul class="hy-list">
+        <li>Date of QIM launch → 9 Aug 1942</li>
+        <li>Approved where → Gowalia Tank, Bombay</li>
+        <li>Gandhi's slogan → Do or Die</li>
+        <li>1st Individual Satyagrahi → Vinoba Bhave</li>
+        <li>INA Trials venue → Red Fort</li>
+        <li>Cabinet Mission chairman → Pethick Lawrence</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">🎯 Statement-Based</div>
+      <ul class="hy-list">
+        <li>Cripps Mission = "post-dated cheque on failing bank"</li>
+        <li>QIM was a leaderless movement</li>
+        <li>Attlee was in Simon Commission AND freed India</li>
+        <li>Faizpur = first Congress session in a village</li>
+        <li>Patti Sitaramayya was Gandhi's candidate in 1939</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">🎯 Match the Following</div>
+      <ul class="hy-list">
+        <li>Ballia → Chittu Pandey</li>
+        <li>Tamluk → Jatiya Sarkar</li>
+        <li>Satara → Prati Sarkar</li>
+        <li>Underground Radio → Usha Mehta</li>
+        <li>Rani Lakshmibai Regiment → Lakshmi Sahgal</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">🎯 Chronology Traps</div>
+      <ul class="hy-list">
+        <li>CR Formula (1944) → Desai-Liaquat (1945) → Wavell Plan (1945) → Cabinet Mission (1946)</li>
+        <li>INA Leadership: Mohan Singh → Ras Bihari → Subhash</li>
+        <li>Separate Electorate: 1909 → 1919 → 1932</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">🎯 Confusing Facts</div>
+      <ul class="hy-list">
+        <li>Madan Mohan Malviya signed Poona Pact (not Gandhi directly)</li>
+        <li>Bose's alias = Orlando Mazzota</li>
+        <li>Free India Legion = Tiger Legion (same thing)</li>
+        <li>Attlee announced exit by June 1948 (actually happened Aug 1947)</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">🎯 Assertion-Reason Type</div>
+      <ul class="hy-list">
+        <li>A: QIM was leaderless. R: All top leaders arrested on Day 1 → Both correct, R explains A</li>
+        <li>A: Cabinet Mission accepted by ML. R: It had no provision for Pakistan → Both correct</li>
+        <li>A: Cripps Mission failed. R: It offered Dominion Status, not full freedom → Both correct</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVE RECALL -->
+<section id="recall">
+  <div class="section-label">Section 08</div>
+  <div class="section-title"><span class="icon">❓</span> Active Recall Section</div>
+  <p style="font-size:13px; color:var(--text-dim); margin-bottom:20px;">Click "Reveal" to check your answer. Test yourself before looking!</p>
+
+  <div class="q-block">
+    <div class="q-text">1. Who gave the Communal Award (1932) and what did it do?</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">Ramsay MacDonald (British PM). Gave separate electorates to Depressed Classes, women, Marathi community.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">2. Who signed the Poona Pact on behalf of Gandhi?</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">Madan Mohan Malviya</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">3. Which Congress session was the first held in a village? When and where?</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">Faizpur Session, 1937, Maharashtra.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">4. Who was Pattabhi Sitaramayya and why is he important?</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">Gandhi's candidate for Congress President in 1939. Bose defeated him, causing a rift. Gandhi said Sitaramayya's defeat was his own defeat.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">5. What was Gandhi's famous quote about the Cripps Mission proposals?</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">"A post-dated cheque on a failing bank."</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">6. Name the three officers tried at INA Trials. One Hindu, one Muslim, one Sikh.</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">Prem Kumar Sahgal (Hindu) | Shahnawaz Khan (Muslim) | Gurbakhsh Singh Dhillon (Sikh)</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">7. Who led the INA before Subhash Chandra Bose? In correct order.</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">1. Mohan Singh → 2. Ras Bihari Bose → 3. Subhash Chandra Bose</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">8. Who ran an underground radio station during QIM, and from where?</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">Usha Mehta, from Bombay.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">9. What is Direct Action Day? Date and who called it?</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">16 August 1946. Called by Muhammad Ali Jinnah (Muslim League) after Nehru rejected compulsory grouping in Cabinet Mission Plan. Led to massive communal violence (Noakhali).</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">10. Fill in the blank: Bose's alias in Germany was ________ and his regiment there was called ________ or ________.</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">Orlando Mazzota | Free India Legion | Tiger Legion</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">11. Where was Gandhi on the night of 14–15 August 1947?</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">Noakhali (not Delhi). He was trying to stop communal violence.</div>
+  </div>
+
+  <div class="q-block">
+    <div class="q-text">12. Who formed Bahishkrit Hitkarini Sabha? When?</div>
+    <button class="q-btn" onclick="toggleAns(this)">Reveal Answer</button>
+    <div class="q-ans">B.R. Ambedkar, 1924.</div>
+  </div>
+
+</section>
+
+<!-- HIGH YIELD -->
+<section id="highyield">
+  <div class="section-label">Section 09</div>
+  <div class="section-title"><span class="icon">⭐</span> High-Yield Revision Notes</div>
+
+  <div class="hy-grid">
+    <div class="hy-card">
+      <div class="hy-card-title">Poona Pact (1932)</div>
+      <ul class="hy-list">
+        <li>MacDonald → Communal Award</li>
+        <li>Gandhi fasted (Yerawada Jail)</li>
+        <li>Separate electorates dropped</li>
+        <li>Reserved seats increased</li>
+        <li>Signed by Malviya for Gandhi</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">Quit India (1942)</div>
+      <ul class="hy-list">
+        <li>9 August 1942</li>
+        <li>Gowalia Tank, Bombay</li>
+        <li>"Do or Die"</li>
+        <li>Leaderless movement</li>
+        <li>Aruna Asaf Ali hoisted flag</li>
+        <li>Usha Mehta → Radio</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">INA Trials (1945–46)</div>
+      <ul class="hy-list">
+        <li>Red Fort, Delhi</li>
+        <li>Sahgal + Shahnawaz + Dhillon</li>
+        <li>H + M + S = Unity symbol</li>
+        <li>Nehru &amp; Desai defended</li>
+        <li>British released them</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">Cabinet Mission (1946)</div>
+      <ul class="hy-list">
+        <li>Attlee (Labour PM)</li>
+        <li>Cripps + Alexander + Lawrence</li>
+        <li>Lawrence = Chairman</li>
+        <li>Group A, B, C</li>
+        <li>Nehru rejected grouping</li>
+        <li>→ Direct Action Day (16 Aug 1946)</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">Plans Sequence</div>
+      <ul class="hy-list">
+        <li>1944 → CR Formula</li>
+        <li>1945 → Desai-Liaquat</li>
+        <li>1945 → Wavell Plan (Shimla)</li>
+        <li>1946 → Cabinet Mission</li>
+        <li>1947 → Mountbatten Plan</li>
+      </ul>
+    </div>
+    <div class="hy-card">
+      <div class="hy-card-title">Parallel Govts in QIM</div>
+      <ul class="hy-list">
+        <li>Ballia (UP) → Chittu Pandey</li>
+        <li>Tamluk (W. Bengal) → Jatiya Sarkar</li>
+        <li>Satara (Maharashtra) → Prati Sarkar</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ULTRA FAST -->
+<section id="ultrafast">
+  <div class="section-label">Section 10</div>
+  <div class="section-title"><span class="icon">⚡</span> Ultra-Fast Revision Sheet</div>
+
+  <table class="speed-table">
+    <thead>
+      <tr><th>Fact</th><th>Answer</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Communal Award year</td><td>1932 — Ramsay MacDonald</td></tr>
+      <tr><td>Poona Pact year</td><td>1932 — Yerawada Jail, Pune</td></tr>
+      <tr><td>Malviya's role in Poona Pact</td><td>Signed on behalf of Gandhi</td></tr>
+      <tr><td>Harijan Sevak Sangh year</td><td>1932 (by Gandhi)</td></tr>
+      <tr><td>Bahishkrit Hitkarini Sabha</td><td>1924, by Ambedkar</td></tr>
+      <tr><td>First Congress session in village</td><td>Faizpur 1937, Maharashtra</td></tr>
+      <tr><td>National Planning Committee Chairman</td><td>Jawaharlal Nehru (1938)</td></tr>
+      <tr><td>Forward Bloc formed by</td><td>Subhash Chandra Bose, 1939</td></tr>
+      <tr><td>WWII Allied Powers</td><td>Britain, USA, Russia</td></tr>
+      <tr><td>WWII Axis Powers</td><td>Germany, Italy, Japan</td></tr>
+      <tr><td>August Offer 1940</td><td>Linlithgow — Dominion Status — Rejected</td></tr>
+      <tr><td>1st Individual Satyagrahi</td><td>Vinoba Bhave</td></tr>
+      <tr><td>Cripps Mission year</td><td>1942 — Stafford Cripps</td></tr>
+      <tr><td>Gandhi on Cripps Mission</td><td>"Post-dated cheque on a failing bank"</td></tr>
+      <tr><td>QIM date</td><td>9 August 1942</td></tr>
+      <tr><td>QIM venue (resolution)</td><td>Gowalia Tank, Bombay</td></tr>
+      <tr><td>QIM slogan</td><td>"Do or Die"</td></tr>
+      <tr><td>QIM type</td><td>Leaderless movement</td></tr>
+      <tr><td>Flag hoisted at QIM</td><td>Aruna Asaf Ali</td></tr>
+      <tr><td>Underground radio (QIM)</td><td>Usha Mehta, Bombay</td></tr>
+      <tr><td>Ballia leader (QIM)</td><td>Chittu Pandey</td></tr>
+      <tr><td>Jatiya Sarkar location</td><td>Tamluk, West Bengal</td></tr>
+      <tr><td>Prati Sarkar location</td><td>Satara, Maharashtra</td></tr>
+      <tr><td>INA leadership order</td><td>Mohan Singh → Ras Bihari Bose → Subhash Bose</td></tr>
+      <tr><td>Bose's alias in Germany</td><td>Orlando Mazzota</td></tr>
+      <tr><td>Free India Legion (aka)</td><td>Tiger Legion — formed in Germany (1941)</td></tr>
+      <tr><td>Women's INA regiment</td><td>Rani Lakshmibai Regiment — led by Lakshmi Sahgal</td></tr>
+      <tr><td>INA Trials venue</td><td>Red Fort, Delhi (1945–46)</td></tr>
+      <tr><td>INA Trial officers</td><td>Sahgal (H) + Shahnawaz Khan (M) + Dhillon (S)</td></tr>
+      <tr><td>INA defence lawyers</td><td>Nehru + Bhulabhai Desai</td></tr>
+      <tr><td>Royal Indian Navy Mutiny ship</td><td>HMIS Talwar (1946)</td></tr>
+      <tr><td>Cabinet Mission year</td><td>1946 — Clement Attlee (Labour PM)</td></tr>
+      <tr><td>Cabinet Mission members</td><td>Cripps + AV Alexander + Pethick Lawrence (chair)</td></tr>
+      <tr><td>Direct Action Day</td><td>16 August 1946 — Jinnah/ML</td></tr>
+      <tr><td>Noakhali riots reason</td><td>Direct Action Day communal violence</td></tr>
+      <tr><td>CR Formula year</td><td>1944 — C Rajagopalachari</td></tr>
+      <tr><td>Desai-Liaquat Pact year</td><td>1945</td></tr>
+      <tr><td>Wavell Plan / Shimla Conf.</td><td>1945 — failed on Pakistan demand</td></tr>
+      <tr><td>Mountbatten Plan</td><td>= Partition Plan → Indian Independence Act 1947</td></tr>
+      <tr><td>Gandhi on Independence night</td><td>Noakhali (NOT Delhi)</td></tr>
+      <tr><td>East Pakistan → Bangladesh</td><td>1971</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 30-SEC -->
+<section id="30sec">
+  <div class="section-label">Section 11</div>
+  <div class="section-title"><span class="icon">⏱</span> 30-Second Revision Sheet</div>
+
+  <div class="sec30">
+    <div class="sec30-col">
+      <h4>Key Dates</h4>
+      <p><strong>1932</strong> — Communal Award + Poona Pact</p>
+      <p><strong>1937</strong> — Faizpur (1st village session)</p>
+      <p><strong>1939</strong> — Forward Bloc</p>
+      <p><strong>9 Aug 1942</strong> — QIM</p>
+      <p><strong>1945–46</strong> — INA Trials</p>
+      <p><strong>16 Aug 1946</strong> — Direct Action Day</p>
+      <p><strong>1947</strong> — Independence</p>
+    </div>
+    <div class="sec30-col">
+      <h4>Key People</h4>
+      <p><strong>Malviya</strong> → signed Poona Pact</p>
+      <p><strong>Vinoba Bhave</strong> → 1st Satyagrahi</p>
+      <p><strong>Aruna Asaf Ali</strong> → QIM flag</p>
+      <p><strong>Usha Mehta</strong> → radio</p>
+      <p><strong>Lakshmi Sahgal</strong> → INA women's regiment</p>
+      <p><strong>Pethick Lawrence</strong> → Cabinet Mission chair</p>
+    </div>
+    <div class="sec30-col">
+      <h4>Key Traps</h4>
+      <p>Cripps = 1942 alone, 1946 as team</p>
+      <p>Faizpur = Maharashtra</p>
+      <p>INA Trials = Red Fort</p>
+      <p>Gandhi = Noakhali on Aug 15</p>
+      <p>CR = Rajagopalachari, NOT Clement Reed</p>
+    </div>
+    <div class="sec30-col">
+      <h4>QIM Parallel Govts</h4>
+      <p><strong>Ballia</strong> → Chittu Pandey</p>
+      <p><strong>Tamluk</strong> → Jatiya Sarkar (WB)</p>
+      <p><strong>Satara</strong> → Prati Sarkar (MH)</p>
+      <h4 style="margin-top:12px;">INA Order</h4>
+      <p>Mohan → Ras Bihari → Subhash</p>
+    </div>
+  </div>
+</section>
+
+<!-- LAST NIGHT -->
+<section id="lastnight">
+  <div class="section-label">Section 12</div>
+  <div class="section-title"><span class="icon">🌙</span> Last-Night-Before-Exam Sheet</div>
+
+  <div class="ln-panel">
+    <div class="ln-title">◈ LAST NIGHT SHEET — QUIT INDIA MOVEMENT ◈</div>
+
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Communal Award 1932</strong> = Ramsay MacDonald → Poona Pact → Malviya signed for Gandhi → Separate electorates dropped, reserved seats ↑</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Faizpur 1937</strong> = First Congress session in a VILLAGE (Maharashtra)</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Haripura 1938</strong> = Bose as President → National Planning Committee → Nehru as Chairman</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Forward Bloc 1939</strong> = Bose (after losing to Pattabhi Sitaramayya)</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Individual Satyagraha</strong> = 1st Vinoba Bhave, 2nd Nehru, 3rd Brahmadatta</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Cripps Mission 1942</strong> = "Post-dated cheque on a failing bank" → Rejected → QIM</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>QIM = 9 August 1942</strong> | Gowalia Tank Bombay | "Do or Die" | Leaderless movement</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>QIM leaders</strong> = Aruna Asaf Ali (flag) | Usha Mehta (radio, Bombay) | Chittu Pandey (Ballia) | Jatiya Sarkar (Tamluk, WB) | Prati Sarkar (Satara, MH)</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>INA order</strong> = Mohan Singh → Ras Bihari Bose → Subhash Bose | Women's Regt = Lakshmi Sahgal</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>INA Trials 1945–46</strong> = Red Fort | Sahgal (H) + Shahnawaz Khan (M) + Dhillon (S) | Defended by Nehru &amp; Desai</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Plans</strong> = 1944 CR Formula | 1945 Desai-Liaquat + Wavell | 1946 Cabinet Mission (Lawrence=chair) | 1947 Mountbatten</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Cabinet Mission 1946</strong> = Attlee (Labour PM) | Cripps + Alexander + Lawrence | Direct Action Day = 16 Aug 1946</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Attlee double fact</strong> = Simon Commission member 1928 + PM who freed India 1947</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Gandhi on 15 Aug 1947</strong> = Noakhali, NOT Delhi Red Fort</div></div>
+    <div class="ln-row"><div class="ln-bullet">⚡</div><div class="ln-text"><strong>Indian Independence Act 1947</strong> = based on Mountbatten (Partition) Plan | East Pakistan → Bangladesh 1971</div></div>
+  </div>
+</section>
+
+</div>
+
+<!-- RAPID FIRE HOVER BOX -->
+<div style="max-width:900px; margin:-60px auto 80px; padding:0 24px;">
+  <div class="section-title" style="border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:20px;"><span class="icon">🔥</span> Rapid-Fire Hover Quiz</div>
+  <p style="font-size:12px; color:var(--text-dim); margin-bottom:16px;">Hover over each card to reveal the answer.</p>
+  <div class="rf-grid">
+    <div class="rf-item"><div class="rf-q">QIM launched on?</div><div class="rf-a">9 August 1942</div></div>
+    <div class="rf-item"><div class="rf-q">QIM venue?</div><div class="rf-a">Gowalia Tank, Bombay</div></div>
+    <div class="rf-item"><div class="rf-q">Gandhi's QIM slogan?</div><div class="rf-a">Do or Die</div></div>
+    <div class="rf-item"><div class="rf-q">1st Individual Satyagrahi?</div><div class="rf-a">Acharya Vinoba Bhave</div></div>
+    <div class="rf-item"><div class="rf-q">Poona Pact signer for Gandhi?</div><div class="rf-a">Madan Mohan Malviya</div></div>
+    <div class="rf-item"><div class="rf-q">Free India Legion alias of Bose?</div><div class="rf-a">Orlando Mazzota</div></div>
+    <div class="rf-item"><div class="rf-q">INA Trials location?</div><div class="rf-a">Red Fort, Delhi</div></div>
+    <div class="rf-item"><div class="rf-q">Cabinet Mission Chairman?</div><div class="rf-a">Pethick Lawrence</div></div>
+    <div class="rf-item"><div class="rf-q">Direct Action Day?</div><div class="rf-a">16 August 1946 (Jinnah/ML)</div></div>
+    <div class="rf-item"><div class="rf-q">Jatiya Sarkar location?</div><div class="rf-a">Tamluk, West Bengal</div></div>
+    <div class="rf-item"><div class="rf-q">Prati Sarkar location?</div><div class="rf-a">Satara, Maharashtra</div></div>
+    <div class="rf-item"><div class="rf-q">Underground radio — QIM?</div><div class="rf-a">Usha Mehta, Bombay</div></div>
+    <div class="rf-item"><div class="rf-q">INA Women's Regt leader?</div><div class="rf-a">Lakshmi Sahgal (Capt.)</div></div>
+    <div class="rf-item"><div class="rf-q">Communal Award giver?</div><div class="rf-a">Ramsay MacDonald, 1932</div></div>
+    <div class="rf-item"><div class="rf-q">Cripps Mission year?</div><div class="rf-a">1942 (March)</div></div>
+    <div class="rf-item"><div class="rf-q">Bahishkrit Hitkarini Sabha?</div><div class="rf-a">Ambedkar, 1924</div></div>
+    <div class="rf-item"><div class="rf-q">Faizpur session — what's special?</div><div class="rf-a">First Congress session in a VILLAGE (1937, Maharashtra)</div></div>
+    <div class="rf-item"><div class="rf-q">National Planning Cttee chairman?</div><div class="rf-a">Nehru (1938)</div></div>
+    <div class="rf-item"><div class="rf-q">Gandhi on 15 Aug 1947?</div><div class="rf-a">Noakhali (not Delhi)</div></div>
+    <div class="rf-item"><div class="rf-q">East Pakistan became?</div><div class="rf-a">Bangladesh in 1971</div></div>
+  </div>
+</div>
+
+<button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Top</button>
+
+<script>
+function toggleAns(btn) {
+  const ans = btn.nextElementSibling;
+  if (ans.style.display === 'block') {
+    ans.style.display = 'none';
+    btn.textContent = 'Reveal Answer';
+  } else {
+    ans.style.display = 'block';
+    btn.textContent = 'Hide Answer';
+  }
+}
+</script>
+
+</body>
+</html>

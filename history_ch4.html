@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>INC & Governor Generals — SSC CGL Elite Notes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg:       #0d0f14;
+    --bg2:      #13161e;
+    --bg3:      #1a1e2a;
+    --bg4:      #20253a;
+    --border:   #2a3050;
+    --gold:     #f0b429;
+    --gold-dim: #a07820;
+    --teal:     #38d9a9;
+    --red:      #ff6b6b;
+    --blue:     #6eb5ff;
+    --purple:   #c084fc;
+    --orange:   #fb923c;
+    --green:    #86efac;
+    --text:     #d4daf0;
+    --text-dim: #7a85a8;
+    --text-faint:#3d4560;
+    --fire:     #ff4500;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(135deg, #0d0f14 0%, #1a1130 50%, #0d0f14 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    position: sticky; top: 0; z-index: 100;
+  }
+  .site-header h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .site-header p {
+    color: var(--text-dim);
+    font-size: .8rem;
+    margin-top: .25rem;
+    letter-spacing: .05em;
+  }
+  .pill-row {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: .8rem;
+  }
+  .pill {
+    font-size: .7rem;
+    padding: .2rem .7rem;
+    border-radius: 999px;
+    letter-spacing: .06em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .pill-fire  { background: rgba(255,69,0,.15);  color: var(--fire);   border: 1px solid rgba(255,69,0,.3); }
+  .pill-star  { background: rgba(240,180,41,.1); color: var(--gold);   border: 1px solid rgba(240,180,41,.3); }
+  .pill-plus  { background: rgba(56,217,169,.1); color: var(--teal);   border: 1px solid rgba(56,217,169,.3); }
+
+  /* ── NAV ── */
+  .toc {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: .6rem 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: .75rem;
+    letter-spacing: .04em;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .toc a {
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: .3rem .5rem;
+    border-radius: 4px;
+    transition: color .2s, background .2s;
+  }
+  .toc a:hover { color: var(--gold); background: rgba(240,180,41,.08); }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    max-width: 1020px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* ── SECTION SHELL ── */
+  section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .sec-head {
+    background: linear-gradient(90deg, var(--bg3) 0%, var(--bg2) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+  .sec-head .icon { font-size: 1.4rem; }
+  .sec-head h2 {
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .sec-body { padding: 1.5rem; }
+
+  /* ── BIG PICTURE ── */
+  .big-picture {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.15rem;
+    color: #b0bde0;
+    line-height: 1.9;
+    border-left: 3px solid var(--gold);
+    padding-left: 1.2rem;
+  }
+
+  /* ── MEMORY PALACE ── */
+  .palace-story {
+    background: linear-gradient(135deg, #0f1525 0%, #1a0f2e 100%);
+    border: 1px solid #3a2a60;
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.05rem;
+    line-height: 2;
+    color: #c8b4f0;
+  }
+  .palace-story strong { color: var(--purple); }
+  .palace-story em { color: var(--gold); font-style: normal; }
+
+  /* ── TIMELINE ENTRIES ── */
+  .timeline { position: relative; padding-left: 1.5rem; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--gold), var(--teal), var(--purple));
+    border-radius: 2px;
+  }
+  .tl-entry {
+    position: relative;
+    padding: .75rem 0 .75rem 1.2rem;
+    border-bottom: 1px solid var(--text-faint);
+  }
+  .tl-entry:last-child { border-bottom: none; }
+  .tl-entry::before {
+    content: '';
+    position: absolute; left: -1.6rem; top: 1.1rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--bg2);
+  }
+  .tl-year {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: .05em;
+  }
+  .tl-org {
+    font-weight: 700;
+    color: var(--gold);
+    font-size: .95rem;
+  }
+  .tl-detail { color: var(--text-dim); font-size: .88rem; }
+  .tl-detail b { color: var(--text); }
+
+  /* ── CONGRESS SESSIONS TABLE ── */
+  .session-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  .session-table th {
+    background: var(--bg4);
+    color: var(--gold);
+    padding: .6rem .8rem;
+    text-align: left;
+    font-size: .75rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .session-table td {
+    padding: .55rem .8rem;
+    border-bottom: 1px solid rgba(42,48,80,.6);
+    vertical-align: top;
+  }
+  .session-table tr:hover td { background: rgba(240,180,41,.04); }
+  .yr { color: var(--teal); font-family: 'JetBrains Mono', monospace; font-size: .8rem; font-weight: 600; white-space: nowrap; }
+  .loc { color: var(--purple); font-size: .82rem; }
+  .pres { color: var(--blue); font-size: .82rem; }
+  .note { color: var(--green); font-size: .78rem; }
+  .highlight-row td { background: rgba(240,180,41,.07) !important; border-left: 2px solid var(--gold); }
+
+  /* ── GOVGEN TABLE ── */
+  .govgen-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  .govgen-table th {
+    background: var(--bg4); color: var(--purple);
+    padding: .6rem .8rem; text-align: left;
+    font-size: .75rem; letter-spacing: .06em; text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .govgen-table td {
+    padding: .6rem .8rem;
+    border-bottom: 1px solid rgba(42,48,80,.5);
+    vertical-align: top;
+  }
+  .govgen-table tr:hover td { background: rgba(192,132,252,.04); }
+  .gg-name { color: var(--orange); font-weight: 700; font-size: .88rem; }
+  .gg-yr { color: var(--teal); font-family: 'JetBrains Mono', monospace; font-size: .78rem; font-weight: 600; }
+  .gg-events { color: var(--text); font-size: .82rem; line-height: 1.6; }
+  .gg-events span { display: block; }
+  .gg-tag {
+    display: inline-block;
+    font-size: .65rem; padding: .1rem .4rem;
+    border-radius: 3px; margin-right: .25rem; margin-top: .15rem;
+    font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  }
+  .tag-fire { background: rgba(255,69,0,.15); color: var(--fire); border: 1px solid rgba(255,69,0,.3); }
+  .tag-act  { background: rgba(110,181,255,.12); color: var(--blue); border: 1px solid rgba(110,181,255,.3); }
+  .tag-war  { background: rgba(255,107,107,.12); color: var(--red); border: 1px solid rgba(255,107,107,.3); }
+  .tag-award{ background: rgba(134,239,172,.12); color: var(--green); border: 1px solid rgba(134,239,172,.3); }
+
+  /* ── HOOKS ── */
+  .hook-card {
+    background: linear-gradient(135deg, #0f1a12, #122012);
+    border: 1px solid #1e4028;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: .9rem;
+  }
+  .hook-card:last-child { margin-bottom: 0; }
+  .hook-label {
+    font-size: .7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--teal); margin-bottom: .4rem;
+  }
+  .hook-card p { font-family: 'Crimson Pro', serif; font-size: 1rem; color: #b4dfc8; line-height: 1.8; }
+  .hook-card b { color: var(--green); }
+
+  /* ── CONNECTIONS ── */
+  .connection {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    padding: .7rem 0;
+    border-bottom: 1px solid rgba(42,48,80,.5);
+  }
+  .connection:last-child { border-bottom: none; }
+  .conn-arrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .75rem;
+    color: var(--gold);
+    background: rgba(240,180,41,.1);
+    border: 1px solid rgba(240,180,41,.2);
+    border-radius: 4px;
+    padding: .15rem .45rem;
+    white-space: nowrap;
+    margin-top: .1rem;
+    flex-shrink: 0;
+  }
+  .conn-text { color: var(--text); font-size: .88rem; line-height: 1.6; }
+  .conn-text b { color: var(--blue); }
+
+  /* ── TRAPS ── */
+  .trap-card {
+    background: linear-gradient(135deg, #1a0c0c, #200f0f);
+    border: 1px solid #4a1515;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: .8rem;
+  }
+  .trap-card:last-child { margin-bottom: 0; }
+  .trap-label {
+    font-size: .7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .08em; color: var(--red); margin-bottom: .4rem;
+  }
+  .trap-card p { color: #e0b0b0; font-size: .88rem; line-height: 1.7; }
+  .trap-card b { color: var(--red); }
+  .trap-card code {
+    background: rgba(255,107,107,.1);
+    color: var(--orange);
+    border-radius: 3px;
+    padding: .05rem .35rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .82rem;
+  }
+
+  /* ── EXAMINER Qs ── */
+  .eq-list { list-style: none; }
+  .eq-list li {
+    padding: .6rem .8rem .6rem 2.2rem;
+    border-bottom: 1px solid rgba(42,48,80,.4);
+    position: relative;
+    font-size: .88rem;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .eq-list li:last-child { border-bottom: none; }
+  .eq-list li::before {
+    content: attr(data-icon);
+    position: absolute; left: .5rem;
+    font-size: .9rem;
+  }
+
+  /* ── ACTIVE RECALL ── */
+  .recall-q {
+    padding: .75rem 1rem;
+    background: var(--bg3);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: .6rem;
+    cursor: pointer;
+    font-size: .88rem;
+    color: var(--text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    user-select: none;
+  }
+  .recall-q:hover { background: var(--bg4); }
+  .recall-q .toggle { color: var(--text-dim); font-size: .8rem; white-space: nowrap; }
+  .recall-ans {
+    display: none;
+    background: rgba(56,217,169,.06);
+    border: 1px solid rgba(56,217,169,.2);
+    border-radius: 6px;
+    padding: .75rem 1rem;
+    margin-bottom: .8rem;
+    font-size: .86rem;
+    color: var(--teal);
+    line-height: 1.7;
+  }
+  .recall-ans.visible { display: block; }
+
+  /* ── HIGH-YIELD ── */
+  .hy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .hy-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  .hy-card h4 {
+    font-size: .78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--purple);
+    margin-bottom: .6rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: .4rem;
+  }
+  .hy-card ul { list-style: none; }
+  .hy-card li { font-size: .84rem; padding: .3rem 0; color: var(--text); border-bottom: 1px dotted var(--text-faint); }
+  .hy-card li:last-child { border-bottom: none; }
+  .hy-card li::before { content: '› '; color: var(--gold); }
+
+  /* ── ULTRA FAST ── */
+  .ultrafast {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .82rem;
+    line-height: 2.2;
+    color: var(--text);
+    column-count: 2;
+    column-gap: 2rem;
+  }
+  .ultrafast b { color: var(--gold); }
+  .ultrafast span.yr { color: var(--teal); }
+  @media(max-width:600px) { .ultrafast { column-count: 1; } }
+
+  /* ── 30 SEC ── */
+  .thirty-sec { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .sec-chip {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .35rem .8rem;
+    font-size: .78rem;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .sec-chip b { color: var(--gold); }
+
+  /* ── LAST NIGHT ── */
+  .ln-card {
+    background: linear-gradient(135deg, #0d1a1f, #0d1520);
+    border: 1px solid #1a3a50;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: .7rem;
+  }
+  .ln-card:last-child { margin-bottom: 0; }
+  .ln-card .ln-head { color: var(--teal); font-weight: 700; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; margin-bottom: .4rem; }
+  .ln-card p { color: #9dd0e8; font-size: .86rem; line-height: 1.8; }
+  .ln-card p b { color: #fff; }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block; font-size: .65rem; padding: .1rem .4rem;
+    border-radius: 3px; font-weight: 700; letter-spacing: .04em;
+    text-transform: uppercase; vertical-align: middle; margin-left: .3rem;
+  }
+  .fire { background: rgba(255,69,0,.2); color: var(--fire); border: 1px solid rgba(255,69,0,.4); }
+  .star { background: rgba(240,180,41,.15); color: var(--gold); border: 1px solid rgba(240,180,41,.3); }
+  .plus { background: rgba(56,217,169,.1); color: var(--teal); border: 1px solid rgba(56,217,169,.3); }
+
+  /* ── SCROLL PROGRESS ── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--teal));
+    z-index: 9999;
+    transition: width .1s;
+    width: 0%;
+  }
+
+  /* ── UTIL ── */
+  .mt { margin-top: .8rem; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media(max-width:600px) { .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<header class="site-header">
+  <h1>🏛 Indian National Congress & Governor Generals</h1>
+  <p>SSC CGL Elite Revision Notes · FRB 2.0 Lecture · Dark Mode</p>
+  <div class="pill-row">
+    <span class="pill pill-fire">🔥 Must Know</span>
+    <span class="pill pill-star">⭐ Important</span>
+    <span class="pill pill-plus">➕ Good to Know</span>
+  </div>
+</header>
+
+<nav class="toc">
+  <a href="#big-picture">Big Picture</a>
+  <a href="#palace">Memory Palace</a>
+  <a href="#precursors">Precursor Orgs</a>
+  <a href="#inc-sessions">INC Sessions</a>
+  <a href="#govgen">Gov Generals</a>
+  <a href="#hooks">Memory Hooks</a>
+  <a href="#connections">Connections</a>
+  <a href="#traps">Exam Traps</a>
+  <a href="#examiner-qs">Examiner Qs</a>
+  <a href="#recall">Active Recall</a>
+  <a href="#high-yield">High-Yield</a>
+  <a href="#ultrafast">Ultra-Fast</a>
+  <a href="#thirty">30-Second</a>
+  <a href="#lastnight">Last Night</a>
+</nav>
+
+<div class="wrapper">
+
+  <!-- BIG PICTURE -->
+  <section id="big-picture">
+    <div class="sec-head"><span class="icon">🌐</span><h2>Big Picture</h2></div>
+    <div class="sec-body">
+      <p class="big-picture">
+        This chapter is the story of how Indian political consciousness evolved from small regional clubs (1814–1884) into a full-scale national party (INC, 1885) — and how British administrators shaped India's political landscape through acts, wars, and policies (1772–1947). Think of it as two parallel streams: <b>Indians organising themselves</b>, and <b>British governors reshaping India</b>. The exam loves firsts, years, presidents, and the exact session where each milestone happened.
+      </p>
+    </div>
+  </section>
+
+  <!-- MEMORY PALACE -->
+  <section id="palace">
+    <div class="sec-head"><span class="icon">🧠</span><h2>Chapter Memory Palace — The Grand Delhi Station</h2></div>
+    <div class="sec-body">
+      <div class="palace-story">
+        <strong>Imagine a grand old railway station called "India Station."</strong><br><br>
+        You enter the <em>waiting room (1814–1866)</em>: Raja Ram Mohan Roy sits reading a newspaper — he started Atmiya Sabha, Brahmo Samaj, Hindu College. Beside him, Dadabhai Naoroji (old man with white beard = <em>Grand Old Man</em>) holds a book: <em>"Poverty and Un-British Rule"</em>.<br><br>
+        You walk to <em>Platform 1 (1867–1884)</em>: A Marathi platform. Ranade stands at Prarthana Samaj sign (1867). Shishir Kumar Ghosh sells Amrit Bazar Patrika (India League 1875). Surendranath Banerjee and Anand Mohan Bose share a bench — Indian National Association 1876. Feroze Shah Mehta announces Bombay Presidency Association 1885. A signboard reads MGP → Madras Mahajan Sabha 1884.<br><br>
+        The <em>station master's office (1885)</em> has AO Hume inside — a birdwatcher (Father of Indian Ornithology) who founded INC. The station was supposed to be in Pune but PLAGUE struck, so it moved to Bombay. 72 delegates board the train. WC Banerjee is the driver.<br><br>
+        Each <em>train compartment</em> is a Congress session. Compartment 1906 = Naoroji's third presidency + Kolkata; 1907 = Surat crack in the compartment wall (SPLIT); 1916 = Lucknow — crack REPAIRED (Merger); 1917 = Annie Besant — first woman pilot; 1929 = Lahore — Nehru declares PURNA SWARAJ at the final destination.<br><br>
+        On the <em>other side of the station</em> sit the Governor Generals: Warren Hastings at the first window (Regulating Act 1773), Cornwallis polishing his police badge (Father of ICS), Dalhousie with tiny train toys (first railway 1853), Canning watching the 1857 revolt fire and becoming first Viceroy, Ripon building a mini city (Father of Local Self-Govt), and Mountbatten locking the station door — last British Governor General.
+      </div>
+    </div>
+  </section>
+
+  <!-- PRECURSOR ORGANISATIONS -->
+  <section id="precursors">
+    <div class="sec-head"><span class="icon">🌱</span><h2>Complete Revision — Precursor Organisations (Pre-INC)</h2></div>
+    <div class="sec-body">
+      <div class="timeline">
+
+        <div class="tl-entry">
+          <div class="tl-year">1814</div>
+          <div class="tl-org">Atmiya Sabha <span class="badge fire">🔥</span></div>
+          <div class="tl-detail">Founded by <b>Raja Ram Mohan Roy</b>. Beginning of his reform journey.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1817</div>
+          <div class="tl-org">Hindu College, Calcutta</div>
+          <div class="tl-detail">Founded by <b>Raja Ram Mohan Roy + David Hare</b>. Promoted English & Western education.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1821</div>
+          <div class="tl-org">Mirat-ul-Akhbar (Newspaper)</div>
+          <div class="tl-detail">Founded by <b>Raja Ram Mohan Roy</b>. Persian language. Gifted concept of free press.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1828</div>
+          <div class="tl-org">Brahmo Sabha → Brahmo Samaj <span class="badge fire">🔥</span></div>
+          <div class="tl-detail">Founded by <b>Raja Ram Mohan Roy</b>. Later renamed Brahmo Samaj. Monotheism, anti-Sati.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1836</div>
+          <div class="tl-org">Bang Bhasha Prakashika Sabha</div>
+          <div class="tl-detail">Founded by <b>Raja Ram Mohan Roy</b>.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1849</div>
+          <div class="tl-org">Paramhans Mandali <span class="badge star">⭐</span></div>
+          <div class="tl-detail">Founded by <b>Dadoba Pandurang</b>. Maharashtra.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1851</div>
+          <div class="tl-org">Rahnumai Mazdayasnan Sabha <span class="badge star">⭐</span></div>
+          <div class="tl-detail">Founded by <b>Dadabhai Naoroji + Faridji Naoroji</b>. For Parsi reform. (SS = Bengali in the founding group)</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1866</div>
+          <div class="tl-org">East India Association <span class="badge fire">🔥</span></div>
+          <div class="tl-detail">Founded by <b>Dadabhai Naoroji</b> (Grand Old Man of India). Promoted Indian interests in Britain.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1867</div>
+          <div class="tl-org">Prarthana Samaj <span class="badge fire">🔥</span></div>
+          <div class="tl-detail">Founded by <b>Atmaram Pandurang</b>. Maharashtra. MG Ranade joined 1870. Social reform, monotheism.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1870</div>
+          <div class="tl-org">Poona Sarvajanik Sabha <span class="badge star">⭐</span></div>
+          <div class="tl-detail"><b>MG Ranade</b> joined in 1870. Maharashtra's premier public body.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1875</div>
+          <div class="tl-org">India League <span class="badge star">⭐</span></div>
+          <div class="tl-detail">Founded by <b>Shishir Kumar Ghosh</b>. Bengal. Published <b>Amrit Bazar Patrika</b> (Bengali).</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1876</div>
+          <div class="tl-org">Indian National Association <span class="badge fire">🔥</span></div>
+          <div class="tl-detail">Founded by <b>Surendranath Banerjee + Anand Mohan Bose</b>. Later merged into INC.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1884</div>
+          <div class="tl-org">Madras Mahajan Sabha <span class="badge star">⭐</span></div>
+          <div class="tl-detail">Founded by <b>MGP</b> (M=Mudali, G=Ghosh, P=Pillai — remember MGP). Madras.</div>
+        </div>
+
+        <div class="tl-entry">
+          <div class="tl-year">1885</div>
+          <div class="tl-org">Bombay Presidency Association <span class="badge star">⭐</span></div>
+          <div class="tl-detail">Founded by <b>Feroze Shah Mehta, KT Telang, Badruddin Tyabji</b>. Same year as INC!</div>
+        </div>
+
+      </div>
+
+      <div class="mt" style="background:rgba(240,180,41,.07);border:1px solid rgba(240,180,41,.2);border-radius:8px;padding:1rem 1.2rem;">
+        <div style="color:var(--gold);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">⭐ Dadabhai Naoroji — Grand Old Man of India</div>
+        <ul style="list-style:none;font-size:.86rem;color:var(--text);">
+          <li>📖 Wrote <b>Rast Guftar</b> — for Parsi community</li>
+          <li>📖 Wrote <b>"Poverty and Un-British Rule in India"</b> — introduced Drain Theory</li>
+          <li>🪑 Presided over Congress <b>3 times</b>: 1886, 1893, 1906 (Kolkata)</li>
+          <li>🏛 Founded East India Association (1866)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- INC FORMATION -->
+  <section>
+    <div class="sec-head"><span class="icon">🏛</span><h2>Indian National Congress — Formation (1885)</h2></div>
+    <div class="sec-body">
+      <div class="grid2">
+        <div>
+          <div style="color:var(--gold);font-weight:700;margin-bottom:.6rem;font-size:.88rem;">WHO FORMED IT?</div>
+          <p style="font-size:.88rem;color:var(--text);line-height:1.8;">
+            <b>Allan Octavian Hume (AO Hume)</b><br>
+            Called: <span style="color:var(--teal);">Father of Indian Ornithology</span><br>
+            (Ornithology = Study of Birds)
+          </p>
+        </div>
+        <div>
+          <div style="color:var(--gold);font-weight:700;margin-bottom:.6rem;font-size:.88rem;">WHERE?</div>
+          <p style="font-size:.88rem;color:var(--text);line-height:1.8;">
+            <b>Gokuldas Tejpal Sanskrit College, Bombay</b><br>
+            Originally planned: <span style="color:var(--red);">Pune</span> (shifted due to plague outbreak)<br>
+            72 delegates attended<br>
+            <b>President:</b> WC Banerjee (Umesh Chandra Banerjee)
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top:1rem;background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.25);border-radius:8px;padding:1rem 1.2rem;">
+        <div style="color:var(--red);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">🔥 Immediate Cause — Ilbert Bill Controversy</div>
+        <p style="font-size:.88rem;line-height:1.8;color:#e0c0c0;">
+          <b>Ripon</b> was Viceroy · <b>Ilbert</b> composed the bill · Bill said Indian Judicial Magistrates can try Britishers · Britishers PROTESTED · Ripon had to withdraw it · This exposed British double standards → fuelled need for INC
+        </p>
+      </div>
+
+      <div style="margin-top:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem 1.2rem;">
+        <div style="color:var(--purple);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;">📚 Three Theories About INC Formation</div>
+        <ul style="list-style:none;font-size:.86rem;color:var(--text);">
+          <li style="padding:.3rem 0;border-bottom:1px dotted var(--text-faint);">🔴 <b>Safety Valve Theory</b> — Lala Lajpat Rai: British created INC as a pressure valve to release anti-British steam safely</li>
+          <li style="padding:.3rem 0;border-bottom:1px dotted var(--text-faint);">⚡ <b>Lightning Conductor Theory</b> — Gopal Krishna Gokhale: INC acts like a lightning rod — channels dangerous energy safely</li>
+          <li style="padding:.3rem 0;">😡 <b>Factory of Sedition</b> — Dufferin (Viceroy when INC was formed) called it this. (He ironically named it!)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- INC SESSIONS -->
+  <section id="inc-sessions">
+    <div class="sec-head"><span class="icon">📅</span><h2>Important INC Sessions</h2></div>
+    <div class="sec-body" style="padding:0;">
+      <div style="overflow-x:auto;">
+        <table class="session-table">
+          <thead>
+            <tr>
+              <th>Year</th><th>Place</th><th>President</th><th>Key Highlight</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight-row">
+              <td><span class="yr">1885</span></td>
+              <td><span class="loc">Bombay (Gokuldas Tejpal College)</span></td>
+              <td><span class="pres">WC Banerjee</span></td>
+              <td><span class="note">🔥 FIRST session · 72 delegates · Originally planned Pune (Plague!)</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1886</span></td>
+              <td><span class="loc">Calcutta</span></td>
+              <td><span class="pres">Dadabhai Naoroji</span></td>
+              <td><span class="note">434 delegates. Naoroji's 1st presidency.</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1887</span></td>
+              <td><span class="loc">Madras</span></td>
+              <td><span class="pres">Badruddin Tyabji</span></td>
+              <td><span class="note">🔥 First Muslim President of INC</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1888</span></td>
+              <td><span class="loc">Allahabad</span></td>
+              <td><span class="pres">George Yule</span></td>
+              <td><span class="note">🔥 First Britisher to preside over INC</span></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><span class="yr">1896</span></td>
+              <td><span class="loc">Calcutta</span></td>
+              <td><span class="pres">—</span></td>
+              <td><span class="note">🔥 Vande Mataram sung for FIRST TIME (Bankim Chandra Chatterjee)</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1901</span></td>
+              <td><span class="loc">Calcutta</span></td>
+              <td><span class="pres">—</span></td>
+              <td><span class="note">Gandhi appeared for the first time (did NOT preside)</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1905</span></td>
+              <td><span class="loc">Banaras</span></td>
+              <td><span class="pres">Gopal Krishna Gokhale</span></td>
+              <td><span class="note">Swadeshi Movement formally adopted. Swaraj discussion began.</span></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><span class="yr">1906</span></td>
+              <td><span class="loc">Kolkata</span></td>
+              <td><span class="pres">Dadabhai Naoroji (3rd)</span></td>
+              <td><span class="note">🔥 4 Resolutions: Swaraj, Swadeshi, Boycott, National Education. Swaraj = Self-Rule (NOT full independence yet)</span></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><span class="yr">1907</span></td>
+              <td><span class="loc">Surat</span></td>
+              <td><span class="pres">Ras Bihari Ghosh (moderate)</span></td>
+              <td><span class="note">🔥 SURAT SPLIT — Congress divided into Moderates vs Extremists (Lal-Bal-Pal)</span></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><span class="yr">1911</span></td>
+              <td><span class="loc">Calcutta (Delhi session)</span></td>
+              <td><span class="pres">—</span></td>
+              <td><span class="note">🔥 Jana Gana Mana (Rabindranath Tagore) sung for FIRST TIME</span></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><span class="yr">1916</span></td>
+              <td><span class="loc">Lucknow</span></td>
+              <td><span class="pres">—</span></td>
+              <td><span class="note">🔥 Surat Split REVERSED — Moderates + Extremists REUNITED. Lucknow Pact (INC + Muslim League joint demands)</span></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><span class="yr">1917</span></td>
+              <td><span class="loc">Calcutta</span></td>
+              <td><span class="pres">Annie Besant</span></td>
+              <td><span class="note">🔥 First WOMAN President of INC</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1924</span></td>
+              <td><span class="loc">Belgaum (Karnataka)</span></td>
+              <td><span class="pres">Mahatma Gandhi</span></td>
+              <td><span class="note">🔥 ONLY session presided by Gandhi. Released from jail post-Chauri Chaura.</span></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><span class="yr">1925</span></td>
+              <td><span class="loc">Kanpur</span></td>
+              <td><span class="pres">Sarojini Naidu</span></td>
+              <td><span class="note">🔥 First INDIAN woman to preside (Annie Besant = first woman but she was British!)</span></td>
+            </tr>
+            <tr class="highlight-row">
+              <td><span class="yr">1929</span></td>
+              <td><span class="loc">Lahore</span></td>
+              <td><span class="pres">Jawaharlal Nehru</span></td>
+              <td><span class="note">🔥🔥 Purna Swaraj declared · 26 Jan 1930 = First Independence Day · CDM approved · Boycott 1st Round Table Conference approved</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1931</span></td>
+              <td><span class="loc">Karachi</span></td>
+              <td><span class="pres">Sardar Patel</span></td>
+              <td><span class="note">2 Resolutions: Fundamental Rights + National Economic Policy. Gandhi-Irwin Pact endorsed. 2nd RTC participation approved.</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1937</span></td>
+              <td><span class="loc">Faizpur</span></td>
+              <td><span class="pres">Jawaharlal Nehru</span></td>
+              <td><span class="note">🔥 FIRST session held in a VILLAGE</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1938–39</span></td>
+              <td><span class="loc">Haripur/Tripuri</span></td>
+              <td><span class="pres">Subhash Chandra Bose (won both)</span></td>
+              <td><span class="note">Gandhi backed Sita Ramaiya (Tripuri). Bose won. Gandhi called it "my defeat." Bose resigned due to differences → formed All India Forward Bloc (1939)</span></td>
+            </tr>
+            <tr>
+              <td><span class="yr">1946</span></td>
+              <td><span class="loc">Meerut</span></td>
+              <td><span class="pres">JP Kriplani (Acharya Kriplani)</span></td>
+              <td><span class="note">Last major pre-independence session. Kriplani = first to bring no-confidence motion against Nehru.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="padding:1rem 1.5rem;background:rgba(56,217,169,.05);border-top:1px solid var(--border);">
+        <div style="color:var(--teal);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4rem;">🧠 KOLKATA MAGIC — All firsts happened here!</div>
+        <p style="font-size:.84rem;color:#9dd0c8;line-height:1.8;">
+          National <b>Song</b> first sung (1896) · Four <b>Resolutions</b> adopted (1906) · National <b>Anthem</b> first sung (1911) · First <b>Woman President</b> (1917, Annie Besant) — four landmark firsts, all in Calcutta/Kolkata sessions!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOVERNOR GENERALS -->
+  <section id="govgen">
+    <div class="sec-head"><span class="icon">👑</span><h2>Governor Generals & Viceroys — Key Events</h2></div>
+    <div class="sec-body" style="padding:0;">
+      <div style="overflow-x:auto;">
+        <table class="govgen-table">
+          <thead>
+            <tr><th>Governor General / Viceroy</th><th>Period</th><th>Key Events</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="gg-name">Warren Hastings</div><div style="font-size:.72rem;color:var(--text-dim);">1st Gov-Gen of Bengal</div></td>
+              <td><span class="gg-yr">1772–1785</span></td>
+              <td class="gg-events">
+                <span><span class="gg-tag tag-act">Act</span> Regulating Act 1773 (gave Governor of Bengal title of Gov-Gen of Bengal)</span>
+                <span><span class="gg-tag tag-war">War</span> 1st Anglo-Maratha War + Treaty of Salbai</span>
+                <span><span class="gg-tag tag-war">War</span> 2nd Anglo-Mysore War</span>
+                <span><span class="gg-tag tag-award">Org</span> Asiatic Society of Bengal 1784 — William Jones</span>
+                <span><span class="gg-tag tag-award">Press</span> First newspaper: Bengal Gazette — James Augustus Hickey (1780)</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Cornwallis</div><div style="font-size:.72rem;color:var(--teal);">Father of ICS & Modern Police</div></td>
+              <td><span class="gg-yr">1786–1793</span></td>
+              <td class="gg-events">
+                <span><span class="gg-tag tag-war">War</span> 3rd Anglo-Mysore War → Treaty of Seringapatam (Tipu lost)</span>
+                <span><span class="gg-tag tag-act">Act</span> Permanent Settlement 1793 — Zamindari system in Bengal, Bihar, Odisha</span>
+                <span>🎖 Father of Indian Civil Services</span>
+                <span>👮 Modern policing — Daroga system</span>
+                <span>💀 Only GG with 2 graves in India (Ghazipur, UP)</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Wellesley</div></td>
+              <td><span class="gg-yr">1798–1805</span></td>
+              <td class="gg-events">
+                <span><span class="gg-tag tag-war">War</span> 4th Anglo-Mysore War</span>
+                <span><span class="gg-tag tag-war">War</span> 2nd Anglo-Maratha War</span>
+                <span><span class="gg-tag tag-award">Policy</span> Subsidiary Alliance (1798) — brainchild of <b>Dupleix (French)</b></span>
+                <span>First to sign: <b>Hyderabad (1798)</b>, then Mysore (1799)</span>
+                <span><span class="gg-tag tag-act">Treaty</span> Treaty of Bassein 1802 with Bajirao II → triggered 2nd Anglo-Maratha War</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Lord Minto I</div></td>
+              <td><span class="gg-yr">1807–1813</span></td>
+              <td class="gg-events">
+                <span><span class="gg-tag tag-award">Treaty</span> Treaty of Amritsar 1809 — Sutlej river boundary with Sikh Kingdom (Maharaja Ranjit Singh)</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Lord Hastings</div><div style="font-size:.72rem;color:var(--text-dim);">(NOT Warren Hastings!)</div></td>
+              <td><span class="gg-yr">1813–1823</span></td>
+              <td class="gg-events">
+                <span><span class="gg-tag tag-war">War</span> 3rd Anglo-Maratha War</span>
+                <span><span class="gg-tag tag-award">Treaty</span> Treaty of Sagauli — after Anglo-Nepal War</span>
+                <span><span class="gg-tag tag-act">System</span> Ryotwari System (Munro & Reed, 1820) — Madras region, tax direct from peasant</span>
+                <span><span class="gg-tag tag-act">System</span> Mahalwari System (1822)</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">William Bentinck</div><div style="font-size:.72rem;color:var(--teal);">1st Governor General of India</div></td>
+              <td><span class="gg-yr">1828–1835</span></td>
+              <td class="gg-events">
+                <span>🔥 Govt of India Act 1833 → made him 1st Gov-Gen of INDIA (not just Bengal)</span>
+                <span><span class="gg-tag tag-act">Reform</span> Abolished Sati — 1829</span>
+                <span>Suppressed Thuggee system</span>
+                <span>Abolished circuit courts</span>
+                <span><span class="gg-tag tag-award">Edu</span> Macaulay's Minute → English education (Downward Filtration Theory)</span>
+                <span>Called Father of Modern Education</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Metcalfe</div><div style="font-size:.72rem;color:var(--teal);">Liberator of Indian Press</div></td>
+              <td><span class="gg-yr">1835–1836</span></td>
+              <td class="gg-events">
+                <span>Removed all restrictions on Indian Press → called Liberator of the Indian Press</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Auckland</div></td>
+              <td><span class="gg-yr">1836–1842</span></td>
+              <td class="gg-events">
+                <span><span class="gg-tag tag-war">War</span> 1st Anglo-Afghan War (1839–42) — British defeated</span>
+                <span>Shah Shuja replaced Dost Mohammad but Afghans resisted → British defeat</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Hardinge I</div></td>
+              <td><span class="gg-yr">1844–1848</span></td>
+              <td class="gg-events">
+                <span><span class="gg-tag tag-war">War</span> 1st Anglo-Sikh War (1845–46)</span>
+                <span><span class="gg-tag tag-award">Treaty</span> Treaty of Lahore (after 1st Anglo-Sikh War)</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Dalhousie</div><div style="font-size:.72rem;color:var(--red);">Most Important!</div></td>
+              <td><span class="gg-yr">1848–1856</span></td>
+              <td class="gg-events">
+                <span>🔥 <span class="gg-tag tag-act">Policy</span> Doctrine of Lapse (1848)</span>
+                <span>🔥 <span class="gg-tag tag-award">Rail</span> First Railway: Bombay–Thane, 1853, 34 km</span>
+                <span><span class="gg-tag tag-act">Act</span> Widow Remarriage Act — Ishwar Chandra Vidyasagar's efforts</span>
+                <span><span class="gg-tag tag-act">Act</span> Postal Act + Telegraph expansion</span>
+                <span><span class="gg-tag tag-act">Edu</span> Wood's Dispatch 1854 — Magna Carta of Indian Education</span>
+                <span>PWD (Public Works Department) established</span>
+                <span><span class="gg-tag tag-war">War</span> 2nd Anglo-Sikh War (1848–49)</span>
+              </td>
+            </tr>
+            <tr style="background:rgba(255,69,0,.04);">
+              <td><div class="gg-name">Canning</div><div style="font-size:.72rem;color:var(--fire);">Last GG + First Viceroy!</div></td>
+              <td><span class="gg-yr">1856–1862</span></td>
+              <td class="gg-events">
+                <span>🔥 Revolt of 1857</span>
+                <span>🔥 East India Company abolished → Direct Crown Rule</span>
+                <span>🔥 Title changed from Governor General → VICEROY</span>
+                <span>First Viceroy of India = Canning himself</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Mayo</div></td>
+              <td><span class="gg-yr">1869–1872</span></td>
+              <td class="gg-events">
+                <span>First Census 1872 — incomplete & unsynchronised</span>
+                <span>Statistical Survey of India established</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Lytton</div><div style="font-size:.72rem;color:var(--red);">Did "dirty things"</div></td>
+              <td><span class="gg-yr">1876–1880</span></td>
+              <td class="gg-events">
+                <span><span class="gg-tag tag-act">Act</span> Arms Act 1878 — no Indian can keep arms</span>
+                <span><span class="gg-tag tag-act">Act</span> Vernacular Press Act 1878 — local newspapers need British approval</span>
+                <span>🎪 1st Delhi Durbar 1877 — for Queen Victoria</span>
+                <span>Reduced ICS exam age to 19 (from higher limit) — discriminatory move</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Ripon</div><div style="font-size:.72rem;color:var(--teal);">Father of Local Self-Govt</div></td>
+              <td><span class="gg-yr">1880–1884</span></td>
+              <td class="gg-events">
+                <span>🔥 Ilbert Bill Controversy (Indian magistrates can try Britishers) → WITHDRAWN after protest</span>
+                <span>Repealed Arms Act & Vernacular Press Act — 1882</span>
+                <span>🔥 First COMPLETE Census — 1881</span>
+                <span><span class="gg-tag tag-act">Edu</span> Hunter Education Commission 1882</span>
+                <span><span class="gg-tag tag-act">Act</span> First Factory Act 1881 — regulated child & worker hours</span>
+                <span>Father of Local Self-Government</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Dufferin</div></td>
+              <td><span class="gg-yr">1884–1888</span></td>
+              <td class="gg-events">
+                <span>🔥 INC formed 1885 — under his viceroyalty</span>
+                <span>Called Congress "Factory of Sedition"</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Curzon</div></td>
+              <td><span class="gg-yr">1899–1905</span></td>
+              <td class="gg-events">
+                <span>🔥 Partition of Bengal 1905</span>
+                <span><span class="gg-tag tag-act">Act</span> Indian Universities Act</span>
+                <span>Curzon-Kitchener Controversy (civil vs military authority)</span>
+                <span>Younghusband Mission to Tibet</span>
+                <span>🎪 2nd Delhi Durbar 1903</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Minto II</div></td>
+              <td><span class="gg-yr">1905–1910</span></td>
+              <td class="gg-events">
+                <span>🔥 Muslim League formed 1906 (Nawab Salimullah + Aga Khan)</span>
+                <span>🔥 Surat Split 1907 — Congress split into Moderates vs Extremists</span>
+                <span><span class="gg-tag tag-act">Act</span> Indian Councils Act 1909 = Morley-Minto Reforms (Morley = Secretary of State)</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Hardinge II</div></td>
+              <td><span class="gg-yr">1910–1916</span></td>
+              <td class="gg-events">
+                <span>🎪 3rd Delhi Durbar 1911 — for George V</span>
+                <span>🔥 Capital shifted: Calcutta → Delhi (announced 1911, shifted 1912)</span>
+                <span>🔥 Bengal Partition ANNULLED — 1911</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Chelmsford</div></td>
+              <td><span class="gg-yr">1916–1921</span></td>
+              <td class="gg-events">
+                <span><span class="gg-tag tag-act">Act</span> Govt of India Act 1919 = Montagu-Chelmsford (Montchelm) Reforms</span>
+                <span>🔥 Jallianwala Bagh Massacre 1919</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Lord Reading</div></td>
+              <td><span class="gg-yr">1921–1926</span></td>
+              <td class="gg-events">
+                <span>Chauri Chaura incident 1922 → Gandhi jailed</span>
+                <span>Kakori Train Incident 1925</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Irwin</div></td>
+              <td><span class="gg-yr">1926–1931</span></td>
+              <td class="gg-events">
+                <span>Simon Commission came to India</span>
+                <span>Murder of Saunders (Bhagat Singh)</span>
+                <span>Dandi March / Civil Disobedience Movement</span>
+                <span>🔥 Gandhi-Irwin Pact</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Willingdon</div></td>
+              <td><span class="gg-yr">1931–1936</span></td>
+              <td class="gg-events">
+                <span>2nd Round Table Conference 1931</span>
+                <span>3rd Round Table Conference</span>
+                <span>Poona Pact (after McDonald Award on separate electorates)</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Linlithgow</div></td>
+              <td><span class="gg-yr">1936–1944</span></td>
+              <td class="gg-events">
+                <span>Congress resigned 1939</span>
+                <span>August Offer 1940</span>
+                <span>Cripps Mission 1942</span>
+                <span>🔥 Quit India Movement 1942</span>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="gg-name">Wavell</div></td>
+              <td><span class="gg-yr">1944–1947</span></td>
+              <td class="gg-events">
+                <span>Wavell Plan + Shimla Conference</span>
+              </td>
+            </tr>
+            <tr style="background:rgba(240,180,41,.05);">
+              <td><div class="gg-name">Lord Mountbatten</div><div style="font-size:.72rem;color:var(--fire);">Last British Viceroy</div></td>
+              <td><span class="gg-yr">1947</span></td>
+              <td class="gg-events">
+                <span>🔥 Last British Governor General</span>
+                <span>Independence — India & Pakistan partition</span>
+              </td>
+            </tr>
+            <tr style="background:rgba(56,217,169,.05);">
+              <td><div class="gg-name">C. Rajagopalachari</div><div style="font-size:.72rem;color:var(--teal);">ONLY Indian GG</div></td>
+              <td><span class="gg-yr">1948–1950</span></td>
+              <td class="gg-events">
+                <span>🔥 Only Indian to become Governor General of India</span>
+                <span>Post abolished after him → India became Republic (Jan 26, 1950)</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMORY HOOKS -->
+  <section id="hooks">
+    <div class="sec-head"><span class="icon">🪝</span><h2>Smart Memory Hooks</h2></div>
+    <div class="sec-body">
+      <div class="hook-card">
+        <div class="hook-label">Hook 1 — The LOCAL PERSON rule (Congress Sessions)</div>
+        <p>Wherever a session was held, the <b>local/majority person did NOT preside</b>. Madras = mostly Hindu → <b>Muslim</b> presided (Tyabji). Allahabad = Hindu + Muslim → <b>Christian/Britisher</b> presided (George Yule). Use this logic to deduce the president!</p>
+      </div>
+      <div class="hook-card">
+        <div class="hook-label">Hook 2 — Naoroji's THREE presidencies</div>
+        <p>Dadabhai Naoroji presided <b>1886, 1893, 1906</b>. Think: <b>"Naoroji scored THREE centuries: 86, 93, 06."</b> Like a cricket batsman with three tons!</p>
+      </div>
+      <div class="hook-card">
+        <div class="hook-label">Hook 3 — Women Presidents of INC</div>
+        <p><b>Annie Besant (1917)</b> = First WOMAN president but she was British → <b>"Annie came FIRST but was a foreigner."</b><br><b>Sarojini Naidu (1925)</b> = First INDIAN woman → <b>"Sarojini sang India's song, so she's the Indian one."</b></p>
+      </div>
+      <div class="hook-card">
+        <div class="hook-label">Hook 4 — Cornwallis has TWO graves</div>
+        <p>Only Governor General to die in India. <b>"Cornwallis loved India so much, he stayed TWICE — one grave in Ghazipur, one in history books."</b></p>
+      </div>
+      <div class="hook-card">
+        <div class="hook-label">Hook 5 — Dalhousie's FIRST Railway (1853)</div>
+        <p>Dalhousie = <b>DAL-housie = DAL (lentils) train</b>. Imagine a train carrying dal from Bombay to Thane, 34 km. First railway. Dal was the first thing India exported by train!</p>
+      </div>
+      <div class="hook-card">
+        <div class="hook-label">Hook 6 — Subsidiary Alliance trick</div>
+        <p>Wellesley BROUGHT it. Dupleix (French) CONCEIVED it. <b>"Dupleix was the BRAIN, Wellesley was the BRAWN."</b> First to sign = Hyderabad 1798, Mysore 1799.</p>
+      </div>
+      <div class="hook-card">
+        <div class="hook-label">Hook 7 — Surat Split vs Lucknow Merger</div>
+        <p>Think of it as a CRACK (1907 Surat) and a WELD (1916 Lucknow). <b>Surat cracked the glass. Lucknow welded it back.</b> Time gap = 9 years.</p>
+      </div>
+      <div class="hook-card">
+        <div class="hook-label">Hook 8 — Gandhi's ONLY presidency — Belgaum 1924</div>
+        <p>Gandhi presided <b>ONCE only</b>. He was released from jail in 1923 (post Chauri Chaura). Imagine him walking out of jail straight to Belgaum to take the chair — <b>one entry, one session, one exit.</b></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONNECTIONS -->
+  <section id="connections">
+    <div class="sec-head"><span class="icon">🔗</span><h2>Concept Connections</h2></div>
+    <div class="sec-body">
+      <div class="connection">
+        <span class="conn-arrow">CAUSE→EFFECT</span>
+        <div class="conn-text"><b>Ilbert Bill Controversy</b> → Britishers protested Indian judges trying them → Bill withdrawn → Indians realised British will never give equality → Immediate cause for forming <b>INC (1885)</b></div>
+      </div>
+      <div class="connection">
+        <span class="conn-arrow">EVENT→CONSEQUENCE</span>
+        <div class="conn-text"><b>Revolt of 1857</b> → East India Company abolished → Governor General title → Viceroy title → <b>Canning becomes first Viceroy</b></div>
+      </div>
+      <div class="connection">
+        <span class="conn-arrow">POLICY→IMPACT</span>
+        <div class="conn-text"><b>Doctrine of Lapse (Dalhousie)</b> → many Indian states annexed → Indian rulers angry → contributed to <b>1857 Revolt</b></div>
+      </div>
+      <div class="connection">
+        <span class="conn-arrow">LYTTON→RIPON</span>
+        <div class="conn-text">Lytton did "dirty things" (Arms Act, Vernacular Press Act, reduced ICS age) → Ripon cleaned up: repealed both acts in <b>1882</b>, held first complete census (1881), Factory Act (1881), Hunter Commission (1882)</div>
+      </div>
+      <div class="connection">
+        <span class="conn-arrow">EDU CHAIN</span>
+        <div class="conn-text"><b>Macaulay's Minute</b> (English education, filtration theory) → negated by <b>Wood's Dispatch 1854</b> (Magna Carta of Education) → both happened under Dalhousie's time</div>
+      </div>
+      <div class="connection">
+        <span class="conn-arrow">SURAT→LUCKNOW</span>
+        <div class="conn-text"><b>1907 Surat Split</b>: Extremists (Lal-Bal-Pal) vs Moderates → <b>1916 Lucknow Pact</b>: Reunited + INC + Muslim League joint demands to British</div>
+      </div>
+      <div class="connection">
+        <span class="conn-arrow">1929 LAHORE</span>
+        <div class="conn-text">Purna Swaraj declared → CDM permitted → 26 Jan 1930 celebrated as Independence Day → 1931 Karachi: Fundamental Rights resolution + endorsed Gandhi-Irwin Pact</div>
+      </div>
+      <div class="connection">
+        <span class="conn-arrow">BOSE STORY</span>
+        <div class="conn-text">Bose won Haripur (1938) → won Tripuri (1939) despite Gandhi backing Sita Ramaiya → differences grew → resigned → formed <b>All India Forward Bloc (1939)</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAM TRAPS -->
+  <section id="traps">
+    <div class="sec-head"><span class="icon">⚠️</span><h2>Exam Traps — Do NOT Get These Wrong</h2></div>
+    <div class="sec-body">
+      <div class="trap-card">
+        <div class="trap-label">TRAP 1 — Annie Besant vs Sarojini Naidu</div>
+        <p><b>Annie Besant (1917)</b> = First WOMAN president (but British) <br><b>Sarojini Naidu (1925)</b> = First <b>INDIAN woman</b> president<br>👉 If exam asks "first woman" → Annie Besant. If "first Indian woman" → Sarojini Naidu.</p>
+      </div>
+      <div class="trap-card">
+        <div class="trap-label">TRAP 2 — Warren Hastings vs Lord Hastings</div>
+        <p>These are TWO different people!<br><code>Warren Hastings</code> = First Governor General of Bengal (1772)<br><code>Lord Hastings</code> = Governor General 1813–1823 (3rd Maratha War, Treaty of Sagauli, Ryotwari system)<br>👉 Don't confuse them on match-the-following!</p>
+      </div>
+      <div class="trap-card">
+        <div class="trap-label">TRAP 3 — Swaraj (1906) vs Purna Swaraj (1929)</div>
+        <p><b>Swaraj</b> (1906 Kolkata) = Self-rule. NOT full independence.<br><b>Purna Swaraj</b> (1929 Lahore) = Complete independence.<br>👉 Exam will try to make you say 1906 = complete independence. WRONG!</p>
+      </div>
+      <div class="trap-card">
+        <div class="trap-label">TRAP 4 — Treaty of Amritsar vs Treaty of Lahore</div>
+        <p><b>Treaty of Amritsar 1809</b> = With <b>Maharaja Ranjit Singh</b> (Minto I). Sutlej river boundary.<br><b>Treaty of Lahore</b> = After 1st Anglo-Sikh War (Hardinge I). Completely different!<br>👉 Both involve Sikhs but completely different context & Viceroy.</p>
+      </div>
+      <div class="trap-card">
+        <div class="trap-label">TRAP 5 — Census: 1872 vs 1881</div>
+        <p><b>1872 (Mayo)</b> = First census, but <b>INCOMPLETE and unsynchronised</b><br><b>1881 (Ripon)</b> = First <b>COMPLETE</b> census<br>👉 "First census" = 1872. "First complete/synchronized census" = 1881.</p>
+      </div>
+      <div class="trap-card">
+        <div class="trap-label">TRAP 6 — Delhi Durbar dates</div>
+        <p>1st Delhi Durbar = <code>1877</code> (Lytton) — Queen Victoria<br>2nd Delhi Durbar = <code>1903</code> (Curzon)<br>3rd Delhi Durbar = <code>1911</code> (Hardinge II) — George V + Capital shift announced<br>👉 Exams often mix these up!</p>
+      </div>
+      <div class="trap-card">
+        <div class="trap-label">TRAP 7 — INC First Session Location</div>
+        <p>Session was planned in <b>Pune</b> but held in <b>Bombay</b> due to <b>plague outbreak</b>.<br>👉 Exam may ask "originally planned location" — answer = Pune.</p>
+      </div>
+      <div class="trap-card">
+        <div class="trap-label">TRAP 8 — Subsidiary Alliance Origin</div>
+        <p>Wellesley <b>IMPLEMENTED</b> it. Dupleix (French Governor General) was its <b>ORIGINATOR/BRAINCHILD</b>.<br>👉 If asked "who introduced Subsidiary Alliance" → Wellesley. "Whose idea was it originally?" → Dupleix.</p>
+      </div>
+      <div class="trap-card">
+        <div class="trap-label">TRAP 9 — Cornwallis — 1st GG of Bengal? No!</div>
+        <p><b>Warren Hastings</b> = 1st GG of Bengal (Regulating Act 1773)<br><b>William Bentinck</b> = 1st GG of India (Govt of India Act 1833)<br><b>Cornwallis</b> = Father of ICS + Father of modern police. But NOT the first GG of anything!</p>
+      </div>
+      <div class="trap-card">
+        <div class="trap-label">TRAP 10 — Capital Shift: Announced vs Shifted</div>
+        <p>Capital shift <b>announced</b> in <code>1911</code> (at 3rd Delhi Durbar under Hardinge II)<br>Capital actually <b>shifted</b> in <code>1912</code><br>👉 Both years can be asked!</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAMINER'S FAVOURITE QUESTIONS -->
+  <section id="examiner-qs">
+    <div class="sec-head"><span class="icon">🎯</span><h2>Examiner's Favourite Questions</h2></div>
+    <div class="sec-body">
+      <ul class="eq-list">
+        <li data-icon="🔥">First session of INC was held at? → Gokuldas Tejpal Sanskrit College, Bombay (1885)</li>
+        <li data-icon="🔥">Who was the first Muslim President of INC? → Badruddin Tyabji (1887, Madras)</li>
+        <li data-icon="🔥">Who was the first Britisher to preside over INC? → George Yule (1888, Allahabad)</li>
+        <li data-icon="🔥">Where was Vande Mataram first sung in INC session? → 1896 Calcutta</li>
+        <li data-icon="🔥">Where was Jana Gana Mana first sung in INC session? → 1911 Calcutta</li>
+        <li data-icon="🔥">Congress split into moderates & extremists — which session? → Surat 1907</li>
+        <li data-icon="🔥">First woman president of INC? → Annie Besant (1917, Calcutta)</li>
+        <li data-icon="🔥">First Indian woman president of INC? → Sarojini Naidu (1925, Kanpur)</li>
+        <li data-icon="🔥">Only session presided by Gandhi? → Belgaum 1924</li>
+        <li data-icon="🔥">Purna Swaraj was declared in which session? → Lahore 1929 (Nehru)</li>
+        <li data-icon="🎯">Immediate cause of INC formation? → Ilbert Bill Controversy</li>
+        <li data-icon="🎯">AO Hume is called Father of? → Indian Ornithology</li>
+        <li data-icon="🎯">Who called INC a "Factory of Sedition"? → Viceroy Dufferin</li>
+        <li data-icon="🎯">Safety Valve Theory given by? → Lala Lajpat Rai</li>
+        <li data-icon="🎯">First Governor General of India (NOT Bengal)? → William Bentinck</li>
+        <li data-icon="🎯">Father of Local Self-Government? → Ripon</li>
+        <li data-icon="🎯">Father of Indian Civil Services? → Cornwallis</li>
+        <li data-icon="🎯">Liberator of Indian Press? → Metcalfe</li>
+        <li data-icon="🎯">First railway line in India — year and cities? → 1853, Bombay to Thane, 34 km</li>
+        <li data-icon="🎯">Widow Remarriage Act — efforts by? → Ishwar Chandra Vidyasagar (Dalhousie era)</li>
+        <li data-icon="🎯">Wood's Dispatch 1854 called? → Magna Carta of Indian Education</li>
+        <li data-icon="🎯">Who was the only Indian Governor General? → C. Rajagopalachari</li>
+        <li data-icon="🎯">Bose formed All India Forward Bloc in? → 1939 (resigned from INC)</li>
+        <li data-icon="🎯">Permanent Settlement 1793 — which regions? → Bengal, Bihar, Odisha (Cornwallis)</li>
+        <li data-icon="🎯">Ryotwari system — region? → Madras (direct tax from peasant, Munro & Reed)</li>
+        <li data-icon="🎯">Subsidiary Alliance — first state to sign? → Hyderabad (1798)</li>
+        <li data-icon="🎯">Muslim League formed in? → 1906 (Minto II's time, Nawab Salimullah + Aga Khan)</li>
+        <li data-icon="🎯">Morley-Minto Reforms = which Act? → Indian Councils Act 1909</li>
+        <li data-icon="⭐">Faizpur session 1937 — significance? → First session held in a VILLAGE</li>
+        <li data-icon="⭐">Dadabhai Naoroji's book on Drain Theory? → "Poverty and Un-British Rule in India"</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ACTIVE RECALL -->
+  <section id="recall">
+    <div class="sec-head"><span class="icon">❓</span><h2>Active Recall — Tap to Reveal Answers</h2></div>
+    <div class="sec-body">
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        INC was formed in _____ by _____, who was called Father of _____.
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">1885 · AO Hume · Indian Ornithology. First session: Gokuldas Tejpal Sanskrit College, Bombay. 72 delegates. WC Banerjee presided.</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        Name 4 resolutions passed in 1906 Kolkata session.
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">Swaraj (self-rule, NOT Purna Swaraj) · Swadeshi · Boycott · National Education. Presided by Dadabhai Naoroji (his 3rd presidency).</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        What is the difference between Swaraj (1906) and Purna Swaraj (1929)?
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">Swaraj = Self-Rule (not complete independence). Purna Swaraj = Complete Independence, declared at Lahore 1929 under Nehru. CDM was also approved in 1929.</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        Three things that happened in Kolkata INC sessions (firsts)?
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">1896: Vande Mataram first sung · 1906: Four resolutions adopted · 1911: Jana Gana Mana first sung · 1917: First woman president (Annie Besant)</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        What did Dalhousie contribute? (minimum 5 things)
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">Doctrine of Lapse · First Railway (Bombay-Thane, 1853, 34km) · Widow Remarriage Act (Vidyasagar) · Wood's Dispatch 1854 · PWD formed · Postal Act · Telegraph expansion · 2nd Anglo-Sikh War (1848-49)</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        Ripon did what 5 things (the "clean-up" Governor)?
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">Repealed Arms Act (1882) · Repealed Vernacular Press Act (1882) · First complete Census 1881 · Hunter Education Commission 1882 · First Factory Act 1881 · Father of Local Self-Government</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        Subsidiary Alliance: Who brought it? Who conceived it? Who signed first?
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">Brought by Wellesley · Conceived by Dupleix (French) · First to sign: Hyderabad (1798) · Mysore signed 1799</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        What happened in the Lahore session 1929? (3 key decisions)
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">1) Purna Swaraj declared · 2) 26 Jan 1930 = celebrate as Independence Day · 3) CDM approved · 4) Boycott 1st Round Table Conference approved. Presided by Nehru.</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        What was special about the Faizpur (1937) and Belgaum (1924) sessions?
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">Faizpur 1937: First session held in a VILLAGE (Nehru presided) · Belgaum 1924: Only session presided by Mahatma Gandhi (after release from jail post-Chauri Chaura)</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        Who was Acharya Kriplani and what was his distinction?
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">JP Kriplani (Acharya Kriplani) presided over the last major pre-independence session (Meerut, 1946). He was also the first person to bring a no-confidence motion against Jawaharlal Nehru.</div>
+
+      <div class="recall-q" onclick="toggleRecall(this)">
+        Fill: Census 1872 under ___ was ___. Census 1881 under ___ was ___.
+        <span class="toggle">👁 Reveal</span>
+      </div>
+      <div class="recall-ans">1872 under Mayo was INCOMPLETE & unsynchronised · 1881 under Ripon was the first COMPLETE & synchronized census</div>
+
+    </div>
+  </section>
+
+  <!-- HIGH YIELD -->
+  <section id="high-yield">
+    <div class="sec-head"><span class="icon">⭐</span><h2>High-Yield Revision Notes</h2></div>
+    <div class="sec-body">
+      <div class="hy-grid">
+        <div class="hy-card">
+          <h4>🔥 Top Firsts — INC</h4>
+          <ul>
+            <li>First session: Bombay, 1885</li>
+            <li>First Muslim president: Tyabji, 1887</li>
+            <li>First Britisher president: Yule, 1888</li>
+            <li>Vande Mataram first: 1896</li>
+            <li>Jana Gana Mana first: 1911</li>
+            <li>First woman president: Annie Besant 1917</li>
+            <li>First Indian woman: Sarojini 1925</li>
+            <li>First village session: Faizpur 1937</li>
+          </ul>
+        </div>
+        <div class="hy-card">
+          <h4>🔥 Governor General Fathers</h4>
+          <ul>
+            <li>Father of Indian Civil Services: Cornwallis</li>
+            <li>Father of Local Self-Govt: Ripon</li>
+            <li>Father of Modern Education: Bentinck</li>
+            <li>Father of Indian Ornithology: AO Hume</li>
+            <li>Liberator of Indian Press: Metcalfe</li>
+            <li>Modern Police (Daroga): Cornwallis</li>
+          </ul>
+        </div>
+        <div class="hy-card">
+          <h4>🔥 Dalhousie Must-Know</h4>
+          <ul>
+            <li>Doctrine of Lapse: 1848</li>
+            <li>First Railway: 1853 (Bombay-Thane, 34 km)</li>
+            <li>Widow Remarriage Act (Vidyasagar)</li>
+            <li>Wood's Dispatch 1854</li>
+            <li>PWD established</li>
+            <li>2nd Anglo-Sikh War: 1848–49</li>
+          </ul>
+        </div>
+        <div class="hy-card">
+          <h4>🔥 Ripon Must-Know</h4>
+          <ul>
+            <li>Ilbert Bill (withdrawn)</li>
+            <li>Repealed Arms Act 1882</li>
+            <li>Repealed Vernacular Press Act 1882</li>
+            <li>First complete census 1881</li>
+            <li>Hunter Education Commission 1882</li>
+            <li>First Factory Act 1881</li>
+          </ul>
+        </div>
+        <div class="hy-card">
+          <h4>🔥 Crucial Sessions</h4>
+          <ul>
+            <li>1907 Surat: Congress SPLIT</li>
+            <li>1916 Lucknow: Reunited + Lucknow Pact</li>
+            <li>1924 Belgaum: Gandhi's ONLY session</li>
+            <li>1929 Lahore: Purna Swaraj + CDM</li>
+            <li>1931 Karachi: Fundamental Rights resolution</li>
+            <li>1939: Bose resigned → Forward Bloc</li>
+          </ul>
+        </div>
+        <div class="hy-card">
+          <h4>🔥 Precursor Organisations</h4>
+          <ul>
+            <li>1814: Atmiya Sabha (RRM Roy)</li>
+            <li>1828: Brahmo Sabha/Samaj (RRM Roy)</li>
+            <li>1866: East India Association (Naoroji)</li>
+            <li>1867: Prarthana Samaj (Atmaram P.)</li>
+            <li>1875: India League (Shishir Ghosh)</li>
+            <li>1876: Indian National Association</li>
+            <li>1884: Madras Mahajan Sabha (MGP)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ULTRA FAST -->
+  <section id="ultrafast">
+    <div class="sec-head"><span class="icon">⚡</span><h2>Ultra-Fast Revision Sheet</h2></div>
+    <div class="sec-body">
+      <div class="ultrafast">
+        <b>INC formed:</b> <span class="yr">1885</span> · AO Hume · 72 delegates · Bombay<br>
+        <b>Immediate cause:</b> Ilbert Bill<br>
+        <b>Session shifted from:</b> Pune → Bombay (Plague)<br>
+        <b>First president:</b> WC Banerjee<br>
+        <b>Naoroji presided:</b> <span class="yr">1886, 1893, 1906</span><br>
+        <b>First Muslim pres:</b> Tyabji <span class="yr">1887</span><br>
+        <b>First Brit pres:</b> Yule <span class="yr">1888</span><br>
+        <b>Vande Mataram first:</b> <span class="yr">1896</span><br>
+        <b>Gandhi appeared first:</b> <span class="yr">1901</span> (not presided)<br>
+        <b>Swadeshi formally:</b> <span class="yr">1905</span> Banaras<br>
+        <b>4 resolutions:</b> <span class="yr">1906</span> Kolkata (Naoroji)<br>
+        <b>Surat Split:</b> <span class="yr">1907</span> · Ras Bihari Ghosh<br>
+        <b>Jana Gana Mana first:</b> <span class="yr">1911</span> Calcutta<br>
+        <b>Lucknow Pact:</b> <span class="yr">1916</span> · INC + ML<br>
+        <b>Annie Besant pres:</b> <span class="yr">1917</span> Calcutta<br>
+        <b>Gandhi presided:</b> <span class="yr">1924</span> Belgaum (ONLY time)<br>
+        <b>Sarojini Naidu pres:</b> <span class="yr">1925</span> Kanpur<br>
+        <b>Purna Swaraj:</b> <span class="yr">1929</span> Lahore · Nehru<br>
+        <b>CDM approved:</b> <span class="yr">1929</span> Lahore<br>
+        <b>Karachi session:</b> <span class="yr">1931</span> · Fundamental Rights<br>
+        <b>First village session:</b> <span class="yr">1937</span> Faizpur · Nehru<br>
+        <b>Bose resigned → AIFB:</b> <span class="yr">1939</span><br>
+        <b>Last pre-independence:</b> <span class="yr">1946</span> Meerut · JP Kriplani<br>
+        <br>
+        <b>Warren Hastings:</b> Regulating Act 1773 · Asiatic Society 1784<br>
+        <b>Cornwallis:</b> Perm Settlement 1793 · Father ICS · 2 graves<br>
+        <b>Wellesley:</b> Subsidiary Alliance 1798 · Hyderabad first<br>
+        <b>Bentinck:</b> 1st GG of India · Sati abolished 1829<br>
+        <b>Metcalfe:</b> Liberator of Indian Press<br>
+        <b>Dalhousie:</b> Doctrine of Lapse · Railway 1853 · Wood's Dispatch 1854<br>
+        <b>Canning:</b> 1857 revolt · First Viceroy<br>
+        <b>Mayo:</b> Census 1872 (incomplete)<br>
+        <b>Lytton:</b> Arms Act 1878 · Vernacular Press Act 1878 · 1st Durbar 1877<br>
+        <b>Ripon:</b> Complete census 1881 · Father Local Self-Govt · Factory Act 1881<br>
+        <b>Dufferin:</b> INC formed under him · "Factory of Sedition"<br>
+        <b>Curzon:</b> Bengal Partition 1905 · 2nd Durbar 1903<br>
+        <b>Minto II:</b> Muslim League 1906 · Surat Split 1907 · Indian Councils Act 1909<br>
+        <b>Hardinge II:</b> 3rd Durbar 1911 · Capital shift Delhi · Bengal Partition annulled<br>
+        <b>Irwin:</b> CDM · Dandi March · Gandhi-Irwin Pact<br>
+        <b>Mountbatten:</b> Last British Viceroy<br>
+        <b>C. Rajagopalachari:</b> Only Indian GG
+      </div>
+    </div>
+  </section>
+
+  <!-- 30 SECOND -->
+  <section id="thirty">
+    <div class="sec-head"><span class="icon">🚀</span><h2>30-Second Revision Sheet</h2></div>
+    <div class="sec-body">
+      <div class="thirty-sec">
+        <div class="sec-chip">INC <b>1885</b> · AO Hume · Bombay</div>
+        <div class="sec-chip">First pres: <b>WC Banerjee</b></div>
+        <div class="sec-chip">Naoroji: <b>3 times (86,93,06)</b></div>
+        <div class="sec-chip">First Muslim: <b>Tyabji 1887</b></div>
+        <div class="sec-chip">First Brit: <b>Yule 1888</b></div>
+        <div class="sec-chip">Vande Mataram: <b>1896</b></div>
+        <div class="sec-chip">Jana Gana: <b>1911</b></div>
+        <div class="sec-chip">Surat Split: <b>1907</b></div>
+        <div class="sec-chip">Lucknow Pact: <b>1916</b></div>
+        <div class="sec-chip">Annie Besant: <b>1917 (first woman)</b></div>
+        <div class="sec-chip">Gandhi presided: <b>1924 Belgaum ONLY</b></div>
+        <div class="sec-chip">Sarojini: <b>1925 (first Indian woman)</b></div>
+        <div class="sec-chip">Purna Swaraj: <b>1929 Lahore</b></div>
+        <div class="sec-chip">First village: <b>Faizpur 1937</b></div>
+        <div class="sec-chip">AIFB formed: <b>Bose 1939</b></div>
+        <div class="sec-chip">Cornwallis: <b>ICS · Police · Perm Settlement</b></div>
+        <div class="sec-chip">Dalhousie: <b>Railway 1853 · Doctrine of Lapse</b></div>
+        <div class="sec-chip">Ripon: <b>Local Self-Govt · Census 1881</b></div>
+        <div class="sec-chip">Canning: <b>1857 · First Viceroy</b></div>
+        <div class="sec-chip">Last British GG: <b>Mountbatten</b></div>
+        <div class="sec-chip">Only Indian GG: <b>C. Rajagopalachari</b></div>
+        <div class="sec-chip">Ilbert Bill → <b>INC formed</b></div>
+        <div class="sec-chip">Bengal Partition annulled: <b>1911</b></div>
+        <div class="sec-chip">Capital shifted: <b>1911 announced · 1912 shifted</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAST NIGHT -->
+  <section id="lastnight">
+    <div class="sec-head"><span class="icon">🌙</span><h2>Last-Night-Before-Exam Sheet</h2></div>
+    <div class="sec-body">
+      <div class="ln-card">
+        <div class="ln-head">🔥 INC — 7 Absolute Must-Knows</div>
+        <p>
+          1. INC = <b>1885, AO Hume, Bombay</b>, 72 delegates, WC Banerjee presided<br>
+          2. Naoroji presided <b>3 times: 1886, 1893, 1906</b><br>
+          3. First Muslim: <b>Tyabji 1887</b> · First Brit: <b>Yule 1888</b><br>
+          4. Vande Mataram: <b>1896</b> · Jana Gana Mana: <b>1911</b><br>
+          5. Surat Split: <b>1907</b> · Lucknow Merger: <b>1916</b><br>
+          6. Annie Besant: <b>1917 (first woman)</b> · Sarojini: <b>1925 (first Indian woman)</b><br>
+          7. Purna Swaraj: <b>1929 Lahore · Nehru</b> · CDM approved
+        </p>
+      </div>
+      <div class="ln-card">
+        <div class="ln-head">🔥 Governor Generals — 6 Essentials</div>
+        <p>
+          1. <b>Warren Hastings</b>: First GG Bengal, Regulating Act 1773<br>
+          2. <b>Cornwallis</b>: Father ICS, Permanent Settlement 1793, 2 graves<br>
+          3. <b>Dalhousie</b>: First railway 1853, Doctrine of Lapse, Wood's Dispatch 1854<br>
+          4. <b>Ripon</b>: First complete census 1881, Father Local Self-Govt, Factory Act 1881<br>
+          5. <b>Canning</b>: 1857 revolt, first Viceroy<br>
+          6. <b>Mountbatten</b>: Last British · <b>C. Rajagopalachari</b>: Only Indian GG
+        </p>
+      </div>
+      <div class="ln-card">
+        <div class="ln-head">⚠️ 5 Classic Traps — Read Twice</div>
+        <p>
+          1. Annie Besant (first woman) ≠ Sarojini Naidu (first <b>Indian</b> woman)<br>
+          2. Warren Hastings ≠ Lord Hastings — <b>DIFFERENT people!</b><br>
+          3. Swaraj 1906 = Self-Rule · Purna Swaraj 1929 = Full independence<br>
+          4. Census 1872 = incomplete (Mayo) · Census 1881 = complete (Ripon)<br>
+          5. Capital <b>announced</b> 1911 · Capital <b>shifted</b> 1912
+        </p>
+      </div>
+      <div class="ln-card">
+        <div class="ln-head">⚡ 10 Firsts to Remember</div>
+        <p>
+          First GG Bengal = Warren Hastings · First GG India = Bentinck<br>
+          First Viceroy = Canning · Last British Viceroy = Mountbatten<br>
+          Only Indian GG = C. Rajagopalachari<br>
+          First railway = Bombay-Thane 1853 · First complete census = 1881<br>
+          First Muslim INC pres = Tyabji · First woman INC pres = Annie Besant<br>
+          First INC village session = Faizpur 1937
+        </p>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /wrapper -->
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progress-bar').style.width = progress + '%';
+  });
+
+  // Active recall toggle
+  function toggleRecall(el) {
+    const ans = el.nextElementSibling;
+    const toggle = el.querySelector('.toggle');
+    if (ans.classList.contains('visible')) {
+      ans.classList.remove('visible');
+      toggle.textContent = '👁 Reveal';
+    } else {
+      ans.classList.add('visible');
+      toggle.textContent = '🙈 Hide';
+    }
+  }
+</script>
+
+</body>
+</html>
