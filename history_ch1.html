@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advent of Europeans — Revision System</title>
+<style>
+  :root{
+    --ink:#0c0e11;
+    --ink-2:#13161b;
+    --ink-3:#1a1e25;
+    --parchment:#e8dfc8;
+    --gold:#cfa45c;
+    --gold-dim:#8a7345;
+    --bronze:#a8702f;
+    --teal:#5ea394;
+    --teal-dim:#3a6359;
+    --blood:#c0463d;
+    --blood-dim:#7a322c;
+    --ghost:#7d8694;
+    --line:#262b33;
+    --text:#d8d3c4;
+    --text-dim:#9a9486;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Source Serif Pro', Georgia, serif;
+    line-height:1.65;
+    font-size:16px;
+  }
+
+  @font-face{font-family:'fallback';}
+
+  /* ---------- texture backdrop ---------- */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse 1200px 800px at 15% -10%, rgba(207,164,92,0.06), transparent 60%),
+      radial-gradient(ellipse 1000px 700px at 100% 30%, rgba(94,163,148,0.05), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Playfair Display', Georgia, serif;
+    font-weight:700;
+    color:var(--parchment);
+    letter-spacing:0.01em;
+  }
+
+  a{color:var(--gold);}
+
+  /* ---------- layout shell ---------- */
+  .shell{
+    display:flex;
+    max-width:1400px;
+    margin:0 auto;
+    position:relative;
+    z-index:1;
+  }
+
+  /* ---------- sidebar nav ---------- */
+  .sidebar{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    padding:28px 18px 40px 24px;
+    border-right:1px solid var(--line);
+    background:linear-gradient(180deg, var(--ink-2), var(--ink));
+  }
+  .sidebar::-webkit-scrollbar{width:6px;}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px;}
+
+  .brand{
+    font-family:'Playfair Display', serif;
+    font-size:1.05rem;
+    color:var(--gold);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .brand-sub{
+    font-family:'Source Serif Pro', serif;
+    font-size:0.75rem;
+    color:var(--text-dim);
+    font-style:italic;
+    margin-bottom:24px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:18px;
+  }
+
+  .nav-group{margin-bottom:6px;}
+  .nav-link{
+    display:block;
+    font-family:'Source Sans Pro', Arial, sans-serif;
+    font-size:0.82rem;
+    color:var(--text-dim);
+    text-decoration:none;
+    padding:7px 10px;
+    border-radius:4px;
+    border-left:2px solid transparent;
+    transition:all 0.15s ease;
+    cursor:pointer;
+  }
+  .nav-link:hover{
+    color:var(--parchment);
+    background:rgba(207,164,92,0.07);
+    border-left-color:var(--gold);
+  }
+  .nav-link.active{
+    color:var(--gold);
+    background:rgba(207,164,92,0.1);
+    border-left-color:var(--gold);
+    font-weight:600;
+  }
+
+  .progress-box{
+    margin-top:22px;
+    padding:14px;
+    background:var(--ink-3);
+    border:1px solid var(--line);
+    border-radius:8px;
+    font-family:'Source Sans Pro', sans-serif;
+  }
+  .progress-box .ptitle{
+    font-size:0.7rem;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--text-dim);
+    margin-bottom:8px;
+  }
+  .progress-bar-track{
+    width:100%;
+    height:6px;
+    background:var(--ink);
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:8px;
+  }
+  .progress-bar-fill{
+    height:100%;
+    background:linear-gradient(90deg, var(--bronze), var(--gold));
+    width:0%;
+    transition:width 0.3s ease;
+  }
+  #revCount{font-size:0.75rem; color:var(--text-dim);}
+  .reset-btn{
+    margin-top:8px;
+    width:100%;
+    background:none;
+    border:1px solid var(--line);
+    color:var(--text-dim);
+    font-size:0.7rem;
+    padding:5px;
+    border-radius:5px;
+    cursor:pointer;
+    font-family:'Source Sans Pro', sans-serif;
+  }
+  .reset-btn:hover{border-color:var(--blood); color:var(--blood);}
+
+  /* ---------- main content ---------- */
+  .main{
+    flex:1;
+    padding:48px 56px 120px;
+    min-width:0;
+  }
+
+  .hero{
+    margin-bottom:56px;
+    padding-bottom:32px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:'Source Sans Pro', sans-serif;
+    font-size:0.78rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:14px;
+  }
+  .hero h1{
+    font-size:2.6rem;
+    margin:0 0 14px;
+    line-height:1.15;
+  }
+  .hero p.dek{
+    font-size:1.05rem;
+    color:var(--text-dim);
+    max-width:640px;
+    font-style:italic;
+  }
+
+  section.layer{
+    margin-bottom:64px;
+    scroll-margin-top:24px;
+  }
+
+  .layer-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:22px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .layer-head h2{
+    font-size:1.55rem;
+    margin:0;
+  }
+  .layer-num{
+    font-family:'Source Sans Pro', sans-serif;
+    font-size:0.8rem;
+    color:var(--ghost);
+    border:1px solid var(--line);
+    padding:3px 9px;
+    border-radius:20px;
+  }
+  .chevron{
+    margin-left:auto;
+    color:var(--text-dim);
+    transition:transform 0.25s ease;
+    font-size:1.1rem;
+  }
+  .layer-head.collapsed .chevron{transform:rotate(-90deg);}
+  .layer-body{
+    overflow:hidden;
+    max-height:none;
+  }
+  .layer-body.hidden{display:none;}
+
+  /* ---------- timeline spine (signature element) ---------- */
+  .timeline-wrap{
+    position:relative;
+    margin:0 0 20px 0;
+    padding-left:34px;
+  }
+  .timeline-wrap::before{
+    content:"";
+    position:absolute;
+    left:9px; top:6px; bottom:6px;
+    width:2px;
+    background:linear-gradient(180deg, var(--gold-dim), var(--teal-dim));
+  }
+  .tl-item{
+    position:relative;
+    margin-bottom:18px;
+    padding-left:8px;
+  }
+  .tl-item::before{
+    content:"";
+    position:absolute;
+    left:-30px; top:5px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--ink);
+    border:2px solid var(--gold);
+  }
+  .tl-item.teal::before{border-color:var(--teal);}
+  .tl-item.blood::before{border-color:var(--blood);}
+  .tl-year{
+    font-family:'Source Sans Pro', sans-serif;
+    font-weight:700;
+    color:var(--gold);
+    font-size:0.92rem;
+    margin-right:8px;
+  }
+  .tl-text{color:var(--text);}
+  .tl-sub{color:var(--text-dim); font-size:0.9rem; display:block; margin-top:2px;}
+
+  /* ---------- memory palace ---------- */
+  .palace{
+    background:linear-gradient(135deg, rgba(94,163,148,0.06), rgba(207,164,92,0.04));
+    border:1px solid var(--teal-dim);
+    border-radius:12px;
+    padding:26px 28px;
+    margin-bottom:20px;
+  }
+  .palace h3{
+    color:var(--teal);
+    font-size:1.15rem;
+    margin-top:0;
+  }
+  .palace-stop{
+    margin:14px 0;
+    padding-left:18px;
+    border-left:3px solid var(--teal-dim);
+  }
+  .palace-stop b{color:var(--parchment);}
+
+  /* ---------- generic content blocks ---------- */
+  .card{
+    background:var(--ink-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 24px;
+    margin-bottom:18px;
+  }
+  .card h3{
+    font-size:1.1rem;
+    margin-top:0;
+    margin-bottom:10px;
+    color:var(--gold);
+  }
+  .card h4{
+    font-size:0.98rem;
+    color:var(--parchment);
+    margin:14px 0 6px;
+  }
+  ul,ol{padding-left:22px; margin:8px 0;}
+  li{margin-bottom:6px;}
+
+  .tag{
+    display:inline-block;
+    font-family:'Source Sans Pro', sans-serif;
+    font-size:0.72rem;
+    font-weight:700;
+    padding:2px 9px;
+    border-radius:20px;
+    margin-right:6px;
+    letter-spacing:0.02em;
+  }
+  .tag-must{background:rgba(192,70,61,0.18); color:#e8847c; border:1px solid var(--blood-dim);}
+  .tag-imp{background:rgba(207,164,92,0.18); color:var(--gold); border:1px solid var(--gold-dim);}
+  .tag-good{background:rgba(94,163,148,0.18); color:var(--teal); border:1px solid var(--teal-dim);}
+
+  .hook-box{
+    background:rgba(94,163,148,0.07);
+    border-left:3px solid var(--teal);
+    border-radius:0 8px 8px 0;
+    padding:14px 18px;
+    margin:14px 0;
+    font-size:0.96rem;
+  }
+  .hook-box .hook-label{
+    font-family:'Source Sans Pro', sans-serif;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--teal);
+    display:block;
+    margin-bottom:6px;
+  }
+
+  .trap-box{
+    background:rgba(192,70,61,0.08);
+    border-left:3px solid var(--blood);
+    border-radius:0 8px 8px 0;
+    padding:14px 18px;
+    margin:14px 0;
+  }
+  .trap-box .trap-label{
+    font-family:'Source Sans Pro', sans-serif;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#e8847c;
+    display:block;
+    margin-bottom:6px;
+  }
+
+  .connect-arrow{
+    color:var(--teal);
+    font-weight:700;
+    margin:0 6px;
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:14px 0;
+    font-size:0.92rem;
+  }
+  th,td{
+    text-align:left;
+    padding:9px 12px;
+    border-bottom:1px solid var(--line);
+  }
+  th{
+    font-family:'Source Sans Pro', sans-serif;
+    font-size:0.75rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--text-dim);
+    border-bottom:1px solid var(--gold-dim);
+  }
+  tr:hover td{background:rgba(207,164,92,0.04);}
+
+  /* ---------- active recall / flip cards ---------- */
+  .recall-card{
+    background:var(--ink-2);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:12px;
+    cursor:pointer;
+  }
+  .recall-q{
+    font-weight:600;
+    color:var(--parchment);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .recall-q .hint{
+    font-family:'Source Sans Pro', sans-serif;
+    font-size:0.7rem;
+    color:var(--text-dim);
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  .recall-a{
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px dashed var(--line);
+    color:var(--teal);
+    display:none;
+  }
+  .recall-card.revealed .recall-a{display:block;}
+  .recall-card.revealed{border-color:var(--teal-dim);}
+
+  /* ---------- ultra fast / 30 sec / last night sheets ---------- */
+  .speed-sheet{
+    background:var(--ink-3);
+    border:1px solid var(--gold-dim);
+    border-radius:12px;
+    padding:24px 28px;
+  }
+  .speed-sheet.danger{border-color:var(--blood-dim);}
+  .speed-sheet ul{list-style:none; padding-left:0;}
+  .speed-sheet li{
+    padding:6px 0 6px 22px;
+    position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .speed-sheet li:last-child{border-bottom:none;}
+  .speed-sheet li::before{
+    content:"▸";
+    position:absolute;
+    left:0;
+    color:var(--gold);
+  }
+
+  .last-night{
+    background:radial-gradient(ellipse at top left, rgba(192,70,61,0.1), var(--ink-3));
+    border:1px solid var(--blood-dim);
+    border-radius:14px;
+    padding:28px 30px;
+    text-align:left;
+  }
+  .last-night h3{color:#e8847c; margin-top:0;}
+
+  .divider-stamp{
+    text-align:center;
+    color:var(--ghost);
+    font-family:'Source Sans Pro', sans-serif;
+    font-size:0.75rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    margin:36px 0;
+  }
+  .divider-stamp::before, .divider-stamp::after{
+    content:"⚜";
+    margin:0 12px;
+    color:var(--gold-dim);
+  }
+
+  .battle-table tr td:nth-child(1){color:var(--gold); font-weight:600; white-space:nowrap;}
+  .winner-british{color:var(--teal);}
+  .winner-other{color:var(--text-dim);}
+
+  /* mobile */
+  @media (max-width: 920px){
+    .shell{flex-direction:column;}
+    .sidebar{
+      position:relative;
+      width:100%;
+      height:auto;
+      border-right:none;
+      border-bottom:1px solid var(--line);
+    }
+    .main{padding:32px 20px 100px;}
+    .hero h1{font-size:1.9rem;}
+  }
+
+  .toc-toggle{
+    display:none;
+  }
+  @media (max-width: 920px){
+    .toc-toggle{
+      display:block;
+      width:100%;
+      background:var(--ink-3);
+      color:var(--gold);
+      border:1px solid var(--line);
+      padding:10px;
+      border-radius:6px;
+      font-family:'Source Sans Pro', sans-serif;
+      cursor:pointer;
+      margin-bottom:10px;
+    }
+    .sidebar .nav-scroll.collapsed-mobile{display:none;}
+  }
+
+  footer.endmark{
+    text-align:center;
+    padding:30px 0 10px;
+    color:var(--ghost);
+    font-size:0.8rem;
+    font-family:'Source Sans Pro', sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <nav class="sidebar">
+    <div class="brand">FRB 2.0 · History</div>
+    <div class="brand-sub">Modern History · Ch. 1</div>
+
+    <button class="toc-toggle" onclick="document.querySelector('.nav-scroll').classList.toggle('collapsed-mobile')">☰ Contents</button>
+
+    <div class="nav-scroll">
+      <div class="nav-group">
+        <a class="nav-link" data-target="big-picture">Big Picture</a>
+        <a class="nav-link" data-target="memory-palace">🧠 Memory Palace</a>
+        <a class="nav-link" data-target="complete-notes">Complete Revision Notes</a>
+        <a class="nav-link" data-target="memory-hooks">Smart Memory Hooks</a>
+        <a class="nav-link" data-target="connections">Concept Connections</a>
+        <a class="nav-link" data-target="exam-traps">⚠ Exam Traps</a>
+        <a class="nav-link" data-target="examiner">🎯 Examiner's Favourites</a>
+        <a class="nav-link" data-target="active-recall">❓ Active Recall</a>
+        <a class="nav-link" data-target="high-yield">⭐ High-Yield Notes</a>
+        <a class="nav-link" data-target="ultra-fast">⚡ Ultra-Fast Sheet</a>
+        <a class="nav-link" data-target="thirty-sec">⏱ 30-Second Sheet</a>
+        <a class="nav-link" data-target="last-night">🌙 Last Night Sheet</a>
+      </div>
+    </div>
+
+    <div class="progress-box">
+      <div class="ptitle">Revision Tracker</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progFill"></div></div>
+      <div id="revCount">0 revisions logged</div>
+      <button class="reset-btn" id="logRevBtn" style="margin-top:10px; border-color:var(--gold-dim); color:var(--gold);">+ Log a revision today</button>
+      <button class="reset-btn" id="resetBtn">Reset tracker</button>
+    </div>
+  </nav>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <div class="hero">
+      <div class="eyebrow">Modern History · Lecture 1</div>
+      <h1>Advent of Europeans in India</h1>
+      <p class="dek">1498 → 1919. Four centuries compressed into one fight for trade, told as one long game of musical chairs — Portuguese sit first, Dutch try, French nearly win, British take every chair.</p>
+    </div>
+
+    <!-- ============ BIG PICTURE ============ -->
+    <section class="layer" id="big-picture">
+      <div class="layer-head"><h2>Big Picture</h2><span class="layer-num">Orientation</span></div>
+      <div class="layer-body">
+        <div class="card">
+          <p>This chapter is the origin story of British rule in India — but it did <b>not</b> start as conquest. It started as <b>trade competition between four European countries</b>, and only turned into territorial conquest once the British realised that controlling land was the best way to protect trade.</p>
+          <p>Four European powers entered India, in this order, and the British eliminated each rival one at a time, like clearing levels in a game:</p>
+          <table>
+            <tr><th>Order</th><th>Power</th><th>Came / arrived</th><th>How British neutralised them</th></tr>
+            <tr><td>1</td><td>Portuguese</td><td>1498 (Vasco da Gama)</td><td>Sidelined navally; finally expelled <b>1961</b> (Goa)</td></tr>
+            <tr><td>2</td><td>Dutch</td><td>1605 (factory at Masulipatnam)</td><td>Defeated 1759, Battle of Bedara/Hooghly</td></tr>
+            <tr><td>3</td><td>French</td><td>1668 (factory at Surat)</td><td>Defeated across 3 Carnatic Wars, finished by Treaty of Paris 1763</td></tr>
+            <tr><td>4</td><td><b>British</b></td><td>1599 (Company formed)</td><td>— last power standing</td></tr>
+          </table>
+          <p>After clearing European rivals, the British then took down <b>Indian powers one by one</b>: Bengal → Mysore → the Marathas → Punjab (Sikhs) → Afghanistan/Nepal/Burma on the frontier. Same pattern every time: <b>internal weakness or betrayal + a treaty that strips away independence.</b></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MEMORY PALACE ============ -->
+    <section class="layer" id="memory-palace">
+      <div class="layer-head"><h2>🧠 Chapter Memory Palace</h2><span class="layer-num">Walk it before every exam</span></div>
+      <div class="layer-body">
+        <div class="palace">
+          <h3>The Port of Surat — A Pier With Five Gates</h3>
+          <p>Picture a long wooden pier stretching into the Arabian Sea at <b>Surat</b>. Five gates stand along it, one for every phase of this chapter. You are walking down the pier, west to east, and at each gate something happens.</p>
+
+          <div class="palace-stop">
+            <b>Gate 1 — The Portuguese Gate (rotting wood, oldest gate):</b> A weathered sailor (Vasco da Gama, 1498) steps off a boat and is greeted by a king in flowers (Zamorin of Calicut). Behind the gate, a man burns old ships — that's the <b>Blue Water Policy</b> (Almeida, 1505). A second man stamps out a fire-ritual (Albuquerque <b>abolishing Sati</b> + capturing Goa, 1509–10). This gate never fully closes — it's the only one still standing at the end of the pier, until police finally shut it in <b>1961</b>.
+          </div>
+
+          <div class="palace-stop">
+            <b>Gate 2 — The Dutch Gate (small, modest, smells like spices):</b> A trader from the Netherlands quietly opens a tiny shop — <b>Masulipatnam, 1605</b>. He barely looks up; he's really watching ships heading toward Indonesia. He gets pushed aside almost without a fight — <b>Battle of Hooghly/Bedara, 1759.</b>
+          </div>
+
+          <div class="palace-stop">
+            <b>Gate 3 — The British Gate (the biggest, made of solid brick, growing taller as you watch):</b> A ship called <i>Hector</i> docks — <b>Hawkins, 1608</b>, fails to charm the emperor. A second Englishman, <b>Thomas Roe (1615)</b>, succeeds where Hawkins failed. Bricks keep being added to this gate throughout the whole palace — it never stops growing.
+          </div>
+
+          <div class="palace-stop">
+            <b>Gate 4 — The French Gate (elegant, flickering candlelight, three duels fought in front of it):</b> Three duels happen here — the <b>three Carnatic Wars</b>. First duel: a draw, the French edge it slightly (Aix-la-Chapelle, 1748). Second duel: a tie (Pondicherry, 1749). Third duel: the French finally fall — <b>Wandiwash, 1760</b>, sealed by the <b>Treaty of Paris, 1763</b>. Picture the gate's candle finally snuffed out.
+          </div>
+
+          <div class="palace-stop">
+            <b>Gate 5 — The Bengal Gate (a locked dungeon door — this is where the story turns dark):</b> Behind this gate is a suffocating dungeon — the <b>Black Hole Tragedy</b>. A traitor (<b>Mir Jafar</b>) stands holding the keys he sold. Beyond the dungeon, a long hallway of conquest stretches into the rest of India — Mysore's tiger (Tipu Sultan), the Maratha chiefs scattering like broken chess pieces, the Sikh throne falling after Ranjit Singh dies, and finally a frozen mountain pass where three failed wars with Afghanistan happen in the cold.
+          </div>
+
+          <p style="margin-top:16px;"><b>Walk the pier in your head:</b> rotting wood → spice shop → growing brick gate → flickering candles snuffed out → locked dungeon with a traitor holding the keys. Five images, four centuries.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-stamp">Complete Revision Notes</div>
+
+    <!-- ============ COMPLETE NOTES ============ -->
+    <section class="layer" id="complete-notes">
+      <div class="layer-head"><h2>Complete Revision Notes</h2><span class="layer-num">Full depth</span></div>
+      <div class="layer-body">
+
+        <div class="card">
+          <h3>1. The Portuguese <span class="tag tag-must">Must Know</span></h3>
+          <div class="timeline-wrap">
+            <div class="tl-item"><span class="tl-year">1498</span><span class="tl-text">Vasco da Gama lands at <b>Calicut</b>. Welcomed by the local ruler, <b>Zamorin</b>.</span><span class="tl-sub">He did not "discover India" — he discovered the <b>sea route</b> to India. Columbus had set out to discover India but landed in the Americas instead.</span></div>
+            <div class="tl-item"><span class="tl-year">1505</span><span class="tl-text"><b>Francisco de Almeida</b>, first Portuguese Viceroy, starts the <b>Blue Water Policy</b></span><span class="tl-sub">Also called the <b>Cartaze (Carthage) System</b> — control of the seas through naval dominance and licensing of ships.</span></div>
+            <div class="tl-item"><span class="tl-year">1509–10</span><span class="tl-text"><b>Alfonso de Albuquerque</b> abolishes <b>Sati</b> for the first time (anywhere in India) and captures <b>Goa</b>.</span></div>
+            <div class="tl-item blood"><span class="tl-year">1961</span><span class="tl-text">Portuguese finally expelled from Goa & Daman via <b>Police Action</b>.</span><span class="tl-sub">First to arrive, <b>last to leave</b> — a 463-year presence.</span></div>
+          </div>
+          <p><b>Side note:</b> In Vijayanagar/medieval history, the Portuguese are given a fort at <b>Bhatkal</b> by the Vijayanagar ruler.</p>
+        </div>
+
+        <div class="card">
+          <h3>2. The Dutch <span class="tag tag-good">Good to Know</span></h3>
+          <ul>
+            <li>"Dutch" = people of the <b>Netherlands</b>.</li>
+            <li>First factory: <b>1605, Masulipatnam</b> (also called Machilipatnam), Andhra Pradesh.</li>
+            <li>Dutch interest was always stronger in <b>Indonesia</b> than India — explains why they didn't fight hard to stay.</li>
+            <li>Defeated by the British in <b>1759</b> — <b>Battle of Bedara</b>, also called the <b>Battle of Hooghly</b>.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>3. The British East India Company — Founding & Early Footing <span class="tag tag-must">Must Know</span></h3>
+          <div class="timeline-wrap">
+            <div class="tl-item"><span class="tl-year">1599</span><span class="tl-text">English East India Company established.</span></div>
+            <div class="tl-item"><span class="tl-year">1600</span><span class="tl-text"><b>Royal Charter</b> granted by <b>Queen Elizabeth I</b> — gives a trade monopoly in the East.</span></div>
+            <div class="tl-item"><span class="tl-year">1608</span><span class="tl-text"><b>Captain William Hawkins</b> arrives at Jahangir's court (ship: <i>Hector</i>) — fails to win trade concessions.</span></div>
+            <div class="tl-item"><span class="tl-year">1611</span><span class="tl-text">First <b>temporary</b> factory — at <b>Masulipatnam</b> (same place the Dutch had theirs).</span></div>
+            <div class="tl-item teal"><span class="tl-year">1612</span><span class="tl-text"><b>Battle of Swally</b> — British defeat the Portuguese; Portuguese influence sidelined (not eliminated).</span></div>
+            <div class="tl-item"><span class="tl-year">1613</span><span class="tl-text">First <b>permanent</b> factory — at <b>Surat</b> (won only after defeating Portuguese resistance there).</span></div>
+            <div class="tl-item"><span class="tl-year">1615</span><span class="tl-text"><b>Sir Thomas Roe</b> arrives at Jahangir's court — succeeds where Hawkins failed; secures trade concessions.</span></div>
+            <div class="tl-item"><span class="tl-year">1668</span><span class="tl-text">A later British factory established at <b>Bombay</b>-adjacent / further expansion (factory network growing).</span></div>
+          </div>
+          <div class="hook-box"><span class="hook-label">Memory Hook</span><b>Hawkins hawks, but Roe rows through.</b> Hawkins (1608) tries and fails; Roe (1615) actually rows the deal home.</div>
+        </div>
+
+        <div class="card">
+          <h3>4. The Carnatic Wars (vs. the French) <span class="tag tag-must">Must Know</span></h3>
+          <p>The French were the <b>main European rival</b> the British had to defeat (more than the Dutch). Three wars, fought partly because of wars happening simultaneously in <b>Europe</b> (an Indian "extension" of a European conflict).</p>
+          <table class="battle-table">
+            <tr><th>War</th><th>Years</th><th>Linked Battle</th><th>Ended by Treaty</th><th>Result</th></tr>
+            <tr><td>First Carnatic War</td><td>1744–1748</td><td>Battle of St. Thome (vs. Nawab Anwaruddin of Carnatic — French won)</td><td>Aix-la-Chapelle</td><td class="winner-other">Slight French edge</td></tr>
+            <tr><td>Second Carnatic War</td><td>1749 (battle); war to 1754</td><td>Battle of Ambur</td><td>Pondicherry</td><td class="winner-other">Tie</td></tr>
+            <tr><td>Third Carnatic War</td><td>1756–1763</td><td>Battle of Wandiwash (1760)</td><td><b>Paris (1763)</b></td><td class="winner-british">British win — French subdued</td></tr>
+          </table>
+          <p><b>First War — root cause:</b> Extension of the <b>Austrian War of Succession</b> fought in Europe — not started over Indian territory at all.</p>
+          <p><b>Third War commanders:</b> British forces — <b>Sir Eyre Coote</b>. French forces — <b>Comte de Lally</b>.</p>
+          <div class="hook-box"><span class="hook-label">Memory Hook</span>"<b>Lally</b> finally falls" — rhymes, and tells you the French commander Lally lost the decisive third war.</div>
+        </div>
+
+        <div class="card">
+          <h3>5. Bengal — Plassey & Buxar <span class="tag tag-must">Must Know — Highest Priority</span></h3>
+          <p>After Mughal decline, three independent kingdoms emerged: <b>Bengal, Awadh, Hyderabad.</b></p>
+          <h4>The root cause: the Golden Farman</h4>
+          <ul>
+            <li><b>1717</b> — Mughal emperor <b>Farrukhsiyar</b> issues the <b>Golden Farman</b>: British get <b>duty-free trade</b> in Bengal + the right to issue <b>dastaks</b> (trade passes).</li>
+            <li>Company officials <b>misuse</b> the dastaks for personal trade — this single decision is the root cause of <b>both</b> Plassey and Buxar.</li>
+          </ul>
+          <h4>Nawabs of Bengal, in order</h4>
+          <ol>
+            <li><b>Murshid Quli Khan</b> — first Nawab of Bengal.</li>
+            <li><b>Alivardi Khan</b> — later Nawab.</li>
+            <li><b>Siraj-ud-Daulah</b> — Alivardi Khan's grandson. Demands the British pay taxes properly (the Farman is 40 years old by now). British refuse, instead fortify <b>Fort William</b> without permission → Siraj attacks → <b>Black Hole Tragedy</b> (British prisoners die of suffocation in a dungeon).</li>
+          </ol>
+          <div class="timeline-wrap">
+            <div class="tl-item blood"><span class="tl-year">1757</span><span class="tl-text"><b>Battle of Plassey</b> — Robert Clive vs. Siraj-ud-Daulah.</span><span class="tl-sub">Clive bribes <b>Mir Jafar</b> (Siraj's commander) with the promise of becoming Nawab. Mir Jafar betrays Siraj. <b>British win — foundation of British political supremacy in India.</b></span></div>
+            <div class="tl-item"><span class="tl-text">Mir Jafar proves incapable as Nawab → British install <b>Mir Qasim</b> instead.</span></div>
+            <div class="tl-item blood"><span class="tl-year">1764</span><span class="tl-text"><b>Battle of Buxar</b> — Mir Qasim + Shuja-ud-Daulah (Nawab of Awadh) + Shah Alam II (Mughal emperor) <i>vs.</i> British (led by <b>Hector Munro</b>; Governor of Bengal at the time: <b>Vansittart</b>).</span><span class="tl-sub">British win again. Three rulers together still lose.</span></div>
+            <div class="tl-item"><span class="tl-year">1765</span><span class="tl-text"><b>Treaty of Allahabad</b> — signed by <b>Robert Clive</b>. Two separate settlements:</span></div>
+          </div>
+          <table>
+            <tr><th>With whom</th><th>Terms</th></tr>
+            <tr><td>Shuja-ud-Daulah (Awadh)</td><td>Allahabad & Kara handed to the Mughal emperor; pays ₹50 lakh war indemnity to the British.</td></tr>
+            <tr><td>Shah Alam II (Mughal Emperor)</td><td>Grants British the <b>Diwani rights</b> (revenue collection) of <b>Bengal, Bihar, Odisha</b> + Company pays him ₹26 lakh/year; British also handle <b>Nizamat functions</b> (policing/admin) for ₹53 lakh.</td></tr>
+          </table>
+          <p>This arrangement = <b>Dual Government of Bengal</b> — started by <b>Clive</b>, ended in <b>1772</b> by <b>Warren Hastings</b>.</p>
+          <div class="hook-box"><span class="hook-label">Memory Hook</span>Think of it as a relay race: <b>Clive starts</b> the Dual Government baton, <b>Hastings finishes</b> it 7 years later (1765 → 1772).</div>
+        </div>
+
+        <div class="card">
+          <h3>6. Mysore — The Four Anglo-Mysore Wars <span class="tag tag-imp">Important</span></h3>
+          <p>Original dynasty: <b>Wodeyar</b> (Hindu). Military commander <b>Hyder Ali</b> gradually takes real power and founds his own line; succeeded by son <b>Tipu Sultan</b> (Hyder Ali dies of cancer mid-second-war).</p>
+          <table class="battle-table">
+            <tr><th>War</th><th>Years</th><th>Treaty</th><th>Result</th></tr>
+            <tr><td>1st Anglo-Mysore</td><td>1767–1769</td><td>Madras</td><td class="winner-other">Mysore wins</td></tr>
+            <tr><td>2nd Anglo-Mysore</td><td>—</td><td>Mangalore</td><td>Tie (Hyder Ali dies mid-war; Tipu takes over)</td></tr>
+            <tr><td>3rd Anglo-Mysore</td><td>ended 1792</td><td>Srirangapatnam</td><td class="winner-british">Tipu defeated</td></tr>
+            <tr><td>4th Anglo-Mysore</td><td>1799</td><td>No treaty — Tipu dies in battle</td><td class="winner-british">British win; Wodeyar dynasty restored as puppet, signs Subsidiary Alliance</td></tr>
+          </table>
+          <h4>Subsidiary Alliance</h4>
+          <ul>
+            <li>Brainchild of <b>Dupleix</b> (French) — but perfected and used by <b>Lord Wellesley</b>, introduced <b>1798</b>.</li>
+            <li>Terms: a British Resident stays permanently at the ruler's court (can interfere internally); ruler must disband own army and maintain a British army instead (at the ruler's expense); ruler cannot treaty with anyone else without British permission; in return, British offer "protection."</li>
+            <li>Order of signing: <b>Hyderabad (1798) → Mysore (1799) → Tanjore (1799) → Awadh (1801) → Peshwa (1802)</b>.</li>
+          </ul>
+          <div class="hook-box"><span class="hook-label">Memory Hook</span>"<b>H</b>yderabad <b>M</b>ust <b>T</b>rust <b>A</b>nyone's <b>P</b>rotection" → Hyderabad, Mysore, Tanjore, Awadh, Peshwa — in signing order.</div>
+        </div>
+
+        <div class="card">
+          <h3>7. The Marathas — Three Anglo-Maratha Wars <span class="tag tag-must">Must Know</span></h3>
+          <p>Background: Marathas crushed in the <b>Third Battle of Panipat (1761)</b> by Afghans — this is what triggers internal Maratha disintegration that the British later exploit.</p>
+          <div class="timeline-wrap">
+            <div class="tl-item"><span class="tl-year">1775–1782</span><span class="tl-text"><b>1st Anglo-Maratha War.</b></span><span class="tl-sub"><b>Raghunath Rao</b> (a claimant to the Peshwa throne) signs the <b>Treaty of Surat (1765)</b> with the British, offering Salsette & Bassein in exchange for military help. Marathas actually win the early fighting — Bombay government's treaty rejected by Warren Hastings, who restarts the war.</span></div>
+            <div class="tl-item teal"><span class="tl-text">Ends with the <b>Treaty of Salbai (1782)</b>.</span><span class="tl-sub">British forces: Robert Clive (note: appears again here per the lecture). Maratha side: <b>Mahadji Shinde</b>, with <b>Nana Phadnavis</b> playing a major role.</span></div>
+            <div class="tl-item"><span class="tl-year">1803–1806</span><span class="tl-text"><b>2nd Anglo-Maratha War</b> — started with the <b>Treaty of Bassein (1802)</b>.</span><span class="tl-sub">British forces led by <b>Arthur Wellesley</b>. Ended with separate treaties for separate Maratha chiefs:</span></div>
+          </div>
+          <table>
+            <tr><th>Maratha Chief</th><th>Region</th><th>Treaty Signed</th></tr>
+            <tr><td>Holkar</td><td>Indore</td><td>Treaty of Rajghat</td></tr>
+            <tr><td>Bhosale</td><td>Nagpur</td><td>Treaty of Deogaon</td></tr>
+            <tr><td>Scindia</td><td>Gwalior</td><td>Treaty of Surji-Anjangaon</td></tr>
+            <tr><td>Gaikwad</td><td>Baroda</td><td>(allied separately)</td></tr>
+          </table>
+          <div class="timeline-wrap">
+            <div class="tl-item blood"><span class="tl-year">1817–1818</span><span class="tl-text"><b>3rd Anglo-Maratha War</b> — triggered partly by the <b>Pindari War</b>.</span><span class="tl-sub">Pindaris: a mixed tribal group (Hindus, Muslims, Afghans, Sikhs, Jats) who raided for/with the Marathas; British crackdown on them angers Peshwa <b>Baji Rao II</b>, who also resents excessive British control. Ends with the <b>Treaty of Mandsaur</b>. Maratha power completely ends — Baji Rao II exiled to <b>Bithoor, Kanpur</b> on a pension.</span></div>
+          </div>
+          <div class="hook-box"><span class="hook-label">Memory Hook</span><b>"Rajghat-Deogaon-Surji"</b> — say it like a chant; one chief, one region, one treaty per syllable: Holkar/Indore/Rajghat, Bhosale/Nagpur/Deogaon, Scindia/Gwalior/Surji-Anjangaon.</div>
+        </div>
+
+        <div class="card">
+          <h3>8. Punjab — The Sikh Kingdom <span class="tag tag-imp">Important</span></h3>
+          <ul>
+            <li><b>Maharaja Ranjit Singh</b> (from the <b>Sukerchakia Misl</b>, one of the 12 Sikh Misls) rules a powerful, unified Punjab.</li>
+            <li><b>1809 — Treaty of Amritsar:</b> the <b>Sutlej river</b> fixed as the boundary between British and Sikh territory — a peace pact, not a war, because Ranjit Singh was too strong to challenge.</li>
+            <li><b>1839</b> — Ranjit Singh dies → unstable succession ("wickets falling") → British seize the opportunity.</li>
+          </ul>
+          <table class="battle-table">
+            <tr><th>War</th><th>Key Battle</th><th>Governor-General</th><th>Treaty</th></tr>
+            <tr><td>1st Anglo-Sikh War (1845–46)</td><td>Battle of Aliwal (1846)</td><td><b>Hardinge</b></td><td>Treaty of Lahore + Treaty of Bhairowal</td></tr>
+            <tr><td>2nd Anglo-Sikh War</td><td>—</td><td><b>Dalhousie</b></td><td>Full annexation of Punjab</td></tr>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>9. Frontier Wars — Afghanistan, Nepal, Burma <span class="tag tag-good">Good to Know</span></h3>
+          <h4>Anglo-Afghan Wars</h4>
+          <table class="battle-table">
+            <tr><th>War</th><th>Years</th><th>Governor-General</th><th>Treaty / Outcome</th></tr>
+            <tr><td>1st Anglo-Afghan</td><td>1839–1842</td><td><b>Auckland</b></td><td>No clear British victory; fear of Russian influence was the real cause</td></tr>
+            <tr><td>2nd Anglo-Afghan</td><td>started 1878–79</td><td><b>Lytton</b></td><td>Treaty of Gandamak (1879) — again no clean British victory</td></tr>
+            <tr><td>3rd Anglo-Afghan</td><td>1919</td><td>—</td><td>Same year as Montagu-Chelmsford Reforms (Govt. of India Act 1919)</td></tr>
+          </table>
+          <p>In between: <b>John Lawrence</b> (Viceroy, 1864–69) followed the <b>Policy of Masterly Inactivity</b> — deliberate non-interference in Afghan affairs.</p>
+          <p><b>Anglo-Nepal War:</b> 1814–1816, single war (no series), ended with the <b>Treaty of Sugauli</b>.</p>
+          <h4>Anglo-Burmese Wars</h4>
+          <table class="battle-table">
+            <tr><th>War</th><th>Years</th><th>British Commander / GG</th><th>Treaty</th></tr>
+            <tr><td>1st Anglo-Burmese</td><td>1824–1826</td><td>Sir Archibald Campbell</td><td>Treaty of Yandaboo</td></tr>
+            <tr><td>2nd Anglo-Burmese</td><td>1852</td><td>Governor-General: Dalhousie</td><td>—</td></tr>
+            <tr><td>3rd Anglo-Burmese</td><td>1885</td><td>—</td><td>(least important of the three)</td></tr>
+          </table>
+          <div class="hook-box"><span class="hook-label">Memory Hook</span><b>"Sugauli for Nepal, Salbai for Maratha — both end in vowels, both end wars."</b> Pair the rhyme so you never swap which treaty belongs to which conflict.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="divider-stamp">Memory & Connections</div>
+
+    <!-- ============ MEMORY HOOKS ============ -->
+    <section class="layer" id="memory-hooks">
+      <div class="layer-head"><h2>Smart Memory Hooks</h2><span class="layer-num">Collected</span></div>
+      <div class="layer-body">
+        <div class="hook-box"><span class="hook-label">Order of Arrival</span>Imagine four guests arriving at a party in order: a <b>Portuguese sailor</b> (first, oldest clothes), a <b>Dutch trader</b> (quiet, holding spices), a <b>French diplomat</b> (elegant, candle in hand), and a <b>British officer</b> (last in, but takes over hosting). Last to arrive, first to dominate.</div>
+        <div class="hook-box"><span class="hook-label">Hawkins vs Roe</span>"<b>Hawkins hawks (tries to sell, fails), Roe rows the deal home (succeeds).</b>" 1608 vs 1615 — Roe came later and actually delivered.</div>
+        <div class="hook-box"><span class="hook-label">Lally Falls</span>French commander <b>Lally</b> in the 3rd Carnatic War — say "<b>Lally finally falls</b>" to remember the French lose this one (unlike the first two, which were a slight win/tie).</div>
+        <div class="hook-box"><span class="hook-label">Plassey → Buxar, Same Root</span>Picture a single golden scroll — the <b>1717 Golden Farman</b> — being passed hand to hand, getting dirtier each time it's misused, until it finally causes <b>two</b> fires: Plassey (1757) and Buxar (1764). One cause, two battles.</div>
+        <div class="hook-box"><span class="hook-label">Subsidiary Alliance Order</span>"<b>H</b>yderabad <b>M</b>ust <b>T</b>rust <b>A</b>nyone's <b>P</b>rotection" = Hyderabad, Mysore, Tanjore, Awadh, Peshwa (1798→1802).</div>
+        <div class="hook-box"><span class="hook-label">Maratha Treaties</span>Chant it: "<b>Rajghat-Deogaon-Surji</b>" → Holkar(Indore)/Bhosale(Nagpur)/Scindia(Gwalior).</div>
+        <div class="hook-box"><span class="hook-label">Clive Starts, Hastings Finishes</span>Dual Government of Bengal: Clive starts it (1765), Warren Hastings ends it (1772) — like a relay baton passed across 7 years.</div>
+        <div class="hook-box"><span class="hook-label">First In, Last Out</span>Portuguese: <b>first</b> European power to land (1498) and the <b>last</b> to leave (1961, Goa). Bookend fact — always check both ends of a timeline question.</div>
+      </div>
+    </section>
+
+    <!-- ============ CONNECTIONS ============ -->
+    <section class="layer" id="connections">
+      <div class="layer-head"><h2>Concept Connections</h2><span class="layer-num">Cause → Effect chains</span></div>
+      <div class="layer-body">
+        <div class="card">
+          <ul>
+            <li><b>European wars</b> <span class="connect-arrow">→</span> Carnatic Wars in India: the <b>Austrian War of Succession</b> in Europe directly causes the <b>1st Carnatic War</b> in India — a European fight gets a colonial extension.</li>
+            <li><b>Golden Farman (1717)</b> <span class="connect-arrow">→</span> misuse of dastaks by Company officials <span class="connect-arrow">→</span> Siraj-ud-Daulah's anger <span class="connect-arrow">→</span> fortification of Fort William <span class="connect-arrow">→</span> Black Hole Tragedy <span class="connect-arrow">→</span> <b>Battle of Plassey (1757)</b>.</li>
+            <li><b>Mir Jafar's betrayal</b> <span class="connect-arrow">→</span> British win at Plassey <span class="connect-arrow">→</span> Mir Jafar proves incapable <span class="connect-arrow">→</span> Mir Qasim installed <span class="connect-arrow">→</span> Mir Qasim allies with Awadh + Mughal emperor <span class="connect-arrow">→</span> <b>Battle of Buxar (1764)</b>.</li>
+            <li><b>Treaty of Allahabad (1765)</b> <span class="connect-arrow">→</span> British get Diwani rights <span class="connect-arrow">→</span> Dual Government of Bengal <span class="connect-arrow">→</span> abused/inefficient <span class="connect-arrow">→</span> ended by Warren Hastings (1772).</li>
+            <li><b>3rd Battle of Panipat (1761)</b> <span class="connect-arrow">→</span> Maratha power shattered <span class="connect-arrow">→</span> internal succession dispute (Raghunath Rao) <span class="connect-arrow">→</span> Treaty of Surat <span class="connect-arrow">→</span> <b>1st Anglo-Maratha War.</b></li>
+            <li><b>Hyder Ali's death (cancer, mid-2nd Mysore War)</b> <span class="connect-arrow">→</span> Tipu Sultan takes over <span class="connect-arrow">→</span> war ends in a tie (Mangalore) instead of a clean result.</li>
+            <li><b>Tipu Sultan's death (4th Mysore War)</b> <span class="connect-arrow">→</span> no treaty needed <span class="connect-arrow">→</span> Wodeyar dynasty reinstalled as a puppet <span class="connect-arrow">→</span> forced to sign Subsidiary Alliance (1799).</li>
+            <li><b>Ranjit Singh's death (1839)</b> <span class="connect-arrow">→</span> unstable Sikh succession <span class="connect-arrow">→</span> British exploit the gap <span class="connect-arrow">→</span> 1st & 2nd Anglo-Sikh Wars <span class="connect-arrow">→</span> full Punjab annexation under Dalhousie.</li>
+            <li><b>Fear of Russian expansion</b> <span class="connect-arrow">→</span> British anxiety over Afghanistan <span class="connect-arrow">→</span> 1st Anglo-Afghan War (Auckland) — even though Britain had no direct interest in Afghan territory itself.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-stamp">Exam Warfare</div>
+
+    <!-- ============ EXAM TRAPS ============ -->
+    <section class="layer" id="exam-traps">
+      <div class="layer-head"><h2>⚠ Exam Traps</h2><span class="layer-num">Where students lose marks</span></div>
+      <div class="layer-body">
+        <div class="trap-box"><span class="trap-label">Trap 1 — Carnatic ≠ Karnataka</span>"Carnatic" (the Coromandel Coast region, between the Eastern Ghats and Bay of Bengal) sounds like "Karnataka" but is a <b>completely different region</b>. The Carnatic Wars are about the Carnatic, not the modern state of Karnataka.</div>
+        <div class="trap-box"><span class="trap-label">Trap 2 — Hawkins vs Roe, who succeeded?</span><b>Hawkins (1608) failed</b> to get trade concessions. <b>Roe (1615) succeeded.</b> Students often swap these two or assume the earlier visit succeeded.</div>
+        <div class="trap-box"><span class="trap-label">Trap 3 — "Discovered India" is wrong phrasing</span>Vasco da Gama discovered the <b>sea route</b> to India, not India itself. Exam statement-questions often plant this exact wrong phrase as a "true" statement.</div>
+        <div class="trap-box"><span class="trap-label">Trap 4 — Who led Plassey vs Buxar?</span><b>Plassey (1757):</b> Robert Clive led British forces, was also Governor of Bengal. <b>Buxar (1764):</b> <b>Hector Munro</b> led British forces, but the <i>Governor</i> of Bengal at the time was <b>Vansittart</b> — two different people doing two different jobs. A favourite match-the-following trap.</div>
+        <div class="trap-box"><span class="trap-label">Trap 5 — Mir Jafar vs Mir Qasim</span><b>Mir Jafar</b> betrays Siraj-ud-Daulah (Plassey context). <b>Mir Qasim</b> is installed afterward, becomes too independent-minded, and ends up fighting at Buxar. Easy to confuse which "Mir" belongs to which battle.</div>
+        <div class="trap-box"><span class="trap-label">Trap 6 — Diwani Rights vs Nizamat Functions</span><b>Diwani rights</b> = revenue collection. <b>Nizamat functions</b> = police/administrative functions. Both granted via the Treaty of Allahabad (1765), but they are not the same right — exams test this distinction directly.</div>
+        <div class="trap-box"><span class="trap-label">Trap 7 — Who started vs who ended Dual Government?</span><b>Clive started</b> it (1765). <b>Warren Hastings ended</b> it (1772). A classic "who did what" swap trap.</div>
+        <div class="trap-box"><span class="trap-label">Trap 8 — Treaty of Surat ≠ Permanent factory at Surat</span>"Treaty of Surat" (1765, with Raghunath Rao, Maratha context) is unrelated to the British "permanent factory at Surat" (1613, much earlier). Same place name, two unrelated events a century-and-a-half apart.</div>
+        <div class="trap-box"><span class="trap-label">Trap 9 — Subsidiary Alliance: idea vs use</span>The <b>idea</b> originated with <b>Dupleix</b> (French). It was <b>Wellesley</b> (British) who actually implemented and popularised it (1798). Don't credit the wrong nationality.</div>
+        <div class="trap-box"><span class="trap-label">Trap 10 — Similar-sounding treaties</span><b>Treaty of Salbai</b> (ends 1st Anglo-Maratha War) vs <b>Treaty of Sugauli</b> (ends Anglo-Nepal War) — both single, short, vowel-ending names tied to unrelated conflicts.</div>
+        <div class="trap-box"><span class="trap-label">Trap 11 — Three Anglo-Maratha War treaty chains</span>2nd war ends in <b>multiple chief-specific treaties</b> (Rajghat/Deogaon/Surji-Anjangaon) — not one single treaty like the 1st war (Salbai) or 3rd war (Mandsaur). A "name the treaty" question for the 2nd war has more than one correct context-dependent answer.</div>
+        <div class="trap-box"><span class="trap-label">Trap 12 — Governor-Generals across the Sikh Wars</span><b>Hardinge</b> → 1st Anglo-Sikh War. <b>Dalhousie</b> → 2nd Anglo-Sikh War (and also Burma's 2nd war). Easy to misattribute Dalhousie to the wrong Sikh war.</div>
+        <div class="trap-box"><span class="trap-label">Trap 13 — Auckland vs John Lawrence on Afghanistan</span><b>Auckland</b> = 1st Anglo-Afghan War (aggressive). <b>John Lawrence</b> = Masterly Inactivity (deliberately non-aggressive), a later and opposite approach. Don't assume both took the same stance.</div>
+        <div class="trap-box"><span class="trap-label">Trap 14 — Treaty of Paris (1763) — which one?</span>There were multiple historical "Treaty of Paris" agreements across world history. <b>This one</b> ends the 3rd Carnatic War between British and French in India — don't confuse with other Treaties of Paris from unrelated eras.</div>
+      </div>
+    </section>
+
+    <!-- ============ EXAMINER'S FAVOURITES ============ -->
+    <section class="layer" id="examiner">
+      <div class="layer-head"><h2>🎯 Examiner's Favourite Questions</h2><span class="layer-num">How this gets attacked</span></div>
+      <div class="layer-body">
+        <div class="card">
+          <h4>Statement-based</h4>
+          <ul>
+            <li>"Vasco da Gama discovered India in 1498." — <b>False framing</b>; he discovered the sea route.</li>
+            <li>"The Treaty of Allahabad (1765) granted the British Diwani rights over Bengal, Bihar, and Odisha." — <b>True</b>, but check if a question swaps in "Nizamat" instead.</li>
+            <li>"Mir Jafar was made Nawab of Bengal after Plassey, and remained Nawab until the British left India." — <b>False</b>; he was replaced by Mir Qasim.</li>
+          </ul>
+          <h4>Match the Following</h4>
+          <ul>
+            <li>Match Battle ↔ Treaty ↔ Year: Plassey/Buxar/Wandiwash/Panipat ↔ no treaty / Allahabad / Paris / no direct India treaty.</li>
+            <li>Match Governor-General ↔ War: Hardinge/Dalhousie/Auckland/Lytton ↔ 1st Sikh / 2nd Sikh / 1st Afghan / 2nd Afghan.</li>
+            <li>Match Maratha Chief ↔ Region ↔ Treaty: Holkar/Scindia/Bhosale/Gaikwad ↔ Indore/Gwalior/Nagpur/Baroda ↔ Rajghat/Surji-Anjangaon/Deogaon/—</li>
+          </ul>
+          <h4>Chronology</h4>
+          <ul>
+            <li>Arrange in order: Battle of Plassey, Treaty of Allahabad, Battle of Buxar, Black Hole Tragedy. <i>(Correct: Black Hole → Plassey → Buxar → Allahabad)</i></li>
+            <li>Arrange: Treaty of Amritsar, Death of Ranjit Singh, 1st Anglo-Sikh War, 2nd Anglo-Sikh War.</li>
+            <li>Arrange the four Anglo-Mysore Wars by their ending treaties: Madras → Mangalore → Srirangapatnam → (no treaty, Tipu's death).</li>
+          </ul>
+          <h4>Assertion–Reason</h4>
+          <ul>
+            <li><b>Assertion:</b> The Subsidiary Alliance system effectively ended the military independence of Indian states. <b>Reason:</b> States that signed it had to disband their own armies and host British troops at their own expense. <i>(Both true, reason correctly explains assertion.)</i></li>
+            <li><b>Assertion:</b> Battle of Plassey (1757) led to immediate British territorial annexation of Bengal. <b>Reason:</b> Mir Jafar was installed as a puppet Nawab. <i>(Assertion is false — annexation came later via Diwani rights in 1765, not immediately in 1757; the Company ruled indirectly through puppet Nawabs first.)</i></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-stamp">Active Recall</div>
+
+    <!-- ============ ACTIVE RECALL ============ -->
+    <section class="layer" id="active-recall">
+      <div class="layer-head"><h2>❓ Active Recall Section</h2><span class="layer-num">Tap a question to test yourself</span></div>
+      <div class="layer-body">
+        <p style="color:var(--text-dim); font-size:0.9rem; margin-bottom:16px;">Tap any card to reveal the answer. Try to answer in your head <i>before</i> tapping.</p>
+
+        <div class="recall-card"><div class="recall-q">Who discovered the sea route to India, and in which year? <span class="hint">tap</span></div><div class="recall-a">Vasco da Gama, 1498 — landed at Calicut, welcomed by Zamorin.</div></div>
+        <div class="recall-card"><div class="recall-q">Name the policy started by Francisco de Almeida in 1505. <span class="hint">tap</span></div><div class="recall-a">The Blue Water Policy (also called the Cartaze/Carthage System).</div></div>
+        <div class="recall-card"><div class="recall-q">Fill in the blank: The British East India Company received its Royal Charter from ____ in the year ____. <span class="hint">tap</span></div><div class="recall-a">Queen Elizabeth I, 1600.</div></div>
+        <div class="recall-card"><div class="recall-q">Who failed to get trade concessions from Jahangir in 1608, and who succeeded in 1615? <span class="hint">tap</span></div><div class="recall-a">William Hawkins failed (1608); Sir Thomas Roe succeeded (1615).</div></div>
+        <div class="recall-card"><div class="recall-q">What event in Europe directly caused the First Carnatic War in India? <span class="hint">tap</span></div><div class="recall-a">The Austrian War of Succession.</div></div>
+        <div class="recall-card"><div class="recall-q">Reverse question: If the Treaty of Paris (1763) ended a war, which war was it, and who were the two sides? <span class="hint">tap</span></div><div class="recall-a">The Third Carnatic War — British vs. French.</div></div>
+        <div class="recall-card"><div class="recall-q">What was the Golden Farman (1717), and why does it matter for both Plassey and Buxar? <span class="hint">tap</span></div><div class="recall-a">Issued by Farrukhsiyar, it gave the British duty-free trade and the right to issue dastaks in Bengal. Its misuse by Company officials is the root cause leading to both battles.</div></div>
+        <div class="recall-card"><div class="recall-q">One-liner: Who betrayed Siraj-ud-Daulah at Plassey? <span class="hint">tap</span></div><div class="recall-a">Mir Jafar, his own commander, in exchange for being made Nawab.</div></div>
+        <div class="recall-card"><div class="recall-q">Who led British forces at Buxar, and who was the Governor of Bengal at that time? <span class="hint">tap</span></div><div class="recall-a">Hector Munro led the forces; Vansittart was the Governor of Bengal.</div></div>
+        <div class="recall-card"><div class="recall-q">What two rights did the Treaty of Allahabad (1765) grant the British in Bengal, Bihar, and Odisha? <span class="hint">tap</span></div><div class="recall-a">Diwani rights (revenue collection) and Nizamat functions (policing/admin).</div></div>
+        <div class="recall-card"><div class="recall-q">Who started the Dual Government of Bengal, and who ended it? In which years? <span class="hint">tap</span></div><div class="recall-a">Clive started it (1765); Warren Hastings ended it (1772).</div></div>
+        <div class="recall-card"><div class="recall-q">Fill in the blank: Hyder Ali died of ____ during the ____ Anglo-Mysore War, after which his son ____ took over. <span class="hint">tap</span></div><div class="recall-a">Cancer; Second; Tipu Sultan.</div></div>
+        <div class="recall-card"><div class="recall-q">Rapid fire: Name the five states in the order they signed the Subsidiary Alliance. <span class="hint">tap</span></div><div class="recall-a">Hyderabad (1798) → Mysore (1799) → Tanjore (1799) → Awadh (1801) → Peshwa (1802).</div></div>
+        <div class="recall-card"><div class="recall-q">What major battle in 1761 shattered Maratha power before the British even fought them directly? <span class="hint">tap</span></div><div class="recall-a">The Third Battle of Panipat (Marathas vs. Afghans).</div></div>
+        <div class="recall-card"><div class="recall-q">Match: Holkar — Indore — ?, Scindia — Gwalior — ?, Bhosale — Nagpur — ? <span class="hint">tap</span></div><div class="recall-a">Holkar/Indore/Treaty of Rajghat; Scindia/Gwalior/Treaty of Surji-Anjangaon; Bhosale/Nagpur/Treaty of Deogaon.</div></div>
+        <div class="recall-card"><div class="recall-q">What was the Pindari War, and how does it connect to the Third Anglo-Maratha War? <span class="hint">tap</span></div><div class="recall-a">Pindaris were a mixed raiding tribe loosely allied with the Marathas. British crackdown on them angered Peshwa Baji Rao II, contributing to the Third Anglo-Maratha War (1817–18).</div></div>
+        <div class="recall-card"><div class="recall-q">Where was the last Peshwa, Baji Rao II, exiled to after the Third Anglo-Maratha War? <span class="hint">tap</span></div><div class="recall-a">Bithoor, Kanpur — on a British pension.</div></div>
+        <div class="recall-card"><div class="recall-q">What river was fixed as the boundary in the 1809 Treaty of Amritsar with Ranjit Singh? <span class="hint">tap</span></div><div class="recall-a">The Sutlej river.</div></div>
+        <div class="recall-card"><div class="recall-q">Who was the Governor-General during the First Anglo-Sikh War, and who during the Second? <span class="hint">tap</span></div><div class="recall-a">Hardinge (1st); Dalhousie (2nd).</div></div>
+        <div class="recall-card"><div class="recall-q">What policy did John Lawrence follow regarding Afghanistan, and what does it mean? <span class="hint">tap</span></div><div class="recall-a">Policy of Masterly Inactivity — deliberate non-interference in Afghan internal affairs.</div></div>
+        <div class="recall-card"><div class="recall-q">Which treaty ended the Anglo-Nepal War, and in which years was that war fought? <span class="hint">tap</span></div><div class="recall-a">Treaty of Sugauli; fought 1814–1816.</div></div>
+        <div class="recall-card"><div class="recall-q">Who commanded the British forces in the First Anglo-Burmese War, and which treaty ended it? <span class="hint">tap</span></div><div class="recall-a">Sir Archibald Campbell; Treaty of Yandaboo (1824–1826).</div></div>
+        <div class="recall-card"><div class="recall-q">In which year were the Portuguese finally expelled from Goa, and how? <span class="hint">tap</span></div><div class="recall-a">1961, through Police Action.</div></div>
+      </div>
+    </section>
+
+    <div class="divider-stamp">Speed Layers</div>
+
+    <!-- ============ HIGH YIELD ============ -->
+    <section class="layer" id="high-yield">
+      <div class="layer-head"><h2>⭐ High-Yield Revision Notes</h2><span class="layer-num">Layer 2</span></div>
+      <div class="layer-body">
+        <div class="speed-sheet">
+          <ul>
+            <li><b>1498</b> — Vasco da Gama (Portuguese) lands at Calicut; welcomed by Zamorin.</li>
+            <li><b>1600</b> — British East India Company gets Royal Charter from Elizabeth I.</li>
+            <li><b>1608/1615</b> — Hawkins fails, Roe succeeds, at Jahangir's court.</li>
+            <li><b>1612</b> — Battle of Swally: British defeat Portuguese.</li>
+            <li><b>1605/1759</b> — Dutch factory at Masulipatnam; defeated at Bedara/Hooghly.</li>
+            <li><b>1744–1763</b> — Three Carnatic Wars vs. French; British finally win 3rd war (Wandiwash, 1760) via Treaty of Paris (1763).</li>
+            <li><b>1717</b> — Golden Farman (Farrukhsiyar) → root cause of Plassey & Buxar.</li>
+            <li><b>1757</b> — Battle of Plassey: Clive + Mir Jafar's betrayal beat Siraj-ud-Daulah. Foundation of British political power.</li>
+            <li><b>1764</b> — Battle of Buxar: Mir Qasim + Awadh + Mughal emperor lose to British (Munro).</li>
+            <li><b>1765</b> — Treaty of Allahabad: British get Diwani rights of Bengal-Bihar-Odisha.</li>
+            <li><b>1772</b> — Warren Hastings ends Dual Government of Bengal.</li>
+            <li><b>1767–1799</b> — Four Anglo-Mysore Wars; Hyder Ali → Tipu Sultan; Tipu dies in 4th war.</li>
+            <li><b>1798</b> — Subsidiary Alliance (Wellesley) — Hyderabad signs first.</li>
+            <li><b>1761</b> — Third Battle of Panipat shatters Maratha power.</li>
+            <li><b>1775–1818</b> — Three Anglo-Maratha Wars; Maratha power fully ends with Treaty of Mandsaur.</li>
+            <li><b>1809</b> — Treaty of Amritsar: Sutlej fixed as boundary with Ranjit Singh.</li>
+            <li><b>1839</b> — Ranjit Singh dies → Anglo-Sikh Wars follow → full annexation under Dalhousie.</li>
+            <li><b>1839–1919</b> — Three Anglo-Afghan Wars; no clean British victory in any.</li>
+            <li><b>1814–1816 / 1824–1885</b> — Anglo-Nepal War (Sugauli) and three Anglo-Burmese Wars (Yandaboo first).</li>
+            <li><b>1961</b> — Portuguese finally expelled from Goa.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ULTRA FAST ============ -->
+    <section class="layer" id="ultra-fast">
+      <div class="layer-head"><h2>⚡ Ultra-Fast Revision Sheet</h2><span class="layer-num">Layer 3</span></div>
+      <div class="layer-body">
+        <div class="speed-sheet">
+          <ul>
+            <li>Order of arrival: <b>Portuguese → Dutch → British → French</b> (factory order); but power order eliminated: Portuguese → Dutch → French → British rules.</li>
+            <li>Plassey (1757, Clive, Mir Jafar) → Buxar (1764, Munro) → Allahabad (1765, Diwani rights).</li>
+            <li>3 Carnatic Wars → French lose by 1763 (Treaty of Paris).</li>
+            <li>4 Mysore Wars → Tipu dies in the 4th, no treaty.</li>
+            <li>3 Maratha Wars → ends with Mandsaur (1818), Peshwa exiled to Bithoor.</li>
+            <li>Sikh Wars: Hardinge (1st) → Dalhousie (2nd) → annexed.</li>
+            <li>Afghan Wars: Auckland (1st) → Lytton (2nd) → 1919 (3rd, same year as Govt of India Act 1919).</li>
+            <li>Subsidiary Alliance order: Hyderabad-Mysore-Tanjore-Awadh-Peshwa (1798-1802).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 30 SECOND ============ -->
+    <section class="layer" id="thirty-sec">
+      <div class="layer-head"><h2>⏱ 30-Second Revision Sheet</h2><span class="layer-num">Layer 4</span></div>
+      <div class="layer-body">
+        <div class="speed-sheet danger">
+          <ul>
+            <li>1498 Portuguese (da Gama) → 1600 British Charter → 1612 Swally (beat Portuguese) → 1757 Plassey → 1764 Buxar → 1765 Diwani Rights → 1772 Dual Govt ends → 1763 French out (Paris) → 1799 Tipu dies → 1818 Marathas finished → 1849 Punjab annexed → 1919 3rd Afghan War → 1961 Portuguese finally leave.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LAST NIGHT ============ -->
+    <section class="layer" id="last-night">
+      <div class="layer-head"><h2>🌙 Last-Night-Before-Exam Sheet</h2><span class="layer-num">Layer 5 — just this</span></div>
+      <div class="layer-body">
+        <div class="last-night">
+          <h3>If you remember only this much, remember this:</h3>
+          <ul style="list-style:none; padding-left:0;">
+            <li style="margin-bottom:10px;">🔴 <b>Da Gama, 1498</b> → Portuguese first in, last out (1961).</li>
+            <li style="margin-bottom:10px;">🔴 <b>Royal Charter, 1600</b> → Elizabeth I, British Company born.</li>
+            <li style="margin-bottom:10px;">🔴 <b>Plassey 1757</b> → Clive + Mir Jafar betrayal → foundation of British power.</li>
+            <li style="margin-bottom:10px;">🔴 <b>Buxar 1764</b> → Munro beats 3 rulers combined.</li>
+            <li style="margin-bottom:10px;">🔴 <b>Allahabad 1765</b> → Diwani rights = revenue control of Bengal-Bihar-Odisha.</li>
+            <li style="margin-bottom:10px;">🔴 <b>Subsidiary Alliance 1798</b> → Wellesley, Hyderabad first.</li>
+            <li style="margin-bottom:10px;">🔴 <b>Tipu dies 1799</b> → 4th Mysore War, no treaty needed.</li>
+            <li style="margin-bottom:10px;">🔴 <b>Mandsaur 1818</b> → Marathas finished, Peshwa to Bithoor.</li>
+            <li style="margin-bottom:10px;">🔴 <b>Ranjit Singh dies 1839</b> → Punjab falls within a decade.</li>
+            <li style="margin-bottom:0;">🔴 <b>Treaty of Paris 1763</b> → French out for good.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="endmark">FRB 2.0 · History · Advent of Europeans — revise often, recall under pressure.</footer>
+
+  </main>
+</div>
+
+<script>
+  // ---------- collapsible sections ----------
+  document.querySelectorAll('.layer-head').forEach(head => {
+    head.innerHTML += '<span class="chevron">▾</span>';
+    head.addEventListener('click', () => {
+      const body = head.nextElementSibling;
+      body.classList.toggle('hidden');
+      head.classList.toggle('collapsed');
+    });
+  });
+
+  // ---------- nav scroll + active highlighting ----------
+  const navLinks = document.querySelectorAll('.nav-link');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const target = document.getElementById(link.dataset.target);
+      if(target){
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+        // make sure section is open
+        const body = target.querySelector('.layer-body');
+        if(body && body.classList.contains('hidden')){
+          body.classList.remove('hidden');
+          target.querySelector('.layer-head').classList.remove('collapsed');
+        }
+      }
+      if(window.innerWidth <= 920){
+        document.querySelector('.nav-scroll').classList.add('collapsed-mobile');
+      }
+    });
+  });
+
+  const sections = document.querySelectorAll('section.layer');
+  function highlightNav(){
+    let current = sections[0]?.id;
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if(rect.top <= 140) current = sec.id;
+    });
+    navLinks.forEach(l => l.classList.toggle('active', l.dataset.target === current));
+  }
+  window.addEventListener('scroll', highlightNav);
+  highlightNav();
+
+  // ---------- active recall flip cards ----------
+  document.querySelectorAll('.recall-card').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('revealed'));
+  });
+
+  // ---------- revision tracker (in-memory + localStorage attempt with fallback) ----------
+  let revisionData = {count:0, dates:[]};
+  try{
+    const saved = localStorage.getItem('aoe_revision_tracker');
+    if(saved) revisionData = JSON.parse(saved);
+  }catch(e){ /* localStorage unavailable, stays in-memory only for this session */ }
+
+  function renderTracker(){
+    const fill = document.getElementById('progFill');
+    const countEl = document.getElementById('revCount');
+    const pct = Math.min(revisionData.count * 4, 100); // visually fills toward 25 revisions
+    fill.style.width = pct + '%';
+    countEl.textContent = revisionData.count + (revisionData.count === 1 ? ' revision logged' : ' revisions logged');
+  }
+
+  document.getElementById('logRevBtn').addEventListener('click', () => {
+    revisionData.count += 1;
+    revisionData.dates.push(new Date().toISOString().slice(0,10));
+    try{ localStorage.setItem('aoe_revision_tracker', JSON.stringify(revisionData)); }catch(e){}
+    renderTracker();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    revisionData = {count:0, dates:[]};
+    try{ localStorage.setItem('aoe_revision_tracker', JSON.stringify(revisionData)); }catch(e){}
+    renderTracker();
+  });
+
+  renderTracker();
+</script>
+
+</body>
+</html>
