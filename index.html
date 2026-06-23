@@ -92,20 +92,9 @@
             gap: 8px;
         }
 
-        /* Custom Scrollbar for inner card scrolling */
-        .links-container::-webkit-scrollbar {
-            width: 6px;
-        }
-        .links-container::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .links-container::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-        .links-container::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
+        .links-container::-webkit-scrollbar { width: 6px; }
+        .links-container::-webkit-scrollbar-track { background: transparent; }
+        .links-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
         .topic-link {
             text-decoration: none;
@@ -139,51 +128,44 @@
 
     <header>
         <h1>Knowledge Repository</h1>
-        <p class="subtitle">Select a topic to view the notes</p>
+        <p class="subtitle">Select a topic to view your study notes</p>
     </header>
 
-    <main class="grid-container" id="repository-grid">
-        </main>
+    <main class="grid-container" id="repository-grid"></main>
 
     <script>
-        // 1. Configure your subjects and topic counts here
+        // Standardized subject configurations and exact topic counts
         const subjects = [
-            { name: 'PHYSICS', count: 10 },
-            { name: 'POLITY', count: 15 },
-            { name: 'BIOLOGY', count: 16 },
-            { name: 'HISTORY', count: 23 },
-            { name: 'GEOGRAPHY', count: 18 },
-            { name: 'CHEMISTRY', count: 7 },
-            { name: 'STATIC', count: 7 },
-            { name: 'ECONOMICS', count: 11 }
+            { id: 'physics', displayName: 'PHYSICS', count: 10 },
+            { id: 'polity', displayName: 'POLITY', count: 15 },
+            { id: 'biology', displayName: 'BIOLOGY', count: 16 },
+            { id: 'history', displayName: 'HISTORY', count: 23 },
+            { id: 'geography', displayName: 'GEOGRAPHY', count: 18 },
+            { id: 'chemistry', displayName: 'CHEMISTRY', count: 7 },
+            { id: 'static', displayName: 'STATIC', count: 7 },
+            { id: 'economics', displayName: 'ECONOMICS', count: 11 }
         ];
 
         const grid = document.getElementById('repository-grid');
 
-        // 2. Automatically generate the cards and links
         subjects.forEach(subject => {
-            // Create Card Container
             const card = document.createElement('div');
             card.className = 'subject-card';
 
-            // Create Card Header
             const header = document.createElement('h2');
-            header.innerHTML = `${subject.name} <span class="topic-count">${subject.count} Topics</span>`;
+            header.innerHTML = `${subject.displayName} <span class="topic-count">${subject.count} Chapters</span>`;
             card.appendChild(header);
 
-            // Create Links Container
             const linksContainer = document.createElement('div');
             linksContainer.className = 'links-container';
 
-            // Generate Links
+            // Dynamically generate standard links: e.g., physics_ch1.html
             for (let i = 1; i <= subject.count; i++) {
                 const link = document.createElement('a');
                 link.className = 'topic-link';
                 
-                // Set the link target (e.g., "PHYSICS/topic-1.html")
-                // Adjust this logic if you prefer a different folder or naming structure
-                link.href = `${subject.name}/topic-${i}.html`; 
-                link.textContent = `Topic ${i}`;
+                link.href = `${subject.id}_ch${i}.html`;
+                link.textContent = `${subject.displayName} - Chapter ${i}`;
                 
                 linksContainer.appendChild(link);
             }
@@ -192,6 +174,5 @@
             grid.appendChild(card);
         });
     </script>
-
 </body>
 </html>
