@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plant Tissue — Elite Revision System | SSC CGL Bio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0d1117;
+    --bg-card: #161b22;
+    --bg-card2: #1c2333;
+    --bg-hover: #21262d;
+    --border: #30363d;
+    --border-light: #21262d;
+
+    --green: #7ee787;
+    --green-dim: #3fb950;
+    --green-bg: rgba(126,231,135,0.08);
+    --green-border: rgba(126,231,135,0.25);
+
+    --blue: #79c0ff;
+    --blue-dim: #388bfd;
+    --blue-bg: rgba(121,192,255,0.08);
+    --blue-border: rgba(121,192,255,0.25);
+
+    --teal: #56d4c8;
+    --teal-bg: rgba(86,212,200,0.08);
+    --teal-border: rgba(86,212,200,0.25);
+
+    --yellow: #e3b341;
+    --yellow-bg: rgba(227,179,65,0.08);
+    --yellow-border: rgba(227,179,65,0.25);
+
+    --red: #ff7b72;
+    --red-bg: rgba(255,123,114,0.08);
+    --red-border: rgba(255,123,114,0.25);
+
+    --purple: #bc8cff;
+    --purple-bg: rgba(188,140,255,0.08);
+    --purple-border: rgba(188,140,255,0.25);
+
+    --orange: #ffa657;
+    --orange-bg: rgba(255,166,87,0.08);
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-serif: 'Crimson Pro', serif;
+
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    flex-wrap: wrap; min-height: 52px;
+  }
+  nav .brand { font-weight: 700; color: var(--green); font-size: 0.85rem; letter-spacing: 0.04em; margin-right: 0.5rem; }
+  nav a {
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 0.75rem; padding: 4px 10px; border-radius: 6px;
+    transition: all 0.15s; font-weight: 500; white-space: nowrap;
+  }
+  nav a:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem 6rem; }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center; padding: 3.5rem 1rem 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .hero .eyebrow {
+    display: inline-block;
+    font-family: var(--font-mono); font-size: 0.72rem;
+    color: var(--green); letter-spacing: 0.12em;
+    background: var(--green-bg); border: 1px solid var(--green-border);
+    padding: 4px 12px; border-radius: 20px; margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.15;
+    background: linear-gradient(135deg, #e6edf3 0%, var(--green) 50%, var(--blue) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+  .hero .sub { color: var(--text-secondary); font-size: 1rem; max-width: 500px; margin: 0 auto 1.5rem; }
+  .hero .tags { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.72rem; padding: 3px 10px; border-radius: 20px;
+    font-family: var(--font-mono); font-weight: 500;
+  }
+  .tag-green { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+  .tag-blue  { background: var(--blue-bg);  color: var(--blue);  border: 1px solid var(--blue-border); }
+  .tag-yellow{ background: var(--yellow-bg);color: var(--yellow);border: 1px solid var(--yellow-border); }
+  .tag-red   { background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-border); }
+  .tag-purple{ background: var(--purple-bg);color: var(--purple);border: 1px solid var(--purple-border); }
+  .tag-teal  { background: var(--teal-bg);  color: var(--teal);  border: 1px solid var(--teal-border); }
+
+  /* ── SECTIONS ── */
+  .section { margin-bottom: 3.5rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon { font-size: 1.4rem; }
+  .section-title { font-size: 1.25rem; font-weight: 700; color: var(--text-primary); }
+  .section-badge {
+    margin-left: auto; font-family: var(--font-mono); font-size: 0.65rem;
+    padding: 3px 8px; border-radius: 4px; font-weight: 600; letter-spacing: 0.06em;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 1.4rem; margin-bottom: 1rem;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border-light); }
+  .card-title {
+    font-weight: 700; font-size: 0.9rem; margin-bottom: 0.75rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .card p, .card li { color: var(--text-secondary); font-size: 0.9rem; }
+  .card ul { list-style: none; padding: 0; }
+  .card li { padding: 0.2rem 0; padding-left: 1.1rem; position: relative; }
+  .card li::before { content: '→'; position: absolute; left: 0; color: var(--text-muted); }
+
+  .card-green  { border-left: 3px solid var(--green);  background: linear-gradient(135deg, var(--green-bg) 0%, var(--bg-card) 60%); }
+  .card-blue   { border-left: 3px solid var(--blue);   background: linear-gradient(135deg, var(--blue-bg) 0%, var(--bg-card) 60%); }
+  .card-yellow { border-left: 3px solid var(--yellow); background: linear-gradient(135deg, var(--yellow-bg) 0%, var(--bg-card) 60%); }
+  .card-red    { border-left: 3px solid var(--red);    background: linear-gradient(135deg, var(--red-bg) 0%, var(--bg-card) 60%); }
+  .card-purple { border-left: 3px solid var(--purple); background: linear-gradient(135deg, var(--purple-bg) 0%, var(--bg-card) 60%); }
+  .card-teal   { border-left: 3px solid var(--teal);   background: linear-gradient(135deg, var(--teal-bg) 0%, var(--bg-card) 60%); }
+
+  /* ── HIGHLIGHT TEXT ── */
+  .hl-green  { color: var(--green); font-weight: 600; }
+  .hl-blue   { color: var(--blue); font-weight: 600; }
+  .hl-yellow { color: var(--yellow); font-weight: 600; }
+  .hl-red    { color: var(--red); font-weight: 600; }
+  .hl-purple { color: var(--purple); font-weight: 600; }
+  .hl-teal   { color: var(--teal); font-weight: 600; }
+  .hl-orange { color: var(--orange); font-weight: 600; }
+
+  /* ── TREE / MIND MAP ── */
+  .tree { font-family: var(--font-mono); font-size: 0.82rem; color: var(--text-secondary);
+    background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.2rem 1.5rem; line-height: 2; overflow-x: auto; }
+  .tree .root { color: var(--green); font-weight: 700; font-size: 0.95rem; }
+  .tree .l1 { color: var(--blue); font-weight: 600; }
+  .tree .l2 { color: var(--teal); }
+  .tree .l3 { color: var(--text-secondary); }
+  .tree .note { color: var(--yellow); font-style: italic; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th {
+    background: var(--bg-card2); color: var(--text-primary); font-weight: 700;
+    padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em;
+  }
+  td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-hover); }
+
+  /* ── PALACE ── */
+  .palace {
+    background: var(--bg-card2); border: 1px solid var(--purple-border);
+    border-radius: var(--radius-lg); padding: 1.5rem; position: relative; overflow: hidden;
+  }
+  .palace::before {
+    content: '🧠'; position: absolute; right: 1rem; top: 1rem; font-size: 2.5rem; opacity: 0.12;
+  }
+  .palace .stop {
+    display: flex; gap: 1rem; padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-light); align-items: flex-start;
+  }
+  .palace .stop:last-child { border-bottom: none; }
+  .palace .stop-num {
+    min-width: 28px; height: 28px; border-radius: 50%;
+    background: var(--purple-bg); border: 1px solid var(--purple-border);
+    color: var(--purple); font-weight: 700; font-size: 0.8rem;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .palace .stop-place { color: var(--teal); font-weight: 600; font-size: 0.88rem; margin-bottom: 2px; }
+  .palace .stop-fact { color: var(--text-secondary); font-size: 0.84rem; }
+
+  /* ── HOOK BOX ── */
+  .hook {
+    background: var(--bg-card2); border: 1px solid var(--yellow-border);
+    border-radius: var(--radius); padding: 1.1rem 1.3rem; margin-bottom: 0.75rem;
+  }
+  .hook .hook-label {
+    font-family: var(--font-mono); font-size: 0.68rem; color: var(--yellow);
+    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem;
+  }
+  .hook p { color: var(--text-secondary); font-size: 0.88rem; }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: var(--red-bg); border: 1px solid var(--red-border);
+    border-radius: var(--radius); padding: 1rem 1.2rem; margin-bottom: 0.75rem;
+  }
+  .trap-box .trap-q { color: var(--red); font-weight: 700; font-size: 0.88rem; margin-bottom: 0.3rem; }
+  .trap-box .trap-a { color: var(--text-secondary); font-size: 0.84rem; }
+
+  /* ── PRIORITY BADGES ── */
+  .fire::before { content: '🔥 '; }
+  .star::before { content: '⭐ '; }
+  .plus::before { content: '➕ '; }
+
+  /* ── RECALL / QUIZ ── */
+  .quiz-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.2rem; margin-bottom: 0.65rem; cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .quiz-card:hover { border-color: var(--green-border); }
+  .quiz-q { color: var(--text-primary); font-size: 0.88rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .quiz-a {
+    color: var(--green); font-size: 0.85rem; display: none;
+    padding-top: 0.5rem; border-top: 1px solid var(--border-light);
+  }
+  .quiz-card.open .quiz-a { display: block; }
+  .quiz-hint { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+  /* ── SPEED SHEET ── */
+  .speed-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.75rem;
+  }
+  .speed-item {
+    background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 0.9rem 1rem;
+    font-size: 0.82rem;
+  }
+  .speed-item .key { color: var(--blue); font-weight: 700; font-size: 0.78rem;
+    font-family: var(--font-mono); margin-bottom: 4px; }
+  .speed-item .val { color: var(--text-secondary); }
+
+  /* ── LAST NIGHT ── */
+  .last-night {
+    background: linear-gradient(135deg, #0d1f0f 0%, #0d1117 100%);
+    border: 2px solid var(--green-border); border-radius: var(--radius-lg);
+    padding: 2rem;
+  }
+  .last-night h3 { color: var(--green); font-size: 1.1rem; margin-bottom: 1.2rem; }
+  .last-night .ln-item {
+    display: flex; gap: 0.75rem; padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-light); align-items: baseline;
+  }
+  .last-night .ln-item:last-child { border-bottom: none; }
+  .last-night .ln-num { color: var(--green); font-weight: 700; font-family: var(--font-mono); font-size: 0.8rem; min-width: 20px; }
+  .last-night .ln-text { color: var(--text-primary); font-size: 0.88rem; }
+  .last-night .ln-text em { color: var(--yellow); font-style: normal; font-weight: 600; }
+
+  /* ── 30 SEC ── */
+  .flash-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 0.6rem; }
+  .flash {
+    background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 0.85rem; text-align: center; font-size: 0.8rem;
+  }
+  .flash .fk { color: var(--teal); font-weight: 700; font-size: 0.75rem;
+    font-family: var(--font-mono); margin-bottom: 4px; display: block; }
+  .flash .fv { color: var(--text-secondary); }
+
+  /* ── CONNECTION ARROWS ── */
+  .chain {
+    display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
+    font-size: 0.84rem; padding: 0.5rem 0;
+  }
+  .chain-node {
+    background: var(--bg-card2); border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 6px; color: var(--text-secondary);
+  }
+  .chain-node.active { border-color: var(--green-border); color: var(--green); background: var(--green-bg); }
+  .chain-arrow { color: var(--text-muted); font-size: 1rem; }
+
+  /* ── UTIL ── */
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.75rem; }
+  .mt1 { margin-top: 1rem; }
+  .mt05 { margin-top: 0.5rem; }
+  .mb1 { margin-bottom: 1rem; }
+  .bold { font-weight: 700; }
+  .mono { font-family: var(--font-mono); }
+  .small { font-size: 0.8rem; color: var(--text-muted); }
+  .italic-serif { font-family: var(--font-serif); font-style: italic; color: var(--text-secondary); font-size: 1rem; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-base); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 0.5rem 1rem; }
+    .container { padding: 1.5rem 1rem 5rem; }
+    .hero { padding: 2.5rem 0.5rem 1.5rem; }
+    .grid2 { grid-template-columns: 1fr; }
+    .speed-grid { grid-template-columns: repeat(2, 1fr); }
+    .flash-cards { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">🌿 BIO NOTES</span>
+  <a href="#bigpicture">Big Picture</a>
+  <a href="#palace">Memory Palace</a>
+  <a href="#notes">Full Notes</a>
+  <a href="#hooks">Hooks</a>
+  <a href="#traps">⚠ Traps</a>
+  <a href="#examiner">Examiner</a>
+  <a href="#recall">Quiz</a>
+  <a href="#speed">Speed Sheet</a>
+  <a href="#flash">30-Sec</a>
+  <a href="#lastnight">Last Night</a>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero" id="top">
+    <div class="eyebrow">SSC CGL · BIOLOGY · CHAPTER 2</div>
+    <h1>Plant Tissue</h1>
+    <p class="sub">High-retention revision system — designed to survive 6 months and exam pressure</p>
+    <div class="tags">
+      <span class="tag tag-green">🔥 Meristematic Tissue</span>
+      <span class="tag tag-blue">⭐ Simple Permanent</span>
+      <span class="tag tag-teal">⭐ Complex Tissue</span>
+      <span class="tag tag-yellow">⚠ High Trap Zone</span>
+      <span class="tag tag-purple">🧠 Memory Palace</span>
+    </div>
+  </div>
+
+  <!-- BIG PICTURE -->
+  <div class="section" id="bigpicture">
+    <div class="section-header">
+      <span class="section-icon">🗺️</span>
+      <span class="section-title">Big Picture — What This Chapter Is Really About</span>
+      <span class="section-badge tag-green">START HERE</span>
+    </div>
+
+    <div class="card card-green">
+      <p class="italic-serif">
+        "Plants grow, survive, and thrive because different groups of cells specialise. Some cells keep dividing forever (meristematic). Others retire from dividing and become experts at one job (permanent). This chapter is a map of that entire workforce."
+      </p>
+    </div>
+
+    <div class="grid2 mt1">
+      <div class="card card-blue">
+        <div class="card-title">📌 Core Definitions</div>
+        <ul>
+          <li><span class="hl-green">Tissue</span> = group of similar cells performing a specific function</li>
+          <li><span class="hl-blue">Cytology</span> = study of <strong>cells</strong></li>
+          <li><span class="hl-yellow">Histology</span> = study of <strong>tissues</strong></li>
+          <li><span class="hl-teal">Protoplasm</span> = cytoplasm + nucleus; coined by <span class="hl-red">Purkinje</span></li>
+          <li><span class="hl-purple">Cytoplasm</span> = everything inside cell membrane except nucleus</li>
+          <li><span class="hl-orange">Nucleoplasm</span> = content inside nucleus only</li>
+        </ul>
+      </div>
+      <div class="card card-purple">
+        <div class="card-title">🌳 Chapter Master Tree</div>
+        <div class="tree">
+<span class="root">PLANT TISSUE</span>
+├── <span class="l1">Meristematic</span>
+│   ├── <span class="l2">Apical</span>
+│   ├── <span class="l2">Intercalary</span>
+│   └── <span class="l2">Lateral</span>
+└── <span class="l1">Permanent</span>
+    ├── <span class="l2">Simple</span>
+    │   ├── <span class="l3">Parenchyma</span>
+    │   ├── <span class="l3">Collenchyma</span>
+    │   ├── <span class="l3">Sclerenchyma</span>
+    │   └── <span class="l3">Protective (Epidermis, Cork)</span>
+    └── <span class="l2">Complex</span>
+        ├── <span class="l3">Xylem</span>
+        └── <span class="l3">Phloem</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEMORY PALACE -->
+  <div class="section" id="palace">
+    <div class="section-header">
+      <span class="section-icon">🧠</span>
+      <span class="section-title">Chapter Memory Palace — The Plant City</span>
+      <span class="section-badge tag-purple">MEMORY FIRST</span>
+    </div>
+
+    <div class="card card-purple mb1">
+      <div class="card-title">🏙️ Welcome to Plant City</div>
+      <p style="color:var(--text-secondary); font-size:0.9rem">Imagine you are walking through a living city built inside a plant. Each location you visit has workers doing a specific job. Walk through this city every time you revise.</p>
+    </div>
+
+    <div class="palace">
+      <div class="stop">
+        <div class="stop-num">1</div>
+        <div>
+          <div class="stop-place">🚪 City Gates (Root Tips & Shoot Tips)</div>
+          <div class="stop-fact"><span class="hl-green">Apical Meristematic Tissue</span> — Workers here never stop. They're the ones who BUILD new floors (increase height/length). Dense cytoplasm, prominent nucleus, NO vacuoles — they're too busy dividing. <em>Think: construction foremen at the city entrance who work 24/7.</em></div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">2</div>
+        <div>
+          <div class="stop-place">🏗️ Middle Floors (Internodes)</div>
+          <div class="stop-fact"><span class="hl-blue">Intercalary Meristematic Tissue</span> — Second team also building height, but in the middle. When the foremen at the top can't work, these guys keep the building rising. <em>Think: construction crew mid-building.</em></div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">3</div>
+        <div>
+          <div class="stop-place">🏢 Outer Walls — Girth Office (Bark)</div>
+          <div class="stop-fact"><span class="hl-yellow">Lateral Meristematic Tissue</span> — These workers don't build HEIGHT, they build WIDTH. They're the ones who make the tree trunk thicker. <em>Think: humans who stop growing taller but keep getting wider 😄</em></div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">4</div>
+        <div>
+          <div class="stop-place">🏠 Retired Workers' Colony (Permanent Zone)</div>
+          <div class="stop-fact">Meristematic cells <span class="hl-green">stop dividing → differentiation → become permanent tissue</span>. Now they have BIG vacuoles (they're relaxing!), varied cell walls, and specialised jobs.</div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">5</div>
+        <div>
+          <div class="stop-place">🏪 Grocery Store (Parenchyma)</div>
+          <div class="stop-fact"><span class="hl-green">Parenchyma</span> — LIVING cells, they store food. Two shops: <span class="hl-teal">Chlorenchyma</span> (green shop — does photosynthesis) and <span class="hl-blue">Aerenchyma</span> (floaty shop — has air spaces, helps aquatic plants float). <em>They're the most abundant cells.</em></div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">6</div>
+        <div>
+          <div class="stop-place">🤸 Gym / Flexibility Studio (Collenchyma)</div>
+          <div class="stop-fact"><span class="hl-yellow">Collenchyma</span> — LIVING cells, mechanical support, <strong>flexible</strong>. Found in leaf stalks and dicot stems. Irregularly thickened at corners. <em>This is why a plant bends in storm but doesn't break immediately — collenchyma is the yoga teacher.</em></div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">7</div>
+        <div>
+          <div class="stop-place">🪨 Stone Factory (Sclerenchyma)</div>
+          <div class="stop-fact"><span class="hl-red">Sclerenchyma</span> — Mostly DEAD cells. Lignified walls. Provides RIGIDITY and TOUGHNESS. <em>Think: coconut husk — impossible to break easily. That's sclerenchyma at work.</em> Parts: Sclereids + Fibres.</div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">8</div>
+        <div>
+          <div class="stop-place">🛡️ City Security Wall (Epidermis & Cork)</div>
+          <div class="stop-fact"><span class="hl-blue">Epidermis</span> = outer skin of plant, LIVING. Has <span class="hl-teal">cuticle</span> (waxy layer = cutin) to prevent water loss. Root epidermis has <strong>hair-like extensions</strong> to increase surface area for absorption. <span class="hl-purple">Cork</span> = DEAD cells, has <strong>suberin</strong>, prevents gas exchange.</div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">9</div>
+        <div>
+          <div class="stop-place">🚰 Water Pipes (Xylem) and 🍎 Food Pipeline (Phloem)</div>
+          <div class="stop-fact"><span class="hl-blue">Xylem</span>: water only, ONE-WAY (bottom → top). Parts: Tracheids, Vessels, Xylem Fibres (dead), Xylem Parenchyma (<span class="hl-green">living</span>). <br><span class="hl-orange">Phloem</span>: food, TWO-WAY (up or down). Parts: Sieve tubes, Companion cells, Phloem Parenchyma (all <span class="hl-green">living</span>), Phloem Fibres (<span class="hl-red">dead</span>).</div>
+        </div>
+      </div>
+      <div class="stop">
+        <div class="stop-num">10</div>
+        <div>
+          <div class="stop-place">🪟 City Vents (Stomata & Hydathodes)</div>
+          <div class="stop-fact"><span class="hl-green">Stomata</span>: kidney-shaped guard cells on the bottom of leaves. Open when wet (water exits as vapour = <strong>transpiration</strong>), close when dry. <span class="hl-yellow">Hydathodes</span>: on edges of leaves. Water exits as droplets = <strong>guttation</strong> (mainly at night).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLETE NOTES -->
+  <div class="section" id="notes">
+    <div class="section-header">
+      <span class="section-icon">📚</span>
+      <span class="section-title">Complete Revision Notes</span>
+      <span class="section-badge tag-blue">LAYER 1</span>
+    </div>
+
+    <!-- Meristematic -->
+    <div class="card card-green mb1">
+      <div class="card-title">🔥 MERISTEMATIC TISSUE <span class="tag tag-green" style="font-size:0.65rem">DIVIDING CELLS</span></div>
+      <p class="small mb1">Found in growing regions. Cells divide rapidly. Growth requires mitosis (cell division).</p>
+      <ul>
+        <li class="fire bold">Intercellular spaces: <span class="hl-red">ABSENT</span></li>
+        <li class="fire bold">Vacuoles: <span class="hl-red">ABSENT</span> (no time to relax — always dividing)</li>
+        <li class="fire bold">Nucleus: <span class="hl-green">PROMINENT</span> (large, visible)</li>
+        <li class="fire bold">Cytoplasm: <span class="hl-yellow">DENSE</span></li>
+        <li>Cell wall: made of <span class="hl-blue">cellulose</span></li>
+        <li>When they stop dividing → undergo <span class="hl-purple">differentiation</span> → become permanent tissue</li>
+      </ul>
+    </div>
+
+    <div class="table-wrap mb1">
+      <table>
+        <thead>
+          <tr>
+            <th>TYPE</th><th>LOCATION</th><th>FUNCTION</th><th>DIRECTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="hl-green">Apical</span></td>
+            <td>Tips of roots and shoots (+ Protoderm in roots)</td>
+            <td>Increases <strong>length/height</strong></td>
+            <td>↑ Up</td>
+          </tr>
+          <tr>
+            <td><span class="hl-blue">Intercalary</span></td>
+            <td>In between (internodes, base of leaves)</td>
+            <td>Increases <strong>height</strong> (even when apical is absent)</td>
+            <td>↑ Up</td>
+          </tr>
+          <tr>
+            <td><span class="hl-yellow">Lateral</span></td>
+            <td>Sides / Girth of stem and root (like bark)</td>
+            <td>Increases <strong>width/girth</strong></td>
+            <td>↔ Outward</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Simple Permanent -->
+    <div class="card card-blue mb1">
+      <div class="card-title">⭐ SIMPLE PERMANENT TISSUE</div>
+      <p class="small mb1">Formed after differentiation. Have specific roles. Large central vacuole present.</p>
+    </div>
+
+    <div class="grid2 mb1">
+      <div class="card card-teal">
+        <div class="card-title">🟢 Parenchyma <span class="tag tag-green" style="font-size:0.6rem">LIVING</span></div>
+        <ul>
+          <li>Most abundant plant tissue</li>
+          <li>Function: <span class="hl-green">food storage</span></li>
+          <li><span class="hl-teal">Chlorenchyma</span> → has chlorophyll → photosynthesis</li>
+          <li><span class="hl-blue">Aerenchyma</span> → airy spaces → helps plants <strong>float</strong> (buoyancy) in water</li>
+        </ul>
+      </div>
+      <div class="card card-yellow">
+        <div class="card-title">🤸 Collenchyma <span class="tag tag-green" style="font-size:0.6rem">LIVING</span></div>
+        <ul>
+          <li>Location: leaf stalks, stems of <span class="hl-yellow">dicots</span></li>
+          <li>Irregularly thickened at <span class="hl-red">corners</span></li>
+          <li>Very <span class="hl-yellow">little intracellular space</span></li>
+          <li>Function: provides <span class="hl-green">flexibility</span> + mechanical support</li>
+          <li>= Mechanical tissue (bends without breaking)</li>
+        </ul>
+      </div>
+      <div class="card card-red">
+        <div class="card-title">🪨 Sclerenchyma <span class="tag tag-red" style="font-size:0.6rem">MOSTLY DEAD</span></div>
+        <ul>
+          <li>Location: outer parts of plants, <span class="hl-yellow">veins of leaves</span></li>
+          <li><span class="hl-red">Lignified walls</span> (lignin deposited → very hard)</li>
+          <li>Function: provides <span class="hl-red">rigidity and toughness</span></li>
+          <li>Best example: <span class="hl-orange">coconut husk</span>, outer covering of nuts</li>
+          <li>Parts: <span class="hl-blue">Sclereids</span> + <span class="hl-green">Fibres</span></li>
+        </ul>
+      </div>
+      <div class="card card-purple">
+        <div class="card-title">🛡️ Protective Tissue</div>
+        <div style="margin-top:0.5rem">
+          <div class="card-title" style="font-size:0.8rem; margin-bottom:0.3rem">Epidermis (Living)</div>
+          <ul>
+            <li>Outermost layer of all plant parts</li>
+            <li>Dry habitat plants: <span class="hl-yellow">thicker epidermis</span></li>
+            <li><span class="hl-green">Cutin</span> = waxy material → forms layer called <span class="hl-blue">Cuticle</span></li>
+            <li>Cuticle: prevents water loss + protects from injury & fungal invasion</li>
+            <li>Root epidermis: long <span class="hl-teal">hair-like extensions</span> → ↑ surface area for water absorption</li>
+            <li>Has <span class="hl-green">Stomata</span>: kidney-shaped guard cells on bottom of leaf</li>
+          </ul>
+        </div>
+        <div style="margin-top:0.75rem">
+          <div class="card-title" style="font-size:0.8rem; margin-bottom:0.3rem">Cork (Dead)</div>
+          <ul>
+            <li>Seen in mature roots and shoots</li>
+            <li>Cell walls have <span class="hl-red">Suberin</span> (not cutin)</li>
+            <li>Made of <span class="hl-red">dead cells</span></li>
+            <li>Impervious to gases — <span class="hl-red">no gas exchange</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Complex Permanent -->
+    <div class="card card-teal mb1">
+      <div class="card-title">⭐ COMPLEX PERMANENT TISSUE — Xylem & Phloem</div>
+    </div>
+
+    <div class="table-wrap mb1">
+      <table>
+        <thead>
+          <tr><th>FEATURE</th><th>XYLEM</th><th>PHLOEM</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Transports</td><td><span class="hl-blue">Water + Minerals</span></td><td><span class="hl-green">Food (sugars)</span></td></tr>
+          <tr><td>Direction</td><td><span class="hl-yellow">ONE-WAY</span> (bottom → top only)</td><td><span class="hl-green">TWO-WAY</span> (top ↔ bottom)</td></tr>
+          <tr><td>Parts</td><td>Tracheids, Vessels, Xylem Fibres, <span class="hl-green">Xylem Parenchyma</span></td><td>Sieve tubes, Companion cells, <span class="hl-green">Phloem Parenchyma</span>, <span class="hl-red">Phloem Fibres</span></td></tr>
+          <tr><td>Living parts</td><td><span class="hl-green">Only Xylem Parenchyma</span></td><td><span class="hl-green">All EXCEPT Phloem Fibres</span></td></tr>
+          <tr><td>Dead parts</td><td><span class="hl-red">Tracheids, Vessels, Xylem Fibres</span></td><td><span class="hl-red">Only Phloem Fibres</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card card-yellow">
+      <div class="card-title">🧩 The Golden Rule of Xylem & Phloem</div>
+      <div class="chain mt05">
+        <div class="chain-node active">Parenchyma</div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-node active">ALWAYS LIVING</div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-node active">Stores Food</div>
+      </div>
+      <div class="chain mt05">
+        <div class="chain-node active">Fibres</div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-node active">ALWAYS DEAD</div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-node active">Give Support</div>
+      </div>
+      <p class="small mt05">So: Xylem Parenchyma = living (stores food, NOT water conduction). Phloem Fibres = dead.</p>
+    </div>
+
+    <!-- Stomata & Transpiration -->
+    <div class="card card-blue mt1">
+      <div class="card-title">💧 Stomata, Transpiration & Guttation</div>
+      <div class="grid2" style="margin-top:0.75rem">
+        <div>
+          <p class="bold hl-green">Transpiration</p>
+          <ul style="margin-top:0.3rem">
+            <li>Water loss as <span class="hl-blue">vapour</span></li>
+            <li>Happens during <span class="hl-yellow">daytime</span></li>
+            <li>Through <span class="hl-green">Stomata</span> (mainly)</li>
+            <li>Stomata: bottom of leaf, kidney-shaped guard cells</li>
+            <li>Close when dry → open when wet</li>
+          </ul>
+        </div>
+        <div>
+          <p class="bold hl-teal">Guttation</p>
+          <ul style="margin-top:0.3rem">
+            <li>Water loss as <span class="hl-yellow">droplets</span></li>
+            <li>Happens mainly at <span class="hl-blue">night</span></li>
+            <li>Through <span class="hl-orange">Hydathodes</span> (on leaf edges)</li>
+            <li>Looks like dew drops on leaf margins</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEMORY HOOKS -->
+  <div class="section" id="hooks">
+    <div class="section-header">
+      <span class="section-icon">🪝</span>
+      <span class="section-title">Smart Memory Hooks</span>
+      <span class="section-badge tag-yellow">NEVER FORGET</span>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🤸 Hook 1 — Collenchyma vs Sclerenchyma</div>
+      <p><span class="hl-yellow">Collagen = flexible</span> (think collagen in your skin makes it flexible). <span class="hl-yellow">CoLLENchyma → LLEN sounds like "Lenient" → Flexible, bends easily.</span> <span class="hl-red">SCLERenchyma → SCLER sounds like "Sclera" (white rigid part of eye) → RIGID, tough.</span></p>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🌴 Hook 2 — Coconut husk = Sclerenchyma</div>
+      <p>Next time you see a coconut, think: that impossibly hard husk is <span class="hl-red">sclerenchyma tissue with lignified walls.</span> The harder something is to crack, the more sclerenchyma it has. Walnut shell, coconut husk = your sclerenchyma anchors.</p>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">💧 Hook 3 — Xylem (X = Water)</div>
+      <p><span class="hl-blue">X-ylem = eX-tra thirsty → carries WATER.</span> Imagine a person named "Xavier" who is always thirsty and only drinks water, and he travels only ONE way — north (bottom to top). <strong>Xylem = Xavier, one-way water carrier.</strong></p>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🍎 Hook 4 — Phloem (Food)</div>
+      <p><span class="hl-green">Phloem → "Flow of Food"</span>. Food flows both ways because it's made in green leaves (which can be anywhere). Imagine a food delivery app that delivers both up and down in a building — that's phloem.</p>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🌊 Hook 5 — Aerenchyma floats</div>
+      <p><span class="hl-teal">AEROchyma → AERO (air) → has air pockets → FLOATS.</span> Imagine a swimmer with a pool float (the air pockets are the floaties). Aerenchyma gives aquatic plants their buoyancy.</p>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🔬 Hook 6 — Purkinje & Protoplasm</div>
+      <p><span class="hl-purple">PURKINJE coined PROTOPLASM</span> = "Purkinje PRO at naming PROtoplasm." Protoplasm = cytoplasm + nucleus (the entire living content of the cell). Don't confuse with nucleoplasm (only inside nucleus).</p>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🧂 Hook 7 — Cutin vs Suberin</div>
+      <p><span class="hl-blue">CUTin → CUTicle</span> (found in epidermis — the outer CUT of the plant). <span class="hl-red">SUBerin → CORk</span> (SUBmerged/dead cells in cork). CUTin = alive, waxy protection. SUBerin = dead cells in cork, gas-proof.</p>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">👤 Hook 8 — Parenchyma = Living, Fibres = Dead (Universally)</div>
+      <p>Think of parenchyma as a <span class="hl-green">living, breathing grocery store worker</span> who actively stores food. Fibres are like <span class="hl-red">dead steel rods</span> in a building — they give structure but have no life. This rule never breaks: <strong>Parenchyma = Living, Fibres = Dead</strong>.</p>
+    </div>
+
+    <div class="hook">
+      <div class="hook-label">🤸 Hook 9 — Humans & Lateral Meristem</div>
+      <p>Apical + Intercalary = increase HEIGHT. Lateral = increase WIDTH. Exactly like humans: we grow taller as kids (apical/intercalary), then in adulthood we stop growing tall and start getting wider (lateral meristem moment 😄).</p>
+    </div>
+  </div>
+
+  <!-- CONCEPT CONNECTIONS -->
+  <div class="section" id="connections">
+    <div class="section-header">
+      <span class="section-icon">🔗</span>
+      <span class="section-title">Concept Connections — The Web</span>
+    </div>
+
+    <div class="grid2">
+      <div class="card card-teal">
+        <div class="card-title">Chain: Meristem → Permanent</div>
+        <div class="chain mt05">
+          <div class="chain-node active">Meristematic</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node">Stops dividing</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node active">Differentiation</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node active">Permanent</div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <div class="card-title">Chain: Mitosis → Cancer</div>
+        <div class="chain mt05">
+          <div class="chain-node active">Mitosis</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node">Uncontrolled</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node active" style="border-color:var(--red-border);color:var(--red);background:var(--red-bg)">Cancer</div>
+        </div>
+      </div>
+      <div class="card card-yellow">
+        <div class="card-title">Chain: Dry Habitat → Thick Epidermis</div>
+        <div class="chain mt05">
+          <div class="chain-node">Water scarcity</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node active">Thicker epidermis</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node active">More cuticle</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node active">Less water loss</div>
+        </div>
+      </div>
+      <div class="card card-green">
+        <div class="card-title">Chain: Root Hair → More Water</div>
+        <div class="chain mt05">
+          <div class="chain-node active">Hair-like extensions</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node active">↑ Surface area</div>
+          <span class="chain-arrow">→</span>
+          <div class="chain-node active">↑ Water absorption</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAM TRAPS -->
+  <div class="section" id="traps">
+    <div class="section-header">
+      <span class="section-icon">⚠️</span>
+      <span class="section-title">EXAM TRAPS — What Students Get Wrong</span>
+      <span class="section-badge tag-red">HIGH PRIORITY</span>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 1: Protoplasm vs Nucleoplasm</div>
+      <div class="trap-a">Protoplasm = cytoplasm + nucleus (entire living content). Nucleoplasm = only inside nucleus. Purkinje coined <strong>PROTOplasm</strong> — NOT nucleoplasm. Exam will swap these!</div>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 2: Cytology vs Histology</div>
+      <div class="trap-a">Cytology = study of CELLS. Histology = study of TISSUES. They swap these in MCQs.</div>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 3: Xylem transports food? NO!</div>
+      <div class="trap-a">Xylem transports WATER + minerals only. Phloem transports food. Xylem Parenchyma stores food — but does NOT transport water. This is a mega trap!</div>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 4: Xylem is two-way? NO!</div>
+      <div class="trap-a">Xylem is ONE-WAY (root → shoot, bottom → top). Phloem is TWO-WAY. Students confuse this.</div>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 5: All xylem parts are dead? NO!</div>
+      <div class="trap-a">Xylem Parenchyma is LIVING. All others (Tracheids, Vessels, Xylem Fibres) are dead. In Phloem: Phloem Fibres are DEAD, all others are living.</div>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 6: Collenchyma = Sclerenchyma (both give strength)?</div>
+      <div class="trap-a">Collenchyma = LIVING, flexible, irregularly thickened CORNERS, found in dicot stems/leaf stalks. Sclerenchyma = mostly DEAD, rigid/tough, LIGNIFIED walls, found in leaf veins/outer parts. Totally different!</div>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 7: Cutin (Cuticle) vs Suberin (Cork)</div>
+      <div class="trap-a">Cutin → Cuticle → Epidermis (living cells). Suberin → Cork (dead cells). Exam will interchange cutin/suberin.</div>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 8: Transpiration vs Guttation</div>
+      <div class="trap-a">Transpiration = vapour, daytime, through STOMATA. Guttation = liquid droplets, nighttime, through HYDATHODES (leaf edges).</div>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 9: Vacuoles in Meristematic tissue?</div>
+      <div class="trap-a">ABSENT. Meristematic cells have NO vacuoles, no intercellular space. Permanent cells have LARGE central vacuole.</div>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-q">❌ TRAP 10: Aerenchyma = just air cells?</div>
+      <div class="trap-a">Aerenchyma is a TYPE of Parenchyma. It has airy/empty intercellular spaces — this gives buoyancy to aquatic plants. Don't treat it as a separate tissue — it's under Parenchyma.</div>
+    </div>
+  </div>
+
+  <!-- EXAMINER'S QUESTIONS -->
+  <div class="section" id="examiner">
+    <div class="section-header">
+      <span class="section-icon">🎯</span>
+      <span class="section-title">Examiner's Favourite Questions</span>
+      <span class="section-badge tag-yellow">MUST STUDY</span>
+    </div>
+
+    <div class="grid2">
+      <div class="card card-yellow">
+        <div class="card-title">🎯 High Probability MCQs</div>
+        <ul>
+          <li>Which tissue provides <strong>flexibility</strong> to plant? → <span class="hl-yellow">Collenchyma</span></li>
+          <li>Which tissue provides <strong>rigidity</strong>? → <span class="hl-red">Sclerenchyma</span></li>
+          <li>Which tissue transports water? → <span class="hl-blue">Xylem</span></li>
+          <li>Which tissue transports food? → <span class="hl-green">Phloem</span></li>
+          <li>Which meristem increases <strong>girth</strong>? → <span class="hl-yellow">Lateral meristem</span></li>
+          <li>Coconut husk is made of? → <span class="hl-red">Sclerenchyma</span></li>
+          <li>Study of tissue = ? → <span class="hl-teal">Histology</span></li>
+          <li>Protoplasm coined by? → <span class="hl-purple">Purkinje</span></li>
+          <li>Waxy layer on epidermis = ? → <span class="hl-blue">Cuticle (cutin)</span></li>
+          <li>Water loss as droplets at night = ? → <span class="hl-orange">Guttation (hydathodes)</span></li>
+        </ul>
+      </div>
+      <div class="card card-blue">
+        <div class="card-title">🎯 Statement-Based Traps</div>
+        <ul>
+          <li>"Xylem parenchyma conducts water" → <span class="hl-red">FALSE</span> (it stores food)</li>
+          <li>"All xylem cells are dead" → <span class="hl-red">FALSE</span> (parenchyma is living)</li>
+          <li>"Collenchyma has lignified walls" → <span class="hl-red">FALSE</span> (sclerenchyma does)</li>
+          <li>"Cork allows gas exchange" → <span class="hl-red">FALSE</span> (it prevents it)</li>
+          <li>"Phloem is unidirectional" → <span class="hl-red">FALSE</span> (it's bidirectional)</li>
+          <li>"Aerenchyma helps in photosynthesis" → <span class="hl-red">FALSE</span> (chlorenchyma does)</li>
+          <li>"Guttation happens through stomata" → <span class="hl-red">FALSE</span> (hydathodes)</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <div class="card-title">🎯 Match the Following</div>
+        <ul>
+          <li>Rigid walls + dead → <span class="hl-red">Sclerenchyma</span></li>
+          <li>Irregular corner thickening → <span class="hl-yellow">Collenchyma</span></li>
+          <li>Chlorophyll-containing parenchyma → <span class="hl-green">Chlorenchyma</span></li>
+          <li>Air-space parenchyma → <span class="hl-teal">Aerenchyma</span></li>
+          <li>Water transport → <span class="hl-blue">Xylem</span></li>
+          <li>Food transport → <span class="hl-green">Phloem</span></li>
+          <li>Waxy coating → <span class="hl-blue">Cuticle</span></li>
+          <li>Dead cork walls → <span class="hl-red">Suberin</span></li>
+        </ul>
+      </div>
+      <div class="card card-purple">
+        <div class="card-title">🎯 Fill in the Blanks</div>
+        <ul>
+          <li>Meristematic cells have no _____ and no _____. → <span class="hl-green">vacuoles, intercellular spaces</span></li>
+          <li>Process: meristem → permanent = _____. → <span class="hl-purple">differentiation</span></li>
+          <li>Lateral meristem increases _____ of plant. → <span class="hl-yellow">girth/width</span></li>
+          <li>Stomata are _____ shaped. → <span class="hl-green">kidney</span></li>
+          <li>Root epidermis has _____ for absorption. → <span class="hl-teal">hair-like extensions</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIVE RECALL -->
+  <div class="section" id="recall">
+    <div class="section-header">
+      <span class="section-icon">❓</span>
+      <span class="section-title">Active Recall — Tap to Reveal</span>
+      <span class="section-badge tag-teal">QUIZ YOURSELF</span>
+    </div>
+    <p class="small mb1" style="color:var(--text-muted)">Click/tap each card to reveal the answer. Do this without looking at your notes.</p>
+
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q1. What is the difference between cytology and histology?</div>
+      <div class="quiz-a">Cytology = study of <strong>cells</strong>. Histology = study of <strong>tissues</strong>. (Histo = tissue in Greek)</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q2. Who coined the term protoplasm? What does it include?</div>
+      <div class="quiz-a"><strong>Purkinje</strong> coined protoplasm. It includes cytoplasm + nucleoplasm (entire living content of cell). Nucleoplasm = only inside nucleus.</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q3. List THREE features of meristematic tissue.</div>
+      <div class="quiz-a">1. No vacuoles, 2. No intercellular spaces, 3. Prominent nucleus + dense cytoplasm, 4. Cellulose cell wall.</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q4. Apical vs Intercalary vs Lateral — what does each increase?</div>
+      <div class="quiz-a">Apical → HEIGHT (tips of root/shoot). Intercalary → HEIGHT (middle/internodes). Lateral → WIDTH/GIRTH (sides of stem).</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q5. What is differentiation in plant tissue?</div>
+      <div class="quiz-a">Process by which meristematic tissue stops dividing and converts into permanent tissue, taking up a specific role.</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q6. What are chlorenchyma and aerenchyma?</div>
+      <div class="quiz-a">Both are types of Parenchyma. Chlorenchyma = parenchyma with chlorophyll → photosynthesis. Aerenchyma = parenchyma with air spaces → buoyancy (floating) in aquatic plants.</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q7. Why does collenchyma help plants survive storms?</div>
+      <div class="quiz-a">Collenchyma is a mechanical tissue providing FLEXIBILITY — it allows the stem to BEND without breaking. It is found in leaf stalks and dicot stems. Irregularly thickened at corners.</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q8. What makes sclerenchyma tissue so hard?</div>
+      <div class="quiz-a">LIGNIN deposition in cell walls (lignified walls) makes them extremely hard and rigid. Cells are mostly dead. Best example = coconut husk, walnut shell covering.</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q9. What is cutin? What is suberin? Where are they found?</div>
+      <div class="quiz-a">Cutin = waxy material in epidermis → forms Cuticle → prevents water loss. Suberin = waxy substance in Cork cell walls → makes cork impervious to gases. Cork = dead cells in mature roots/shoots.</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q10. Is xylem transport one-way or two-way? What about phloem?</div>
+      <div class="quiz-a">Xylem = ONE-WAY (root → shoot, bottom to top only). Phloem = TWO-WAY (food made in leaves can travel up or down depending on need).</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q11. Which parts of xylem are living? Which of phloem are dead?</div>
+      <div class="quiz-a">Xylem LIVING: only Xylem Parenchyma. Xylem DEAD: Tracheids, Vessels, Xylem Fibres. | Phloem DEAD: only Phloem Fibres. Phloem LIVING: Sieve Tubes, Companion Cells, Phloem Parenchyma.</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q12. Transpiration vs Guttation — state 3 differences.</div>
+      <div class="quiz-a">1. Form: Transpiration = vapour; Guttation = liquid droplets. 2. Time: Transpiration = daytime; Guttation = night. 3. Path: Transpiration = through Stomata; Guttation = through Hydathodes (leaf edges).</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q13. What shape are stomatal guard cells? Where are stomata found?</div>
+      <div class="quiz-a">Kidney-shaped guard cells. Found on the LOWER (bottom) surface of leaves. They open when wet and close when dry (to prevent water loss).</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+    <div class="quiz-card" onclick="this.classList.toggle('open')">
+      <div class="quiz-q">Q14. Why do root epidermal cells have hair-like extensions?</div>
+      <div class="quiz-a">To INCREASE SURFACE AREA for water absorption from the soil. More surface area = more contact with soil water = more absorption.</div>
+      <div class="quiz-hint">tap to reveal</div>
+    </div>
+  </div>
+
+  <!-- HIGH YIELD -->
+  <div class="section" id="speed">
+    <div class="section-header">
+      <span class="section-icon">⚡</span>
+      <span class="section-title">High-Yield Revision Sheet</span>
+      <span class="section-badge tag-green">LAYER 2 & 3</span>
+    </div>
+
+    <div class="speed-grid">
+      <div class="speed-item">
+        <div class="key">Tissue definition</div>
+        <div class="val">Group of similar cells → specific function</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Cytology / Histology</div>
+        <div class="val">Cells / Tissues</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Protoplasm coined by</div>
+        <div class="val">Purkinje = cytoplasm + nucleus</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Meristem features</div>
+        <div class="val">No vacuole, no intercellular space, dense cytoplasm, prominent nucleus</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Apical meristem</div>
+        <div class="val">Tips → ↑ height</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Intercalary meristem</div>
+        <div class="val">Middle → ↑ height</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Lateral meristem</div>
+        <div class="val">Sides → ↑ girth/width</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Differentiation</div>
+        <div class="val">Meristem → Permanent tissue</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Parenchyma</div>
+        <div class="val">Living, stores food; chlorenchyma (photo) + aerenchyma (float)</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Collenchyma</div>
+        <div class="val">Living, flexible, irregular corner thickening, dicot stems/leaf stalks</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Sclerenchyma</div>
+        <div class="val">Dead, rigid, lignified walls, coconut husk</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Epidermis</div>
+        <div class="val">Outermost layer; cuticle (cutin); root hair for absorption; stomata</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Cork</div>
+        <div class="val">Dead cells; suberin; no gas exchange; mature roots/shoots</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Stomata</div>
+        <div class="val">Kidney-shaped guard cells; bottom of leaf; transpiration</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Hydathodes</div>
+        <div class="val">Leaf edges; guttation (droplets, night)</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Xylem</div>
+        <div class="val">Water, one-way ↑; Xylem parenchyma = only living part</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Phloem</div>
+        <div class="val">Food, two-way ↕; Phloem fibres = only dead part</div>
+      </div>
+      <div class="speed-item">
+        <div class="key">Golden Rule</div>
+        <div class="val">Parenchyma = always living. Fibres = always dead.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 30 SEC FLASH -->
+  <div class="section" id="flash">
+    <div class="section-header">
+      <span class="section-icon">⏱️</span>
+      <span class="section-title">30-Second Revision Flash Cards</span>
+      <span class="section-badge tag-teal">LAYER 4</span>
+    </div>
+    <p class="small mb1">Glance at these right before the exam or between breaks.</p>
+    <div class="flash-cards">
+      <div class="flash"><span class="fk">Histology</span><span class="fv">Study of Tissues</span></div>
+      <div class="flash"><span class="fk">Purkinje</span><span class="fv">Coined PROTOPLASM</span></div>
+      <div class="flash"><span class="fk">Apical</span><span class="fv">Tips → HEIGHT ↑</span></div>
+      <div class="flash"><span class="fk">Intercalary</span><span class="fv">Middle → HEIGHT ↑</span></div>
+      <div class="flash"><span class="fk">Lateral</span><span class="fv">Sides → GIRTH ↑</span></div>
+      <div class="flash"><span class="fk">Parenchyma</span><span class="fv">Living, Food store</span></div>
+      <div class="flash"><span class="fk">Chlorenchyma</span><span class="fv">Photosynthesis</span></div>
+      <div class="flash"><span class="fk">Aerenchyma</span><span class="fv">Floats (buoyancy)</span></div>
+      <div class="flash"><span class="fk">Collenchyma</span><span class="fv">Living, Flexible, corners</span></div>
+      <div class="flash"><span class="fk">Sclerenchyma</span><span class="fv">Dead, Rigid, Lignin</span></div>
+      <div class="flash"><span class="fk">Coconut Husk</span><span class="fv">Sclerenchyma</span></div>
+      <div class="flash"><span class="fk">Cutin → Cuticle</span><span class="fv">Epidermis, waxy</span></div>
+      <div class="flash"><span class="fk">Suberin → Cork</span><span class="fv">Dead, no gas exchange</span></div>
+      <div class="flash"><span class="fk">Stomata</span><span class="fv">Kidney guard cells, leaf bottom</span></div>
+      <div class="flash"><span class="fk">Transpiration</span><span class="fv">Vapour, day, stomata</span></div>
+      <div class="flash"><span class="fk">Guttation</span><span class="fv">Droplets, night, hydathodes</span></div>
+      <div class="flash"><span class="fk">Xylem</span><span class="fv">Water, ONE-WAY ↑</span></div>
+      <div class="flash"><span class="fk">Phloem</span><span class="fv">Food, TWO-WAY ↕</span></div>
+      <div class="flash"><span class="fk">Xylem living part</span><span class="fv">Xylem Parenchyma only</span></div>
+      <div class="flash"><span class="fk">Phloem dead part</span><span class="fv">Phloem Fibres only</span></div>
+    </div>
+  </div>
+
+  <!-- LAST NIGHT -->
+  <div class="section" id="lastnight">
+    <div class="section-header">
+      <span class="section-icon">🌙</span>
+      <span class="section-title">Last-Night-Before-Exam Sheet</span>
+      <span class="section-badge tag-red">LAYER 5 — CRITICAL</span>
+    </div>
+
+    <div class="last-night">
+      <h3>🌙 Read this ONE time. Close your eyes. Recall. Sleep.</h3>
+
+      <div class="ln-item">
+        <div class="ln-num">1</div>
+        <div class="ln-text">Plant tissue = <em>Meristematic</em> + <em>Permanent</em></div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">2</div>
+        <div class="ln-text">Meristematic: NO vacuoles, NO intercellular space, PROMINENT nucleus, DENSE cytoplasm</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">3</div>
+        <div class="ln-text"><em>Apical</em> = height ↑ (tips) | <em>Intercalary</em> = height ↑ (middle) | <em>Lateral</em> = girth ↑ (sides)</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">4</div>
+        <div class="ln-text">Meristem → <em>differentiation</em> → Permanent tissue</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">5</div>
+        <div class="ln-text"><em>Parenchyma</em> = Living, food storage → Chlorenchyma (photosynthesis) / Aerenchyma (floats)</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">6</div>
+        <div class="ln-text"><em>Collenchyma</em> = Living, flexible, irregular CORNER thickening, dicot stems</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">7</div>
+        <div class="ln-text"><em>Sclerenchyma</em> = Dead, rigid, LIGNIFIED walls, coconut husk = best example</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">8</div>
+        <div class="ln-text"><em>Epidermis</em>: Cutin → Cuticle → prevents water loss. Root hair = ↑ absorption surface area</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">9</div>
+        <div class="ln-text"><em>Cork</em>: Dead cells, suberin, NO gas exchange</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">10</div>
+        <div class="ln-text">Stomata = kidney-shaped guard cells, BOTTOM of leaf, transpiration (vapour, day)</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">11</div>
+        <div class="ln-text">Hydathodes = leaf EDGES, guttation (droplets, night)</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">12</div>
+        <div class="ln-text"><em>Xylem</em>: water, ONE-WAY ↑. <em>Xylem Parenchyma</em> = only LIVING part of xylem</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">13</div>
+        <div class="ln-text"><em>Phloem</em>: food, TWO-WAY ↕. <em>Phloem Fibres</em> = only DEAD part of phloem</div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">14</div>
+        <div class="ln-text">GOLDEN RULE: <em>Parenchyma = ALWAYS LIVING</em> | <em>Fibres = ALWAYS DEAD</em></div>
+      </div>
+      <div class="ln-item">
+        <div class="ln-num">15</div>
+        <div class="ln-text">Protoplasm coined by <em>Purkinje</em>. Histology = tissues. Cytology = cells.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center; padding: 2rem 0; color:var(--text-muted); font-size:0.8rem; font-family:var(--font-mono)">
+    Made for maximum retention · SSC CGL Biology · Plant Tissue<br>
+    <span style="color:var(--green)">Revise → Recall → Win 🌿</span>
+  </div>
+
+</div>
+
+<script>
+  // Smooth scroll offset for sticky nav
+  document.querySelectorAll('nav a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        const offset = 60;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CELL — Revision Specimen | FRB 2.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0f0d;
+  --bg-soft:#0e1512;
+  --card:#111b17;
+  --card-2:#0d1614;
+  --line:#1f2e28;
+  --line-soft:#16221d;
+  --text:#eef3f0;
+  --text-dim:#9fb3ac;
+  --text-faint:#6c8079;
+  --membrane:#5eead4;
+  --membrane-dim:#2d6e62;
+  --nucleus:#b9a2ff;
+  --nucleus-dim:#5a4d8a;
+  --amber:#fbbf24;
+  --amber-dim:#7a5e15;
+  --rose:#fb7185;
+  --rose-dim:#7a2f3a;
+  --serif:'Fraunces', serif;
+  --sans:'Inter', sans-serif;
+  --mono:'JetBrains Mono', monospace;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background-image:
+    radial-gradient(circle at 15% 8%, rgba(94,234,212,0.05), transparent 40%),
+    radial-gradient(circle at 85% 78%, rgba(185,162,255,0.045), transparent 45%);
+  pointer-events:none;
+  z-index:0;
+}
+
+a{color:var(--membrane); text-decoration:none;}
+
+/* ===== layout shell ===== */
+.shell{display:flex; min-height:100vh; position:relative; z-index:1;}
+
+/* ===== sidebar ===== */
+.sidebar{
+  width:280px; flex-shrink:0;
+  background:var(--bg-soft);
+  border-right:1px solid var(--line);
+  position:sticky; top:0; height:100vh;
+  overflow-y:auto;
+  padding:28px 20px 40px;
+}
+.sidebar::-webkit-scrollbar{width:6px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px;}
+
+.brand{margin-bottom:28px;}
+.brand .tag{
+  font-family:var(--mono); font-size:10px; letter-spacing:0.18em;
+  color:var(--membrane); text-transform:uppercase;
+}
+.brand h1{
+  font-family:var(--serif); font-weight:700; font-size:26px;
+  margin-top:6px; letter-spacing:-0.01em;
+}
+.brand .sub{
+  font-size:11.5px; color:var(--text-faint); margin-top:4px; font-family:var(--mono);
+}
+
+.nav-group{margin-bottom:4px;}
+.nav-label{
+  font-family:var(--mono); font-size:10px; text-transform:uppercase;
+  letter-spacing:0.14em; color:var(--text-faint); padding:14px 10px 6px;
+}
+.nav-link{
+  display:flex; align-items:baseline; gap:8px;
+  padding:8px 10px; border-radius:6px;
+  font-size:13.5px; color:var(--text-dim);
+  cursor:pointer; transition:background .15s, color .15s;
+  border-left:2px solid transparent;
+}
+.nav-link:hover{background:var(--card); color:var(--text);}
+.nav-link.active{
+  background:var(--card); color:var(--membrane);
+  border-left:2px solid var(--membrane);
+}
+.nav-link .num{font-family:var(--mono); font-size:10px; color:var(--text-faint); width:16px;}
+
+.progress-note{
+  margin-top:20px; padding:12px 14px;
+  background:var(--card-2); border:1px solid var(--line-soft);
+  border-radius:8px; font-size:11px; color:var(--text-faint); font-family:var(--mono);
+  line-height:1.5;
+}
+
+/* ===== main content ===== */
+main{flex:1; min-width:0; position:relative;}
+.content{max-width:880px; margin:0 auto; padding:48px 40px 120px;}
+
+.masthead{
+  border-bottom:1px solid var(--line); padding-bottom:28px; margin-bottom:40px;
+}
+.masthead .eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--membrane); margin-bottom:10px;
+}
+.masthead h1{
+  font-family:var(--serif); font-size:clamp(36px,5vw,54px); font-weight:700;
+  letter-spacing:-0.015em; line-height:1.05;
+}
+.masthead .desc{color:var(--text-dim); margin-top:14px; font-size:15px; max-width:600px;}
+.masthead .stats{display:flex; gap:24px; margin-top:20px; flex-wrap:wrap;}
+.stat{font-family:var(--mono); font-size:11.5px; color:var(--text-faint);}
+.stat b{color:var(--amber); font-weight:600;}
+
+section.layer{margin-bottom:64px; scroll-margin-top:24px;}
+.layer-head{
+  display:flex; align-items:center; gap:14px; margin-bottom:20px;
+}
+.layer-head .icon{
+  width:38px; height:38px; border-radius:9px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:17px; border:1px solid var(--line);
+}
+.layer-head h2{
+  font-family:var(--serif); font-size:24px; font-weight:700; letter-spacing:-0.01em;
+}
+.layer-head .meta{font-family:var(--mono); font-size:11px; color:var(--text-faint); margin-top:2px;}
+
+/* priority tags */
+.tag{
+  display:inline-flex; align-items:center; gap:4px;
+  font-family:var(--mono); font-size:10.5px; font-weight:600;
+  padding:2px 8px; border-radius:5px; letter-spacing:0.02em;
+  white-space:nowrap;
+}
+.tag-must{background:rgba(251,191,36,0.13); color:var(--amber); border:1px solid var(--amber-dim);}
+.tag-imp{background:rgba(185,162,255,0.12); color:var(--nucleus); border:1px solid var(--nucleus-dim);}
+.tag-good{background:rgba(94,234,212,0.1); color:var(--membrane); border:1px solid var(--membrane-dim);}
+
+/* generic card / specimen slide */
+.slide{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-left:3px solid var(--membrane-dim);
+  border-radius:10px;
+  padding:18px 20px;
+  margin-bottom:14px;
+}
+.slide.violet{border-left-color:var(--nucleus-dim);}
+.slide.amber{border-left-color:var(--amber-dim);}
+.slide.rose{border-left-color:var(--rose-dim);}
+.slide h3{
+  font-family:var(--serif); font-size:17px; font-weight:600; margin-bottom:8px;
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+}
+.slide p, .slide li{font-size:14px; color:var(--text-dim);}
+.slide p{margin-bottom:8px;}
+.slide ul, .slide ol{padding-left:20px; margin-bottom:8px;}
+.slide li{margin-bottom:4px;}
+.slide strong{color:var(--text); font-weight:600;}
+.slide .hook{
+  margin-top:10px; padding:10px 12px;
+  background:var(--card-2); border-radius:7px;
+  font-size:13px; color:var(--text-dim); border:1px dashed var(--line);
+}
+.slide .hook b{color:var(--membrane); font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; display:block; margin-bottom:4px;}
+
+/* memory palace */
+.palace{
+  background:linear-gradient(160deg, var(--card-2), var(--bg-soft));
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:28px 26px;
+  position:relative;
+  overflow:hidden;
+}
+.palace::before{
+  content:"";
+  position:absolute; top:-40px; right:-40px; width:180px; height:180px;
+  background:radial-gradient(circle, rgba(94,234,212,0.08), transparent 70%);
+}
+.palace .room{
+  display:flex; gap:14px; padding:14px 0;
+  border-bottom:1px dashed var(--line-soft);
+}
+.palace .room:last-child{border-bottom:none;}
+.palace .room .marker{
+  font-family:var(--mono); font-size:11px; color:var(--membrane);
+  width:30px; flex-shrink:0; padding-top:3px; font-weight:600;
+}
+.palace .room .room-body h4{
+  font-family:var(--serif); font-size:15.5px; font-weight:600; color:var(--text); margin-bottom:4px;
+}
+.palace .room .room-body p{font-size:13.5px; color:var(--text-dim);}
+
+/* table */
+.tbl-wrap{overflow-x:auto; margin-bottom:16px; border:1px solid var(--line); border-radius:10px;}
+table{width:100%; border-collapse:collapse; font-size:13.5px;}
+th{
+  background:var(--card-2); text-align:left; padding:10px 14px;
+  font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em;
+  color:var(--text-faint); border-bottom:1px solid var(--line);
+}
+td{padding:10px 14px; border-bottom:1px solid var(--line-soft); color:var(--text-dim);}
+tr:last-child td{border-bottom:none;}
+td strong, td b{color:var(--text);}
+tr:hover td{background:rgba(94,234,212,0.03);}
+
+/* exam trap */
+.trap{
+  background:rgba(251,113,133,0.06); border:1px solid var(--rose-dim);
+  border-radius:10px; padding:16px 18px; margin-bottom:12px;
+}
+.trap .trap-title{
+  font-family:var(--mono); font-size:11px; color:var(--rose); text-transform:uppercase;
+  letter-spacing:0.08em; margin-bottom:6px; font-weight:700;
+}
+.trap p{font-size:13.5px; color:var(--text-dim);}
+.trap strong{color:var(--text);}
+
+/* active recall */
+.recall-card{
+  background:var(--card); border:1px solid var(--line); border-radius:10px;
+  padding:14px 18px; margin-bottom:10px; cursor:pointer; transition:border-color .15s;
+}
+.recall-card:hover{border-color:var(--membrane-dim);}
+.recall-card .q{font-size:14px; color:var(--text); font-weight:500;}
+.recall-card .q::before{content:"Q. "; color:var(--membrane); font-family:var(--mono); font-weight:700;}
+.recall-card .a{
+  margin-top:0; max-height:0; overflow:hidden;
+  font-size:13.5px; color:var(--membrane); opacity:0;
+  transition:max-height .25s ease, opacity .2s ease, margin-top .25s ease;
+}
+.recall-card.open .a{max-height:200px; opacity:1; margin-top:10px;}
+.recall-card .a::before{content:"A. "; font-family:var(--mono); font-weight:700; color:var(--text-faint);}
+.recall-card .tap-hint{font-family:var(--mono); font-size:9.5px; color:var(--text-faint); margin-top:6px;}
+
+/* ultra fast / 30s / last night sheets */
+.fast-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+@media (max-width:640px){.fast-grid{grid-template-columns:1fr;}}
+.fast-item{
+  background:var(--card-2); border:1px solid var(--line); border-radius:8px;
+  padding:10px 13px; font-size:13px;
+}
+.fast-item b{color:var(--amber); font-family:var(--mono); font-size:11px;}
+
+.sheet-30{
+  background:linear-gradient(145deg, var(--card-2), var(--card));
+  border:1px solid var(--amber-dim); border-radius:12px; padding:22px;
+}
+.sheet-30 .row{display:flex; gap:10px; padding:7px 0; border-bottom:1px solid var(--line-soft); font-size:13.5px; align-items:baseline;}
+.sheet-30 .row:last-child{border-bottom:none;}
+.sheet-30 .row .k{color:var(--membrane); font-family:var(--mono); font-weight:600; min-width:140px; flex-shrink:0; font-size:12.5px;}
+.sheet-30 .row .v{color:var(--text-dim);}
+
+.last-night{
+  background:var(--bg-soft); border:1.5px solid var(--rose-dim); border-radius:14px; padding:24px;
+}
+.last-night h3{font-family:var(--serif); color:var(--rose); font-size:16px; margin-bottom:10px;}
+.last-night ul{padding-left:18px;}
+.last-night li{font-size:13.5px; color:var(--text-dim); margin-bottom:6px;}
+.last-night li strong{color:var(--text);}
+
+.connect-line{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  font-family:var(--mono); font-size:12.5px; padding:10px 0;
+}
+.connect-line .node{
+  background:var(--card-2); border:1px solid var(--line); border-radius:6px; padding:4px 10px; color:var(--text);
+}
+.connect-line .arrow{color:var(--membrane);}
+
+.divider{height:1px; background:var(--line); margin:36px 0;}
+
+.fab-top{
+  position:fixed; bottom:24px; right:24px;
+  width:42px; height:42px; border-radius:50%;
+  background:var(--card); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:var(--membrane); font-size:16px; z-index:10;
+  opacity:0; transition:opacity .2s; pointer-events:none;
+}
+.fab-top.show{opacity:1; pointer-events:all;}
+
+/* mobile */
+.menu-toggle{
+  display:none; position:fixed; top:16px; left:16px; z-index:20;
+  width:40px; height:40px; border-radius:8px;
+  background:var(--card); border:1px solid var(--line);
+  align-items:center; justify-content:center; color:var(--text); font-size:16px;
+}
+@media (max-width:860px){
+  .sidebar{
+    position:fixed; left:0; top:0; height:100vh; z-index:15;
+    transform:translateX(-100%); transition:transform .25s ease;
+    box-shadow:8px 0 30px rgba(0,0,0,0.5);
+  }
+  .sidebar.open{transform:translateX(0);}
+  .menu-toggle{display:flex;}
+  .content{padding:80px 18px 100px;}
+  .masthead h1{font-size:32px;}
+  .fast-grid{grid-template-columns:1fr;}
+  .sheet-30 .row{flex-direction:column;}
+  .sheet-30 .row .k{min-width:auto;}
+}
+
+.overlay{
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:14;
+}
+.overlay.show{display:block;}
+
+::selection{background:var(--membrane-dim); color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="menu-toggle" id="menuToggle">☰</div>
+<div class="overlay" id="overlay"></div>
+
+<div class="shell">
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="tag">FRB 2.0 · Biology</div>
+      <h1>The Cell</h1>
+      <div class="sub">study of cells ▸ cytology</div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Foundation</div>
+      <div class="nav-link" data-target="palace"><span class="num">01</span> Memory Palace</div>
+      <div class="nav-link" data-target="notes"><span class="num">02</span> Complete Notes</div>
+      <div class="nav-link" data-target="hooks"><span class="num">03</span> Memory Hooks</div>
+      <div class="nav-link" data-target="connections"><span class="num">04</span> Connections</div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Exam Strategy</div>
+      <div class="nav-link" data-target="traps"><span class="num">05</span> Exam Traps</div>
+      <div class="nav-link" data-target="examiner"><span class="num">06</span> Examiner's Mind</div>
+      <div class="nav-link" data-target="recall"><span class="num">07</span> Active Recall</div>
+    </div>
+    <div class="nav-group">
+      <div class="nav-label">Revision Speed</div>
+      <div class="nav-link" data-target="highyield"><span class="num">08</span> High-Yield</div>
+      <div class="nav-link" data-target="ultrafast"><span class="num">09</span> Ultra-Fast Sheet</div>
+      <div class="nav-link" data-target="thirty"><span class="num">10</span> 30-Second Sheet</div>
+      <div class="nav-link" data-target="lastnight"><span class="num">11</span> Last Night Sheet</div>
+    </div>
+
+    <div class="progress-note">
+      ⏱ Built for 20–100 revisions.<br>
+      Start at <b style="color:var(--membrane)">Memory Palace</b> the first 3 times.<br>
+      After that → jump straight to <b style="color:var(--amber)">Ultra-Fast</b> or <b style="color:var(--rose)">Last Night</b>.
+    </div>
+  </nav>
+
+  <main>
+    <div class="content">
+
+      <header class="masthead">
+        <div class="eyebrow">Chapter 01 — Biology</div>
+        <h1>The Cell</h1>
+        <p class="desc">The fundamental unit of life. Every fact below is wired into a story, a trap warning, or a recall question — because reading it once will not be enough, and it isn't supposed to be.</p>
+        <div class="stats">
+          <span class="stat"><b>23</b> sets of facts compressed</span>
+          <span class="stat"><b>4</b> revision speeds</span>
+          <span class="stat"><b>1</b> memory palace</span>
+        </div>
+      </header>
+
+      <!-- ============ 01 MEMORY PALACE ============ -->
+      <section class="layer" id="palace">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(94,234,212,0.08); color:var(--membrane);">🧠</div>
+          <div>
+            <h2>The Cell City — Memory Palace</h2>
+            <div class="meta">walk through it, don't read it</div>
+          </div>
+        </div>
+
+        <div class="palace">
+          <p style="color:var(--text-dim); font-size:14px; margin-bottom:16px;">
+            Picture a <strong style="color:var(--text)">walled city</strong> sitting inside a watery moat. You are walking in from the city gate toward the palace at the centre. Each stop on your walk is one part of the cell.
+          </p>
+
+          <div class="room">
+            <div class="marker">①</div>
+            <div class="room-body">
+              <h4>The City Wall — Cell Membrane</h4>
+              <p>You enter through a thin, stretchy, elastic gate that only lets certain visitors in — <strong>selectively permeable</strong>. Guards check everyone (50% protein, 50% lipid — mostly phospholipid + cholesterol). This wall exists at <strong>every</strong> city in the kingdom (every cell has a membrane), but some cities also build a second, outer stone wall — the <strong>cell wall</strong> — which is dead stone, not living skin. Only plants, bacteria and fungi build that extra stone wall.</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">②</div>
+            <div class="room-body">
+              <h4>The Canal Outside — Osmosis Moat</h4>
+              <p>Outside the gate is a moat. Water always flows from where it's crowded to where it's empty — through the gate only (osmosis). If the water inside the city is dense and rushes <em>out</em>, the city shrinks (<strong>hypertonic → plasmolysis</strong>). If the water rushes <em>in</em>, the city swells fat and tight (<strong>hypotonic → turgid</strong>). If nothing moves, the city is calm (<strong>isotonic</strong>).</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">③</div>
+            <div class="room-body">
+              <h4>The Palace at the Centre — Nucleus</h4>
+              <p>Inside the city stands the palace — the <strong>brain</strong> giving every order. The king's chamber is wrapped in a double curtain (<strong>nuclear envelope</strong>). Inside, the royal fluid is the <strong>nucleoplasm</strong> (named by Purkinje). In one corner sits a small workshop, the <strong>nucleolus</strong>, which builds tiny machines called <strong>ribosomes</strong> (protein factories). Loose royal threads lie scattered on the floor — <strong>chromatin</strong> — and whenever the city must split into two, these threads tangle themselves tightly into <strong>chromosomes</strong>, always appearing as 23 paired guards (22 ordinary pairs + 1 gender pair, XX or XY).</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">④</div>
+            <div class="room-body">
+              <h4>The Royal Ladder — DNA</h4>
+              <p>In the throne room hangs a twisted rope ladder (<strong>double helix</strong> — Watson & Crick, 1953). Each rung is a pair of guards holding hands: <strong>Adenine–Thymine</strong>, <strong>Guanine–Cytosine</strong>. A team of builder-spirits repairs this ladder before every battle: <strong>Helicase</strong> unzips it, <strong>Primase</strong> starts the work, <strong>DNA Polymerase</strong> builds new rope, <strong>Ligase</strong> glues the joins, and <strong>Topoisomerase</strong> stops the rope from tangling into knots.</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">⑤</div>
+            <div class="room-body">
+              <h4>The Engine Room — Mitochondria</h4>
+              <p>Down in the basement is a sausage-shaped furnace with two skins — an outer porous gate letting oxygen in, and an inner folded wall (<strong>cristae</strong>) where the city's coins (<strong>ATP — energy currency</strong>) are minted. This furnace is so independent it keeps <strong>its own treasury and workers</strong> (own DNA + ribosomes) — the only other room in the city that does this is the demolition crew below.</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">⑥</div>
+            <div class="room-body">
+              <h4>The Demolition Crew — Lysosome</h4>
+              <p>A sealed barrel of acid sits in a side room, built in the workshop upstairs (RER) and packed by the post office. If the city decides a building has failed, this barrel bursts and dissolves it completely — a controlled, silent <strong>suicide squad</strong> (discovered by Christian de Duve, 1955). This is the cell's way of "give up gracefully and let something new grow" — <strong>apoptosis</strong>.</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">⑦</div>
+            <div class="room-body">
+              <h4>The Post Office — Golgi Body</h4>
+              <p>Letters and parcels (proteins, lipids) arrive from the workshop, get packaged, modified, and dispatched. One face of the post office (<strong>cis</strong>) looks toward the palace and curves inward (convex); the opposite face (<strong>trans</strong>) looks toward the city wall and curves outward (concave).</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">⑧</div>
+            <div class="room-body">
+              <h4>The Two Workshops — Endoplasmic Reticulum</h4>
+              <p>Two workshops stand side by side. One has tiny dotted machines bolted to its walls (<strong>ribosomes → Rough ER</strong>) and builds proteins. The other is smooth-walled, with no machines, and instead brews oils and filters out poison (<strong>Smooth ER</strong> → lipids + detox).</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">⑨</div>
+            <div class="room-body">
+              <h4>The Royal Reservoir — Vacuole</h4>
+              <p>In plant cities, an enormous water tank takes up most of the land (50–90% of the volume), keeping the whole city pressurised and firm (<strong>turgidity</strong>) — filled with cell sap (amino acids, sugar, organic acids). In animal cities, only small, temporary buckets exist, used to store glucose, glycogen, protein when needed.</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">⑩</div>
+            <div class="room-body">
+              <h4>The Paint House — Plastids (plant cities only)</h4>
+              <p>Only plant cities have a paint house. The green-painters (<strong>chloroplast</strong>, chlorophyll + magnesium → photosynthesis) cook food. The colourless storeroom (<strong>leucoplast</strong>) stores food: carbs in one bin (<strong>amyloplast</strong>), protein in another (<strong>aleuroplast</strong> — "<em>aleuro sounds like a-protein</em>"), fats in the third (<strong>elaioplast</strong>). The colour-painters (<strong>chromoplast</strong>) splash the city: red = lycopene, yellow = lutein, purple = anthocyanin, orange (carrot) = beta-carotene.</p>
+            </div>
+          </div>
+
+          <div class="room">
+            <div class="marker">⑪</div>
+            <div class="room-body">
+              <h4>The City Skeleton & Watchtowers</h4>
+              <p>A frame of scaffolding holds the city's shape (<strong>cytoskeleton</strong>). Two cylindrical watchtowers near the palace (<strong>centrosome → 2 centrioles</strong>, 9+0 or 9+2 cylindrical arrangement, also called <strong>MTOC</strong>) activate only when the city must split into two — <strong>cell division</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 02 COMPLETE NOTES ============ -->
+      <section class="layer" id="notes">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(185,162,255,0.08); color:var(--nucleus);">📋</div>
+          <div><h2>Complete Revision Notes</h2><div class="meta">every fact, organised</div></div>
+        </div>
+
+        <div class="slide">
+          <h3>Cell — Basic Definition <span class="tag tag-must">Must Know</span></h3>
+          <p><strong>Cell</strong> = fundamental unit / building block of life. Cells group → <strong>tissues</strong> → <strong>organs</strong> → <strong>organ systems</strong> → organism.</p>
+          <p><strong>Cytology</strong> = study of cells.</p>
+          <div class="hook"><b>Hook</b>Brick → wall → house → city. Cell → tissue → organ → organ system → body.</div>
+        </div>
+
+        <div class="slide violet">
+          <h3>Discoveries & Pioneers <span class="tag tag-must">Must Know</span></h3>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Discovery</th><th>Scientist</th><th>Year</th><th>Title / Note</th></tr>
+              <tr><td>Cell (dead, in cork)</td><td><strong>Robert Hooke</strong></td><td>1665</td><td>Father of Cytology</td></tr>
+              <tr><td>Living cell (in pond water)</td><td><strong>Antony van Leeuwenhoek</strong></td><td>1674</td><td>Father of Microbiology</td></tr>
+              <tr><td>Nucleus</td><td><strong>Robert Brown</strong></td><td>1831</td><td>Different person from Hooke</td></tr>
+              <tr><td>DNA molecule</td><td><strong>Friedrich Miescher</strong></td><td>1869</td><td>—</td></tr>
+              <tr><td>Double helix structure of DNA</td><td><strong>Watson & Crick</strong></td><td>1953</td><td>—</td></tr>
+              <tr><td>Golgi body</td><td><strong>Camillo Golgi</strong></td><td>—</td><td>Named after him</td></tr>
+              <tr><td>Nucleoplasm (term)</td><td><strong>Purkinje</strong></td><td>—</td><td>Coined the term</td></tr>
+              <tr><td>Lysosome</td><td><strong>Christian de Duve</strong></td><td>1955</td><td>—</td></tr>
+              <tr><td>Ribosome</td><td><strong>George E. Palade</strong></td><td>—</td><td>Common to pro + eukaryotes</td></tr>
+              <tr><td>Cell Theory</td><td><strong>Schleiden & Schwann</strong></td><td>1838</td><td>All organisms made of cells</td></tr>
+              <tr><td>Cell Theory improved — "Omnis cellula e cellula"</td><td><strong>Rudolf Virchow</strong></td><td>—</td><td>New cells come from pre-existing cells</td></tr>
+            </table>
+          </div>
+          <div class="hook"><b>Hook</b>Hooke = dead cork cell. Leeuwenhoek = living pond cell. 9 years apart (1665 → 1674).</div>
+        </div>
+
+        <div class="slide">
+          <h3>Cell Membrane (Plasma Membrane) <span class="tag tag-must">Must Know</span></h3>
+          <ul>
+            <li>Outermost covering of <strong>every</strong> cell (no exceptions).</li>
+            <li>Gives shape & size; holds cell contents.</li>
+            <li>Thin, elastic, flexible, living.</li>
+            <li><strong>Selectively permeable</strong> (= semi-permeable) — not everything passes.</li>
+            <li>Composition: ~50% protein + ~50% lipid (mainly phospholipid + cholesterol).</li>
+            <li>Never called "cell wall." Cell membrane ≠ cell wall.</li>
+          </ul>
+        </div>
+
+        <div class="slide">
+          <h3>Diffusion vs Osmosis <span class="tag tag-must">Must Know</span></h3>
+          <p><strong>Diffusion</strong>: spontaneous movement of molecules from <strong>high → low concentration</strong>. Occurs in solid, liquid, gas. Rate: gas > liquid > solid.</p>
+          <ul>
+            <li>Gas in gas: deodorant/agarbatti spreading in a room.</li>
+            <li>Gas in liquid: ink spreading in water.</li>
+            <li>Solid: chalk dust spreading while erasing a blackboard.</li>
+          </ul>
+          <p><strong>Osmosis</strong>: diffusion specifically through a <strong>semi-permeable membrane</strong> (high → low concentration of water).</p>
+        </div>
+
+        <div class="slide">
+          <h3>Tonicity — Hypertonic / Hypotonic / Isotonic <span class="tag tag-must">Must Know</span></h3>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Type</th><th>Water concentration</th><th>Effect on cell</th><th>Term</th></tr>
+              <tr><td><strong>Hypertonic</strong></td><td>High inside, low outside → water exits</td><td>Cell <strong>shrinks</strong></td><td><strong>Plasmolysis</strong></td></tr>
+              <tr><td><strong>Hypotonic</strong></td><td>Low inside, high outside → water enters</td><td>Cell <strong>swells</strong></td><td>Turgid</td></tr>
+              <tr><td><strong>Isotonic</strong></td><td>Equal inside/outside</td><td>No net movement</td><td>—</td></tr>
+            </table>
+          </div>
+          <div class="hook"><b>Hook</b>Solute is the opposite of water — high water = low solute, and vice versa. Hyper = shrink, Hypo = swell (balloon filling with water = turgid).</div>
+        </div>
+
+        <div class="slide">
+          <h3>Cell Wall vs Cell Membrane <span class="tag tag-must">Must Know</span></h3>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Feature</th><th>Cell Wall</th><th>Cell Membrane</th></tr>
+              <tr><td>State</td><td>Dead, non-living</td><td>Living</td></tr>
+              <tr><td>Permeability</td><td>Freely permeable</td><td>Selectively permeable</td></tr>
+              <tr><td>Osmosis possible?</td><td>No</td><td>Yes</td></tr>
+              <tr><td>Present in</td><td>Plants, bacteria, fungi only</td><td>Every cell, always</td></tr>
+              <tr><td>Determines shape/strength/turgor?</td><td>Yes</td><td>Provides shape only</td></tr>
+            </table>
+          </div>
+          <p><strong>Composition of cell wall:</strong> Plants → cellulose · Bacteria → peptidoglycan (peptin) · Fungi → chitin. <em>Study of fungi = Mycology.</em></p>
+        </div>
+
+        <div class="slide violet">
+          <h3>Nucleus <span class="tag tag-must">Must Know</span></h3>
+          <ul>
+            <li>"Brain of the cell" — controls & regulates all cell functions. Largest cell structure.</li>
+            <li>Discovered by <strong>Robert Brown</strong> (1831).</li>
+            <li><strong>Nuclear envelope</strong>: made of membranes, separates nucleus from cytoplasm, permits selective exchange.</li>
+            <li><strong>Nucleoplasm</strong>: liquid ground substance inside the envelope (term by Purkinje).</li>
+            <li><strong>Nucleolus</strong>: inside nucleoplasm; makes <strong>ribosomes</strong> (process = <strong>ribogenesis</strong>); ribosomes make proteins.</li>
+            <li><strong>Chromatin material</strong>: entangled thread-like structures; organizes into <strong>chromosomes</strong> during cell division.</li>
+          </ul>
+        </div>
+
+        <div class="slide violet">
+          <h3>Chromosomes <span class="tag tag-must">Must Know</span></h3>
+          <ul>
+            <li>Always exist in <strong>pairs</strong> — humans have <strong>23 pairs</strong>.</li>
+            <li><strong>22 pairs = autosomes</strong> (not involved in sex determination).</li>
+            <li><strong>1 pair = sex chromosomes / allosomes</strong> — XX (female), XY (male).</li>
+            <li>Disorders to recall later: <strong>Klinefelter syndrome</strong>, <strong>Turner syndrome</strong> (extra/missing X).</li>
+            <li>Made of <strong>DNA + protein</strong>; the protein that binds DNA is <strong>Histone</strong>.</li>
+            <li><strong>Gene</strong> = functional unit of DNA (a specific segment).</li>
+          </ul>
+        </div>
+
+        <div class="slide violet">
+          <h3>DNA Structure & Base Pairing <span class="tag tag-must">Must Know</span></h3>
+          <ul>
+            <li>DNA = Deoxyribonucleic acid; sugar = <strong>deoxyribose</strong>. RNA sugar = <strong>ribose</strong>.</li>
+            <li>Double helix (Watson & Crick, 1953) — shaped like a twisted ladder; rungs = <strong>base pairs</strong>.</li>
+            <li><strong>Adenine ↔ Thymine</strong>, <strong>Guanine ↔ Cytosine</strong> (DNA).</li>
+            <li>In RNA: <strong>Thymine is replaced by Uracil</strong> — Adenine ↔ Uracil, Guanine ↔ Cytosine.</li>
+          </ul>
+        </div>
+
+        <div class="slide violet">
+          <h3>DNA Replication Enzymes <span class="tag tag-imp">Important</span></h3>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Enzyme</th><th>Function</th><th>Memory Hook</th></tr>
+              <tr><td><strong>Helicase</strong></td><td>Unwinds the double helix</td><td>"un-helix-ase"</td></tr>
+              <tr><td><strong>Primase</strong></td><td>Initiates / starts replication</td><td>Primer = starter</td></tr>
+              <tr><td><strong>DNA Polymerase</strong></td><td>Builds / doubles the new DNA strand</td><td>The Builder</td></tr>
+              <tr><td><strong>Ligase</strong></td><td>Binds/glues DNA strands together</td><td>Ligase = "glue-ase"</td></tr>
+              <tr><td><strong>Topoisomerase</strong></td><td>Prevents tangling/super-coiling</td><td>Untangler</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="slide">
+          <h3>Cytoplasm & Cytosol <span class="tag tag-good">Good to Know</span></h3>
+          <ul>
+            <li><strong>Cytoplasm</strong>: everything between plasma membrane and nuclear envelope; contains cell organelles.</li>
+            <li><strong>Cytosol</strong>: the aqueous ground substance of cytoplasm (the "milk" in kheer — organelles are the rice/dry fruits).</li>
+            <li><strong>Cytoplasmic inclusions</strong>: non-living components in cytoplasm — pigments, nutrients (not organelles).</li>
+          </ul>
+        </div>
+
+        <div class="slide">
+          <h3>Mitochondria — Powerhouse of the Cell <span class="tag tag-must">Must Know</span></h3>
+          <ul>
+            <li>Generates energy as <strong>ATP</strong> (Adenosine Triphosphate) — the "energy currency of the cell."</li>
+            <li>Sausage / hot-dog shaped. <strong>Double membrane</strong>: outer = porous (lets O₂ in), inner = folded into <strong>cristae</strong> (site of ATP formation).</li>
+            <li>Has its <strong>own DNA and ribosomes</strong> — one of only <strong>two</strong> organelles with this property (the other is the chloroplast, in plant cells).</li>
+            <li>Diameter: <strong>0.5–1 micrometre</strong> (1 micrometre = 10⁻⁶ m).</li>
+          </ul>
+        </div>
+
+        <div class="slide">
+          <h3>Lysosome — "Suicidal Bag" <span class="tag tag-must">Must Know</span></h3>
+          <ul>
+            <li>Contains <strong>hydrolytic (digestive) enzymes</strong>. If the cell/organelle malfunctions, it bursts and digests the cell.</li>
+            <li>Hydrolytic enzymes are produced in <strong>RER</strong>; the lysosome itself is packaged by the <strong>Golgi body</strong>.</li>
+            <li>Discovered by <strong>Christian de Duve</strong>, 1955.</li>
+            <li>Linked to <strong>apoptosis</strong> = programmed cell death (gradual; contrast with sudden death).</li>
+          </ul>
+        </div>
+
+        <div class="slide">
+          <h3>Golgi Apparatus — "Post Office of the Cell" <span class="tag tag-must">Must Know</span></h3>
+          <ul>
+            <li>Functions: storage, modification, <strong>packaging</strong>, and <strong>dispatching</strong>.</li>
+            <li>Discovered by <strong>Camillo Golgi</strong>.</li>
+            <li>Two faces: <strong>Cis face</strong> — toward nucleus, <strong>convex</strong>. <strong>Trans face</strong> — toward plasma membrane, <strong>concave</strong>.</li>
+          </ul>
+        </div>
+
+        <div class="slide">
+          <h3>Endoplasmic Reticulum (ER) <span class="tag tag-must">Must Know</span></h3>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Type</th><th>Has Ribosomes?</th><th>Function</th></tr>
+              <tr><td><strong>Rough ER (RER)</strong></td><td>Yes (dotted appearance)</td><td>Protein synthesis</td></tr>
+              <tr><td><strong>Smooth ER (SER)</strong></td><td>No</td><td>Lipid/fat synthesis + detoxification (removes poisons & drugs)</td></tr>
+            </table>
+          </div>
+          <p>Shapes: long tubules, vesicles, or cisternae.</p>
+        </div>
+
+        <div class="slide">
+          <h3>Vacuole <span class="tag tag-imp">Important</span></h3>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Plant cell</th><th>Animal cell</th></tr>
+              <tr><td>Single, very large (50–90% of cell volume)</td><td>Many, very small</td></tr>
+              <tr><td>Permanent</td><td>Temporary</td></tr>
+              <tr><td>Provides <strong>turgidity & rigidity</strong></td><td>Stores glucose, glycogen, protein</td></tr>
+              <tr><td>Contains <strong>cell sap</strong> (amino acids, sugars, organic acids)</td><td>—</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="slide">
+          <h3>Peroxisome <span class="tag tag-good">Good to Know</span></h3>
+          <p>Breaks down long-chain fatty acids via <strong>beta oxidation</strong>; neutralises harmful toxins.</p>
+          <div class="hook"><b>Hook</b>Word "oxidation" anywhere in a question → think Peroxisome.</div>
+        </div>
+
+        <div class="slide">
+          <h3>Plastids (Plant Cell Only) <span class="tag tag-must">Must Know</span></h3>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Plastid</th><th>Function</th><th>Detail</th></tr>
+              <tr><td><strong>Chloroplast</strong></td><td>Photosynthesis</td><td>Green — pigment chlorophyll contains <strong>magnesium</strong>; chlorophyll <em>reflects</em> green (doesn't absorb it)</td></tr>
+              <tr><td><strong>Leucoplast</strong></td><td>Stores food</td><td>Colourless</td></tr>
+              <tr><td>— Amyloplast</td><td>Stores carbohydrates</td><td>sub-type of leucoplast</td></tr>
+              <tr><td>— Aleuroplast</td><td>Stores proteins</td><td>sub-type of leucoplast</td></tr>
+              <tr><td>— Elaioplast</td><td>Stores fats</td><td>sub-type of leucoplast ("oily/liver-like fat")</td></tr>
+              <tr><td><strong>Chromoplast</strong></td><td>Provides colour</td><td>Red = lycopene · Yellow = lutein · Purple = anthocyanin · Orange (carrot) = beta-carotene</td></tr>
+            </table>
+          </div>
+          <p>Not present in animal cells, bacteria, or fungi — plant cells only.</p>
+        </div>
+
+        <div class="slide">
+          <h3>Prokaryotic vs Eukaryotic Cells <span class="tag tag-must">Must Know</span></h3>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Feature</th><th>Prokaryotic</th><th>Eukaryotic</th></tr>
+              <tr><td>Nucleus</td><td>Absent (no true nucleus)</td><td>True nucleus present</td></tr>
+              <tr><td>Cell organelles</td><td>Absent / undeveloped</td><td>Present</td></tr>
+              <tr><td>Cell membrane</td><td>Present</td><td>Present</td></tr>
+              <tr><td>Ribosome</td><td>Present</td><td>Present</td></tr>
+              <tr><td>Examples</td><td>Bacteria, cyanobacteria, mycoplasma</td><td>Plant & animal cells</td></tr>
+            </table>
+          </div>
+          <p><strong>Common to both:</strong> Cell membrane + Ribosome.</p>
+          <div class="hook"><b>Hook</b>"Pro" = primitive, hasn't evolved a true (eu-) nucleus yet.</div>
+        </div>
+
+        <div class="slide">
+          <h3>Mitosis vs Meiosis <span class="tag tag-must">Must Know</span></h3>
+          <div class="tbl-wrap">
+            <table>
+              <tr><th>Feature</th><th>Mitosis</th><th>Meiosis</th></tr>
+              <tr><td>Daughter cells</td><td>2 (from 1 parent)</td><td>4 (from 1 parent)</td></tr>
+              <tr><td>Occurs in</td><td>Somatic cells</td><td>Germ cells (reproductive)</td></tr>
+              <tr><td>Nuclear division</td><td>Once</td><td>Twice</td></tr>
+              <tr><td>Chromosome number</td><td>Diploid</td><td>Haploid</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="slide">
+          <h3>Cell Cycle <span class="tag tag-must">Must Know</span></h3>
+          <p><strong>Interphase</strong> → <strong>M-phase (Mitosis)</strong></p>
+          <ul>
+            <li><strong>G1 phase</strong>: cell growth.</li>
+            <li><strong>S phase</strong>: DNA synthesis / replication.</li>
+            <li><strong>G2 phase</strong>: preparation for mitosis.</li>
+            <li><strong>M phase</strong>: Mitosis — <strong>Prophase → Metaphase → Anaphase → Telophase</strong> (P-M-A-T).</li>
+          </ul>
+          <div class="hook"><b>Hook</b>"PMAT" — "<strong>P</strong>lease <strong>M</strong>ake <strong>A</strong> <strong>T</strong>eam" (in order).</div>
+        </div>
+
+        <div class="slide">
+          <h3>Cytoskeleton & Centrosome <span class="tag tag-imp">Important</span></h3>
+          <ul>
+            <li><strong>Cytoskeleton</strong>: gives structural support and shape, helps in movement (like a body's bone skeleton).</li>
+            <li><strong>Centrosome</strong>: contains <strong>2 centrioles</strong>, cylindrical, arranged as <strong>9+0</strong> or <strong>9+2</strong>.</li>
+            <li>Involved in cell division. Also called <strong>MTOC</strong> (Microtubule Organizing Center).</li>
+          </ul>
+        </div>
+
+        <div class="slide">
+          <h3>DNA Replication — Summary <span class="tag tag-good">Good to Know</span></h3>
+          <p>The cell copies its DNA before dividing so each new (daughter) cell receives an identical copy of the original DNA.</p>
+        </div>
+      </section>
+
+      <!-- ============ 03 MEMORY HOOKS ============ -->
+      <section class="layer" id="hooks">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(94,234,212,0.08); color:var(--membrane);">💡</div>
+          <div><h2>Smart Memory Hooks — Quick Reference</h2><div class="meta">all hooks collected in one place</div></div>
+        </div>
+        <div class="slide">
+          <ul>
+            <li><strong>Hooke vs Leeuwenhoek</strong>: Hooke found a dead cell in cork in <strong>166<u>5</u></strong>; Leeuwenhoek found a living cell in pond water <strong>9 years later (1674)</strong> — pond water is "alive," cork is "dead wood."</li>
+            <li><strong>Ligase = "glue-ase"</strong> — it glues DNA strands together.</li>
+            <li><strong>Cis is towards nucleus, convex</strong> — think "C for Centre" (nucleus is the centre of the cell).</li>
+            <li><strong>Oxidation → Peroxisome</strong> — any question with "oxidation" in it, your first instinct should be peroxisome.</li>
+            <li><strong>Cytosol = milk in kheer</strong> — the base fluid; organelles are the rice and dry fruits floating in it.</li>
+            <li><strong>Aleuroplast stores protein</strong> — "aleuro" rhymes oddly with nothing, so anchor it as "the odd one out of the three leucoplast types," leaving carbs (amylo-) and fats (elaio-, "oily") as the easy two.</li>
+            <li><strong>Hypertonic shrinks, Hypotonic swells</strong> — "HypER, like a balloon that's been pricked — Energy leaves, it shrinks." "HypO, like blowing it Open and full of air."</li>
+            <li><strong>PMAT</strong> for mitosis phase order: Prophase, Metaphase, Anaphase, Telophase.</li>
+            <li><strong>Only 2 organelles have own DNA + ribosomes</strong>: Mitochondria + Chloroplast — both are the cell's "power generators" (energy / food).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ 04 CONNECTIONS ============ -->
+      <section class="layer" id="connections">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(185,162,255,0.08); color:var(--nucleus);">🔗</div>
+          <div><h2>Concept Connections</h2><div class="meta">never isolated facts</div></div>
+        </div>
+        <div class="slide">
+          <div class="connect-line"><span class="node">Hooke discovers dead cell (1665)</span><span class="arrow">→</span><span class="node">Leeuwenhoek discovers living cell (1674)</span><span class="arrow">→</span><span class="node">Schleiden & Schwann formalise Cell Theory (1838)</span><span class="arrow">→</span><span class="node">Virchow refines it: cells come from cells</span></div>
+        </div>
+        <div class="slide">
+          <div class="connect-line"><span class="node">Nucleolus</span><span class="arrow">→ makes →</span><span class="node">Ribosomes</span><span class="arrow">→ make →</span><span class="node">Proteins</span><span class="arrow">→ stuck to →</span><span class="node">RER (becomes "rough")</span></div>
+        </div>
+        <div class="slide">
+          <div class="connect-line"><span class="node">RER makes hydrolytic enzymes</span><span class="arrow">→</span><span class="node">Golgi body packages them</span><span class="arrow">→</span><span class="node">Lysosome formed</span><span class="arrow">→ if cell fails →</span><span class="node">Bursts → Apoptosis</span></div>
+        </div>
+        <div class="slide">
+          <div class="connect-line"><span class="node">High water conc. inside</span><span class="arrow">→</span><span class="node">Water exits (osmosis)</span><span class="arrow">→</span><span class="node">Cell shrinks</span><span class="arrow">→</span><span class="node">Plasmolysis (Hypertonic)</span></div>
+        </div>
+        <div class="slide">
+          <div class="connect-line"><span class="node">Mitochondria has own DNA</span><span class="arrow">→ similar to →</span><span class="node">Chloroplast has own DNA</span><span class="arrow">→ both →</span><span class="node">Energy-related organelles</span></div>
+        </div>
+        <div class="slide">
+          <div class="connect-line"><span class="node">Chromatin (thread)</span><span class="arrow">→ entangles during division →</span><span class="node">Chromosome</span><span class="arrow">→ made of →</span><span class="node">DNA + Histone protein</span><span class="arrow">→ segment of DNA =</span><span class="node">Gene</span></div>
+        </div>
+      </section>
+
+      <!-- ============ 05 EXAM TRAPS ============ -->
+      <section class="layer" id="traps">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(251,113,133,0.1); color:var(--rose);">⚠</div>
+          <div><h2>Exam Traps</h2><div class="meta">where students lose marks</div></div>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Robert Hooke ≠ Robert Brown</div>
+          <p>Both share the first name "Robert" and both relate to cell discovery. <strong>Hooke</strong> discovered the cell (1665, dead, cork). <strong>Brown</strong> discovered the nucleus (1831). Frederick Miescher is a third, separate name — he discovered the <strong>DNA molecule</strong> (1869). Three different Roberts/Fredericks, three different discoveries — don't merge them.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Cell Wall vs Cell Membrane — most common confusion</div>
+          <p>Exams love asking "which is dead, which is living" or "which is selectively permeable." Remember: <strong>cell membrane is in every cell, always living, selectively permeable</strong>. <strong>Cell wall exists only in plants/bacteria/fungi, is dead, freely permeable.</strong></p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Hypertonic vs Hypotonic — direction reversal trap</div>
+          <p>Students often mix up which way water moves. Always anchor to <strong>water concentration</strong>, not solute, unless the question states solute explicitly. High water inside + low water outside = water leaves = <strong>shrink (hypertonic, plasmolysis)</strong>.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Mitosis vs Meiosis — number trap</div>
+          <p>Mitosis: 1 → <strong>2</strong> daughter cells (diploid). Meiosis: 1 → <strong>4</strong> daughter cells (haploid) via <strong>two</strong> nuclear divisions. A common wrong-option trick swaps "diploid" and "haploid" between the two.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Only 2 organelles with own DNA + ribosomes</div>
+          <p>The trap option usually adds a third organelle (often Golgi or ER) to this list. Only <strong>Mitochondria and Chloroplast</strong> qualify.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Cis face vs Trans face of Golgi</div>
+          <p>Cis = toward nucleus = <strong>convex</strong>. Trans = toward plasma membrane = <strong>concave</strong>. Exams flip these in options.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Chlorophyll absorbs vs reflects</div>
+          <p>Trap: "Chlorophyll absorbs green light, hence plants are green." This is <strong>false</strong>. Chlorophyll <strong>reflects</strong> green (and absorbs red/blue), which is why we see green.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Pigment-colour pairs — easily swapped</div>
+          <p>Red = <strong>lycopene</strong>, Yellow = <strong>lutein</strong>, Purple = <strong>anthocyanin</strong>, Orange = <strong>beta-carotene</strong>. Exams often swap lycopene and anthocyanin, or lutein and beta-carotene, in options.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">DNA vs RNA base difference</div>
+          <p>Only difference tested repeatedly: <strong>Thymine (DNA) is replaced by Uracil (RNA)</strong>. Sugar also differs — deoxyribose (DNA) vs ribose (RNA). Adenine–Guanine–Cytosine pairing rules stay the same.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Autosomes vs Allosomes — count trap</div>
+          <p>Total = 23 pairs. <strong>22 pairs autosomal</strong>, <strong>1 pair sex/allosomal</strong>. A common wrong option says "23 pairs autosomal" or shifts the ratio.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">Diffusion rate across states</div>
+          <p>Rate is <strong>lowest in solids, highest in gases</strong> — examiners sometimes reverse this in assertion-type questions.</p>
+        </div>
+      </section>
+
+      <!-- ============ 06 EXAMINER'S MIND ============ -->
+      <section class="layer" id="examiner">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(251,191,36,0.1); color:var(--amber);">🎯</div>
+          <div><h2>Examiner's Favourite Questions</h2><div class="meta">how this topic gets attacked</div></div>
+        </div>
+
+        <div class="slide amber">
+          <h3>Statement-Based</h3>
+          <ul>
+            <li>"Statement I: Cell wall is selectively permeable. Statement II: Cell membrane is freely permeable." → <strong>Both false</strong>, they're swapped.</li>
+            <li>"Statement I: Mitochondria and Golgi body both possess their own DNA." → <strong>False</strong> — Golgi does not; only Mitochondria & Chloroplast do.</li>
+          </ul>
+        </div>
+
+        <div class="slide amber">
+          <h3>Match the Following</h3>
+          <ul>
+            <li>Scientist ↔ Discovery (Hooke–Cell, Brown–Nucleus, Miescher–DNA molecule, Watson&Crick–Double helix, de Duve–Lysosome, Palade–Ribosome, Golgi–Golgi body, Purkinje–Nucleoplasm).</li>
+            <li>Plastid type ↔ Function (Chloro–Photosynthesis, Leuco–Storage, Chromo–Colour).</li>
+            <li>Pigment ↔ Colour (Lycopene–Red, Lutein–Yellow, Anthocyanin–Purple, Beta-carotene–Orange).</li>
+          </ul>
+        </div>
+
+        <div class="slide amber">
+          <h3>Chronology Questions</h3>
+          <p>Arrange in order: Hooke (1665) → Leeuwenhoek (1674) → Miescher (1869) → Cell Theory by Schleiden-Schwann (1838) ⚠ <em>note this comes before Miescher chronologically but is often listed after in mixed lists</em> → de Duve (1955) → Watson & Crick (1953, before de Duve).</p>
+          <p><strong>Correct order by year:</strong> 1665 (Hooke) → 1674 (Leeuwenhoek) → 1831 (Brown) → 1838 (Schleiden-Schwann) → 1869 (Miescher) → 1953 (Watson-Crick) → 1955 (de Duve).</p>
+        </div>
+
+        <div class="slide amber">
+          <h3>Assertion–Reason</h3>
+          <ul>
+            <li>Assertion: Cell membrane is called selectively permeable. Reason: It allows only certain substances to pass through. → <strong>Both true, reason correctly explains assertion.</strong></li>
+            <li>Assertion: Plant cells have a large permanent vacuole. Reason: It provides turgidity and rigidity to the cell. → <strong>Both true, correctly linked.</strong></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ 07 ACTIVE RECALL ============ -->
+      <section class="layer" id="recall">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(94,234,212,0.08); color:var(--membrane);">❓</div>
+          <div><h2>Active Recall — Tap to Reveal</h2><div class="meta">don't peek before answering in your head</div></div>
+        </div>
+
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">Who discovered the living cell, and where?</div><div class="a">Antony van Leeuwenhoek, in pond water, 1674.</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">What is the energy currency of the cell?</div><div class="a">ATP (Adenosine Triphosphate).</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">Name the two organelles with their own DNA and ribosomes.</div><div class="a">Mitochondria and Chloroplast.</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">Which face of the Golgi body is convex, and which way does it face?</div><div class="a">Cis face — convex, faces the nucleus.</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">Fill in the blank: In RNA, Thymine is replaced by ______.</div><div class="a">Uracil.</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">What happens to a cell in a hypertonic solution?</div><div class="a">It shrinks — this process is called plasmolysis.</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">Reverse question: This enzyme "glues" DNA strands together during replication — name it.</div><div class="a">DNA Ligase.</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">How many pairs of chromosomes does a human have, and what's the autosome/allosome split?</div><div class="a">23 pairs total — 22 autosomal pairs + 1 sex (allosomal) pair.</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">One-liner: What pigment gives carrots their orange colour?</div><div class="a">Beta-carotene.</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">Rapid fire: Cell wall is made of ______ in plants, ______ in bacteria, ______ in fungi.</div><div class="a">Cellulose (plants), Peptidoglycan/peptin (bacteria), Chitin (fungi).</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">What is the correct order of mitotic phases?</div><div class="a">Prophase → Metaphase → Anaphase → Telophase (PMAT).</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">Who gave the Cell Theory, and who later refined it?</div><div class="a">Schleiden & Schwann (1838) gave it; Rudolf Virchow refined it with "Omnis cellula e cellula."</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">What does the centrosome's 9+2 arrangement refer to?</div><div class="a">The cylindrical structure of the two centrioles inside the centrosome.</div></div>
+        <div class="recall-card" onclick="this.classList.toggle('open')"><div class="q">Reverse: This organelle is the cell's "suicidal bag" — name it and its discoverer.</div><div class="a">Lysosome; discovered by Christian de Duve, 1955.</div></div>
+      </section>
+
+      <!-- ============ 08 HIGH YIELD ============ -->
+      <section class="layer" id="highyield">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(251,191,36,0.1); color:var(--amber);">⭐</div>
+          <div><h2>High-Yield Revision Notes</h2><div class="meta">condensed — second pass onward</div></div>
+        </div>
+        <div class="slide amber">
+          <ul>
+            <li><strong>Hooke</strong> (1665, dead, cork, Father of Cytology) → <strong>Leeuwenhoek</strong> (1674, living, pond water, Father of Microbiology).</li>
+            <li><strong>Brown</strong> = nucleus (1831). <strong>Miescher</strong> = DNA molecule (1869). <strong>Watson-Crick</strong> = double helix (1953).</li>
+            <li>Cell Theory: <strong>Schleiden-Schwann</strong> (1838) → refined by <strong>Virchow</strong>.</li>
+            <li>Cell membrane: every cell, living, selectively permeable, 50% protein + 50% lipid.</li>
+            <li>Cell wall: only plants/bacteria/fungi, dead, freely permeable (cellulose/peptidoglycan/chitin).</li>
+            <li>Osmosis: Hypertonic → shrink (plasmolysis); Hypotonic → swell (turgid); Isotonic → no change.</li>
+            <li>Nucleus → Nucleolus (makes ribosomes) → Chromatin (becomes chromosomes during division).</li>
+            <li>23 pairs chromosomes = 22 autosomal + 1 sex pair. DNA + Histone = chromosome. Gene = DNA's functional unit.</li>
+            <li>DNA base pairs: A-T, G-C. RNA: Thymine → Uracil.</li>
+            <li>Replication enzymes: Helicase (unwind) → Primase (start) → Polymerase (build) → Ligase (glue) ; Topoisomerase (anti-tangle).</li>
+            <li>Mitochondria = powerhouse, ATP, own DNA+ribosomes, cristae.</li>
+            <li>Lysosome = suicidal bag, hydrolytic enzymes, RER makes enzymes, de Duve 1955, linked to apoptosis.</li>
+            <li>Golgi = post office; cis (nucleus side, convex) / trans (membrane side, concave).</li>
+            <li>RER (has ribosomes, makes protein) vs SER (no ribosomes, makes lipid + detox).</li>
+            <li>Vacuole: plant = large/permanent/turgidity; animal = small/temporary/storage.</li>
+            <li>Peroxisome = beta oxidation of fatty acids, detox — "oxidation" keyword.</li>
+            <li>Plastids (plants only): Chloroplast (photosynthesis, green, Mg), Leucoplast (amylo-carbs/aleuro-protein/elaio-fat), Chromoplast (colour: lycopene-red, lutein-yellow, anthocyanin-purple, beta-carotene-orange).</li>
+            <li>Prokaryote: no true nucleus, no organelles, has membrane + ribosome. Eukaryote: true nucleus, full organelles.</li>
+            <li>Mitosis: 1→2, diploid, somatic. Meiosis: 1→4, haploid, germ cells, 2 divisions.</li>
+            <li>Cell cycle: G1 (growth) → S (DNA synthesis) → G2 (prep) → M (PMAT).</li>
+            <li>Centrosome: 2 centrioles, 9+0/9+2, cylindrical, MTOC, active in division.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ============ 09 ULTRA FAST ============ -->
+      <section class="layer" id="ultrafast">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(94,234,212,0.08); color:var(--membrane);">⚡</div>
+          <div><h2>Ultra-Fast Revision Sheet</h2><div class="meta">2-minute scan</div></div>
+        </div>
+        <div class="fast-grid">
+          <div class="fast-item"><b>HOOKE</b> 1665 · dead cell · cork · Father of Cytology</div>
+          <div class="fast-item"><b>LEEUWENHOEK</b> 1674 · living cell · pond · Father of Microbiology</div>
+          <div class="fast-item"><b>BROWN</b> nucleus, 1831</div>
+          <div class="fast-item"><b>MIESCHER</b> DNA molecule, 1869</div>
+          <div class="fast-item"><b>WATSON-CRICK</b> double helix, 1953</div>
+          <div class="fast-item"><b>DE DUVE</b> lysosome, 1955</div>
+          <div class="fast-item"><b>SCHLEIDEN-SCHWANN</b> cell theory, 1838</div>
+          <div class="fast-item"><b>VIRCHOW</b> cells from cells</div>
+          <div class="fast-item"><b>MEMBRANE</b> every cell · living · selective · 50:50 protein-lipid</div>
+          <div class="fast-item"><b>WALL</b> plants/bacteria/fungi · dead · freely permeable</div>
+          <div class="fast-item"><b>HYPERTONIC</b> shrink → plasmolysis</div>
+          <div class="fast-item"><b>HYPOTONIC</b> swell → turgid</div>
+          <div class="fast-item"><b>MITOCHONDRIA</b> ATP · cristae · own DNA</div>
+          <div class="fast-item"><b>LYSOSOME</b> suicide bag · hydrolytic enzymes</div>
+          <div class="fast-item"><b>GOLGI</b> post office · cis convex/nucleus · trans concave/membrane</div>
+          <div class="fast-item"><b>RER</b> ribosomes → protein</div>
+          <div class="fast-item"><b>SER</b> no ribosomes → lipid + detox</div>
+          <div class="fast-item"><b>VACUOLE</b> plant big/permanent · animal small/temp</div>
+          <div class="fast-item"><b>PEROXISOME</b> beta oxidation · "oxidation" keyword</div>
+          <div class="fast-item"><b>CHLOROPLAST</b> photosynthesis · Mg · reflects green</div>
+          <div class="fast-item"><b>CHROMOPLAST</b> red-lycopene/yellow-lutein/purple-anthocyanin/orange-beta-carotene</div>
+          <div class="fast-item"><b>PRO vs EU</b> no nucleus/organelles vs true nucleus/organelles</div>
+          <div class="fast-item"><b>MITOSIS</b> 1→2, diploid, somatic</div>
+          <div class="fast-item"><b>MEIOSIS</b> 1→4, haploid, germ, 2 divisions</div>
+          <div class="fast-item"><b>CELL CYCLE</b> G1 → S → G2 → M(PMAT)</div>
+          <div class="fast-item"><b>CHROMOSOMES</b> 23 pairs = 22 autosomal + 1 sex</div>
+        </div>
+      </section>
+
+      <!-- ============ 10 30-SECOND ============ -->
+      <section class="layer" id="thirty">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(251,191,36,0.1); color:var(--amber);">⏱</div>
+          <div><h2>30-Second Revision Sheet</h2><div class="meta">read top to bottom, nothing else</div></div>
+        </div>
+        <div class="sheet-30">
+          <div class="row"><span class="k">Cytology</span><span class="v">study of cells</span></div>
+          <div class="row"><span class="k">Hooke / Leeuwenhoek</span><span class="v">1665 dead / 1674 living</span></div>
+          <div class="row"><span class="k">Cell Theory</span><span class="v">Schleiden-Schwann 1838, refined by Virchow</span></div>
+          <div class="row"><span class="k">Membrane</span><span class="v">living, selective, 50:50 protein-lipid</span></div>
+          <div class="row"><span class="k">Wall</span><span class="v">dead, plants/bacteria/fungi only</span></div>
+          <div class="row"><span class="k">Hyper/Hypo</span><span class="v">shrink/swell</span></div>
+          <div class="row"><span class="k">Nucleus</span><span class="v">brain, Robert Brown 1831</span></div>
+          <div class="row"><span class="k">DNA</span><span class="v">Miescher 1869, Watson-Crick helix 1953</span></div>
+          <div class="row"><span class="k">A-T, G-C</span><span class="v">RNA: T→U</span></div>
+          <div class="row"><span class="k">Mitochondria</span><span class="v">ATP, own DNA, cristae</span></div>
+          <div class="row"><span class="k">Lysosome</span><span class="v">de Duve 1955, suicide bag</span></div>
+          <div class="row"><span class="k">Golgi</span><span class="v">post office, cis convex/nucleus</span></div>
+          <div class="row"><span class="k">Plastids</span><span class="v">plant only, chloro/leuco/chromo</span></div>
+          <div class="row"><span class="k">Pro vs Eu</span><span class="v">no nucleus vs true nucleus</span></div>
+          <div class="row"><span class="k">Mitosis/Meiosis</span><span class="v">2 diploid / 4 haploid</span></div>
+          <div class="row"><span class="k">Chromosomes</span><span class="v">23 pairs, 22+1</span></div>
+        </div>
+      </section>
+
+      <!-- ============ 11 LAST NIGHT ============ -->
+      <section class="layer" id="lastnight">
+        <div class="layer-head">
+          <div class="icon" style="background:rgba(251,113,133,0.1); color:var(--rose);">🌙</div>
+          <div><h2>Last-Night-Before-Exam Sheet</h2><div class="meta">only the traps that bite</div></div>
+        </div>
+        <div class="last-night">
+          <h3>Only check these — you already know the rest</h3>
+          <ul>
+            <li><strong>Cell wall is dead</strong>, cell membrane is living — don't swap.</li>
+            <li><strong>Hypertonic = shrinks</strong> (water leaves), <strong>Hypotonic = swells</strong> (water enters).</li>
+            <li>Only <strong>Mitochondria + Chloroplast</strong> have their own DNA and ribosomes — no third option.</li>
+            <li><strong>Cis face = convex, faces nucleus</strong>. Trans = concave, faces membrane.</li>
+            <li>Chlorophyll <strong>reflects</strong> green, does not absorb it.</li>
+            <li>23 pairs = <strong>22 autosomal + 1 sex pair</strong>, not the other way round.</li>
+            <li>RNA has <strong>Uracil instead of Thymine</strong> — everything else pairs the same.</li>
+            <li>Mitosis → <strong>2</strong> diploid cells. Meiosis → <strong>4</strong> haploid cells.</li>
+            <li>Pigments: <strong>Red-lycopene, Yellow-lutein, Purple-anthocyanin, Orange-beta-carotene.</strong></li>
+            <li>Mitotic order: <strong>P-M-A-T</strong> — Prophase, Metaphase, Anaphase, Telophase.</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div class="fab-top" id="fabTop">↑</div>
+
+<script>
+// nav active state + smooth scroll
+const links = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('section.layer');
+const sidebar = document.getElementById('sidebar');
+const menuToggle = document.getElementById('menuToggle');
+const overlay = document.getElementById('overlay');
+
+links.forEach(link => {
+  link.addEventListener('click', () => {
+    const target = document.getElementById(link.dataset.target);
+    if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    if(window.innerWidth <= 860){ sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+  });
+});
+
+function onScroll(){
+  let current = sections[0];
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if(rect.top <= 140) current = sec;
+  });
+  links.forEach(l => l.classList.toggle('active', l.dataset.target === current.id));
+
+  const fab = document.getElementById('fabTop');
+  fab.classList.toggle('show', window.scrollY > 600);
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+
+document.getElementById('fabTop').addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+menuToggle.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+});
+</script>
+
+</body>
+</html>
