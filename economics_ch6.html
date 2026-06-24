@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monetary Policy — The Vault Room | SSC CGL Revision System</title>
+<style>
+:root{
+  --ink:#0b0f17;
+  --ink-2:#10151f;
+  --ink-3:#161d2b;
+  --ledger-line:#212a3b;
+  --brass:#d4a548;
+  --brass-soft:#9c8050;
+  --cyan:#5fd0c9;
+  --cyan-dim:#2f6f6a;
+  --red-flag:#e2625a;
+  --green-flag:#6fbf73;
+  --paper:#e9e6db;
+  --paper-dim:#a9a59a;
+  --paper-faint:#6b6a63;
+  --serif:'Source Serif 4','Iowan Old Style','Georgia',serif;
+  --sans:'Inter','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono','SF Mono',monospace;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(ellipse 1200px 600px at 50% -10%, rgba(212,165,72,0.07), transparent 60%),
+    var(--ink);
+  color:var(--paper);
+  font-family:var(--sans);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== Texture: faint ledger grid on ink ===== */
+body::before{
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size:48px 48px;
+}
+
+.wrap{position:relative; z-index:1; max-width:880px; margin:0 auto; padding:0 24px 120px;}
+
+/* ===== HERO ===== */
+.hero{
+  padding:64px 0 40px;
+  border-bottom:1px solid var(--ledger-line);
+  position:relative;
+}
+.hero-eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--brass);
+  margin-bottom:18px;
+  display:flex; align-items:center; gap:10px;
+}
+.hero-eyebrow::before{content:'§'; color:var(--cyan); font-size:14px;}
+.hero h1{
+  font-family:var(--serif);
+  font-size:clamp(38px,7vw,58px);
+  font-weight:600;
+  line-height:1.05;
+  margin:0 0 14px;
+  color:var(--paper);
+  letter-spacing:-0.01em;
+}
+.hero h1 em{
+  font-style:normal;
+  color:var(--brass);
+}
+.hero p.lede{
+  font-size:17px;
+  color:var(--paper-dim);
+  max-width:560px;
+  margin:0 0 28px;
+}
+.hero-tank{
+  display:flex; justify-content:center; margin:8px 0 0;
+}
+
+/* ===== STICKY KNOB LEGEND ===== */
+.legend-bar{
+  position:sticky; top:0; z-index:50;
+  background:rgba(11,15,23,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--ledger-line);
+  padding:10px 0;
+  margin:0 -24px 0;
+  overflow-x:auto;
+  white-space:nowrap;
+  scrollbar-width:none;
+}
+.legend-bar::-webkit-scrollbar{display:none;}
+.legend-inner{
+  max-width:880px; margin:0 auto; padding:0 24px;
+  display:flex; gap:8px; align-items:center;
+}
+.legend-label{
+  font-family:var(--mono); font-size:10.5px; color:var(--paper-faint);
+  text-transform:uppercase; letter-spacing:0.08em; margin-right:4px; flex-shrink:0;
+}
+.nav-chip{
+  font-family:var(--mono); font-size:11.5px;
+  background:var(--ink-3); border:1px solid var(--ledger-line);
+  color:var(--paper-dim); padding:5px 11px; border-radius:20px;
+  text-decoration:none; flex-shrink:0; transition:all .15s ease;
+}
+.nav-chip:hover{border-color:var(--brass); color:var(--brass);}
+
+/* ===== SECTION SHELL ===== */
+section.block{ padding:56px 0; border-bottom:1px solid var(--ledger-line); }
+section.block:last-child{border-bottom:none;}
+
+.block-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:28px; }
+.block-num{
+  font-family:var(--mono); font-size:13px; color:var(--cyan-dim);
+  border:1px solid var(--cyan-dim); border-radius:4px; padding:2px 7px;
+  flex-shrink:0;
+}
+.block-head h2{
+  font-family:var(--serif); font-weight:600; font-size:28px; margin:0;
+  color:var(--paper); letter-spacing:-0.01em;
+}
+.block-sub{ color:var(--paper-faint); font-size:14.5px; margin:-18px 0 26px 0; max-width:560px;}
+
+/* ===== TAGS ===== */
+.tag{
+  display:inline-flex; align-items:center; gap:5px;
+  font-family:var(--mono); font-size:11px; font-weight:600;
+  padding:2px 8px; border-radius:4px; letter-spacing:0.02em;
+  margin-right:6px; vertical-align:middle;
+}
+.tag-must{ background:rgba(226,98,90,0.14); color:#f0938c; border:1px solid rgba(226,98,90,0.35);}
+.tag-imp{ background:rgba(212,165,72,0.14); color:var(--brass); border:1px solid rgba(212,165,72,0.35);}
+.tag-good{ background:rgba(95,208,201,0.12); color:var(--cyan); border:1px solid rgba(95,208,201,0.3);}
+
+/* ===== PROSE ===== */
+p{ margin:0 0 14px; color:var(--paper); font-size:15.5px;}
+.dim{color:var(--paper-dim);}
+strong{color:var(--brass); font-weight:600;}
+.cyan-strong{color:var(--cyan); font-weight:600;}
+ul,ol{ margin:0 0 16px; padding-left:22px; }
+li{ margin-bottom:8px; font-size:15.5px; }
+a{color:var(--cyan);}
+
+/* ===== CARDS ===== */
+.card{
+  background:var(--ink-2); border:1px solid var(--ledger-line);
+  border-radius:10px; padding:20px 22px; margin-bottom:18px;
+}
+.card-title{
+  font-family:var(--mono); font-size:12px; text-transform:uppercase;
+  letter-spacing:0.08em; color:var(--brass-soft); margin-bottom:10px;
+  display:flex; align-items:center; gap:8px;
+}
+
+/* ===== MEMORY PALACE ===== */
+.palace{
+  background:linear-gradient(160deg, var(--ink-3), var(--ink-2));
+  border:1px solid var(--ledger-line);
+  border-left:3px solid var(--brass);
+  border-radius:10px;
+  padding:26px 26px 22px;
+  margin-bottom:20px;
+}
+.palace-room{
+  padding:14px 0; border-bottom:1px dashed var(--ledger-line);
+}
+.palace-room:last-child{border-bottom:none; padding-bottom:0;}
+.palace-room-title{
+  font-family:var(--serif); font-size:17px; color:var(--brass); margin-bottom:6px; font-weight:600;
+}
+.palace-room p{font-size:14.5px; color:var(--paper-dim); margin-bottom:0;}
+
+/* ===== KNOB DIAGRAM ===== */
+.knob-board{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px; margin:20px 0;
+}
+.knob-card{
+  background:var(--ink-2); border:1px solid var(--ledger-line); border-radius:10px;
+  padding:16px 18px; position:relative; overflow:hidden;
+}
+.knob-card.up{border-top:2px solid var(--red-flag);}
+.knob-card.down{border-top:2px solid var(--green-flag);}
+.knob-name{font-family:var(--serif); font-weight:600; font-size:15.5px; color:var(--paper); margin-bottom:4px;}
+.knob-dir{
+  font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.04em;
+  display:inline-flex; align-items:center; gap:5px; margin-bottom:8px;
+}
+.knob-dir.up{color:var(--red-flag);}
+.knob-dir.down{color:var(--green-flag);}
+.knob-desc{font-size:13.2px; color:var(--paper-dim); margin:0;}
+
+/* ===== TABLE ===== */
+.tbl-wrap{overflow-x:auto; margin:18px 0;}
+table{ width:100%; border-collapse:collapse; font-size:14.5px;}
+th{
+  text-align:left; font-family:var(--mono); font-size:11px; text-transform:uppercase;
+  letter-spacing:0.05em; color:var(--brass-soft); border-bottom:1px solid var(--brass-soft);
+  padding:8px 12px;
+}
+td{ padding:9px 12px; border-bottom:1px solid var(--ledger-line); color:var(--paper); vertical-align:top;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+td.num{font-family:var(--mono); color:var(--cyan);}
+
+/* ===== TRAPS ===== */
+.trap{
+  background:rgba(226,98,90,0.06); border:1px solid rgba(226,98,90,0.28);
+  border-radius:10px; padding:16px 20px; margin-bottom:14px;
+  position:relative;
+}
+.trap-head{
+  font-family:var(--mono); font-size:12px; color:var(--red-flag); text-transform:uppercase;
+  letter-spacing:0.06em; margin-bottom:8px; display:flex; align-items:center; gap:6px;
+}
+.trap p{margin-bottom:6px; font-size:14.5px;}
+.trap .vs{color:var(--paper-faint); font-style:italic;}
+
+/* ===== EXAMINER Q ===== */
+.examq{
+  background:var(--ink-2); border-left:3px solid var(--cyan-dim);
+  padding:14px 18px; border-radius:0 8px 8px 0; margin-bottom:12px;
+}
+.examq-type{
+  font-family:var(--mono); font-size:11px; color:var(--cyan); text-transform:uppercase;
+  letter-spacing:0.06em; margin-bottom:6px;
+}
+.examq p{margin-bottom:0; font-size:14.5px;}
+
+/* ===== FLASHCARD / RECALL ===== */
+.flash{
+  background:var(--ink-2); border:1px solid var(--ledger-line); border-radius:10px;
+  margin-bottom:12px; overflow:hidden; cursor:pointer; transition:border-color .15s;
+}
+.flash:hover{border-color:var(--brass-soft);}
+.flash-q{
+  padding:15px 20px; font-size:14.8px; color:var(--paper);
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+}
+.flash-q::after{
+  content:'reveal'; font-family:var(--mono); font-size:10.5px; color:var(--paper-faint);
+  text-transform:uppercase; flex-shrink:0; letter-spacing:.05em;
+}
+.flash.open .flash-q::after{content:'hide';}
+.flash-a{
+  max-height:0; overflow:hidden; transition:max-height .25s ease;
+  background:var(--ink-3);
+}
+.flash.open .flash-a{max-height:400px;}
+.flash-a-inner{ padding:14px 20px 16px; font-size:14.5px; color:var(--cyan); border-top:1px solid var(--ledger-line);}
+
+/* ===== FILL BLANK ===== */
+.blank{
+  border-bottom:2px dotted var(--brass-soft); color:transparent; padding:0 2px;
+  cursor:pointer; transition:color .15s; user-select:none;
+}
+.blank.revealed{color:var(--brass); border-bottom-style:solid;}
+
+/* ===== COLLAPSIBLE LAYERS ===== */
+.layer{
+  border:1px solid var(--ledger-line); border-radius:10px; margin-bottom:14px;
+  background:var(--ink-2); overflow:hidden;
+}
+.layer-head{
+  padding:16px 20px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+  gap:12px;
+}
+.layer-head-left{display:flex; align-items:center; gap:12px;}
+.layer-num{
+  font-family:var(--mono); font-size:11px; color:var(--ink); background:var(--brass);
+  width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; font-weight:700;
+}
+.layer-title{font-family:var(--serif); font-size:17px; font-weight:600; color:var(--paper);}
+.layer-meta{font-family:var(--mono); font-size:11px; color:var(--paper-faint); flex-shrink:0;}
+.layer-chevron{color:var(--paper-faint); transition:transform .2s; flex-shrink:0;}
+.layer.open .layer-chevron{transform:rotate(180deg);}
+.layer-body{ max-height:0; overflow:hidden; transition:max-height .3s ease;}
+.layer.open .layer-body{max-height:none;}
+.layer-body-inner{ padding:0 20px 22px; border-top:1px solid var(--ledger-line); padding-top:18px;}
+
+/* ===== LAST NIGHT SHEET ===== */
+.lastnight{
+  background:linear-gradient(160deg, rgba(212,165,72,0.08), var(--ink-2));
+  border:1px solid var(--brass-soft);
+  border-radius:12px; padding:24px;
+}
+.lastnight ul{padding-left:18px;}
+.lastnight li{font-size:15px; margin-bottom:10px; color:var(--paper);}
+
+/* ===== TOC ===== */
+.toc{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:8px; margin-top:24px;}
+.toc a{
+  display:block; padding:10px 14px; background:var(--ink-2); border:1px solid var(--ledger-line);
+  border-radius:8px; color:var(--paper-dim); text-decoration:none; font-size:13.5px;
+  transition:all .15s;
+}
+.toc a:hover{border-color:var(--brass); color:var(--paper);}
+.toc-n{color:var(--brass-soft); font-family:var(--mono); margin-right:6px;}
+
+/* ===== FOOTER ===== */
+footer{ text-align:center; padding:50px 0 20px; color:var(--paper-faint); font-size:12.5px; font-family:var(--mono);}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:600px){
+  .hero{padding:44px 0 30px;}
+  .block-head h2{font-size:23px;}
+  section.block{padding:40px 0;}
+  .knob-board{grid-template-columns:1fr 1fr;}
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="hero-eyebrow">SSC CGL · Economy · Revision System</div>
+    <h1>The Vault Room:<br><em>Monetary Policy</em></h1>
+    <p class="lede">How RBI turns the knobs on a water tank called the Indian economy — every rate, ratio, and rule, built to survive 100 revisions and one nervous exam morning.</p>
+    <div class="hero-tank" id="tankSvgHolder"></div>
+  </header>
+
+  <!-- ============ STICKY LEGEND ============ -->
+  <nav class="legend-bar">
+    <div class="legend-inner">
+      <span class="legend-label">Jump</span>
+      <a class="nav-chip" href="#palace">Memory Palace</a>
+      <a class="nav-chip" href="#notes">Full Notes</a>
+      <a class="nav-chip" href="#hooks">Hooks</a>
+      <a class="nav-chip" href="#connections">Connections</a>
+      <a class="nav-chip" href="#traps">Traps</a>
+      <a class="nav-chip" href="#examiner">Examiner</a>
+      <a class="nav-chip" href="#recall">Self-Test</a>
+      <a class="nav-chip" href="#layers">Fast Layers</a>
+    </div>
+  </nav>
+
+  <!-- ============ BIG PICTURE ============ -->
+  <section class="block" id="bigpicture">
+    <div class="block-head"><span class="block-num">00</span><h2>The Big Picture</h2></div>
+    <p>Strip away every term and one sentence survives: <strong>RBI watches how much money is sloshing around the economy, and turns a set of knobs to let more in or shut more out.</strong></p>
+    <p class="dim">Too much money chasing the same goods → <strong>inflation</strong> (prices rise). Too little money moving → <strong>deflation</strong> (prices fall). RBI's whole toolkit — bank rate, repo, reverse repo, CRR, SLR, MSF, OMOs, and the qualitative tools — exists to push money supply up or down until it's just enough. <span class="cyan-strong">Inflation isn't fully evil</span> — a little of it is salt in the sabzi. The danger is too much, or too little.</p>
+    <p>Everything downstream in this chapter is really one decision tree: <em>is RBI fighting inflation, or fighting deflation</em> — and once you know that, every single rate's direction follows automatically.</p>
+  </section>
+
+  <!-- ============ MEMORY PALACE ============ -->
+  <section class="block" id="palace">
+    <div class="block-head"><span class="block-num">01</span><h2>🧠 Chapter Memory Palace — The Vault Room</h2></div>
+    <p class="block-sub">Walk through this room in your head during the exam. Every object is a tool. Every direction it turns is the answer.</p>
+
+    <div class="palace">
+      <div class="palace-room">
+        <div class="palace-room-title">🏛️ You walk into a stone vault. In the centre stands a giant water tank.</div>
+        <p>The tank is the Indian economy. Water is money. The tank has a tap feeding it (money entering people's hands) and a drain at the bottom (money leaving circulation). When the tank is <strong>overfilling</strong>, that's inflation — too much liquidity. When it's <strong>running dry</strong>, that's deflation.</p>
+      </div>
+      <div class="palace-room">
+        <div class="palace-room-title">🚰 On the wall: a row of brass knobs, each labelled with a rate.</div>
+        <p><strong>Bank Rate</strong> is the oldest, rustiest knob — no collateral, no negotiation, used for long-term borrowing by banks straight from RBI. <strong>Repo Rate</strong> sits next to it, shinier, used daily — short-term borrowing, against collateral. <strong>Reverse Repo</strong> is the mirror knob right beside it — this is where banks park money <em>with</em> RBI and earn interest. Turn any knob clockwise (↑) and the tank's tap narrows — money gets costlier to draw out. Turn anti-clockwise (↓) and the tap widens.</p>
+      </div>
+      <div class="palace-room">
+        <div class="palace-room-title">🕵️ Master Gogo, RBI's inspector, walks bank to bank with a clipboard.</div>
+        <p>He checks: is this bank holding its CRR (cash sitting idle, untouchable) and SLR (gold/cash/government securities) properly? If a bank is short and panics at night, it can knock on a side door marked <strong>MSF — Marginal Standing Facility</strong>: an overnight loan, pledged against its own SLR quota, used <em>only</em> to avoid a CRR/SLR default penalty.</p>
+      </div>
+      <div class="palace-room">
+        <div class="palace-room-title">🏦 Two buckets sit on a shelf: one says CRR, one says SLR.</div>
+        <p>The CRR bucket only accepts <strong>pure cash</strong> — deposited with RBI, earning zero return, untouchable. The SLR bucket accepts <strong>cash, gold, or government securities</strong> — kept by the bank itself, and it can at least earn something on the gold/G-Sec portion. Both buckets are filled from the same tap: <strong>NDTL — Net Demand and Time Liability</strong> (all the public's deposits, net of interbank stuff).</p>
+      </div>
+      <div class="palace-room">
+        <div class="palace-room-title">📜 In the corner, a market stall trading paper — Open Market Operations.</div>
+        <p>RBI sells government securities to mop up cash from the public (fighting inflation) or buys them back to inject cash (fighting deflation). Short-tenure paper (under 1 year) on this stall is called a <strong>Treasury Bill</strong> — and the stall only stocks three sizes: 91-day, 182-day, 364-day.</p>
+      </div>
+      <div class="palace-room">
+        <div class="palace-room-title">⚖️ A set of scales near the exit: qualitative tools, not numeric knobs.</div>
+        <p><strong>Rationing of credit</strong> (lend more to this sector, less to that one), <strong>change in margin requirement</strong> (how much collateral you must pledge per rupee borrowed), <strong>regulation of consumer credit</strong> (raise the down-payment on EMIs), and <strong>moral suasion</strong> (RBI simply requests banks to behave — no force, just a stern letter).</p>
+      </div>
+      <div class="palace-room">
+        <div class="palace-room-title">🏢 Outside the vault: the Finance Ministry building — Fiscal Policy.</div>
+        <p>RBI's vault handles <em>monetary</em> policy. Next door, the government handles <em>fiscal</em> policy — taxes, subsidies, and MSP. Same goal (control inflation/deflation), different building, different tools.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPLETE NOTES ============ -->
+  <section class="block" id="notes">
+    <div class="block-head"><span class="block-num">02</span><h2>Complete Revision Notes</h2></div>
+
+    <div class="card">
+      <div class="card-title">2.1 — What Is Monetary Policy</div>
+      <p><span class="tag tag-must">MUST KNOW</span>Monetary policy is the set of actions <strong>RBI</strong> takes to control the <strong>money supply</strong> in the economy, mainly to manage <strong>inflation</strong> and <strong>deflation</strong>.</p>
+      <p>RBI is the <strong>Bank of Banks</strong> and the <strong>Lender of Last Resort</strong> — it regulates banks and lends to them when no one else will.</p>
+      <p class="dim"><strong>Inflation</strong> = prices rising (too much money chasing goods). <strong>Deflation</strong> = prices falling (too little money in circulation). A controlled, mild inflation is healthy — it's the excess of either extreme that RBI corrects.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.2 — Demand-Pull vs Cost-Push Inflation</div>
+      <ul>
+        <li><strong>Demand-pull inflation</strong> — comes from the demand side: more money in people's hands (or more money printed) chasing the same amount of goods.</li>
+        <li><strong>Cost-push inflation</strong> — also called <strong>supply-side inflation</strong>: the cost of production itself rises, pushing prices up.</li>
+      </ul>
+      <p class="dim">Why doesn't the government just print money for everyone? Because the quantity of goods stays fixed — flooding the system with cash without matching output causes <strong>hyperinflation</strong>, as seen in <strong>Venezuela</strong> and <strong>Sri Lanka</strong>.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.3 — Bank Balance Sheet: Asset vs Liability</div>
+      <p>A bank's balance sheet has two sides:</p>
+      <ul>
+        <li><strong>Liability</strong> — money the bank owes back. Your <strong>deposit</strong> is a liability for the bank (it must repay you).</li>
+        <li><strong>Asset</strong> — money the bank will receive / that earns it returns. A <strong>loan</strong> given out is an asset for the bank (it earns interest on it).</li>
+      </ul>
+      <p><span class="tag tag-must">MUST KNOW</span><strong>Spread</strong> = the bank's profit margin = (interest charged on loans) − (interest paid on deposits). Example from the lecture: bank pays you 4% on deposits, charges the borrower 12% on loans → spread ≈ the difference, and that's the bank's earning.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.4 — Demand Deposits vs Time Deposits</div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Feature</th><th>Demand Deposit</th><th>Time / Term Deposit</th></tr>
+          <tr><td>Withdrawal</td><td>Anytime, on demand</td><td>Locked for a fixed period</td></tr>
+          <tr><td>Examples</td><td>Savings / current account, ATM withdrawal</td><td>FD (Fixed Deposit), RD (Recurring Deposit)</td></tr>
+          <tr><td>Early withdrawal</td><td>No penalty — that's the point</td><td>Penalty / compensation charged</td></tr>
+          <tr><td>Liquidity</td><td>High</td><td>Lower</td></tr>
+        </table>
+      </div>
+      <p><span class="tag tag-imp">IMPORTANT</span><strong>Liquidity ranking</strong> (most → least liquid): <strong>Cash &gt; Gold &gt; Time Deposit/FD</strong>. Cash converts instantly; gold needs a shop visit; FD needs the bank's cooperation (or a penalty).</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.5 — Why Banks Must Hold Reserves: The Default Risk</div>
+      <p>A bank takes your deposit (liability) and lends it out (asset becomes the borrower's loan). If everyone demands their money back at once and the bank has lent it all out, it cannot pay — a <strong>bank run / default</strong>. RBI mandates reserves precisely to prevent this systemic collapse.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.6 — CRR and SLR</div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Term</th><th>Full Form</th><th>Held As</th><th>Held Where</th><th>Earns Return?</th></tr>
+          <tr><td><strong>CRR</strong></td><td>Cash Reserve Ratio</td><td>Cash only</td><td>With RBI</td><td>No</td></tr>
+          <tr><td><strong>SLR</strong></td><td>Statutory Liquidity Ratio</td><td>Cash, Gold, or G-Sec</td><td>With the bank itself</td><td>Yes (on gold/G-Sec portion)</td></tr>
+        </table>
+      </div>
+      <p>Both are mandated as a percentage of <strong>NDTL — Net Demand and Time Liability</strong> (the "net" excludes routine interbank/daily transaction amounts). Current CRR referenced in the lecture: <strong>4.5%</strong>. <span class="dim">(Always verify the latest rate before the exam — these change with each Monetary Policy Committee meeting.)</span></p>
+      <p><span class="tag tag-imp">IMPORTANT</span> SLR gives banks <strong>relaxation</strong> over CRR — since CRR earns nothing, SLR at least lets the bank earn something via gold/G-Sec while still satisfying the reserve requirement.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.7 — The Monetary Policy Committee (MPC)</div>
+      <p><span class="tag tag-must">MUST KNOW</span> <strong>6 members</strong> total — <strong>3 from RBI, 3 from the Government</strong>. RBI's <strong>Governor</strong> is one of the three from the RBI side (also Deputy Governor + one executive director are part of the RBI panel structure).</p>
+      <ul>
+        <li>Current Governor referenced in lecture: <strong>Shaktikanta Das</strong> <span class="dim">(verify the sitting Governor before your exam — this rotates).</span></li>
+        <li>First RBI Governor: <strong>Osborne Smith</strong></li>
+        <li>First <em>Indian</em> RBI Governor: <strong>C.D. Deshmukh</strong></li>
+      </ul>
+      <p>The MPC decides whether and how much to move each policy rate, based on current inflation/deflation readings.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.8 — Money Multiplier</div>
+      <p><span class="tag tag-must">MUST KNOW</span> <strong>Money Multiplier = Maximum new money created from a fraction of reserves.</strong> If ₹100 deposited becomes ₹150 in circulation through repeated lending, money has multiplied 1.5×.</p>
+      <p><strong>Money Multiplier is inversely proportional to CRR.</strong> Higher CRR → less money available for banks to lend → lower multiplier. At <strong>CRR = 100%</strong>, nothing can be lent → multiplier = <strong>0</strong>. At <strong>CRR = 0%</strong>, maximum lending capacity → multiplier is at its highest.</p>
+      <p class="dim">RBI never sets CRR to either extreme — 100% kills the banking business model; 0% removes the safety cushion that prevents a systemic collapse.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.9 — Quantitative Tools: Bank Rate, Repo, Reverse Repo, MSF</div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Tool</th><th>Term</th><th>Collateral?</th><th>Who borrows from whom</th><th>To fight inflation</th></tr>
+          <tr><td><strong>Bank Rate</strong></td><td>Long-term</td><td>No collateral needed</td><td>Scheduled commercial banks ← RBI</td><td class="num">↑ Increase</td></tr>
+          <tr><td><strong>Repo Rate</strong></td><td>Short-term</td><td>Collateral required</td><td>Banks borrow from RBI (repurchase agreement)</td><td class="num">↑ Increase</td></tr>
+          <tr><td><strong>Reverse Repo Rate</strong></td><td>Short-term</td><td>—</td><td>RBI borrows from banks (banks park surplus funds)</td><td class="num">↑ Increase</td></tr>
+          <tr><td><strong>MSF</strong></td><td>Overnight</td><td>Pledged against bank's own SLR quota</td><td>Banks ← RBI, emergency only (to avoid CRR/SLR penalty)</td><td class="num">↑ Increase</td></tr>
+        </table>
+      </div>
+      <p><span class="tag tag-must">MUST KNOW</span> Repo + Reverse Repo together are called <strong>LAF — Liquidity Adjustment Facility</strong>. "Repo" = <strong>Repurchase Agreement / Repurchase Obligation</strong>.</p>
+      <p><strong>Why does Reverse Repo also rise (not fall) when fighting inflation?</strong> Because raising reverse repo means RBI pays banks <em>more</em> interest to park their surplus money with RBI instead of lending it out to the public. More money parked with RBI = less money circulating = inflation cools. <span class="cyan-strong">All four quantitative tools move in the SAME direction together.</span></p>
+      <p><strong>MSF — Marginal Standing Facility:</strong> an overnight emergency loan banks use when they are short on cash and at risk of failing to maintain CRR/SLR (which would attract a penalty). Collateral = the bank's own SLR-eligible government securities, pledged.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.10 — Tight vs Easy Monetary Policy</div>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Name(s)</th><th>What happens</th><th>Used when</th></tr>
+          <tr><td><strong>Tight / Dear / Contractionary / Hawkish</strong></td><td>All rates ↑ (Bank Rate, Repo, Reverse Repo, MSF, CRR, SLR)</td><td>Inflation</td></tr>
+          <tr><td><strong>Easy / Dove / Expansionary</strong></td><td>All rates ↓</td><td>Deflation</td></tr>
+        </table>
+      </div>
+      <p class="dim">"Expansionary" = expanding the money supply into more people's hands. "Contractionary" = contracting / withdrawing money from circulation.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.11 — Open Market Operations (OMO) & Treasury Bills</div>
+      <p><span class="tag tag-must">MUST KNOW</span> OMO = RBI buying or selling <strong>government securities</strong> in the open market to control liquidity.</p>
+      <ul>
+        <li><strong>To fight inflation</strong> (withdraw money from public): RBI <strong>sells</strong> government securities → public hands over cash, receives securities → cash withdrawn from circulation.</li>
+        <li><strong>To fight deflation</strong> (inject money): RBI <strong>buys</strong> government securities → public hands over securities, receives cash → cash injected into circulation.</li>
+      </ul>
+      <p>This trade where ownership changes outright is called an <strong>outright purchase/sale</strong>.</p>
+      <p><strong>Treasury Bills (T-Bills):</strong> Government securities with <strong>tenure under 1 year</strong>. Issued in exactly <strong>three tenors: 91 days, 182 days, 364 days.</strong></p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.12 — Qualitative (Selective) Tools</div>
+      <p class="dim">Qualitative tools don't change a numeric rate uniformly — they direct credit selectively toward or away from specific sectors/purposes.</p>
+      <ul>
+        <li><strong>Rationing of Credit</strong> — RBI directs banks to lend differently to different sectors (e.g., tighten lending to industry while leaving agriculture untouched, if inflation is sector-specific).</li>
+        <li><strong>Change in Margin Requirement</strong> — changes how much collateral value you must pledge per rupee borrowed. To curb inflation, RBI raises the required margin (e.g., pledge ₹5 lakh worth of asset to get a ₹1 lakh loan instead of ₹1.25 lakh) — fewer people can then qualify for loans.</li>
+        <li><strong>Regulation of Consumer Credit</strong> — changes EMI/down-payment rules. Raising the mandatory down payment for big-ticket purchases (car, bike) reduces how many people can afford to buy on credit.</li>
+        <li><strong>Moral Suasion</strong> — RBI simply <em>persuades</em> banks (no legal force) to raise or lower lending, increase or decrease rates, as the situation demands.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.13 — Currency Deposit Ratio (CDR)</div>
+      <p><strong>CDR = Currency held by the public (cash) ÷ Deposits held in banks.</strong></p>
+      <p>During the <strong>festive season</strong>, people withdraw and spend more cash, saving less in deposits → <strong>CDR rises</strong> in festive season.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.14 — NBFCs: What Makes Them Different</div>
+      <p><strong>NBFCs (Non-Banking Financial Companies)</strong> do <strong>not</strong> have to maintain CRR and SLR, and they <strong>cannot accept demand deposits</strong> — both are exclusively banking-sector obligations/privileges.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.15 — Fiscal Policy (The Government's Toolkit, Not RBI's)</div>
+      <p><span class="tag tag-must">MUST KNOW</span> <strong>Monetary policy = RBI's tools. Fiscal policy = the Government's tools</strong> — both aim at the same target (controlling inflation/deflation) using different levers: taxation, subsidy, and MSP.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>Lever</th><th>To fight Inflation</th><th>To fight Deflation</th></tr>
+          <tr><td>Tax rate</td><td class="num">↑ Increase</td><td class="num">↓ Decrease</td></tr>
+          <tr><td>Subsidy</td><td class="num">↓ Decrease</td><td class="num">↑ Increase</td></tr>
+          <tr><td>MSP (Minimum Support Price)</td><td class="num">↓ Decrease / hold</td><td class="num">↑ Increase</td></tr>
+        </table>
+      </div>
+      <p class="dim">Logic: higher tax → less <strong>personal disposable income</strong> → less spending → less money circulating → inflation cools. Higher subsidy/MSP → more money directly in people's hands → fights deflation.</p>
+      <p><strong>MSP</strong> is announced by the government on recommendation of <strong>CACP — Commission for Agricultural Costs and Prices</strong>, which was constituted at the time of the <strong>Third Five-Year Plan</strong>.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2.16 — Paper Tax vs Non-Paper Tax (Exam-asked fact)</div>
+      <p><span class="tag tag-imp">IMPORTANT — recently asked in SSC JE</span></p>
+      <ul>
+        <li><strong>Paper Taxes</strong> (direct, document/return-based): <strong>Wealth Tax</strong> (abolished, none collected since 2016), <strong>Gift Tax</strong>, <strong>Income Tax</strong>.</li>
+        <li><strong>Not Paper Taxes</strong> (indirect, transaction-based, no return filed by the taxed individual in the same sense): <strong>Excise Duty</strong>, <strong>Customs Duty</strong>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ SMART MEMORY HOOKS ============ -->
+  <section class="block" id="hooks">
+    <div class="block-head"><span class="block-num">03</span><h2>Smart Memory Hooks</h2></div>
+
+    <div class="card">
+      <div class="card-title">🧂 The Salt Hook — Inflation</div>
+      <p>A little inflation is salt in the sabzi. None at all → tasteless (deflation, stagnant economy). Too much → inedible (hyperinflation, Venezuela/Sri Lanka style). You season to taste — that's exactly what MPC does every meeting.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🕵️ Master Gogo Hook — CRR/SLR Enforcement & MSF</div>
+      <p>Picture an inspector named <strong>Master Gogo</strong> visiting every bank with a clipboard, silently checking reserve compliance. If a bank's short, it doesn't panic — it slips through a side door (MSF) for one overnight loan, using its own SLR securities as the key. This hook ties the inspector (compliance), the punishment (penalty), and the escape valve (MSF) into one mental scene.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🚰 Tank-and-Knob Hook — Direction of Every Rate</div>
+      <p>One knob, one tank, one rule: <strong>knob turned UP (↑) = tap narrows = less money flows out = fights inflation.</strong> Every single quantitative tool — Bank Rate, Repo, Reverse Repo, MSF, CRR, SLR — is just another knob on the same tank. You never need to memorise six separate directions; you memorise one tank.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💧 Liquidity-As-Feeling Hook</div>
+      <p>Don't just memorise "cash is most liquid" — <em>feel</em> it. Cash should feel like water you can scoop instantly. FD should feel like ice — solid, locked, needs time (or a penalty/heat) to turn back into water. Gold sits in between — solid, but a quick trip to a shop melts it into cash. <span class="dim">The lecture's own analogy: like remembering the Humboldt Current is cold simply by feeling cold when you hear "Humboldt" — texture beats rote memory.</span></p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚖️ Mirror Twins Hook — Repo vs Reverse Repo</div>
+      <p>Repo = banks borrow FROM RBI (RBI lends). Reverse Repo = RBI borrows FROM banks (banks lend, RBI pays interest). They are mirror images — and that's exactly why, despite sounding "reverse," <strong>reverse repo also rises during inflation</strong> — RBI is the one paying more this time, to pull bank money toward itself instead of into the market.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📜 Market Stall Hook — OMO Direction</div>
+      <p>Picture RBI running a stall selling government securities. <strong>Selling pulls cash OUT of the public's pocket into RBI's till</strong> (fights inflation). <strong>Buying pushes cash back OUT to the public</strong> (fights deflation). The good/security always moves opposite to where the cash needs to go.</p>
+    </div>
+  </section>
+
+  <!-- ============ CONCEPT CONNECTIONS ============ -->
+  <section class="block" id="connections">
+    <div class="block-head"><span class="block-num">04</span><h2>Concept Connections</h2></div>
+
+    <div class="card">
+      <p><strong>Too much money supply → Inflation → MPC raises rates (Bank Rate, Repo, Reverse Repo, MSF, CRR, SLR all ↑) → Borrowing becomes expensive → Less money circulates → Inflation cools.</strong></p>
+    </div>
+    <div class="card">
+      <p><strong>High CRR → Less money left with banks to lend → Lower Money Multiplier → Less total money created in the economy.</strong> (CRR and Money Multiplier are inversely related.)</p>
+    </div>
+    <div class="card">
+      <p><strong>Bank fails to maintain CRR/SLR → Penalty risk → Bank uses MSF (overnight, pledging SLR securities) → Avoids default and penalty.</strong></p>
+    </div>
+    <div class="card">
+      <p><strong>RBI wants to fight inflation → Sells G-Sec via OMO → Public pays cash, gets securities → Cash supply shrinks.</strong> (Reverse this entirely for deflation.)</p>
+    </div>
+    <div class="card">
+      <p><strong>Government raises tax → Personal disposable income falls → Less spending → Demand-pull inflation eases.</strong> This is fiscal policy doing the same job monetary policy does, from the Finance Ministry's side rather than RBI's.</p>
+    </div>
+    <div class="card">
+      <p><strong>Festive season → People withdraw cash, save less → Currency Deposit Ratio (CDR) rises.</strong> A real-world seasonal pattern, not just a formula.</p>
+    </div>
+  </section>
+
+  <!-- ============ EXAM TRAPS ============ -->
+  <section class="block" id="traps">
+    <div class="block-head"><span class="block-num">05</span><h2>⚠ Exam Traps</h2></div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 1 — "Reverse Repo must fall when fighting inflation"</div>
+      <p>This is the single most common error. <strong>Reverse Repo also RISES during inflation</strong>, exactly like every other quantitative tool. Students wrongly assume "reverse" means "opposite direction." It doesn't — it means RBI and banks have swapped roles as borrower/lender, not that the rate moves opposite.</p>
+    </div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 2 — CRR vs SLR: what can be held as</div>
+      <p><span class="vs">CRR = cash ONLY, with RBI.</span> <span class="vs">SLR = cash, gold, OR G-Sec, with the bank itself.</span> A frequent statement-based trap: "SLR must be maintained in cash with RBI" — FALSE, that's CRR's job description, not SLR's.</p>
+    </div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 3 — Bank Rate vs Repo Rate: collateral and tenure</div>
+      <p>Bank Rate = no collateral, long-term. Repo Rate = collateral required, short-term. Exam options love to swap these two attributes between the two tools.</p>
+    </div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 4 — MSF vs Repo</div>
+      <p>Both involve banks borrowing from RBI against collateral, but MSF is strictly <strong>overnight</strong> and used to avoid a CRR/SLR shortfall penalty; Repo is general short-term liquidity management, not an emergency-only tool.</p>
+    </div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 5 — First RBI Governor vs First Indian RBI Governor</div>
+      <p><span class="vs">First Governor overall: Osborne Smith (British). First Indian Governor: C.D. Deshmukh.</span> These two get deliberately confused in MCQs.</p>
+    </div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 6 — Disinflation vs Deflation</div>
+      <p><strong>Disinflation</strong> = inflation rate is still positive but slowing down (prices still rising, just more slowly). <strong>Deflation</strong> = prices are actually falling (negative inflation rate). They sound similar and are routinely swapped in tricky statements.</p>
+    </div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 7 — Demand-pull vs Cost-push (Supply-side) inflation</div>
+      <p>Demand-pull = too much money/demand chasing fixed goods. Cost-push (= supply-side) = rising production costs push prices up regardless of demand. A question may describe a scenario and ask you to identify which type — read for "cost of production rising" (cost-push) vs "more money/demand" (demand-pull) cues.</p>
+    </div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 8 — Paper Tax list</div>
+      <p>Wealth Tax, Gift Tax, Income Tax = paper taxes. Excise Duty and Customs Duty are NOT paper taxes, even though students often lump all taxes together. Also recall: Wealth Tax itself is now <strong>abolished</strong> (no longer collected since 2016) — a question might ask which tax was discontinued.</p>
+    </div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 9 — Monetary Policy vs Fiscal Policy ownership</div>
+      <p><strong>RBI → Monetary Policy. Government → Fiscal Policy.</strong> A classic statement-matching trap swaps "tax rate" or "subsidy" under monetary policy, or "CRR/Repo" under fiscal policy. They belong to entirely separate institutions.</p>
+    </div>
+
+    <div class="trap">
+      <div class="trap-head">⚠ Trap 10 — NBFC powers</div>
+      <p>NBFCs do NOT maintain CRR/SLR and CANNOT accept demand deposits — but they CAN still lend and operate financial products. Don't over-generalise "NBFC = no rules at all."</p>
+    </div>
+  </section>
+
+  <!-- ============ EXAMINER'S FAVOURITE QUESTIONS ============ -->
+  <section class="block" id="examiner">
+    <div class="block-head"><span class="block-num">06</span><h2>🎯 Examiner's Favourite Questions</h2></div>
+
+    <div class="examq">
+      <div class="examq-type">Statement-Based</div>
+      <p>"Statement I: To control inflation, RBI increases the Repo Rate. Statement II: To control inflation, RBI decreases the Reverse Repo Rate." <br><span class="cyan-strong">→ Statement I is true, Statement II is FALSE</span> (Reverse Repo also increases — see Trap 1).</p>
+    </div>
+
+    <div class="examq">
+      <div class="examq-type">Match the Following</div>
+      <p>Match: (A) CRR (B) SLR (C) Repo (D) MSF — with: (1) Held only as cash with RBI (2) Can be held as gold/G-Sec with the bank (3) Short-term, collateral-backed daily borrowing (4) Overnight emergency borrowing against SLR quota. <span class="cyan-strong">→ A-1, B-2, C-3, D-4</span></p>
+    </div>
+
+    <div class="examq">
+      <div class="examq-type">Chronology / Sequencing</div>
+      <p>Arrange in order of typical tenure (shortest to longest): MSF, Repo, Bank Rate. <span class="cyan-strong">→ MSF (overnight) → Repo (short-term) → Bank Rate (long-term)</span></p>
+    </div>
+
+    <div class="examq">
+      <div class="examq-type">Assertion–Reason</div>
+      <p>Assertion: An increase in CRR reduces the money multiplier. Reason: A higher CRR leaves banks with less money available to lend out. <span class="cyan-strong">→ Both true, Reason correctly explains Assertion.</span></p>
+    </div>
+
+    <div class="examq">
+      <div class="examq-type">Confusing Pair MCQ</div>
+      <p>"Which of the following is NOT a paper tax?" with options like Income Tax, Gift Tax, Excise Duty, Wealth Tax. <span class="cyan-strong">→ Excise Duty</span></p>
+    </div>
+
+    <div class="examq">
+      <div class="examq-type">Identify the Qualitative Tool</div>
+      <p>"RBI asks banks to increase lending to the agriculture sector while restricting lending to industry" is an example of: (a) CRR (b) Rationing of Credit (c) Repo Rate (d) OMO. <span class="cyan-strong">→ (b) Rationing of Credit</span></p>
+    </div>
+
+    <div class="examq">
+      <div class="examq-type">Direct Factual</div>
+      <p>"The Monetary Policy Committee (MPC) consists of how many members, and in what RBI-to-Government ratio?" <span class="cyan-strong">→ 6 members; 3 from RBI, 3 from Government.</span></p>
+    </div>
+
+    <div class="examq">
+      <div class="examq-type">Tenure-Based</div>
+      <p>"Treasury Bills are issued for which tenures?" <span class="cyan-strong">→ 91 days, 182 days, 364 days only — never any other duration.</span></p>
+    </div>
+  </section>
+
+  <!-- ============ ACTIVE RECALL ============ -->
+  <section class="block" id="recall">
+    <div class="block-head"><span class="block-num">07</span><h2>❓ Active Recall Section</h2></div>
+    <p class="block-sub">Don't read the answers. Try to retrieve them first — tap to reveal.</p>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">What happens to all six quantitative tools during inflation?</div>
+      <div class="flash-a"><div class="flash-a-inner">All six (Bank Rate, Repo, Reverse Repo, MSF, CRR, SLR) increase together. This is called Tight / Dear / Contractionary / Hawkish monetary policy.</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">Fill in the blank: CRR can only be held as ______, while SLR can be held as cash, ______, or ______.</div>
+      <div class="flash-a"><div class="flash-a-inner">CRR → cash. SLR → cash, gold, or Government Securities (G-Sec).</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">One-liner: Who is the Lender of Last Resort in India?</div>
+      <div class="flash-a"><div class="flash-a-inner">RBI (Reserve Bank of India).</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">Reverse question: If the Money Multiplier is at its theoretical maximum, what must CRR be?</div>
+      <div class="flash-a"><div class="flash-a-inner">CRR = 0%. (Money Multiplier and CRR are inversely related — lowest CRR gives highest multiplier.)</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">Rapid-fire: Name the institution that recommends MSP.</div>
+      <div class="flash-a"><div class="flash-a-inner">CACP — Commission for Agricultural Costs and Prices (set up during the Third Five-Year Plan).</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">Fill in the blank: To fight deflation, RBI ______ government securities through OMO (buys/sells)?</div>
+      <div class="flash-a"><div class="flash-a-inner">Buys — this injects cash into the public's hands.</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">One-liner: What collateral does MSF use?</div>
+      <div class="flash-a"><div class="flash-a-inner">The bank's own SLR-quota government securities, pledged to RBI.</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">Reverse question: If you see "Lender of Last Resort, no collateral, long-term borrowing by banks" in a question — which tool is being described?</div>
+      <div class="flash-a"><div class="flash-a-inner">Bank Rate.</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">Rapid-fire: Name all four qualitative tools.</div>
+      <div class="flash-a"><div class="flash-a-inner">Rationing of Credit, Change in Margin Requirement, Regulation of Consumer Credit, Moral Suasion.</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">One-liner: NBFCs cannot accept which type of deposit?</div>
+      <div class="flash-a"><div class="flash-a-inner">Demand deposits.</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">Fill in the blank: CDR rises during the ______ season because people ______ more cash.</div>
+      <div class="flash-a"><div class="flash-a-inner">Festive season; withdraw/spend more cash (save less in deposits).</div></div>
+    </div>
+
+    <div class="flash" onclick="this.classList.toggle('open')">
+      <div class="flash-q">Rapid-fire: List the three Treasury Bill tenors.</div>
+      <div class="flash-a"><div class="flash-a-inner">91 days, 182 days, 364 days.</div></div>
+    </div>
+  </section>
+
+  <!-- ============ LAYERED REVISION SYSTEM ============ -->
+  <section class="block" id="layers">
+    <div class="block-head"><span class="block-num">08</span><h2>Multi-Layer Revision System</h2></div>
+    <p class="block-sub">Use Layer 1 the first week. By revision #20, you should only need Layer 4 or 5.</p>
+
+    <!-- LAYER 1 -->
+    <div class="layer">
+      <div class="layer-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="layer-head-left"><span class="layer-num">1</span><span class="layer-title">High-Yield Revision Notes</span></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span class="layer-meta">~3 min read</span><span class="layer-chevron">▾</span></div>
+      </div>
+      <div class="layer-body"><div class="layer-body-inner">
+        <ul>
+          <li>RBI = Bank of Banks + Lender of Last Resort. Controls money supply via Monetary Policy.</li>
+          <li>Inflation ↑ prices, too much money. Deflation ↓ prices, too little money. Disinflation = inflation slowing (still positive).</li>
+          <li>Demand-pull (demand side) vs Cost-push/Supply-side (production cost) inflation.</li>
+          <li>Spread = bank's profit = loan interest rate − deposit interest rate.</li>
+          <li>Demand deposit (anytime) vs Time deposit (FD/RD, locked, penalty on early exit). Liquidity: Cash &gt; Gold &gt; FD.</li>
+          <li>CRR = cash only, with RBI. SLR = cash/gold/G-Sec, with bank. Both as % of NDTL.</li>
+          <li>MPC = 6 members (3 RBI + 3 Govt), includes Governor. Osborne Smith = first Governor; C.D. Deshmukh = first Indian Governor.</li>
+          <li>Money Multiplier ∝ 1/CRR. CRR 100% → multiplier 0. CRR 0% → multiplier maximum.</li>
+          <li>Bank Rate (no collateral, long-term), Repo (collateral, short-term), Reverse Repo (RBI borrows from banks), MSF (overnight, SLR-pledged, emergency). All FOUR rise together to fight inflation. Repo + Reverse Repo = LAF.</li>
+          <li>Tight/Dear/Contractionary/Hawkish = all rates ↑ (inflation). Easy/Dove/Expansionary = all rates ↓ (deflation).</li>
+          <li>OMO: Sell G-Sec → withdraw cash (inflation). Buy G-Sec → inject cash (deflation). T-Bills: under 1 year, tenors 91/182/364 days.</li>
+          <li>Qualitative tools: Rationing of Credit, Margin Requirement change, Consumer Credit regulation, Moral Suasion.</li>
+          <li>CDR = cash held ÷ deposits. Rises in festive season.</li>
+          <li>NBFCs: no CRR/SLR requirement, cannot take demand deposits.</li>
+          <li>Fiscal Policy = Government's tools (tax, subsidy, MSP) — NOT RBI's job. MSP recommended by CACP (est. 3rd Five-Year Plan).</li>
+          <li>Paper tax: Wealth (abolished since 2016), Gift, Income Tax. NOT paper tax: Excise Duty, Customs Duty.</li>
+        </ul>
+      </div></div>
+    </div>
+
+    <!-- LAYER 2 -->
+    <div class="layer">
+      <div class="layer-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="layer-head-left"><span class="layer-num">2</span><span class="layer-title">Ultra-Fast Revision Sheet</span></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span class="layer-meta">~90 sec</span><span class="layer-chevron">▾</span></div>
+      </div>
+      <div class="layer-body"><div class="layer-body-inner">
+        <p><strong>Inflation → ALL UP:</strong> Bank Rate ↑, Repo ↑, Reverse Repo ↑, MSF ↑, CRR ↑, SLR ↑, Sell G-Sec, Tax ↑, Subsidy ↓, MSP ↓.</p>
+        <p><strong>Deflation → ALL DOWN:</strong> exact opposite of every line above.</p>
+        <p><strong>CRR</strong> = cash, with RBI. <strong>SLR</strong> = cash/gold/G-Sec, with bank. <strong>MSF</strong> = overnight, SLR-pledged, emergency only.</p>
+        <p><strong>MPC</strong> = 6 (3 RBI + 3 Govt). <strong>T-Bills</strong> = 91/182/364 days. <strong>Money Multiplier ∝ 1/CRR.</strong></p>
+        <p><strong>RBI → Monetary Policy. Govt → Fiscal Policy (tax/subsidy/MSP, via CACP for MSP).</strong></p>
+      </div></div>
+    </div>
+
+    <!-- LAYER 3 -->
+    <div class="layer">
+      <div class="layer-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="layer-head-left"><span class="layer-num">3</span><span class="layer-title">30-Second Revision Sheet</span></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span class="layer-meta">~30 sec</span><span class="layer-chevron">▾</span></div>
+      </div>
+      <div class="layer-body"><div class="layer-body-inner">
+        <p style="font-size:16px;"><strong>One knob, six dials, one direction.</strong> Inflation → every quantitative dial turns UP (Bank Rate, Repo, Reverse Repo, MSF, CRR, SLR) + RBI sells G-Sec + Govt raises tax, cuts subsidy/MSP. Deflation → everything flips DOWN. CRR=cash@RBI. SLR=cash/gold/G-Sec@bank. MPC=6(3+3). T-Bills=91/182/364d.</p>
+      </div></div>
+    </div>
+
+    <!-- LAYER 4 -->
+    <div class="layer">
+      <div class="layer-head" onclick="this.parentElement.classList.toggle('open')">
+        <div class="layer-head-left"><span class="layer-num">4</span><span class="layer-title">Last-Night-Before-Exam Sheet</span></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span class="layer-meta">~10 sec</span><span class="layer-chevron">▾</span></div>
+      </div>
+      <div class="layer-body"><div class="layer-body-inner">
+        <div class="lastnight">
+          <ul>
+            <li><strong>Inflation → ALL rates UP. Deflation → ALL rates DOWN.</strong> No exceptions, including Reverse Repo.</li>
+            <li><strong>CRR = cash with RBI. SLR = cash/gold/G-Sec with the bank.</strong></li>
+            <li><strong>MSF = overnight emergency, pledges SLR quota.</strong></li>
+            <li><strong>MPC = 6 members, 3 RBI + 3 Govt.</strong></li>
+            <li><strong>T-Bills = 91 / 182 / 364 days only.</strong></li>
+            <li><strong>Monetary Policy = RBI. Fiscal Policy = Government.</strong></li>
+            <li><strong>Excise & Customs Duty are NOT paper taxes.</strong></li>
+          </ul>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- ============ TOC at bottom for quick second jump ============ -->
+  <section class="block" id="toc">
+    <div class="block-head"><span class="block-num">∎</span><h2>Quick Jump</h2></div>
+    <div class="toc">
+      <a href="#bigpicture"><span class="toc-n">00</span>Big Picture</a>
+      <a href="#palace"><span class="toc-n">01</span>Memory Palace</a>
+      <a href="#notes"><span class="toc-n">02</span>Complete Notes</a>
+      <a href="#hooks"><span class="toc-n">03</span>Memory Hooks</a>
+      <a href="#connections"><span class="toc-n">04</span>Connections</a>
+      <a href="#traps"><span class="toc-n">05</span>Exam Traps</a>
+      <a href="#examiner"><span class="toc-n">06</span>Examiner's Questions</a>
+      <a href="#recall"><span class="toc-n">07</span>Active Recall</a>
+      <a href="#layers"><span class="toc-n">08</span>Fast Revision Layers</a>
+    </div>
+  </section>
+
+  <footer>BUILT FOR REVISION #1 THROUGH #100 · SSC CGL ECONOMY · MONETARY POLICY</footer>
+</div>
+
+<script>
+// ===== Hero water-tank knob SVG (signature visual) =====
+const tankSvg = `
+<svg width="320" height="220" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Water tank with knobs representing RBI monetary policy tools">
+  <defs>
+    <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5fd0c9" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#2f6f6a" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <!-- tank body -->
+  <rect x="90" y="40" width="140" height="130" rx="6" fill="none" stroke="#9c8050" stroke-width="2"/>
+  <!-- water -->
+  <rect x="92" y="95" width="136" height="73" rx="2" fill="url(#waterGrad)">
+    <animate attributeName="y" values="95;88;95" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="height" values="73;80;73" dur="4s" repeatCount="indefinite"/>
+  </rect>
+  <!-- water line wobble -->
+  <line x1="92" y1="95" x2="228" y2="95" stroke="#5fd0c9" stroke-width="1.5" opacity="0.7">
+    <animate attributeName="y1" values="95;88;95" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="95;88;95" dur="4s" repeatCount="indefinite"/>
+  </line>
+  <!-- inlet pipe top -->
+  <rect x="150" y="14" width="20" height="28" fill="none" stroke="#d4a548" stroke-width="2"/>
+  <text x="160" y="10" text-anchor="middle" fill="#a9a59a" font-family="JetBrains Mono, monospace" font-size="9">INFLOW</text>
+  <!-- knob on inlet -->
+  <circle cx="160" cy="28" r="7" fill="#0b0f17" stroke="#d4a548" stroke-width="2"/>
+  <line x1="160" y1="28" x2="166" y2="22" stroke="#d4a548" stroke-width="2" stroke-linecap="round"/>
+  <!-- outlet pipe bottom -->
+  <rect x="150" y="168" width="20" height="26" fill="none" stroke="#d4a548" stroke-width="2"/>
+  <text x="160" y="206" text-anchor="middle" fill="#a9a59a" font-family="JetBrains Mono, monospace" font-size="9">OUTFLOW</text>
+  <!-- knob on outlet -->
+  <circle cx="160" cy="181" r="7" fill="#0b0f17" stroke="#e2625a" stroke-width="2"/>
+  <line x1="160" y1="181" x2="154" y2="175" stroke="#e2625a" stroke-width="2" stroke-linecap="round"/>
+  <!-- side labels -->
+  <text x="60" y="100" text-anchor="end" fill="#6b6a63" font-family="JetBrains Mono, monospace" font-size="9">ECONOMY</text>
+  <text x="260" y="100" text-anchor="start" fill="#6b6a63" font-family="JetBrains Mono, monospace" font-size="9">MONEY SUPPLY</text>
+</svg>`;
+document.getElementById('tankSvgHolder').innerHTML = tankSvg;
+
+// ===== Active recall fill-in-blank style click reveal (extra utility, future-proof) =====
+document.querySelectorAll('.blank').forEach(b=>{
+  b.addEventListener('click', ()=> b.classList.toggle('revealed'));
+});
+</script>
+</body>
+</html>

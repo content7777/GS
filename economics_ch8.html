@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microeconomics — SSC CGL Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d14;
+    --bg2: #0f1320;
+    --bg3: #141927;
+    --card: #181e2e;
+    --card2: #1e253a;
+    --border: #252d45;
+    --border2: #2e3a58;
+
+    --gold: #f5c542;
+    --gold2: #e6b020;
+    --fire: #ff6b35;
+    --fire2: #ff4500;
+    --star: #7ec8e3;
+    --green: #4ade80;
+    --green2: #16a34a;
+    --purple: #a78bfa;
+    --pink: #f472b6;
+    --teal: #2dd4bf;
+    --red: #f87171;
+    --orange: #fb923c;
+
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+
+    --mono: 'JetBrains Mono', monospace;
+    --head: 'Space Grotesk', sans-serif;
+    --body: 'Crimson Pro', Georgia, serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,13,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-brand {
+    font-family: var(--head);
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 1rem 1rem 1rem 0;
+    margin-right: 0.5rem;
+    border-right: 1px solid var(--border);
+  }
+  nav a {
+    font-family: var(--head);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--text3);
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 0.4rem 0.7rem;
+    border-radius: 6px;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  nav a:hover { color: var(--text); background: var(--card); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0a0d14 0%, #0f1628 50%, #0a0d14 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(245,197,66,0.07) 0%, transparent 70%);
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--gold);
+    background: rgba(245,197,66,0.1);
+    border: 1px solid rgba(245,197,66,0.25);
+    border-radius: 100px;
+    padding: 0.3rem 1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: var(--head);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #f5c542, #e2e8f0 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+  .hero p {
+    color: var(--text2);
+    font-size: 1.05rem;
+    max-width: 550px;
+    margin: 0 auto 2rem;
+  }
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .pill {
+    font-family: var(--head);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    border: 1px solid;
+  }
+  .pill-gold { color: var(--gold); border-color: rgba(245,197,66,0.3); background: rgba(245,197,66,0.07); }
+  .pill-blue { color: var(--star); border-color: rgba(126,200,227,0.3); background: rgba(126,200,227,0.07); }
+  .pill-green { color: var(--green); border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.07); }
+
+  /* LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* SECTIONS */
+  .section {
+    padding: 3rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+  .section-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: var(--head);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .section-sub {
+    font-size: 0.85rem;
+    color: var(--text3);
+    font-family: var(--head);
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .card-title {
+    font-family: var(--head);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* CONCEPT BOXES */
+  .concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+
+  .concept-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .concept-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .cb-gold::before { background: linear-gradient(90deg, var(--gold), var(--orange)); }
+  .cb-blue::before { background: linear-gradient(90deg, var(--star), var(--purple)); }
+  .cb-green::before { background: linear-gradient(90deg, var(--green), var(--teal)); }
+  .cb-red::before { background: linear-gradient(90deg, var(--red), var(--pink)); }
+  .cb-purple::before { background: linear-gradient(90deg, var(--purple), var(--pink)); }
+  .cb-teal::before { background: linear-gradient(90deg, var(--teal), var(--star)); }
+
+  .concept-box h3 {
+    font-family: var(--head);
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .concept-box p { color: var(--text2); font-size: 0.92rem; }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 5px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-right: 0.3rem;
+  }
+  .tag-fire { background: rgba(255,107,53,0.15); color: var(--fire); border: 1px solid rgba(255,107,53,0.3); }
+  .tag-star { background: rgba(126,200,227,0.12); color: var(--star); border: 1px solid rgba(126,200,227,0.25); }
+  .tag-plus { background: rgba(74,222,128,0.1); color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+  .tag-trap { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
+
+  /* STORY/PALACE */
+  .palace {
+    background: linear-gradient(135deg, rgba(15,19,40,0.9), rgba(20,25,45,0.9));
+    border: 1px solid rgba(167,139,250,0.25);
+    border-radius: 16px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .palace::before {
+    content: '🧠';
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    font-size: 3rem;
+    opacity: 0.08;
+  }
+  .palace h3 {
+    font-family: var(--head);
+    font-weight: 700;
+    color: var(--purple);
+    margin-bottom: 0.75rem;
+    font-size: 1.05rem;
+  }
+  .palace p { color: var(--text2); margin-bottom: 0.6rem; }
+  .palace .stop {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin: 0.6rem 0;
+    padding: 0.6rem 0.75rem;
+    background: rgba(167,139,250,0.06);
+    border-radius: 10px;
+    border-left: 3px solid var(--purple);
+    font-size: 0.9rem;
+    color: var(--text2);
+  }
+  .stop-num {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--purple);
+    font-weight: 700;
+    flex-shrink: 0;
+    padding-top: 0.1rem;
+  }
+
+  /* MEMORY HOOK */
+  .hook {
+    background: rgba(245,197,66,0.05);
+    border: 1px solid rgba(245,197,66,0.2);
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .hook-title {
+    font-family: var(--head);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .hook p { color: var(--text2); font-size: 0.92rem; }
+
+  /* TRAP BOX */
+  .trap-box {
+    background: rgba(248,113,113,0.05);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  .trap-title {
+    font-family: var(--head);
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+  }
+  .trap-box ul { list-style: none; padding: 0; }
+  .trap-box li {
+    color: var(--text2);
+    font-size: 0.9rem;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(248,113,113,0.1);
+    display: flex;
+    gap: 0.5rem;
+  }
+  .trap-box li:last-child { border-bottom: none; }
+  .trap-box li::before { content: '⚡'; flex-shrink: 0; }
+
+  /* CONNECTIONS */
+  .connect {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 0;
+    font-size: 0.9rem;
+    color: var(--text2);
+    border-bottom: 1px solid var(--border);
+  }
+  .connect:last-child { border-bottom: none; }
+  .connect .arrow {
+    font-family: var(--mono);
+    color: var(--teal);
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+  .connect strong { color: var(--text); font-family: var(--head); font-size: 0.85rem; }
+
+  /* EXAM QUESTIONS */
+  .exam-q {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.7rem;
+    display: flex;
+    gap: 0.75rem;
+  }
+  .q-num {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--gold);
+    font-weight: 700;
+    background: rgba(245,197,66,0.1);
+    border: 1px solid rgba(245,197,66,0.2);
+    border-radius: 6px;
+    padding: 0.2rem 0.5rem;
+    height: fit-content;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .exam-q p { font-size: 0.9rem; color: var(--text2); }
+  .exam-q strong { color: var(--text); font-family: var(--head); font-size: 0.85rem; display: block; margin-bottom: 0.2rem; }
+
+  /* ACTIVE RECALL */
+  .recall-q {
+    background: var(--card2);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .recall-q:hover { border-color: var(--teal); }
+  .recall-q .q-text {
+    font-family: var(--head);
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  .recall-q .q-text span { color: var(--teal); flex-shrink: 0; }
+  .answer {
+    display: none;
+    margin-top: 0.6rem;
+    padding: 0.75rem;
+    background: rgba(45,212,191,0.06);
+    border-radius: 8px;
+    border-left: 3px solid var(--teal);
+    font-size: 0.88rem;
+    color: var(--text2);
+  }
+  .recall-q.open .answer { display: block; }
+  .reveal-hint {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* MARKET TABLE */
+  .market-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: var(--head);
+    font-size: 0.82rem;
+  }
+  .market-table th {
+    background: var(--card2);
+    color: var(--gold);
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--border2);
+  }
+  .market-table th:first-child { border-radius: 10px 0 0 0; }
+  .market-table th:last-child { border-radius: 0 10px 0 0; }
+  .market-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    vertical-align: top;
+  }
+  .market-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .market-table td:first-child { color: var(--text); font-weight: 600; }
+
+  /* ELASTICITY VISUAL */
+  .elasticity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .e-card {
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid;
+  }
+  .e-card .e-type {
+    font-family: var(--head);
+    font-weight: 700;
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+  }
+  .e-card .e-formula {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .e-card .e-example {
+    font-size: 0.78rem;
+    color: var(--text3);
+  }
+  .e-card .e-curve {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    margin-top: 0.4rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    display: inline-block;
+  }
+
+  /* REVISION LAYERS */
+  .layer-tabs {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .layer-tab {
+    font-family: var(--head);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text3);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .layer-tab.active, .layer-tab:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+  .layer-content { display: none; }
+  .layer-content.active { display: block; }
+
+  /* SPEED REVISION */
+  .speed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.6rem;
+  }
+  .speed-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+  .speed-item .k { color: var(--text3); font-family: var(--mono); font-size: 0.7rem; margin-bottom: 0.2rem; }
+  .speed-item .v { color: var(--text); font-family: var(--head); font-weight: 600; font-size: 0.88rem; }
+
+  /* LAST NIGHT */
+  .final-sheet {
+    background: linear-gradient(135deg, rgba(245,197,66,0.05), rgba(255,107,53,0.05));
+    border: 1px solid rgba(245,197,66,0.25);
+    border-radius: 16px;
+    padding: 1.75rem;
+  }
+  .final-sheet h3 {
+    font-family: var(--head);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .bullet-list { list-style: none; }
+  .bullet-list li {
+    padding: 0.3rem 0;
+    color: var(--text2);
+    font-size: 0.9rem;
+    border-bottom: 1px solid rgba(245,197,66,0.06);
+    display: flex;
+    gap: 0.6rem;
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before { content: '▸'; color: var(--gold); flex-shrink: 0; }
+
+  /* FORMULA */
+  .formula-box {
+    background: rgba(126,200,227,0.06);
+    border: 1px solid rgba(126,200,227,0.2);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--star);
+    margin: 0.75rem 0;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  /* COMPARE */
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .compare-left {
+    background: rgba(74,222,128,0.07);
+    border: 1px solid rgba(74,222,128,0.2);
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+    color: var(--green);
+    font-family: var(--head);
+    font-weight: 600;
+  }
+  .compare-right {
+    background: rgba(248,113,113,0.07);
+    border: 1px solid rgba(248,113,113,0.2);
+    border-radius: 10px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.85rem;
+    color: var(--red);
+    font-family: var(--head);
+    font-weight: 600;
+  }
+  .compare-vs {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--text3);
+    text-align: center;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text3);
+    font-family: var(--head);
+    font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* MISC */
+  .highlight { color: var(--gold); font-weight: 600; }
+  .highlight-b { color: var(--star); font-weight: 600; }
+  .highlight-g { color: var(--green); font-weight: 600; }
+  .highlight-r { color: var(--red); font-weight: 600; }
+  .highlight-p { color: var(--purple); font-weight: 600; }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border2), transparent);
+    margin: 1.25rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .concept-grid { grid-template-columns: 1fr; }
+    .hero { padding: 3rem 1.25rem 2rem; }
+    .compare-row { grid-template-columns: 1fr; }
+    .compare-vs { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">📈 Micro Eco</div>
+  <a href="#big-picture">Overview</a>
+  <a href="#palace">Memory Palace</a>
+  <a href="#notes">Full Notes</a>
+  <a href="#hooks">Hooks</a>
+  <a href="#connections">Links</a>
+  <a href="#traps">Traps ⚠️</a>
+  <a href="#examiner">Examiner</a>
+  <a href="#recall">Recall</a>
+  <a href="#revision">Revision</a>
+  <a href="#lastnight">Last Night</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="nav-brand" style="display:inline-block;margin:0 0 1.25rem">SSC CGL · FRB Series</div>
+  <div></div>
+  <h1>Microeconomics<br>Demand, Supply & Markets</h1>
+  <p>A complete high-retention revision system built for 20–100 revisions. Every fact. Never forgotten.</p>
+  <div class="hero-pills">
+    <span class="pill pill-gold">🔥 Must Know All</span>
+    <span class="pill pill-blue">Demand & Supply Curves</span>
+    <span class="pill pill-green">Elasticity</span>
+    <span class="pill pill-gold">4 Market Types</span>
+    <span class="pill pill-blue">Laffer Curve</span>
+    <span class="pill pill-green">Money Motives</span>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ══════════════════ BIG PICTURE ══════════════════ -->
+<section class="section" id="big-picture">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(245,197,66,0.1);">🌍</div>
+    <div>
+      <div class="section-title">Big Picture</div>
+      <div class="section-sub">What this chapter is really about</div>
+    </div>
+  </div>
+
+  <div class="card" style="border-color:rgba(245,197,66,0.2);background:rgba(245,197,66,0.04);">
+    <p style="color:var(--text2);">This chapter is the <span class="highlight">engine of a market economy</span>. You're learning how prices form — through the battle between buyers (demand) and sellers (supply). Once you understand this, everything else — inflation, government policy, market failures — makes sense. The 4 market types tell you <span class="highlight">how much power</span> the seller has to set prices. Elasticity tells you <span class="highlight">how sensitive</span> buyers and sellers are to price changes.</p>
+  </div>
+
+  <div class="concept-grid">
+    <div class="concept-box cb-gold">
+      <span class="tag tag-fire">🔥 Core</span>
+      <h3 style="color:var(--gold);">Demand Curve</h3>
+      <p>Price ↑ → Demand ↓. Negative slope. Consumer's perspective. Exceptions exist (Giffen & Veblen).</p>
+    </div>
+    <div class="concept-box cb-blue">
+      <span class="tag tag-fire">🔥 Core</span>
+      <h3 style="color:var(--star);">Supply Curve</h3>
+      <p>Price ↑ → Supply ↑. Positive slope. Producer's perspective. Both meet at Equilibrium.</p>
+    </div>
+    <div class="concept-box cb-green">
+      <span class="tag tag-fire">🔥 Core</span>
+      <h3 style="color:var(--green);">Elasticity</h3>
+      <p>How strongly does demand react to price/income changes? Determines pricing power and tax impact.</p>
+    </div>
+    <div class="concept-box cb-purple">
+      <span class="tag tag-star">⭐ Imp</span>
+      <h3 style="color:var(--purple);">Market Types</h3>
+      <p>4 types from Monopoly (1 seller) to Perfect Competition (many sellers, identical goods).</p>
+    </div>
+    <div class="concept-box cb-teal">
+      <span class="tag tag-star">⭐ Imp</span>
+      <h3 style="color:var(--teal);">Laffer Curve</h3>
+      <p>Bell-shaped curve. Tax rate ↑ → Tax revenue ↑ but only up to a point. Then revenue falls.</p>
+    </div>
+    <div class="concept-box cb-red">
+      <span class="tag tag-plus">➕ Good</span>
+      <h3 style="color:var(--red);">Money Motives</h3>
+      <p>Keynes: 3 reasons people hold money — Transaction, Precautionary, Speculative.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ MEMORY PALACE ══════════════════ -->
+<section class="section" id="palace">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(167,139,250,0.1);">🧠</div>
+    <div>
+      <div class="section-title">Chapter Memory Palace</div>
+      <div class="section-sub">Walk through the Market Bazaar and remember everything</div>
+    </div>
+  </div>
+
+  <div class="palace">
+    <h3>🏪 THE MEMORY BAZAAR — A Night Market Story</h3>
+    <p style="color:var(--text3);font-size:0.88rem;margin-bottom:1rem;">Imagine you're walking through a bustling night bazaar. Each stall you pass = one concept. Walk through it in your mind every time you revise.</p>
+
+    <div class="stop">
+      <div class="stop-num">GATE</div>
+      <div>You enter through a <strong style="color:var(--purple);">bell-shaped arch</strong> — that's the <strong style="color:var(--gold);">Laffer Curve</strong>. Above it says: "Tax beyond this point and we lose money." The arch collapses if pushed too far.</div>
+    </div>
+    <div class="stop">
+      <div class="stop-num">STALL 1</div>
+      <div><strong style="color:var(--gold);">DEMAND STALL — Tomato vendor.</strong> As he raises his price tag (₹10 → ₹20 → ₹30), customers walk away one by one. His chart line slopes DOWN. He's in a panic. <em>Inverse relationship.</em> Two strange customers never leave no matter how high the price: <strong style="color:var(--red);">Giffen (poor wheat buyer)</strong> and <strong style="color:var(--pink);">Veblen (iPhone snob)</strong>.</div>
+    </div>
+    <div class="stop">
+      <div class="stop-num">STALL 2</div>
+      <div><strong style="color:var(--green);">SUPPLY STALL — Tomato farmer.</strong> As the price rises, he brings more and more crates. His chart slopes UP. He's happy! <em>Direct relationship.</em> Both vendor and farmer meet at the <strong style="color:var(--teal);">middle of the bazaar = EQUILIBRIUM POINT.</strong></div>
+    </div>
+    <div class="stop">
+      <div class="stop-num">STALL 3</div>
+      <div><strong style="color:var(--star);">ELASTICITY CORNER.</strong> A rubber band stall. Some bands stretch easily (elastic goods like onion). Some barely stretch (inelastic goods like potato/wheat). One is horizontal flat = perfectly elastic. One is vertical rod = perfectly inelastic.</div>
+    </div>
+    <div class="stop">
+      <div class="stop-num">STALL 4</div>
+      <div><strong style="color:var(--orange);">MARKET ZONE — 4 shops side by side.</strong> ONE massive shop (Monopoly — Indian Railways), a FEW big shops (Oligopoly — Airtel/Jio/Vi), MANY shops with slightly different products (Monopolistic — toothpaste brands), and HUNDREDS of identical stalls (Perfect Competition — tomato sellers).</div>
+    </div>
+    <div class="stop">
+      <div class="stop-num">EXIT</div>
+      <div><strong style="color:var(--purple);">Keynes' Bank ATM.</strong> Three queues: 1) Bill payment (Transaction), 2) Emergency fund (Precautionary), 3) Stock market speculators waiting for rates to drop (Speculative). Liquidity Trap = entire crowd stuck at the ATM refusing to invest.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ COMPLETE NOTES ══════════════════ -->
+<section class="section" id="notes">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(74,222,128,0.1);">📋</div>
+    <div>
+      <div class="section-title">Complete Revision Notes</div>
+      <div class="section-sub">Every fact from the lecture — structured for maximum retention</div>
+    </div>
+  </div>
+
+  <!-- LAFFER CURVE -->
+  <div class="card">
+    <div class="card-title"><span class="tag tag-star">⭐</span> <span style="color:var(--teal);">Laffer Curve</span> — Given by Arthur Laffer</div>
+    <ul class="bullet-list">
+      <li>Shape: <span class="highlight">BELL-SHAPED</span> (also described as "hour-glass" shaped)</li>
+      <li>X-axis = Tax Rate &nbsp;|&nbsp; Y-axis = Tax Revenue collected by govt</li>
+      <li>Tax Rate ↑ → Revenue ↑ → but only up to an <span class="highlight">optimal point</span></li>
+      <li>Beyond that point: Tax Rate ↑ → Revenue <span class="highlight-r">↓</span> (people evade tax / stop earning)</li>
+      <li>Why revenue falls: At very high rates, people think <em>"Why earn if government takes everything?"</em> → Tax evasion surges</li>
+      <li>Associated with: <span class="highlight">Tax Policy</span></li>
+    </ul>
+    <div class="divider"></div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;font-size:0.85rem;">
+      <span><span class="highlight-b">Phillips Curve</span> = Inflation vs Unemployment (inverse) — downward slope</span>
+      <span><span class="highlight-g">Laffer Curve</span> = Tax Rate vs Tax Revenue — bell shape</span>
+    </div>
+  </div>
+
+  <!-- DEMAND -->
+  <div class="card" style="margin-top:1.25rem;">
+    <div class="card-title"><span class="tag tag-fire">🔥</span> <span style="color:var(--gold);">Demand — The 3 Parameters</span></div>
+    <div class="concept-grid" style="margin-top:0.5rem;">
+      <div style="background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+        <div style="font-family:var(--head);font-weight:700;color:var(--gold);margin-bottom:0.3rem;">1. Utility</div>
+        <div style="font-size:0.88rem;color:var(--text2);">The good must satisfy a need/give pleasure. Hindi: <em>Upyogita</em></div>
+      </div>
+      <div style="background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+        <div style="font-family:var(--head);font-weight:700;color:var(--star);margin-bottom:0.3rem;">2. Affordability</div>
+        <div style="font-size:0.88rem;color:var(--text2);">You must have the capacity (income) to buy it</div>
+      </div>
+      <div style="background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+        <div style="font-family:var(--head);font-weight:700;color:var(--green);margin-bottom:0.3rem;">3. Desire/Willingness</div>
+        <div style="font-size:0.88rem;color:var(--text2);">You must actually WANT to buy it</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="card-title" style="margin-top:0.5rem;">📉 Marginal Utility</div>
+    <p style="color:var(--text2);font-size:0.9rem;">Additional satisfaction from each additional unit consumed. <span class="highlight">Diminishes</span> as you consume more of the same thing.</p>
+    <div class="hook" style="margin-top:0.75rem;">
+      <div class="hook-title">💧 Water in Summer Analogy</div>
+      <p>First sip of water on a hot day = AMAZING (high marginal utility). 10th sip = meh. 20th sip = forced. This is the Law of Diminishing Marginal Utility. <strong style="color:var(--gold);">More you have → less satisfying the next unit.</strong></p>
+    </div>
+  </div>
+
+  <!-- DEMAND CURVE -->
+  <div class="card" style="margin-top:1rem;">
+    <div class="card-title"><span class="tag tag-fire">🔥</span> <span style="color:var(--gold);">Demand Curve</span></div>
+    <ul class="bullet-list">
+      <li>Slope: <span class="highlight">NEGATIVE (downward sloping)</span></li>
+      <li>Relationship: Price and Demand are <span class="highlight">INVERSELY related</span></li>
+      <li>Price ↑ → Quantity Demanded ↓ (and vice versa)</li>
+      <li>This assumes <span class="highlight">all other factors are constant</span> (Ceteris Paribus)</li>
+    </ul>
+    <div class="divider"></div>
+    <div class="card-title">↔ Shift in Demand Curve</div>
+    <div class="compare-row">
+      <div class="compare-left">🡒 RIGHTWARD SHIFT<br><span style="font-weight:400;font-size:0.82rem;color:var(--text2);">Demand INCREASES at same price<br>Causes: Income ↑, complements cheaper, substitutes costlier, tastes shift toward product</span></div>
+      <div class="compare-vs">VS</div>
+      <div class="compare-right">🡐 LEFTWARD SHIFT<br><span style="font-weight:400;font-size:0.82rem;color:var(--text2);">Demand DECREASES at same price<br>Causes: Income ↓, complements costlier, substitutes cheaper, tastes shift away</span></div>
+    </div>
+    <div class="divider"></div>
+    <div class="card-title">⚠️ Exceptions to Demand Curve</div>
+    <div class="concept-grid" style="margin-top:0.5rem;">
+      <div class="concept-box cb-red">
+        <span class="tag tag-trap">EXCEPTION</span>
+        <h3 style="color:var(--red);">Giffen Goods</h3>
+        <p>Price ↑ → Demand ↑<br><strong>Non-luxurious necessities</strong> (e.g., wheat, bread for the poor). As price rises, poor people can't afford alternatives → buy more of it.</p>
+      </div>
+      <div class="concept-box cb-purple">
+        <span class="tag tag-trap">EXCEPTION</span>
+        <h3 style="color:var(--purple);">Veblen Goods</h3>
+        <p>Price ↑ → Demand ↑<br><strong>Luxurious / Status symbols</strong> (e.g., iPhone, luxury watches). Higher price = more desirable. "Perfectly Inelastic demand."</p>
+      </div>
+    </div>
+    <div class="trap-box" style="margin-top:0.75rem;">
+      <div class="trap-title">⚡ Giffen vs Veblen — Don't Mix Up!</div>
+      <ul class="bullet-list">
+        <li><strong style="color:var(--green);">Giffen</strong> = Poor man's necessity (wheat, rice). Non-luxurious. Robert Giffen discovered.</li>
+        <li><strong style="color:var(--purple);">Veblen</strong> = Rich man's status symbol (iPhone). Luxurious. Thorstein Veblen discovered.</li>
+        <li>Both show Price ↑ → Demand ↑ but for OPPOSITE reasons</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SUPPLY CURVE -->
+  <div class="card" style="margin-top:1rem;">
+    <div class="card-title"><span class="tag tag-fire">🔥</span> <span style="color:var(--green);">Supply Curve</span></div>
+    <ul class="bullet-list">
+      <li>Slope: <span class="highlight-g">POSITIVE (upward sloping)</span></li>
+      <li>Relationship: Price and Supply are <span class="highlight-g">DIRECTLY related</span></li>
+      <li>Price ↑ → Quantity Supplied ↑ (producer wants to earn more)</li>
+      <li>Seen from <span class="highlight-g">Producer's perspective</span></li>
+    </ul>
+    <div class="divider"></div>
+    <div class="card-title">⚖️ Equilibrium</div>
+    <p style="color:var(--text2);font-size:0.9rem;">Where Demand Curve meets Supply Curve = <span class="highlight">Equilibrium Price & Quantity</span>. The price at which what buyers want equals what sellers offer.</p>
+    <div class="formula-box">Equilibrium = Demand Curve ∩ Supply Curve</div>
+    <p style="color:var(--text2);font-size:0.88rem;margin-top:0.5rem;">Equilibrium shifts if: Demand curve shifts (L/R) OR Supply curve shifts (L/R) OR both shift. <span class="highlight">CGL 2022 asked this!</span></p>
+  </div>
+
+  <!-- ELASTICITY -->
+  <div class="card" style="margin-top:1rem;">
+    <div class="card-title"><span class="tag tag-fire">🔥</span> <span style="color:var(--star);">Price Elasticity of Demand</span></div>
+    <div class="formula-box">Price Elasticity (PED) = % Change in Quantity Demanded ÷ % Change in Price</div>
+    <p style="color:var(--text2);font-size:0.9rem;margin-bottom:1rem;">Measures how SENSITIVE consumers are to price changes.</p>
+
+    <div class="elasticity-grid">
+      <div class="e-card" style="background:rgba(248,113,113,0.07);border-color:rgba(248,113,113,0.25);">
+        <div class="e-type" style="color:var(--red);">Perfectly Inelastic</div>
+        <div class="e-formula" style="color:var(--text3);">PED = 0</div>
+        <div class="e-example">Price changes, demand doesn't budge at all. Eg: life-saving medicine</div>
+        <div class="e-curve" style="background:rgba(248,113,113,0.1);color:var(--red);">⏸ VERTICAL curve</div>
+      </div>
+      <div class="e-card" style="background:rgba(245,197,66,0.07);border-color:rgba(245,197,66,0.25);">
+        <div class="e-type" style="color:var(--gold);">Relatively Inelastic</div>
+        <div class="e-formula" style="color:var(--text3);">0 &lt; PED &lt; 1</div>
+        <div class="e-example">Big price change = small demand change. Eg: Potato, Wheat</div>
+        <div class="e-curve" style="background:rgba(245,197,66,0.1);color:var(--gold);">↗ Steep curve</div>
+      </div>
+      <div class="e-card" style="background:rgba(126,200,227,0.07);border-color:rgba(126,200,227,0.25);">
+        <div class="e-type" style="color:var(--star);">Unitary Elastic</div>
+        <div class="e-formula" style="color:var(--text3);">PED = 1</div>
+        <div class="e-example">% price change = % demand change exactly</div>
+        <div class="e-curve" style="background:rgba(126,200,227,0.1);color:var(--star);">↗ 45° curve</div>
+      </div>
+      <div class="e-card" style="background:rgba(74,222,128,0.07);border-color:rgba(74,222,128,0.25);">
+        <div class="e-type" style="color:var(--green);">Relatively Elastic</div>
+        <div class="e-formula" style="color:var(--text3);">PED &gt; 1</div>
+        <div class="e-example">Small price change = big demand change. Eg: Onion, luxury substitutes</div>
+        <div class="e-curve" style="background:rgba(74,222,128,0.1);color:var(--green);">↗ Flat curve</div>
+      </div>
+      <div class="e-card" style="background:rgba(167,139,250,0.07);border-color:rgba(167,139,250,0.25);">
+        <div class="e-type" style="color:var(--purple);">Perfectly Elastic</div>
+        <div class="e-formula" style="color:var(--text3);">PED = ∞</div>
+        <div class="e-example">Tiniest price change → demand collapses to zero. Hyper-competitive markets.</div>
+        <div class="e-curve" style="background:rgba(167,139,250,0.1);color:var(--purple);">⏸ HORIZONTAL curve</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="card-title">💰 Income Elasticity</div>
+    <p style="color:var(--text2);font-size:0.9rem;">% Change in Demand upon % Change in <span class="highlight">Income</span>. How demand responds when your salary changes.</p>
+    <div class="divider"></div>
+    <div class="card-title">🔄 Cross Price Elasticity</div>
+    <div class="concept-grid" style="margin-top:0.5rem;">
+      <div style="background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+        <div style="font-family:var(--head);font-weight:700;color:var(--green);margin-bottom:0.3rem;">Substitutes</div>
+        <div style="font-size:0.85rem;color:var(--text2);">Price of A ↑ → Demand for B ↑ (positive cross elasticity)<br><em>Example: Price of tomato ↑ → people buy more ketchup</em></div>
+      </div>
+      <div style="background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:1rem;">
+        <div style="font-family:var(--head);font-weight:700;color:var(--red);margin-bottom:0.3rem;">Complements</div>
+        <div style="font-size:0.85rem;color:var(--text2);">Price of A ↑ → Demand for B ↓ (negative cross elasticity)<br><em>Example: Price of bread ↑ → demand for butter ↓</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MONEY MOTIVES -->
+  <div class="card" style="margin-top:1rem;">
+    <div class="card-title"><span class="tag tag-star">⭐</span> <span style="color:var(--purple);">Keynes' 3 Motives for Holding Money</span> <span style="font-size:0.75rem;color:var(--text3);font-family:var(--mono);">(John Maynard Keynes — England)</span></div>
+    <div class="concept-grid" style="margin-top:0.75rem;">
+      <div class="concept-box cb-teal">
+        <span class="tag tag-fire">🔥</span>
+        <h3 style="color:var(--teal);">1. Transaction Motive</h3>
+        <p>Day-to-day expenses — pay bills, buy groceries, commute. You withdraw exactly what you need to spend.</p>
+      </div>
+      <div class="concept-box cb-gold">
+        <span class="tag tag-fire">🔥</span>
+        <h3 style="color:var(--gold);">2. Precautionary Motive</h3>
+        <p>Emergency fund. Wedding expenses, health emergency, job loss. You save for future uncertainties.</p>
+      </div>
+      <div class="concept-box cb-purple">
+        <span class="tag tag-fire">🔥</span>
+        <h3 style="color:var(--purple);">3. Speculative Motive</h3>
+        <p>Hold cash hoping interest rates fall → invest then for profit. <strong style="color:var(--gold);">Interest Rate ↓ → Speculative Demand ↑</strong></p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:0.75rem;background:rgba(248,113,113,0.05);border-color:rgba(248,113,113,0.2);">
+      <div class="card-title" style="color:var(--red);">⚡ Liquidity Trap</div>
+      <p style="color:var(--text2);font-size:0.9rem;">When interest rates are very low, people prefer to hold cash (speculative demand is very high) rather than invest. Money gets trapped in people's hands. Speculative demand = <span class="highlight">perfectly elastic</span>.</p>
+    </div>
+    <div style="margin-top:0.75rem;padding:0.75rem;background:rgba(126,200,227,0.06);border-radius:10px;font-size:0.88rem;color:var(--text2);">
+      <strong style="color:var(--star);">Speculative Demand relationship:</strong><br>
+      Interest Rate ↑ → Hold less cash (invest more) → Speculative Demand ↓<br>
+      Interest Rate ↓ → Hold more cash (wait to invest) → Speculative Demand ↑
+    </div>
+  </div>
+
+  <!-- MARKET TYPES -->
+  <div class="card" style="margin-top:1rem;">
+    <div class="card-title"><span class="tag tag-fire">🔥</span> <span style="color:var(--orange);">4 Types of Market</span></div>
+    <div style="overflow-x:auto;margin-top:0.75rem;">
+      <table class="market-table">
+        <thead>
+          <tr>
+            <th>Market Type</th>
+            <th>Sellers</th>
+            <th>Buyers</th>
+            <th>Product Type</th>
+            <th>Entry Barrier</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--red);">🔴 Monopoly</td>
+            <td>ONE (1)</td>
+            <td>Many</td>
+            <td>Unique / No substitute</td>
+            <td><strong style="color:var(--red);">HIGH (entry blocked)</strong></td>
+            <td>Indian Railways</td>
+          </tr>
+          <tr>
+            <td style="color:var(--orange);">🟠 Oligopoly</td>
+            <td>FEW (2-5)</td>
+            <td>Many</td>
+            <td>Similar or differentiated</td>
+            <td>Not easy</td>
+            <td>Telecom: Jio/Airtel/Vi; Laptops: Dell/HP/Lenovo</td>
+          </tr>
+          <tr>
+            <td style="color:var(--gold);">🟡 Monopolistic Competition</td>
+            <td>Many</td>
+            <td>Many</td>
+            <td><strong>Similar but slightly different</strong></td>
+            <td>Some barriers</td>
+            <td>Toothpaste brands (Colgate vs Patanjali vs Sensodyne)</td>
+          </tr>
+          <tr>
+            <td style="color:var(--green);">🟢 Perfect Competition</td>
+            <td>Very Many</td>
+            <td>Many</td>
+            <td><strong>Homogeneous (identical)</strong></td>
+            <td><strong style="color:var(--green);">FREE entry & exit</strong></td>
+            <td>Agricultural markets (tomato vendors)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="hook" style="margin-top:1rem;">
+      <div class="hook-title">🧠 Price Power Memory</div>
+      <p>Monopoly = God-mode (set any price). Oligopoly = Boss-mode (price leadership). Monopolistic = Hustle mode (compete on features). Perfect = Slave-mode (no price control, take market price or leave).</p>
+    </div>
+    <div style="margin-top:0.75rem;padding:0.75rem;background:rgba(74,222,128,0.05);border:1px solid rgba(74,222,128,0.15);border-radius:10px;font-size:0.88rem;color:var(--text2);">
+      <strong style="color:var(--gold);">Article 19 link:</strong> Citizens have the right to any occupation/profession, BUT the government can create monopolies and is NOT required to give reasons. That's how Indian Railways stays a monopoly.
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ MEMORY HOOKS ══════════════════ -->
+<section class="section" id="hooks">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(245,197,66,0.1);">💡</div>
+    <div>
+      <div class="section-title">Smart Memory Hooks</div>
+      <div class="section-sub">Vivid mental images that survive 6 months of forgetting</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🔔 Laffer Curve = Bell at a School</div>
+    <p>Imagine a school bell. Ring it once — students come. Ring it twice — they rush. Ring it CONSTANTLY — they ignore it. Government taxing beyond the peak point = ringing the bell too much. Revenue drops just like student attention.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🍅 Demand Curve = The Tomato Experiment</div>
+    <p>You buy 5 kg tomatoes at ₹10/kg. Price jumps to ₹20/kg → you buy 3 kg. ₹50/kg → you buy 1 kg. The graph just traces your reluctance. <strong style="color:var(--gold);">Price goes up, you pull back.</strong> That downward slope = your wallet defending itself.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🌾 Giffen vs 📱 Veblen — The Two Rebels</div>
+    <p><strong style="color:var(--green);">Giffen</strong> = A poor farmer. Wheat price rises. He can't afford daal or vegetables now. So he eats MORE wheat because it's still the cheapest option. Necessity forces him UP the demand as price goes UP.<br><br><strong style="color:var(--purple);">Veblen</strong> = A rich kid. iPhone price rises. He wants it MORE because it's exclusive now. Status demands he pays more. Luxury drives him UP the demand as price goes UP.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🧲 Nitish Kumar = Elasticity Visual</div>
+    <p>Nitish Kumar <em>before</em> June 4 2024: Modi didn't care much if he left. <strong style="color:var(--text3);">Low elasticity response.</strong><br>Nitish Kumar <em>after</em> June 4 2024 (NDA needs him): Modi panics at every sneeze. <strong style="color:var(--gold);">High elasticity response.</strong><br>That's exactly what elasticity means — how much does a change in one thing affect another?</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🪙 3 Motives = Wallet, Piggy Bank, Stock App</div>
+    <p><strong style="color:var(--teal);">Transaction</strong> = money in your wallet (daily use). <strong style="color:var(--gold);">Precautionary</strong> = money in your piggy bank (emergencies). <strong style="color:var(--purple);">Speculative</strong> = money waiting in your Zerodha/Groww app (watching for the right moment to invest).</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🏪 Market Types = Size of Shop</div>
+    <p>Monopoly = One giant Amazon warehouse. Oligopoly = 3 big malls. Monopolistic = 50 restaurants all serving "pasta" but each slightly differently. Perfect Competition = 500 identical vegetable carts at the mandi — you buy from whoever is cheapest.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ CONCEPT CONNECTIONS ══════════════════ -->
+<section class="section" id="connections">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(45,212,191,0.1);">🔗</div>
+    <div>
+      <div class="section-title">Concept Connections</div>
+      <div class="section-sub">No fact is an island — everything connects</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="connect">
+      <div class="arrow">CAUSE→EFFECT</div>
+      <div><strong>Price ↑</strong> <span class="arrow" style="margin:0 0.3rem;">→</span> Demand ↓ (Normal goods) but Demand ↑ (Giffen/Veblen)</div>
+    </div>
+    <div class="connect">
+      <div class="arrow">CAUSE→EFFECT</div>
+      <div><strong>Tax Rate beyond optimal point ↑</strong> <span class="arrow" style="margin:0 0.3rem;">→</span> Tax Revenue ↓ (Laffer Curve)</div>
+    </div>
+    <div class="connect">
+      <div class="arrow">CAUSE→EFFECT</div>
+      <div><strong>Interest Rate ↓</strong> <span class="arrow" style="margin:0 0.3rem;">→</span> Speculative Money Demand ↑ → Liquidity Trap risk</div>
+    </div>
+    <div class="connect">
+      <div class="arrow">FEATURE→TYPE</div>
+      <div><strong>Perfectly Elastic demand</strong> = Horizontal curve | <strong>Perfectly Inelastic</strong> = Vertical curve</div>
+    </div>
+    <div class="connect">
+      <div class="arrow">CONCEPT→APPLICATION</div>
+      <div><strong>Complements</strong> (bread+butter): Price of one ↑ → Demand for BOTH ↓</div>
+    </div>
+    <div class="connect">
+      <div class="arrow">CONCEPT→APPLICATION</div>
+      <div><strong>Substitutes</strong> (tomato vs ketchup): Price of one ↑ → Demand for the OTHER ↑</div>
+    </div>
+    <div class="connect">
+      <div class="arrow">DISCOVERY→POLICY</div>
+      <div><strong>Laffer Curve insight</strong> → Governments shouldn't over-tax; it kills revenue (Reagan Tax Cuts 1981 were based on this)</div>
+    </div>
+    <div class="connect">
+      <div class="arrow">MARKET→POWER</div>
+      <div><strong>Monopoly</strong> → Seller has ALL price power. <strong>Perfect Competition</strong> → Seller has ZERO price power</div>
+    </div>
+    <div class="connect">
+      <div class="arrow">LAW→MARKET</div>
+      <div><strong>Article 19</strong> (right to occupation) → EXCEPTION allows govt to create monopolies like Indian Railways</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ EXAM TRAPS ══════════════════ -->
+<section class="section" id="traps">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(248,113,113,0.1);">⚠️</div>
+    <div>
+      <div class="section-title">Exam Traps</div>
+      <div class="section-sub">Where students lose marks — study these hardest</div>
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚡ TRAP 1: Laffer vs Phillips Curve Shape</div>
+    <ul>
+      <li><strong style="color:var(--gold);">Laffer Curve</strong> = Bell-shaped. Tax Rate vs Tax Revenue.</li>
+      <li><strong style="color:var(--star);">Phillips Curve</strong> = Downward sloping (inverse). Inflation vs Unemployment.</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚡ TRAP 2: Giffen vs Veblen — Same Behaviour, Different Reason</div>
+    <ul>
+      <li>Both show Price ↑ → Demand ↑ (positive slope)</li>
+      <li>Giffen = inferior/necessary goods (poor people, wheat)</li>
+      <li>Veblen = luxury/status goods (rich people, designer items)</li>
+      <li>Examiner will swap the names — don't fall for it!</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚡ TRAP 3: Perfectly Elastic vs Perfectly Inelastic Curves</div>
+    <ul>
+      <li><strong style="color:var(--purple);">Perfectly ELASTIC</strong> = HORIZONTAL line (demand crashes with tiniest price change)</li>
+      <li><strong style="color:var(--red);">Perfectly INELASTIC</strong> = VERTICAL line (demand never changes regardless of price)</li>
+      <li>Students confuse horizontal and vertical — visualise as: elastic = lying flat (relaxed), inelastic = standing rigid (stiff)</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚡ TRAP 4: Shift in Curve vs Movement Along Curve</div>
+    <ul>
+      <li><strong>Movement along curve</strong> = price changes, other factors constant (same curve)</li>
+      <li><strong>Shift of curve</strong> = income changes, substitute prices change, taste changes (whole curve moves)</li>
+      <li>Examiner loves to test which one is happening in a scenario!</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚡ TRAP 5: Complement vs Substitute in Cross Elasticity</div>
+    <ul>
+      <li>Substitutes: Cross elasticity is POSITIVE (if A's price ↑, demand for B ↑)</li>
+      <li>Complements: Cross elasticity is NEGATIVE (if A's price ↑, demand for B ↓)</li>
+      <li>Bread and butter are COMPLEMENTS. Tomato and ketchup are SUBSTITUTES. Know these by heart.</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚡ TRAP 6: Monopolistic Competition Product Type</div>
+    <ul>
+      <li>Monopolistic Competition = SIMILAR but DIFFERENTIATED products (not identical)</li>
+      <li>Perfect Competition = HOMOGENEOUS (identical) products</li>
+      <li>Students mix these two. Toothpaste = Monopolistic. Tomatoes at mandi = Perfect Competition.</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚡ TRAP 7: Speculative Demand and Interest Rates</div>
+    <ul>
+      <li>Interest Rate ↑ → Speculative Demand for money ↓ (people invest instead)</li>
+      <li>Interest Rate ↓ → Speculative Demand ↑ (people hoard cash, wait to invest later)</li>
+      <li>Liquidity Trap = Interest rates SO LOW that increasing money supply has no effect (everyone hoards)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════════════════ EXAMINER'S QUESTIONS ══════════════════ -->
+<section class="section" id="examiner">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(245,197,66,0.1);">🎯</div>
+    <div>
+      <div class="section-title">Examiner's Favourite Questions</div>
+      <div class="section-sub">The angles SSC CGL loves to attack</div>
+    </div>
+  </div>
+
+  <div class="exam-q">
+    <div class="q-num">Q1</div>
+    <div><strong>The Laffer Curve is associated with which concept?</strong><p>Tax Revenue vs Tax Rate. Bell-shaped curve. Named after Arthur Laffer. (Distinguish from Phillips Curve!)</p></div>
+  </div>
+  <div class="exam-q">
+    <div class="q-num">Q2</div>
+    <div><strong>Which goods have upward sloping demand curves? (Asked repeatedly)</strong><p>Giffen Goods (inferior necessities) and Veblen Goods (luxury/status symbols)</p></div>
+  </div>
+  <div class="exam-q">
+    <div class="q-num">Q3</div>
+    <div><strong>CGL 2022: Equilibrium point shifts when...</strong><p>Either demand curve shifts (L or R), or supply curve shifts (L or R), or both shift. Any shift displaces the equilibrium price and quantity.</p></div>
+  </div>
+  <div class="exam-q">
+    <div class="q-num">Q4</div>
+    <div><strong>Perfectly elastic demand curve is represented by...</strong><p>A horizontal line (not vertical). Tiniest price change → demand becomes zero.</p></div>
+  </div>
+  <div class="exam-q">
+    <div class="q-num">Q5</div>
+    <div><strong>Which market structure has the most price-setting power?</strong><p>Monopoly (single seller). Perfect Competition = zero price power (price taker).</p></div>
+  </div>
+  <div class="exam-q">
+    <div class="q-num">Q6</div>
+    <div><strong>Match the column: Market Type → Product characteristic</strong><p>Monopoly→Unique / Oligopoly→Similar-differentiated / Monopolistic→Differentiated / Perfect→Homogeneous</p></div>
+  </div>
+  <div class="exam-q">
+    <div class="q-num">Q7</div>
+    <div><strong>Keynes' speculative motive: relationship with interest rate?</strong><p>Inverse. Interest Rate ↑ → Speculative demand for money ↓. This demand is perfectly elastic.</p></div>
+  </div>
+  <div class="exam-q">
+    <div class="q-num">Q8</div>
+    <div><strong>Indian Railways is an example of which market?</strong><p>Monopoly. Backed by Article 19 which allows government to maintain monopoly without explanation.</p></div>
+  </div>
+  <div class="exam-q">
+    <div class="q-num">Q9</div>
+    <div><strong>Assertion-Reason type: Law of Demand states price and quantity are inversely related BECAUSE consumers' marginal utility diminishes.</strong><p>Both A and R are correct AND R is the correct explanation of A. (Classic A-R trap!)</p></div>
+  </div>
+  <div class="exam-q">
+    <div class="q-num">Q10</div>
+    <div><strong>Bread and Butter are examples of...</strong><p>Complementary goods. Price of bread ↑ → Demand for butter ↓. Cross price elasticity is NEGATIVE.</p></div>
+  </div>
+</section>
+
+<!-- ══════════════════ ACTIVE RECALL ══════════════════ -->
+<section class="section" id="recall">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(45,212,191,0.1);">❓</div>
+    <div>
+      <div class="section-title">Active Recall Section</div>
+      <div class="section-sub">Tap each question — try to answer before revealing</div>
+    </div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> What shape is the Laffer Curve and what is it associated with?</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">Bell-shaped (hour-glass shape). Associated with Tax Rate vs Tax Revenue. Tax rate ↑ increases revenue up to an optimal point, then revenue FALLS due to evasion and lost incentive.</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> Name the 3 parameters required for demand to exist.</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">1. Utility (good must give satisfaction), 2. Affordability (you must have money), 3. Desire/Willingness (you must want it). All 3 must exist together.</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> What is the difference between Giffen and Veblen goods? Give one example each.</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">Giffen = Non-luxurious necessities. Price ↑ → Demand ↑ (because poor people can't afford alternatives). Example: Wheat. Veblen = Luxurious status symbols. Price ↑ → Demand ↑ (because high price = exclusivity = more desirable). Example: iPhone/luxury watches.</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> Which type of curve is perfectly elastic? Which is perfectly inelastic?</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">Perfectly ELASTIC = HORIZONTAL line. Perfectly INELASTIC = VERTICAL line. Remember: elastic = lies flat (horizontal), inelastic = stands stiff (vertical).</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> What happens to the equilibrium point when the demand curve shifts rightward?</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">Equilibrium shifts — new equilibrium is at a HIGHER price and HIGHER quantity. The demand curve moving right (increase in demand) pushes the intersection point up along the supply curve.</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> Fill in the blank: If the price of bread increases, demand for butter will _____</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">DECREASE. They are complementary goods. You eat butter WITH bread. If bread becomes too expensive and people buy less bread, they also buy less butter. Cross price elasticity is negative for complements.</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> Name all 4 market types from fewest to most sellers. Give one example each.</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">1. Monopoly (1 seller) — Indian Railways. 2. Oligopoly (few sellers) — Telecom: Jio/Airtel/Vi. 3. Monopolistic Competition (many, differentiated) — Toothpaste brands. 4. Perfect Competition (many, identical) — Agricultural vegetable markets.</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> What are Keynes' 3 motives for holding money? Who is Keynes and where is he from?</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">John Maynard Keynes — Father of Modern Economics — from England. Three motives: 1. Transaction (daily spending), 2. Precautionary (emergencies), 3. Speculative (hold cash until interest rates fall to invest).</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> Interest rate falls sharply. What happens to speculative demand? What economic phenomenon might occur?</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">Speculative demand for money RISES (people hoard cash, wait to invest later). If rates fall too much, Liquidity Trap occurs — people refuse to invest no matter how much money supply increases. The economy gets stuck.</div>
+  </div>
+
+  <div class="recall-q" onclick="this.classList.toggle('open')">
+    <div class="q-text"><span>❓</span> Rapid Fire: Demand curve slope? Supply curve slope? Laffer Curve shape?</div>
+    <div class="reveal-hint">tap to reveal</div>
+    <div class="answer">Demand = Negative slope (downward). Supply = Positive slope (upward). Laffer = Bell-shaped.</div>
+  </div>
+</section>
+
+<!-- ══════════════════ REVISION LAYERS ══════════════════ -->
+<section class="section" id="revision">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,107,53,0.1);">📚</div>
+    <div>
+      <div class="section-title">Multi-Layer Revision System</div>
+      <div class="section-sub">Pick the layer based on time available</div>
+    </div>
+  </div>
+
+  <div class="layer-tabs">
+    <button class="layer-tab active" onclick="showLayer('l2')">⭐ High-Yield</button>
+    <button class="layer-tab" onclick="showLayer('l3')">⚡ Ultra-Fast</button>
+    <button class="layer-tab" onclick="showLayer('l4')">⏱ 30-Second</button>
+  </div>
+
+  <!-- LAYER 2 -->
+  <div class="layer-content active" id="l2">
+    <div class="card">
+      <div class="card-title" style="color:var(--star);">⭐ High-Yield Revision Notes</div>
+      <ul class="bullet-list">
+        <li><strong style="color:var(--gold);">Laffer Curve</strong> = Bell-shaped. Tax Rate ↑ → Revenue ↑ till peak, then ↓. Given by Arthur Laffer.</li>
+        <li><strong style="color:var(--gold);">Phillips Curve</strong> = Downward sloping. Inflation ↑ → Unemployment ↓. (Inverse, NOT bell-shaped)</li>
+        <li><strong style="color:var(--star);">Demand Curve</strong> = Negative slope. Price ↑ → Demand ↓. Consumer's perspective.</li>
+        <li><strong style="color:var(--green);">Supply Curve</strong> = Positive slope. Price ↑ → Supply ↑. Producer's perspective.</li>
+        <li><strong style="color:var(--teal);">Equilibrium</strong> = Intersection of demand & supply curves. Shifts with any curve movement.</li>
+        <li><strong style="color:var(--red);">Giffen Goods</strong> = Inferior necessities. Price ↑ → Demand ↑. Eg: Wheat for poor.</li>
+        <li><strong style="color:var(--purple);">Veblen Goods</strong> = Luxury status goods. Price ↑ → Demand ↑. Eg: iPhone.</li>
+        <li><strong style="color:var(--star);">PED = ∞</strong> = Perfectly Elastic = Horizontal curve. PED = 0 = Perfectly Inelastic = Vertical curve.</li>
+        <li><strong style="color:var(--orange);">Substitutes</strong> = Positive cross elasticity. Complements = Negative cross elasticity.</li>
+        <li><strong style="color:var(--gold);">Keynes' Motives</strong>: Transaction | Precautionary | Speculative. (Interest Rate ↓ → Speculative Demand ↑)</li>
+        <li><strong style="color:var(--red);">Monopoly</strong> = 1 seller, entry barrier. Indian Railways. Article 19 allows government monopoly.</li>
+        <li><strong style="color:var(--orange);">Oligopoly</strong> = Few sellers. Telecom (Jio/Airtel/Vi).</li>
+        <li><strong style="color:var(--gold);">Monopolistic</strong> = Many sellers, differentiated products. Toothpaste brands.</li>
+        <li><strong style="color:var(--green);">Perfect Competition</strong> = Many sellers, homogeneous goods, free entry/exit. Vegetable mandi.</li>
+        <li><strong style="color:var(--teal);">Liquidity Trap</strong> = Very low interest → people hoard cash → speculative demand perfectly elastic.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LAYER 3 -->
+  <div class="layer-content" id="l3">
+    <div class="speed-grid">
+      <div class="speed-item"><div class="k">Laffer Curve</div><div class="v">Bell-shaped | Tax Rate vs Revenue</div></div>
+      <div class="speed-item"><div class="k">Phillips Curve</div><div class="v">Downward | Inflation vs Unemployment</div></div>
+      <div class="speed-item"><div class="k">Demand Curve</div><div class="v">Negative slope | Price↑ Demand↓</div></div>
+      <div class="speed-item"><div class="k">Supply Curve</div><div class="v">Positive slope | Price↑ Supply↑</div></div>
+      <div class="speed-item"><div class="k">Giffen Goods</div><div class="v">Inferior necessity | Wheat | Non-luxury exception</div></div>
+      <div class="speed-item"><div class="k">Veblen Goods</div><div class="v">Luxury status | iPhone | Price↑ Demand↑</div></div>
+      <div class="speed-item"><div class="k">Perfectly Elastic</div><div class="v">PED=∞ | HORIZONTAL curve</div></div>
+      <div class="speed-item"><div class="k">Perfectly Inelastic</div><div class="v">PED=0 | VERTICAL curve</div></div>
+      <div class="speed-item"><div class="k">Substitutes</div><div class="v">+ve cross elasticity | tomato & ketchup</div></div>
+      <div class="speed-item"><div class="k">Complements</div><div class="v">-ve cross elasticity | bread & butter</div></div>
+      <div class="speed-item"><div class="k">Keynes Motives</div><div class="v">Transaction | Precautionary | Speculative</div></div>
+      <div class="speed-item"><div class="k">Speculative Demand</div><div class="v">Interest Rate↓ → Demand↑ (perfectly elastic)</div></div>
+      <div class="speed-item"><div class="k">Liquidity Trap</div><div class="v">Low interest → hoard cash → money stuck</div></div>
+      <div class="speed-item"><div class="k">Monopoly</div><div class="v">1 seller | Indian Railways | Art.19</div></div>
+      <div class="speed-item"><div class="k">Oligopoly</div><div class="v">Few sellers | Jio/Airtel/Vi</div></div>
+      <div class="speed-item"><div class="k">Monopolistic</div><div class="v">Many sellers | differentiated | Toothpaste</div></div>
+      <div class="speed-item"><div class="k">Perfect Competition</div><div class="v">Many | Homogeneous | Free entry | Mandi</div></div>
+      <div class="speed-item"><div class="k">Equilibrium</div><div class="v">Demand curve ∩ Supply curve</div></div>
+    </div>
+  </div>
+
+  <!-- LAYER 4 -->
+  <div class="layer-content" id="l4">
+    <div class="final-sheet">
+      <h3>⏱ 30-SECOND REVIEW</h3>
+      <ul class="bullet-list">
+        <li>Laffer = Bell. Phillips = Downward. (NEVER confuse)</li>
+        <li>Demand = Down slope. Supply = Up slope. Meet = Equilibrium.</li>
+        <li>Giffen = Poor+Necessity. Veblen = Rich+Luxury. Both show Price↑→Demand↑.</li>
+        <li>Elastic = Horizontal. Inelastic = Vertical.</li>
+        <li>Substitutes = +ve cross elasticity. Complements = -ve.</li>
+        <li>Keynes: Transaction + Precautionary + Speculative. Interest↓ = Speculative↑ = Liquidity Trap.</li>
+        <li>Monopoly(1)→Oligopoly(few)→Monopolistic(many+diff)→Perfect(many+same)</li>
+        <li>Indian Railways = Monopoly (Article 19 protection)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ LAST NIGHT ══════════════════ -->
+<section class="section" id="lastnight">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,107,53,0.1);">🌙</div>
+    <div>
+      <div class="section-title">Last-Night-Before-Exam Sheet</div>
+      <div class="section-sub">Read this once. Sleep well. Walk in confident.</div>
+    </div>
+  </div>
+
+  <div class="final-sheet">
+    <h3>🌙 THE ONLY THINGS THAT MATTER TONIGHT</h3>
+    <ul class="bullet-list">
+      <li><strong style="color:var(--gold);">Laffer</strong> = Bell-shaped tax curve. Beyond peak → revenue falls. Arthur Laffer.</li>
+      <li><strong style="color:var(--star);">Phillips</strong> = Downward slope. Inflation vs Unemployment.</li>
+      <li><strong style="color:var(--text);">Demand</strong> = Negative slope (consumer). <strong style="color:var(--text);">Supply</strong> = Positive slope (producer).</li>
+      <li><strong style="color:var(--red);">Giffen</strong> (non-luxury, wheat) ≠ <strong style="color:var(--purple);">Veblen</strong> (luxury, iPhone). Both = Price↑ Demand↑.</li>
+      <li><strong style="color:var(--purple);">Perfectly Elastic</strong> = Horizontal. <strong style="color:var(--red);">Perfectly Inelastic</strong> = Vertical.</li>
+      <li><strong style="color:var(--teal);">Substitutes</strong> (+ve cross elasticity) vs <strong style="color:var(--orange);">Complements</strong> (-ve cross elasticity).</li>
+      <li><strong style="color:var(--gold);">Keynes</strong> (England) — Transaction | Precautionary | Speculative money motives.</li>
+      <li><strong style="color:var(--purple);">Liquidity Trap</strong> = Low interest → people hoard money → economy stagnates.</li>
+      <li><strong style="color:var(--red);">Monopoly</strong> = 1 seller (Indian Railways, Art. 19). <strong style="color:var(--orange);">Oligopoly</strong> = Few (Telecom).</li>
+      <li><strong style="color:var(--gold);">Monopolistic</strong> = Many + Differentiated (Toothpaste). <strong style="color:var(--green);">Perfect</strong> = Many + Homogeneous (Mandi).</li>
+      <li><strong style="color:var(--teal);">CGL 2022</strong> asked about equilibrium shifting — it shifts when any curve shifts left or right.</li>
+    </ul>
+    <div style="margin-top:1.25rem;padding:1rem;background:rgba(245,197,66,0.06);border-radius:10px;text-align:center;">
+      <p style="font-family:var(--head);font-size:0.85rem;color:var(--gold);">🎯 You've studied this. You know this. Trust your preparation.</p>
+    </div>
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<footer>
+  Built for SSC CGL FRB Series · Microeconomics — Demand, Supply & Markets · Revise 20–100× until it's automatic.
+</footer>
+
+<script>
+  function showLayer(id) {
+    document.querySelectorAll('.layer-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.layer-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+
+</body>
+</html>

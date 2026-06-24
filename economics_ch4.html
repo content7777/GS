@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inflation &amp; Unemployment — SSC CGL Revision Vault</title>
+<style>
+  :root{
+    --bg: #0b0e14;
+    --bg-raised: #11151f;
+    --bg-card: #141925;
+    --ink: #ecedf3;
+    --ink-dim: #9aa3b8;
+    --ink-faint: #5e6678;
+    --hairline: #232a3a;
+    --rupee: #e8b54a;       /* gold — inflation / money */
+    --rupee-dim: #4a3d22;
+    --teal: #4fc3a1;        /* deflation / good economy */
+    --teal-dim: #1c3a33;
+    --red: #e2685c;         /* danger / traps / stagflation */
+    --red-dim: #3a2422;
+    --violet: #9d8cf2;      /* unemployment family */
+    --violet-dim: #2a2540;
+    --serif: "Source Serif 4", "Georgia", "Iowan Old Style", serif;
+    --sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(232,181,74,0.07), transparent 60%),
+      radial-gradient(ellipse 700px 600px at 100% 20%, rgba(157,140,242,0.06), transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ============ TICKER (signature element) ============ */
+  .ticker-wrap{
+    position:sticky; top:0; z-index:100;
+    background:#070911;
+    border-bottom:1px solid var(--hairline);
+    overflow:hidden;
+    white-space:nowrap;
+    padding:7px 0;
+  }
+  .ticker{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.02em;
+    color:var(--ink-faint);
+    animation: scroll-left 38s linear infinite;
+    padding-left:100%;
+  }
+  .ticker span{margin-right:38px;}
+  .ticker b{color:var(--rupee); font-weight:600;}
+  .ticker .v{color:var(--violet);}
+  .ticker .r{color:var(--red);}
+  @keyframes scroll-left{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-100%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker{animation:none; padding-left:16px;}
+  }
+
+  /* ============ TOP NAV ============ */
+  .topnav{
+    position:sticky; top:33px; z-index:99;
+    background:rgba(11,14,20,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--hairline);
+    display:flex;
+    gap:2px;
+    overflow-x:auto;
+    padding:0 16px;
+    scrollbar-width:thin;
+  }
+  .topnav::-webkit-scrollbar{height:4px;}
+  .topnav::-webkit-scrollbar-thumb{background:var(--hairline);}
+  .topnav a{
+    flex-shrink:0;
+    color:var(--ink-dim);
+    text-decoration:none;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.03em;
+    text-transform:uppercase;
+    padding:13px 11px;
+    border-bottom:2px solid transparent;
+    transition:color .15s, border-color .15s;
+    white-space:nowrap;
+  }
+  .topnav a:hover{color:var(--rupee); border-bottom-color:var(--rupee-dim);}
+  .topnav a.active{color:var(--rupee); border-bottom-color:var(--rupee);}
+
+  /* ============ LAYOUT ============ */
+  .wrap{max-width:880px; margin:0 auto; padding:0 20px 120px;}
+
+  /* ============ HERO ============ */
+  .hero{
+    padding:64px 0 40px;
+    border-bottom:1px solid var(--hairline);
+  }
+  .hero .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--rupee);
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-bottom:18px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .hero .eyebrow::before{
+    content:""; width:7px; height:7px; border-radius:50%;
+    background:var(--rupee); box-shadow:0 0 12px var(--rupee);
+  }
+  .hero h1{
+    font-family:var(--serif);
+    font-size:clamp(34px, 6vw, 54px);
+    line-height:1.08;
+    margin:0 0 16px;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{color:var(--rupee); font-style:normal;}
+  .hero h1 .un{color:var(--violet);}
+  .hero p.lede{
+    font-size:16px;
+    color:var(--ink-dim);
+    max-width:560px;
+    margin:0 0 28px;
+  }
+  .hero-meta{display:flex; gap:22px; flex-wrap:wrap;}
+  .hero-meta .stat{display:flex; flex-direction:column; gap:2px;}
+  .hero-meta .stat .n{font-family:var(--serif); font-size:22px; color:var(--ink);}
+  .hero-meta .stat .l{font-family:var(--mono); font-size:10.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.08em;}
+
+  /* ============ SECTION SCAFFOLDING ============ */
+  section.block{padding:56px 0; border-bottom:1px solid var(--hairline);}
+  section.block:last-of-type{border-bottom:none;}
+  .block-head{display:flex; align-items:baseline; gap:14px; margin-bottom:28px;}
+  .block-head .num{font-family:var(--mono); font-size:13px; color:var(--ink-faint);}
+  .block-head h2{
+    font-family:var(--serif);
+    font-size:28px;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .block-sub{color:var(--ink-dim); font-size:14.5px; margin:-18px 0 26px; max-width:600px;}
+
+  /* tags */
+  .tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-family:var(--mono); font-size:10.5px; font-weight:600;
+    letter-spacing:0.04em; text-transform:uppercase;
+    padding:3px 9px; border-radius:20px;
+    border:1px solid currentColor;
+  }
+  .tag.must{color:var(--red); background:var(--red-dim);}
+  .tag.imp{color:var(--rupee); background:var(--rupee-dim);}
+  .tag.good{color:var(--teal); background:var(--teal-dim);}
+
+  /* cards */
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--hairline);
+    border-radius:10px;
+    padding:22px 24px;
+    margin-bottom:16px;
+  }
+  .card h3{
+    font-family:var(--serif); font-size:18px; margin:0 0 10px;
+    display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+  }
+  .card p{margin:0 0 10px; color:var(--ink); font-size:14.5px;}
+  .card p:last-child{margin-bottom:0;}
+  .card ul, .card ol{margin:8px 0 0; padding-left:20px;}
+  .card li{margin-bottom:6px; font-size:14.5px;}
+  .card .hook{
+    margin-top:12px; padding:12px 14px;
+    background:rgba(232,181,74,0.06);
+    border-left:3px solid var(--rupee);
+    border-radius:0 6px 6px 0;
+    font-size:13.5px; color:var(--ink-dim);
+  }
+  .card .hook b{color:var(--rupee);}
+
+  /* memory palace */
+  .palace{
+    background:linear-gradient(160deg, var(--bg-card), #0e1320);
+    border:1px solid var(--hairline);
+    border-radius:14px;
+    padding:28px 26px;
+    position:relative;
+    overflow:hidden;
+  }
+  .palace::before{
+    content:"🧠"; position:absolute; top:-10px; right:6px; font-size:120px; opacity:0.04;
+  }
+  .palace h3{font-family:var(--serif); font-size:20px; color:var(--rupee); margin:0 0 6px;}
+  .palace .room{
+    display:flex; gap:16px; margin:18px 0; padding-bottom:18px;
+    border-bottom:1px dashed var(--hairline);
+  }
+  .palace .room:last-child{border-bottom:none; padding-bottom:0; margin-bottom:0;}
+  .palace .room .marker{
+    flex-shrink:0; width:34px; height:34px; border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px; background:var(--rupee-dim); border:1px solid var(--rupee);
+  }
+  .palace .room .body b{display:block; color:var(--ink); font-size:14.5px; margin-bottom:3px;}
+  .palace .room .body span{color:var(--ink-dim); font-size:13.5px;}
+
+  /* exam traps */
+  .trap{
+    background:var(--red-dim);
+    border:1px solid rgba(226,104,92,0.35);
+    border-radius:10px;
+    padding:18px 20px;
+    margin-bottom:14px;
+  }
+  .trap .vs{
+    display:flex; align-items:center; gap:14px; margin:10px 0;
+    font-family:var(--mono); font-size:13px;
+  }
+  .trap .vs .a, .trap .vs .b{flex:1; padding:8px 10px; background:rgba(0,0,0,0.2); border-radius:6px;}
+  .trap .vs .a{color:var(--rupee);}
+  .trap .vs .b{color:var(--violet);}
+  .trap .vs .x{color:var(--ink-faint); font-size:11px;}
+  .trap h4{margin:0 0 6px; font-size:15px; color:var(--red); display:flex; gap:8px; align-items:center;}
+
+  /* table */
+  table{width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px;}
+  th{
+    text-align:left; font-family:var(--mono); font-size:11px; text-transform:uppercase;
+    letter-spacing:0.05em; color:var(--ink-faint); padding:8px 12px;
+    border-bottom:1px solid var(--hairline);
+  }
+  td{padding:10px 12px; border-bottom:1px solid var(--hairline); color:var(--ink);}
+  tr:last-child td{border-bottom:none;}
+  .table-wrap{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+
+  /* recall / accordion */
+  details.recall{
+    background:var(--bg-card); border:1px solid var(--hairline);
+    border-radius:8px; margin-bottom:8px; overflow:hidden;
+  }
+  details.recall summary{
+    padding:13px 16px; cursor:pointer; font-size:14px; color:var(--ink);
+    list-style:none; display:flex; gap:10px; align-items:flex-start;
+    font-weight:500;
+  }
+  details.recall summary::-webkit-details-marker{display:none;}
+  details.recall summary::before{
+    content:"?"; flex-shrink:0; width:20px; height:20px; border-radius:50%;
+    background:var(--violet-dim); color:var(--violet); font-size:12px; font-weight:700;
+    display:flex; align-items:center; justify-content:center; margin-top:1px;
+  }
+  details.recall[open] summary::before{content:"✓"; background:var(--teal-dim); color:var(--teal);}
+  details.recall .answer{
+    padding:0 16px 16px 46px; color:var(--rupee); font-size:13.5px;
+    border-top:1px dashed var(--hairline); margin-top:0; padding-top:12px;
+  }
+
+  /* fast revision strips */
+  .strip{
+    display:flex; gap:10px; align-items:flex-start;
+    padding:11px 0; border-bottom:1px dashed var(--hairline);
+    font-size:14px;
+  }
+  .strip:last-child{border-bottom:none;}
+  .strip .k{flex:0 0 38%; color:var(--rupee); font-weight:600; font-size:13.5px;}
+  .strip .v{flex:1; color:var(--ink-dim);}
+
+  /* ultra fast grid */
+  .ultra-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px;}
+  @media(max-width:560px){.ultra-grid{grid-template-columns:1fr;}}
+  .ultra-grid .cell{
+    background:var(--bg-raised); border:1px solid var(--hairline); border-radius:8px;
+    padding:12px 14px;
+  }
+  .ultra-grid .cell .t{font-family:var(--mono); font-size:10px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;}
+  .ultra-grid .cell .d{font-size:13.5px; color:var(--ink);}
+
+  /* 30 sec sheet */
+  .sec30{
+    background:radial-gradient(ellipse at top left, rgba(232,181,74,0.08), transparent 60%), var(--bg-card);
+    border:1.5px solid var(--rupee-dim);
+    border-radius:12px; padding:24px;
+  }
+  .sec30 .row{display:flex; gap:10px; padding:9px 0; border-bottom:1px solid var(--hairline); align-items:baseline;}
+  .sec30 .row:last-child{border-bottom:none;}
+  .sec30 .row .lab{font-family:var(--mono); font-size:11px; color:var(--rupee); flex:0 0 130px; text-transform:uppercase; letter-spacing:0.04em;}
+  .sec30 .row .val{font-size:14px; color:var(--ink);}
+
+  /* last night sheet */
+  .lastnight{
+    background:linear-gradient(135deg, rgba(226,104,92,0.08), rgba(157,140,242,0.06));
+    border:1.5px solid var(--red); border-radius:12px; padding:26px;
+  }
+  .lastnight h3{color:var(--red); font-family:var(--serif); margin-top:0;}
+  .lastnight .item{display:flex; gap:10px; margin-bottom:10px; font-size:14px;}
+  .lastnight .item::before{content:"▸"; color:var(--red); flex-shrink:0;}
+
+  /* progress dots */
+  .layer-pills{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px;}
+  .layer-pills a{
+    font-family:var(--mono); font-size:11px; padding:6px 12px; border-radius:20px;
+    background:var(--bg-raised); border:1px solid var(--hairline); color:var(--ink-dim);
+    text-decoration:none;
+  }
+  .layer-pills a:hover{border-color:var(--rupee); color:var(--rupee);}
+
+  /* connections / arrows */
+  .chain{
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    font-size:14px; padding:14px 0;
+  }
+  .chain .node{
+    padding:7px 13px; border-radius:7px; background:var(--bg-raised);
+    border:1px solid var(--hairline); font-weight:500;
+  }
+  .chain .arrow{color:var(--rupee); font-size:16px;}
+
+  blockquote{
+    border-left:3px solid var(--violet);
+    margin:14px 0; padding:4px 0 4px 16px;
+    color:var(--ink-dim); font-size:13.5px; font-style:italic;
+  }
+
+  code{
+    font-family:var(--mono); background:var(--bg-raised);
+    padding:2px 6px; border-radius:4px; font-size:0.92em; color:var(--rupee);
+  }
+
+  footer{
+    padding:50px 0 30px; text-align:center;
+    color:var(--ink-faint); font-size:12.5px; font-family:var(--mono);
+  }
+
+  ::selection{background:var(--rupee-dim); color:var(--rupee);}
+
+  /* mobile */
+  @media(max-width:600px){
+    .hero{padding:44px 0 30px;}
+    section.block{padding:40px 0;}
+    .block-head h2{font-size:23px;}
+    .ultra-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>🔥 <b>Phillips Curve</b> fails in <span class="r">stagflation</span></span>
+    <span>MV = PT — <b>Irving Fisher</b></span>
+    <span>WPI base year <b>2011-12</b> · CPI base year <b>2012</b></span>
+    <span>Sri Lanka 2022 — inflation <b>~44%</b> = <span class="r">Hyperinflation</span></span>
+    <span>8 Core Industries → <b>40%</b> weight in IIP</span>
+    <span>Disguised unemployment → marginal productivity = <b>0</b></span>
+    <span><span class="v">CPI Combined</span> used by RBI to target inflation</span>
+    <span>🔥 <b>Phillips Curve</b> fails in <span class="r">stagflation</span></span>
+    <span>MV = PT — <b>Irving Fisher</b></span>
+    <span>WPI base year <b>2011-12</b> · CPI base year <b>2012</b></span>
+    <span>Sri Lanka 2022 — inflation <b>~44%</b> = <span class="r">Hyperinflation</span></span>
+    <span>8 Core Industries → <b>40%</b> weight in IIP</span>
+  </div>
+</div>
+
+<nav class="topnav" id="topnav">
+  <a href="#palace">Memory Palace</a>
+  <a href="#complete">Complete Notes</a>
+  <a href="#hooks">Memory Hooks</a>
+  <a href="#connections">Connections</a>
+  <a href="#traps">Exam Traps</a>
+  <a href="#examiner">Examiner's Mind</a>
+  <a href="#recall">Active Recall</a>
+  <a href="#highyield">High-Yield</a>
+  <a href="#ultrafast">Ultra-Fast</a>
+  <a href="#sec30">30-Second</a>
+  <a href="#lastnight">Last Night</a>
+</nav>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">SSC CGL · Indian Economy · Revision Vault</div>
+    <h1><em>Inflation</em> &amp; <span class="un">Unemployment</span></h1>
+    <p class="lede">The complete retention system — built to survive 50 revisions and still fire instantly inside the exam hall. Everything from the FRB lecture, restructured for memory, not just understanding.</p>
+    <div class="hero-meta">
+      <div class="stat"><span class="n">11</span><span class="l">Layers of notes</span></div>
+      <div class="stat"><span class="n">7</span><span class="l">Types of unemployment</span></div>
+      <div class="stat"><span class="n">5</span><span class="l">Memory palace rooms</span></div>
+      <div class="stat"><span class="n">1</span><span class="l">Equation that runs the economy</span></div>
+    </div>
+  </div>
+
+  <!-- ============ MEMORY PALACE ============ -->
+  <section class="block" id="palace">
+    <div class="block-head"><span class="num">01</span><h2>Chapter Memory Palace</h2></div>
+    <p class="block-sub">Walk through this every time before you start revising. It's a single street — <b>Inflation Bazaar</b> — five shops, one storyline.</p>
+
+    <div class="palace">
+      <h3>🏙️ Inflation Bazaar — walk it in your head</h3>
+      <p style="color:var(--ink-dim); font-size:14px; margin-bottom:4px;">You're walking down a market street. Every shop sells the same Parle-G packet, but at a different price. That's the whole chapter.</p>
+
+      <div class="room">
+        <div class="marker">🍪</div>
+        <div class="body">
+          <b>Shop 1 — The Parle-G Counter (Inflation itself)</b>
+          <span>Ten years ago the packet cost ₹5. Today it's ₹10 — same biscuits, more rupees. The shopkeeper hasn't gotten richer; your money has gotten weaker. This is <b>inflation</b>: general rise in prices, fall in purchasing power. Pin this image — it's the root of every other room.</span>
+        </div>
+      </div>
+
+      <div class="room">
+        <div class="marker">🤝</div>
+        <div class="body">
+          <b>Shop 2 — The Moneylender's Window (Debtor vs Lender)</b>
+          <span>You lend a friend ₹10,000 to buy a phone. A year later he repays exactly ₹10,000 — but that same phone now costs ₹12,000. You've lost ₹2,000 of real value. <b>Debtor wins, lender loses</b> in inflation — money sitting still is melting ice. (This is also why salary "increases" can secretly be pay cuts — the <b>money illusion</b>.)</span>
+        </div>
+      </div>
+
+      <div class="room">
+        <div class="marker">⚖️</div>
+        <div class="body">
+          <b>Shop 3 — The Tug-of-War Yard (Demand-pull vs Cost-push)</b>
+          <span>On one side, a crowd with fat wallets pulling a rope toward "MORE STUFF" — too much money chasing too few goods (<b>demand-pull</b>). On the other side, the supply truck has a flat tyre — war, bad monsoon, expensive electricity — so less reaches the market and price climbs anyway (<b>cost-push</b>). Same result, opposite cause.</span>
+        </div>
+      </div>
+
+      <div class="room">
+        <div class="marker">📊</div>
+        <div class="body">
+          <b>Shop 4 — The Measuring Office (WPI, CPI, IIP)</b>
+          <span>A clerk with two ledgers: one tracks <b>factory goods only</b> (WPI — no services), the other tracks <b>your household basket</b> including food and services (CPI — RBI's favourite). A third ledger in the corner tracks 8 "load-bearing" industries that everything else depends on (<b>IIP</b>) — electricity, steel, crude oil, cement, the pillars holding the whole office roof up.</span>
+        </div>
+      </div>
+
+      <div class="room">
+        <div class="marker">🧍‍♂️</div>
+        <div class="body">
+          <b>Shop 5 — The Unemployment Office (the seven characters)</b>
+          <span>Seven people sit in the waiting room, each unemployed for a different reason — the skill-mismatched one, the picky job-hopper, the two extra farmhands doing nothing, the recession victim, the off-season farmer, the degree-holder in the city, and outside, a strange sign reads <b>"Stagflation Ward"</b> — where prices rise AND the waiting room is overflowing at once, the one room that breaks every rule in the other shops.</span>
+        </div>
+      </div>
+
+      <p style="margin-top:18px; color:var(--ink-faint); font-size:13px; font-family:var(--mono);">→ Walk the street again right now in your head before reading further. Bazaar → Window → Yard → Office → Waiting Room.</p>
+    </div>
+  </section>
+
+  <!-- ============ COMPLETE REVISION NOTES ============ -->
+  <section class="block" id="complete">
+    <div class="block-head"><span class="num">02</span><h2>Complete Revision Notes</h2></div>
+    <p class="block-sub">Nothing dropped. Read once slowly, then never need to read this slowly again.</p>
+
+    <div class="card">
+      <h3>What is Inflation? <span class="tag must">🔥 Must Know</span></h3>
+      <p><b>Definition:</b> A sustained <b>increase in the general price level</b> of goods and services in an economy over time.</p>
+      <ul>
+        <li>Example used in lecture: a Parle-G packet that cost ₹5 ten years ago costs ₹10 today — same product, more money needed.</li>
+        <li>Direct effect: <b>purchasing power decreases</b> — the same ₹100 buys fewer goods as time passes.</li>
+      </ul>
+      <div class="hook"><b>Hook:</b> Inflation = your money on a slow leak. The number in your pocket doesn't fall, but what it can buy does.</div>
+    </div>
+
+    <div class="card">
+      <h3>Money Illusion <span class="tag imp">⭐ Important</span></h3>
+      <p>People feel richer when their <b>nominal</b> income rises, even if their <b>real</b> income (purchasing power) has fallen because of inflation.</p>
+      <ul>
+        <li>Example: Salary was ₹20,000 five years ago, now ₹30,000. You feel richer — but if prices rose faster than your salary, you can actually buy <b>less</b> than before.</li>
+        <li>Conclusion drawn in lecture: money should not sit idle in a bank account, because its real value keeps eroding under inflation.</li>
+        <li>This concept was first put forward by <b>Irving Fisher</b> in his work on money illusion.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Debtor vs Lender under Inflation <span class="tag must">🔥 Must Know</span></h3>
+      <p>Inflation benefits the <b>debtor/borrower</b> and hurts the <b>creditor/lender</b>.</p>
+      <ul>
+        <li>Example: You lend ₹10,000 today. A year later, you're repaid exactly ₹10,000 — but the phone that cost ₹10,000 a year ago now costs ₹12,000.</li>
+        <li>The lender effectively loses ₹2,000 of real value; the borrower effectively gained that value by holding the money instead of repaying it sooner.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Causes of Inflation — Two Types <span class="tag must">🔥 Must Know</span></h3>
+      <table>
+        <tr><th>Type</th><th>Driven by</th><th>Mechanism</th></tr>
+        <tr><td><b>Demand-Pull Inflation</b></td><td>Demand side</td><td>Too much money/demand chasing too few goods. Classic phrase: <i>"Too many rupees chasing too few goods."</i> e.g., salary suddenly doubles → people spend more → supply unchanged → prices rise.</td></tr>
+        <tr><td><b>Cost-Push Inflation</b></td><td>Supply side</td><td>Cost of factors of production rises (or supply falls) while demand stays the same → producers raise prices to cover costs. e.g., Russia–Ukraine war disrupting wheat exports; poor monsoon cutting agricultural supply; rising electricity/server costs raising a course's fee.</td></tr>
+      </table>
+      <p style="margin-top:10px;">Either demand rises <b>or</b> supply falls — both end in the same outcome: higher prices.</p>
+    </div>
+
+    <div class="card">
+      <h3>Measuring Inflation — Indices <span class="tag must">🔥 Must Know</span></h3>
+      <div class="table-wrap">
+      <table>
+        <tr><th>Index</th><th>Full Form</th><th>Focus</th><th>Base Year</th><th>Published By</th><th>Parent Ministry</th></tr>
+        <tr><td><b>WPI</b></td><td>Wholesale Price Index</td><td>Manufactured/wholesale goods only. Does <b>not</b> capture services.</td><td>2011–12</td><td>Office of Economic Adviser (OEA)</td><td>Ministry of Commerce &amp; Industry</td></tr>
+        <tr><td><b>CPI</b></td><td>Consumer Price Index</td><td>Food items get highest weightage; also includes services.</td><td>2012</td><td>NSO (National Statistical Office)</td><td>MOSPI (Ministry of Statistics &amp; Programme Implementation)</td></tr>
+        <tr><td><b>IIP</b></td><td>Index of Industrial Production</td><td>Industrial output, incl. 8 Core Industries (40% weight)</td><td>—</td><td>NSO</td><td>MOSPI</td></tr>
+      </table>
+      </div>
+      <ul>
+        <li><b>RBI uses CPI Combined</b> to target/manage inflation through monetary policy (covered in the next lecture on Money &amp; Banking).</li>
+        <li>CPI is published in multiple variants: <b>Industrial Worker, Agricultural Worker, Rural Worker</b> (all three by the <b>Labour Bureau</b>, Ministry of Labour) and <b>CPI Urban, CPI Rural, CPI Combined</b> (by NSO/MOSPI — this is the one RBI uses).</li>
+      </ul>
+      <div class="hook"><b>Hook:</b> WPI = the factory's price tag (goods only). CPI = your shopping basket (goods + services, food-heavy). RBI shops from the CPI basket.</div>
+    </div>
+
+    <div class="card">
+      <h3>Types of Inflation — by Rate of Increase <span class="tag must">🔥 Must Know</span></h3>
+      <table>
+        <tr><th>Type</th><th>Approx. Rate</th></tr>
+        <tr><td>Creeping Inflation</td><td>~3–4%</td></tr>
+        <tr><td>Walking Inflation</td><td>~4–10%</td></tr>
+        <tr><td>Running/Galloping Inflation</td><td>~10–20% (some sources extend to 20–100%)</td></tr>
+        <tr><td><b>Hyperinflation</b></td><td>&gt; 100% — completely beyond control</td></tr>
+      </table>
+      <p>No single universally fixed boundary exists between these — ranges are approximate and used for conceptual classification.</p>
+      <p><b>Real example:</b> Sri Lanka's inflation rate reached around <b>44% by 2022</b> during its economic crisis (galloping/near-hyper territory). India's inflation rate around the time of the lecture was referenced near <b>5.1%</b>.</p>
+    </div>
+
+    <div class="card">
+      <h3>Disinflation vs Deflation <span class="tag must">🔥 Must Know — frequently confused</span></h3>
+      <ul>
+        <li><b>Deflation:</b> The exact opposite of inflation — prices of goods actually <b>fall</b>; purchasing power <b>increases</b>. Rare in practice.</li>
+        <li><b>Disinflation:</b> Still a <b>type of inflation</b> — prices are still rising, but the <b>rate</b> of inflation is slowing down. E.g., inflation moving 5% → 4% → 3% → 2%: still positive inflation every year, but decelerating. That deceleration itself is called disinflation.</li>
+      </ul>
+      <div class="hook"><b>Hook:</b> Deflation = car reversing. Disinflation = car still moving forward, just lifting its foot off the accelerator.</div>
+    </div>
+
+    <div class="card">
+      <h3>Phillips Curve &amp; the Inflation–Unemployment Relationship <span class="tag must">🔥 Must Know</span></h3>
+      <p>Normally, inflation and unemployment have an <b>inverse relationship</b> (proposed by <b>Phillips</b>): as inflation rises, unemployment falls, and vice versa.</p>
+      <ul>
+        <li><b>Why:</b> Inflation usually signals rising demand → money flows to producers → production must increase → humans are needed to run that increased production (machines still need operators) → employment rises, unemployment falls.</li>
+        <li>Conclusion in lecture: a little inflation is actually good for the economy — like salt in a vegetable. Too little (or none) is bad; too much (Sri Lanka-style, ~44%+) is also bad.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Stagflation <span class="tag must">🔥 Must Know — high PYQ frequency</span></h3>
+      <p><b>Definition:</b> A situation where <b>both inflation and unemployment are high simultaneously</b> — the Phillips Curve relationship <b>breaks down/fails</b>.</p>
+      <ul>
+        <li>Typically caused by <b>cost-push</b> factors — e.g., poor monsoon, war-like global conditions — pushing prices up while economic activity stalls and jobs aren't created.</li>
+        <li><b>Historical examples cited:</b> The <b>Great Depression (1929–39)</b> and the <b>Great Recession (2008)</b> showed this kind of combined distress (note: lecture uses these as examples of severe simultaneous economic pain associated with the stagflation-type concept).</li>
+        <li>Considered the <b>most damaging</b> macroeconomic state — high prices <b>and</b> high joblessness together, with no offsetting benefit.</li>
+      </ul>
+      <div class="hook"><b>Hook:</b> Stagflation = the worst of both worlds at the same party — expensive food, AND no one has a job to pay for it.</div>
+    </div>
+
+    <div class="card">
+      <h3>Index of Industrial Production (IIP) &amp; 8 Core Industries <span class="tag imp">⭐ Important</span></h3>
+      <p>IIP measures industrial output; published by <b>NSO</b>. The <b>8 Core Industries</b> — those other industries critically depend on — carry <b>40% weight</b> in the IIP basket.</p>
+      <ul>
+        <li><b>Electricity</b> — needed almost everywhere; factories halt without it.</li>
+        <li><b>Steel</b> — backbone of the manufacturing sector; machinery becomes costlier without it.</li>
+        <li><b>Crude Oil</b> — base for refinery products, including jet fuel.</li>
+        <li><b>Natural Gas, Cement, Fertilizers</b> — agriculture and construction depend on these.</li>
+        <li>(Lecture lists these as the core dependency chain; the standard list of 8 core industries also includes Coal and Refinery Products.)</li>
+      </ul>
+      <div class="hook"><b>Hook:</b> Think of these 8 as the <b>pillars</b> holding up the entire industrial building — knock one out (say, electricity) and everything resting on it wobbles.</div>
+    </div>
+
+    <div class="card">
+      <h3>Types of Unemployment — All 7 <span class="tag must">🔥 Must Know — very high PYQ frequency</span></h3>
+
+      <p><b>1. Structural Unemployment</b></p>
+      <ul>
+        <li>Mismatch between the <b>skills workers have</b> and the <b>skills jobs require</b>.</li>
+        <li>Example: technological advancement like AI or machinery replacing workers who lack the new required skills (e.g., machinery replacing farm labour).</li>
+      </ul>
+
+      <p><b>2. Frictional Unemployment</b></p>
+      <ul>
+        <li>Also called <b>voluntary unemployment</b> or <b>search unemployment</b>.</li>
+        <li>Person already has a job but is searching for a better one — wrong location, undesired salary, etc. They <b>could</b> work but are choosing not to, in search of better prospects.</li>
+        <li>Example: SSC selects with a job already, but waiting for a "home posting" / better location.</li>
+      </ul>
+
+      <p><b>3. Disguised Unemployment</b></p>
+      <ul>
+        <li>People <b>appear</b> employed but their <b>marginal productivity is zero</b> — removing them changes nothing about output.</li>
+        <li>Example: 5 labourers on a farm produce 1 tonne of wheat; remove 2 of them, and output is still 1 tonne. Those 2 were disguised unemployed.</li>
+        <li>Commonly seen in India's <b>agriculture sector</b>.</li>
+      </ul>
+
+      <p><b>4. Cyclical Unemployment</b></p>
+      <ul>
+        <li>Tied to the <b>business cycle</b> — boom, slowdown, recession, recovery, repeating roughly every 15–20 years.</li>
+        <li>Example: <b>The Great Recession of 2008</b> — a sustained period of negative/stalled growth (recession) that cost jobs globally.</li>
+      </ul>
+
+      <p><b>5. Seasonal Unemployment</b></p>
+      <ul>
+        <li>A subtype tied to a particular <b>season</b> rather than the full economic cycle.</li>
+        <li>Common in <b>rural India's agriculture sector</b> — workers are employed during sowing/harvesting season, idle the rest of the year. Also seen with seasonal trades, e.g., extra demand for potters (kumhar) around Diwali, then idle off-season.</li>
+      </ul>
+
+      <p><b>6. Educated Unemployment</b></p>
+      <ul>
+        <li>A subtype most associated with <b>structural unemployment</b> in concept, but treated as a <b>distinct category in exam options</b>.</li>
+        <li>People who are <b>educated / hold a degree</b> but remain unemployed — primarily an <b>urban India</b> phenomenon.</li>
+        <li><b>Exam rule given directly by the teacher:</b> If a question's options specify "urban India," "educated," or "has a degree," choose <b>Educated Unemployment</b> over Structural — even if Structural also appears as an option.</li>
+      </ul>
+
+      <p><b>7. Stagflation</b> (as a related macro condition, not a unemployment "type" per se, but discussed alongside): see card above — inflation + unemployment together, breaking the Phillips Curve.</p>
+    </div>
+
+    <div class="card">
+      <h3>Fisher's Equation of Exchange — MV = PT <span class="tag must">🔥 Must Know — direct PYQ favourite</span></h3>
+      <p>Given by economist <b>Irving Fisher</b> (the same person behind the money illusion concept).</p>
+      <table>
+        <tr><th>Symbol</th><th>Stands for</th></tr>
+        <tr><td><b>M</b></td><td>Money Supply</td></tr>
+        <tr><td><b>V</b></td><td>Velocity of Circulation of Money — the number of times/hands money changes in the economy</td></tr>
+        <tr><td><b>P</b></td><td>Price Level</td></tr>
+        <tr><td><b>T</b></td><td>Transactions (number of transactions)</td></tr>
+      </table>
+      <p>Logic: If money supply (M) increases → velocity of circulation (V) increases → price level (P) rises → number of transactions (T) also rises.</p>
+      <ul>
+        <li><b>Velocity of circulation example from lecture:</b> You withdraw a ₹1,000 note from an ATM → pay a tomato seller → tomato seller pays a cloth seller → cloth seller pays a wholesaler. Each "hand" the note passes through is one unit of velocity.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ SMART MEMORY HOOKS ============ -->
+  <section class="block" id="hooks">
+    <div class="block-head"><span class="num">03</span><h2>Smart Memory Hooks</h2></div>
+    <p class="block-sub">One vivid image per tricky cluster. Don't read these — <i>see</i> them.</p>
+
+    <div class="card">
+      <h3>Demand-Pull vs Cost-Push</h3>
+      <p>🪢 <b>Tug of war.</b> Demand-pull = crowd pulling from the front (too many buyers). Cost-push = the rope itself getting heavier from behind (rising costs). Either way, the flag (price) moves up.</p>
+    </div>
+
+    <div class="card">
+      <h3>WPI vs CPI</h3>
+      <p>🏭 vs 🛒 <b>Factory gate vs Kitchen basket.</b> WPI stands at the factory gate — only counts goods leaving the factory, ignores services entirely. CPI stands inside your kitchen — counts food (heaviest), other goods, AND services. RBI cooks its monetary policy using the kitchen basket (CPI Combined).</p>
+    </div>
+
+    <div class="card">
+      <h3>Creeping → Walking → Running → Hyper</h3>
+      <p>🐌🚶🏃🚀 <b>A person's pace turning into a rocket.</b> Creeping (3–4%) barely moves. Walking (4–10%) ambles. Running/Galloping (10–20%+) sprints. Hyperinflation (&gt;100%) launches off the ground entirely — Sri Lanka 2022, ~44%, already losing control before even reaching "true" hyper territory.</p>
+    </div>
+
+    <div class="card">
+      <h3>Disinflation vs Deflation</h3>
+      <p>🚗 <b>Same car, different action.</b> Deflation = reverse gear (prices actually fall). Disinflation = still in drive, just easing off the accelerator (prices still rising, just slower). Don't let the word "dis-" trick you into thinking it's the opposite of inflation — that word trap belongs to deflation.</p>
+    </div>
+
+    <div class="card">
+      <h3>The 7 Unemployment Characters</h3>
+      <p>🎭 Picture <b>one office with seven cubicles</b>, each holding a character who explains their own unemployment in one line:</p>
+      <ul>
+        <li><b>Structural</b> — "I don't have the new skill they need." (skill ≠ job)</li>
+        <li><b>Frictional</b> — "I have a job, I just don't want this one." (voluntary, searching)</li>
+        <li><b>Disguised</b> — "I'm sitting here, but I add literally nothing." (marginal productivity = 0)</li>
+        <li><b>Cyclical</b> — "The whole economy crashed, not just me." (2008-style recession)</li>
+        <li><b>Seasonal</b> — "I only work three months a year." (rural, sowing/harvest)</li>
+        <li><b>Educated</b> — "I have a degree and I'm still in this cubicle." (urban India)</li>
+      </ul>
+      <p>Memorize the cubicle order: <b>Structural → Frictional → Disguised → Cyclical → Seasonal → Educated</b> (S-F-D-C-S-E). Say it as a chant 3 times.</p>
+    </div>
+
+    <div class="card">
+      <h3>MV = PT</h3>
+      <p>💵➡️💵➡️💵 <b>A ₹1,000 note's road trip.</b> ATM → you → tomato seller → cloth seller → wholesaler. Every handoff = one unit of <b>V</b>elocity. More handoffs + more notes in circulation (<b>M</b>oney supply) = more <b>P</b>rice rise and more <b>T</b>ransactions. Fisher's whole equation is just this one note's journey, scaled up to the whole economy.</p>
+    </div>
+
+    <div class="card">
+      <h3>Salt-in-the-Vegetable Rule</h3>
+      <p>🧂 <b>Zero inflation</b> = bland vegetable, no salt, economy stagnant. <b>A little inflation</b> = perfectly salted, economy growing healthily. <b>Hyperinflation</b> = the whole bowl is salt, inedible. This single image answers most "is inflation good or bad" conceptual questions.</p>
+    </div>
+  </section>
+
+  <!-- ============ CONCEPT CONNECTIONS ============ -->
+  <section class="block" id="connections">
+    <div class="block-head"><span class="num">04</span><h2>Concept Connections</h2></div>
+    <p class="block-sub">No fact stands alone. These are the wires connecting the whole chapter.</p>
+
+    <div class="card">
+      <div class="chain">
+        <span class="node">Money supply ↑</span><span class="arrow">→</span>
+        <span class="node">Velocity (V) ↑</span><span class="arrow">→</span>
+        <span class="node">Price level (P) ↑</span><span class="arrow">→</span>
+        <span class="node">Transactions (T) ↑</span>
+      </div>
+      <p style="color:var(--ink-faint); font-size:13px;">Fisher's chain — memorise the direction, not just the letters.</p>
+    </div>
+
+    <div class="card">
+      <div class="chain">
+        <span class="node">Demand ↑ <i>or</i> Supply ↓</span><span class="arrow">→</span>
+        <span class="node">Prices ↑</span><span class="arrow">→</span>
+        <span class="node">Purchasing power ↓</span><span class="arrow">→</span>
+        <span class="node">Debtor gains, Lender loses</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="chain">
+        <span class="node">Inflation ↑ (normal)</span><span class="arrow">→</span>
+        <span class="node">Demand ↑</span><span class="arrow">→</span>
+        <span class="node">Production ↑</span><span class="arrow">→</span>
+        <span class="node">Employment ↑</span><span class="arrow">→</span>
+        <span class="node">Unemployment ↓</span>
+      </div>
+      <p style="color:var(--ink-faint); font-size:13px;">This is the Phillips Curve relationship. <b>Stagflation is this chain snapping</b> — inflation rises but employment does NOT follow.</p>
+    </div>
+
+    <div class="card">
+      <h3>Feature → Exception Map</h3>
+      <table>
+        <tr><th>General Rule</th><th>Exception</th></tr>
+        <tr><td>Inflation ↑ usually means Unemployment ↓ (Phillips Curve)</td><td><b>Stagflation</b> — both rise together</td></tr>
+        <tr><td>Inflation = prices rising</td><td><b>Disinflation</b> is still inflation, just slower; only <b>Deflation</b> is true opposite</td></tr>
+        <tr><td>WPI and CPI both measure inflation</td><td>WPI excludes services entirely; CPI includes them</td></tr>
+        <tr><td>Structural unemployment = skill-job mismatch</td><td>If urban + educated/degree is specified → answer <b>Educated</b>, not Structural</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Institutional Web — Who Publishes What</h3>
+      <table>
+        <tr><th>Body</th><th>Publishes</th><th>Sits Under</th></tr>
+        <tr><td>NSO</td><td>CPI (Urban/Rural/Combined), IIP</td><td>MOSPI</td></tr>
+        <tr><td>Labour Bureau</td><td>CPI (Industrial/Agricultural/Rural Worker)</td><td>Ministry of Labour</td></tr>
+        <tr><td>OEA</td><td>WPI</td><td>Ministry of Commerce &amp; Industry</td></tr>
+        <tr><td>RBI</td><td>Uses CPI Combined to target inflation</td><td>—</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ EXAM TRAPS ============ -->
+  <section class="block" id="traps">
+    <div class="block-head"><span class="num">05</span><h2>⚠ Exam Traps</h2></div>
+    <p class="block-sub">Where toppers lose marks. Read this section the most number of times.</p>
+
+    <div class="trap">
+      <h4>⚠ Disinflation ≠ Deflation</h4>
+      <p>The single most common trap in this chapter. Both sound like "less inflation" — they are NOT the same.</p>
+      <div class="vs">
+        <div class="a">DISINFLATION<br><span class="x">prices still ↑, rate of rise ↓</span></div>
+        <div class="x">vs</div>
+        <div class="b">DEFLATION<br><span class="x">prices actually ↓</span></div>
+      </div>
+    </div>
+
+    <div class="trap">
+      <h4>⚠ WPI vs CPI — "does it include services?"</h4>
+      <p>A favourite one-liner trap. <b>WPI does NOT capture services</b> — manufactured/wholesale goods only. <b>CPI includes services</b> and gives food items the highest weight. If a question mentions "services," the answer is almost always CPI.</p>
+    </div>
+
+    <div class="trap">
+      <h4>⚠ Structural vs Educated Unemployment</h4>
+      <p>Both involve a skill/job mismatch conceptually. But if the question's option text explicitly says <b>"urban India," "educated,"</b> or <b>"has a degree"</b> — pick <b>Educated Unemployment</b>, even if Structural is also listed as a choice. This was a direct instruction from the lecture.</p>
+    </div>
+
+    <div class="trap">
+      <h4>⚠ Frictional vs Disguised vs Seasonal Unemployment</h4>
+      <p>All three can look similar in vague MCQ language ("temporarily not working"). Separate them by <b>cause</b>:</p>
+      <div class="vs">
+        <div class="a">FRICTIONAL<br><span class="x">voluntary, searching for better job</span></div>
+        <div class="b">DISGUISED<br><span class="x">working but adding zero output</span></div>
+      </div>
+      <p>Seasonal = idle only in certain months due to nature of work (agriculture, festival trades) — not voluntary, not zero-productivity, just cyclical-by-season.</p>
+    </div>
+
+    <div class="trap">
+      <h4>⚠ Base Years — WPI vs CPI</h4>
+      <p>Easy to swap under exam pressure: <b>WPI base year = 2011–12</b>. <b>CPI base year = 2012</b>. Very close numbers, deliberately confusable — write them side by side until they stick.</p>
+    </div>
+
+    <div class="trap">
+      <h4>⚠ Demand-Pull vs Cost-Push — which side caused it?</h4>
+      <p>If the question scenario mentions <b>salary increase, festive buying, credit boom</b> → Demand-Pull. If it mentions <b>war, poor monsoon, rising input/fuel cost</b> → Cost-Push. Don't default to "inflation = demand-pull" — supply-side triggers are equally testable.</p>
+    </div>
+
+    <div class="trap">
+      <h4>⚠ Who publishes vs who uses</h4>
+      <p><b>NSO publishes CPI Combined</b> (under MOSPI) — but it is <b>RBI that uses</b> CPI Combined to target inflation. A question asking "who targets inflation using CPI" wants RBI, not NSO.</p>
+    </div>
+
+    <div class="trap">
+      <h4>⚠ Phillips Curve direction</h4>
+      <p>Phillips Curve shows an <b>inverse</b> relationship between inflation and unemployment — inflation ↑ means unemployment ↓ normally. Don't reverse the direction under pressure. And remember: <b>stagflation is the named exception</b> where this fails.</p>
+    </div>
+  </section>
+
+  <!-- ============ EXAMINER'S FAVOURITE QUESTIONS ============ -->
+  <section class="block" id="examiner">
+    <div class="block-head"><span class="num">06</span><h2>Examiner's Favourite Questions</h2></div>
+    <p class="block-sub">How SSC CGL is likely to attack this chapter — by question type.</p>
+
+    <div class="card">
+      <h3>🎯 Statement-Based Questions</h3>
+      <ul>
+        <li>"Statement I: WPI includes services. Statement II: CPI gives highest weight to food items." → Statement I is <b>false</b>, Statement II is <b>true</b>.</li>
+        <li>"Statement I: Disinflation means prices are falling. Statement II: Deflation means the rate of inflation is decreasing." → Both statements are <b>swapped/false</b> — disinflation = rate slowing, deflation = prices falling.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Match-the-Following</h3>
+      <table>
+        <tr><th>Column A</th><th>Column B</th></tr>
+        <tr><td>WPI</td><td>Office of Economic Adviser</td></tr>
+        <tr><td>CPI</td><td>NSO / MOSPI</td></tr>
+        <tr><td>Phillips Curve</td><td>Inflation–Unemployment inverse link</td></tr>
+        <tr><td>Fisher's Equation</td><td>MV = PT</td></tr>
+        <tr><td>Disguised Unemployment</td><td>Marginal productivity = 0</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Chronology / "Which came first" Style</h3>
+      <p>Watch for ordering questions around <b>Great Depression (1929–39) → Great Recession (2008) → Sri Lanka crisis (2022)</b> as real-world stagflation/hyperinflation reference points.</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Assertion–Reason</h3>
+      <p><b>Assertion:</b> A little inflation is considered healthy for an economy.<br><b>Reason:</b> Rising demand under mild inflation pushes production and employment up.<br>→ Both true, <b>Reason correctly explains</b> Assertion.</p>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Direct Definition-Recall MCQs</h3>
+      <ul>
+        <li>"Too many rupees chasing too few goods" is a definition of → <b>Demand-Pull Inflation</b>.</li>
+        <li>Inflation rate exceeding 100% is called → <b>Hyperinflation</b>.</li>
+        <li>"M" in Fisher's equation MV=PT stands for → <b>Money Supply</b>.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Confusing Facts To Pre-empt</h3>
+      <ul>
+        <li>WPI base year (2011–12) vs CPI base year (2012) — very close, deliberately testable.</li>
+        <li>"Structural" appearing as a wrong distractor when "Educated" is the intended urban/degree-holder answer.</li>
+        <li>Velocity of circulation (V) being confused with money supply (M) itself — V is the <i>speed of hands changing</i>, not the total amount.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ ACTIVE RECALL ============ -->
+  <section class="block" id="recall">
+    <div class="block-head"><span class="num">07</span><h2>Active Recall Section</h2></div>
+    <p class="block-sub">Don't read the answers first. Try to answer in your head, <i>then</i> tap to reveal.</p>
+
+    <details class="recall"><summary>What is the general definition of inflation?</summary><div class="answer">A sustained increase in the general price level of goods and services, leading to a fall in purchasing power.</div></details>
+
+    <details class="recall"><summary>Fill in the blank: During inflation, the ____ benefits and the ____ loses.</summary><div class="answer">Debtor/borrower benefits; creditor/lender loses.</div></details>
+
+    <details class="recall"><summary>One-liner: What causes demand-pull inflation?</summary><div class="answer">Too much money/demand chasing too few goods — demand rises while supply stays constant.</div></details>
+
+    <details class="recall"><summary>One-liner: What causes cost-push inflation?</summary><div class="answer">Rising cost of factors of production (or falling supply) while demand stays the same — e.g., war, poor monsoon, costlier inputs.</div></details>
+
+    <details class="recall"><summary>Reverse question: If an index does NOT capture changes in service prices, which index is it?</summary><div class="answer">WPI (Wholesale Price Index).</div></details>
+
+    <details class="recall"><summary>Reverse question: If an index gives the highest weight to food items, which index is it?</summary><div class="answer">CPI (Consumer Price Index).</div></details>
+
+    <details class="recall"><summary>What is the base year of WPI? What is the base year of CPI?</summary><div class="answer">WPI: 2011–12. CPI: 2012.</div></details>
+
+    <details class="recall"><summary>Rapid fire: Name all the types of inflation by rate, in increasing order.</summary><div class="answer">Creeping → Walking → Running/Galloping → Hyperinflation.</div></details>
+
+    <details class="recall"><summary>Fill in the blank: ____ is a type of inflation where the rate of price rise is decreasing, while ____ is the exact opposite of inflation where prices actually fall.</summary><div class="answer">Disinflation; Deflation.</div></details>
+
+    <details class="recall"><summary>What does the Phillips Curve describe, and what breaks this relationship?</summary><div class="answer">An inverse relationship between inflation and unemployment. Stagflation breaks this — both rise together.</div></details>
+
+    <details class="recall"><summary>Rapid fire: Name all 7 types/related-categories of unemployment discussed.</summary><div class="answer">Structural, Frictional, Disguised, Cyclical, Seasonal, Educated, and the related macro condition of Stagflation.</div></details>
+
+    <details class="recall"><summary>One-liner: What is the defining feature of disguised unemployment?</summary><div class="answer">Marginal productivity of the "extra" worker is zero — removing them does not change total output.</div></details>
+
+    <details class="recall"><summary>One-liner: What is frictional unemployment also called?</summary><div class="answer">Voluntary unemployment or search unemployment.</div></details>
+
+    <details class="recall"><summary>Self-test: A farmer is idle for 8 months of the year except during sowing and harvest. What type of unemployment is this?</summary><div class="answer">Seasonal unemployment.</div></details>
+
+    <details class="recall"><summary>Self-test: An engineering graduate in Mumbai is unemployed despite having a degree. What type of unemployment, and why not the "obvious" alternative?</summary><div class="answer">Educated unemployment — because the question specifies urban + degree-holder, which the exam treats as Educated rather than Structural.</div></details>
+
+    <details class="recall"><summary>Expand the equation MV = PT. What does each letter mean?</summary><div class="answer">M = Money Supply, V = Velocity of circulation of money, P = Price level, T = Transactions. Given by Irving Fisher.</div></details>
+
+    <details class="recall"><summary>Fill in the blank: The 8 Core Industries carry ____% weight in the IIP.</summary><div class="answer">40%.</div></details>
+
+    <details class="recall"><summary>One-liner: Who uses CPI Combined to target inflation through monetary policy?</summary><div class="answer">RBI (Reserve Bank of India).</div></details>
+
+    <details class="recall"><summary>Rapid fire: Name the body and ministry behind WPI, CPI, and IIP.</summary><div class="answer">WPI — OEA, Ministry of Commerce & Industry. CPI & IIP — NSO, under MOSPI.</div></details>
+
+    <details class="recall"><summary>What real-world example was given for hyperinflation, and what was the approximate rate?</summary><div class="answer">Sri Lanka, by 2022, inflation around 44%.</div></details>
+  </section>
+
+  <!-- ============ HIGH-YIELD REVISION NOTES ============ -->
+  <section class="block" id="highyield">
+    <div class="block-head"><span class="num">08</span><h2>High-Yield Revision Notes</h2></div>
+    <p class="block-sub">Layer 2 — for your 2nd-to-10th revision. Compressed, but still complete enough to refresh full understanding.</p>
+
+    <div class="card">
+      <div class="strip"><div class="k">Inflation</div><div class="v">General rise in prices → purchasing power ↓ → debtor gains, lender loses.</div></div>
+      <div class="strip"><div class="k">Demand-Pull</div><div class="v">Too much demand/money chasing too few goods.</div></div>
+      <div class="strip"><div class="k">Cost-Push</div><div class="v">Rising input costs / falling supply (war, monsoon failure, costlier inputs).</div></div>
+      <div class="strip"><div class="k">WPI</div><div class="v">Goods only, no services. Base 2011–12. OEA, Commerce Ministry.</div></div>
+      <div class="strip"><div class="k">CPI</div><div class="v">Goods + services, food = highest weight. Base 2012. NSO/MOSPI. RBI uses CPI Combined.</div></div>
+      <div class="strip"><div class="k">IIP</div><div class="v">Industrial output; 8 Core Industries = 40% weight. NSO.</div></div>
+      <div class="strip"><div class="k">Rate-wise types</div><div class="v">Creeping (3–4%) → Walking (4–10%) → Galloping (10–20%+) → Hyper (&gt;100%).</div></div>
+      <div class="strip"><div class="k">Disinflation</div><div class="v">Inflation rate slowing — still inflation.</div></div>
+      <div class="strip"><div class="k">Deflation</div><div class="v">Prices actually falling — true opposite of inflation.</div></div>
+      <div class="strip"><div class="k">Phillips Curve</div><div class="v">Inflation ↑, Unemployment ↓ (inverse). Fails in stagflation.</div></div>
+      <div class="strip"><div class="k">Stagflation</div><div class="v">High inflation + high unemployment together. e.g. Great Depression, Great Recession 2008.</div></div>
+      <div class="strip"><div class="k">Structural unemployment</div><div class="v">Skill ≠ job requirement (tech replacing workers).</div></div>
+      <div class="strip"><div class="k">Frictional unemployment</div><div class="v">Voluntary, job-searching, "home posting" type wait.</div></div>
+      <div class="strip"><div class="k">Disguised unemployment</div><div class="v">Looks employed, marginal productivity = 0. Common in agriculture.</div></div>
+      <div class="strip"><div class="k">Cyclical unemployment</div><div class="v">Tied to business cycle/recession. e.g. 2008.</div></div>
+      <div class="strip"><div class="k">Seasonal unemployment</div><div class="v">Idle in off-season. Rural agriculture / festival trades.</div></div>
+      <div class="strip"><div class="k">Educated unemployment</div><div class="v">Urban + degree-holder still jobless. Pick this over Structural when specified.</div></div>
+      <div class="strip"><div class="k">MV = PT</div><div class="v">Money supply × Velocity = Price level × Transactions. By Irving Fisher.</div></div>
+      <div class="strip"><div class="k">Money Illusion</div><div class="v">Feeling richer from nominal salary rise while real purchasing power falls. Irving Fisher.</div></div>
+      <div class="strip"><div class="k">Sri Lanka 2022</div><div class="v">~44% inflation — real hyperinflation example.</div></div>
+    </div>
+  </section>
+
+  <!-- ============ ULTRA-FAST REVISION SHEET ============ -->
+  <section class="block" id="ultrafast">
+    <div class="block-head"><span class="num">09</span><h2>Ultra-Fast Revision Sheet</h2></div>
+    <p class="block-sub">Layer 3 — scan this in under 3 minutes.</p>
+
+    <div class="ultra-grid">
+      <div class="cell"><div class="t">Inflation</div><div class="d">Prices ↑, purchasing power ↓, debtor wins</div></div>
+      <div class="cell"><div class="t">Deflation</div><div class="d">Prices ↓ (true opposite)</div></div>
+      <div class="cell"><div class="t">Disinflation</div><div class="d">Inflation rate slowing (still +ve)</div></div>
+      <div class="cell"><div class="t">Demand-Pull</div><div class="d">↑ demand, fixed supply</div></div>
+      <div class="cell"><div class="t">Cost-Push</div><div class="d">↑ cost / ↓ supply</div></div>
+      <div class="cell"><div class="t">WPI</div><div class="d">Goods only · 2011–12 · OEA</div></div>
+      <div class="cell"><div class="t">CPI</div><div class="d">Goods+services, food heavy · 2012 · NSO</div></div>
+      <div class="cell"><div class="t">RBI's choice</div><div class="d">CPI Combined</div></div>
+      <div class="cell"><div class="t">IIP core</div><div class="d">8 industries = 40% weight</div></div>
+      <div class="cell"><div class="t">Creeping</div><div class="d">3–4%</div></div>
+      <div class="cell"><div class="t">Walking</div><div class="d">4–10%</div></div>
+      <div class="cell"><div class="t">Galloping</div><div class="d">10–20%+</div></div>
+      <div class="cell"><div class="t">Hyper</div><div class="d">&gt;100% (Sri Lanka ~44%, 2022)</div></div>
+      <div class="cell"><div class="t">Phillips Curve</div><div class="d">Inflation ↑ ⇄ Unemployment ↓</div></div>
+      <div class="cell"><div class="t">Stagflation</div><div class="d">Both ↑ together — curve fails</div></div>
+      <div class="cell"><div class="t">Structural</div><div class="d">Skill ≠ job</div></div>
+      <div class="cell"><div class="t">Frictional</div><div class="d">Voluntary search</div></div>
+      <div class="cell"><div class="t">Disguised</div><div class="d">Marginal productivity = 0</div></div>
+      <div class="cell"><div class="t">Cyclical</div><div class="d">Business cycle / recession</div></div>
+      <div class="cell"><div class="t">Seasonal</div><div class="d">Off-season idle, rural</div></div>
+      <div class="cell"><div class="t">Educated</div><div class="d">Urban + degree, still jobless</div></div>
+      <div class="cell"><div class="t">MV = PT</div><div class="d">Money×Velocity = Price×Transactions</div></div>
+      <div class="cell"><div class="t">Given by</div><div class="d">Irving Fisher (also: money illusion)</div></div>
+    </div>
+  </section>
+
+  <!-- ============ 30 SECOND REVISION SHEET ============ -->
+  <section class="block" id="sec30">
+    <div class="block-head"><span class="num">10</span><h2>30-Second Revision Sheet</h2></div>
+    <p class="block-sub">Layer 4 — the absolute compression. For the elevator, the queue, the last 30 seconds before the invigilator says start.</p>
+
+    <div class="sec30">
+      <div class="row"><div class="lab">Inflation</div><div class="val">prices ↑ · purchasing power ↓ · debtor wins</div></div>
+      <div class="row"><div class="lab">Opposite</div><div class="val">Deflation (prices fall) — NOT disinflation</div></div>
+      <div class="row"><div class="lab">2 causes</div><div class="val">Demand-pull (↑demand) / Cost-push (↑cost or ↓supply)</div></div>
+      <div class="row"><div class="lab">2 indices</div><div class="val">WPI (goods, 2011–12) / CPI (goods+services+food, 2012, RBI uses this)</div></div>
+      <div class="row"><div class="lab">4 rates</div><div class="val">Creeping 3–4 → Walking 4–10 → Galloping 10–20+ → Hyper &gt;100</div></div>
+      <div class="row"><div class="lab">Phillips Curve</div><div class="val">Inflation ↑ ⇄ Unemployment ↓ — fails in Stagflation</div></div>
+      <div class="row"><div class="lab">6 unemployment types</div><div class="val">Structural · Frictional · Disguised · Cyclical · Seasonal · Educated</div></div>
+      <div class="row"><div class="lab">Equation</div><div class="val">MV = PT (Fisher) — Money, Velocity, Price, Transactions</div></div>
+      <div class="row"><div class="lab">IIP</div><div class="val">8 Core Industries = 40% weight</div></div>
+    </div>
+  </section>
+
+  <!-- ============ LAST NIGHT BEFORE EXAM SHEET ============ -->
+  <section class="block" id="lastnight">
+    <div class="block-head"><span class="num">11</span><h2>Last-Night-Before-Exam Sheet</h2></div>
+    <p class="block-sub">Layer 5. Read this once, close the laptop, sleep.</p>
+
+    <div class="lastnight">
+      <h3>⚠ Don't mix these up tonight</h3>
+      <div class="item">Disinflation = slowing inflation. Deflation = falling prices. Not the same word, not the same thing.</div>
+      <div class="item">WPI = no services, base 2011–12. CPI = has services + food-heavy, base 2012, RBI's pick.</div>
+      <div class="item">If a question says "urban" or "degree" → Educated unemployment, not Structural.</div>
+      <div class="item">Stagflation = the one time Phillips Curve fails — inflation AND unemployment both high.</div>
+      <div class="item">Disguised unemployment → marginal productivity is exactly zero. That's the test.</div>
+      <div class="item">MV = PT → Money, Velocity, Price, Transactions. Given by Irving Fisher.</div>
+      <div class="item">8 Core Industries → 40% of IIP. Electricity, steel, crude oil, cement, gas, fertilizers (+ coal, refinery products).</div>
+      <div class="item">Sri Lanka 2022 ≈ 44% = the hyperinflation example to remember.</div>
+      <p style="margin-top:16px; color:var(--ink-dim); font-size:13.5px;">Walk the <a href="#palace" style="color:var(--rupee);">Inflation Bazaar</a> one last time in your head. Then stop. You know this.</p>
+    </div>
+  </section>
+
+  <footer>
+    Built for revision, not for reading once. · FRB Lecture — Inflation &amp; Unemployment · SSC CGL
+  </footer>
+
+</div>
+
+<script>
+  // Active nav highlighting on scroll
+  const sections = document.querySelectorAll('section.block');
+  const navLinks = document.querySelectorAll('#topnav a');
+
+  function onScroll(){
+    let current = '';
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if(rect.top <= 120 && rect.bottom > 120){
+        current = sec.id;
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+</script>
+
+</body>
+</html>

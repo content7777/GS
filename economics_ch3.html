@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget & Taxation — SSC CGL Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1e2a;
+    --border: #252b3b;
+    --text: #c8d0e0;
+    --muted: #606880;
+    --fire: #ff6b35;
+    --star: #f5c518;
+    --plus: #4ecdc4;
+    --accent: #7c6af7;
+    --green: #3ddc84;
+    --red: #ff4757;
+    --blue: #54a0ff;
+    --pink: #ff6b9d;
+    --heading: #e8eaf0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(13,15,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  }
+  nav span { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin-right: 4px; }
+  nav a {
+    color: var(--text); text-decoration: none; font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  nav a:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #13111f 50%, #0d1419 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 24px 40px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(124,106,247,0.15), transparent);
+  }
+  .hero-tag {
+    display: inline-block; background: rgba(124,106,247,0.15); color: var(--accent);
+    border: 1px solid rgba(124,106,247,0.3); border-radius: 20px;
+    padding: 4px 16px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    color: var(--heading);
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--fire); }
+  .hero p { color: var(--muted); font-size: 13px; max-width: 500px; margin: 0 auto; }
+  /* LAYER BADGES */
+  .layers {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    padding: 24px; border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .layer-btn {
+    background: var(--surface2); border: 1px solid var(--border); color: var(--muted);
+    padding: 6px 16px; border-radius: 6px; cursor: pointer; font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px; font-weight: 600; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .layer-btn.active, .layer-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  /* LAYERS */
+  .layer { display: none; }
+  .layer.active { display: block; }
+  /* MAIN LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 20px 80px; }
+  /* SECTIONS */
+  .section {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px; margin-bottom: 24px;
+    position: relative; overflow: hidden;
+  }
+  .section::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+    background: var(--accent);
+  }
+  .section.fire::before { background: var(--fire); }
+  .section.green::before { background: var(--green); }
+  .section.star::before { background: var(--star); }
+  .section.red::before { background: var(--red); }
+  .section.pink::before { background: var(--pink); }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; color: var(--heading); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title .icon { font-size: 22px; }
+  h3 { color: var(--heading); font-size: 15px; font-weight: 700; margin: 20px 0 10px; }
+  h4 { color: var(--accent); font-size: 13px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin: 16px 0 8px; }
+  /* TAGS */
+  .tag {
+    display: inline-block; border-radius: 4px; padding: 2px 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-right: 4px;
+  }
+  .tag-fire { background: rgba(255,107,53,0.15); color: var(--fire); border: 1px solid rgba(255,107,53,0.3); }
+  .tag-star { background: rgba(245,197,24,0.12); color: var(--star); border: 1px solid rgba(245,197,24,0.3); }
+  .tag-plus { background: rgba(78,205,196,0.12); color: var(--plus); border: 1px solid rgba(78,205,196,0.3); }
+  /* CARDS GRID */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 14px 0; }
+  .card {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px;
+  }
+  .card-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; }
+  .card-title.fire { color: var(--fire); }
+  .card-title.star { color: var(--star); }
+  .card-title.blue { color: var(--blue); }
+  .card-title.green { color: var(--green); }
+  .card-title.pink { color: var(--pink); }
+  .card-title.accent { color: var(--accent); }
+  /* FORMULA BOX */
+  .formula {
+    background: var(--bg); border: 1px solid var(--accent); border-radius: 8px;
+    padding: 14px 18px; margin: 12px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent);
+  }
+  .formula span { color: var(--fire); }
+  /* MEMORY HOOK */
+  .memory-hook {
+    background: linear-gradient(135deg, rgba(124,106,247,0.08), rgba(255,107,53,0.06));
+    border: 1px solid rgba(124,106,247,0.25); border-radius: 10px;
+    padding: 18px; margin: 14px 0;
+  }
+  .memory-hook .hook-label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent);
+    font-weight: 700; margin-bottom: 8px;
+  }
+  /* TRAP BOX */
+  .trap {
+    background: rgba(255,71,87,0.07); border: 1px solid rgba(255,71,87,0.3); border-radius: 10px;
+    padding: 16px; margin: 12px 0;
+  }
+  .trap .trap-label {
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--red);
+    font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+  }
+  /* QUESTION BOX */
+  .question {
+    background: rgba(84,160,255,0.07); border: 1px solid rgba(84,160,255,0.2);
+    border-radius: 8px; padding: 14px 16px; margin: 10px 0;
+  }
+  .question .q-label { color: var(--blue); font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
+  /* FLOW */
+  .flow {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0;
+    font-size: 13px;
+  }
+  .flow-box {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 12px; font-weight: 600; color: var(--heading);
+  }
+  .flow-arrow { color: var(--accent); font-weight: 700; font-size: 16px; }
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th { background: var(--surface2); color: var(--heading); padding: 10px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  /* PILL LIST */
+  .pill-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .pill {
+    background: var(--surface2); border: 1px solid var(--border); border-radius: 20px;
+    padding: 5px 14px; font-size: 12px; font-weight: 600;
+  }
+  .pill.fire { border-color: rgba(255,107,53,0.4); color: var(--fire); }
+  .pill.green { border-color: rgba(61,220,132,0.4); color: var(--green); }
+  .pill.blue { border-color: rgba(84,160,255,0.4); color: var(--blue); }
+  .pill.pink { border-color: rgba(255,107,157,0.4); color: var(--pink); }
+  .pill.star { border-color: rgba(245,197,24,0.4); color: var(--star); }
+  /* RECALL */
+  .recall-q { cursor: pointer; }
+  .recall-q .ans {
+    display: none; margin-top: 8px; padding: 10px 14px;
+    background: rgba(61,220,132,0.08); border-left: 3px solid var(--green);
+    border-radius: 0 6px 6px 0; color: var(--green); font-weight: 500; font-size: 13px;
+  }
+  .recall-q.open .ans { display: block; }
+  .recall-q .q-text { color: var(--blue); font-weight: 600; }
+  .recall-q .q-text::after { content: ' 👆 tap to reveal'; color: var(--muted); font-size: 11px; font-weight: 400; }
+  .recall-q.open .q-text::after { content: ' 👆 tap to hide'; }
+  /* PALACE */
+  .palace-stop {
+    display: flex; gap: 14px; align-items: flex-start; margin: 12px 0; padding: 14px;
+    background: var(--surface2); border-radius: 8px; border: 1px solid var(--border);
+  }
+  .palace-num {
+    min-width: 34px; height: 34px; border-radius: 50%;
+    background: var(--accent); color: #fff; font-weight: 700; font-size: 14px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  /* ULTRA FAST */
+  .ufs-row { display: flex; gap: 8px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .ufs-row:last-child { border-bottom: none; }
+  .ufs-key { min-width: 160px; color: var(--heading); font-weight: 700; flex-shrink: 0; }
+  .ufs-val { color: var(--text); }
+  /* LAST NIGHT */
+  .ln-item {
+    display: flex; align-items: flex-start; gap: 10px; padding: 10px 0;
+    border-bottom: 1px dashed var(--border); font-size: 13px; line-height: 1.5;
+  }
+  .ln-item:last-child { border-bottom: none; }
+  .ln-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--fire); flex-shrink: 0; margin-top: 6px; }
+  /* PROGRESS BAR label */
+  .progress-label {
+    font-size: 11px; color: var(--muted); text-align: right; margin-bottom: 4px;
+  }
+  .progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 20px; }
+  .progress-bar .fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--fire)); }
+  /* highlight */
+  .hl { color: var(--fire); font-weight: 700; }
+  .hl-b { color: var(--blue); font-weight: 700; }
+  .hl-g { color: var(--green); font-weight: 700; }
+  .hl-y { color: var(--star); font-weight: 700; }
+  .hl-p { color: var(--accent); font-weight: 700; }
+  /* responsive */
+  @media(max-width:600px) {
+    .flow { flex-direction: column; align-items: flex-start; }
+    .grid { grid-template-columns: 1fr; }
+    .ufs-key { min-width: 120px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span>Jump →</span>
+  <a href="#palace">🧠 Palace</a>
+  <a href="#complete">📖 Full Notes</a>
+  <a href="#hooks">🔗 Hooks</a>
+  <a href="#traps">⚠️ Traps</a>
+  <a href="#examiner">🎯 Examiner</a>
+  <a href="#recall">❓ Recall</a>
+  <a href="#highyield">⚡ High-Yield</a>
+  <a href="#ultrafast">🚀 Ultra-Fast</a>
+  <a href="#lastnight">🌙 Last Night</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">SSC CGL · Economics · FRB</div>
+  <h1>Budget &<br><span>Taxation</span></h1>
+  <p>High-retention revision system · 20–100 revisions ready · Built to fight forgetting</p>
+</div>
+
+<!-- LAYER SELECTOR -->
+<div class="layers">
+  <span style="color:var(--muted);font-size:12px;align-self:center;">REVISION MODE:</span>
+  <button class="layer-btn active" onclick="setLayer('all')">📖 Full Study</button>
+  <button class="layer-btn" onclick="setLayer('highyield')">⚡ High-Yield</button>
+  <button class="layer-btn" onclick="setLayer('ultrafast')">🚀 Ultra-Fast</button>
+  <button class="layer-btn" onclick="setLayer('lastnight')">🌙 Last Night</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- LAYER: ALL (Full Study) -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="layer-all" class="layer active">
+<div class="container">
+
+  <!-- BIG PICTURE -->
+  <div class="section" id="bigpicture">
+    <div class="section-title"><span class="icon">🌐</span> Big Picture</div>
+    <p>The Indian Budget is the government's annual <strong>income & expense statement</strong>. SSC CGL loves testing which head (Revenue vs Capital) a particular item falls under, the formulas for different deficits, and the mechanics of direct vs indirect taxes. This chapter is a formula + classification machine — once the logic clicks, every question becomes trivial.</p>
+    <div class="grid" style="margin-top:16px;">
+      <div class="card"><div class="card-title fire">🔥 Most Tested</div>Revenue vs Capital classification, Types of Deficit formulas, GST facts, Direct vs Indirect Tax differences</div>
+      <div class="card"><div class="card-title star">⭐ Important</div>Article 112, Fiscal Year dates, Who presents budget, Budget merger/separation history</div>
+      <div class="card"><div class="card-title blue">➕ Good to Know</div>Pigou Tax, Surcharge vs Cess, Budget firsts, Number of budgets presented by leaders</div>
+    </div>
+  </div>
+
+  <!-- MEMORY PALACE -->
+  <div class="section fire" id="palace">
+    <div class="section-title"><span class="icon">🧠</span> Chapter Memory Palace — The Government's House</div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:18px;">Imagine the Government of India lives in a massive house. Walk through it room by room to recall everything.</p>
+
+    <div class="palace-stop">
+      <div class="palace-num">1</div>
+      <div><strong style="color:var(--heading)">Front Gate — Article 112</strong><br>
+      The gate has "112" written on it. A guard says <em>"Annual Financial Statement — NOT budget!"</em> The word budget doesn't appear in the Constitution at all. The gate opens from <span class="hl">1st April to 31st March</span> (Fiscal Year).</div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-num">2</div>
+      <div><strong style="color:var(--heading)">Reception Desk — Ministry of Finance</strong><br>
+      The receptionist is the Finance Minister. She sits under the <span class="hl-b">Department of Economic Affairs</span>. The first visitor ever was <span class="hl">R. K. Shanmukham Chetty</span> (first Finance Minister, first budget). On the wall: <em>Morarji Desai – 10 budgets, P. J. Nandu – 9, Pranab Mukherjee – 8.</em></div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-num">3</div>
+      <div><strong style="color:var(--heading)">Left Pocket Room — Revenue Side</strong><br>
+      Everything here is <span class="hl-g">frequent & recurring</span>. Income side: Tax money (Direct + Indirect) and Non-tax money. Expense side: Salary, Pension, Subsidies, Grants, Interest Payments. Think: monthly recurring items.</div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-num">4</div>
+      <div><strong style="color:var(--heading)">Right Pocket Room — Capital Side</strong><br>
+      Everything here is <span class="hl-y">infrequent & changes assets/liabilities</span>. Income: Loans taken, Disinvestment. Expense: Loans given, Loan repayment, Infrastructure building, Purchase of machinery/land.</div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-num">5</div>
+      <div><strong style="color:var(--heading)">Deficit Corridor — The Deficit Hall</strong><br>
+      Four doors: <span class="hl">Revenue Deficit</span> (rev exp – rev receipt), <span class="hl-p">Effective Revenue Deficit</span> (RD minus grants for development), <span class="hl-g">Fiscal Deficit</span> (Total exp – Total receipts + loans taken), <span class="hl-y">Primary Deficit</span> (FD – interest payments). Each door reveals how broke the government is in a different way.</div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-num">6</div>
+      <div><strong style="color:var(--heading)">Tax Office — Two Desks</strong><br>
+      <span class="hl">Left desk: Direct Tax</span> — You pay directly to government, can't pass on. Progressive (rich pay more). Income Tax, Corporate Tax, Wealth Tax, Capital Gains Tax.<br>
+      <span class="hl-b">Right desk: Indirect Tax</span> — Can be passed to others. Regressive/Proportional (same % for all). GST, Excise Duty, Customs Duty.</div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-num">7</div>
+      <div><strong style="color:var(--heading)">Special Charges Room — Cess & Surcharge</strong><br>
+      <span class="hl-y">Surcharge</span> = Tax on tax; only for high earners. <span class="hl-g">Cess</span> = Specific purpose tax; everyone pays regardless of income. <span class="hl-p">Pigouvian Tax</span> = Pollution/negative externality penalty tax.</div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-num">8</div>
+      <div><strong style="color:var(--heading)">GST Room — The One Nation Room</strong><br>
+      This room replaced 10+ old rooms (VAT, Excise etc.). GST came via <span class="hl">101st Constitutional Amendment Act, 1 July 2017</span>. First state to ratify: <span class="hl-g">Assam</span>. GST Council under Article 279A has <span class="hl-b">33 members</span> (2 Centre + 31 States). Chair: Finance Minister.</div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-num">9</div>
+      <div><strong style="color:var(--heading)">Railway Junction — The Merger Story</strong><br>
+      Railway Budget separated from General Budget in <span class="hl">1924</span> (Acworth Committee 1921). They were re-merged in <span class="hl">2016</span> (Vivek Debroy Committee). The first General Budget after separation was presented by <span class="hl-b">John Mathai</span>.</div>
+    </div>
+  </div>
+
+  <!-- COMPLETE NOTES -->
+  <div class="section" id="complete">
+    <div class="section-title"><span class="icon">📖</span> Complete Revision Notes</div>
+
+    <h3>1. What is Budget?</h3>
+    <div class="trap" style="border-color:rgba(245,197,24,0.3);background:rgba(245,197,24,0.05);">
+      <div class="trap-label" style="color:var(--star);">💡 CRITICAL CONSTITUTIONAL FACT</div>
+      The word <strong>"Budget"</strong> is <span class="hl">NOT mentioned in the Constitution</span>. It is called <span class="hl">"Annual Financial Statement"</span> under <span class="hl">Article 112</span>. (Not "Annual Fiscal Statement" — it's FINANCIAL.)
+    </div>
+    <ul style="padding-left:18px;line-height:2;">
+      <li>Contains approximation of Revenue & Expenses over a <strong>Fiscal Year</strong></li>
+      <li>Fiscal Year = <span class="hl-g">1st April → 31st March</span></li>
+      <li>Prepared by: <span class="hl-b">Ministry of Finance → Department of Economic Affairs</span></li>
+      <li>Presented by: Finance Minister in Parliament</li>
+    </ul>
+
+    <h3>2. Budget History</h3>
+    <table>
+      <tr><th>Fact</th><th>Detail</th><th>Priority</th></tr>
+      <tr><td>First Budget of India</td><td>R. K. Shanmukham Chetty (first FM)</td><td><span class="tag tag-fire">🔥 Must Know</span></td></tr>
+      <tr><td>Second Budget</td><td>John Mathai</td><td><span class="tag tag-star">⭐ Imp</span></td></tr>
+      <tr><td>Max Budgets Presented</td><td>Morarji Desai — 10 times</td><td><span class="tag tag-fire">🔥 Must Know</span></td></tr>
+      <tr><td>P. J. Nandu</td><td>9 budgets</td><td><span class="tag tag-star">⭐ Imp</span></td></tr>
+      <tr><td>Pranab Mukherjee</td><td>8 budgets</td><td><span class="tag tag-star">⭐ Imp</span></td></tr>
+      <tr><td>Railway + General separated</td><td>1924 (Acworth Committee 1921)</td><td><span class="tag tag-fire">🔥 Must Know</span></td></tr>
+      <tr><td>Re-merged</td><td>2016 (Vivek Debroy Committee)</td><td><span class="tag tag-fire">🔥 Must Know</span></td></tr>
+      <tr><td>Estimates Committee</td><td>Largest committee, 30 members, only Lok Sabha, based on John Mathai Committee recommendation</td><td><span class="tag tag-star">⭐ Imp</span></td></tr>
+    </table>
+
+    <h3>3. Types of Budget</h3>
+    <div class="grid">
+      <div class="card"><div class="card-title green">SURPLUS BUDGET</div>Income > Expenditure<br><span style="color:var(--muted);font-size:12px;">Never happened in India's history!</span></div>
+      <div class="card"><div class="card-title fire">DEFICIT BUDGET</div>Expenditure > Income<br><span style="color:var(--muted);font-size:12px;">India always runs this. Study this most.</span></div>
+      <div class="card"><div class="card-title blue">BALANCED BUDGET</div>Income = Expenditure<br><span style="color:var(--muted);font-size:12px;">Also never happened in India.</span></div>
+    </div>
+
+    <h3>4. Revenue vs Capital — The Core Framework</h3>
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Memory Hook — The Two Pockets</div>
+      Imagine your <strong>Left Pocket = Revenue</strong> (frequent transactions — daily/monthly money in & out). <strong>Right Pocket = Capital</strong> (rare transactions — change your assets or liabilities permanently).
+    </div>
+
+    <table>
+      <tr><th>Category</th><th>RECEIPTS (Income)</th><th>EXPENDITURE (Expense)</th></tr>
+      <tr>
+        <td><span class="hl-g">Revenue</span><br><em style="color:var(--muted);font-size:12px;">Frequent / Recurring</em></td>
+        <td>• Tax Revenue (Direct + Indirect)<br>• Non-Tax Revenue (fines, tolls, fees, dividends)</td>
+        <td>• Salaries & Wages<br>• Pensions<br>• Subsidies<br>• Grants<br>• Interest Payments on loans</td>
+      </tr>
+      <tr>
+        <td><span class="hl-y">Capital</span><br><em style="color:var(--muted);font-size:12px;">Infrequent / Asset-Liability</em></td>
+        <td>• Loans taken by government<br>• Disinvestment (selling PSU stake)</td>
+        <td>• Loans given to states<br>• Repayment of previous loans<br>• Infrastructure construction (hospitals, roads, schools)<br>• Purchase of machinery/land</td>
+      </tr>
+    </table>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Quick Logic for Capital Side</div>
+      <strong>Capital Receipt:</strong> Money comes IN, but your assets go DOWN (sold something) OR liabilities go UP (took loan).<br><br>
+      <strong>Capital Expenditure:</strong> Money goes OUT, but assets go UP (built something) OR liabilities go DOWN (repaid loan).<br><br>
+      <em style="color:var(--muted);">Interest on loans is REVENUE (frequent). Taking/giving the loan itself is CAPITAL (one-time).</em>
+    </div>
+
+    <h3>5. Types of Deficit</h3>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:12px;">India has ALWAYS had a deficit budget. Hence we study deficit types, not surplus types.</p>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title fire">① REVENUE DEFICIT</div>
+      <div class="formula">Revenue Expenditure <span>−</span> Revenue Receipts</div>
+      When the government spends more on regular operations than it earns regularly.
+    </div>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title accent">② EFFECTIVE REVENUE DEFICIT</div>
+      <div class="formula">Revenue Deficit <span>−</span> Grants given for Capital/Development purpose</div>
+      Removes the "productive" part of the deficit (grants that create assets in states).
+      <div class="memory-hook" style="margin-top:10px;">
+        <div class="hook-label">🧠 Logic</div>
+        Government gives grant to Mizoram → Mizoram builds roads (asset creation). This is productive, so remove it from RD. What's left = true wasteful deficit = <strong>Effective Revenue Deficit</strong>.
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title star">③ BUDGET DEFICIT</div>
+      <div class="formula">Total Expenditure <span>−</span> Total Receipts</div>
+      <span style="color:var(--muted);font-size:13px;">Always comes to ZERO on paper (because loans are included in receipts). That's why we use Fiscal Deficit instead.</span>
+    </div>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title green">④ FISCAL DEFICIT ⭐ (Most Important)</div>
+      <div class="formula">Total Expenditure <span>−</span> (Total Receipts <span>−</span> Debt-Creating Capital Receipts)<br>= Total Expenditure <span>−</span> Non-Debt Receipts</div>
+      <p style="margin-top:8px;font-size:13px;">Simply: Remove borrowings from receipts. What remains shows how much the government <strong>actually borrowed</strong> this year.<br><span style="color:var(--green);">Fiscal Deficit = Accurate measure of government borrowing.</span></p>
+    </div>
+
+    <div class="card" style="margin-bottom:12px;">
+      <div class="card-title blue">⑤ PRIMARY DEFICIT</div>
+      <div class="formula">Fiscal Deficit <span>−</span> Interest Payments</div>
+      <p style="margin-top:8px;font-size:13px;">Government says: "We're paying interest on old debts — that's not our fault. Remove it. What's left is our actual new borrowing need." = Primary Deficit.</p>
+    </div>
+
+    <h3>6. Taxation System</h3>
+    <table>
+      <tr><th></th><th>Direct Tax</th><th>Indirect Tax</th></tr>
+      <tr><td>Payment</td><td>Directly to government</td><td>Via intermediary (seller passes it)</td></tr>
+      <tr><td>Can be passed?</td><td>❌ Cannot be transferred</td><td>✅ Can be passed on to consumer</td></tr>
+      <tr><td>Nature</td><td>Progressive (more income = more tax)</td><td>Regressive/Proportional (same % for all)</td></tr>
+      <tr><td>Effect on inequality</td><td>Reduces inequality</td><td>Can increase inequality (poor pay same %)</td></tr>
+      <tr><td>Examples</td><td>Income Tax, Corporate Tax, Wealth Tax, Gift Tax, Capital Gains Tax</td><td>GST, Excise Duty, Customs Duty</td></tr>
+    </table>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Example to cement Indirect Tax</div>
+      Course fee = ₹1000 + 18% GST = ₹1180. The teacher collects ₹1180 but pays ₹180 to the government. The <strong>teacher transferred (passed) the tax burden to the student</strong>. That's indirect tax.
+    </div>
+
+    <h4>Excise Duty vs Customs Duty</h4>
+    <div class="grid">
+      <div class="card"><div class="card-title fire">EXCISE DUTY</div>Levied on goods <strong>manufactured within India</strong>. (Now mostly merged into GST)</div>
+      <div class="card"><div class="card-title blue">CUSTOMS DUTY</div>Levied on goods <strong>imported into India</strong>. Border tax.</div>
+    </div>
+
+    <h4>Special Taxes</h4>
+    <div class="grid">
+      <div class="card">
+        <div class="card-title star">SURCHARGE</div>
+        Tax on tax. Only on <strong>high-income earners</strong> (above certain threshold). Not for everyone.
+      </div>
+      <div class="card">
+        <div class="card-title green">CESS</div>
+        For a <strong>specific stated purpose</strong> (e.g., education, health, environment). <strong>Everyone pays it</strong> regardless of income level.
+      </div>
+      <div class="card">
+        <div class="card-title accent">PIGOUVIAN TAX</div>
+        Tax on <strong>negative externalities</strong> — pollution, noise, environmental harm. Factory causes pollution → pays Pigouvian tax → money used for public benefit.
+      </div>
+    </div>
+
+    <h3>7. GST — Goods and Services Tax</h3>
+    <div class="grid">
+      <div class="card"><div class="card-title fire">Constitutional Amendment</div>101st Constitutional Amendment Act</div>
+      <div class="card"><div class="card-title green">Implementation Date</div>1st July 2017</div>
+      <div class="card"><div class="card-title blue">First State to Ratify</div>Assam</div>
+      <div class="card"><div class="card-title star">GST Council</div>Article 279A — 33 Members (2 Centre + 31 States). Chair: Finance Minister</div>
+      <div class="card"><div class="card-title accent">GST Council Type</div>Constitutional Body (has its own Article)</div>
+      <div class="card"><div class="card-title pink">Nature</div>Regressive/Proportional — same rate for rich & poor</div>
+    </div>
+  </div>
+
+  <!-- MEMORY HOOKS SECTION -->
+  <div class="section green" id="hooks">
+    <div class="section-title"><span class="icon">🔗</span> Smart Memory Hooks</div>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Hook 1 — Article 112</div>
+      <strong>"One-One-Two, No Budget for You."</strong> Article 112 = Annual Financial Statement. The word "budget" doesn't exist in the Constitution. The number 112 looks like 1 person, 1 document, 2 pages (income & expense).
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Hook 2 — Fiscal Year</div>
+      <strong>"April Fool starts the year, March Madness ends it."</strong> 1 April → 31 March. The government starts fresh on April Fool's Day.
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Hook 3 — Budget Records</div>
+      <strong>Morarji = "More"-arji = MORE budgets (10)</strong><br>
+      P. J. = "Pehle Jo" = second most = 9<br>
+      Pranab = "PraNab" = not as many = 8<br>
+      Think: 10-9-8 countdown = Morarji, P.J., Pranab
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Hook 4 — Revenue vs Capital (The Rent vs Property Story)</div>
+      You pay <strong>rent every month</strong> (Revenue — frequent). But you <strong>buy a house once</strong> (Capital — rare, changes your asset). Monthly salary, food, bills = Revenue. Buying property, taking home loan, selling investment = Capital.
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Hook 5 — Direct vs Indirect Tax</div>
+      <strong>Direct = Doctor's bill</strong> — you pay it yourself, you can't make someone else pay it.<br>
+      <strong>Indirect = Restaurant bill</strong> — GST is added to your bill. The restaurant PASSED the tax to you.
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Hook 6 — Cess vs Surcharge</div>
+      <strong>Cess = "Cause"</strong> — Always has a CAUSE (specific purpose). EVERYONE pays.<br>
+      <strong>Surcharge = "Sur" (extra)</strong> — EXTRA tax only for EXTRA-rich people.
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Hook 7 — GST Dates</div>
+      <strong>"GST = One Hundred and One Party on July First"</strong> = 101st Amendment, 1st July 2017. Assam = first state. <strong>ASSAM started it ASAP.</strong>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Hook 8 — Railway Budget Story</div>
+      Railways wanted independence in <strong>1921</strong> (Acworth Committee born). Got it in <strong>1924</strong>. Lived independently for 92 years. Then Vivek Debroy said "come home" in <strong>2016</strong>. Merged. Done.
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">🧠 Hook 9 — Deficit Chain</div>
+      <strong>REFP Chain:</strong><br>
+      Revenue Deficit → Minus grants → <strong>E</strong>ffective Revenue Deficit<br>
+      <strong>F</strong>iscal Deficit → Minus interest payments → <strong>P</strong>rimary Deficit<br>
+      Think: "RE comes before FP" like "referee" in a game
+    </div>
+  </div>
+
+  <!-- CONCEPT CONNECTIONS -->
+  <div class="section star" id="connections">
+    <div class="section-title"><span class="icon">🔄</span> Concept Connections</div>
+
+    <h4>Chain: Loan → Capital Receipt → Fiscal Deficit</h4>
+    <div class="flow">
+      <div class="flow-box">Govt takes loan</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Capital Receipt (infrequent)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Increases liability</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Reflected in Fiscal Deficit</div>
+    </div>
+
+    <h4>Chain: Grant for Development → Reduces Effective Revenue Deficit</h4>
+    <div class="flow">
+      <div class="flow-box">Govt gives grant to state</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">State builds road/school</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Asset created</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Subtract from RD → Effective RD</div>
+    </div>
+
+    <h4>Direct Tax → Progressive → Reduces Inequality</h4>
+    <div class="flow">
+      <div class="flow-box">Higher income</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Higher tax rate</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Rich pay more</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Reduces inequality</div>
+    </div>
+
+    <h4>Indirect Tax → Regressive → Increases Inequality (potentially)</h4>
+    <div class="flow">
+      <div class="flow-box">GST 18% on all</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Poor man pays same %</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Higher burden on poor</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Regressive effect</div>
+    </div>
+
+    <h4>Interest Payment Connection</h4>
+    <p style="font-size:13px;">Loan is taken once (Capital). But interest is paid every month (Revenue). This is WHY interest payment goes to Revenue Expenditure, not Capital Expenditure.</p>
+    <div class="flow">
+      <div class="flow-box">Loan taken (one-time)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Capital Receipt</div>
+    </div>
+    <div class="flow">
+      <div class="flow-box">Interest paid (every month)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Revenue Expenditure</div>
+    </div>
+  </div>
+
+  <!-- EXAM TRAPS -->
+  <div class="section red" id="traps">
+    <div class="section-title"><span class="icon">⚠️</span> Exam Traps</div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 1 — The Name Trap</div>
+      The Constitution uses "Annual <strong>Financial</strong> Statement" NOT "Annual <strong>Fiscal</strong> Statement." The word "Fiscal" is commonly written in wrong answers. Answer = FINANCIAL.
+    </div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 2 — Budget Not in Constitution</div>
+      The word "Budget" is NOT mentioned in the Constitution at all. Article 112 is about Annual Financial Statement. Never say "Budget is mentioned in Article 112."
+    </div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 3 — Acworth vs Vivek Debroy Committee</div>
+      Acworth Committee (1921) → Separation of Railway & General Budget (done in 1924).<br>
+      Vivek Debroy Committee → Re-merging in 2016.<br>
+      Examiners swap these. Know which did what.
+    </div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 4 — Shanmukham Chetty vs John Mathai</div>
+      Shanmukham Chetty = FIRST budget ever.<br>
+      John Mathai = SECOND budget AND the first GENERAL budget after separation from Railway budget.<br>
+      John Mathai Committee ≠ Estimates Committee (Estimates Committee is BASED ON John Mathai's recommendation).
+    </div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 5 — Interest on Loan = Revenue, not Capital</div>
+      Students confuse: Loan taken (Capital), Loan repaid (Capital), but Interest on loan = REVENUE EXPENDITURE (because it's recurring/monthly).
+    </div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 6 — Cess vs Surcharge</div>
+      Cess = purpose-specific, EVERYONE pays.<br>
+      Surcharge = only HIGH-INCOME earners, no specific purpose needed.<br>
+      Examiners swap the definitions in options.
+    </div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 7 — GST Council Members</div>
+      GST Council = 33 members (2 from Centre + 31 from States/UTs).<br>
+      Chair = Finance Minister (not PM, not RBI Governor).<br>
+      It is a CONSTITUTIONAL body under Article 279A.
+    </div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 8 — Disinvestment</div>
+      Disinvestment comes under CAPITAL RECEIPT (it's selling government's PSU stake — infrequent, changes assets). NOT revenue receipt.
+    </div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 9 — Fiscal Deficit vs Budget Deficit</div>
+      Budget Deficit always = 0 (loans balance it out on paper). Fiscal Deficit is the REAL measure. Fiscal Deficit = government borrowing.
+    </div>
+
+    <div class="trap">
+      <div class="trap-label">⚠️ TRAP 10 — Excise vs Customs</div>
+      Excise = MADE in India (domestic production).<br>
+      Customs = IMPORTED into India (comes from outside).<br>
+      Exam may say "tax on imported goods = excise duty" — that's WRONG. It's Customs Duty.
+    </div>
+  </div>
+
+  <!-- EXAMINER'S FAVOURITE -->
+  <div class="section pink" id="examiner">
+    <div class="section-title"><span class="icon">🎯</span> Examiner's Favourite Questions</div>
+
+    <h4>High Probability Questions</h4>
+    <div class="question">
+      <div class="q-label">🎯 Classification Question</div>
+      The government pays salaries to employees. In which head does this come? → <span class="hl-g">Revenue Expenditure</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Classification Question</div>
+      The government repays a loan taken from World Bank. In which head? → <span class="hl-y">Capital Expenditure</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Classification Question</div>
+      The government pays interest on the loan taken from World Bank. In which head? → <span class="hl-g">Revenue Expenditure</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Classification Question</div>
+      Disinvestment proceeds from LIC stake sale. Which head? → <span class="hl-y">Capital Receipt</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Formula Question</div>
+      Fiscal Deficit = ? → <span class="hl-g">Total Expenditure − Non-Debt Receipts (i.e., Total Receipts minus borrowings)</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Formula Question</div>
+      Primary Deficit = ? → <span class="hl-g">Fiscal Deficit − Interest Payments</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Constitutional Question</div>
+      Budget is mentioned in which Article? → <span class="hl-g">Trick! Budget is NOT mentioned. Article 112 mentions Annual Financial Statement.</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Match-the-Following Type</div>
+      Vivek Debroy Committee → Railway-General Budget merger (2016)<br>
+      Acworth Committee → Railway-General Budget separation (1924)
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Statement-Based</div>
+      "Indirect taxes are progressive in nature." → <span class="hl-g">FALSE. Indirect taxes are regressive/proportional.</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Factual</div>
+      First state to ratify GST? → <span class="hl-g">Assam</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Factual</div>
+      Who presented maximum budgets? → <span class="hl-g">Morarji Desai (10 times)</span>
+    </div>
+    <div class="question">
+      <div class="q-label">🎯 Assertion-Reason Type</div>
+      A: India always runs a deficit budget.<br>
+      R: Government expenditure always exceeds government receipts.<br>
+      → Both A and R are true and R is the correct explanation.
+    </div>
+  </div>
+
+  <!-- ACTIVE RECALL -->
+  <div class="section" id="recall">
+    <div class="section-title"><span class="icon">❓</span> Active Recall Section <span style="font-size:13px;color:var(--muted);font-family:'Space Grotesk';">— tap each question to reveal answer</span></div>
+
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">The word "Budget" appears in which Article of the Indian Constitution?</div>
+      <div class="ans">⚡ Trick question! Budget does NOT appear in the Constitution. Article 112 mentions "Annual Financial Statement."</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">What is the Indian Fiscal Year?</div>
+      <div class="ans">⚡ 1st April to 31st March</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Who presented the first Budget of independent India?</div>
+      <div class="ans">⚡ R. K. Shanmukham Chetty (India's first Finance Minister)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Who presented the most budgets? How many?</div>
+      <div class="ans">⚡ Morarji Desai — 10 budgets</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">In which year were Railway and General Budgets separated? Which committee recommended it?</div>
+      <div class="ans">⚡ Separated in 1924 on recommendation of Acworth Committee (formed 1921)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">When were Railway and General Budgets re-merged? Which committee?</div>
+      <div class="ans">⚡ Re-merged in 2016 on recommendation of Vivek Debroy Committee</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Salary payment to government employees — Revenue or Capital Expenditure?</div>
+      <div class="ans">⚡ Revenue Expenditure (recurring, monthly)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Repayment of loan principal — Revenue or Capital Expenditure?</div>
+      <div class="ans">⚡ Capital Expenditure (reduces liability — one-time)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Interest payment on loan — Revenue or Capital Expenditure?</div>
+      <div class="ans">⚡ Revenue Expenditure (paid every month — recurring)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Disinvestment goes into which head?</div>
+      <div class="ans">⚡ Capital Receipt (selling PSU stake — infrequent, reduces assets)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Formula for Fiscal Deficit?</div>
+      <div class="ans">⚡ Total Expenditure − (Total Receipts − Debt-Creating Capital Receipts) i.e., Total Expenditure minus all receipts except borrowings</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Formula for Primary Deficit?</div>
+      <div class="ans">⚡ Fiscal Deficit − Interest Payments</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">What does Fiscal Deficit represent?</div>
+      <div class="ans">⚡ Total government borrowing in a year — the accurate measure of government deficit</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Can indirect tax be passed on? Can direct tax?</div>
+      <div class="ans">⚡ Indirect tax: YES, can be passed to consumer. Direct tax: NO, taxpayer must pay it themselves.</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Which type of tax reduces inequality — direct or indirect?</div>
+      <div class="ans">⚡ Direct Tax (progressive — rich pay more %)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">GST was implemented via which Constitutional Amendment Act?</div>
+      <div class="ans">⚡ 101st Constitutional Amendment Act</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">When was GST implemented?</div>
+      <div class="ans">⚡ 1st July 2017</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Which state first ratified GST?</div>
+      <div class="ans">⚡ Assam</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">GST Council: Article number, how many members, who is the chair?</div>
+      <div class="ans">⚡ Article 279A | 33 members (2 Centre + 31 States) | Finance Minister is the Chair</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Difference: Excise Duty vs Customs Duty</div>
+      <div class="ans">⚡ Excise = tax on goods manufactured IN India. Customs = tax on goods IMPORTED into India.</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">What is Pigouvian Tax?</div>
+      <div class="ans">⚡ Tax on negative externalities — activities that cause harm to others (pollution, noise). Used to discourage harmful activities and fund public welfare.</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">Who pays Cess? Who pays Surcharge?</div>
+      <div class="ans">⚡ Cess: EVERYONE pays regardless of income. Surcharge: Only HIGH-income earners above a certain threshold.</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('open')">
+      <div class="q-text">India's budget has NEVER been ___ type.</div>
+      <div class="ans">⚡ Surplus (income > expenditure). India has always run a Deficit budget.</div>
+    </div>
+  </div>
+
+</div><!-- end .container layer-all -->
+</div><!-- end #layer-all -->
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- LAYER: HIGH-YIELD -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="layer-highyield" class="layer">
+<div class="container">
+
+  <div class="section" id="highyield">
+    <div class="section-title"><span class="icon">⚡</span> High-Yield Revision Notes</div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Only the things examiners love most. Read this 2 days before the exam.</p>
+
+    <h3>🔥 Constitutional Facts</h3>
+    <div class="pill-list">
+      <div class="pill fire">Budget → NOT in Constitution</div>
+      <div class="pill fire">Article 112 → Annual Financial Statement</div>
+      <div class="pill fire">Fiscal Year: 1 Apr → 31 Mar</div>
+      <div class="pill fire">Ministry of Finance → Dept of Economic Affairs</div>
+    </div>
+
+    <h3>🔥 Budget History Numbers</h3>
+    <table>
+      <tr><th>Who</th><th>What</th></tr>
+      <tr><td>R. K. Shanmukham Chetty</td><td>First budget of India</td></tr>
+      <tr><td>John Mathai</td><td>Second budget; first separate General Budget</td></tr>
+      <tr><td>Morarji Desai</td><td>10 budgets (maximum)</td></tr>
+      <tr><td>P. J. Nandu</td><td>9 budgets</td></tr>
+      <tr><td>Pranab Mukherjee</td><td>8 budgets</td></tr>
+      <tr><td>Acworth Committee (1921)</td><td>Recommended Railway + General separation → done 1924</td></tr>
+      <tr><td>Vivek Debroy Committee</td><td>Recommended re-merger → done 2016</td></tr>
+    </table>
+
+    <h3>🔥 Revenue vs Capital — Quick Classification</h3>
+    <table>
+      <tr><th>Item</th><th>Head</th></tr>
+      <tr><td>Salary, Pension</td><td>Revenue Expenditure</td></tr>
+      <tr><td>Subsidies, Grants</td><td>Revenue Expenditure</td></tr>
+      <tr><td>Interest payment on loan</td><td>Revenue Expenditure</td></tr>
+      <tr><td>Income Tax collected</td><td>Revenue Receipt</td></tr>
+      <tr><td>Loan taken by govt</td><td>Capital Receipt</td></tr>
+      <tr><td>Disinvestment</td><td>Capital Receipt</td></tr>
+      <tr><td>Loan given by govt to states</td><td>Capital Expenditure</td></tr>
+      <tr><td>Repayment of loan (principal)</td><td>Capital Expenditure</td></tr>
+      <tr><td>Building roads, hospitals, schools</td><td>Capital Expenditure</td></tr>
+    </table>
+
+    <h3>🔥 Deficit Formulas</h3>
+    <div class="formula">Revenue Deficit = Revenue Expenditure <span>−</span> Revenue Receipt</div>
+    <div class="formula">Effective Revenue Deficit = Revenue Deficit <span>−</span> Grants for development</div>
+    <div class="formula">Fiscal Deficit = Total Expenditure <span>−</span> (Total Receipts <span>−</span> Borrowings)</div>
+    <div class="formula">Primary Deficit = Fiscal Deficit <span>−</span> Interest Payments</div>
+
+    <h3>🔥 Tax Comparison</h3>
+    <table>
+      <tr><th>Feature</th><th>Direct Tax</th><th>Indirect Tax</th></tr>
+      <tr><td>Passed on?</td><td>❌ NO</td><td>✅ YES</td></tr>
+      <tr><td>Nature</td><td>Progressive</td><td>Regressive/Proportional</td></tr>
+      <tr><td>Inequality effect</td><td>Reduces it</td><td>May increase it</td></tr>
+      <tr><td>Examples</td><td>Income, Corporate, Wealth, Capital Gains</td><td>GST, Excise, Customs</td></tr>
+    </table>
+
+    <h3>🔥 GST Key Facts</h3>
+    <div class="pill-list">
+      <div class="pill fire">101st Constitutional Amendment Act</div>
+      <div class="pill green">1st July 2017</div>
+      <div class="pill blue">First state: Assam</div>
+      <div class="pill star">Article 279A</div>
+      <div class="pill pink">33 members (2+31)</div>
+      <div class="pill fire">Chair: Finance Minister</div>
+    </div>
+
+    <h3>🔥 Special Tax Facts</h3>
+    <div class="grid">
+      <div class="card"><div class="card-title star">Cess</div>Specific purpose. Everyone pays.</div>
+      <div class="card"><div class="card-title fire">Surcharge</div>Extra tax on extra-rich. Not everyone.</div>
+      <div class="card"><div class="card-title accent">Pigouvian</div>Tax on pollution/negative externality.</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- LAYER: ULTRA-FAST -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="layer-ultrafast" class="layer">
+<div class="container">
+
+  <div class="section" id="ultrafast">
+    <div class="section-title"><span class="icon">🚀</span> Ultra-Fast Revision Sheet</div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">10 minutes. Know everything. Day before exam.</p>
+
+    <div class="ufs-row"><div class="ufs-key">Article 112</div><div class="ufs-val">Annual <strong>Financial</strong> Statement (NOT budget, NOT fiscal)</div></div>
+    <div class="ufs-row"><div class="ufs-key">Fiscal Year</div><div class="ufs-val">1 April → 31 March</div></div>
+    <div class="ufs-row"><div class="ufs-key">First Budget</div><div class="ufs-val">R. K. Shanmukham Chetty</div></div>
+    <div class="ufs-row"><div class="ufs-key">Max Budgets</div><div class="ufs-val">Morarji Desai = 10, P.J. = 9, Pranab = 8</div></div>
+    <div class="ufs-row"><div class="ufs-key">Separated 1924</div><div class="ufs-val">Acworth Committee (formed 1921) → Railway & General</div></div>
+    <div class="ufs-row"><div class="ufs-key">Merged 2016</div><div class="ufs-val">Vivek Debroy Committee</div></div>
+    <div class="ufs-row"><div class="ufs-key">Revenue Receipt</div><div class="ufs-val">Tax (Direct+Indirect) + Non-Tax</div></div>
+    <div class="ufs-row"><div class="ufs-key">Revenue Expenditure</div><div class="ufs-val">Salary, Pension, Subsidies, Grants, Interest on loans</div></div>
+    <div class="ufs-row"><div class="ufs-key">Capital Receipt</div><div class="ufs-val">Loans taken + Disinvestment</div></div>
+    <div class="ufs-row"><div class="ufs-key">Capital Expenditure</div><div class="ufs-val">Loans given, Loan repayment, Infrastructure, Machinery</div></div>
+    <div class="ufs-row"><div class="ufs-key">Revenue Deficit</div><div class="ufs-val">Rev Exp − Rev Receipt</div></div>
+    <div class="ufs-row"><div class="ufs-key">Eff. Revenue Deficit</div><div class="ufs-val">Rev Deficit − Dev Grants</div></div>
+    <div class="ufs-row"><div class="ufs-key">Fiscal Deficit</div><div class="ufs-val">Total Exp − (Total Receipts − Borrowings)</div></div>
+    <div class="ufs-row"><div class="ufs-key">Primary Deficit</div><div class="ufs-val">Fiscal Deficit − Interest Payments</div></div>
+    <div class="ufs-row"><div class="ufs-key">Direct Tax</div><div class="ufs-val">Can't be passed, Progressive, Reduces inequality</div></div>
+    <div class="ufs-row"><div class="ufs-key">Indirect Tax</div><div class="ufs-val">Can be passed, Regressive, GST/Excise/Customs</div></div>
+    <div class="ufs-row"><div class="ufs-key">Excise Duty</div><div class="ufs-val">Tax on goods MADE in India</div></div>
+    <div class="ufs-row"><div class="ufs-key">Customs Duty</div><div class="ufs-val">Tax on goods IMPORTED into India</div></div>
+    <div class="ufs-row"><div class="ufs-key">Cess</div><div class="ufs-val">Specific purpose, Everyone pays</div></div>
+    <div class="ufs-row"><div class="ufs-key">Surcharge</div><div class="ufs-val">Tax on tax, Only high earners</div></div>
+    <div class="ufs-row"><div class="ufs-key">Pigouvian Tax</div><div class="ufs-val">Tax on negative externalities (pollution etc.)</div></div>
+    <div class="ufs-row"><div class="ufs-key">GST Date</div><div class="ufs-val">1 July 2017 | 101st Amendment</div></div>
+    <div class="ufs-row"><div class="ufs-key">GST First State</div><div class="ufs-val">Assam</div></div>
+    <div class="ufs-row"><div class="ufs-key">GST Council</div><div class="ufs-val">Article 279A | 33 members | Chair: Finance Minister</div></div>
+    <div class="ufs-row"><div class="ufs-key">India's Budget Type</div><div class="ufs-val">ALWAYS DEFICIT (never surplus, never balanced)</div></div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- LAYER: LAST NIGHT -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div id="layer-lastnight" class="layer">
+<div class="container">
+
+  <div class="section red" id="lastnight">
+    <div class="section-title"><span class="icon">🌙</span> Last Night Before Exam Sheet</div>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">Only the make-or-break facts. 5 minutes maximum.</p>
+
+    <div class="ln-item"><div class="ln-dot"></div><div><span class="hl">Article 112</span> = Annual <span class="hl">Financial</span> Statement (NOT budget, NOT fiscal)</div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div><span class="hl">First budget</span>: Shanmukham Chetty | <span class="hl">Max budgets</span>: Morarji Desai (10)</div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div>Railway separated <span class="hl">1924</span> (Acworth 1921) → merged <span class="hl">2016</span> (Vivek Debroy)</div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div>Interest on loan = <span class="hl">Revenue</span> Expenditure | Loan repayment = <span class="hl">Capital</span> Expenditure</div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div>Disinvestment = <span class="hl">Capital Receipt</span></div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div><span class="hl">Fiscal Deficit</span> = Govt borrowing. <span class="hl">Primary Deficit</span> = FD − Interest</div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div><span class="hl">Direct Tax</span>: can't pass on, progressive. <span class="hl">Indirect Tax</span>: can pass on, regressive</div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div>Excise = <span class="hl">Made in India</span>. Customs = <span class="hl">Imported</span></div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div>Cess = <span class="hl">everyone pays</span>, specific purpose | Surcharge = only <span class="hl">rich pay</span></div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div>GST = <span class="hl">101st Amendment</span>, <span class="hl">1 July 2017</span>, First state: <span class="hl">Assam</span></div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div>GST Council: Article <span class="hl">279A</span>, <span class="hl">33 members</span>, Chair: <span class="hl">Finance Minister</span></div></div>
+    <div class="ln-item"><div class="ln-dot"></div><div>India's budget = <span class="hl">ALWAYS DEFICIT</span></div></div>
+
+    <div style="margin-top:24px;padding:16px;background:rgba(124,106,247,0.1);border-radius:8px;border:1px solid rgba(124,106,247,0.3);text-align:center;">
+      <div style="color:var(--accent);font-weight:700;font-size:14px;margin-bottom:4px;">You've got this. 💪</div>
+      <div style="color:var(--muted);font-size:12px;">These 12 points cover 90% of what SSC CGL will ask from this chapter. Trust your preparation.</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  function setLayer(name) {
+    // hide all layers
+    document.querySelectorAll('.layer').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+
+    // show target
+    if (name === 'all') {
+      document.getElementById('layer-all').classList.add('active');
+    } else if (name === 'highyield') {
+      document.getElementById('layer-highyield').classList.add('active');
+    } else if (name === 'ultrafast') {
+      document.getElementById('layer-ultrafast').classList.add('active');
+    } else if (name === 'lastnight') {
+      document.getElementById('layer-lastnight').classList.add('active');
+    }
+
+    // active button
+    const btns = document.querySelectorAll('.layer-btn');
+    const map = { all: 0, highyield: 1, ultrafast: 2, lastnight: 3 };
+    btns[map[name]].classList.add('active');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

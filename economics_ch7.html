@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Banking Vault — SSC CGL Revision System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A0E13;
+  --ink-2:#11161D;
+  --panel:#161D26;
+  --panel-2:#1C2530;
+  --hairline:#2A333F;
+  --paper:#E9E4D6;
+  --paper-dim:#A9ADAE;
+  --gold:#C9A24B;
+  --gold-bright:#E8C572;
+  --green:#5BA37A;
+  --green-dim:#3A6B52;
+  --red:#D2685C;
+  --red-dim:#8C3F38;
+  --blue:#6FA3C7;
+  --serif:'Spectral', Georgia, serif;
+  --sans:'Inter', -apple-system, sans-serif;
+  --mono:'IBM Plex Mono', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,162,75,0.07), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(95,150,120,0.05), transparent);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ===== LAYOUT ===== */
+.shell{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  max-width:1400px;
+  margin:0 auto;
+  position:relative;
+  z-index:1;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  padding:28px 18px 40px 28px;
+  border-right:1px solid var(--hairline);
+  scrollbar-width:thin;
+}
+.sidebar::-webkit-scrollbar{width:6px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:3px;}
+
+.vault-mark{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:6px;
+}
+.vault-mark .dial{
+  width:34px;height:34px;
+  border:1.5px solid var(--gold);
+  border-radius:50%;
+  position:relative;
+  flex-shrink:0;
+}
+.vault-mark .dial::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  width:2px;height:11px;
+  background:var(--gold);
+  transform:translate(-50%,-100%);
+  transform-origin:bottom center;
+}
+.vault-mark .dial::after{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  width:3px;height:3px;
+  background:var(--gold);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+}
+.vault-mark h1{
+  font-family:var(--serif);
+  font-size:1.18rem;
+  font-weight:600;
+  color:var(--paper);
+  letter-spacing:0.01em;
+}
+.sidebar .sub{
+  font-family:var(--mono);
+  font-size:0.66rem;
+  color:var(--paper-dim);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:28px;
+  padding-left:44px;
+}
+
+.nav-group{margin-bottom:22px;}
+.nav-group-label{
+  font-family:var(--mono);
+  font-size:0.62rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--gold);
+  opacity:0.7;
+  margin-bottom:8px;
+  padding-left:2px;
+}
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 8px;
+  border-radius:6px;
+  color:var(--paper-dim);
+  text-decoration:none;
+  font-size:0.84rem;
+  transition:background 0.15s, color 0.15s;
+  border-left:2px solid transparent;
+}
+.nav-link:hover{
+  background:var(--panel);
+  color:var(--paper);
+}
+.nav-link.active{
+  color:var(--gold-bright);
+  border-left:2px solid var(--gold);
+  background:var(--panel);
+}
+.nav-link .tag{
+  font-size:0.95em;
+}
+
+.progress-box{
+  margin-top:20px;
+  padding:14px;
+  background:var(--panel);
+  border:1px solid var(--hairline);
+  border-radius:10px;
+}
+.progress-box .pb-label{
+  font-family:var(--mono);
+  font-size:0.62rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--paper-dim);
+  margin-bottom:8px;
+}
+.progress-bar{
+  height:6px;
+  background:var(--ink-2);
+  border-radius:4px;
+  overflow:hidden;
+  margin-bottom:8px;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--green-dim),var(--green));
+  width:0%;
+  transition:width 0.4s ease;
+  border-radius:4px;
+}
+.progress-box .pb-count{
+  font-family:var(--mono);
+  font-size:0.72rem;
+  color:var(--paper-dim);
+}
+.reset-link{
+  display:inline-block;
+  margin-top:8px;
+  font-family:var(--mono);
+  font-size:0.64rem;
+  color:var(--red-dim);
+  cursor:pointer;
+  text-decoration:underline;
+}
+
+/* ===== MAIN CONTENT ===== */
+.main{
+  padding:48px 56px 120px;
+  min-width:0;
+}
+
+.hero{
+  margin-bottom:56px;
+  padding-bottom:32px;
+  border-bottom:1px solid var(--hairline);
+}
+.hero .eyebrow{
+  font-family:var(--mono);
+  font-size:0.74rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:14px;
+}
+.hero h1{
+  font-family:var(--serif);
+  font-size:2.6rem;
+  font-weight:600;
+  line-height:1.15;
+  color:var(--paper);
+  margin-bottom:16px;
+  letter-spacing:-0.01em;
+}
+.hero h1 em{
+  font-style:italic;
+  color:var(--gold-bright);
+}
+.hero p{
+  font-size:1.02rem;
+  color:var(--paper-dim);
+  max-width:640px;
+}
+
+section.chapter{
+  margin-bottom:64px;
+  scroll-margin-top:24px;
+}
+
+.chapter-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  margin-bottom:6px;
+}
+.chapter-num{
+  font-family:var(--mono);
+  font-size:0.85rem;
+  color:var(--gold);
+  opacity:0.8;
+}
+h2.chapter-title{
+  font-family:var(--serif);
+  font-size:1.9rem;
+  font-weight:600;
+  color:var(--paper);
+}
+.chapter-tagline{
+  font-size:0.94rem;
+  color:var(--paper-dim);
+  font-style:italic;
+  margin-bottom:28px;
+  max-width:680px;
+}
+
+h3.block-title{
+  font-family:var(--serif);
+  font-size:1.28rem;
+  font-weight:600;
+  color:var(--gold-bright);
+  margin:34px 0 14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+h3.block-title .icon{font-size:1.1rem;}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--hairline);
+  border-radius:12px;
+  padding:22px 24px;
+  margin-bottom:16px;
+}
+.card.tight{padding:16px 20px;}
+
+p{margin-bottom:12px;color:var(--paper);}
+p:last-child{margin-bottom:0;}
+
+strong{color:var(--gold-bright);font-weight:600;}
+
+ul, ol{margin:10px 0 10px 22px;}
+li{margin-bottom:7px;color:var(--paper);}
+li::marker{color:var(--gold);}
+
+/* tags */
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-family:var(--mono);
+  font-size:0.68rem;
+  font-weight:600;
+  padding:2px 9px;
+  border-radius:20px;
+  letter-spacing:0.03em;
+  white-space:nowrap;
+}
+.tag-must{background:rgba(91,163,122,0.15);color:var(--green);border:1px solid var(--green-dim);}
+.tag-imp{background:rgba(201,162,75,0.15);color:var(--gold-bright);border:1px solid var(--gold);}
+.tag-good{background:rgba(111,163,199,0.15);color:var(--blue);border:1px solid var(--blue);}
+.tag-trap{background:rgba(210,104,92,0.15);color:var(--red);border:1px solid var(--red-dim);}
+
+/* memory palace */
+.palace{
+  background:linear-gradient(135deg, rgba(201,162,75,0.07), rgba(201,162,75,0.02));
+  border:1px solid var(--gold);
+  border-radius:14px;
+  padding:26px 28px;
+  margin-bottom:20px;
+  position:relative;
+}
+.palace::before{
+  content:'🏛';
+  position:absolute;
+  top:-14px;
+  left:24px;
+  background:var(--ink);
+  padding:2px 10px;
+  font-size:1rem;
+}
+.palace h4{
+  font-family:var(--serif);
+  font-size:1.1rem;
+  color:var(--gold-bright);
+  margin-bottom:10px;
+}
+.palace p{font-size:0.95rem;}
+.palace .stop{
+  display:flex;
+  gap:12px;
+  margin:14px 0;
+  padding-left:0;
+}
+.palace .stop .marker{
+  font-family:var(--mono);
+  color:var(--gold);
+  font-size:0.8rem;
+  flex-shrink:0;
+  width:20px;
+}
+.palace .stop .content{font-size:0.92rem;color:var(--paper);}
+.palace .stop .content b{color:var(--gold-bright);}
+
+/* hook cards */
+.hook{
+  background:var(--panel-2);
+  border-left:3px solid var(--gold);
+  border-radius:8px;
+  padding:16px 20px;
+  margin-bottom:14px;
+}
+.hook .hook-label{
+  font-family:var(--mono);
+  font-size:0.66rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:6px;
+  display:block;
+}
+.hook p{font-size:0.93rem;}
+
+/* exam trap */
+.trap{
+  background:rgba(210,104,92,0.08);
+  border:1px solid var(--red-dim);
+  border-radius:10px;
+  padding:16px 20px;
+  margin-bottom:14px;
+}
+.trap .trap-label{
+  font-family:var(--mono);
+  font-size:0.7rem;
+  letter-spacing:0.06em;
+  color:var(--red);
+  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.trap p{font-size:0.92rem;color:var(--paper);}
+
+/* connections */
+.flow{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  font-family:var(--mono);
+  font-size:0.85rem;
+  background:var(--ink-2);
+  border:1px solid var(--hairline);
+  border-radius:8px;
+  padding:14px 18px;
+  margin-bottom:12px;
+}
+.flow .node{color:var(--paper);background:var(--panel-2);padding:3px 10px;border-radius:6px;}
+.flow .arrow{color:var(--gold);}
+
+/* table */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:14px 0;
+  font-size:0.9rem;
+}
+th{
+  text-align:left;
+  font-family:var(--mono);
+  font-size:0.7rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--gold);
+  padding:10px 14px;
+  border-bottom:2px solid var(--hairline);
+}
+td{
+  padding:10px 14px;
+  border-bottom:1px solid var(--hairline);
+  color:var(--paper);
+}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* accordion layers */
+.layer{
+  border:1px solid var(--hairline);
+  border-radius:12px;
+  margin-bottom:12px;
+  overflow:hidden;
+  background:var(--panel);
+}
+.layer-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 22px;
+  cursor:pointer;
+  user-select:none;
+}
+.layer-head:hover{background:var(--panel-2);}
+.layer-head .lh-left{display:flex;align-items:center;gap:12px;}
+.layer-num{
+  font-family:var(--mono);
+  font-size:0.7rem;
+  color:var(--gold);
+  border:1px solid var(--gold);
+  border-radius:50%;
+  width:24px;height:24px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.layer-head h4{
+  font-family:var(--serif);
+  font-size:1.08rem;
+  color:var(--paper);
+  font-weight:600;
+}
+.layer-head .chev{
+  color:var(--paper-dim);
+  transition:transform 0.25s;
+  font-size:0.8rem;
+}
+.layer.open .layer-head .chev{transform:rotate(180deg);}
+.layer-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.3s ease;
+  padding:0 22px;
+}
+.layer.open .layer-body{
+  padding:0 22px 20px;
+}
+.layer-body p, .layer-body li{font-size:0.92rem;}
+
+/* recall / flashcards */
+.recall-card{
+  background:var(--ink-2);
+  border:1px solid var(--hairline);
+  border-radius:10px;
+  padding:16px 20px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:border-color 0.2s;
+}
+.recall-card:hover{border-color:var(--gold);}
+.recall-q{
+  font-size:0.93rem;
+  color:var(--paper);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.recall-q .qmark{color:var(--gold);font-family:var(--mono);flex-shrink:0;}
+.recall-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height 0.25s ease;
+  font-size:0.9rem;
+  color:var(--green);
+  padding-top:0;
+}
+.recall-card.revealed .recall-a{
+  max-height:300px;
+  padding-top:10px;
+  border-top:1px dashed var(--hairline);
+  margin-top:10px;
+}
+.recall-card .hint{
+  font-family:var(--mono);
+  font-size:0.62rem;
+  color:var(--paper-dim);
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+}
+
+/* dial / vault wheel for monetary aggregates */
+.dial-wrap{
+  display:flex;
+  gap:30px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.vault-wheel{
+  flex-shrink:0;
+  width:280px;
+  height:280px;
+}
+.wheel-legend{
+  flex:1;
+  min-width:240px;
+}
+.wheel-legend .wl-row{
+  display:flex;
+  gap:10px;
+  align-items:baseline;
+  margin-bottom:10px;
+  font-size:0.9rem;
+}
+.wheel-legend .wl-tag{
+  font-family:var(--mono);
+  font-weight:700;
+  width:34px;
+  flex-shrink:0;
+}
+
+/* last night sheet */
+.lastnight{
+  background:radial-gradient(circle at top left, rgba(201,162,75,0.1), var(--panel));
+  border:1.5px solid var(--gold);
+  border-radius:14px;
+  padding:28px;
+}
+.lastnight .ln-item{
+  display:flex;
+  gap:12px;
+  margin-bottom:10px;
+  font-size:0.92rem;
+  align-items:flex-start;
+}
+.lastnight .ln-item .bullet{color:var(--gold);flex-shrink:0;}
+
+/* TOC mobile toggle */
+.mobile-toc-toggle{
+  display:none;
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:100;
+  background:var(--gold);
+  color:var(--ink);
+  border:none;
+  width:52px;height:52px;
+  border-radius:50%;
+  font-size:1.3rem;
+  cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,0.4);
+}
+
+/* scroll-to-top */
+.totop{
+  position:fixed;
+  bottom:20px;
+  right:80px;
+  z-index:99;
+  background:var(--panel);
+  border:1px solid var(--hairline);
+  color:var(--paper);
+  width:44px;height:44px;
+  border-radius:50%;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.2s;
+}
+.totop.show{opacity:1;pointer-events:auto;}
+
+footer{
+  border-top:1px solid var(--hairline);
+  margin-top:60px;
+  padding-top:24px;
+  text-align:center;
+  color:var(--paper-dim);
+  font-size:0.8rem;
+  font-family:var(--mono);
+}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr;}
+  .sidebar{
+    position:fixed;
+    left:0;top:0;
+    width:280px;
+    height:100vh;
+    z-index:200;
+    background:var(--ink);
+    transform:translateX(-100%);
+    transition:transform 0.25s ease;
+  }
+  .sidebar.open{transform:translateX(0);box-shadow:10px 0 30px rgba(0,0,0,0.5);}
+  .main{padding:36px 20px 100px;}
+  .hero h1{font-size:2rem;}
+  .mobile-toc-toggle{display:flex;align-items:center;justify-content:center;}
+  .dial-wrap{flex-direction:column;}
+  .vault-wheel{width:240px;height:240px;}
+  .sidebar-overlay{
+    display:none;
+    position:fixed;inset:0;
+    background:rgba(0,0,0,0.6);
+    z-index:150;
+  }
+  .sidebar-overlay.show{display:block;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{transition:none !important; scroll-behavior:auto !important;}
+}
+</style>
+</head>
+<body>
+
+<button class="mobile-toc-toggle" id="tocToggle" aria-label="Toggle table of contents">☰</button>
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="shell">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="vault-mark">
+      <div class="dial"></div>
+      <h1>The Banking Vault</h1>
+    </div>
+    <div class="sub">SSC CGL · Lecture 3 of 3</div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Chapters</div>
+      <a href="#ch1" class="nav-link"><span class="tag">①</span> Liquidity & Money Types</a>
+      <a href="#ch2" class="nav-link"><span class="tag">②</span> Monetary Aggregates M0–M4</a>
+      <a href="#ch3" class="nav-link"><span class="tag">③</span> Quantity Theory of Money</a>
+      <a href="#ch4" class="nav-link"><span class="tag">④</span> NPA & Bad Banks</a>
+      <a href="#ch5" class="nav-link"><span class="tag">⑤</span> SARFAESI & IBC</a>
+      <a href="#ch6" class="nav-link"><span class="tag">⑥</span> Basel Norms</a>
+      <a href="#ch7" class="nav-link"><span class="tag">⑦</span> Liquidity Trap & Markets</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Revision Layers</div>
+      <a href="#layers" class="nav-link">📚 All 5 Layers</a>
+      <a href="#recall" class="nav-link">❓ Active Recall</a>
+      <a href="#traps" class="nav-link">⚠️ Exam Traps (all)</a>
+      <a href="#lastnight" class="nav-link">🌙 Last Night Sheet</a>
+    </div>
+
+    <div class="progress-box">
+      <div class="pb-label">Recall Mastery</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="pb-count" id="progressCount">0 / 0 cards flipped</div>
+      <span class="reset-link" id="resetProgress">reset tracker</span>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <div class="hero">
+      <div class="eyebrow">Banking · Final Lecture · Monetary Aggregates / NPA / Basel / Markets</div>
+      <h1>Forget less. <em>Recall faster.</em><br>Walk the Vault.</h1>
+      <p>This isn't a summary — it's a memory system. Every concept below is hooked to an image, a trap, and a question, so it survives 6 months of silence and surfaces the second the exam needs it.</p>
+    </div>
+
+    <!-- ============ CHAPTER 1 ============ -->
+    <section class="chapter" id="ch1">
+      <div class="chapter-head">
+        <span class="chapter-num">01</span>
+        <h2 class="chapter-title">Liquidity & Types of Money</h2>
+      </div>
+      <p class="chapter-tagline">The foundation everything else stands on — how "convertible to cash" defines every asset's rank.</p>
+
+      <h3 class="block-title"><span class="icon">🧠</span>Memory Hook</h3>
+      <div class="hook">
+        <span class="hook-label">The Liquidity Ladder</span>
+        <p>Picture a <strong>ladder leaning against a bank's vault door</strong>. On the top rung — already inside the vault — sits <strong>Cash</strong>. It needs zero steps to become money; it already is money. One rung down stands the <strong>Cheque</strong> — it has to walk into the bank, get verified, then become cash. At the bottom, far from the vault, sits the <strong>Bond</strong> — it has to wait out its term before it climbs anywhere near cash. <em>The closer to the top of the ladder, the more liquid.</em></p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">📖</span>Complete Notes</h3>
+      <div class="card">
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;<strong>Liquidity</strong> = how quickly an asset/security can be converted into cash. The faster the conversion, the more liquid the asset.</p>
+        <ul>
+          <li><strong>Cash</strong> — the most liquid asset that exists (the benchmark itself).</li>
+          <li><strong>Cheque</strong> — less liquid than cash; deposit it, then wait for clearance to get money.</li>
+          <li><strong>Bonds</strong> — take the longest to convert; least liquid of the three.</li>
+        </ul>
+        <p><span class="tag tag-imp">IMPORTANT</span> &nbsp;<strong>Fiat money</strong> is government-backed legal tender — <em>nobody can refuse it</em>. You cannot say "I won't accept this ₹1 note, give me gold instead."</p>
+        <p><span class="tag tag-imp">IMPORTANT</span> &nbsp;<strong>Fiduciary money</strong> (like a cheque) works only on <em>mutual agreement</em> between the giver and the taker. A seller can legally refuse to accept a cheque and demand cash instead — but no one can refuse cash itself.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">⚠️</span>Exam Trap</h3>
+      <div class="trap">
+        <div class="trap-label">⚠ FAT vs FIAT — the silent killer</div>
+        <p>Students mishear/misspell "Fiat Money" as something else entirely. Lock the spelling: <strong>FIAT</strong> = mandatory legal tender (cash). <strong>FIDUCIARY</strong> = works only by mutual trust/agreement (cheque). One is forced by law, the other is a handshake.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">❓</span>Quick Self-Test</h3>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Why can a shopkeeper refuse your cheque but never your ₹500 note?</span><span class="hint">tap</span></div>
+        <div class="recall-a">Because cash is fiat money (legally mandatory to accept), while a cheque is fiduciary — it only works if both parties mutually agree to it.</div>
+      </div>
+    </section>
+
+    <!-- ============ CHAPTER 2 ============ -->
+    <section class="chapter" id="ch2">
+      <div class="chapter-head">
+        <span class="chapter-num">02</span>
+        <h2 class="chapter-title">Monetary Aggregates — M0 to M4</h2>
+      </div>
+      <p class="chapter-tagline">The single highest-frequency topic in SSC CGL & CHSL banking. One clean mental model removes 90% of the confusion.</p>
+
+      <div class="palace">
+        <h4>🏛 Memory Palace — "The 5-Floor Currency Tower"</h4>
+        <p>Imagine a <strong>5-floor tower</strong>. You start in the basement vault and climb up, and at <em>every floor someone hands you one more bag of money</em> to add to what you're already carrying. You never put anything down — you only pick up more as you climb.</p>
+        <div class="stop"><span class="marker">B0</span><div class="content"><b>Basement (M0)</b> — Reserve Money / High-Powered Money. You're holding: Currency in Circulation (public + bank) + Bankers' Deposits with RBI + Other Deposits with RBI.</div></div>
+        <div class="stop"><span class="marker">F1</span><div class="content"><b>Floor 1 (M1)</b> — Currency with the Public + Demand Deposits (DD) + Other Deposits with RBI. (Notice: bank's own currency is dropped here — only public's cash counts now.)</div></div>
+        <div class="stop"><span class="marker">F2</span><div class="content"><b>Floor 2 (M2)</b> — Take the whole M1 bag, and the floor attendant adds <b>Post Office Savings Deposits</b> to it.</div></div>
+        <div class="stop"><span class="marker">F3</span><div class="content"><b>Floor 3 (M3)</b> — Go back down conceptually to M1, and this time add <b>Time/Term Deposits (TD)</b> instead. M3 = M1 + TD. This is called <b>Broad Money / Actual Money Supply</b>.</div></div>
+        <div class="stop"><span class="marker">F4</span><div class="content"><b>Floor 4 (M4)</b> — Take all of M3, and add <b>ALL deposits with the Post Office</b> (not just savings). Top of the tower — the broadest aggregate.</div></div>
+      </div>
+
+      <h3 class="block-title"><span class="icon">🎯</span>The Vault Wheel — Visual Build-Up</h3>
+      <div class="dial-wrap">
+        <svg class="vault-wheel" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="140" cy="140" r="135" fill="none" stroke="#2A333F" stroke-width="1"/>
+          <circle cx="140" cy="140" r="115" fill="none" stroke="#2A333F" stroke-width="1"/>
+          <circle cx="140" cy="140" r="95" fill="none" stroke="#2A333F" stroke-width="1"/>
+          <circle cx="140" cy="140" r="75" fill="none" stroke="#2A333F" stroke-width="1"/>
+          <circle cx="140" cy="140" r="55" fill="#1C2530" stroke="#C9A24B" stroke-width="1.5"/>
+          <text x="140" y="135" text-anchor="middle" fill="#E8C572" font-family="IBM Plex Mono" font-size="15" font-weight="600">M0</text>
+          <text x="140" y="152" text-anchor="middle" fill="#A9ADAE" font-family="Inter" font-size="8">Reserve Money</text>
+
+          <circle cx="140" cy="140" r="75" fill="none" stroke="#5BA37A" stroke-width="2" stroke-dasharray="2 471" stroke-dashoffset="0"/>
+          <text x="140" y="71" text-anchor="middle" fill="#5BA37A" font-family="IBM Plex Mono" font-size="13" font-weight="600">M1</text>
+          <text x="140" y="83" text-anchor="middle" fill="#A9ADAE" font-family="Inter" font-size="7">+ DD, public cash</text>
+
+          <text x="140" y="51" text-anchor="middle" fill="#6FA3C7" font-family="IBM Plex Mono" font-size="12" font-weight="600">M2</text>
+          <text x="140" y="63" text-anchor="middle" fill="#A9ADAE" font-family="Inter" font-size="6.5">+ PO savings</text>
+
+          <text x="140" y="31" text-anchor="middle" fill="#E8C572" font-family="IBM Plex Mono" font-size="11" font-weight="600">M3</text>
+          <text x="140" y="42" text-anchor="middle" fill="#A9ADAE" font-family="Inter" font-size="6">M1 + Time Deposit</text>
+
+          <text x="140" y="14" text-anchor="middle" fill="#D2685C" font-family="IBM Plex Mono" font-size="10" font-weight="600">M4 = M3 + all PO deposits</text>
+
+          <line x1="140" y1="140" x2="140" y2="20" stroke="#C9A24B" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
+        </svg>
+        <div class="wheel-legend">
+          <div class="wl-row"><span class="wl-tag" style="color:#E8C572">M0</span> Currency in Circulation + Bankers' Deposits with RBI + Other Deposits with RBI</div>
+          <div class="wl-row"><span class="wl-tag" style="color:#5BA37A">M1</span> Currency with Public + Demand Deposits + Other Deposits with RBI</div>
+          <div class="wl-row"><span class="wl-tag" style="color:#6FA3C7">M2</span> M1 + Savings Deposits with Post Office</div>
+          <div class="wl-row"><span class="wl-tag" style="color:#E8C572">M3</span> M1 + Time/Term Deposits <em style="color:var(--paper-dim);font-size:0.82em">(= Broad Money)</em></div>
+          <div class="wl-row"><span class="wl-tag" style="color:#D2685C">M4</span> M3 + ALL Deposits with Post Office</div>
+        </div>
+      </div>
+
+      <h3 class="block-title"><span class="icon">🧠</span>The Teacher's Own Shortcut Hook</h3>
+      <div class="hook">
+        <span class="hook-label">"A + DD" — the fake formula that actually works</span>
+        <p>The lecture gives a deliberately "wrong but useful" trick: remember <strong>M0 → "M Na + DD"</strong> (a placeholder, not literally in M0) just to remind you that <strong>DD attaches itself starting at M1</strong>. Then:</p>
+        <ul>
+          <li><strong>M1 = M0-base + DD</strong> (Demand Deposit enters here)</li>
+          <li><strong>M2 = M1 + Post Office Savings</strong></li>
+          <li><strong>M3 = M1 + TD</strong> (Time Deposit enters here, NOT M2)</li>
+          <li><strong>M4 = M3 + all Post Office deposits</strong></li>
+        </ul>
+        <p>Picture <strong>DD and TD as two siblings who never stand in the same room</strong>: DD lives on the M1/M2 side of the building, TD lives on the M3 side. They only meet inside M4, at the very top.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">🔗</span>Concept Connections</h3>
+      <div class="flow"><span class="node">Money Supply ↑</span><span class="arrow">→</span><span class="node">Velocity of Circulation ↑</span><span class="arrow">→</span><span class="node">Price Level ↑</span><span class="arrow">→</span><span class="node">Inflation</span></div>
+      <div class="flow"><span class="node">M0</span><span class="arrow">also called</span><span class="node">Reserve Money / High-Powered Money / Monetary Base</span></div>
+      <div class="flow"><span class="node">M3</span><span class="arrow">also called</span><span class="node">Broad Money / Actual Money Supply</span></div>
+
+      <h3 class="block-title"><span class="icon">⚠️</span>Exam Traps</h3>
+      <div class="trap">
+        <div class="trap-label">⚠ TRAP 1 — DD vs TD swap</div>
+        <p>Examiners love swapping which deposit belongs where. Memorize: <strong>D</strong>emand <strong>D</strong>eposit joins early (M1), <strong>T</strong>ime <strong>D</strong>eposit joins late (M3). "Demand comes first, Time takes time."</p>
+      </div>
+      <div class="trap">
+        <div class="trap-label">⚠ TRAP 2 — "Currency in Circulation" public vs bank</div>
+        <p>For most competitive exams (SSC), "Currency in Circulation" within M1 effectively means <strong>currency with the public only</strong> — bank's own cash is excluded going into M1. (For CDS/CAPF-type papers, remember currency in circulation technically has two components: with the public AND with banks — but for SSC, lock onto "public.")</p>
+      </div>
+      <div class="trap">
+        <div class="trap-label">⚠ TRAP 3 — M2 ≠ M1 + Post Office ALL deposits</div>
+        <p>M2 adds only <strong>savings</strong> deposits of the post office. It's M4 that adds <strong>all</strong> post office deposits. Don't let "post office" alone trigger the wrong aggregate.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">🎯</span>Examiner's Favourite Angles</h3>
+      <div class="card tight">
+        <ul>
+          <li><strong>Match the following:</strong> M0/M1/M2/M3/M4 ↔ their components — by far the most repeated format.</li>
+          <li><strong>Direct definition recall:</strong> "Reserve Money is also known as ___" / "Broad Money is ___".</li>
+          <li><strong>Odd-one-out:</strong> Which component does NOT belong to M1? (plant a TD among DD options).</li>
+          <li><strong>Ranking question:</strong> Arrange M0–M4 in increasing order of scope (trivial once the tower is memorized).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ CHAPTER 3 ============ -->
+    <section class="chapter" id="ch3">
+      <div class="chapter-head">
+        <span class="chapter-num">03</span>
+        <h2 class="chapter-title">Quantity Theory of Money & Money Illusion</h2>
+      </div>
+      <p class="chapter-tagline">Why printing more money doesn't make you richer — and why a "raise" can secretly be a pay cut.</p>
+
+      <h3 class="block-title"><span class="icon">🧠</span>Memory Hook</h3>
+      <div class="hook">
+        <span class="hook-label">The Shrinking Sandwich</span>
+        <p>Imagine your boss gives you a <strong>5% raise</strong> and hands you a bigger sandwich to celebrate. But while you weren't looking, <strong>inflation at 7% shrank the bread</strong>. You're holding a bigger-looking sandwich that actually has less filling than before. That's <strong>Money Illusion</strong> — you feel richer in numbers, but you're poorer in real terms (5% raise − 7% inflation = −2% real wage).</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">📖</span>Complete Notes</h3>
+      <div class="card">
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;<strong>Quantity Theory of Money</strong>, given by <strong>Irving Fisher</strong>: <code>M × V = P × T</code> (commonly recalled as <strong>MVPT</strong>) where:</p>
+        <ul>
+          <li><strong>M</strong> = Money Supply in the economy</li>
+          <li><strong>V</strong> = Velocity of Circulation (how many times money changes hands)</li>
+          <li><strong>P</strong> = Price Level of goods</li>
+        </ul>
+        <p>If <strong>V stays constant</strong> and <strong>M increases</strong>, then <strong>P must increase</strong> — printing more money raises prices (inflation), all else equal.</p>
+        <p><span class="tag tag-imp">IMPORTANT</span> &nbsp;<strong>Money Illusion</strong> (also Irving Fisher): people judge their wealth in nominal (face-value) terms rather than real (inflation-adjusted) terms. A 1% wage rise feels like a gain even if 2% inflation makes you actually poorer.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">⚠️</span>Exam Trap</h3>
+      <div class="trap">
+        <div class="trap-label">⚠ Irving Fisher ≠ J.M. Keynes</div>
+        <p>Both names appear in the same lecture and get mixed up. <strong>Irving Fisher</strong> → Quantity Theory of Money + Money Illusion. <strong>John Maynard Keynes</strong> → Liquidity Trap + Speculative Demand for Money (see Chapter 7). Different economist, different theory — don't cross-wire them.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">❓</span>Rapid Fire</h3>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Wages rise 5%, inflation is 7%. What's your real wage change?</span><span class="hint">tap</span></div>
+        <div class="recall-a">−2% (you are actually poorer in real terms, despite a nominal raise) — classic Money Illusion example.</div>
+      </div>
+    </section>
+
+    <!-- ============ CHAPTER 4 ============ -->
+    <section class="chapter" id="ch4">
+      <div class="chapter-head">
+        <span class="chapter-num">04</span>
+        <h2 class="chapter-title">NPA & Bad Banks</h2>
+      </div>
+      <p class="chapter-tagline">When a loan stops "performing," the asset turns toxic — here's how banks triage the damage.</p>
+
+      <div class="palace">
+        <h4>🏛 Memory Palace — "The Hospital Ward for Sick Loans"</h4>
+        <p>Picture a loan as a <strong>patient</strong> admitted because it stopped paying interest on time. The hospital has 3 wards based on how long the patient has been "unresponsive":</p>
+        <div class="stop"><span class="marker">W1</span><div class="content"><b>Sub-Standard Ward</b> — unresponsive for <b>up to 12 months</b> after crossing the 90-day NPA mark. Still some hope of recovery.</div></div>
+        <div class="stop"><span class="marker">W2</span><div class="content"><b>Doubtful Ward</b> — unresponsive <b>beyond 12 months</b>. Doctors are doubtful, but haven't given up.</div></div>
+        <div class="stop"><span class="marker">W3</span><div class="content"><b>Loss Ward</b> — patient is declared <b>unrecoverable</b>. Bank must <b>write it off</b> — accept the money is gone.</div></div>
+        <p>The whole hospital itself only opens once a "patient" (loan account) has been sick for <strong>more than 90 days</strong> — that's the official NPA admission criteria.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">📖</span>Complete Notes</h3>
+      <div class="card">
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;Bank assets are of 3 broad health categories:</p>
+        <table>
+          <tr><th>Category</th><th>Definition</th></tr>
+          <tr><td><strong>Regular Asset</strong></td><td>Interest/principal coming on time.</td></tr>
+          <tr><td><strong>Stressed Asset</strong></td><td>Payment overdue, but under 90 days.</td></tr>
+          <tr><td><strong>NPA</strong></td><td>No payment for more than <strong>90 days</strong> — asset has "stopped performing."</td></tr>
+        </table>
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;Within NPA, 3 sub-categories by RBI:</p>
+        <table>
+          <tr><th>Sub-category</th><th>Duration of default</th></tr>
+          <tr><td>Sub-Standard Asset</td><td>Up to 12 months (post-90-day default)</td></tr>
+          <tr><td>Doubtful Asset</td><td>Beyond 12 months</td></tr>
+          <tr><td>Loss Asset</td><td>Unrecoverable — bank writes it off</td></tr>
+        </table>
+        <p><span class="tag tag-imp">IMPORTANT</span> &nbsp;Quick recall trick from the asset/liability confusion: <strong>always think from the bank's point of view.</strong> Your deposit = bank's liability (it owes you). Your loan = bank's asset (you owe it). Forget "whose money is it" — anchor everything to the bank's perspective.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">🧠</span>Bad Banks Hook</h3>
+      <div class="hook">
+        <span class="hook-label">The Debt Collector with a Commission</span>
+        <p>A <strong>"Bad Bank"</strong> is bad in name only — it's actually the cleanup crew. Think of it as a <strong>debt-collection agency that buys written-off NPAs for cheap</strong>, then tries to recover whatever it can, keeping a cut. Example from the lecture: ₹10 crore stuck → bad bank recovers ₹5 crore → keeps ₹1 crore commission → hands ₹4 crore back to the original bank. <strong>Win-win</strong>: the original bank had already written it off as zero, so anything recovered is a bonus.</p>
+      </div>
+
+      <div class="card">
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;Announced in the <strong>Union Budget 2021</strong>, two Bad Banks were created:</p>
+        <ul>
+          <li><strong>NARCL</strong> — National Asset Reconstruction Company Limited</li>
+          <li><strong>IDRCL</strong> — India Debt Resolution Company Limited</li>
+        </ul>
+        <p>Both are financial entities set up specifically to buy and help recover NPAs.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">⚠️</span>Exam Trap</h3>
+      <div class="trap">
+        <div class="trap-label">⚠ NARCL vs IDRCL — who does what</div>
+        <p>Both were created in the same Budget (2021) and are often confused as one entity. <strong>NARCL</strong> = buys/acquires the bad loans (the "asset reconstruction" company). <strong>IDRCL</strong> = handles resolution/management of those bad loans. Don't write them as synonyms in a match-the-following.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">❓</span>Self-Test</h3>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> After how many days of non-payment does an asset officially become an NPA?</span><span class="hint">tap</span></div>
+        <div class="recall-a">More than 90 days (3 months).</div>
+      </div>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Name the two bad banks created in Budget 2021.</span><span class="hint">tap</span></div>
+        <div class="recall-a">NARCL (National Asset Reconstruction Company Limited) and IDRCL (India Debt Resolution Company Limited).</div>
+      </div>
+    </section>
+
+    <!-- ============ CHAPTER 5 ============ -->
+    <section class="chapter" id="ch5">
+      <div class="chapter-head">
+        <span class="chapter-num">05</span>
+        <h2 class="chapter-title">SARFAESI Act & Insolvency and Bankruptcy Code</h2>
+      </div>
+      <p class="chapter-tagline">The two legal weapons banks use to chase defaulters — one skips the courtroom, the other rewrites the rulebook.</p>
+
+      <h3 class="block-title"><span class="icon">🧠</span>Memory Hook</h3>
+      <div class="hook">
+        <span class="hook-label">The Repo Man with a Skeleton Key</span>
+        <p><strong>SARFAESI</strong> (2002) is a <strong>repo man who doesn't need a court order</strong> — he has a skeleton key to walk straight into a defaulter's property (above ₹1 lakh) and seize the collateral. No judge, no waiting. <strong>IBC</strong> (2016) is the opposite: a <strong>single rulebook that replaced a messy filing cabinet</strong> of older, scattered bankruptcy laws — consolidating everything about insolvency into one code.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">📖</span>Complete Notes</h3>
+      <div class="card">
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;<strong>SARFAESI Act, 2002</strong> — Full form: <strong>S</strong>ecuritisation and <strong>R</strong>econstruction of <strong>F</strong>inancial <strong>A</strong>ssets and <strong>E</strong>nforcement of <strong>S</strong>ecurity <strong>I</strong>nterest Act.</p>
+        <ul>
+          <li>Gives banks/financial institutions the power to <strong>seize a defaulting borrower's property</strong> without court intervention.</li>
+          <li>Applies typically when the default amount exceeds <strong>₹1 lakh</strong> and collateral/mortgage was pledged.</li>
+          <li>Helps banks recover dues directly from <strong>willful defaulters</strong> — those who can pay but deliberately don't.</li>
+        </ul>
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;<strong>Insolvency and Bankruptcy Code (IBC), 2016</strong>:</p>
+        <ul>
+          <li>Consolidates all existing, scattered laws on bank insolvency/bankruptcy into <strong>one single law</strong>.</li>
+          <li>"Bank rape"/"bankrupt" in the lecture = a person/entity unable to repay is legally declared <strong>bankrupt</strong>.</li>
+        </ul>
+      </div>
+
+      <h3 class="block-title"><span class="icon">⚠️</span>Exam Trap</h3>
+      <div class="trap">
+        <div class="trap-label">⚠ SARFAESI's full form — letter order</div>
+        <p>Students often jumble the order of words. Anchor: <strong>Securitisation AND Reconstruction</strong> (what happens to the financial asset) <strong>+ Enforcement of Security Interest</strong> (the seizure power). Two halves, two jobs.</p>
+      </div>
+      <div class="trap">
+        <div class="trap-label">⚠ SARFAESI (2002) vs IBC (2016) — different years, different jobs</div>
+        <p>SARFAESI = seize property directly (no court). IBC = consolidate bankruptcy law + formal insolvency resolution process. A question may ask "which Act allows asset seizure without court order" (SARFAESI) vs "which Code consolidates bankruptcy laws" (IBC) — don't swap them.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">❓</span>Rapid Fire</h3>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Which Act lets banks seize a defaulter's property without going to court?</span><span class="hint">tap</span></div>
+        <div class="recall-a">SARFAESI Act, 2002.</div>
+      </div>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Which year was IBC enacted, and what's its core purpose?</span><span class="hint">tap</span></div>
+        <div class="recall-a">2016 — to consolidate existing insolvency/bankruptcy laws into a single code.</div>
+      </div>
+    </section>
+
+    <!-- ============ CHAPTER 6 ============ -->
+    <section class="chapter" id="ch6">
+      <div class="chapter-head">
+        <span class="chapter-num">06</span>
+        <h2 class="chapter-title">Basel Norms</h2>
+      </div>
+      <p class="chapter-tagline">A Swiss city lends its name to the global rulebook on how much "safety cushion" every bank must keep.</p>
+
+      <div class="palace">
+        <h4>🏛 Memory Palace — "Basel, the Swiss City of Safety Vaults"</h4>
+        <p>Picture the actual city of <strong>Basel, Switzerland</strong> — headquarters of the <strong>Bank for International Settlements (BIS)</strong>, the meeting club for central banks (RBI is a member, just like India is a member of the IMF/UN — but BIS is NOT a UN body). Inside this city are <strong>three Basel Committee meetings</strong>, each adding a new safety rule, like three renovations to the same vault:</p>
+        <div class="stop"><span class="marker">I</span><div class="content"><b>Basel I (1988)</b> — focus on <b>Credit Risk</b>. Introduced minimum Capital Adequacy Ratio of <b>8% on Risk-Weighted Assets</b> (15% for NBFCs/MFIs).</div></div>
+        <div class="stop"><span class="marker">II</span><div class="content"><b>Basel II (2004)</b> — expanded risk framework (credit, market, operational risk).</div></div>
+        <div class="stop"><span class="marker">III</span><div class="content"><b>Basel III (2008–2010 era)</b> — introduced <b>Tier 1, Tier 2, Tier 3 capital</b> classification — dividing a bank's capital cushion into layers of quality.</div></div>
+      </div>
+
+      <h3 class="block-title"><span class="icon">🧠</span>Risk-Weighted Asset Hook</h3>
+      <div class="hook">
+        <span class="hook-label">Four Borrowers, Four Risk Tags</span>
+        <p>Picture <strong>4 customers walking into a bank to borrow ₹1 lakh each</strong>, each wearing a colour-coded badge for risk:</p>
+        <ul>
+          <li><strong>🟢 Salaried employee</strong> — pays on time every month → <strong>Risk weight ≈ 0–5</strong></li>
+          <li><strong>🟡 Reliable businessman</strong> — pays on time mostly → <strong>Risk weight ≈ 5</strong></li>
+          <li><strong>🟠 Irregular businessman</strong> — sometimes late → <strong>Risk weight ≈ 10</strong></li>
+          <li><strong>🔴 Known defaulter</strong> — rarely pays → <strong>Risk weight ≈ 80</strong></li>
+        </ul>
+        <p>The bank doesn't treat all loans equally — riskier borrowers force the bank to set aside more safety capital. Sum these weighted amounts → that's the bank's total <strong>Risk-Weighted Assets (RWA)</strong>, and the bank must hold a percentage of THIS (not the raw loan amount) as a safety cushion.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">📖</span>Complete Notes</h3>
+      <div class="card">
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;<strong>Bank for International Settlements (BIS)</strong> — HQ in <strong>Basel, Switzerland</strong>. Central banks of most countries (including RBI) are members. <strong>BIS is NOT a United Nations body.</strong></p>
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;The <strong>Basel Committee</strong> first met in <strong>1974</strong>, with representatives from <strong>10 countries</strong> — India was <strong>not</strong> among the original 10.</p>
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;<strong>Capital Adequacy Ratio (CAR)</strong> = the percentage of Risk-Weighted Assets a bank must hold as capital reserve, so it can still pay depositors even if some loans default. Set at <strong>8%</strong> for normal banks under Basel I, <strong>15%</strong> for NBFCs/MFIs.</p>
+        <p><span class="tag tag-good">GOOD TO KNOW</span> &nbsp;NBFCs don't accept demand deposits and don't have to maintain CRR/SLR — but they DO have a higher Risk-Weighted Asset requirement (15% vs 8%) to compensate for that extra freedom.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">⚠️</span>Exam Traps</h3>
+      <div class="trap">
+        <div class="trap-label">⚠ Basel NORMS vs Basel CONVENTION — different subjects entirely!</div>
+        <p>This is the #1 SSC trap on this topic. <strong>Basel Norms</strong> = Banking topic (capital adequacy, risk-weighted assets). <strong>Basel Convention</strong> = an Environment/International Relations topic — a treaty on the <strong>transboundary movement of hazardous waste/substances</strong>. Same city name, completely unrelated subjects. If the question says "Basel ___ is related to," check whether it says Norms (→ Banking) or Convention (→ Environment).</p>
+      </div>
+      <div class="trap">
+        <div class="trap-label">⚠ CRR/SLR vs CAR — don't merge them</div>
+        <p>CRR (Cash Reserve Ratio) is a fraction of a bank's <strong>deposits</strong> (liability side) kept with RBI. CAR (Capital Adequacy Ratio) under Basel is a fraction of a bank's <strong>risk-weighted assets</strong> (loan/asset side) kept as a safety buffer. Different base, different purpose — don't treat them as interchangeable reserve ratios.</p>
+      </div>
+      <div class="trap">
+        <div class="trap-label">⚠ Basel I / II / III — which one did what</div>
+        <p>Most repeated direct question: <strong>"Basel Norms are related to ___"</strong> → Answer: <strong>Banking</strong> (deceptively simple, but it's exactly how it's been asked before). For deeper questions: Basel I → 8% CAR/credit risk; Basel III → Tier 1/2/3 capital.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">❓</span>Rapid Fire</h3>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> "Basel Norms are associated with ___?"</span><span class="hint">tap</span></div>
+        <div class="recall-a">Banking. (Most frequently asked exact phrasing in SSC papers.)</div>
+      </div>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> What's the minimum Capital Adequacy Ratio under Basel I for normal banks? For NBFCs?</span><span class="hint">tap</span></div>
+        <div class="recall-a">8% for normal banks; 15% for NBFCs/Micro Finance Institutions.</div>
+      </div>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Is BIS a United Nations body?</span><span class="hint">tap</span></div>
+        <div class="recall-a">No. It's an independent organization of central banks headquartered in Basel, Switzerland — not a UN body.</div>
+      </div>
+    </section>
+
+    <!-- ============ CHAPTER 7 ============ -->
+    <section class="chapter" id="ch7">
+      <div class="chapter-head">
+        <span class="chapter-num">07</span>
+        <h2 class="chapter-title">Liquidity Trap, Speculative Demand & Markets</h2>
+      </div>
+      <p class="chapter-tagline">Why people sometimes hoard cash even when interest rates are low — and the short-vs-long divide between money & capital markets.</p>
+
+      <h3 class="block-title"><span class="icon">🧠</span>Memory Hook</h3>
+      <div class="hook">
+        <span class="hook-label">The Election-Week Freeze</span>
+        <p>Picture investors right <strong>before an election result</strong>, sitting on piles of cash, refusing to invest or borrow even though interest rates are dirt low. They're betting that once a stable government forms, <strong>rates will rise</strong> — so they'd rather wait than lock in money now. That frozen cash, refusing to move into the economy no matter how cheap borrowing gets, is the <strong>Liquidity Trap</strong>.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">📖</span>Complete Notes</h3>
+      <div class="card">
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;<strong>Liquidity Trap</strong>: a situation where people prefer holding cash over investing/lending, regardless of how low the interest rate goes — usually driven by uncertainty (e.g., political/economic instability) and speculation about future rate hikes.</p>
+        <p><span class="tag tag-must">MUST KNOW</span> &nbsp;<strong>Speculative Demand for Money</strong> (theory by <strong>John Maynard Keynes</strong>): how much people want to hold their wealth as cash rather than invest it.</p>
+        <div class="flow"><span class="node">Interest Rate ↑</span><span class="arrow">→</span><span class="node">Speculative Demand ↓</span><span class="arrow">(people invest/lend instead of holding cash)</span></div>
+        <div class="flow"><span class="node">Interest Rate ↓</span><span class="arrow">→</span><span class="node">Speculative Demand ↑</span><span class="arrow">(people hoard cash, waiting for better rates)</span></div>
+      </div>
+
+      <h3 class="block-title"><span class="icon">🧠</span>Money Market vs Capital Market Hook</h3>
+      <div class="hook">
+        <span class="hook-label">The Overnight Bag vs The Long Trek Backpack</span>
+        <p><strong>Money Market</strong> = an overnight bag — built for <strong>short-term</strong> borrowing, often between banks themselves (one bank has surplus cash, lends to another short on CRR/SLR). <strong>Capital Market</strong> = a long-trek backpack — built for <strong>long-term</strong> funding needs.</p>
+        <p>Within the Money Market: <strong>Call Money</strong> = pay back literally within a day. <strong>Notice Money</strong> = pay back in 2 to 14 days. Both are short-term cousins living in the same overnight bag.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">📖</span>Complete Notes — Markets & Bills</h3>
+      <div class="card">
+        <table>
+          <tr><th>Instrument</th><th>Tenure</th><th>Notes</th></tr>
+          <tr><td><strong>Call Money</strong></td><td>Within 1 day</td><td>Shortest-term interbank borrowing</td></tr>
+          <tr><td><strong>Notice Money</strong></td><td>2–14 days</td><td>Slightly longer interbank borrowing</td></tr>
+          <tr><td><strong>Treasury Bills</strong></td><td>Less than 1 year</td><td>Issued by RBI, backed by Government — short-term government securities</td></tr>
+        </table>
+        <p><span class="tag tag-imp">IMPORTANT</span> &nbsp;<strong>Money Market</strong> = short-term funds market (includes call money, notice money, treasury bills). <strong>Capital Market</strong> = long-term funds market.</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">⚠️</span>Exam Traps</h3>
+      <div class="trap">
+        <div class="trap-label">⚠ Keynes ≠ Fisher (again — final reminder)</div>
+        <p>Liquidity Trap + Speculative Demand → <strong>John Maynard Keynes</strong>. Quantity Theory of Money + Money Illusion → <strong>Irving Fisher</strong>. These two economists appear back-to-back in this lecture and are a classic "match the economist to the theory" trap.</p>
+      </div>
+      <div class="trap">
+        <div class="trap-label">⚠ Call Money vs Notice Money — exact day count</div>
+        <p>Call Money = <strong>1 day</strong>. Notice Money = <strong>2 to 14 days</strong>. A question may ask "money market instrument repayable within 2-14 days" expecting "Notice Money" specifically, not "Call Money."</p>
+      </div>
+
+      <h3 class="block-title"><span class="icon">❓</span>Rapid Fire</h3>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Who gave the theory of Speculative Demand for Money / Liquidity Trap?</span><span class="hint">tap</span></div>
+        <div class="recall-a">John Maynard Keynes.</div>
+      </div>
+      <div class="recall-card" onclick="this.classList.toggle('revealed')">
+        <div class="recall-q"><span><span class="qmark">Q.</span> What's the maturity period of a Treasury Bill?</span><span class="hint">tap</span></div>
+        <div class="recall-a">Less than 1 year (short-term government security issued by RBI, backed by the Government).</div>
+      </div>
+    </section>
+
+    <!-- ============ LAYERS ============ -->
+    <section class="chapter" id="layers">
+      <div class="chapter-head">
+        <span class="chapter-num">📚</span>
+        <h2 class="chapter-title">Multi-Layer Revision System</h2>
+      </div>
+      <p class="chapter-tagline">Five compression levels — from full notes down to a 30-second glance. Tap each layer to expand.</p>
+
+      <div class="layer" id="layer1">
+        <div class="layer-head" onclick="toggleLayer('layer1')">
+          <div class="lh-left"><span class="layer-num">1</span><h4>Complete Revision Notes</h4></div>
+          <span class="chev">▾</span>
+        </div>
+        <div class="layer-body">
+          <p>Liquidity = speed of conversion to cash (Cash > Cheque > Bonds). Fiat money is mandatory legal tender; Fiduciary money needs mutual consent.</p>
+          <p>Monetary Aggregates: M0 (Reserve Money) = Currency in Circulation + Bankers' Deposits with RBI + Other Deposits with RBI. M1 = Currency with Public + Demand Deposits + Other Deposits with RBI. M2 = M1 + Post Office Savings Deposits. M3 (Broad Money) = M1 + Time Deposits. M4 = M3 + All Post Office Deposits.</p>
+          <p>Quantity Theory of Money (Irving Fisher): M×V=P×T. Money Illusion: judging wealth by nominal, not real, value.</p>
+          <p>NPA: asset with no payment for 90+ days. Sub-categories: Sub-standard (up to 12 months), Doubtful (beyond 12 months), Loss (written off). Bad Banks (NARCL, IDRCL — Budget 2021) buy and recover NPAs for a commission.</p>
+          <p>SARFAESI Act (2002): lets banks seize defaulter property above ₹1 lakh without court order. IBC (2016): consolidates all bankruptcy laws into one code.</p>
+          <p>Basel Norms (Banking, HQ Basel Switzerland, under BIS, member since 1974 committee with 10 countries, India not included): Basel I (1988, credit risk, 8% CAR, 15% for NBFC), Basel II (2004), Basel III (2008, Tier 1/2/3 capital). Basel Convention (different — environment, hazardous waste).</p>
+          <p>Liquidity Trap & Speculative Demand for Money (Keynes): cash hoarding regardless of low interest rates. Money Market (short-term: Call Money 1 day, Notice Money 2-14 days, T-Bills under 1 year) vs Capital Market (long-term).</p>
+        </div>
+      </div>
+
+      <div class="layer" id="layer2">
+        <div class="layer-head" onclick="toggleLayer('layer2')">
+          <div class="lh-left"><span class="layer-num">2</span><h4>High-Yield Revision Notes</h4></div>
+          <span class="chev">▾</span>
+        </div>
+        <div class="layer-body">
+          <ul>
+            <li>M0 = Reserve Money = Currency in Circ. + Bankers' Dep. + Other Dep. with RBI</li>
+            <li>M1 = Public Currency + DD + Other Dep. with RBI</li>
+            <li>M2 = M1 + PO Savings | M3 = M1 + TD (Broad Money) | M4 = M3 + All PO Deposits</li>
+            <li>NPA = no payment 90+ days → Sub-standard (≤12mo) → Doubtful (>12mo) → Loss (write-off)</li>
+            <li>NARCL + IDRCL = Bad Banks, Budget 2021</li>
+            <li>SARFAESI (2002) = seize property, no court, &gt;₹1 lakh | IBC (2016) = consolidates bankruptcy law</li>
+            <li>Basel = Banking (NOT Convention=Environment) | BIS HQ Basel | Basel I → 8% CAR (15% NBFC)</li>
+            <li>Liquidity Trap/Speculative Demand → Keynes | Quantity Theory/Money Illusion → Fisher</li>
+            <li>Call Money = 1 day | Notice Money = 2-14 days | T-Bill = &lt;1 year</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="layer" id="layer3">
+        <div class="layer-head" onclick="toggleLayer('layer3')">
+          <div class="lh-left"><span class="layer-num">3</span><h4>Ultra-Fast Revision Sheet</h4></div>
+          <span class="chev">▾</span>
+        </div>
+        <div class="layer-body">
+          <p><strong>M0</strong>=Reserve Money &nbsp;|&nbsp; <strong>M1</strong>=+DD &nbsp;|&nbsp; <strong>M2</strong>=M1+PO Savings &nbsp;|&nbsp; <strong>M3</strong>=M1+TD(Broad) &nbsp;|&nbsp; <strong>M4</strong>=M3+All PO</p>
+          <p><strong>NPA</strong>: 90 days → Sub-std(≤12mo) → Doubtful(&gt;12mo) → Loss(write-off)</p>
+          <p><strong>Bad Banks</strong>: NARCL + IDRCL (2021)</p>
+          <p><strong>SARFAESI</strong>(2002)=seize, no court &nbsp;|&nbsp; <strong>IBC</strong>(2016)=consolidate laws</p>
+          <p><strong>Basel</strong>=Banking, HQ Switzerland, I→8%CAR, III→Tier1/2/3</p>
+          <p><strong>Fisher</strong>=Quantity Theory/Illusion &nbsp;|&nbsp; <strong>Keynes</strong>=Liquidity Trap/Speculative Demand</p>
+          <p><strong>Call</strong>=1 day &nbsp;|&nbsp; <strong>Notice</strong>=2-14 days &nbsp;|&nbsp; <strong>T-Bill</strong>=&lt;1yr</p>
+        </div>
+      </div>
+
+      <div class="layer" id="layer4">
+        <div class="layer-head" onclick="toggleLayer('layer4')">
+          <div class="lh-left"><span class="layer-num">4</span><h4>30-Second Revision Sheet</h4></div>
+          <span class="chev">▾</span>
+        </div>
+        <div class="layer-body">
+          <p>M0→M1(+DD)→M2(+POsav)→M3(+TD,Broad)→M4(+allPO) | NPA&gt;90d→Substd→Doubtful→Loss | NARCL+IDRCL=BadBanks'21 | SARFAESI'02=seize | IBC'16=law | Basel=Banking(I:8%CAR) | Fisher=Qty/Illusion, Keynes=Trap/Spec | Call=1d, Notice=2-14d, T-Bill=&lt;1y</p>
+        </div>
+      </div>
+
+      <div class="layer open" id="layer5">
+        <div class="layer-head" onclick="toggleLayer('layer5')">
+          <div class="lh-left"><span class="layer-num">5</span><h4>Last-Night-Before-Exam Sheet</h4></div>
+          <span class="chev">▾</span>
+        </div>
+        <div class="layer-body">
+          <div class="lastnight">
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>DD enters at M1, TD enters at M3</strong> — they never share a room until M4.</span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>M2 adds only PO Savings; M4 adds ALL PO deposits.</strong></span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>Basel Norms = Banking. Basel Convention = Environment.</strong> Never confuse the two.</span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>NPA = 90+ days unpaid.</strong> Sub-standard ≤12mo, Doubtful &gt;12mo, Loss = write-off.</span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>NARCL + IDRCL</strong> = the two Bad Banks, Budget 2021.</span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>SARFAESI (2002)</strong> = seize property, no court order, &gt;₹1 lakh.</span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>IBC (2016)</strong> = single consolidated bankruptcy code.</span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>BIS HQ = Basel, Switzerland. NOT a UN body.</strong></span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>Basel I (1988)</strong> = 8% CAR (15% for NBFC), credit risk focus.</span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>Fisher</strong> = Quantity Theory + Money Illusion. <strong>Keynes</strong> = Liquidity Trap + Speculative Demand.</span></div>
+            <div class="ln-item"><span class="bullet">▸</span><span><strong>Call Money = 1 day. Notice Money = 2–14 days. T-Bill = &lt;1 year.</strong></span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ALL TRAPS ============ -->
+    <section class="chapter" id="traps">
+      <div class="chapter-head">
+        <span class="chapter-num">⚠️</span>
+        <h2 class="chapter-title">All Exam Traps — Consolidated</h2>
+      </div>
+      <p class="chapter-tagline">Every confusion examiners exploit, gathered in one place for a final pre-exam sweep.</p>
+
+      <div class="trap"><div class="trap-label">⚠ FIAT vs FIDUCIARY</div><p>Fiat = mandatory (cash). Fiduciary = mutual agreement (cheque).</p></div>
+      <div class="trap"><div class="trap-label">⚠ DD vs TD placement</div><p>DD joins at M1. TD joins at M3. Never the reverse.</p></div>
+      <div class="trap"><div class="trap-label">⚠ M2's Post Office add-on</div><p>M2 = M1 + Post Office SAVINGS only. M4 = M3 + ALL Post Office deposits.</p></div>
+      <div class="trap"><div class="trap-label">⚠ Fisher vs Keynes</div><p>Fisher → Quantity Theory of Money, Money Illusion. Keynes → Liquidity Trap, Speculative Demand.</p></div>
+      <div class="trap"><div class="trap-label">⚠ NARCL vs IDRCL</div><p>NARCL acquires bad loans. IDRCL manages/resolves them. Both from Budget 2021.</p></div>
+      <div class="trap"><div class="trap-label">⚠ SARFAESI vs IBC</div><p>SARFAESI (2002) = seize property without court. IBC (2016) = consolidates bankruptcy law.</p></div>
+      <div class="trap"><div class="trap-label">⚠ Basel Norms vs Basel Convention</div><p>Norms = Banking (capital adequacy). Convention = Environment (hazardous waste, transboundary movement). Same city, unrelated topics.</p></div>
+      <div class="trap"><div class="trap-label">⚠ CRR/SLR vs CAR</div><p>CRR/SLR are based on deposits (liability side). CAR is based on risk-weighted assets (loan/asset side).</p></div>
+      <div class="trap"><div class="trap-label">⚠ Call Money vs Notice Money</div><p>Call = within 1 day. Notice = 2 to 14 days. Don't swap the day ranges.</p></div>
+      <div class="trap"><div class="trap-label">⚠ Basel I CAR % for banks vs NBFCs</div><p>Normal banks = 8%. NBFCs/MFIs = 15% — the higher number compensates for NBFCs not needing CRR/SLR.</p></div>
+    </section>
+
+    <!-- ============ ACTIVE RECALL HUB ============ -->
+    <section class="chapter" id="recall">
+      <div class="chapter-head">
+        <span class="chapter-num">❓</span>
+        <h2 class="chapter-title">Full Active Recall Set</h2>
+      </div>
+      <p class="chapter-tagline">Tap any card to flip. Don't read passively — force the retrieval first, every single time.</p>
+
+      <h3 class="block-title">Fill in the Blanks</h3>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">Q.</span> M1 = Currency with Public + ___ + Other Deposits with RBI.</span><span class="hint">tap</span></div>
+        <div class="recall-a">Demand Deposits (DD)</div>
+      </div>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">Q.</span> M3 is also known as ___ or ___.</span><span class="hint">tap</span></div>
+        <div class="recall-a">Broad Money / Actual Money Supply</div>
+      </div>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">Q.</span> An asset becomes NPA after ___ days of non-payment.</span><span class="hint">tap</span></div>
+        <div class="recall-a">90 days</div>
+      </div>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">Q.</span> SARFAESI's full form's last word relates to "Security ___".</span><span class="hint">tap</span></div>
+        <div class="recall-a">Interest — full form: Securitisation and Reconstruction of Financial Assets and Enforcement of Security Interest Act</div>
+      </div>
+
+      <h3 class="block-title">One-Liner Recall</h3>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Who gave the Quantity Theory of Money?</span><span class="hint">tap</span></div>
+        <div class="recall-a">Irving Fisher</div>
+      </div>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Where is BIS headquartered?</span><span class="hint">tap</span></div>
+        <div class="recall-a">Basel, Switzerland</div>
+      </div>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Year the IBC was enacted?</span><span class="hint">tap</span></div>
+        <div class="recall-a">2016</div>
+      </div>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Capital Adequacy Ratio for NBFCs under Basel I?</span><span class="hint">tap</span></div>
+        <div class="recall-a">15%</div>
+      </div>
+
+      <h3 class="block-title">Reverse Questions (Answer → find the Question)</h3>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">A.</span> "Reserve Money" / "High-Powered Money" / "Monetary Base"</span><span class="hint">tap</span></div>
+        <div class="recall-a">Q: What is M0 also called?</div>
+      </div>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">A.</span> "Bad in name, good in function — recovers NPAs for a commission"</span><span class="hint">tap</span></div>
+        <div class="recall-a">Q: What is a Bad Bank (e.g., NARCL/IDRCL)?</div>
+      </div>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">A.</span> "People hoard cash regardless of how low interest rates fall"</span><span class="hint">tap</span></div>
+        <div class="recall-a">Q: What is a Liquidity Trap?</div>
+      </div>
+
+      <h3 class="block-title">Chronology Drill</h3>
+      <div class="recall-card" onclick="flipCard(this)">
+        <div class="recall-q"><span><span class="qmark">Q.</span> Arrange in chronological order: IBC, SARFAESI, Basel I, Basel III, Bad Banks (NARCL/IDRCL)</span><span class="hint">tap</span></div>
+        <div class="recall-a">Basel I (1988) → SARFAESI (2002) → Basel III (2008) → IBC (2016) → NARCL/IDRCL (2021)</div>
+      </div>
+    </section>
+
+    <footer>
+      THE BANKING VAULT — Built for revision #1 through revision #100. Bookmark this page.
+    </footer>
+
+  </main>
+</div>
+
+<button class="totop" id="toTop" aria-label="Scroll to top">↑</button>
+
+<script>
+// Sidebar mobile toggle
+const sidebar = document.getElementById('sidebar');
+const tocToggle = document.getElementById('tocToggle');
+const overlay = document.getElementById('overlay');
+tocToggle.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('show');
+});
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('show');
+});
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  });
+});
+
+// Active nav highlighting on scroll
+const sections = document.querySelectorAll('section.chapter');
+const navLinks = document.querySelectorAll('.nav-link');
+function updateActiveNav(){
+  let current = '';
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if(rect.top <= 140) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateActiveNav);
+updateActiveNav();
+
+// Scroll to top button
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  toTop.classList.toggle('show', window.scrollY > 600);
+});
+toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+// Accordion layers
+function toggleLayer(id){
+  const el = document.getElementById(id);
+  const body = el.querySelector('.layer-body');
+  el.classList.toggle('open');
+  if(el.classList.contains('open')){
+    body.style.maxHeight = body.scrollHeight + 'px';
+  } else {
+    body.style.maxHeight = '0px';
+  }
+}
+// init open layer height
+window.addEventListener('load', () => {
+  document.querySelectorAll('.layer.open').forEach(el => {
+    const body = el.querySelector('.layer-body');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  });
+});
+
+// Recall card progress tracking via localStorage
+const STORAGE_KEY = 'bankingVaultFlipped';
+function getFlipped(){
+  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }catch(e){ return {}; }
+}
+function saveFlipped(obj){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(obj)); }catch(e){}
+}
+function cardKey(card){
+  const qText = card.querySelector('.recall-q span:first-child').textContent.trim();
+  return qText.slice(0,60);
+}
+function updateProgress(){
+  const total = document.querySelectorAll('.recall-card').length;
+  const flipped = getFlipped();
+  const count = Object.keys(flipped).length;
+  const pct = total ? Math.round((count/total)*100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressCount').textContent = count + ' / ' + total + ' cards flipped';
+}
+function flipCard(card){
+  card.classList.toggle('revealed');
+  const flipped = getFlipped();
+  const key = cardKey(card);
+  if(card.classList.contains('revealed')){
+    flipped[key] = true;
+  }
+  saveFlipped(flipped);
+  updateProgress();
+}
+document.getElementById('resetProgress').addEventListener('click', () => {
+  localStorage.removeItem(STORAGE_KEY);
+  document.querySelectorAll('.recall-card.revealed').forEach(c => c.classList.remove('revealed'));
+  updateProgress();
+});
+updateProgress();
+</script>
+
+</body>
+</html>

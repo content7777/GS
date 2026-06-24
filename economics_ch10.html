@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BoP & Poverty — Revision Vault</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500..700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --ink:#0B0F1A;
+    --surface:#121826;
+    --raised:#1A2236;
+    --raised2:#222B42;
+    --line:#2A3450;
+    --gold:#E8C766;
+    --gold-dim:#9C8A4E;
+    --cyan:#5FD4D0;
+    --rose:#E8607A;
+    --green:#7FD49A;
+    --text:#F2F4F8;
+    --muted:#9CA8C2;
+    --muted2:#6B7693;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(232,199,102,0.06), transparent 40%),
+      radial-gradient(circle at 85% 15%, rgba(95,212,208,0.05), transparent 45%);
+    color:var(--text);
+    font-family:'Source Sans 3', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Fraunces', serif;
+    font-weight:650;
+    letter-spacing:-0.01em;
+    margin:0 0 0.4em 0;
+    color:var(--text);
+  }
+
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  a{color:var(--cyan); text-decoration:none;}
+
+  /* ---------- LAYOUT ---------- */
+  .app{display:flex; min-height:100vh;}
+
+  .sidebar{
+    width:268px;
+    flex-shrink:0;
+    background:var(--surface);
+    border-right:1px solid var(--line);
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    padding:24px 18px 40px;
+  }
+  .sidebar::-webkit-scrollbar{width:6px;}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--line); border-radius:3px;}
+
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:6px;
+  }
+  .brand-mark{
+    width:34px; height:34px; border-radius:7px;
+    background:linear-gradient(155deg, var(--gold), var(--gold-dim));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:700; color:var(--ink); font-size:16px;
+    flex-shrink:0;
+  }
+  .brand-title{font-family:'Fraunces',serif; font-weight:650; font-size:16.5px; line-height:1.15;}
+  .brand-sub{font-size:11px; color:var(--muted2); letter-spacing:0.06em; text-transform:uppercase; margin-top:2px;}
+
+  .nav-group{margin-top:22px;}
+  .nav-label{
+    font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--muted2); margin:0 0 8px 4px; font-weight:600;
+  }
+  .nav-link{
+    display:block; padding:7px 10px; border-radius:7px;
+    color:var(--muted); font-size:13.6px; text-decoration:none;
+    border-left:2px solid transparent;
+    transition:background .15s, color .15s, border-color .15s;
+    margin-bottom:1px;
+  }
+  .nav-link:hover{background:var(--raised); color:var(--text);}
+  .nav-link.active{background:var(--raised2); color:var(--gold); border-left-color:var(--gold);}
+
+  .progress-box{
+    margin-top:24px; padding:12px; border-radius:10px;
+    background:var(--raised); border:1px solid var(--line);
+  }
+  .progress-box .pb-label{font-size:11px; color:var(--muted2); margin-bottom:6px;}
+  .progress-bar-track{height:6px; background:var(--ink); border-radius:4px; overflow:hidden;}
+  .progress-bar-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--cyan)); width:0%; transition:width .3s;}
+  #progress-pct{font-family:'JetBrains Mono',monospace; color:var(--gold); font-size:12px;}
+
+  .main{flex:1; min-width:0; padding:48px 56px 120px; max-width:980px;}
+
+  @media (max-width: 900px){
+    .sidebar{position:fixed; left:-280px; transition:left .25s; z-index:50; box-shadow:8px 0 30px rgba(0,0,0,.5);}
+    .sidebar.open{left:0;}
+    .main{padding:90px 20px 100px;}
+    .menu-btn{display:flex !important;}
+  }
+
+  .menu-btn{
+    display:none; position:fixed; top:16px; left:16px; z-index:60;
+    width:42px; height:42px; border-radius:10px; background:var(--raised2);
+    border:1px solid var(--line); align-items:center; justify-content:center;
+    cursor:pointer; flex-direction:column; gap:4px;
+  }
+  .menu-btn span{width:18px; height:2px; background:var(--gold); display:block;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:34px 32px;
+    border-radius:18px;
+    background:linear-gradient(150deg, var(--surface), var(--ink));
+    border:1px solid var(--line);
+    margin-bottom:44px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; right:-60px; top:-60px;
+    width:220px; height:220px; border-radius:50%;
+    background:radial-gradient(circle, rgba(232,199,102,0.12), transparent 70%);
+  }
+  .hero-eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.14em;
+    color:var(--cyan); text-transform:uppercase; margin-bottom:10px;
+  }
+  .hero h1{font-size:clamp(28px,4vw,40px); margin-bottom:10px;}
+  .hero p{color:var(--muted); max-width:600px; font-size:15.5px; margin:0;}
+  .hero-tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:18px;}
+  .htag{
+    font-size:11.5px; padding:5px 11px; border-radius:20px;
+    border:1px solid var(--line); color:var(--muted); font-family:'JetBrains Mono',monospace;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  .chapter{margin-bottom:64px; scroll-margin-top:24px;}
+  .chapter-head{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:22px;
+    border-bottom:1px solid var(--line); padding-bottom:14px;
+  }
+  .chapter-num{font-family:'JetBrains Mono',monospace; color:var(--gold-dim); font-size:14px;}
+  .chapter-head h2{font-size:24px; margin:0;}
+
+  .block{margin-bottom:30px; scroll-margin-top:24px;}
+  .block h3{
+    font-size:18px; display:flex; align-items:center; gap:9px; margin-bottom:14px;
+    color:var(--gold);
+  }
+  .block h3 .icon{font-size:18px;}
+  .block-sub{font-size:15px; color:var(--cyan); margin:18px 0 10px; font-weight:600; font-family:'Source Sans 3',sans-serif;}
+
+  p{margin:0 0 12px 0; color:#DDE2EE;}
+  .muted{color:var(--muted);}
+
+  ul, ol{margin:0 0 14px 0; padding-left:22px;}
+  li{margin-bottom:7px; color:#DDE2EE;}
+  li::marker{color:var(--gold-dim);}
+
+  strong{color:var(--gold); font-weight:600;}
+  .cy{color:var(--cyan); font-weight:600;}
+  .rs{color:var(--rose); font-weight:600;}
+  .gr{color:var(--green); font-weight:600;}
+
+  /* tags */
+  .tag{
+    display:inline-block; font-size:11px; font-weight:700; padding:2px 8px;
+    border-radius:5px; margin-right:6px; font-family:'JetBrains Mono',monospace;
+    letter-spacing:0.02em; vertical-align:middle;
+  }
+  .tag-must{background:rgba(232,96,122,0.16); color:var(--rose); border:1px solid rgba(232,96,122,0.35);}
+  .tag-imp{background:rgba(232,199,102,0.14); color:var(--gold); border:1px solid rgba(232,199,102,0.32);}
+  .tag-good{background:rgba(95,212,208,0.13); color:var(--cyan); border:1px solid rgba(95,212,208,0.3);}
+
+  /* cards */
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:12px;
+    padding:18px 20px; margin-bottom:14px;
+  }
+  .card-title{font-weight:700; color:var(--text); margin-bottom:8px; font-size:14.5px;}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+  @media (max-width:760px){.grid2,.grid3{grid-template-columns:1fr;}}
+
+  /* table */
+  table{width:100%; border-collapse:collapse; margin-bottom:18px; font-size:14.5px;}
+  th{
+    background:var(--raised2); color:var(--gold); text-align:left; padding:9px 12px;
+    font-size:12.5px; letter-spacing:0.03em; text-transform:uppercase; font-weight:600;
+    border-bottom:1px solid var(--line);
+  }
+  td{padding:9px 12px; border-bottom:1px solid var(--line); color:#DDE2EE;}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(255,255,255,0.02);}
+
+  /* memory palace */
+  .palace{
+    background:linear-gradient(160deg, var(--raised), var(--surface));
+    border:1px solid var(--line); border-left:3px solid var(--cyan);
+    border-radius:12px; padding:22px 24px; margin-bottom:16px;
+  }
+  .palace-room{margin-bottom:16px; padding-left:14px; border-left:2px dashed var(--line);}
+  .palace-room:last-child{margin-bottom:0;}
+  .palace-room .room-name{color:var(--cyan); font-weight:700; font-size:14.5px; margin-bottom:4px; display:block;}
+
+  /* exam traps */
+  .trap{
+    background:rgba(232,96,122,0.07); border:1px solid rgba(232,96,122,0.28);
+    border-radius:10px; padding:14px 16px; margin-bottom:12px;
+  }
+  .trap-title{color:var(--rose); font-weight:700; font-size:14px; margin-bottom:6px;}
+
+  /* hooks */
+  .hook{
+    background:rgba(232,199,102,0.06); border:1px solid rgba(232,199,102,0.25);
+    border-radius:10px; padding:14px 16px; margin-bottom:12px;
+  }
+  .hook-title{color:var(--gold); font-weight:700; font-size:13.5px; margin-bottom:6px;}
+
+  /* recall / flip */
+  .recall{
+    border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;
+    background:var(--surface);
+  }
+  .recall-q{
+    padding:13px 16px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+    font-weight:600; font-size:14.5px; user-select:none; color:var(--text);
+  }
+  .recall-q:hover{background:var(--raised);}
+  .recall-q .chev{color:var(--muted2); transition:transform .2s; font-size:13px;}
+  .recall.open .recall-q .chev{transform:rotate(90deg); color:var(--gold);}
+  .recall-a{
+    max-height:0; overflow:hidden; transition:max-height .25s ease;
+    padding:0 16px; color:var(--cyan); font-size:14px; background:var(--ink);
+  }
+  .recall.open .recall-a{padding:13px 16px; max-height:500px; border-top:1px solid var(--line);}
+
+  /* fast sheets */
+  .fastsheet{
+    background:var(--raised); border:1px solid var(--line); border-radius:12px; padding:20px;
+  }
+  .fastsheet ul{margin-bottom:0;}
+  .fastsheet li{margin-bottom:9px; font-size:14.5px;}
+
+  .lastnight{
+    background:linear-gradient(160deg, rgba(232,199,102,0.1), rgba(95,212,208,0.04));
+    border:1px solid var(--gold-dim); border-radius:14px; padding:22px 24px;
+  }
+  .lastnight h3{color:var(--gold);}
+
+  /* gauge / signature element */
+  .gauge-wrap{
+    background:var(--surface); border:1px solid var(--line); border-radius:14px;
+    padding:22px 24px; margin-bottom:20px;
+  }
+  .gauge-title{font-size:13px; color:var(--muted2); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:16px; font-family:'JetBrains Mono',monospace;}
+  .gauge-row{display:flex; align-items:center; gap:14px; margin-bottom:12px;}
+  .gauge-label{width:150px; flex-shrink:0; font-size:13.5px; color:var(--text); font-weight:600;}
+  .gauge-track{flex:1; height:14px; background:var(--ink); border-radius:7px; overflow:hidden; border:1px solid var(--line);}
+  .gauge-fill{height:100%; border-radius:7px;}
+  .gauge-note{width:230px; flex-shrink:0; font-size:12.5px; color:var(--muted);}
+
+  /* divider note */
+  .sidenote{
+    font-size:13px; color:var(--muted2); border-left:2px solid var(--line);
+    padding-left:12px; margin:14px 0;
+  }
+
+  hr.div{border:none; border-top:1px solid var(--line); margin:36px 0;}
+
+  /* back to top */
+  .top-btn{
+    position:fixed; bottom:24px; right:24px; width:44px; height:44px; border-radius:50%;
+    background:var(--raised2); border:1px solid var(--line); color:var(--gold);
+    display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px;
+    opacity:0; pointer-events:none; transition:opacity .2s;
+    z-index:40;
+  }
+  .top-btn.show{opacity:1; pointer-events:auto;}
+
+  .reset-btn{
+    font-size:11.5px; color:var(--muted2); background:none; border:1px solid var(--line);
+    padding:5px 10px; border-radius:6px; cursor:pointer; margin-top:10px; font-family:inherit;
+  }
+  .reset-btn:hover{color:var(--rose); border-color:var(--rose);}
+</style>
+</head>
+<body>
+
+<div class="menu-btn" id="menuBtn"><span></span><span></span><span></span></div>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">₹</div>
+      <div>
+        <div class="brand-title">Revision Vault</div>
+        <div class="brand-sub">SSC CGL · Economics</div>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Chapter</div>
+      <a class="nav-link" href="#bigpicture">Big Picture</a>
+      <a class="nav-link" href="#palace">Memory Palace</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Complete Notes</div>
+      <a class="nav-link" href="#bop">1 · Balance of Payments</a>
+      <a class="nav-link" href="#poverty">2 · Poverty</a>
+      <a class="nav-link" href="#inequality">3 · Inequality &amp; IMF</a>
+      <a class="nav-link" href="#currency">4 · Currency Mechanics</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Retention Tools</div>
+      <a class="nav-link" href="#hooks">Memory Hooks</a>
+      <a class="nav-link" href="#connections">Concept Connections</a>
+      <a class="nav-link" href="#traps">⚠ Exam Traps</a>
+      <a class="nav-link" href="#examiner">Examiner's Angle</a>
+      <a class="nav-link" href="#recall">Active Recall</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Speed Layers</div>
+      <a class="nav-link" href="#highyield">High-Yield Sheet</a>
+      <a class="nav-link" href="#ultrafast">Ultra-Fast Sheet</a>
+      <a class="nav-link" href="#thirtysec">30-Second Sheet</a>
+      <a class="nav-link" href="#lastnight">Last Night Before Exam</a>
+    </div>
+
+    <div class="progress-box">
+      <div class="pb-label">Recall checklist progress</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="pbar"></div></div>
+      <div style="margin-top:6px; display:flex; justify-content:space-between;">
+        <span id="progress-pct" class="mono">0%</span>
+        <button class="reset-btn" id="resetBtn">reset</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main" id="mainContent">
+
+    <div class="hero">
+      <div class="hero-eyebrow">FRB · Phi Division Batch · Economics</div>
+      <h1>Balance of Payments &amp; Poverty</h1>
+      <p>From the 1991 forex crisis to the Lorenz Curve — rebuilt as a system you can revise 50 times and still find new edges to sharpen. Every fact from the lecture, none of the clutter.</p>
+      <div class="hero-tags">
+        <span class="htag">🔥 Must Know</span>
+        <span class="htag">⭐ Important</span>
+        <span class="htag">➕ Good to Know</span>
+        <span class="htag">⚠ Exam Trap</span>
+      </div>
+    </div>
+
+    <!-- ============ BIG PICTURE ============ -->
+    <section class="chapter" id="bigpicture">
+      <div class="chapter-head"><h2>Big Picture</h2></div>
+      <p>This chapter is really two linked stories about <strong>what a country owns vs. what it owes, at two scales</strong>.</p>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">🌍 Country-level scale</div>
+          <p style="margin:0;"><span class="cy">Balance of Payments</span> — does India have enough foreign currency to pay for what it buys from the world? In 1991, the answer was almost "no," and that single emergency rewired the entire Indian economy via LPG reforms.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">🧍 Individual-level scale</div>
+          <p style="margin:0;"><span class="cy">Poverty</span> — does a person have enough income/consumption to meet basic needs? Five committees, across 70+ years, kept changing <em>what counts as "enough."</em></p>
+        </div>
+      </div>
+      <p>The thread connecting them: <strong>both are about scarcity of resources and how we measure it</strong> — forex reserves measure a nation's buying power abroad; poverty lines measure a household's buying power at home. Both use a <em>threshold</em>, and both thresholds have been argued over by committees for decades.</p>
+    </section>
+
+    <!-- ============ MEMORY PALACE ============ -->
+    <section class="chapter" id="palace">
+      <div class="chapter-head"><span class="chapter-num">🧠</span><h2>Chapter Memory Palace — "The RBI Vault &amp; The Poverty Courtroom"</h2></div>
+
+      <div class="palace">
+        <p class="muted" style="margin-bottom:18px;">Walk through this in your head before any revision. Two buildings, side by side.</p>
+
+        <div class="palace-room">
+          <span class="room-name">🏛️ Building 1 — The RBI Vault (Balance of Payments)</span>
+          <p>You walk into a vault with <strong>four shelves</strong> holding India's foreign wealth: a shelf of <span class="cy">foreign cash (FCA)</span>, a shelf of <span class="gr">gold bars</span>, a drawer of <span class="cy">"paper gold" (SDR)</span> — a 5-currency cocktail (USD, Euro, Yen, Yuan, Pound) — and a locked safe-deposit box at the IMF labelled <span class="cy">RTP</span>. In <strong>1991</strong>, you open the vault and it's almost empty — a security guard (PM <strong>P.V. Narasimha Rao</strong>) calls in an accountant (<strong>Manmohan Singh</strong>) who rips open the doors of the building (liberalization/LPG) to let foreign money flow in again.</p>
+          <p>Next to the vault is a <strong>ledger desk split in two</strong>: the <span class="cy">Current Account</span> side records goods you can touch (visible), services you can't (invisible), gifts (transfer payments), and money relatives mail home (remittances). The <span class="cy">Capital Account</span> side records outsiders buying property here (FDI — they stay) vs. outsiders buying shares here (FPI — they flee at the first sign of trouble, like spooked tourists at a hotel fire alarm = "hot money").</p>
+        </div>
+
+        <div class="palace-room">
+          <span class="room-name">⚖️ Building 2 — The Poverty Courtroom</span>
+          <p>Five judges have sat on this bench across history, each redefining "who is poor" with a new rulebook. First, an old freedom fighter (<strong>Dadabhai Naoroji</strong>) walks in with chalk and writes the first (unofficial) poverty line on a blackboard. Then four judges enter <strong>in order</strong>, each replacing the previous one's rulebook: <strong>Dandekar-Rath</strong> (counts calories on a plate — 2400 rural / 2100 urban), <strong>Lakdawala</strong> (checks price-tags using CPI), <strong>Tendulkar</strong> (adds a school bag and a medicine box to the basic-needs basket — health + education), <strong>Rangarajan</strong> (brings a 365-day diary instead of a 30-day one).</p>
+          <p>Outside the courtroom is a single sloping line on a wall — the <strong>Lorenz Curve</strong> — and a dial from 0 to 1 — the <strong>Gini Coefficient</strong> — measuring how far the room has drifted from perfect fairness.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BOP SECTION ============ -->
+    <section class="chapter" id="bop">
+      <div class="chapter-head"><span class="chapter-num">01</span><h2>Balance of Payments</h2></div>
+
+      <div class="block" id="bop-crisis">
+        <h3><span class="icon">📉</span>The 1991 Crisis — How We Got Here</h3>
+        <p><span class="tag tag-must">MUST KNOW</span>India's forex reserves collapsed to barely a <strong>few billion dollars</strong> in <strong>1991</strong> — not enough to pay for a few days of imports. This is the single most important trigger-fact in modern Indian economic history.</p>
+        <ul>
+          <li><strong>Why it happened:</strong> India hadn't liberalized the economy, so foreign investment wasn't flowing in → no inflow of foreign currency → reserves kept depleting with no replenishment.</li>
+          <li><strong>PM at the time of the reform response:</strong> <strong>P.V. Narasimha Rao</strong>.</li>
+          <li><strong>Architect of the fix:</strong> <strong>Manmohan Singh</strong> (then Finance Minister) — brain behind the <strong>LPG reforms</strong> (Liberalization, Privatization, Globalization).</li>
+          <li class="sidenote">Context from previous lecture: the <strong>Seventh Plan</strong> (PM <strong>Rajiv Gandhi</strong>) had the objective remembered via <strong>"FWP"</strong> — Food, Work, Productivity — i.e., raising employment and productivity. The crisis followed soon after this plan period.</li>
+        </ul>
+      </div>
+
+      <div class="block" id="bop-reserves">
+        <h3><span class="icon">🏦</span>What Are Forex Reserves Made Of?</h3>
+        <p><span class="tag tag-must">MUST KNOW</span>Four components — India's forex reserves are currently at an all-time high, and are tracked across these four buckets:</p>
+
+        <div class="gauge-wrap">
+          <div class="gauge-title">Forex Reserve Stack</div>
+
+          <div class="gauge-row">
+            <div class="gauge-label">FCA</div>
+            <div class="gauge-track"><div class="gauge-fill" style="width:85%; background:linear-gradient(90deg,#5FD4D0,#3CA9A6);"></div></div>
+            <div class="gauge-note">Foreign Currency Assets — USD, Yuan, Yen, Dirham etc. earned via exports/investment</div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">Gold Reserves</div>
+            <div class="gauge-track"><div class="gauge-fill" style="width:55%; background:linear-gradient(90deg,#E8C766,#B89A4A);"></div></div>
+            <div class="gauge-note">Accepted everywhere, unlike any single national currency</div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">SDR</div>
+            <div class="gauge-track"><div class="gauge-fill" style="width:30%; background:linear-gradient(90deg,#9C8AE8,#6E5FBF);"></div></div>
+            <div class="gauge-note">"Paper gold" — basket of 5 currencies, held with IMF</div>
+          </div>
+          <div class="gauge-row">
+            <div class="gauge-label">RTP</div>
+            <div class="gauge-track"><div class="gauge-fill" style="width:18%; background:linear-gradient(90deg,#E8607A,#B14B5E);"></div></div>
+            <div class="gauge-note">Reserve Tranche Position — quota maintained with IMF</div>
+          </div>
+        </div>
+
+        <table>
+          <tr><th>Component</th><th>What it is</th><th>Key detail</th></tr>
+          <tr><td class="cy">FCA</td><td>Foreign Currency Assets</td><td>Currency earned from exports (USD from US, Yuan from China, Yen from Japan, Dirham from UAE) + foreign investment inflows. Held partly as cash, partly as government securities (for liquidity, similar logic to Open Market Operations under Monetary Policy).</td></tr>
+          <tr><td class="gr">Gold Reserves</td><td>Physical gold held by RBI</td><td>Universally accepted — even if a country won't take rupees, it'll take gold. (India recently imported <strong>100 tonnes of gold from the UK</strong>.)</td></tr>
+          <tr><td class="cy">SDR</td><td>Special Drawing Rights</td><td>"Paper gold" — <strong>not physical</strong>. A weighted basket of <strong>5 currencies: USD, Euro, Japanese Yen, Chinese Yuan, British Pound</strong>. Maintained with the <strong>IMF</strong>.</td></tr>
+          <tr><td class="cy">RTP</td><td>Reserve Tranche Position</td><td>A quota each country must maintain with the IMF. Maintaining it = access to IMF facilities (interest-free borrowing up to a limit, interest charged beyond).</td></tr>
+        </table>
+
+        <div class="hook">
+          <div class="hook-title">💡 Memory Hook</div>
+          <p style="margin:0;">Think of forex reserves as <strong>4 emergency pockets</strong> a traveller keeps: cash in your wallet (<span class="cy">FCA</span>), a gold chain around your neck (<span class="gr">Gold</span>), a multi-currency travel card (<span class="cy">SDR</span> — works in 5 currencies), and a credit line with a trusted friend abroad (<span class="cy">RTP</span> with IMF).</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📌 IMF's Biggest Debtors</div>
+          <p style="margin:0;">Countries that have borrowed the most from the IMF: <strong>#1 Argentina</strong>, <strong>#4 Pakistan</strong>. <span class="muted">(Useful for ranking-based questions.)</span></p>
+        </div>
+      </div>
+
+      <div class="block" id="bop-structure">
+        <h3><span class="icon">📒</span>Structure of Balance of Payments</h3>
+        <p><span class="tag tag-must">MUST KNOW</span>Just like the Budget splits into Revenue/Capital Receipts and Expenditure, BoP splits into two accounts:</p>
+
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">📗 Current Account</div>
+            <ul style="margin-bottom:0;">
+              <li><strong class="cy">Visible trade</strong> — goods you can touch (laptop, spices, pen, table)</li>
+              <li><strong class="cy">Invisible trade</strong> — services you can't touch (software, teaching)</li>
+              <li><strong class="cy">Transfer payments</strong> — grants from World Bank, ADB (Asian Development Bank) etc., with nothing given in return</li>
+              <li><strong class="cy">Remittances</strong> — money sent home by Indians working abroad, in the currency they earn it</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">📘 Capital Account</div>
+            <ul style="margin-bottom:0;">
+              <li><strong class="cy">FDI</strong> — Foreign Direct Investment: buying property/building a factory. <span class="gr">Stable, long-term.</span></li>
+              <li><strong class="cy">FPI / FII</strong> — Foreign Portfolio/Institutional Investment: buying shares. <span class="rs">Unstable — "hot money."</span> Flees at the first sign of political instability.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="hook">
+          <div class="hook-title">💡 Memory Hook — FDI vs FPI</div>
+          <p style="margin:0;">FDI = someone buys land and <strong>builds a factory</strong> in India — even if the government changes overnight, the factory can't pack up and leave. FPI = someone just <strong>buys shares</strong> — the instant they sense instability ("the government keeps changing"), they sell and run. That's why FPI is called <strong>hot money</strong> — it burns your hand and you drop it fast.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📰 Current Affairs Anchor (May, current year)</div>
+          <p style="margin:0;"><strong>China</strong> is India's <strong>biggest trading partner</strong> — trade worth <strong class="cy">$118 billion</strong>, with a <strong class="rs">trade deficit of $85 billion</strong> (we import more than we export to China).</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">💸 Remittances — Rankings</div>
+          <ul style="margin-bottom:0;">
+            <li>India is the <strong>#1 remittance-receiving country</strong> in the world.</li>
+            <li><strong>#2 is Mexico.</strong></li>
+            <li>Most of India's remittances come from the <strong>USA</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="block" id="bop-deficit">
+        <h3><span class="icon">🧮</span>Fiscal Deficit &amp; Twin Deficit</h3>
+        <div class="card">
+          <div class="card-title">Fiscal Deficit Formula</div>
+          <p class="mono" style="color:var(--gold); font-size:15px; margin:0;">Fiscal Deficit = Total Expenditure − Total Revenue Receipts (excluding borrowings)</p>
+        </div>
+        <p><span class="tag tag-imp">IMPORTANT</span><strong>Twin Deficit</strong> = when a country runs <strong>both</strong> a Current Account Deficit (CAD) <strong>and</strong> a Fiscal Deficit (FD) at the same time.</p>
+        <ul>
+          <li><strong class="cy">Current Account Deficit</strong>: imports &gt; exports → outflow of forex exceeds inflow.</li>
+          <li><strong class="cy">Fiscal Deficit</strong>: government spends more than it earns (excluding borrowing).</li>
+          <li class="sidenote">A figure of <strong>~3.3% of GDP</strong> was mentioned in class for the twin deficit context — treat this as an illustrative/contextual figure from that lecture's discussion rather than a fixed constant, since CAD and FD numbers are revised every year. Always check the latest Economic Survey / Budget figures closer to your exam.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ POVERTY SECTION ============ -->
+    <section class="chapter" id="poverty">
+      <div class="chapter-head"><span class="chapter-num">02</span><h2>Poverty</h2></div>
+
+      <div class="block" id="poverty-types">
+        <h3><span class="icon">🧍</span>Three Types of Poverty</h3>
+        <table>
+          <tr><th>Type</th><th>Definition</th><th>Example</th></tr>
+          <tr><td class="cy"><strong>Absolute</strong></td><td>A fixed income/expenditure threshold is set. Below it = poor, regardless of anyone else.</td><td>"Earning below ₹8,000/month = poor" (illustrative figure used in class, not an official number)</td></tr>
+          <tr><td class="cy"><strong>Relative</strong></td><td>Poverty measured by comparison to others, not an absolute number.</td><td>You earn ₹10 lakh/month; your neighbour earns ₹20 lakh/month — you feel "poor" relative to them.</td></tr>
+          <tr><td class="cy"><strong>Subjective</strong></td><td>Based on individual/personal perception, not a number at all.</td><td>Feeling poor when comparing your effort-to-buy-a-car against someone who already owns one.</td></tr>
+        </table>
+        <div class="trap">
+          <div class="trap-title">⚠ Exam Trap</div>
+          <p style="margin:0;">Absolute vs Relative is the pair examiners test most — <strong>Absolute = fixed threshold</strong>, <strong>Relative = comparison-based</strong>. Subjective is rarely tested numerically; just don't confuse it with Relative (Relative compares to <em>another specific person/group's income</em>; Subjective is about <em>personal feeling</em>, no income comparison required).</p>
+        </div>
+      </div>
+
+      <div class="block" id="poverty-preindependence">
+        <h3><span class="icon">📜</span>Pre-Independence Poverty Line History</h3>
+        <p><span class="tag tag-must">MUST KNOW</span>The first (unofficial) poverty line was given by <strong>Dadabhai Naoroji</strong>.</p>
+        <div class="card">
+          <div class="card-title">Dadabhai Naoroji — full profile (classic SSC bio-fact cluster)</div>
+          <ul style="margin-bottom:0;">
+            <li>Known as the <strong>"Grand Old Man of India."</strong></li>
+            <li>Belonged to the <strong>Parsi community.</strong></li>
+            <li>Brought out the newspaper <strong>"Rast Goftar."</strong></li>
+            <li><strong>3 times President of the Indian National Congress.</strong></li>
+            <li><strong>First Indian to become a member of the British Parliament.</strong></li>
+            <li>Founded the <strong>East India Association in 1866.</strong></li>
+          </ul>
+        </div>
+
+        <p style="margin-top:16px;"><span class="tag tag-imp">IMPORTANT</span>Two more pre-independence milestones:</p>
+        <table>
+          <tr><th>Year</th><th>Event</th></tr>
+          <tr><td class="mono cy">1938</td><td><strong>National Planning Committee</strong> formed by <strong>Subhash Chandra Bose</strong>; <strong>Jawaharlal Nehru</strong> became its Chairman and made early attempts at poverty estimation.</td></tr>
+          <tr><td class="mono cy">1944</td><td><strong>Bombay Plan</strong> — a plan presented by a group of leading Indian industrialists/corporates, published in Bombay.</td></tr>
+        </table>
+
+        <div class="hook">
+          <div class="hook-title">💡 Memory Hook</div>
+          <p style="margin:0;"><strong>"38 before 44"</strong> — Bose's National Planning Committee (1938) came <em>before</em> the Bombay Plan (1944). Picture Bose handing Nehru a blueprint in '38; six years later, in '44, a group of businessmen in Bombay hand in their own counter-blueprint.</p>
+        </div>
+      </div>
+
+      <div class="block" id="poverty-committees">
+        <h3><span class="icon">⚖️</span>Post-Independence Poverty Committees (in order)</h3>
+        <p><span class="tag tag-must">MUST KNOW</span>Four major committees, <strong>in this exact sequence</strong>: <strong>Dandekar-Rath → Lakdawala → Tendulkar → Rangarajan.</strong> Each is named after its chairman.</p>
+
+        <table>
+          <tr><th>Committee</th><th>Year</th><th>Core Basis</th><th>Key Contribution</th></tr>
+          <tr>
+            <td class="cy"><strong>Dandekar–Rath</strong></td>
+            <td class="mono">1971</td>
+            <td>Expenditure-based</td>
+            <td>First post-independence poverty system. Used <strong>NSSO</strong> (National Sample Survey Office, under <strong>MOSPI</strong> — Ministry of Statistics and Programme Implementation) data. Proposed a <strong>nutrition-based</strong> line: <strong>2400 calories/day (rural)</strong>, <strong>2100 calories/day (urban)</strong> — rural needs more due to physical labour.</td>
+          </tr>
+          <tr>
+            <td class="cy"><strong>Lakdawala</strong></td>
+            <td class="mono">—</td>
+            <td>Price-based (CPI)</td>
+            <td>Used <strong>CPI</strong> (Consumer Price Index) — specifically <strong>CPI-IW</strong> (Industrial Worker) and <strong>CPI-AL</strong> (Agricultural Labour) — same CPI logic RBI uses for monetary policy. Recommended <strong>state-wise poverty lines.</strong></td>
+          </tr>
+          <tr>
+            <td class="cy"><strong>Tendulkar</strong></td>
+            <td class="mono">Formed 2009, recommendations 2011</td>
+            <td>PPP-based, broader basic needs</td>
+            <td>First to include <strong>Health and Education</strong> under basic needs (previously excluded). Used <strong>PPP</strong> (Purchasing Power Parity — common basket of goods across countries). Replaced <strong>URP</strong> (Uniform Reference Period) with <strong>MRP</strong> (Mixed Reference Period).</td>
+          </tr>
+          <tr>
+            <td class="cy"><strong>Rangarajan</strong></td>
+            <td class="mono">2014</td>
+            <td>Nutritional requirement, refined reference period</td>
+            <td>Based on detailed <strong>nutritional needs</strong> (carbs, protein, fat intake). Introduced a further refinement to reference period — using a <strong>365-day window</strong> for low-frequency items (clothing) instead of the shorter 30-day window.</td>
+          </tr>
+        </table>
+
+        <div class="hook">
+          <div class="hook-title">💡 Memory Hook — Remembering the Order</div>
+          <p style="margin:0;">"<strong>D</strong>ad <strong>L</strong>oves <strong>T</strong>elevision <strong>R</strong>emotes" → <strong>D</strong>andekar-Rath → <strong>L</strong>akdawala → <strong>T</strong>endulkar → <strong>R</strong>angarajan. If you forget a year, anchor it relative to its neighbour in the sequence rather than memorising it in isolation — order first, year second.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🔢 Reference Period Terms (Tendulkar &amp; Rangarajan)</div>
+          <ul style="margin-bottom:0;">
+            <li><strong class="cy">URP</strong> — Uniform Reference Period: same 30-day recall window used for <em>all</em> items (food and non-food alike).</li>
+            <li><strong class="cy">MRP</strong> — Mixed Reference Period: a <em>different</em> recall window for low-frequency items (like clothing) vs everyday items — Tendulkar's contribution.</li>
+            <li><strong class="cy">Modified MRP</strong> — Rangarajan extended the low-frequency window further, to <strong>365 days</strong>, for items like clothing and footwear.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📊 Tendulkar Committee — Poverty Ratio Figures</div>
+          <p style="margin:0;">Two key percentage figures were associated with the Tendulkar Committee's poverty ratio findings: <strong class="cy">21.9%</strong> and <strong class="cy">29.5%</strong>. <span class="muted">(Lecture flagged these as the two numbers to memorise; if a question asks for the rural/urban split specifically, verify the exact rural vs. urban assignment against your standard reference book, since this wasn't unambiguous in the recording.)</span></p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">🧮 Head Count Ratio</div>
+          <p class="mono" style="color:var(--gold); margin:0;">Head Count Ratio = (Number of multi-dimensionally poor people) ÷ (Total population)</p>
+        </div>
+      </div>
+
+      <div class="block" id="poverty-mpi">
+        <h3><span class="icon">🌐</span>Multidimensional Poverty Index (MPI)</h3>
+        <p><span class="tag tag-must">MUST KNOW</span>MPI is published at two levels:</p>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">🇮🇳 India level</div>
+            <p style="margin:0;">Published by <strong class="cy">NITI Aayog.</strong></p>
+          </div>
+          <div class="card">
+            <div class="card-title">🌍 Global level</div>
+            <p style="margin:0;">Published by <strong class="cy">UNDP</strong> (United Nations Development Programme) along with <strong class="cy">OPHI</strong> (Oxford Poverty and Human Development Initiative) — ranks all countries.</p>
+          </div>
+        </div>
+
+        <p style="margin-top:14px;"><strong>3 Dimensions, 10 Indicators</strong> (global MPI):</p>
+        <table>
+          <tr><th>Dimension</th><th>Indicators</th></tr>
+          <tr><td class="cy"><strong>Health</strong></td><td>Nutrition, Child Mortality</td></tr>
+          <tr><td class="cy"><strong>Education</strong></td><td>Years of Schooling, School Attendance</td></tr>
+          <tr><td class="cy"><strong>Standard of Living</strong></td><td>Cooking Fuel, Sanitation, Drinking Water, Electricity, Housing, Assets</td></tr>
+        </table>
+
+        <div class="hook">
+          <div class="hook-title">💡 Memory Hook — 3 Dimensions</div>
+          <p style="margin:0;"><strong>"H-E-S"</strong> → <strong>H</strong>ealth, <strong>E</strong>ducation, <strong>S</strong>tandard of living. And the indicator count climbs as you go down the list: 2 (Health) + 2 (Education) + 6 (Standard of Living) = <strong>10 total.</strong></p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">➕ NITI Aayog's own version</div>
+          <p style="margin:0;">NITI Aayog uses <strong>12 indicators</strong> (vs the global MPI's 10) in its national-level report.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📑 NITI Aayog Report — "Multidimensional Poverty in India"</div>
+          <ul style="margin-bottom:0;">
+            <li>Since <strong>2005-06</strong>, <strong class="cy">24.2 crore people</strong> escaped (multidimensional) poverty in India.</li>
+            <li><strong class="cy">Uttar Pradesh</strong> saw the <strong>maximum number of people escape poverty.</strong></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INEQUALITY & IMF ============ -->
+    <section class="chapter" id="inequality">
+      <div class="chapter-head"><span class="chapter-num">03</span><h2>Inequality &amp; IMF</h2></div>
+
+      <div class="block" id="lorenz">
+        <h3><span class="icon">📈</span>Lorenz Curve &amp; Gini Coefficient</h3>
+        <p><span class="tag tag-must">MUST KNOW</span>The <strong>Lorenz Curve</strong> is the standard graphical tool for measuring income inequality.</p>
+        <ul>
+          <li>The <strong>Line of Equality</strong> is a straight diagonal line passing through the origin — it represents <em>perfect equality</em> (everyone holds an equal share of income/wealth).</li>
+          <li>The further the actual Lorenz Curve sags <strong>below</strong> this line, the <strong>greater the inequality.</strong></li>
+          <li>Different countries' curves can be compared on the same graph (e.g., Russia, USA, China plotted together) to see whose income distribution is closer to equality.</li>
+        </ul>
+
+        <div class="card">
+          <div class="card-title">Gini Coefficient</div>
+          <p style="margin:0;">A single number derived from the Lorenz Curve, ranging from <strong class="cy">0 to 1</strong>:</p>
+          <ul style="margin:8px 0 0 0;">
+            <li><strong class="gr">0</strong> = perfect equality (in theory only — never observed in reality)</li>
+            <li><strong class="rs">1</strong> = perfect inequality (also never observed in reality)</li>
+            <li>Real countries fluctuate somewhere in between — e.g. 0.2, 0.3, 0.8 etc.</li>
+          </ul>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">⚠ Exam Trap</div>
+          <p style="margin:0;">Do NOT assume any real country has a Gini value of exactly 0 or exactly 1 — both extremes are theoretical only. Questions sometimes test this as a "true/false" trap statement.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">📊 Oxfam Inequality Report</div>
+          <p style="margin:0;">Published annually by <strong>Oxfam International.</strong> Highlights wealth concentration — e.g., the report has noted that <strong>India's top 1%</strong> hold a disproportionately large share (figures cited around <strong>70–80%</strong> of total wealth in various editions) of the country's wealth.</p>
+        </div>
+      </div>
+
+      <div class="block" id="imf-basics">
+        <h3><span class="icon">🏛️</span>IMF — Core Facts</h3>
+        <table>
+          <tr><th>Fact</th><th>Detail</th></tr>
+          <tr><td>Full form</td><td><strong>International Monetary Fund</strong></td></tr>
+          <tr><td>Headquarters</td><td><strong class="cy">Washington D.C.</strong></td></tr>
+          <tr><td>Created at</td><td><strong>Bretton Woods Conference</strong></td></tr>
+          <tr><td>Year created</td><td><strong class="mono cy">1944</strong> — alongside the <strong>World Bank</strong></td></tr>
+        </table>
+        <div class="hook">
+          <div class="hook-title">💡 Memory Hook</div>
+          <p style="margin:0;">IMF and World Bank are <strong>twins born at Bretton Woods in 1944</strong> — same conference, same year, two different jobs (IMF = financial stability/currency, World Bank = development financing).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CURRENCY MECHANICS ============ -->
+    <section class="chapter" id="currency">
+      <div class="chapter-head"><span class="chapter-num">04</span><h2>Currency Mechanics</h2></div>
+
+      <div class="block" id="curr-terms">
+        <h3><span class="icon">💱</span>Appreciation / Depreciation / Devaluation / Revaluation</h3>
+        <p><span class="tag tag-must">MUST KNOW</span>The key distinction examiners love: <strong>market-driven vs. forced</strong> changes in currency value.</p>
+
+        <table>
+          <tr><th>Term</th><th>Direction</th><th>Cause</th></tr>
+          <tr><td class="cy"><strong>Depreciation</strong></td><td>Value of domestic currency <span class="rs">decreases</span></td><td><strong>Automatic / market-driven</strong></td></tr>
+          <tr><td class="cy"><strong>Appreciation</strong></td><td>Value of domestic currency <span class="gr">increases</span></td><td><strong>Automatic / market-driven</strong></td></tr>
+          <tr><td class="cy"><strong>Devaluation</strong></td><td>Value of domestic currency <span class="rs">decreases</span></td><td><strong>Forced</strong>, done deliberately by the Central Bank</td></tr>
+          <tr><td class="cy"><strong>Revaluation</strong></td><td>Value of domestic currency <span class="gr">increases</span></td><td><strong>Forced</strong>, done deliberately by the Central Bank</td></tr>
+        </table>
+
+        <div class="hook">
+          <div class="hook-title">💡 Memory Hook</div>
+          <p style="margin:0;">If the rupee was ₹80/dollar and is now ₹90/dollar, you need <em>more</em> rupees to buy the same dollar — your rupee has <strong>lost value = depreciated.</strong> Think of it like a phone number that's "too available" — everyone can reach you easily, so your "value" on the market drops. Appreciation is the opposite: you've become harder to get, so your currency is now worth more per unit.</p>
+          <p style="margin:0;">The "<strong>-ation</strong> happens to you, the central bank does the "<strong>-aluation</strong>" — De<strong>valu</strong>ation/Re<strong>valu</strong>ation are deliberate central bank actions; Depreci<strong>ation</strong>/Appreci<strong>ation</strong> just happen via market forces.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Who benefits from Depreciation?</div>
+          <p style="margin:0;"><strong class="gr">Exporters benefit</strong> from depreciation: if you sell goods worth $1 abroad, and the rupee depreciates from ₹80/$ to ₹90/$, you now earn ₹90 instead of ₹80 for the same dollar — more rupees for the same export. <strong class="cy">Importers benefit from appreciation</strong> instead, since their foreign purchases become cheaper in rupee terms.</p>
+        </div>
+
+        <div class="trap">
+          <div class="trap-title">⚠ Exam Trap</div>
+          <p style="margin:0;">Don't mix up who benefits: <strong>Depreciation → good for Exporters.</strong> <strong>Appreciation → good for Importers.</strong> A classic flipped-option trap in MCQs.</p>
+        </div>
+      </div>
+
+      <div class="block" id="curr-fema">
+        <h3><span class="icon">📜</span>FERA → FEMA</h3>
+        <table>
+          <tr><th>Act</th><th>Full Form</th><th>Year</th></tr>
+          <tr><td class="cy"><strong>FERA</strong></td><td>Foreign Exchange Regulation Act</td><td class="mono">1973</td></tr>
+          <tr><td class="cy"><strong>FEMA</strong></td><td>Foreign Exchange Management Act</td><td class="mono">1999</td></tr>
+        </table>
+        <p><span class="tag tag-must">MUST KNOW</span><strong>FEMA (1999) replaced FERA (1973)</strong> — this is a frequently asked replacement-act question in SSC exams.</p>
+        <div class="sidenote">Note: the source lecture audio stated FEMA's year unclearly; the verified, standard year for FEMA is <strong>1999</strong>, which is what's recorded here.</div>
+      </div>
+
+      <div class="block" id="curr-accounts">
+        <h3><span class="icon">🏦</span>NRE vs NRO Accounts</h3>
+        <table>
+          <tr><th>Account</th><th>Full Form</th><th>What it holds</th></tr>
+          <tr><td class="cy"><strong>NRE</strong></td><td>Non-Resident External Account</td><td>Foreign earnings of an NRI, brought into and held in India (repatriable — fully transferable back abroad)</td></tr>
+          <tr><td class="cy"><strong>NRO</strong></td><td>Non-Resident Ordinary Account</td><td>Income earned <em>within India</em> by an NRI (e.g., rent, dividends) — has repatriation restrictions</td></tr>
+        </table>
+        <div class="sidenote">Note: the lecture's explanation of these two accounts was garbled in transcription. The definitions above are the standard, verified versions used in SSC/banking exam material.</div>
+      </div>
+    </section>
+
+    <!-- ============ MEMORY HOOKS (CONSOLIDATED) ============ -->
+    <section class="chapter" id="hooks">
+      <div class="chapter-head"><span class="chapter-num">🧠</span><h2>Smart Memory Hooks — Quick Reference</h2></div>
+      <p class="muted">All hooks from this chapter, gathered in one place for rapid-fire review.</p>
+
+      <div class="hook"><div class="hook-title">Forex Reserves = 4 emergency pockets</div><p style="margin:0;">Cash wallet (FCA) · Gold chain (Gold) · Multi-currency travel card (SDR) · Credit line with a friend (RTP/IMF).</p></div>
+
+      <div class="hook"><div class="hook-title">FDI vs FPI = Factory vs Shares</div><p style="margin:0;">Factory can't run away (FDI = stable). Shares get sold and the money runs (FPI = hot money).</p></div>
+
+      <div class="hook"><div class="hook-title">Poverty Committee Order = "Dad Loves Television Remotes"</div><p style="margin:0;">Dandekar-Rath → Lakdawala → Tendulkar → Rangarajan.</p></div>
+
+      <div class="hook"><div class="hook-title">"38 before 44"</div><p style="margin:0;">National Planning Committee (1938, Bose/Nehru) comes before the Bombay Plan (1944, industrialists).</p></div>
+
+      <div class="hook"><div class="hook-title">MPI Dimensions = "H-E-S"</div><p style="margin:0;">Health (2) + Education (2) + Standard of Living (6) = 10 indicators.</p></div>
+
+      <div class="hook"><div class="hook-title">Depreciation/Appreciation vs Devaluation/Revaluation</div><p style="margin:0;">"-ation" = automatic market action. Central bank does the deliberate "-aluation" moves.</p></div>
+
+      <div class="hook"><div class="hook-title">IMF + World Bank = Twins of 1944</div><p style="margin:0;">Born together at Bretton Woods — same year, different jobs.</p></div>
+    </section>
+
+    <!-- ============ CONCEPT CONNECTIONS ============ -->
+    <section class="chapter" id="connections">
+      <div class="chapter-head"><span class="chapter-num">🔗</span><h2>Concept Connections</h2></div>
+      <div class="card">
+        <div class="card-title">CAUSE → EFFECT</div>
+        <p style="margin:0;">No liberalization → no foreign investment inflow → no forex inflow → <strong>1991 BoP crisis</strong> → forced LPG reforms.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">PROBLEM → SOLUTION</div>
+        <p style="margin:0;">Forex reserves nearly zero (1991) → Narasimha Rao govt + Manmohan Singh → Liberalization opens the door to FDI/FPI inflows → reserves rebuilt to today's all-time high.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">FEATURE → EXCEPTION</div>
+        <p style="margin:0;">FDI is generally "stable" — <strong>except</strong> it requires physical, immovable investment (factories/property) to earn that label; if it were liquid/movable, it would behave like FPI.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">CONCEPT → APPLICATION</div>
+        <p style="margin:0;">CPI (used by Lakdawala Committee for poverty lines) is the <strong>same index RBI uses to set monetary policy</strong> — one concept, two completely different policy applications.</p>
+      </div>
+      <div class="card">
+        <div class="card-title">DISCOVERY → IMPACT</div>
+        <p style="margin:0;">Tendulkar Committee adding Health + Education to "basic needs" → poverty is no longer judged on food/calories alone → changes who officially counts as poor (broader definition).</p>
+      </div>
+      <div class="card">
+        <div class="card-title">EVENT → CONSEQUENCE</div>
+        <p style="margin:0;">A government changes frequently (political instability) → FPI/hot money exits rapidly → currency can depreciate sharply → exporters gain, importers lose.</p>
+      </div>
+    </section>
+
+    <!-- ============ EXAM TRAPS (CONSOLIDATED) ============ -->
+    <section class="chapter" id="traps">
+      <div class="chapter-head"><span class="chapter-num">⚠</span><h2>Exam Traps — Consolidated</h2></div>
+
+      <div class="trap"><div class="trap-title">FDI vs FPI</div><p style="margin:0;">FDI = long-term, stable, physical investment. FPI/FII = short-term, "hot money," easily withdrawn. Examiners often swap these in MCQ options.</p></div>
+
+      <div class="trap"><div class="trap-title">Depreciation/Devaluation — automatic vs forced</div><p style="margin:0;">Depreciation/Appreciation = market-driven. Devaluation/Revaluation = deliberately forced by the central bank. Don't treat them as pure synonyms.</p></div>
+
+      <div class="trap"><div class="trap-title">Exporter vs Importer benefit</div><p style="margin:0;">Depreciation benefits <strong>exporters.</strong> Appreciation benefits <strong>importers.</strong> Frequently flipped in options.</p></div>
+
+      <div class="trap"><div class="trap-title">FERA vs FEMA</div><p style="margin:0;">FERA = 1973 (Regulation Act, more restrictive). FEMA = 1999 (Management Act, replaced FERA, more liberal). Don't swap the years or the full forms.</p></div>
+
+      <div class="trap"><div class="trap-title">Committee order &amp; basis</div><p style="margin:0;">Dandekar-Rath (nutrition/calories) ≠ Lakdawala (CPI/price) ≠ Tendulkar (PPP + health/education) ≠ Rangarajan (refined nutrition + MRP). Each committee is tied to a <em>distinct</em> methodology — don't merge their contributions.</p></div>
+
+      <div class="trap"><div class="trap-title">URP vs MRP vs Modified MRP</div><p style="margin:0;">URP = same 30-day window for everything. MRP = different windows for high vs low frequency items (Tendulkar). Modified MRP extends the low-frequency window to 365 days (Rangarajan).</p></div>
+
+      <div class="trap"><div class="trap-title">India-level vs Global-level MPI publisher</div><p style="margin:0;">India level → <strong>NITI Aayog</strong> (12 indicators). Global level → <strong>UNDP + OPHI</strong> (10 indicators). Don't swap which body uses which indicator count.</p></div>
+
+      <div class="trap"><div class="trap-title">Gini Coefficient extremes</div><p style="margin:0;">0 and 1 are theoretical bounds only — no real country sits exactly at either extreme.</p></div>
+
+      <div class="trap"><div class="trap-title">Absolute vs Relative vs Subjective poverty</div><p style="margin:0;">Absolute = fixed threshold. Relative = comparison to another group/person's income. Subjective = personal feeling, no income comparison required.</p></div>
+    </section>
+
+    <!-- ============ EXAMINER'S ANGLE ============ -->
+    <section class="chapter" id="examiner">
+      <div class="chapter-head"><span class="chapter-num">🎯</span><h2>Examiner's Favourite Questions</h2></div>
+
+      <div class="block-sub">Statement-Based Questions (likely format)</div>
+      <ul>
+        <li>"Statement I: FDI is more stable than FPI. Statement II: FPI is also called hot money. Which is correct?" → <strong class="gr">Both true.</strong></li>
+        <li>"Statement I: Depreciation benefits importers. Statement II: Appreciation benefits exporters." → <strong class="rs">Both false</strong> (reversed — depreciation benefits exporters, appreciation benefits importers).</li>
+      </ul>
+
+      <div class="block-sub">Match-the-Following Possibilities</div>
+      <ul>
+        <li>Match Committee → Basis: Dandekar-Rath–Nutrition, Lakdawala–CPI, Tendulkar–PPP/Health-Education, Rangarajan–Modified MRP.</li>
+        <li>Match Term → Year: FERA–1973, FEMA–1999, IMF/World Bank–1944, National Planning Committee–1938, Bombay Plan–1944.</li>
+        <li>Match Reserve Component → Description: FCA–currency assets, Gold–physical reserves, SDR–"paper gold," RTP–IMF quota.</li>
+      </ul>
+
+      <div class="block-sub">Chronology Questions</div>
+      <ul>
+        <li>Arrange: East India Association (1866) → National Planning Committee (1938) → Bombay Plan (1944) → Dandekar-Rath Committee (1971) → Tendulkar Committee (2009/2011) → Rangarajan Committee (2014).</li>
+      </ul>
+
+      <div class="block-sub">Assertion–Reason Possibilities</div>
+      <ul>
+        <li>Assertion: "India's forex reserves crashed in 1991." Reason: "India had not liberalized its economy, limiting foreign investment inflows." → <strong class="gr">Both true, reason correctly explains assertion.</strong></li>
+      </ul>
+
+      <div class="block-sub">Confusing / Frequently Misread Facts</div>
+      <ul>
+        <li>SDR is <strong>not physical gold</strong> — it's a basket of 5 currencies ("paper gold").</li>
+        <li>"Devaluation" and "Depreciation" sound similar but differ in <strong>who causes the change</strong> (forced vs automatic).</li>
+        <li>Tendulkar Committee was <strong>formed in 2009</strong> but its recommendations came in <strong>2011</strong> — exams sometimes test either year.</li>
+      </ul>
+    </section>
+
+    <!-- ============ ACTIVE RECALL ============ -->
+    <section class="chapter" id="recall">
+      <div class="chapter-head"><span class="chapter-num">❓</span><h2>Active Recall Section</h2></div>
+      <p class="muted">Don't just read the answer — try to recall it first, THEN click to reveal. Each click is tracked in your sidebar progress bar.</p>
+
+      <div class="block-sub">Self-Test Questions</div>
+      <div class="recall-list">
+        <div class="recall"><div class="recall-q"><span>What were India's forex reserves' approximate state in 1991?</span><span class="chev">›</span></div><div class="recall-a">Nearly wiped out — only a few billion dollars left, not enough to cover even a few days of imports.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>Name the 4 components of forex reserves.</span><span class="chev">›</span></div><div class="recall-a">FCA (Foreign Currency Assets), Gold Reserves, SDR (Special Drawing Rights), RTP (Reserve Tranche Position).</div></div>
+
+        <div class="recall"><div class="recall-q"><span>What 5 currencies make up the SDR basket?</span><span class="chev">›</span></div><div class="recall-a">US Dollar, Euro, Japanese Yen, Chinese Yuan, British Pound.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>Which is riskier — FDI or FPI — and why?</span><span class="chev">›</span></div><div class="recall-a">FPI (Foreign Portfolio Investment) — it's "hot money," easily withdrawn when there's political/economic instability, unlike FDI which involves physical, long-term investment.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>Who gave the first (unofficial) poverty line in India?</span><span class="chev">›</span></div><div class="recall-a">Dadabhai Naoroji.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>List the 4 post-independence poverty committees in order.</span><span class="chev">›</span></div><div class="recall-a">Dandekar-Rath (1971) → Lakdawala → Tendulkar (2009/2011) → Rangarajan (2014).</div></div>
+
+        <div class="recall"><div class="recall-q"><span>What did the Tendulkar Committee add to the definition of "basic needs"?</span><span class="chev">›</span></div><div class="recall-a">Health and Education.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>What does MPI stand for, and who publishes it at the global level?</span><span class="chev">›</span></div><div class="recall-a">Multidimensional Poverty Index — published globally by UNDP along with OPHI (Oxford Poverty and Human Development Initiative).</div></div>
+
+        <div class="recall"><div class="recall-q"><span>What are the 3 dimensions of MPI?</span><span class="chev">›</span></div><div class="recall-a">Health, Education, Standard of Living.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>What does the Gini Coefficient range from, and what do the extremes mean?</span><span class="chev">›</span></div><div class="recall-a">0 to 1. 0 = perfect equality (theoretical), 1 = perfect inequality (theoretical). No real country sits at either extreme.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>Where and when was the IMF created?</span><span class="chev">›</span></div><div class="recall-a">At the Bretton Woods Conference, 1944, alongside the World Bank.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>What's the difference between Depreciation and Devaluation?</span><span class="chev">›</span></div><div class="recall-a">Depreciation = automatic, market-driven decrease in currency value. Devaluation = forced decrease, deliberately done by the central bank.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>Who benefits from currency depreciation — exporters or importers?</span><span class="chev">›</span></div><div class="recall-a">Exporters — they earn more domestic currency for the same foreign-currency sale.</div></div>
+
+        <div class="recall"><div class="recall-q"><span>FERA was replaced by which act, and in which year?</span><span class="chev">›</span></div><div class="recall-a">FEMA (Foreign Exchange Management Act), 1999.</div></div>
+      </div>
+
+      <div class="block-sub">Fill in the Blanks</div>
+      <div class="recall-list">
+        <div class="recall"><div class="recall-q"><span>The 1991 BoP crisis was resolved through reforms championed by ______, then Finance Minister under PM ______.</span><span class="chev">›</span></div><div class="recall-a">Manmohan Singh; P.V. Narasimha Rao.</div></div>
+        <div class="recall"><div class="recall-q"><span>India is the world's #____ remittance-receiving country; #2 is ______.</span><span class="chev">›</span></div><div class="recall-a">#1; Mexico.</div></div>
+        <div class="recall"><div class="recall-q"><span>Dandekar-Rath Committee's nutrition standard: ______ calories (rural), ______ calories (urban).</span><span class="chev">›</span></div><div class="recall-a">2400 (rural); 2100 (urban).</div></div>
+        <div class="recall"><div class="recall-q"><span>NITI Aayog's report found that since 2005-06, ______ crore people escaped poverty, with the maximum escapes in ______.</span><span class="chev">›</span></div><div class="recall-a">24.2 crore; Uttar Pradesh.</div></div>
+      </div>
+
+      <div class="block-sub">Rapid-Fire One-Liners</div>
+      <div class="recall-list">
+        <div class="recall"><div class="recall-q"><span>India's biggest trading partner (as of May current affairs)?</span><span class="chev">›</span></div><div class="recall-a">China ($118 billion trade, $85 billion trade deficit).</div></div>
+        <div class="recall"><div class="recall-q"><span>Biggest debtor to the IMF? 4th biggest?</span><span class="chev">›</span></div><div class="recall-a">#1 Argentina; #4 Pakistan.</div></div>
+        <div class="recall"><div class="recall-q"><span>"Grand Old Man of India" — who, and which newspaper did he run?</span><span class="chev">›</span></div><div class="recall-a">Dadabhai Naoroji; "Rast Goftar."</div></div>
+        <div class="recall"><div class="recall-q"><span>Who formed the National Planning Committee, and who chaired it?</span><span class="chev">›</span></div><div class="recall-a">Formed by Subhash Chandra Bose (1938); chaired by Jawaharlal Nehru.</div></div>
+      </div>
+    </section>
+
+    <!-- ============ HIGH-YIELD SHEET ============ -->
+    <section class="chapter" id="highyield">
+      <div class="chapter-head"><span class="chapter-num">⭐</span><h2>High-Yield Revision Notes</h2></div>
+      <div class="fastsheet">
+        <ul>
+          <li><strong>1991 BoP Crisis</strong> — forex reserves nearly zero → PM P.V. Narasimha Rao, FM Manmohan Singh → LPG reforms.</li>
+          <li><strong>Forex Reserves</strong> = FCA + Gold + SDR (5-currency basket: USD, Euro, Yen, Yuan, Pound) + RTP (IMF quota).</li>
+          <li><strong>BoP = Current A/c</strong> (visible + invisible trade + transfers + remittances) <strong>+ Capital A/c</strong> (FDI stable, FPI = hot money).</li>
+          <li><strong>India</strong>: #1 in remittances globally; #2 is Mexico; most remittance from USA; China = biggest trade partner ($118bn, $85bn deficit).</li>
+          <li><strong>Fiscal Deficit</strong> = Total Expenditure − Total Revenue Receipts (excl. borrowing). <strong>Twin Deficit</strong> = CAD + FD together.</li>
+          <li><strong>Poverty types</strong>: Absolute (fixed threshold), Relative (comparison-based), Subjective (personal feeling).</li>
+          <li><strong>Dadabhai Naoroji</strong> = first unofficial poverty line; Grand Old Man of India; Rast Goftar; 3x Congress President; first Indian in British Parliament; East India Association (1866).</li>
+          <li><strong>1938</strong> National Planning Committee (Bose forms it, Nehru chairs); <strong>1944</strong> Bombay Plan.</li>
+          <li><strong>Committees in order</strong>: Dandekar-Rath (1971, nutrition: 2400/2100 cal) → Lakdawala (CPI, state-wise) → Tendulkar (2009/2011, +health/education, PPP, URP→MRP) → Rangarajan (2014, nutrition + Modified MRP/365 days).</li>
+          <li><strong>MPI</strong>: India level by NITI Aayog (12 indicators); Global by UNDP+OPHI (10 indicators, 3 dimensions: Health, Education, Standard of Living).</li>
+          <li><strong>NITI Aayog report</strong>: 24.2 crore escaped poverty since 2005-06; max from UP.</li>
+          <li><strong>Lorenz Curve</strong> = inequality graph; <strong>Gini Coefficient</strong> 0(equal)–1(unequal).</li>
+          <li><strong>IMF</strong>: HQ Washington DC; born at Bretton Woods 1944 with World Bank. Top debtors: Argentina (#1), Pakistan (#4).</li>
+          <li><strong>Depreciation/Appreciation</strong> = automatic; <strong>Devaluation/Revaluation</strong> = forced by central bank. Depreciation helps exporters; Appreciation helps importers.</li>
+          <li><strong>FERA (1973) → FEMA (1999)</strong> — currency regulation acts.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ ULTRA-FAST SHEET ============ -->
+    <section class="chapter" id="ultrafast">
+      <div class="chapter-head"><span class="chapter-num">⚡</span><h2>Ultra-Fast Revision Sheet</h2></div>
+      <div class="fastsheet">
+        <div class="grid2">
+          <ul style="margin:0;">
+            <li>1991 crisis → Rao + Singh → LPG</li>
+            <li>Reserves: FCA, Gold, SDR(5 ccy), RTP</li>
+            <li>Current A/c: visible/invisible/transfer/remit</li>
+            <li>Capital A/c: FDI(stable), FPI(hot)</li>
+            <li>India #1 remittance, USA biggest source</li>
+            <li>China = top trade partner, $85bn deficit</li>
+            <li>FD = Exp − Rev Receipts (no borrowing)</li>
+          </ul>
+          <ul style="margin:0;">
+            <li>Poverty: Absolute/Relative/Subjective</li>
+            <li>Naoroji → first poverty line, 1866 EIA</li>
+            <li>1938 NPC (Bose/Nehru), 1944 Bombay Plan</li>
+            <li>Dandekar→Lakdawala→Tendulkar→Rangarajan</li>
+            <li>Tendulkar: +health/edu, URP→MRP</li>
+            <li>MPI: India=NITI(12), Global=UNDP+OPHI(10)</li>
+            <li>Gini 0–1; IMF 1944 Bretton Woods, DC HQ</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 30-SECOND SHEET ============ -->
+    <section class="chapter" id="thirtysec">
+      <div class="chapter-head"><span class="chapter-num">⏱</span><h2>30-Second Revision Sheet</h2></div>
+      <div class="fastsheet">
+        <p style="margin:0; font-size:15px;">
+          <strong class="gold" style="color:var(--gold);">BoP:</strong> 1991 crisis → LPG. Reserves = FCA+Gold+SDR+RTP. Current A/c vs Capital A/c. FDI stable, FPI hot.
+          &nbsp;|&nbsp; <strong style="color:var(--gold);">Poverty:</strong> Naoroji first → Dandekar→Lakdawala→Tendulkar→Rangarajan. MPI = NITI(India)/UNDP+OPHI(Global), H-E-S, 10 indicators.
+          &nbsp;|&nbsp; <strong style="color:var(--gold);">Other:</strong> Gini 0–1, IMF 1944 Bretton Woods DC, FERA1973→FEMA1999, Depreciation helps exporters.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ LAST NIGHT BEFORE EXAM ============ -->
+    <section class="chapter" id="lastnight">
+      <div class="chapter-head"><span class="chapter-num">🌙</span><h2>Last-Night-Before-Exam Sheet</h2></div>
+      <div class="lastnight">
+        <h3>The 12 Things You Cannot Afford to Forget</h3>
+        <ol style="margin-bottom:0;">
+          <li><strong>1991</strong> = BoP crisis year; Rao + Singh = LPG.</li>
+          <li>Forex reserves = <strong>FCA, Gold, SDR, RTP.</strong></li>
+          <li>FDI = stable. FPI = hot money.</li>
+          <li>Depreciation → exporters win. Appreciation → importers win.</li>
+          <li>FERA <strong>1973</strong> → FEMA <strong>1999.</strong></li>
+          <li>Committee order: <strong>Dandekar-Rath → Lakdawala → Tendulkar → Rangarajan.</strong></li>
+          <li>Tendulkar added <strong>health + education</strong> to basic needs.</li>
+          <li>MPI: India = <strong>NITI Aayog</strong>; Global = <strong>UNDP + OPHI.</strong></li>
+          <li>Gini Coefficient: <strong>0 = equal, 1 = unequal</strong> (theoretical extremes only).</li>
+          <li>IMF born <strong>1944, Bretton Woods,</strong> HQ <strong>Washington DC.</strong></li>
+          <li>Dadabhai Naoroji = first poverty line + Grand Old Man of India.</li>
+          <li>India = <strong>#1 in remittances;</strong> China = <strong>biggest trade partner.</strong></li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="top-btn" id="topBtn">↑</div>
+
+<script>
+  // Mobile sidebar toggle
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  menuBtn.addEventListener('click', () => sidebar.classList.toggle('open'));
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => sidebar.classList.remove('open'));
+  });
+
+  // Active nav highlighting on scroll
+  const sections = document.querySelectorAll('section.chapter, .block');
+  const navLinks = document.querySelectorAll('.nav-link');
+  function onScroll(){
+    let current = '';
+    const scrollPos = window.scrollY + 120;
+    document.querySelectorAll('section.chapter[id], .block[id]').forEach(sec => {
+      if(sec.offsetTop <= scrollPos) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+
+    const topBtn = document.getElementById('topBtn');
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  document.getElementById('topBtn').addEventListener('click', () => {
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // Active recall collapsibles + progress tracking
+  const recalls = document.querySelectorAll('.recall');
+  const STORAGE_KEY = 'bop_poverty_recall_progress_v1';
+
+  function loadProgress(){
+    try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveProgress(p){
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }catch(e){}
+  }
+  function updateProgressBar(){
+    const p = loadProgress();
+    const opened = Object.keys(p).filter(k => p[k]).length;
+    const total = recalls.length;
+    const pct = total ? Math.round((opened/total)*100) : 0;
+    document.getElementById('pbar').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = pct + '%';
+  }
+
+  recalls.forEach((r, i) => {
+    r.dataset.idx = i;
+    const q = r.querySelector('.recall-q');
+    q.addEventListener('click', () => {
+      r.classList.toggle('open');
+      const p = loadProgress();
+      p[i] = true;
+      saveProgress(p);
+      updateProgressBar();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    try{ localStorage.removeItem(STORAGE_KEY); }catch(e){}
+    updateProgressBar();
+  });
+
+  updateProgressBar();
+</script>
+
+</body>
+</html>

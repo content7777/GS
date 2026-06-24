@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>National Income — SSC CGL Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d14;
+    --bg2: #0f1420;
+    --bg3: #141929;
+    --card: #161d2e;
+    --card2: #1c2538;
+    --border: #232d45;
+    --accent: #4f8ef7;
+    --accent2: #7c6af7;
+    --gold: #f5c842;
+    --fire: #ff6b35;
+    --green: #34d399;
+    --red: #f87171;
+    --purple: #a78bfa;
+    --cyan: #22d3ee;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --tag-fire: rgba(255,107,53,0.15);
+    --tag-star: rgba(245,200,66,0.12);
+    --tag-plus: rgba(52,211,153,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0a0d14 0%, #0d1528 50%, #111827 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 24px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(79,142,247,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: rgba(79,142,247,0.1);
+    border: 1px solid rgba(79,142,247,0.3);
+    color: var(--accent);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 900;
+    background: linear-gradient(135deg, #e2e8f0 0%, var(--accent) 60%, var(--accent2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    color: var(--text2);
+    font-size: 15px;
+    max-width: 480px;
+    margin: 0 auto 28px;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .stat-pill {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: var(--text2);
+  }
+  .stat-pill span { color: var(--accent); font-weight: 600; }
+
+  /* ── NAV ── */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,13,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  .sticky-nav::-webkit-scrollbar { display: none; }
+  .nav-inner {
+    display: inline-flex;
+    gap: 4px;
+    padding: 10px 0;
+    min-width: 100%;
+    justify-content: center;
+  }
+  .nav-btn {
+    background: none;
+    border: none;
+    color: var(--text3);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { background: var(--card); color: var(--text); }
+  .nav-btn.active { background: rgba(79,142,247,0.15); color: var(--accent); }
+
+  /* ── MAIN ── */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    margin-top: 60px;
+    scroll-margin-top: 70px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .card p { color: var(--text2); font-size: 15px; margin-bottom: 8px; }
+  .card p:last-child { margin-bottom: 0; }
+  .card strong { color: var(--text); }
+
+  /* ── GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media(max-width: 640px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  /* ── TAGS ── */
+  .fire-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--tag-fire); border: 1px solid rgba(255,107,53,0.3); color: var(--fire); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
+  .star-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--tag-star); border: 1px solid rgba(245,200,66,0.3); color: var(--gold); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
+  .plus-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--tag-plus); border: 1px solid rgba(52,211,153,0.3); color: var(--green); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 6px; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { background: var(--card2); color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 12px 16px; color: var(--text2); border-bottom: 1px solid rgba(35,45,69,0.5); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .hl { color: var(--gold); font-weight: 600; }
+
+  /* ── PALACE ── */
+  .palace {
+    background: linear-gradient(135deg, #0f1528, #161d30);
+    border: 1px solid rgba(124,106,247,0.3);
+    border-radius: 20px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .palace::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(124,106,247,0.08) 0%, transparent 70%);
+  }
+  .palace-stop {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    align-items: flex-start;
+  }
+  .palace-num {
+    width: 32px; height: 32px;
+    background: rgba(124,106,247,0.2);
+    border: 1px solid rgba(124,106,247,0.4);
+    color: var(--accent2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .palace-text strong { color: var(--accent2); }
+  .palace-text { color: var(--text2); font-size: 14px; }
+
+  /* ── HOOK ── */
+  .hook {
+    background: linear-gradient(135deg, rgba(245,200,66,0.06), rgba(255,107,53,0.04));
+    border: 1px solid rgba(245,200,66,0.2);
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .hook-label { font-size: 11px; color: var(--gold); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .hook p { color: var(--text2); font-size: 14px; }
+  .hook .hook-key { color: var(--gold); font-weight: 600; }
+
+  /* ── TRAP ── */
+  .trap {
+    background: rgba(248,113,113,0.05);
+    border: 1px solid rgba(248,113,113,0.25);
+    border-left: 3px solid var(--red);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .trap-label { font-size: 11px; color: var(--red); font-weight: 700; letter-spacing: 1px; font-family: 'JetBrains Mono', monospace; margin-bottom: 6px; }
+  .trap p { color: var(--text2); font-size: 14px; }
+  .trap strong { color: var(--red); }
+
+  /* ── CONNECTION ── */
+  .conn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .conn-arrow { color: var(--accent); font-weight: 700; font-size: 18px; }
+  .conn-from { color: var(--text); font-weight: 600; }
+  .conn-to { color: var(--text2); }
+
+  /* ── QUESTION ── */
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .q-front {
+    padding: 16px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.2s;
+  }
+  .q-front:hover { background: rgba(255,255,255,0.02); }
+  .q-text { color: var(--text2); font-size: 14px; }
+  .q-text strong { color: var(--accent); font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+  .q-toggle { color: var(--text3); font-size: 18px; transition: transform 0.2s; flex-shrink: 0; }
+  .q-answer {
+    display: none;
+    padding: 0 20px 16px;
+    color: var(--green);
+    font-size: 14px;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    margin-top: 0;
+  }
+  .q-card.open .q-toggle { transform: rotate(45deg); }
+  .q-card.open .q-answer { display: block; }
+
+  /* ── FORMULA BOX ── */
+  .formula {
+    background: #0a1628;
+    border: 1px solid rgba(79,142,247,0.3);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--cyan);
+  }
+  .formula span { color: var(--text3); font-size: 12px; display: block; margin-top: 4px; }
+
+  /* ── CHIGAM BOX ── */
+  .chigam {
+    background: linear-gradient(135deg, rgba(34,211,238,0.06), rgba(79,142,247,0.06));
+    border: 1px solid rgba(34,211,238,0.25);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    margin: 16px 0;
+  }
+  .chigam h3 { font-size: 28px; color: var(--cyan); letter-spacing: 6px; font-family: 'JetBrains Mono', monospace; font-weight: 700; margin-bottom: 8px; }
+  .chigam p { color: var(--text2); font-size: 13px; }
+  .chigam .decode { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .chigam .letter { background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.2); border-radius: 8px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+  .chigam .letter span { color: var(--cyan); font-weight: 700; }
+  .chigam .letter small { color: var(--text3); display: block; font-size: 10px; margin-top: 2px; }
+
+  /* ── RAPID FIRE ── */
+  .rf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media(max-width:560px) { .rf-grid { grid-template-columns: 1fr; } }
+  .rf-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+  .rf-q { color: var(--text2); margin-bottom: 4px; }
+  .rf-a { color: var(--green); font-weight: 600; }
+
+  /* ── REVISION LAYERS ── */
+  .layer {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .layer-header {
+    background: var(--card2);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .layer-num {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .layer-title { font-weight: 600; font-size: 15px; }
+  .layer-body { padding: 24px; display: none; }
+  .layer.open .layer-body { display: block; }
+
+  /* ── ULTRA FAST SHEET ── */
+  .uf-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 12px 20px;
+    align-items: start;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(35,45,69,0.5);
+    font-size: 14px;
+  }
+  .uf-row:last-child { border-bottom: none; }
+  .uf-key { color: var(--accent); font-weight: 600; }
+  .uf-val { color: var(--text2); }
+
+  /* ── 30-SEC SHEET ── */
+  .sec30 {
+    background: linear-gradient(135deg, #0f1528, #111827);
+    border: 2px solid rgba(79,142,247,0.3);
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .sec30 h3 { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+  .sec30 ul { list-style: none; }
+  .sec30 li { padding: 8px 0; color: var(--text2); font-size: 14px; border-bottom: 1px solid rgba(35,45,69,0.4); display: flex; gap: 10px; }
+  .sec30 li::before { content: '→'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+  .sec30 li:last-child { border-bottom: none; }
+
+  /* ── LAST NIGHT ── */
+  .lastnight {
+    background: linear-gradient(135deg, rgba(245,200,66,0.05), rgba(255,107,53,0.05));
+    border: 2px solid rgba(245,200,66,0.3);
+    border-radius: 20px;
+    padding: 32px;
+  }
+  .lastnight h3 { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+  .ln-item { display: flex; gap: 12px; margin-bottom: 14px; align-items: flex-start; }
+  .ln-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); margin-top: 7px; flex-shrink: 0; }
+  .ln-text { color: var(--text2); font-size: 14px; }
+  .ln-text strong { color: var(--gold); }
+
+  /* ── FILL BLANKS ── */
+  .blank { display: inline-block; min-width: 80px; height: 2px; background: rgba(79,142,247,0.4); vertical-align: middle; margin: 0 4px; position: relative; }
+  .fill-item { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; font-size: 14px; color: var(--text2); }
+  .fill-ans { color: var(--green); font-weight: 600; font-size: 12px; margin-top: 6px; display: none; }
+  .fill-item:hover .fill-ans { display: block; }
+  .fill-hint { color: var(--text3); font-size: 11px; }
+
+  /* ── MISC ── */
+  .divider { height: 1px; background: var(--border); margin: 40px 0; }
+  .highlight { color: var(--gold); font-weight: 600; }
+  .note { font-size: 12px; color: var(--text3); font-style: italic; margin-top: 6px; }
+
+  /* ── BACK TO TOP ── */
+  .btt { position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; cursor: pointer; box-shadow: 0 4px 20px rgba(79,142,247,0.4); text-decoration: none; z-index: 99; transition: transform 0.2s; }
+  .btt:hover { transform: translateY(-3px); }
+
+  /* ── BADGE ROW ── */
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+
+  /* ── DEFINITION BOX ── */
+  .defbox {
+    background: rgba(79,142,247,0.05);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 14px;
+    color: var(--text2);
+  }
+  .defbox strong { color: var(--accent); display: block; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">SSC CGL · Economics · Chapter 2</div>
+  <h1>National Income</h1>
+  <p class="hero-sub">High-Retention Revision System — designed to survive 100 revisions and recall perfectly under exam pressure.</p>
+  <div class="hero-stats">
+    <div class="stat-pill"><span>8</span> Aggregates</div>
+    <div class="stat-pill"><span>3</span> Methods</div>
+    <div class="stat-pill"><span>5</span> Revision Layers</div>
+    <div class="stat-pill"><span>🔥</span> CGL Mains Priority</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="sticky-nav">
+  <div class="nav-inner">
+    <button class="nav-btn" onclick="scrollTo('bigpicture')">Big Picture</button>
+    <button class="nav-btn" onclick="scrollTo('palace')">Memory Palace</button>
+    <button class="nav-btn" onclick="scrollTo('notes')">Full Notes</button>
+    <button class="nav-btn" onclick="scrollTo('hooks')">Memory Hooks</button>
+    <button class="nav-btn" onclick="scrollTo('connections')">Connections</button>
+    <button class="nav-btn" onclick="scrollTo('traps')">⚠ Traps</button>
+    <button class="nav-btn" onclick="scrollTo('examiner')">Examiner's Qs</button>
+    <button class="nav-btn" onclick="scrollTo('recall')">Active Recall</button>
+    <button class="nav-btn" onclick="scrollTo('highyield')">High-Yield</button>
+    <button class="nav-btn" onclick="scrollTo('ultrafast')">Ultra-Fast</button>
+    <button class="nav-btn" onclick="scrollTo('sec30')">30-Second</button>
+    <button class="nav-btn" onclick="scrollTo('lastnight')">Last Night</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- BIG PICTURE -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="bigpicture">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(79,142,247,0.1);">🌍</div>
+    <div>
+      <div class="section-label">Section 01</div>
+      <div class="section-title">The Big Picture</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <p>This chapter is about <strong>how we measure a country's economic output</strong> — how much an economy produces, earns, and spends. It gives us the language economists and governments use to talk about growth, welfare, and policy.</p>
+    <p>At its core: <strong>GDP is the scoreboard of a nation's economy.</strong> But that scoreboard has 8 versions (aggregates) and 3 ways to calculate it — that's what this chapter is really about.</p>
+    <p>The exam will test: knowing <em>which aggregate is which</em>, the <em>difference between similar terms</em>, and the <em>formulas and adjustments</em> between them.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- MEMORY PALACE -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="palace">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(124,106,247,0.1);">🧠</div>
+    <div>
+      <div class="section-label">Section 02</div>
+      <div class="section-title">Chapter Memory Palace</div>
+    </div>
+  </div>
+
+  <div class="palace">
+    <p style="color:var(--text2);margin-bottom:24px;font-size:14px;"><strong style="color:var(--accent2);">The Location:</strong> Imagine a giant Indian factory that produces one laptop. Walk through it room by room — each room teaches you a concept.</p>
+
+    <div class="palace-stop">
+      <div class="palace-num">01</div>
+      <div class="palace-text"><strong>Factory Gate (GDP)</strong> — You stand at the gate. A sign reads: "Only FINAL goods counted here. No re-sold laptops. No half-built chips." This gate counts everything produced <em>inside this territory</em>. Developer? Simon Kuznets, 1934.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">02</div>
+      <div class="palace-num" style="display:none;"></div>
+      <div class="palace-text"><strong>The British Worker's Desk (GNP)</strong> — Inside you see a British engineer (foreigner) and an Indian engineer. The British engineer's output? <em>Subtract it from GNP</em> (he takes his money home). The Indian engineer in Tokyo? <em>Add his output to GNP</em> (he is a National). GNP = GDP + NFIA.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">03</div>
+      <div class="palace-text"><strong>The Old Laptop Room (Depreciation)</strong> — A room full of old laptops, slowly losing value. That loss in value = Depreciation. Remove it from GROSS to get NET. Remember: Gross → subtract depreciation → Net. NDP = GDP − Depreciation. NNP = GNP − Depreciation.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">04</div>
+      <div class="palace-text"><strong>The Biscuit Counter (Factor Cost vs Market Price)</strong> — At the exit, a man sells biscuits. The price tag = Market Price (includes GST). Tear off the GST sticker = Factor Cost. Market Price − Indirect Taxes + Subsidies = Factor Cost.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">05</div>
+      <div class="palace-text"><strong>The Balloon Stall (Real vs Nominal GDP)</strong> — A balloon seller outside. One balloon is fat (Nominal GDP — inflated with price rises). Stick a needle in it (GDP Deflator) → you get the real, smaller balloon (Real GDP). Real = Nominal ÷ GDP Deflator.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">06</div>
+      <div class="palace-text"><strong>The Chewing Gum Cart (Expenditure Method)</strong> — A cart selling CHIGAM. Each letter is one component of GDP expenditure: C·H·I·G·A·M → see Memory Hooks section!</div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">07</div>
+      <div class="palace-text"><strong>The Salary Counter (Income Method)</strong> — Wages, Rent, Interest, Profit — four pockets for four factors of production: Labour, Land, Capital, Entrepreneur.</div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">08</div>
+      <div class="palace-text"><strong>The Assembly Line (Value Added Method)</strong> — Wheat → Flour → Biscuits. Only count the VALUE ADDED at each stage (output − input). No double-counting. Formula: Output − Input = Value Added.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- COMPLETE NOTES -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="notes">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(52,211,153,0.1);">📋</div>
+    <div>
+      <div class="section-label">Section 03</div>
+      <div class="section-title">Complete Revision Notes</div>
+    </div>
+  </div>
+
+  <!-- THE 8 AGGREGATES -->
+  <div class="card">
+    <div class="card-title">📌 The 8 Aggregates — Master Table</div>
+    <p style="margin-bottom:14px;">There are <strong>4 base aggregates</strong> × <strong>2 price bases</strong> = <strong>8 total aggregates.</strong></p>
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Aggregate</th>
+          <th>Full Form</th>
+          <th>Key Feature</th>
+          <th>Priority</th>
+        </tr>
+        <tr><td class="hl">GDP</td><td>Gross Domestic Product</td><td>Within territory, all producers, GROSS (includes depreciation)</td><td><span class="fire-tag">🔥 Must Know</span></td></tr>
+        <tr><td class="hl">GNP</td><td>Gross National Product</td><td>By Nationals only, anywhere in world, GROSS</td><td><span class="fire-tag">🔥 Must Know</span></td></tr>
+        <tr><td class="hl">NDP</td><td>Net Domestic Product</td><td>Within territory, NET (GDP − Depreciation)</td><td><span class="fire-tag">🔥 Must Know</span></td></tr>
+        <tr><td class="hl">NNP</td><td>Net National Product</td><td>By Nationals, NET (GNP − Depreciation)</td><td><span class="fire-tag">🔥 Must Know</span></td></tr>
+        <tr><td colspan="4" style="color:var(--text3);font-size:12px;padding:10px 16px;">↑ Each of the above has TWO versions: at Market Price (MP) and at Factor Cost (FC) → gives 8 total.</td></tr>
+        <tr><td class="hl">@MP</td><td>At Market Price</td><td>Includes indirect taxes, excludes subsidies (what buyer pays)</td><td><span class="star-tag">⭐ Important</span></td></tr>
+        <tr><td class="hl">@FC</td><td>At Factor Cost</td><td>Excludes taxes, includes subsidies (what factors earn)</td><td><span class="star-tag">⭐ Important</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- GDP DEEP DIVE -->
+  <div class="card">
+    <div class="card-title">🔵 GDP — Deep Dive</div>
+    <div class="defbox">
+      <strong>GDP (Gross Domestic Product)</strong>
+      Total value of all <em>final</em> goods and services produced <em>within the territory</em> of a country in a financial year.
+    </div>
+    <div class="badge-row">
+      <span class="fire-tag">🔥 Developed by Simon Kuznets, 1934</span>
+      <span class="star-tag">⭐ Financial Year: Apr 1 – Mar 31</span>
+    </div>
+    <p style="margin-top:12px;"><strong>Why only FINAL goods?</strong> To avoid <strong>double counting</strong>. If we count wheat + flour + biscuits separately, we count wheat 3 times. Take only the final biscuit.</p>
+    <p><strong>Why not second-hand goods?</strong> They were already counted when first produced. Adding them again = double counting.</p>
+    <div class="formula">
+      GDP is measured at MARKET PRICE by most countries (including India)
+      <span>Calculated by: NSO (National Statistics Office) under MOSPI</span>
+      <span>Base Year currently used: 2011-12</span>
+    </div>
+  </div>
+
+  <!-- REAL vs NOMINAL -->
+  <div class="card">
+    <div class="card-title">🎈 Real GDP vs Nominal GDP</div>
+    <div class="grid2">
+      <div style="background:rgba(248,113,113,0.05);border:1px solid rgba(248,113,113,0.2);border-radius:10px;padding:16px;">
+        <div style="color:var(--red);font-weight:700;margin-bottom:8px;font-size:13px;">NOMINAL GDP</div>
+        <p style="color:var(--text2);font-size:14px;">Calculated at <strong>current year prices</strong>. Includes the effect of inflation. Looks bigger than it really is (like an inflated balloon).</p>
+      </div>
+      <div style="background:rgba(52,211,153,0.05);border:1px solid rgba(52,211,153,0.2);border-radius:10px;padding:16px;">
+        <div style="color:var(--green);font-weight:700;margin-bottom:8px;font-size:13px;">REAL GDP</div>
+        <p style="color:var(--text2);font-size:14px;">Calculated at <strong>constant base year prices</strong>. Inflation removed. Shows <em>actual</em> growth in output. True picture.</p>
+      </div>
+    </div>
+    <div class="formula" style="margin-top:14px;">
+      Real GDP = Nominal GDP ÷ GDP Deflator × 100
+      <span>GDP Deflator = (Nominal GDP / Real GDP) × 100 → measures inflation</span>
+      <span>Nominal GDP is ALWAYS ≥ Real GDP (because inflation is always ≥ 0 in normal economy)</span>
+    </div>
+    <div class="defbox" style="margin-top:12px;">
+      <strong>Money Illusion</strong> — Concept by <strong>Irving Fisher</strong>. Your salary went ₹20,000 → ₹30,000 (you feel richer!). But prices also rose — your REAL purchasing power may have fallen. You are under an illusion. This is Money Illusion.
+    </div>
+  </div>
+
+  <!-- GNP -->
+  <div class="card">
+    <div class="card-title">🟣 GNP — Gross National Product</div>
+    <div class="defbox">
+      <strong>GNP</strong> = Total value of final goods & services produced by the <em>nationals</em> of a country (wherever in the world they produce it).
+    </div>
+    <p>The key difference from GDP: <strong>WHO produces</strong>, not <strong>WHERE</strong>.</p>
+    <div class="formula">
+      GNP = GDP + NFIA
+      <span>NFIA = Net Factor Income from Abroad = Factor Income FROM Abroad − Factor Income TO Abroad</span>
+      <span>Factor Income FROM Abroad = Money Indians abroad send back to India</span>
+      <span>Factor Income TO Abroad = Money foreigners working in India send back to their countries</span>
+    </div>
+  </div>
+
+  <!-- NDP & NNP -->
+  <div class="card">
+    <div class="card-title">🟢 NDP & NNP — The Net Versions</div>
+    <p><strong>Going from Gross → Net:</strong> Subtract <strong>Depreciation</strong> (the loss in value of assets over time due to wear and tear).</p>
+    <div class="formula">
+      NDP = GDP − Depreciation
+      NNP = GNP − Depreciation
+      <span>Depreciation is also called "Consumption of Fixed Capital" in formal language</span>
+    </div>
+    <div class="defbox">
+      <strong>NNP at Factor Cost = National Income</strong> — This is often what economists mean when they say "National Income." It is the most important measure of a country's actual earnings.
+    </div>
+  </div>
+
+  <!-- FACTOR COST vs MARKET PRICE -->
+  <div class="card">
+    <div class="card-title">🟡 Market Price vs Factor Cost</div>
+    <div class="grid2">
+      <div>
+        <p><strong>Market Price:</strong> The price you actually pay in the market. Includes indirect taxes (GST, etc.). What the buyer pays.</p>
+        <p class="note">Example: Biscuit packet MRP ₹10 — includes ₹1.5 GST.</p>
+      </div>
+      <div>
+        <p><strong>Factor Cost:</strong> What the producers/factors of production actually receive. Excludes taxes, includes subsidies.</p>
+        <p class="note">Example: ₹10 − ₹1.5 tax = ₹8.5 factor cost</p>
+      </div>
+    </div>
+    <div class="formula" style="margin-top:14px;">
+      FC = MP − Indirect Taxes + Subsidies
+      OR: FC = MP − Net Indirect Taxes (NIT)
+      <span>NIT = Indirect Taxes − Subsidies</span>
+    </div>
+  </div>
+
+  <!-- 3 METHODS -->
+  <div class="card">
+    <div class="card-title">📐 3 Methods to Calculate GDP</div>
+    <div class="badge-row" style="margin-bottom:16px;">
+      <span class="fire-tag">🔥 Exam: How many methods? 3</span>
+      <span class="star-tag">⭐ Calculated by NSO (MOSPI)</span>
+    </div>
+
+    <p style="margin-bottom:16px;color:var(--text2);"><strong style="color:var(--text);">Method 1: Expenditure Method</strong></p>
+    <div class="chigam">
+      <h3>C H I G A M</h3>
+      <p>The magic word to remember the GDP expenditure formula</p>
+      <div class="decode">
+        <div class="letter"><span>C</span><small>Consumption</small></div>
+        <div class="letter"><span>H</span><small>H stands with…</small></div>
+        <div class="letter"><span>I</span><small>Investment</small></div>
+        <div class="letter"><span>G</span><small>Government Expenditure</small></div>
+        <div class="letter"><span>A</span><small>(filler)</small></div>
+        <div class="letter"><span>M</span><small>Net Exports (X−M)</small></div>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:var(--text3);">GDP = C + I + G + (X − M) where X = Exports, M = Imports<br>Remember: Ex-boys killed Import → Exports MINUS Imports</p>
+    </div>
+
+    <p style="margin-bottom:12px;color:var(--text2);"><strong style="color:var(--text);">Method 2: Income Method</strong></p>
+    <p style="color:var(--text2);font-size:14px;margin-bottom:10px;">Add all factor incomes: <strong>Wages + Rent + Interest + Profit</strong> (WRIP) corresponding to the four factors of production.</p>
+    <div class="table-wrap" style="margin-bottom:16px;">
+      <table>
+        <tr><th>Factor</th><th>Income Received</th></tr>
+        <tr><td>Labour</td><td>Wages / Compensation to Employees</td></tr>
+        <tr><td>Land</td><td>Rent</td></tr>
+        <tr><td>Capital</td><td>Interest</td></tr>
+        <tr><td>Entrepreneur</td><td>Profit</td></tr>
+      </table>
+    </div>
+    <p style="color:var(--text2);font-size:14px;">Also includes: <strong>Mixed Income</strong> (income that mixes multiple factors, e.g., self-employed who get both wages + profit from their own investment)</p>
+
+    <p style="margin-top:16px;margin-bottom:12px;color:var(--text2);"><strong style="color:var(--text);">Method 3: Value Added Method (Production Method)</strong></p>
+    <div class="formula">
+      GDP = Σ GVA (Gross Value Added at each stage of production)
+      Value Added = Output − Input (at each stage)
+      <span>India adopted GVA concept in 2015</span>
+      <span>Example: Farmer (₹50 wheat) → Flour Mill (₹100) → Biscuit Co. (₹200). GDP = 50+50+100 = 200, NOT 350!</span>
+    </div>
+    <p class="note">All three methods give the SAME GDP — just three different ways to look at it: spending, earning, or producing.</p>
+  </div>
+
+  <!-- PPP -->
+  <div class="card">
+    <div class="card-title">🌐 Purchasing Power Parity (PPP)</div>
+    <div class="defbox">
+      <strong>PPP</strong> — A method to compare GDPs of different countries by using a common basket of goods instead of exchange rates.
+    </div>
+    <p style="color:var(--text2);font-size:14px;margin-bottom:8px;">Problem with exchange rates: $4 salary in US ≠ ₹240 in India in real terms (India is cheaper). A common basket (biscuits, soap, clothes) shows true purchasing power.</p>
+    <div class="badge-row" style="margin-top:12px;">
+      <span class="fire-tag">🔥 GDP Ranking: USA → China → Germany → Japan → India (5th)</span>
+      <span class="star-tag">⭐ PPP Ranking: USA → China → India (3rd!)</span>
+    </div>
+    <p class="note" style="margin-top:8px;">India ranks higher on PPP because things are cheaper here — ₹30 lakh in India ≈ $1 crore in USA in purchasing power.</p>
+  </div>
+
+  <!-- PERSONAL INCOME -->
+  <div class="card">
+    <div class="card-title">💰 Personal Income & Disposable Income</div>
+    <div class="defbox">
+      <strong>Personal Income</strong> = Total income of individuals from ALL sources, BEFORE paying taxes.
+    </div>
+    <p style="color:var(--text2);font-size:14px;margin-bottom:10px;">Starting from National Income:</p>
+    <div class="formula">
+      Personal Income = National Income
+                        + Income RECEIVED but NOT EARNED (transfer payments, subsidies, pensions)
+                        − Income EARNED but NOT RECEIVED (undistributed corporate profits, etc.)
+    </div>
+    <div class="defbox" style="margin-top:14px;">
+      <strong>Personal Disposable Income</strong> = Personal Income − Direct Taxes
+      <br>This is the money actually LEFT IN YOUR HANDS to spend or save.
+    </div>
+    <p class="note">Salary ₹9,60,000/year − Tax ₹60,000 = Disposable Income ₹9,00,000</p>
+  </div>
+
+  <!-- EXTRA TERMS -->
+  <div class="card">
+    <div class="card-title">➕ Extra Terms (Good to Know)</div>
+    <div class="grid2">
+      <div>
+        <div class="defbox">
+          <strong>Green GDP</strong>
+          GDP − Cost of Environmental Damage. Accounts for pollution, ecological loss.
+        </div>
+      </div>
+      <div>
+        <div class="defbox">
+          <strong>Recessionary Gap</strong>
+          Potential GDP − Real GDP. How much more we COULD have produced vs what we DID.
+        </div>
+      </div>
+      <div>
+        <div class="defbox">
+          <strong>Per Capita Income</strong>
+          National Income ÷ Population. Average income per person.
+        </div>
+      </div>
+      <div>
+        <div class="defbox">
+          <strong>GVA (Gross Value Added)</strong>
+          GDP concept at sectoral level. India adopted in 2015. GDP = GVA + Taxes − Subsidies.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- MEMORY HOOKS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="hooks">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(245,200,66,0.1);">🎯</div>
+    <div>
+      <div class="section-label">Section 04</div>
+      <div class="section-title">Smart Memory Hooks</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 01 — GDP vs GNP (The British Engineer Story)</div>
+    <p>Imagine <span class="hook-key">two engineers in a Delhi factory</span>: one is Indian (Ram), one is British (James). <br>
+    <span class="hook-key">GDP</span> counts BOTH because they're both producing in Indian territory.<br>
+    <span class="hook-key">GNP</span> counts only RAM (Indian national). Not James — his income goes to Britain.<br>
+    BUT: If Ram's cousin Ravi works in Tokyo? GNP counts Ravi too. He's a NATIONAL.<br>
+    <em>Memory: G<strong>D</strong>P = <strong>D</strong>omicile (where you work). G<strong>N</strong>P = <strong>N</strong>ationality (who you are).</em></p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 02 — Gross vs Net (The Ageing Laptop)</div>
+    <p>You buy a brand new laptop for ₹50,000. That's <span class="hook-key">GROSS value</span>. Five years later, it's worth ₹15,000. The ₹35,000 it lost? That's <span class="hook-key">depreciation</span>. Take that away from gross → you get <span class="hook-key">NET value</span>.<br>
+    <em>GROSS is the new shiny thing. NET is after life has beaten it up a bit.</em></p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 03 — CHIGAM for Expenditure Method</div>
+    <p>Your favourite desi chewing gum brand: <span class="hook-key">CHIGAM</span>.<br>
+    <span class="hook-key">C</span>onsumption + <span class="hook-key">I</span>nvestment + <span class="hook-key">G</span>overnment spending + (e<span class="hook-key">X</span>ports − i<span class="hook-key">M</span>ports)<br>
+    And remember: <em>"The ex-boys KILLED the imports"</em> → Exports MINUS imports = Net Exports (X−M).</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 04 — Real vs Nominal (The Balloon)</div>
+    <p>Nominal GDP is a <span class="hook-key">balloon full of air (inflation)</span>. It looks big. Real GDP is after you <span class="hook-key">stick a pin (GDP Deflator)</span> in it — the air (inflation) escapes, and you see the TRUE SIZE of the economy.<br>
+    <em>GDP Deflator = the pin that pops inflation out of the balloon.</em></p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 05 — Market Price vs Factor Cost (The Biscuit Sticker)</div>
+    <p>Hold a biscuit packet. The <span class="hook-key">MRP on the packet = Market Price</span> (with tax sticker stuck on it).<br>
+    <span class="hook-key">Peel off the tax sticker</span> = Factor Cost. What the producers and workers actually earned.<br>
+    <em>Factor Cost = Market Price MINUS the government's cut (tax) PLUS any help they got (subsidy).</em></p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 06 — Value Added Method (The Biscuit Assembly Line)</div>
+    <p>Farmer → ₹50 wheat → Flour Mill makes ₹100 flour → Biscuit Co. sells for ₹200.<br>
+    If you add 50+100+200 = ₹350 ← WRONG (double counted).<br>
+    Add only value added: 50 + 50 + 100 = ₹200 ✓ OR just take the final output = ₹200.<br>
+    <em>Think of it as adding only the EXTRA SAUCE each chef adds, not the whole dish each time.</em></p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 07 — Money Illusion (Irving Fisher's Trap)</div>
+    <p>Your salary: ₹20,000 in 2019 → ₹30,000 in 2024. You feel <span class="hook-key">50% richer</span>. But a grocery bag that cost ₹500 now costs ₹900. In REAL terms, you're poorer. <em>You fell for the Money Illusion — the happiness of seeing bigger numbers without checking inflation.</em><br>
+    Irving Fisher named this. Connect: <span class="hook-key">Fisher also gave MV=PT</span> (Quantity Theory of Money).</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 08 — Personal Income: Received vs Earned</div>
+    <p><span class="hook-key">Received but NOT Earned</span> = Free money from government (subsidy, PM Kisan, unemployment allowance). You didn't produce anything. ADD these.<br>
+    <span class="hook-key">Earned but NOT Received</span> = Company made profit but didn't give you dividend yet. You earned it but haven't got it. SUBTRACT these.<br>
+    <em>Think of it as: only money that physically reaches you matters for Personal Income.</em></p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- CONNECTIONS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="connections">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(34,211,238,0.1);">🔗</div>
+    <div>
+      <div class="section-label">Section 05</div>
+      <div class="section-title">Concept Connections</div>
+    </div>
+  </div>
+
+  <div class="conn"><div class="conn-from">GDP</div><div class="conn-arrow">+</div><div class="conn-to">NFIA (Net Factor Income from Abroad)</div><div class="conn-arrow">=</div><div class="conn-from">GNP</div></div>
+  <div class="conn"><div class="conn-from">GDP</div><div class="conn-arrow">−</div><div class="conn-to">Depreciation</div><div class="conn-arrow">=</div><div class="conn-from">NDP</div></div>
+  <div class="conn"><div class="conn-from">GNP</div><div class="conn-arrow">−</div><div class="conn-to">Depreciation</div><div class="conn-arrow">=</div><div class="conn-from">NNP</div></div>
+  <div class="conn"><div class="conn-from">Any MP Aggregate</div><div class="conn-arrow">−</div><div class="conn-to">Net Indirect Taxes (Indirect Taxes − Subsidies)</div><div class="conn-arrow">=</div><div class="conn-from">Same FC Aggregate</div></div>
+  <div class="conn"><div class="conn-from">NNP at Factor Cost</div><div class="conn-arrow">=</div><div class="conn-to" style="color:var(--gold);">National Income</div></div>
+  <div class="conn"><div class="conn-from">Nominal GDP</div><div class="conn-arrow">÷</div><div class="conn-to">GDP Deflator</div><div class="conn-arrow">=</div><div class="conn-from">Real GDP</div></div>
+  <div class="conn"><div class="conn-from">Inflation rises</div><div class="conn-arrow">→</div><div class="conn-to">Nominal GDP rises faster than Real GDP → GDP Deflator > 100</div></div>
+  <div class="conn"><div class="conn-from">National Income</div><div class="conn-arrow">÷</div><div class="conn-to">Population</div><div class="conn-arrow">=</div><div class="conn-from">Per Capita Income</div></div>
+  <div class="conn"><div class="conn-from">Personal Income</div><div class="conn-arrow">−</div><div class="conn-to">Direct Taxes</div><div class="conn-arrow">=</div><div class="conn-from">Personal Disposable Income</div></div>
+  <div class="conn"><div class="conn-from">Potential GDP</div><div class="conn-arrow">−</div><div class="conn-to">Real GDP</div><div class="conn-arrow">=</div><div class="conn-from">Recessionary Gap</div></div>
+  <div class="conn"><div class="conn-from">GDP</div><div class="conn-arrow">−</div><div class="conn-to">Environmental Damage Cost</div><div class="conn-arrow">=</div><div class="conn-from">Green GDP</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- EXAM TRAPS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="traps">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(248,113,113,0.1);">⚠️</div>
+    <div>
+      <div class="section-label">Section 06</div>
+      <div class="section-title">⚠ Exam Traps</div>
+    </div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 01 — GDP vs GNP: Who Counts?</div>
+    <p>Students confuse <strong>territory (GDP)</strong> with <strong>nationality (GNP)</strong>. An American working in India? Counted in India's GDP, NOT in India's GNP. An Indian in Japan? In India's GNP, NOT in India's GDP. This is the #1 confusion tested.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 02 — Gross vs Net: Depreciation Direction</div>
+    <p>Students sometimes ADD depreciation to get net. It's always <strong>subtracted</strong>. Gross → subtract depreciation → Net. Never the other way.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 03 — Real vs Nominal: Which is Bigger?</div>
+    <p>Nominal GDP is <strong>always ≥ Real GDP</strong> in normal (inflationary) conditions. Nominal looks bigger because prices inflate it. Real removes inflation. Don't flip them.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 04 — Market Price vs Factor Cost: Tax Direction</div>
+    <p>To go from <strong>Market Price → Factor Cost</strong>: SUBTRACT indirect taxes, ADD subsidies.<br>
+    If asked "Factor Cost vs Market Price — which is higher?" → Market Price is higher (it includes taxes).</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 05 — National Income = NNP at FC (Not GDP!)</div>
+    <p>"National Income" in formal economics = <strong>NNP at Factor Cost</strong>. Not GDP. Not GNP. NNP at FC. Examiners love testing this exact definition.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 06 — Value Added Method: Double Counting</div>
+    <p>Wheat ₹50 + Flour ₹100 + Biscuit ₹200 = NOT ₹350. The correct answer is <strong>₹200</strong> (final output) or ₹50+50+100 = ₹200 (value added at each stage). Students add all outputs = wrong!</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 07 — Second-Hand Goods: Counted or Not?</div>
+    <p>Second-hand goods are <strong>NEVER counted in GDP</strong>. They were counted when first produced. Adding them again = double counting. If you resell your old phone for ₹10,000, that ₹10,000 does NOT add to GDP.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 08 — GDP Deflator Formula</div>
+    <p>GDP Deflator = (Nominal GDP / Real GDP) × 100 ← Many students flip Nominal and Real here.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 09 — PPP Rankings vs GDP Rankings (Different!)</div>
+    <p>GDP Rank: USA → China → Germany → Japan → <strong>India 5th</strong><br>
+    PPP Rank: USA → China → <strong>India 3rd</strong><br>
+    Confusing these in an exam will cost marks!</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 10 — Simon Kuznets vs Irving Fisher</div>
+    <p><strong>Simon Kuznets</strong> = Developed the concept of GDP (1934).<br>
+    <strong>Irving Fisher</strong> = Money Illusion + MV=PT (Quantity Theory of Money).<br>
+    Don't swap them!</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 11 — NFIA: Subtract or Add?</div>
+    <p>GNP = GDP + NFIA. But NFIA = Income FROM Abroad MINUS Income TO Abroad. If more income goes abroad (net outflow), NFIA is NEGATIVE → GNP < GDP. For most developing countries like India with remittances, NFIA is usually positive.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- EXAMINER'S QUESTIONS -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="examiner">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,107,53,0.1);">🎯</div>
+    <div>
+      <div class="section-label">Section 07</div>
+      <div class="section-title">Examiner's Favourite Questions</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔥 High-Probability Direct Questions</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Question Type</th><th>The Question</th><th>Answer</th></tr>
+        <tr><td><span class="fire-tag">🔥</span></td><td>GDP concept was developed by whom?</td><td class="hl">Simon Kuznets, 1934</td></tr>
+        <tr><td><span class="fire-tag">🔥</span></td><td>GDP is calculated by which body in India?</td><td class="hl">NSO under MOSPI</td></tr>
+        <tr><td><span class="fire-tag">🔥</span></td><td>Current base year for GDP in India?</td><td class="hl">2011-12</td></tr>
+        <tr><td><span class="fire-tag">🔥</span></td><td>National Income = ?</td><td class="hl">NNP at Factor Cost</td></tr>
+        <tr><td><span class="fire-tag">🔥</span></td><td>Number of ways to calculate GDP?</td><td class="hl">3 (Expenditure, Income, Value Added)</td></tr>
+        <tr><td><span class="fire-tag">🔥</span></td><td>India's GDP rank in world?</td><td class="hl">5th (USA, China, Germany, Japan, India)</td></tr>
+        <tr><td><span class="fire-tag">🔥</span></td><td>India's PPP rank in world?</td><td class="hl">3rd (USA, China, India)</td></tr>
+        <tr><td><span class="star-tag">⭐</span></td><td>GNP = GDP + ?</td><td class="hl">NFIA (Net Factor Income from Abroad)</td></tr>
+        <tr><td><span class="star-tag">⭐</span></td><td>Real GDP = Nominal GDP ÷ ?</td><td class="hl">GDP Deflator (×100)</td></tr>
+        <tr><td><span class="star-tag">⭐</span></td><td>Money Illusion concept by?</td><td class="hl">Irving Fisher</td></tr>
+        <tr><td><span class="star-tag">⭐</span></td><td>GVA concept adopted in India in?</td><td class="hl">2015</td></tr>
+        <tr><td><span class="star-tag">⭐</span></td><td>India's financial year?</td><td class="hl">April 1 to March 31</td></tr>
+        <tr><td><span class="plus-tag">➕</span></td><td>Green GDP = GDP − ?</td><td class="hl">Environmental Damage Cost</td></tr>
+        <tr><td><span class="plus-tag">➕</span></td><td>Recessionary Gap = ?</td><td class="hl">Potential GDP − Real GDP</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">🎯 Statement-Based (True/False) Questions</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Statement</th><th>T/F</th><th>Why</th></tr>
+        <tr><td>GDP includes second-hand goods</td><td style="color:var(--red);">FALSE</td><td>Double counting; already counted when first produced</td></tr>
+        <tr><td>Nominal GDP is always higher than Real GDP</td><td style="color:var(--green);">TRUE</td><td>Nominal includes inflation effect; Real strips it out</td></tr>
+        <tr><td>GNP counts production by foreigners in India</td><td style="color:var(--red);">FALSE</td><td>GNP counts NATIONALS only, wherever they produce</td></tr>
+        <tr><td>NNP at Factor Cost = National Income</td><td style="color:var(--green);">TRUE</td><td>Formal definition of National Income</td></tr>
+        <tr><td>GDP is calculated at Market Price in India</td><td style="color:var(--green);">TRUE</td><td>Most countries use market price; India follows</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- ACTIVE RECALL -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="recall">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(167,139,250,0.1);">🧩</div>
+    <div>
+      <div class="section-label">Section 08</div>
+      <div class="section-title">Active Recall Section</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">❓ Click to Reveal Answers</div>
+
+    <div class="q-card" onclick="this.classList.toggle('open')">
+      <div class="q-front">
+        <div class="q-text"><strong>Q01 →</strong> What is the difference between GDP and GNP?</div>
+        <div class="q-toggle">+</div>
+      </div>
+      <div class="q-answer">GDP = production within territory (all residents). GNP = production by nationals (wherever in the world). GNP = GDP + NFIA.</div>
+    </div>
+
+    <div class="q-card" onclick="this.classList.toggle('open')">
+      <div class="q-front">
+        <div class="q-text"><strong>Q02 →</strong> Why are intermediate goods excluded from GDP?</div>
+        <div class="q-toggle">+</div>
+      </div>
+      <div class="q-answer">To avoid double counting. Intermediate goods (e.g., flour used to make biscuits) are already included in the value of the final product. Counting them separately inflates GDP artificially.</div>
+    </div>
+
+    <div class="q-card" onclick="this.classList.toggle('open')">
+      <div class="q-front">
+        <div class="q-text"><strong>Q03 →</strong> Write the formula for Real GDP and explain what GDP Deflator is.</div>
+        <div class="q-toggle">+</div>
+      </div>
+      <div class="q-answer">Real GDP = Nominal GDP ÷ GDP Deflator × 100. GDP Deflator = (Nominal GDP / Real GDP) × 100. It measures the price level change between the current year and base year — essentially an inflation index that helps strip inflation out of nominal GDP.</div>
+    </div>
+
+    <div class="q-card" onclick="this.classList.toggle('open')">
+      <div class="q-front">
+        <div class="q-text"><strong>Q04 →</strong> What is NFIA? When is NFIA negative?</div>
+        <div class="q-toggle">+</div>
+      </div>
+      <div class="q-answer">NFIA = Net Factor Income from Abroad = Income received FROM abroad − Income sent TO abroad. NFIA is negative when a country's residents send more money out than they receive (e.g., heavy foreign investment paying back home). Then GNP < GDP.</div>
+    </div>
+
+    <div class="q-card" onclick="this.classList.toggle('open')">
+      <div class="q-front">
+        <div class="q-text"><strong>Q05 →</strong> What are the 3 methods to calculate GDP? Which formula do you use for the expenditure method?</div>
+        <div class="q-toggle">+</div>
+      </div>
+      <div class="q-answer">1. Expenditure Method: GDP = C + I + G + (X−M) [CHIGAM]. 2. Income Method: Sum of all factor incomes (Wages + Rent + Interest + Profit). 3. Value Added/Production Method: Sum of (Output − Input) at each production stage.</div>
+    </div>
+
+    <div class="q-card" onclick="this.classList.toggle('open')">
+      <div class="q-front">
+        <div class="q-text"><strong>Q06 →</strong> Who gave the concept of GDP? Who gave the concept of Money Illusion?</div>
+        <div class="q-toggle">+</div>
+      </div>
+      <div class="q-answer">GDP concept: Simon Kuznets (1934). Money Illusion: Irving Fisher. Fisher also gave MV=PT (Quantity Theory of Money).</div>
+    </div>
+
+    <div class="q-card" onclick="this.classList.toggle('open')">
+      <div class="q-front">
+        <div class="q-text"><strong>Q07 →</strong> How do you convert Market Price to Factor Cost?</div>
+        <div class="q-toggle">+</div>
+      </div>
+      <div class="q-answer">Factor Cost = Market Price − Indirect Taxes + Subsidies. Or: FC = MP − Net Indirect Taxes (NIT). NIT = Indirect Taxes − Subsidies.</div>
+    </div>
+
+    <div class="q-card" onclick="this.classList.toggle('open')">
+      <div class="q-front">
+        <div class="q-text"><strong>Q08 →</strong> What is Personal Disposable Income? How is it different from Personal Income?</div>
+        <div class="q-toggle">+</div>
+      </div>
+      <div class="q-answer">Personal Income = income from all sources BEFORE taxes. Personal Disposable Income = Personal Income − Direct Taxes. It's the money actually available to you to spend or save.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">📝 Fill in the Blanks (Hover to Reveal)</div>
+    <div class="fill-item">
+      GDP was developed by _____ in the year _____.
+      <div class="fill-ans">✓ Simon Kuznets, 1934</div>
+      <div class="fill-hint">Hover/tap to reveal</div>
+    </div>
+    <div class="fill-item">
+      GNP = GDP + _____
+      <div class="fill-ans">✓ NFIA (Net Factor Income from Abroad)</div>
+      <div class="fill-hint">Hover/tap to reveal</div>
+    </div>
+    <div class="fill-item">
+      NDP = GDP − _____
+      <div class="fill-ans">✓ Depreciation</div>
+      <div class="fill-hint">Hover/tap to reveal</div>
+    </div>
+    <div class="fill-item">
+      National Income (formally) = _____ at _____
+      <div class="fill-ans">✓ NNP at Factor Cost</div>
+      <div class="fill-hint">Hover/tap to reveal</div>
+    </div>
+    <div class="fill-item">
+      Real GDP = Nominal GDP ÷ _____ × 100
+      <div class="fill-ans">✓ GDP Deflator</div>
+      <div class="fill-hint">Hover/tap to reveal</div>
+    </div>
+    <div class="fill-item">
+      India's GDP rank in the world is _____ and PPP rank is _____.
+      <div class="fill-ans">✓ 5th (GDP) and 3rd (PPP)</div>
+      <div class="fill-hint">Hover/tap to reveal</div>
+    </div>
+    <div class="fill-item">
+      India adopted the GVA concept in _____.
+      <div class="fill-ans">✓ 2015</div>
+      <div class="fill-hint">Hover/tap to reveal</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">⚡ Rapid-Fire Revision</div>
+    <div class="rf-grid">
+      <div class="rf-item"><div class="rf-q">NSO stands for?</div><div class="rf-a">National Statistics Office</div></div>
+      <div class="rf-item"><div class="rf-q">MOSPI stands for?</div><div class="rf-a">Ministry of Statistics & Programme Implementation</div></div>
+      <div class="rf-item"><div class="rf-q">India's financial year?</div><div class="rf-a">April 1 – March 31</div></div>
+      <div class="rf-item"><div class="rf-q">Base year for India's GDP?</div><div class="rf-a">2011-12</div></div>
+      <div class="rf-item"><div class="rf-q">GDP Deflator formula?</div><div class="rf-a">(Nominal/Real) × 100</div></div>
+      <div class="rf-item"><div class="rf-q">NIT = ?</div><div class="rf-a">Indirect Taxes − Subsidies</div></div>
+      <div class="rf-item"><div class="rf-q">Green GDP = ?</div><div class="rf-a">GDP − Environmental Damage</div></div>
+      <div class="rf-item"><div class="rf-q">PPP = ?</div><div class="rf-a">Purchasing Power Parity</div></div>
+      <div class="rf-item"><div class="rf-q">Which is higher: GDP or GNP for India?</div><div class="rf-a">GNP (India has +ve NFIA from remittances)</div></div>
+      <div class="rf-item"><div class="rf-q">Personal Disposable Income = ?</div><div class="rf-a">Personal Income − Direct Taxes</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- HIGH YIELD REVISION -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="highyield">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,107,53,0.1);">📍</div>
+    <div>
+      <div class="section-label">Section 09</div>
+      <div class="section-title">High-Yield Revision Notes</div>
+    </div>
+  </div>
+
+  <div class="layer open">
+    <div class="layer-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="layer-num" style="background:rgba(79,142,247,0.2);color:var(--accent);">L2</div>
+      <div class="layer-title">High-Yield — All Must-Know Facts</div>
+    </div>
+    <div class="layer-body">
+      <div class="uf-row"><div class="uf-key">GDP by:</div><div class="uf-val">Simon Kuznets, 1934 | NSO under MOSPI | Base Year 2011-12</div></div>
+      <div class="uf-row"><div class="uf-key">8 Aggregates:</div><div class="uf-val">GDP, GNP, NDP, NNP × Market Price / Factor Cost = 8</div></div>
+      <div class="uf-row"><div class="uf-key">GNP formula:</div><div class="uf-val">GDP + NFIA</div></div>
+      <div class="uf-row"><div class="uf-key">Net Aggregates:</div><div class="uf-val">NDP = GDP − Dep. | NNP = GNP − Dep.</div></div>
+      <div class="uf-row"><div class="uf-key">FC from MP:</div><div class="uf-val">MP − Indirect Taxes + Subsidies = FC</div></div>
+      <div class="uf-row"><div class="uf-key">National Income:</div><div class="uf-val">= NNP at Factor Cost (official definition)</div></div>
+      <div class="uf-row"><div class="uf-key">Real GDP formula:</div><div class="uf-val">Nominal GDP ÷ GDP Deflator × 100</div></div>
+      <div class="uf-row"><div class="uf-key">3 Methods:</div><div class="uf-val">Expenditure (CHIGAM) | Income (WRIP) | Value Added (Output−Input)</div></div>
+      <div class="uf-row"><div class="uf-key">PPP Rank India:</div><div class="uf-val">3rd (USA → China → India)</div></div>
+      <div class="uf-row"><div class="uf-key">GDP Rank India:</div><div class="uf-val">5th (USA → China → Germany → Japan → India)</div></div>
+      <div class="uf-row"><div class="uf-key">Money Illusion:</div><div class="uf-val">Irving Fisher | Nominal salary rise looks good; real may be fall</div></div>
+      <div class="uf-row"><div class="uf-key">Disposable Income:</div><div class="uf-val">Personal Income − Direct Taxes</div></div>
+      <div class="uf-row"><div class="uf-key">GVA India:</div><div class="uf-val">Adopted 2015 | GDP = GVA + Taxes − Subsidies</div></div>
+      <div class="uf-row"><div class="uf-key">Financial Year:</div><div class="uf-val">April 1 – March 31</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- ULTRA FAST -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="ultrafast">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(34,211,238,0.1);">⚡</div>
+    <div>
+      <div class="section-label">Section 10</div>
+      <div class="section-title">Ultra-Fast Revision Sheet</div>
+    </div>
+  </div>
+
+  <div class="layer open">
+    <div class="layer-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="layer-num" style="background:rgba(34,211,238,0.2);color:var(--cyan);">L3</div>
+      <div class="layer-title">Ultra-Fast — 5 Minute Revision</div>
+    </div>
+    <div class="layer-body">
+      <div class="formula" style="font-size:13px;line-height:2;">
+        GDP → +NFIA → GNP
+        GDP → −Depreciation → NDP
+        GNP → −Depreciation → NNP
+        MP → −NIT → FC
+        NNP@FC = National Income
+        Real GDP = Nominal ÷ Deflator × 100
+        GDP = C + I + G + (X−M)  [CHIGAM]
+        Per Capita = NI ÷ Population
+        PDI = Personal Income − Taxes
+        Green GDP = GDP − Env. Damage
+        Recessionary Gap = Potential − Real GDP
+      </div>
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+        <div style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--fire);">Kuznets = GDP (1934)</div>
+        <div style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--fire);">Fisher = Money Illusion + MV=PT</div>
+        <div style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--fire);">NSO (MOSPI) calculates GDP</div>
+        <div style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--fire);">Base Year: 2011-12</div>
+        <div style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--fire);">India GDP: 5th | PPP: 3rd</div>
+        <div style="background:rgba(255,107,53,0.1);border:1px solid rgba(255,107,53,0.2);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--fire);">GVA concept: India 2015</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 30-SECOND SHEET -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="sec30">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(79,142,247,0.1);">⏱</div>
+    <div>
+      <div class="section-label">Section 11</div>
+      <div class="section-title">30-Second Revision Sheet</div>
+    </div>
+  </div>
+
+  <div class="sec30">
+    <h3>⏱ 30-Second Recall — Scan Before Exam</h3>
+    <ul>
+      <li>GDP = Final goods, within territory | GNP = By nationals, anywhere | NFIA connects them</li>
+      <li>Gross → subtract depreciation → Net</li>
+      <li>Market Price → subtract NIT → Factor Cost | NIT = Ind.Tax − Subsidy</li>
+      <li>National Income = NNP at FC</li>
+      <li>Real GDP = Nominal ÷ Deflator | Nominal always ≥ Real</li>
+      <li>GDP = C+I+G+(X−M) [CHIGAM] | Income = WRIP | Value Added = Output−Input</li>
+      <li>Kuznets (GDP 1934) ≠ Fisher (Money Illusion, MV=PT)</li>
+      <li>GDP Rank: India 5th | PPP Rank: India 3rd</li>
+      <li>NSO/MOSPI | Base Year 2011-12 | FY: Apr 1–Mar 31</li>
+      <li>PDI = Personal Income − Taxes | Green GDP = GDP − Env.Damage</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- LAST NIGHT SHEET -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="section" id="lastnight">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(245,200,66,0.1);">🌙</div>
+    <div>
+      <div class="section-label">Section 12</div>
+      <div class="section-title">Last-Night-Before-Exam Sheet</div>
+    </div>
+  </div>
+
+  <div class="lastnight">
+    <h3>🌙 Read This Tonight — Then Sleep</h3>
+
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>8 Aggregates</strong> = 4 bases (GDP/GNP/NDP/NNP) × 2 price types (MP/FC)</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>GDP vs GNP:</strong> Territory vs Nationality. GNP = GDP + NFIA.</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>Gross to Net:</strong> Always subtract depreciation. NDP = GDP − Dep. NNP = GNP − Dep.</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>National Income</strong> = NNP at Factor Cost (not GDP, not GNP — this exact phrase!)</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>Expenditure formula (CHIGAM):</strong> C + I + G + (X−M)</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>Nominal GDP</strong> (inflated) > <strong>Real GDP</strong> (true). Real = Nominal ÷ Deflator.</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>Person names:</strong> Kuznets = GDP (1934). Fisher = Money Illusion. Don't mix up!</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>India Rankings:</strong> GDP = 5th | PPP = 3rd (because India is cheaper to live in)</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>NSO under MOSPI</strong> calculates India's GDP. Base year = 2011-12.</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>Second-hand goods & intermediate goods</strong> — NEVER counted in GDP.</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>PDI</strong> = Personal Income − Taxes. <strong>Green GDP</strong> = GDP − Environmental damage.</div>
+    </div>
+    <div class="ln-item">
+      <div class="ln-dot"></div>
+      <div class="ln-text"><strong>GVA adopted by India:</strong> 2015. GDP = GVA + Net Taxes.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<a class="btt" href="#" title="Back to top">↑</a>
+
+<script>
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+// Update nav active state on scroll
+const sections = ['bigpicture','palace','notes','hooks','connections','traps','examiner','recall','highyield','ultrafast','sec30','lastnight'];
+const navBtns = document.querySelectorAll('.nav-btn');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) current = id;
+  });
+  navBtns.forEach((btn, i) => {
+    btn.classList.toggle('active', sections[i] === current);
+  });
+});
+</script>
+
+</body>
+</html>
