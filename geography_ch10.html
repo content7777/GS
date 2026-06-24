@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peninsular Plateau & Beyond — Field Notebook</title>
+<style>
+  :root{
+    --bg: #14110f;
+    --bg-raised: #1c1815;
+    --bg-card: #211c18;
+    --ink: #ece4d8;
+    --ink-dim: #b3a89a;
+    --ink-faint: #7d7468;
+    --rule: #3a332c;
+    --rule-soft: #2a2521;
+    --amber: #d68a3a;
+    --amber-soft: #f0b35e;
+    --rust: #c4583a;
+    --moss: #7a9b6e;
+    --slate: #6e8fa3;
+    --gold: #e0b04a;
+    --danger: #d4574a;
+    --serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+    --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 1200px 800px at 15% -10%, rgba(214,138,58,0.07), transparent 60%),
+      radial-gradient(ellipse 900px 700px at 100% 30%, rgba(110,143,163,0.05), transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ===== Topographic texture overlay ===== */
+  .topo-bg{
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.05;
+    background-image:
+      repeating-radial-gradient(circle at 20% 30%, transparent 0, transparent 38px, var(--ink) 39px, transparent 40px),
+      repeating-radial-gradient(circle at 80% 70%, transparent 0, transparent 52px, var(--ink) 53px, transparent 54px);
+  }
+
+  /* ===== Layout shell ===== */
+  .shell{position:relative; z-index:1; display:flex; min-height:100vh;}
+
+  /* ===== Sidebar / Compass Nav ===== */
+  .nav{
+    width:268px; flex-shrink:0;
+    background:var(--bg-raised);
+    border-right:1px solid var(--rule);
+    padding:28px 0 40px;
+    position:sticky; top:0; height:100vh; overflow-y:auto;
+  }
+  .nav::-webkit-scrollbar{width:6px;}
+  .nav::-webkit-scrollbar-thumb{background:var(--rule); border-radius:3px;}
+
+  .nav-brand{
+    padding:0 24px 22px;
+    border-bottom:1px solid var(--rule-soft);
+    margin-bottom:18px;
+  }
+  .nav-brand .mark{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.18em; color:var(--amber-soft);
+    text-transform:uppercase; display:block; margin-bottom:6px;
+  }
+  .nav-brand h1{
+    font-family:var(--serif); font-size:19px; font-weight:600; margin:0 0 4px; color:var(--ink);
+    line-height:1.25;
+  }
+  .nav-brand .sub{font-size:11.5px; color:var(--ink-faint); font-family:var(--mono);}
+
+  .nav-section{padding:0 14px; margin-bottom:4px;}
+  .nav-section-label{
+    font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--ink-faint); padding:14px 10px 6px;
+  }
+  .nav-link{
+    display:flex; align-items:center; gap:9px;
+    padding:8px 10px; border-radius:7px; color:var(--ink-dim); text-decoration:none;
+    font-size:13.5px; transition:background 0.15s, color 0.15s; cursor:pointer;
+    border-left:2px solid transparent;
+  }
+  .nav-link:hover{background:rgba(214,138,58,0.08); color:var(--ink);}
+  .nav-link.active{background:rgba(214,138,58,0.13); color:var(--amber-soft); border-left:2px solid var(--amber);}
+  .nav-link .dot{width:5px; height:5px; border-radius:50%; background:var(--ink-faint); flex-shrink:0;}
+  .nav-link.active .dot{background:var(--amber);}
+
+  /* ===== Main content ===== */
+  .main{flex:1; min-width:0; padding:48px clamp(20px,5vw,72px) 100px;}
+  .container{max-width:880px; margin:0 auto;}
+
+  .masthead{margin-bottom:48px;}
+  .masthead .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--amber-soft); margin-bottom:14px; display:flex; align-items:center; gap:10px;
+  }
+  .masthead .eyebrow::after{content:""; flex:1; height:1px; background:var(--rule);}
+  .masthead h1{
+    font-family:var(--serif); font-size:clamp(32px,5vw,46px); font-weight:600; margin:0 0 14px;
+    color:var(--ink); line-height:1.12; letter-spacing:-0.01em;
+  }
+  .masthead .deck{font-size:16px; color:var(--ink-dim); max-width:620px; margin-bottom:20px;}
+  .masthead .stats{display:flex; gap:22px; flex-wrap:wrap; font-family:var(--mono); font-size:11.5px; color:var(--ink-faint);}
+  .masthead .stats b{color:var(--amber-soft); font-weight:600;}
+
+  /* progress dial */
+  .progress-wrap{
+    display:flex; align-items:center; gap:14px; margin-top:22px; padding:14px 18px;
+    background:var(--bg-card); border:1px solid var(--rule-soft); border-radius:10px;
+  }
+  .progress-track{flex:1; height:6px; background:var(--rule-soft); border-radius:4px; overflow:hidden;}
+  .progress-fill{height:100%; background:linear-gradient(90deg, var(--amber), var(--gold)); width:0%; transition:width 0.4s ease;}
+  .progress-label{font-family:var(--mono); font-size:11px; color:var(--ink-faint); white-space:nowrap;}
+
+  /* ===== Section chrome ===== */
+  section.block{margin-bottom:64px; scroll-margin-top:24px;}
+  .block-head{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:22px;
+    border-bottom:1px solid var(--rule); padding-bottom:14px;
+  }
+  .block-head .num{font-family:var(--mono); font-size:13px; color:var(--ink-faint);}
+  .block-head h2{
+    font-family:var(--serif); font-size:26px; font-weight:600; margin:0; color:var(--ink);
+    display:flex; align-items:center; gap:10px;
+  }
+  .block-intro{color:var(--ink-dim); font-size:14.5px; margin-bottom:20px; max-width:680px;}
+
+  h3.sub-head{
+    font-family:var(--serif); font-size:18px; color:var(--amber-soft); margin:30px 0 12px;
+    font-weight:600; display:flex; align-items:center; gap:8px;
+  }
+  h4.micro-head{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--slate); margin:22px 0 10px; font-weight:600;
+  }
+
+  p{margin:0 0 12px; font-size:14.5px; color:var(--ink-dim);}
+  strong{color:var(--ink); font-weight:600;}
+
+  /* ===== Tag chips ===== */
+  .tag{
+    display:inline-flex; align-items:center; gap:4px; font-family:var(--mono); font-size:10.5px;
+    padding:2px 8px; border-radius:5px; font-weight:600; letter-spacing:0.02em; white-space:nowrap;
+  }
+  .tag.must{background:rgba(196,88,58,0.18); color:#e08a72;}
+  .tag.imp{background:rgba(224,176,74,0.16); color:var(--gold);}
+  .tag.good{background:rgba(122,155,110,0.16); color:#9fc190;}
+
+  /* ===== Cards ===== */
+  .card{
+    background:var(--bg-card); border:1px solid var(--rule-soft); border-radius:12px;
+    padding:18px 20px; margin-bottom:16px;
+  }
+  .card.amber-edge{border-left:3px solid var(--amber);}
+  .card.rust-edge{border-left:3px solid var(--rust);}
+  .card.moss-edge{border-left:3px solid var(--moss);}
+  .card.slate-edge{border-left:3px solid var(--slate);}
+
+  .fact-row{
+    display:flex; justify-content:space-between; gap:16px; padding:9px 0;
+    border-bottom:1px solid var(--rule-soft); font-size:13.8px;
+  }
+  .fact-row:last-child{border-bottom:none;}
+  .fact-row .k{color:var(--ink-dim);}
+  .fact-row .v{color:var(--amber-soft); font-family:var(--mono); font-weight:600; text-align:right;}
+
+  table{width:100%; border-collapse:collapse; margin:14px 0 20px; font-size:13.5px;}
+  th{
+    text-align:left; font-family:var(--mono); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink-faint); padding:8px 12px; border-bottom:1px solid var(--rule);
+  }
+  td{padding:9px 12px; border-bottom:1px solid var(--rule-soft); color:var(--ink-dim);}
+  tr:hover td{background:rgba(214,138,58,0.04);}
+  td.hl{color:var(--amber-soft); font-weight:600; font-family:var(--mono);}
+
+  ul.clean{margin:0 0 14px; padding-left:20px;}
+  ul.clean li{margin-bottom:7px; font-size:14.5px; color:var(--ink-dim);}
+  ul.clean li::marker{color:var(--amber);}
+
+  .pill-row{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 16px;}
+  .pill{
+    font-family:var(--mono); font-size:12px; padding:5px 12px; border-radius:20px;
+    background:var(--bg-raised); border:1px solid var(--rule-soft); color:var(--ink-dim);
+  }
+  .pill.on{border-color:var(--amber); color:var(--amber-soft);}
+
+  /* ===== Memory palace narrative box ===== */
+  .palace{
+    background:linear-gradient(135deg, rgba(214,138,58,0.06), rgba(110,143,163,0.04));
+    border:1px solid rgba(214,138,58,0.25); border-radius:14px; padding:24px 26px; margin:18px 0 26px;
+    position:relative; overflow:hidden;
+  }
+  .palace::before{
+    content:"🗺"; position:absolute; top:-10px; right:14px; font-size:90px; opacity:0.05;
+  }
+  .palace h4{
+    font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--amber-soft); margin:0 0 12px;
+  }
+  .palace p{color:var(--ink); font-size:15px; line-height:1.75; font-family:var(--serif); margin-bottom:10px;}
+  .palace .station{color:var(--gold); font-weight:600; font-style:italic;}
+
+  /* ===== Exam trap callout ===== */
+  .trap{
+    background:rgba(196,88,58,0.08); border:1px solid rgba(196,88,58,0.3); border-radius:10px;
+    padding:14px 18px; margin-bottom:14px;
+  }
+  .trap .trap-title{
+    font-family:var(--mono); font-size:11.5px; color:var(--rust); font-weight:700;
+    text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px; display:flex; gap:6px; align-items:center;
+  }
+  .trap p{margin:0; font-size:13.8px; color:var(--ink-dim);}
+  .trap .vs{color:var(--ink); font-weight:600;}
+
+  /* ===== Examiner Qs ===== */
+  .examq{
+    background:var(--bg-card); border:1px solid var(--rule-soft); border-left:3px solid var(--slate);
+    border-radius:0 10px 10px 0; padding:13px 18px; margin-bottom:10px; font-size:13.8px; color:var(--ink-dim);
+  }
+  .examq .qtype{font-family:var(--mono); font-size:10px; color:var(--slate); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:5px;}
+
+  /* ===== Flashcards (active recall) ===== */
+  .flash-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; margin:16px 0 24px;}
+  .flash{
+    background:var(--bg-card); border:1px solid var(--rule-soft); border-radius:10px;
+    padding:16px 18px; cursor:pointer; min-height:90px; position:relative; transition:border-color 0.2s, transform 0.15s;
+    user-select:none;
+  }
+  .flash:hover{border-color:var(--amber); transform:translateY(-1px);}
+  .flash .q{font-size:13.5px; color:var(--ink); font-weight:500;}
+  .flash .a{
+    font-size:13.5px; color:var(--amber-soft); margin-top:8px; padding-top:8px;
+    border-top:1px dashed var(--rule); display:none; font-family:var(--mono);
+  }
+  .flash.revealed .a{display:block;}
+  .flash .flip-hint{
+    position:absolute; top:14px; right:14px; font-family:var(--mono); font-size:9.5px; color:var(--ink-faint);
+  }
+  .flash.revealed .flip-hint{color:var(--moss);}
+
+  /* fill in blank */
+  .blank{
+    border-bottom:2px dotted var(--amber); color:transparent; padding:0 2px; cursor:pointer;
+    font-family:var(--mono); font-weight:600; transition:color 0.15s;
+  }
+  .blank.shown{color:var(--amber-soft); border-bottom-style:solid;}
+
+  /* ===== Speed sheets ===== */
+  .speed-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0;}
+  .speed-card{
+    background:var(--bg-raised); border:1px solid var(--rule-soft); border-radius:8px; padding:10px 12px;
+  }
+  .speed-card .t{font-family:var(--mono); font-size:10px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.05em;}
+  .speed-card .v{font-size:13.5px; color:var(--ink); font-weight:600; margin-top:3px;}
+
+  .lastnight{
+    background:linear-gradient(160deg, rgba(196,88,58,0.1), rgba(20,17,15,0));
+    border:1px solid rgba(214,138,58,0.3); border-radius:14px; padding:26px 28px;
+  }
+  .lastnight h4{
+    font-family:var(--mono); color:var(--rust); font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    margin:18px 0 8px;
+  }
+  .lastnight ul.clean li{font-size:14px;}
+
+  /* divider */
+  hr.div{border:none; border-top:1px dashed var(--rule); margin:30px 0;}
+
+  /* badges in headings */
+  .icon{font-size:18px;}
+
+  /* mobile */
+  @media (max-width: 880px){
+    .nav{position:fixed; left:-280px; transition:left 0.25s ease; z-index:50; box-shadow:8px 0 30px rgba(0,0,0,0.5);}
+    .nav.open{left:0;}
+    .main{padding:24px 18px 90px;}
+    .nav-toggle{
+      position:fixed; top:16px; left:16px; z-index:60; background:var(--amber); color:#1a1410;
+      border:none; border-radius:8px; width:42px; height:42px; font-size:18px; cursor:pointer;
+      box-shadow:0 4px 14px rgba(0,0,0,0.4);
+    }
+    .nav-scrim{position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:45; display:none;}
+    .nav-scrim.show{display:block;}
+  }
+  @media (min-width: 881px){.nav-toggle, .nav-scrim{display:none;}}
+
+  ::-webkit-scrollbar{width:9px; height:9px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--rule); border-radius:5px;}
+
+  a{color:var(--amber-soft);}
+
+  .back-top{
+    position:fixed; bottom:24px; right:24px; width:44px; height:44px; border-radius:50%;
+    background:var(--amber); color:#1a1410; display:flex; align-items:center; justify-content:center;
+    font-size:18px; box-shadow:0 6px 18px rgba(0,0,0,0.45); cursor:pointer; opacity:0; pointer-events:none;
+    transition:opacity 0.25s; z-index:40; border:none;
+  }
+  .back-top.show{opacity:1; pointer-events:auto;}
+</style>
+</head>
+<body>
+
+<div class="topo-bg"></div>
+
+<button class="nav-toggle" id="navToggle">☰</button>
+<div class="nav-scrim" id="navScrim"></div>
+
+<div class="shell">
+  <nav class="nav" id="sideNav">
+    <div class="nav-brand">
+      <span class="mark">Field Notebook — Geography</span>
+      <h1>Peninsular Plateau &amp; the Rest of India</h1>
+      <span class="sub">SSC CGL · Indian Physiography Pt. 2</span>
+    </div>
+    <div id="navLinks"></div>
+  </nav>
+
+  <main class="main">
+    <div class="container" id="content">
+      <header class="masthead">
+        <div class="eyebrow">Chapter 2 of 3 · Indian Physiography</div>
+        <h1>Peninsular Plateau, Plains, Coasts &amp; Islands</h1>
+        <p class="deck">Everything south of the Himalayas, mapped, hooked, and trap-proofed for the exam hall. Yesterday you climbed the mountains. Today you walk down onto the oldest, hardest, flattest rock in India — and out to its edges: the plains, the coasts, the desert, the islands.</p>
+        <div class="stats">
+          <span><b>5</b> physiographic divisions covered</span>
+          <span><b>13</b> major ports</span>
+          <span><b>40+</b> named peaks/hills to fix</span>
+          <span><b>5</b> revision layers below</span>
+        </div>
+        <div class="progress-wrap">
+          <span class="progress-label" id="progLabel">Reading progress</span>
+          <div class="progress-track"><div class="progress-fill" id="progFill"></div></div>
+        </div>
+      </header>
+
+      <section class="block" id="big-picture">
+        <div class="block-head"><span class="num">01</span><h2><span class="icon">🧭</span> The Big Picture</h2></div>
+        <p>India has <strong>6 physiographic divisions</strong>. You already conquered the Himalayas (the young, folded, tall one). Everything in this chapter is what's left, and it all shares one trait the Himalayas does not have: <strong>it is old</strong>. The Peninsular Plateau is a chunk of the ancient <strong>Gondwana landmass</strong> — it never collided with anything, it never folded. It just cracked, drifted, and got worn down over hundreds of millions of years.</p>
+        <p>Think of it as the difference between a fresh scar (Himalaya — sharp, jagged, still rising) and an old, smoothed-over one (Peninsular block — rounded hills, broad valleys, no real volcanoes left, just the dried evidence of ancient ones).</p>
+        <p>One river is the spine of this entire chapter: the <strong>Narmada</strong>. It splits the Peninsular Plateau into two unequal halves —</p>
+        <table>
+          <tr><th>North of Narmada</th><th>South of Narmada</th></tr>
+          <tr><td class="hl">Central Highland</td><td class="hl">Deccan Plateau</td></tr>
+          <tr><td>Bounded by Vindhya (N), Satpura (S), Aravalli (NW)</td><td>Triangular landmass, tilted East, Satpura is its northern wall</td></tr>
+        </table>
+        <p>From there the lecture fans out into 5 more pieces of geography that examiners love precisely <em>because</em> they sound similar to each other: Northern Plains (Bhabar→Terai→Khadar/Bhangar), Coastal Plains (Western vs Eastern), 13 Ports, the Thar Desert, and the Island groups (Lakshadweep vs Andaman &amp; Nicobar). Master the shape of each, and the names stop being random — they become addresses on a map you already carry in your head.</p>
+      </section>
+
+      <section class="block" id="memory-palace">
+        <div class="block-head"><span class="num">02</span><h2><span class="icon">🏛</span> Chapter Memory Palace</h2></div>
+        <p class="block-intro">Walk this journey in your head before the exam. One continuous trip, south to east, touching every major fact in order.</p>
+
+        <div class="palace">
+          <h4>The Journey — "South from the Mountains, Out to the Sea"</h4>
+          <p>You start standing on the <span class="station">Narmada River</span>, the spine that splits your map in two. Look north: the <span class="station">Central Highland</span> rises — a wide table in the west that narrows as you walk east, capped by two old <strong>block mountains</strong> standing like fenceposts: <strong>Vindhya</strong> (north wall, peak <em>Sadbhavana</em>, a modest 752 m) and <strong>Satpura</strong> (south wall, peak <em>Dhoopgarh</em>, 1350 m, sitting on Mahadev Hills next to the hill-station Pachmarhi — "Queen of Satpura"). Between these two fenceposts the Narmada flows in the rift valley (the <em>graben</em>) they left behind when the land between them sank.</p>
+          <p>Walk west along the Highland and you cross three sister-plateaus laid out like dominoes: <strong>Mewar/Marwar → Malwa → Bundelkhand → Baghelkhand → Chota Nagpur</strong>. Malwa is black with old lava (basaltic, very fluid — like Hawaii's shield volcanoes). The Chambal, Betwa, Sind and Ken rivers spill out of this lava table. At the very western fence stands the <strong>Aravalli</strong> — ancient, residual, fold mountains 600 million years old, running all the way to Delhi (Raisina Hill, where Rashtrapati Bhavan sits, is its last gasp). Its highest point, <strong>Guru Shikhar (1722 m)</strong> on Mt Abu, is the tallest thing you'll see anywhere in this peninsula chapter outside the Himalaya.</p>
+          <p>Now turn around and cross the Narmada south, onto the great <span class="station">Deccan Plateau</span> — a triangle tilted like a tabletop propped up in the west, sloping down to the east. That tilt is the single fact that explains almost everything else in this chapter: rivers run east, the Eastern coast gets wide and many-rivered, the Eastern Ghats get cut into pieces.</p>
+          <p>Walk along the triangle's western edge: this is the <strong>Western Ghats</strong> — unbroken, like a solid city wall, climbing higher as you go south (Kalsubai in Maharashtra → Nilgiris, where it crashes head-on into the Eastern Ghats at the meeting point near Ooty → Anaimudi (2695 m, the tallest peak south of the Himalaya) on the Anamalai Hills → the southernmost Cardamom Hills). Cross at <strong>Bor Ghat</strong> (Mumbai–Pune) or <strong>Thal Ghat</strong> (Mumbai–Nashik) or <strong>Palghat</strong> (Anamalai–Nilgiri gap).</p>
+          <p>Walk back along the eastern edge: the <strong>Eastern Ghats</strong> — broken into separate hill-clusters because Deccan's eastward rivers keep slicing through it. Chant the chain north to south like a nonsense sentence: <em>"Nalla Venupal could not go so he grew five heads"</em> → Nallamala → Venukonda → Palakonda → Nagari → Javadi → Shabar → Panchamalai → Sirumalai → Palani → Varushnath. Its odd-one-out peak, <strong>Mahendragiri (1501 m, Odisha)</strong>, is actually shorter than the lesser-known Jindagada/Armakonda — remember: if the exam offers both, tick Jindagada; if only Mahendragiri is on offer, tick that.</p>
+          <p>Walk east off the triangle's tip: you reach <strong>Chota Nagpur Plateau</strong> — nicknamed the "Ruhr of India" for its minerals (Ruhr being Germany's mining province). Its peak <strong>Parasnath (1365 m)</strong> is named after the 23rd Jain Tirthankara. Damodar river runs through its rift valley; Jadugoda mines nearby glow with uranium. Push further east and the land vanishes into the <strong>Malda Gap</strong>, resurfacing as the hills of Meghalaya — Garo, Khasi, Jaintia, Mikir (Karbi Anglong), Rengma — these look like they belong to the Himalaya next door, but they are peninsular rock, not Himalayan.</p>
+          <p>Step off the plateau entirely now and you land on the <span class="station">plains</span> at its northern foot — Bhabar (boulders, narrow, 8–16 km, river vanishes underground) blending into Terai (marshy, wide, 15–30 km, river reappears, national parks like Dudhwa and Valmiki) blending into the alluvial floodplain split between fresh <strong>Khadar</strong> and old <strong>Bhangar</strong>.</p>
+          <p>Walk the coastline last. On the west: a narrow, dumbbell-shaped, <em>sinking</em> (retreating) coast, poor for ports because there's little sediment — Kutch/Kathiawar → Konkan → Kannada → Malabar. On the east: a wide, <em>rising</em> (emerging) coast, built fat by sediment from all those eastward Deccan rivers — Northern Circars → Coromandel, with Utkal Plain (Odisha) and Bagga Coast (West Bengal) further north. Dot 13 major ports along this coastline like lighthouses, ending the walk at the islands scattered in the two seas — Lakshadweep (coral, Arabian Sea) and Andaman &amp; Nicobar (submerged mountain-tops, Bay of Bengal, an extension of Myanmar's Arakan Yoma range).</p>
+        </div>
+      </section>
+
+      <!-- CONTENT_INJECT -->
+    </div>
+  </main>
+</div>
+
+<button class="back-top" id="backTop">↑</button>
+
+<script>
+// Nav toggle for mobile
+const navToggle = document.getElementById('navToggle');
+const sideNav = document.getElementById('sideNav');
+const navScrim = document.getElementById('navScrim');
+navToggle?.addEventListener('click', ()=>{ sideNav.classList.toggle('open'); navScrim.classList.toggle('show'); });
+navScrim?.addEventListener('click', ()=>{ sideNav.classList.remove('open'); navScrim.classList.remove('show'); });
+
+// Build nav from sections
+const navSections = [
+  {label:"Orientation", links:[["big-picture","The Big Picture"],["memory-palace","Memory Palace"]]},
+  {label:"Complete Notes", links:[
+    ["central-highland","Central Highland"],
+    ["deccan-plateau","Deccan Plateau"],
+    ["ghats","Western & Eastern Ghats"],
+    ["northern-plains","Northern Plains"],
+    ["coastal-plains","Coastal Plains"],
+    ["ports","Ports of India"],
+    ["desert","The Desert"],
+    ["islands","Island Groups"],
+  ]},
+  {label:"Memory & Links", links:[["hooks","Smart Memory Hooks"],["connections","Concept Connections"]]},
+  {label:"Exam Prep", links:[["traps","Exam Traps ⚠"],["examiner","Examiner's Favourites"],["recall","Active Recall"]]},
+  {label:"Revision Layers", links:[
+    ["high-yield","High-Yield Sheet"],
+    ["ultra-fast","Ultra-Fast Sheet"],
+    ["thirty-sec","30-Second Sheet"],
+    ["last-night","Last Night Before Exam"],
+  ]},
+];
+const navLinksEl = document.getElementById('navLinks');
+navSections.forEach(sec=>{
+  const lab = document.createElement('div');
+  lab.className='nav-section-label';
+  lab.textContent = sec.label;
+  navLinksEl.appendChild(lab);
+  const wrap = document.createElement('div');
+  wrap.className='nav-section';
+  sec.links.forEach(([id,text])=>{
+    const a = document.createElement('a');
+    a.className='nav-link'; a.href='#'+id;
+    a.innerHTML = `<span class="dot"></span>${text}`;
+    a.addEventListener('click', ()=>{ sideNav.classList.remove('open'); navScrim.classList.remove('show'); });
+    wrap.appendChild(a);
+  });
+  navLinksEl.appendChild(wrap);
+});
+
+// scrollspy
+const allLinks = [...document.querySelectorAll('.nav-link')];
+const sectionsEls = allLinks.map(l=>document.querySelector(l.getAttribute('href')));
+function onScroll(){
+  let current = sectionsEls[0];
+  sectionsEls.forEach(s=>{ if(s && s.getBoundingClientRect().top < 140) current = s; });
+  allLinks.forEach(l=> l.classList.toggle('active', current && l.getAttribute('href')==='#'+current.id));
+  document.getElementById('backTop').classList.toggle('show', window.scrollY > 600);
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+document.getElementById('backTop').addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+// Flashcard reveal
+document.addEventListener('click', e=>{
+  const card = e.target.closest('.flash');
+  if(card) card.classList.toggle('revealed');
+  const blank = e.target.closest('.blank');
+  if(blank) blank.classList.toggle('shown');
+});
+</script>
+</body>
+</html>

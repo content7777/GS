@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 Earth & Geography | FRB 2.0 Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #0a0b0f;
+    --bg-1: #111318;
+    --bg-2: #181b22;
+    --bg-3: #1e2230;
+    --border: #252a38;
+    --border-glow: #2e3550;
+    --text-1: #e8eaf0;
+    --text-2: #9aa0b8;
+    --text-3: #5c6278;
+    --accent-gold: #f5c842;
+    --accent-teal: #38e8c8;
+    --accent-red: #ff5c6a;
+    --accent-purple: #a78bfa;
+    --accent-blue: #60a5fa;
+    --accent-orange: #fb923c;
+    --fire: #ff6b35;
+    --star: #fbbf24;
+    --plus: #34d399;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-0);
+    color: var(--text-1);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg-1); }
+  ::-webkit-scrollbar-thumb { background: var(--border-glow); border-radius: 3px; }
+
+  /* ── TOP NAV ── */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,11,15,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .topbar-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-teal);
+    letter-spacing: 0.08em;
+  }
+  .topbar-links {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .topbar-links a {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    text-decoration: none;
+    transition: all 0.2s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .topbar-links a:hover {
+    border-color: var(--accent-teal);
+    color: var(--accent-teal);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 72px 24px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 400px;
+    background: radial-gradient(ellipse at center, rgba(56,232,200,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent-teal);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    background: linear-gradient(135deg, #e8eaf0 30%, #38e8c8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+  }
+  .hero-sub {
+    color: var(--text-2);
+    font-size: 15px;
+    max-width: 500px;
+    margin: 0 auto 32px;
+  }
+  .hero-tags {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 4px;
+    border: 1px solid;
+  }
+  .tag-gold { border-color: var(--accent-gold); color: var(--accent-gold); }
+  .tag-teal { border-color: var(--accent-teal); color: var(--accent-teal); }
+  .tag-red { border-color: var(--accent-red); color: var(--accent-red); }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 960px; margin: 0 auto; padding: 0 24px 120px; }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom: 48px;
+    scroll-margin-top: 70px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon {
+    font-size: 20px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-1);
+  }
+  .section-badge {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--bg-3);
+    color: var(--text-3);
+    border: 1px solid var(--border);
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border-glow); }
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-teal);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  @media (max-width: 640px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ── FACT ROW ── */
+  .fact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .fact-row:last-child { border-bottom: none; }
+  .fact-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent-gold);
+    min-width: 180px;
+    flex-shrink: 0;
+  }
+  .fact-val { color: var(--text-1); }
+
+  /* ── BADGE TAGS ── */
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+  .badge-fire { background: rgba(255,107,53,0.15); color: var(--fire); border: 1px solid rgba(255,107,53,0.3); }
+  .badge-star { background: rgba(251,191,36,0.12); color: var(--star); border: 1px solid rgba(251,191,36,0.3); }
+  .badge-plus { background: rgba(52,211,153,0.1); color: var(--plus); border: 1px solid rgba(52,211,153,0.25); }
+
+  /* ── CALLOUT ── */
+  .callout {
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    border-left: 3px solid;
+  }
+  .callout-trap {
+    background: rgba(255,92,106,0.07);
+    border-color: var(--accent-red);
+    color: #ffb3b9;
+  }
+  .callout-hook {
+    background: rgba(167,139,250,0.07);
+    border-color: var(--accent-purple);
+    color: #d4bbff;
+  }
+  .callout-tip {
+    background: rgba(56,232,200,0.06);
+    border-color: var(--accent-teal);
+    color: #9df5e5;
+  }
+  .callout-exam {
+    background: rgba(245,200,66,0.07);
+    border-color: var(--accent-gold);
+    color: #f7dc7a;
+  }
+  .callout-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 6px;
+    opacity: 0.8;
+  }
+
+  /* ── MEMORY PALACE ── */
+  .palace-stop {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .palace-stop:last-child { border-bottom: none; }
+  .palace-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-teal), var(--accent-purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0a0b0f;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .palace-content strong { color: var(--accent-teal); }
+  .palace-content { font-size: 14px; }
+
+  /* ── QUIZ ── */
+  .quiz-item {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .quiz-item:hover { border-color: var(--accent-teal); }
+  .quiz-q {
+    font-size: 14px;
+    color: var(--text-1);
+    margin-bottom: 0;
+  }
+  .quiz-a {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-glow);
+    color: var(--accent-teal);
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .quiz-a.revealed { display: block; }
+  .quiz-toggle {
+    float: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    margin-left: 8px;
+  }
+
+  /* ── REVISION LAYERS ── */
+  .layer-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .layer-tab {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    color: var(--text-3);
+    background: var(--bg-1);
+    transition: all 0.2s;
+  }
+  .layer-tab.active {
+    background: var(--accent-teal);
+    color: #0a0b0f;
+    border-color: var(--accent-teal);
+    font-weight: 700;
+  }
+  .layer-content { display: none; }
+  .layer-content.active { display: block; }
+
+  /* ── TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  th {
+    background: var(--bg-3);
+    color: var(--accent-teal);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 2px solid var(--border-glow);
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-1);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* ── HIGHLIGHT ── */
+  .hl-gold { color: var(--accent-gold); font-weight: 600; }
+  .hl-teal { color: var(--accent-teal); font-weight: 600; }
+  .hl-red { color: var(--accent-red); font-weight: 600; }
+  .hl-purple { color: var(--accent-purple); font-weight: 600; }
+  .hl-orange { color: var(--accent-orange); font-weight: 600; }
+
+  /* ── FLASH CARD ── */
+  .flash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media(max-width:600px) { .flash-grid { grid-template-columns: 1fr; } }
+  .flash-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 13px;
+  }
+  .flash-front {
+    color: var(--text-2);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .flash-back {
+    color: var(--text-1);
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  /* ── PROCESS CHAIN ── */
+  .chain {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 12px 0;
+    font-size: 14px;
+  }
+  .chain-node {
+    background: var(--bg-3);
+    border: 1px solid var(--border-glow);
+    border-radius: 6px;
+    padding: 6px 12px;
+    color: var(--text-1);
+  }
+  .chain-arrow { color: var(--accent-teal); font-size: 18px; }
+
+  /* ── LAST NIGHT SHEET ── */
+  .last-night {
+    background: linear-gradient(135deg, rgba(56,232,200,0.05), rgba(167,139,250,0.05));
+    border: 1px solid var(--border-glow);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .last-night h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent-gold);
+    margin-bottom: 16px;
+    letter-spacing: 0.1em;
+  }
+  .bullet-list {
+    list-style: none;
+    padding: 0;
+  }
+  .bullet-list li {
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+    font-size: 14px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent-teal);
+    font-weight: 700;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-glow), transparent);
+    margin: 40px 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--text-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes pulse-border {
+    0%,100% { border-color: var(--border); }
+    50% { border-color: var(--accent-teal); }
+  }
+  .pulse { animation: pulse-border 2s ease-in-out infinite; }
+
+  .big-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent-teal);
+    line-height: 1;
+  }
+  .big-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat-card {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="topbar">
+  <span class="topbar-brand">🌍 FRB 2.0 · GEOGRAPHY</span>
+  <div class="topbar-links">
+    <a href="#palace">Memory Palace</a>
+    <a href="#notes">Full Notes</a>
+    <a href="#traps">Exam Traps</a>
+    <a href="#quiz">Self-Test</a>
+    <a href="#layers">Fast Revision</a>
+    <a href="#lastnight">Last Night</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">FRB 2.0 · Lecture 2 · Geography</div>
+  <h1>The Earth —<br>Shape, Motion & Sky</h1>
+  <p class="hero-sub">High-retention revision system for SSC CGL. Every fact. Every trap. Every trick. Unforgettable.</p>
+  <div class="hero-tags">
+    <span class="tag tag-gold">🔥 Exam Priority</span>
+    <span class="tag tag-teal">🧠 Memory Hooks</span>
+    <span class="tag tag-red">⚠ Traps Inside</span>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ══════════ BIG PICTURE ══════════ -->
+<section class="section" id="bigpicture">
+  <div class="section-header">
+    <span class="section-icon">🗺</span>
+    <h2 class="section-title">Big Picture</h2>
+  </div>
+  <div class="card">
+    <p style="color:var(--text-2); font-size:15px; line-height:1.9">
+      This chapter is about <strong style="color:var(--accent-teal)">why Earth is the way it is</strong> — its shape, how it moves (rotation & revolution), how we locate things on it (lat/long), and how its tilt creates seasons, eclipses, and extreme phenomena. Every concept links to the next. The Earth's shape → causes different speeds → revolution + tilt → seasons → solstices/equinoxes → eclipses. One big connected story.
+    </p>
+  </div>
+
+  <!-- Key numbers at a glance -->
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="big-number">6371</div>
+      <div class="big-label">Mean Radius (km)</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-number">23h 56m</div>
+      <div class="big-label">One Rotation</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-number">23.5°</div>
+      <div class="big-label">Earth's Tilt</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-number">181</div>
+      <div class="big-label">Total Latitudes</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-number">360</div>
+      <div class="big-label">Total Longitudes</div>
+    </div>
+    <div class="stat-card">
+      <div class="big-number">111 km</div>
+      <div class="big-label">Per 1° Latitude</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════ MEMORY PALACE ══════════ -->
+<section class="section" id="palace">
+  <div class="section-header">
+    <span class="section-icon">🧠</span>
+    <h2 class="section-title">Chapter Memory Palace</h2>
+    <span class="section-badge">STORY METHOD</span>
+  </div>
+
+  <div class="callout callout-hook">
+    <span class="callout-label">🏛 THE STORY — "A DAY IN THE COSMIC STADIUM"</span>
+    Imagine you are in a giant cosmic stadium shaped like a <strong>squashed ball</strong> (oblate spheroid). Walk through 9 stops to remember everything.
+  </div>
+
+  <div class="card">
+    <div class="palace-stop">
+      <div class="palace-num">1</div>
+      <div class="palace-content">
+        <strong>GATE: The Squashed Ball Gate</strong><br>
+        <span style="color:var(--text-2)">The stadium entrance is not a perfect circle — it's squashed at top/bottom (poles flat) and bulging in the middle (equator wide). A centrifugal fan blows from inside (centrifugal force due to rotation = reason for shape). Mean radius: <span class="hl-gold">6371 km</span>. Equatorial > Polar.</span>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">2</div>
+      <div class="palace-content">
+        <strong>ENTRY CLOCK: The 23h 56m Clock</strong><br>
+        <span style="color:var(--text-2)">Above the gate is a clock stuck at <span class="hl-teal">23h 56m 4s</span> — one rotation. Arrows spin West→East (anticlockwise). The clock runs fastest at the equator (linear velocity), same speed hands everywhere (angular velocity). Day & Night happen as you enter.</span>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">3</div>
+      <div class="palace-content">
+        <strong>TILTED SCOREBOARD: 23.5°</strong><br>
+        <span style="color:var(--text-2)">The scoreboard is tilted at <span class="hl-orange">23.5°</span> from vertical (tilt from axis). It's 66.5° from the floor (orbital plane). This tilt + revolution = SEASONS. No tilt OR no revolution = No seasons.</span>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">4</div>
+      <div class="palace-content">
+        <strong>RACETRACK: Perihelion & Aphelion Pit Stops</strong><br>
+        <span style="color:var(--text-2)">The Earth orbits on an <span class="hl-teal">elliptical racetrack</span>. One pit stop is close (Jan 3 = Perihelion, 147M km), one is far (Jul 4 = Aphelion, 152M km). The moon has its own mini-track: Perigee (close) & Apogee (far), changing monthly so no fixed dates.</span>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">5</div>
+      <div class="palace-content">
+        <strong>HORIZONTAL BLEACHERS: Latitudes</strong><br>
+        <span style="color:var(--text-2)">Seats run east-west (horizontal = latitude). 181 rows. Each row is 111 km apart. Equator (Row 0) is the widest — Great Circle. Tropic of Cancer row 23.5N, Capricorn 23.5S, Arctic 66.5N, Antarctic 66.5S, North/South Pole (just two points, not real rows).</span>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">6</div>
+      <div class="palace-content">
+        <strong>VERTICAL PILLARS: Longitudes</strong><br>
+        <span style="color:var(--text-2)">Pillars run north-south (vertical = longitude). 360 pillars. All pillars are Great Circles. They converge at poles (distance = 0 at poles, max 111.32 km at equator). The GOLD pillar is Greenwich (0° = Prime Meridian). Go East = add time. Go West = subtract time. 15° = 1 hour = 4 min per 1°.</span>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">7</div>
+      <div class="palace-content">
+        <strong>ZIGZAG LINE ON THE FIELD: International Date Line</strong><br>
+        <span style="color:var(--text-2)">A zigzag chalk line on the 180° side (Pacific Ocean). Goes around islands so it only crosses water. Cross it going East = gain a day (but subtract a date, e.g. June 3→June 2). Cross West = lose a day. 24 time zones total. France wins the most: <span class="hl-gold">13 zones</span>! Russia: 11, USA: 6.</span>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">8</div>
+      <div class="palace-content">
+        <strong>SEASON SCOREBOARD: Solstices & Equinoxes</strong><br>
+        <span style="color:var(--text-2)"><span class="hl-teal">Jun 21</span>: Sun overhead Tropic of Cancer → Northern longest day (Summer Solstice). <span class="hl-teal">Dec 22</span>: Sun overhead Tropic of Capricorn → Northern shortest day (Winter Solstice). <span class="hl-gold">Mar 21</span>: Vernal Equinox. <span class="hl-gold">Sep 23</span>: Autumnal Equinox. On equinoxes: whole Earth gets equal day & night.</span>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">9</div>
+      <div class="palace-content">
+        <strong>HALFTIME LIGHT SHOW: Eclipses</strong><br>
+        <span style="color:var(--text-2)">Solar Eclipse = Moon between Sun & Earth (new moon/Amavasya). Lunar Eclipse = Earth between Sun & Moon (full moon/Purnima). Blood Moon = lunar eclipse + all three aligned → red light only reaches moon. Supermoon = lunar eclipse + Perigee. Blue Moon = 2 supermoons in one calendar month (rare!).</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════ COMPLETE NOTES ══════════ -->
+<section class="section" id="notes">
+  <div class="section-header">
+    <span class="section-icon">📋</span>
+    <h2 class="section-title">Complete Revision Notes</h2>
+    <span class="section-badge">LAYER 1</span>
+  </div>
+
+  <!-- 1. AGE OF EARTH -->
+  <div class="card">
+    <div class="card-title">🪨 Age of the Earth — Dating Methods</div>
+    <div class="fact-row">
+      <span class="fact-key">Method</span>
+      <span class="fact-val"><span class="badge badge-star">⭐</span> Radioactive Dating — uses Uranium, Potassium, Rubidium</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Radiocarbon Dating</span>
+      <span class="fact-val">Uses <span class="hl-gold">Carbon-14 (C-14)</span> isotope <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Other methods</span>
+      <span class="fact-val">Chlorine-36 dating <span class="badge badge-plus">➕</span></span>
+    </div>
+    <div class="callout callout-tip" style="margin-top:10px">
+      <span class="callout-label">💡 EXAM TIP</span>
+      Carbon-14 is the most commonly asked. SSC loves C-14 / Radiocarbon dating.
+    </div>
+  </div>
+
+  <!-- 2. SHAPE OF EARTH -->
+  <div class="card">
+    <div class="card-title">🌐 Shape of the Earth</div>
+    <div class="fact-row">
+      <span class="fact-key">Official Shape</span>
+      <span class="fact-val"><span class="hl-gold">Oblate Spheroid</span> / <span class="hl-gold">Geoid</span> <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Characteristics</span>
+      <span class="fact-val">Bulged at equator (centre) + Flat/compressed at poles</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Cause</span>
+      <span class="fact-val"><span class="hl-teal">Centrifugal force</span> due to Earth's rotation <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Mean Radius</span>
+      <span class="fact-val"><span class="hl-gold">6371 km</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Comparison</span>
+      <span class="fact-val">Equatorial radius > Polar radius | Equatorial diameter > Polar diameter | Equatorial circumference > Polar circumference</span>
+    </div>
+    <div class="callout callout-hook" style="margin-top:10px">
+      <span class="callout-label">🧠 MEMORY HOOK</span>
+      Think of a spinning pizza dough — it flattens at top/bottom and spreads wide in the middle. Earth does the same due to rotation!
+    </div>
+  </div>
+
+  <!-- 3. ROTATION -->
+  <div class="card">
+    <div class="card-title">🔄 Rotation</div>
+    <div class="fact-row">
+      <span class="fact-key">Definition</span>
+      <span class="fact-val">Earth spinning on its own axis</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Time (1 rotation)</span>
+      <span class="fact-val"><span class="hl-gold">23 hours 56 minutes 4 seconds</span> <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Direction</span>
+      <span class="fact-val"><span class="hl-teal">West to East</span> (anticlockwise when seen from North Pole) <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Exceptions (planets)</span>
+      <span class="fact-val"><span class="hl-red">Venus & Uranus</span> rotate clockwise <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Linear velocity</span>
+      <span class="fact-val">Maximum at equator → Minimum (zero) at poles</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Angular velocity</span>
+      <span class="fact-val"><span class="hl-teal">Same everywhere</span> on Earth <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Earth's Tilt</span>
+      <span class="fact-val"><span class="hl-gold">23.5°</span> from its axis | <span class="hl-gold">66.5°</span> from orbital plane</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Result of rotation</span>
+      <span class="fact-val">Day & Night <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="callout callout-trap" style="margin-top:10px">
+      <span class="callout-label">⚠ TRAP</span>
+      Angular velocity is the SAME everywhere. Linear velocity is different. Don't mix these up! SSC has asked this.
+    </div>
+  </div>
+
+  <!-- 4. REVOLUTION -->
+  <div class="card">
+    <div class="card-title">🌍 Revolution & Kepler's Laws</div>
+    <div class="fact-row">
+      <span class="fact-key">Definition</span>
+      <span class="fact-val">Earth moving around Sun in elliptical orbit</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Result</span>
+      <span class="fact-val"><span class="hl-teal">Seasons</span> (requires BOTH revolution AND tilt) <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Earth's orbital speed</span>
+      <span class="fact-val"><span class="hl-gold">29.8 km/sec</span></span>
+    </div>
+
+    <div style="margin-top:12px; margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">KEPLER'S LAWS <span class="badge badge-star">⭐</span></div>
+    <table>
+      <thead>
+        <tr><th>Law</th><th>Name</th><th>Content</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="hl-teal">1st</td><td>Law of Orbits</td><td>All planets revolve in elliptical paths around Sun</td></tr>
+        <tr><td class="hl-teal">2nd</td><td>Law of Areas</td><td>Equal areas swept in equal times (faster near Sun)</td></tr>
+        <tr><td class="hl-teal">3rd</td><td>Law of Time Period</td><td>T² ∝ a³ (square of period ∝ cube of semi-major axis)</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:12px; margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">PERIHELION & APHELION</div>
+    <div class="grid-2">
+      <div class="callout callout-tip">
+        <span class="callout-label">🟢 PERIHELION (P = near)</span>
+        <strong>Jan 3</strong> · 147 million km from Sun<br>Earth CLOSEST to Sun
+      </div>
+      <div class="callout callout-trap">
+        <span class="callout-label">🔴 APHELION (A = away)</span>
+        <strong>Jul 4</strong> · 152 million km from Sun<br>Earth FARTHEST from Sun
+      </div>
+    </div>
+    <div class="callout callout-hook" style="margin-top:10px">
+      <span class="callout-label">🧠 MEMORY HOOK — Perihelion vs Aphelion</span>
+      <strong>P</strong>erihelion = <strong>P</strong>inched close (January = cold in northern hemisphere but actually closest to Sun! — classic trap). <strong>A</strong>phelion = <strong>A</strong>way (July 4th, America's Independence — Earth declares independence from Sun!)
+    </div>
+
+    <div style="margin-top:12px; margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">PERIGEE & APOGEE (Moon around Earth)</div>
+    <div class="grid-2">
+      <div class="callout callout-tip">
+        <span class="callout-label">🌑 PERIGEE</span>
+        Moon CLOSEST to Earth · Changes monthly (no fixed date)
+      </div>
+      <div class="callout callout-trap">
+        <span class="callout-label">🌕 APOGEE</span>
+        Moon FARTHEST from Earth · Changes monthly
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. LATITUDE -->
+  <div class="card">
+    <div class="card-title">↔ Latitude</div>
+    <div class="fact-row">
+      <span class="fact-key">Definition</span>
+      <span class="fact-val">Imaginary horizontal (E-W) lines; angular distance from equator</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Distance per degree</span>
+      <span class="fact-val"><span class="hl-gold">111 km</span> (same for every degree) <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Total latitudes</span>
+      <span class="fact-val"><span class="hl-gold">181</span> (including equator) | 179 circles | Poles are just points</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Great Circle</span>
+      <span class="fact-val">Line dividing Earth into 2 equal halves = shortest distance between 2 points</span>
+    </div>
+
+    <div style="margin-top:12px">
+      <table>
+        <thead>
+          <tr><th>Latitude</th><th>Name</th><th>Key Fact</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="hl-teal">0°</td><td>Equator</td><td>Divides Earth equally → Great Circle. Largest latitude.</td></tr>
+          <tr><td class="hl-gold">23.5°N</td><td>Tropic of Cancer</td><td>Northern limit of overhead Sun</td></tr>
+          <tr><td class="hl-gold">23.5°S</td><td>Tropic of Capricorn</td><td>Southern limit of overhead Sun</td></tr>
+          <tr><td class="hl-orange">66.5°N</td><td>Arctic Circle</td><td>Boundary of frozen zone (North)</td></tr>
+          <tr><td class="hl-orange">66.5°S</td><td>Antarctic Circle</td><td>Boundary of frozen zone (South)</td></tr>
+          <tr><td class="hl-red">90°N</td><td>North Pole</td><td>Just a point, not a circle</td></tr>
+          <tr><td class="hl-red">90°S</td><td>South Pole</td><td>Just a point, not a circle</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:12px; margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">HEAT ZONES</div>
+    <table>
+      <thead>
+        <tr><th>Zone</th><th>Between</th><th>Sun Rays</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="hl-red">Torrid Zone</td><td>Cancer ↔ Capricorn</td><td>Direct (overhead) — most heat</td></tr>
+        <tr><td class="hl-orange">Temperate Zone (N/S)</td><td>Cancer/Capricorn ↔ Arctic/Antarctic</td><td>Slanting — moderate heat</td></tr>
+        <tr><td class="hl-teal">Frozen Zone (N/S)</td><td>Arctic/Antarctic ↔ Poles</td><td>Slanting — 6 months day, 6 months night</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-hook" style="margin-top:10px">
+      <span class="callout-label">🧠 STOMACH TRICK for India</span>
+      Earth's body: <strong>Mouth</strong> = Tropic of Cancer, <strong>Stomach</strong> = Equator, <strong>Feet</strong> = Tropic of Capricorn. India is around the mouth-to-stomach region!
+    </div>
+  </div>
+
+  <!-- 6. LONGITUDE -->
+  <div class="card">
+    <div class="card-title">↕ Longitude</div>
+    <div class="fact-row">
+      <span class="fact-key">Definition</span>
+      <span class="fact-val">Imaginary vertical (N-S) lines; angular distance from Prime Meridian</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Total longitudes</span>
+      <span class="fact-val"><span class="hl-gold">360</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">All longitudes</span>
+      <span class="fact-val"><span class="hl-teal">All are Great Circles</span> (all divide Earth into 2 equal parts) <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Distance variation</span>
+      <span class="fact-val">Max <span class="hl-gold">111.32 km</span> at equator → <span class="hl-red">0 km</span> at poles <span class="badge badge-fire">🔥</span></span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Prime Meridian (0°)</span>
+      <span class="fact-val">Greenwich, London, UK (GMT) — reference longitude</span>
+    </div>
+
+    <div style="margin-top:12px; margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">PRIME MERIDIAN — COUNTRIES IT PASSES (0°)</div>
+    <div class="callout callout-hook">
+      <span class="callout-label">🧠 TRICK: BSF GAME IN TOGO KINGDOM</span>
+      <strong>B</strong>urkina Faso · <strong>S</strong>pain · <strong>F</strong>rance · <strong>G</strong>hana · <strong>A</strong>lgeria · <strong>M</strong>ali · <strong>Togo</strong> · <strong>Kingdom</strong> (United Kingdom)
+    </div>
+
+    <div style="margin-top:12px; margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">LONGITUDE & TIME</div>
+    <table>
+      <thead><tr><th>Fact</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Earth rotates 360° in</td><td class="hl-gold">24 hours</td></tr>
+        <tr><td>Rotation in 1 hour</td><td class="hl-gold">15°</td></tr>
+        <tr><td>Time per 1°</td><td class="hl-gold">4 minutes</td></tr>
+        <tr><td>East of Prime Meridian</td><td class="hl-teal">ADD time</td></tr>
+        <tr><td>West of Prime Meridian</td><td class="hl-red">SUBTRACT time</td></tr>
+        <tr><td>IST (Indian Standard Time)</td><td class="hl-gold">82.5°E = +5h 30min ahead of GMT</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 7. IDL -->
+  <div class="card">
+    <div class="card-title">📅 International Date Line (IDL)</div>
+    <div class="fact-row">
+      <span class="fact-key">What</span>
+      <span class="fact-val">Zigzag line at approximately 180° longitude (Pacific Ocean)</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Why zigzag?</span>
+      <span class="fact-val">To avoid passing through inhabited land masses — passes only through water</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Crossing East</span>
+      <span class="fact-val"><span class="hl-teal">Gain a day</span> — but subtract 1 from date (June 3 → June 2)</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">Crossing West</span>
+      <span class="fact-val"><span class="hl-red">Lose a day</span> — add 1 to date</span>
+    </div>
+    <div class="fact-row">
+      <span class="fact-key">About date, not time</span>
+      <span class="fact-val">IDL deals with <span class="hl-gold">DATE</span> change (not time like other longitudes)</span>
+    </div>
+
+    <div style="margin-top:12px; margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">TIME ZONES BY COUNTRY <span class="badge badge-fire">🔥</span></div>
+    <table>
+      <thead><tr><th>Country</th><th>Time Zones</th></tr></thead>
+      <tbody>
+        <tr><td class="hl-gold">France</td><td class="hl-gold">13 (MOST in world)</td></tr>
+        <tr><td>Russia</td><td class="hl-orange">11</td></tr>
+        <tr><td>USA</td><td>6</td></tr>
+        <tr><td>Earth Total</td><td class="hl-teal">24</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-trap" style="margin-top:8px">
+      <span class="callout-label">⚠ TRAP</span>
+      If option says 12 for France and 13 is not available → tick 12. If 13 is available → tick 13 (includes overseas territories).
+    </div>
+  </div>
+
+  <!-- 8. SOLSTICES & EQUINOXES -->
+  <div class="card">
+    <div class="card-title">☀ Solstices & Equinoxes</div>
+    <div class="callout callout-exam" style="margin-bottom:12px">
+      <span class="callout-label">🔑 KEY CONCEPT</span>
+      Seasons exist because of BOTH revolution AND Earth's tilt (23.5°). Remove either one → No seasons.
+    </div>
+
+    <table>
+      <thead><tr><th>Event</th><th>Date</th><th>Sun Overhead</th><th>Result (Northern Hemisphere)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="hl-gold">Summer Solstice</td>
+          <td class="hl-teal">June 21</td>
+          <td>Tropic of Cancer (23.5°N)</td>
+          <td>Longest day + Shortest night</td>
+        </tr>
+        <tr>
+          <td class="hl-red">Winter Solstice</td>
+          <td class="hl-teal">Dec 22</td>
+          <td>Tropic of Capricorn (23.5°S)</td>
+          <td>Shortest day + Longest night</td>
+        </tr>
+        <tr>
+          <td class="hl-purple">Vernal / Spring Equinox</td>
+          <td class="hl-teal">Mar 21</td>
+          <td>Equator (0°)</td>
+          <td>Equal day & night everywhere on Earth</td>
+        </tr>
+        <tr>
+          <td class="hl-orange">Autumnal Equinox</td>
+          <td class="hl-teal">Sep 23</td>
+          <td>Equator (0°)</td>
+          <td>Equal day & night everywhere on Earth</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-hook" style="margin-top:10px">
+      <span class="callout-label">🧠 MEMORY HOOK — 4 dates</span>
+      <strong>"June-Dec flip, March-Sep dip"</strong> → Summer/Winter flip around June-Dec. Equinoxes dip in March & September. 21, 22, 21, 23 — increment by 1 or 2 from each.
+    </div>
+    <div class="callout callout-trap" style="margin-top:8px">
+      <span class="callout-label">⚠ SUPER TRAP</span>
+      On EQUINOX: entire Earth (not just equator) experiences equal day & night. The word "entire earth" is the KEY. SSC has asked this exact distinction!
+    </div>
+  </div>
+
+  <!-- 9. ECLIPSES -->
+  <div class="card">
+    <div class="card-title">🌑 Eclipses</div>
+
+    <div class="grid-2" style="margin-bottom:12px">
+      <div class="callout callout-trap">
+        <span class="callout-label">☀ SOLAR ECLIPSE</span>
+        Moon comes BETWEEN Sun & Earth<br>
+        Occurs on: <span class="hl-gold">New Moon (Amavasya)</span><br>
+        Types: Total, Partial, Annular<br>
+        <strong>Corona visible in total solar eclipse</strong>
+      </div>
+      <div class="callout callout-tip">
+        <span class="callout-label">🌕 LUNAR ECLIPSE</span>
+        Earth comes BETWEEN Sun & Moon<br>
+        Occurs on: <span class="hl-gold">Full Moon (Purnima)</span><br>
+        Blood Moon possible here
+      </div>
+    </div>
+
+    <table>
+      <thead><tr><th>Phenomenon</th><th>Condition</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td class="hl-red">Blood Moon</td><td>Lunar eclipse + all 3 on same plane</td><td>Only red light reaches Moon → Moon appears red</td></tr>
+        <tr><td class="hl-teal">Supermoon</td><td>Lunar eclipse + Moon at Perigee</td><td>Moon appears bigger than usual</td></tr>
+        <tr><td class="hl-purple">Blue Moon</td><td>2 Supermoons in 1 calendar month</td><td>Rare phenomenon (not actually blue!)</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:12px; margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">UMBRA & PENUMBRA</div>
+    <div class="grid-2">
+      <div class="callout callout-trap">
+        <span class="callout-label">🔵 UMBRA</span>
+        Dark (complete) shadow
+      </div>
+      <div class="callout callout-tip">
+        <span class="callout-label">🔷 PENUMBRA</span>
+        Light (partial) shadow
+      </div>
+    </div>
+
+    <div class="callout callout-hook" style="margin-top:10px">
+      <span class="callout-label">🧠 MOON PHASES CHAIN</span>
+      <div class="chain">
+        <div class="chain-node">Amavasya<br>(No Moon)</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node">Crescent grows</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node">Purnima<br>(Full Moon)</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node">Crescent shrinks</div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-node">Amavasya again</div>
+      </div>
+    </div>
+
+    <div class="callout callout-exam" style="margin-top:10px">
+      <span class="callout-label">📌 SUNSPOTS</span>
+      Cold/dark areas on the Sun's surface (photosphere). The photosphere is where solar flares emerge. Corona is the outermost layer — visible during total solar eclipse.
+    </div>
+  </div>
+
+  <!-- 10. IMPORTANT LATITUDES & COUNTRIES -->
+  <div class="card">
+    <div class="card-title">🗺 Important Latitudes & Countries</div>
+
+    <div style="margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">TROPIC OF CANCER (23.5°N)</div>
+    <div class="callout callout-hook" style="margin-bottom:12px">
+      <span class="callout-label">🧠 COUNTRIES</span>
+      Mexico → Bahamas → W. Sahara → Mauritania → Mali → Algeria → Niger → Libya → Egypt → Saudi Arabia → UAE → Oman → <strong style="color:var(--accent-gold)">India</strong> → Bangladesh → Myanmar → China → Taiwan
+    </div>
+
+    <div style="margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">EQUATOR (0°)</div>
+    <div class="callout callout-hook" style="margin-bottom:12px">
+      <span class="callout-label">🧠 COUNTRIES (hint: Ecuador = named after equator)</span>
+      <strong>South America:</strong> Ecuador, Colombia, Brazil<br>
+      <strong>Africa:</strong> Gabon, São Tomé & Príncipe, Republic of Congo, DR Congo, Uganda, Kenya, Somalia<br>
+      <strong>Asia/Oceania:</strong> Maldives (partial), Indonesia
+    </div>
+
+    <div style="margin-bottom:6px; font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--accent-purple)">TROPIC OF CAPRICORN (23.5°S)</div>
+    <div class="callout callout-hook">
+      <span class="callout-label">🧠 COUNTRIES</span>
+      <strong>South America:</strong> Chile, Argentina, Paraguay, Brazil<br>
+      <strong>Africa:</strong> Namibia, Botswana, South Africa, Mozambique, Madagascar<br>
+      <strong>Oceania:</strong> Australia<br>
+      <em>Africa is the only continent where ALL THREE (Cancer, Equator, Capricorn) pass!</em> <span class="badge badge-fire">🔥</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════ EXAM TRAPS ══════════ -->
+<section class="section" id="traps">
+  <div class="section-header">
+    <span class="section-icon">⚠</span>
+    <h2 class="section-title">Exam Traps</h2>
+    <span class="section-badge">READ CAREFULLY</span>
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #1 — Angular vs Linear Velocity</span>
+    Angular velocity is SAME everywhere on Earth. Linear velocity is MAXIMUM at equator, MINIMUM at poles. SSC often puts "velocity is maximum at equator" — you must know they mean LINEAR velocity.
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #2 — Perihelion ≠ Summer in India</span>
+    Earth is CLOSEST to Sun on Jan 3 (Perihelion) — but that's India's WINTER! Proximity to Sun does NOT determine seasons. Tilt does. Don't confuse distance with seasons.
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #3 — Great Circle</span>
+    ONLY equator is a great circle among latitudes. ALL longitudes are great circles. NOT Tropic of Cancer. NOT Arctic Circle. The equator is the ONLY latitude that is a great circle.
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #4 — Equinox = "Entire Earth"</span>
+    On equinox, the ENTIRE EARTH (not just equatorial regions) experiences equal day & night. Don't limit it to just the equator.
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #5 — Solar Eclipse on New Moon</span>
+    Solar eclipse = new moon (Amavasya), NOT full moon. Lunar eclipse = full moon (Purnima). Students often swap these. Sun is blocked by Moon (Solar) → you need Moon between Sun & Earth → Moon not visible from Earth = Amavasya.
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #6 — Blue Moon ≠ Blue Colour</span>
+    Blue Moon = 2 supermoons in ONE calendar month. It has nothing to do with the moon turning blue. "Once in a blue moon" = very rare event.
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #7 — Latitude Distance vs Longitude Distance</span>
+    Distance between latitudes = SAME (111 km per degree). Distance between longitudes = DIFFERENT (111.32 km at equator, 0 at poles). This is a classic MCQ trap.
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #8 — Perigee vs Perihelion</span>
+    Perihelion = Earth closest to SUN. Perigee = Moon closest to EARTH. Aphelion = Earth farthest from Sun. Apogee = Moon farthest from Earth. Peri = near, Ap = away. Helion = Sun, Gee = Earth.
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #9 — IST Calculation</span>
+    India = 82.5°E. Difference from 0° = 82.5°. At 15°/hr → 75° = 5 hours. Remaining 7.5° = 30 minutes. Total = 5h 30min AHEAD of GMT. Don't just memorize the answer — understand the method.
+  </div>
+
+  <div class="callout callout-trap">
+    <span class="callout-label">TRAP #10 — Seasons Need BOTH</span>
+    Seasons exist because of BOTH tilt (23.5°) AND revolution. Remove tilt → equator always gets direct rays, no seasonal change. Remove revolution → no change in which hemisphere faces Sun. BOTH needed.
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════ EXAMINER'S QUESTIONS ══════════ -->
+<section class="section" id="examiner">
+  <div class="section-header">
+    <span class="section-icon">🎯</span>
+    <h2 class="section-title">Examiner's Favourite Questions</h2>
+    <span class="section-badge">PREDICTION</span>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">🎯 High Probability MCQs</div>
+      <ul class="bullet-list">
+        <li>Shape of Earth is called ___? (Oblate Spheroid/Geoid)</li>
+        <li>Cause of Earth's oblate shape? (Centrifugal force due to rotation)</li>
+        <li>Time for one rotation? (23h 56m 4s)</li>
+        <li>Earth's tilt? (23.5° from axis / 66.5° from orbital plane)</li>
+        <li>Which isotope in radiocarbon dating? (Carbon-14)</li>
+        <li>When is perihelion? (January 3)</li>
+        <li>When is aphelion? (July 4)</li>
+        <li>Angular velocity at equator vs poles? (Same everywhere)</li>
+        <li>Great Circle among latitudes? (Only equator)</li>
+        <li>Country with most time zones? (France – 13)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title">🎯 Statement-Based Traps</div>
+      <ul class="bullet-list">
+        <li>"Equatorial radius > Polar radius" → TRUE</li>
+        <li>"All latitudes are great circles" → FALSE (only equator)</li>
+        <li>"All longitudes are great circles" → TRUE</li>
+        <li>"Venus & Uranus rotate clockwise" → TRUE</li>
+        <li>"Linear velocity same at equator & pole" → FALSE</li>
+        <li>"Seasons occur due to revolution alone" → FALSE (both needed)</li>
+        <li>"Equinox = equal day/night everywhere" → TRUE</li>
+        <li>"Blood moon occurs during solar eclipse" → FALSE (lunar)</li>
+        <li>"IDL is a straight line" → FALSE (zigzag)</li>
+        <li>"India is 5.5 hours ahead of GMT" → TRUE (IST)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════ SELF-TEST / ACTIVE RECALL ══════════ -->
+<section class="section" id="quiz">
+  <div class="section-header">
+    <span class="section-icon">❓</span>
+    <h2 class="section-title">Active Recall — Self-Test</h2>
+    <span class="section-badge">TAP TO REVEAL</span>
+  </div>
+  <p style="color:var(--text-2); font-size:13px; margin-bottom:16px">Tap each question to reveal the answer. Test yourself before looking!</p>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> What shape is Earth called and why is it that shape?</div>
+    <div class="quiz-a">Oblate Spheroid / Geoid. Bulged at equator and flat at poles due to <strong>centrifugal force from rotation</strong>.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> What is the difference between linear and angular velocity of Earth's rotation?</div>
+    <div class="quiz-a"><strong>Linear velocity</strong>: maximum at equator, zero at poles (because equatorial circumference is larger). <strong>Angular velocity</strong>: same everywhere on Earth.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> Name the dates and distances for perihelion and aphelion.</div>
+    <div class="quiz-a"><strong>Perihelion</strong>: Jan 3 / 147 million km (closest). <strong>Aphelion</strong>: Jul 4 / 152 million km (farthest).</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> What is the condition for seasons to exist?</div>
+    <div class="quiz-a">BOTH revolution around Sun AND Earth's axial tilt (23.5°) are required. Remove either → no seasons.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> What happens on Summer Solstice? Date? NH result?</div>
+    <div class="quiz-a"><strong>June 21</strong>. Sun overhead Tropic of Cancer. Northern Hemisphere: LONGEST day and SHORTEST night.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> What is Vernal Equinox? What is unique about it globally?</div>
+    <div class="quiz-a"><strong>March 21</strong>. Sun overhead equator. ENTIRE EARTH (not just equator) experiences equal day and night.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> Solar eclipse occurs on which lunar phase? Why?</div>
+    <div class="quiz-a"><strong>New Moon (Amavasya)</strong>. Moon comes between Sun and Earth → blocks sunlight → Moon not visible = Amavasya.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> What is a Blood Moon? When does it occur?</div>
+    <div class="quiz-a">During <strong>lunar eclipse</strong> when all three (Sun, Earth, Moon) align on one plane. All sunlight except red is scattered → only red light reaches Moon → appears red/blood-coloured.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> What is a Blue Moon? Is it actually blue?</div>
+    <div class="quiz-a"><strong>Not blue at all!</strong> Blue Moon = two supermoons in a single calendar month. Extremely rare event (hence "once in a blue moon").</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> Why is International Date Line zigzag?</div>
+    <div class="quiz-a">To avoid crossing inhabited land masses. The zigzag ensures IDL only passes through the Pacific Ocean (water), so no country is split into two different dates.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> Country with maximum time zones? How many?</div>
+    <div class="quiz-a"><strong>France: 13 time zones</strong> (including overseas territories). Russia: 11. USA: 6.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> How is IST (India) 5.5 hours ahead of GMT? Calculate it.</div>
+    <div class="quiz-a">IST = 82.5°E. Difference from 0° = 82.5°. 15° = 1 hour → 75° = 5 hours. 7.5° = 30 min. Total = 5h 30min ahead (East = add time).</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> Which continent has all three major latitudes passing through it?</div>
+    <div class="quiz-a"><strong>Africa</strong> — Tropic of Cancer (23.5°N), Equator (0°), and Tropic of Capricorn (23.5°S) all pass through Africa.</div>
+  </div>
+
+  <div class="quiz-item" onclick="toggleQuiz(this)">
+    <div class="quiz-q"><span class="quiz-toggle">[tap]</span> What is the Corona of the Sun? When is it visible?</div>
+    <div class="quiz-a">The outermost atmosphere of the Sun. Normally hidden by the bright photosphere. Only visible during a <strong>Total Solar Eclipse</strong> when the Moon completely blocks the photosphere.</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════ REVISION LAYERS ══════════ -->
+<section class="section" id="layers">
+  <div class="section-header">
+    <span class="section-icon">⚡</span>
+    <h2 class="section-title">Multi-Layer Revision System</h2>
+    <span class="section-badge">LAYERS 2–4</span>
+  </div>
+
+  <div class="layer-tabs">
+    <div class="layer-tab active" onclick="switchLayer(this, 'l2')">Layer 2 · High Yield</div>
+    <div class="layer-tab" onclick="switchLayer(this, 'l3')">Layer 3 · Ultra Fast</div>
+    <div class="layer-tab" onclick="switchLayer(this, 'l4')">Layer 4 · 30 Seconds</div>
+  </div>
+
+  <!-- LAYER 2 -->
+  <div class="layer-content active" id="l2">
+    <div class="flash-grid">
+      <div class="flash-card"><div class="flash-front">Earth's shape</div><div class="flash-back">Oblate Spheroid / Geoid — bulged equator, flat poles</div></div>
+      <div class="flash-card"><div class="flash-front">Cause of shape</div><div class="flash-back">Centrifugal force due to rotation</div></div>
+      <div class="flash-card"><div class="flash-front">Mean radius</div><div class="flash-back">6371 km</div></div>
+      <div class="flash-card"><div class="flash-front">One rotation time</div><div class="flash-back">23h 56m 4s · West→East</div></div>
+      <div class="flash-card"><div class="flash-front">Clockwise planets</div><div class="flash-back">Venus & Uranus</div></div>
+      <div class="flash-card"><div class="flash-front">Angular velocity</div><div class="flash-back">Same everywhere on Earth</div></div>
+      <div class="flash-card"><div class="flash-front">Linear velocity</div><div class="flash-back">Max at equator, 0 at poles</div></div>
+      <div class="flash-card"><div class="flash-front">Earth's tilt</div><div class="flash-back">23.5° from axis | 66.5° from orbital plane</div></div>
+      <div class="flash-card"><div class="flash-front">Perihelion</div><div class="flash-back">Jan 3 · 147M km · Closest to Sun</div></div>
+      <div class="flash-card"><div class="flash-front">Aphelion</div><div class="flash-back">Jul 4 · 152M km · Farthest from Sun</div></div>
+      <div class="flash-card"><div class="flash-front">Seasons need</div><div class="flash-back">Revolution + Tilt (BOTH)</div></div>
+      <div class="flash-card"><div class="flash-front">Total latitudes</div><div class="flash-back">181 (179 circles + 2 pole points)</div></div>
+      <div class="flash-card"><div class="flash-front">Lat per degree</div><div class="flash-back">111 km (constant)</div></div>
+      <div class="flash-card"><div class="flash-front">Long distance</div><div class="flash-back">111.32 km at equator → 0 at poles</div></div>
+      <div class="flash-card"><div class="flash-front">Great circle</div><div class="flash-back">Equator (lat) + ALL longitudes</div></div>
+      <div class="flash-card"><div class="flash-front">Prime meridian</div><div class="flash-back">0° · Greenwich, London · GMT</div></div>
+      <div class="flash-card"><div class="flash-front">15° longitude = ?</div><div class="flash-back">1 hour time difference</div></div>
+      <div class="flash-card"><div class="flash-front">IST</div><div class="flash-back">82.5°E · +5h 30min from GMT</div></div>
+      <div class="flash-card"><div class="flash-front">Summer Solstice</div><div class="flash-back">Jun 21 · Cancer · NH longest day</div></div>
+      <div class="flash-card"><div class="flash-front">Winter Solstice</div><div class="flash-back">Dec 22 · Capricorn · NH shortest day</div></div>
+      <div class="flash-card"><div class="flash-front">Vernal Equinox</div><div class="flash-back">Mar 21 · Equator · Equal day/night worldwide</div></div>
+      <div class="flash-card"><div class="flash-front">Autumnal Equinox</div><div class="flash-back">Sep 23 · Equator · Equal day/night worldwide</div></div>
+      <div class="flash-card"><div class="flash-front">Solar Eclipse</div><div class="flash-back">Moon between Sun & Earth · New Moon · Amavasya</div></div>
+      <div class="flash-card"><div class="flash-front">Lunar Eclipse</div><div class="flash-back">Earth between Sun & Moon · Full Moon · Purnima</div></div>
+      <div class="flash-card"><div class="flash-front">Blood Moon</div><div class="flash-back">Lunar eclipse + aligned · Red light only · Moon appears red</div></div>
+      <div class="flash-card"><div class="flash-front">Supermoon</div><div class="flash-back">Lunar eclipse + Perigee (Moon closest)</div></div>
+      <div class="flash-card"><div class="flash-front">Blue Moon</div><div class="flash-back">2 supermoons in 1 calendar month</div></div>
+      <div class="flash-card"><div class="flash-front">France time zones</div><div class="flash-back">13 (most in world)</div></div>
+      <div class="flash-card"><div class="flash-front">IDL crossing east</div><div class="flash-back">Gain a day, subtract date</div></div>
+      <div class="flash-card"><div class="flash-front">Africa & latitudes</div><div class="flash-back">Only continent with Cancer + Equator + Capricorn all passing</div></div>
+    </div>
+  </div>
+
+  <!-- LAYER 3 -->
+  <div class="layer-content" id="l3">
+    <div class="card">
+      <div class="card-title">⚡ Ultra-Fast Revision — Key Chains</div>
+      <div class="chain"><div class="chain-node">Rotation</div><div class="chain-arrow">→</div><div class="chain-node">23h56m · W→E</div><div class="chain-arrow">→</div><div class="chain-node">Day&amp;Night</div><div class="chain-arrow">→</div><div class="chain-node">Linear ≠ Angular velocity</div></div>
+      <div class="chain"><div class="chain-node">Revolution + Tilt</div><div class="chain-arrow">→</div><div class="chain-node">Seasons</div><div class="chain-arrow">→</div><div class="chain-node">Jun21/Dec22/Mar21/Sep23</div></div>
+      <div class="chain"><div class="chain-node">Perihelion</div><div class="chain-arrow">→</div><div class="chain-node">Jan 3 · 147M km</div><div class="chain-node" style="margin-left:8px">Aphelion</div><div class="chain-arrow">→</div><div class="chain-node">Jul 4 · 152M km</div></div>
+      <div class="chain"><div class="chain-node">0° lat = Equator</div><div class="chain-arrow">→</div><div class="chain-node">Only great circle lat</div><div class="chain-arrow">→</div><div class="chain-node">All longitudes = great circles</div></div>
+      <div class="chain"><div class="chain-node">Solar Eclipse</div><div class="chain-arrow">→</div><div class="chain-node">Amavasya</div><div class="chain-node" style="margin-left:8px">Lunar Eclipse</div><div class="chain-arrow">→</div><div class="chain-node">Purnima</div></div>
+      <div class="chain"><div class="chain-node">Blood Moon</div><div class="chain-arrow">→</div><div class="chain-node">Lunar + Aligned</div><div class="chain-arrow">→</div><div class="chain-node">Supermoon</div><div class="chain-arrow">→</div><div class="chain-node">+Perigee</div><div class="chain-arrow">→</div><div class="chain-node">Blue Moon</div><div class="chain-arrow">→</div><div class="chain-node">2 in 1 month</div></div>
+      <div class="chain"><div class="chain-node">France</div><div class="chain-arrow">→</div><div class="chain-node">13 zones</div><div class="chain-node" style="margin-left:8px">Russia</div><div class="chain-arrow">→</div><div class="chain-node">11 zones</div><div class="chain-node" style="margin-left:8px">USA</div><div class="chain-arrow">→</div><div class="chain-node">6 zones</div></div>
+    </div>
+  </div>
+
+  <!-- LAYER 4 -->
+  <div class="layer-content" id="l4">
+    <div class="card" style="border-color:var(--accent-gold)">
+      <div class="card-title" style="color:var(--accent-gold)">⚡ 30-Second Scan</div>
+      <div style="column-count:2; column-gap:24px; font-size:13px; line-height:2">
+        Oblate Spheroid = Earth shape<br>
+        Centrifugal force = cause<br>
+        6371 km = mean radius<br>
+        23h56m4s = 1 rotation<br>
+        W→E = direction<br>
+        Venus+Uranus = clockwise<br>
+        Angular vel = same everywhere<br>
+        23.5° tilt from axis<br>
+        Jan 3 = Perihelion (near)<br>
+        Jul 4 = Aphelion (far)<br>
+        Both tilt+rev = seasons<br>
+        111 km = per lat degree<br>
+        181 total latitudes<br>
+        360 total longitudes<br>
+        All longs = great circles<br>
+        Only equator = great lat<br>
+        0° = Greenwich GMT<br>
+        15° = 1 hour | 1° = 4 min<br>
+        IST = 82.5°E = +5h30m<br>
+        France = 13 time zones<br>
+        Jun 21 = Summer Solstice<br>
+        Dec 22 = Winter Solstice<br>
+        Mar 21 = Vernal Equinox<br>
+        Sep 23 = Autumnal Equinox<br>
+        Equinox = equal day everywhere<br>
+        Solar = Amavasya<br>
+        Lunar = Purnima<br>
+        Blood Moon = red in lunar<br>
+        Supermoon = lunar + perigee<br>
+        Blue Moon = 2 super in month<br>
+        Africa = all 3 lines pass<br>
+        IDL east = gain day subtract date
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════ LAST NIGHT SHEET ══════════ -->
+<section class="section" id="lastnight">
+  <div class="section-header">
+    <span class="section-icon">🌙</span>
+    <h2 class="section-title">Last-Night-Before-Exam Sheet</h2>
+    <span class="section-badge">LAYER 5 · MOST CRITICAL</span>
+  </div>
+
+  <div class="last-night pulse">
+    <h3>🚨 IF YOU READ ONLY THIS TONIGHT, READ THIS</h3>
+    <ul class="bullet-list">
+      <li><strong>Shape:</strong> Oblate Spheroid / Geoid → Centrifugal force → Bulge at equator, flat at poles</li>
+      <li><strong>Rotation:</strong> 23h 56m 4s · West→East · Venus & Uranus are exceptions (clockwise)</li>
+      <li><strong>Velocity:</strong> Angular = same everywhere. Linear = max equator, zero poles</li>
+      <li><strong>Tilt:</strong> 23.5° from axis | 66.5° from orbital plane</li>
+      <li><strong>Perihelion:</strong> Jan 3 | 147M km (closest) — <span class="hl-red">NOT summer!</span></li>
+      <li><strong>Aphelion:</strong> Jul 4 | 152M km (farthest)</li>
+      <li><strong>Seasons:</strong> Need BOTH revolution AND tilt. Remove either → no seasons</li>
+      <li><strong>Latitude:</strong> 111 km per degree (constant). 181 total. Only equator = great circle lat.</li>
+      <li><strong>Longitude:</strong> 360 total. ALL are great circles. 0 km at poles, 111.32 km at equator.</li>
+      <li><strong>Time:</strong> 15° = 1 hour. East = add. West = subtract. IST = 82.5°E = +5h 30m</li>
+      <li><strong>France = 13 time zones</strong> (most), Russia = 11, USA = 6</li>
+      <li><strong>IDL:</strong> Zigzag (180°, Pacific). East crossing = gain day, subtract date</li>
+      <li><strong>Summer Solstice:</strong> Jun 21 · Sun on Cancer · NH longest day</li>
+      <li><strong>Winter Solstice:</strong> Dec 22 · Sun on Capricorn · NH shortest day</li>
+      <li><strong>Vernal Equinox:</strong> Mar 21 · <span class="hl-gold">Entire Earth</span> equal day & night</li>
+      <li><strong>Autumnal Equinox:</strong> Sep 23 · <span class="hl-gold">Entire Earth</span> equal day & night</li>
+      <li><strong>Solar Eclipse:</strong> Moon between Sun-Earth · <span class="hl-gold">New Moon (Amavasya)</span></li>
+      <li><strong>Lunar Eclipse:</strong> Earth between Sun-Moon · <span class="hl-gold">Full Moon (Purnima)</span></li>
+      <li><strong>Blood Moon:</strong> Lunar eclipse + all 3 aligned → red light → moon looks red</li>
+      <li><strong>Supermoon:</strong> Lunar eclipse + Perigee (Moon nearest Earth)</li>
+      <li><strong>Blue Moon:</strong> 2 supermoons in 1 calendar month (NOT blue colour!)</li>
+      <li><strong>Africa:</strong> ONLY continent where Cancer + Equator + Capricorn ALL pass through</li>
+      <li><strong>C-14 = Radiocarbon dating.</strong> Umbra = dark shadow. Penumbra = light shadow.</li>
+      <li><strong>BSF Game in Togo Kingdom</strong> = Prime Meridian countries (Burkina F, Spain, France, Ghana, Algeria, Mali, Togo, UK)</li>
+    </ul>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  FRB 2.0 · Geography · Lecture 2 · Built for SSC CGL Revision · Study smart, not just hard 🌍
+</footer>
+
+<script>
+  function toggleQuiz(el) {
+    const ans = el.querySelector('.quiz-a');
+    ans.classList.toggle('revealed');
+  }
+
+  function switchLayer(tab, layerId) {
+    document.querySelectorAll('.layer-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.layer-content').forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(layerId).classList.add('active');
+  }
+</script>
+</body>
+</html>

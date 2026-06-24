@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>India & Its Location — SSC CGL Revision System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0E14;
+  --bg-soft:#0F131C;
+  --panel:#12161F;
+  --panel-raised:#161B26;
+  --line:#212838;
+  --line-soft:#1A2030;
+  --ink:#E7E9EE;
+  --ink-dim:#A7AEBD;
+  --ink-faint:#6E7689;
+  --amber:#F2A33C;
+  --amber-dim:#8a6428;
+  --amber-glow:rgba(242,163,60,0.12);
+  --teal:#3FBF9F;
+  --teal-glow:rgba(63,191,159,0.12);
+  --red:#E5564B;
+  --red-glow:rgba(229,86,75,0.12);
+  --blue:#5B8DEF;
+  --blue-glow:rgba(91,141,239,0.12);
+  --serif:'Fraunces', serif;
+  --sans:'Inter', sans-serif;
+  --mono:'JetBrains Mono', monospace;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* texture */
+body::before{
+  content:'';
+  position:fixed; inset:0;
+  background-image:
+    radial-gradient(circle at 15% 8%, var(--amber-glow), transparent 35%),
+    radial-gradient(circle at 85% 92%, var(--teal-glow), transparent 35%);
+  pointer-events:none;
+  z-index:0;
+}
+
+a{color:var(--amber); text-decoration:none;}
+
+/* ============ HEADER ============ */
+.masthead{
+  position:relative;
+  padding:64px 24px 48px;
+  text-align:center;
+  border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(242,163,60,0.05), transparent 60%);
+}
+.masthead .eyebrow{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
+.masthead .eyebrow::before, .masthead .eyebrow::after{
+  content:'';
+  width:32px; height:1px;
+  background:var(--amber-dim);
+}
+.masthead h1{
+  font-family:var(--serif);
+  font-weight:700;
+  font-size:clamp(34px, 6vw, 64px);
+  line-height:1.05;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+}
+.masthead h1 em{
+  font-style:italic;
+  font-weight:500;
+  color:var(--amber);
+}
+.masthead p.sub{
+  margin-top:16px;
+  color:var(--ink-dim);
+  font-size:16px;
+  max-width:560px;
+  margin-inline:auto;
+}
+.masthead .coords{
+  margin-top:28px;
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--ink-faint);
+  display:flex;
+  gap:24px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.masthead .coords span b{color:var(--ink-dim); font-weight:600;}
+
+/* ============ LAYOUT ============ */
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 24px 120px;
+  position:relative;
+  z-index:1;
+}
+
+/* ============ NAV PILLS (sticky) ============ */
+.layer-nav{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(11,14,20,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  padding:14px 24px;
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.layer-nav::-webkit-scrollbar{display:none;}
+.layer-nav a{
+  font-family:var(--mono);
+  font-size:12px;
+  white-space:nowrap;
+  padding:8px 14px;
+  border-radius:20px;
+  border:1px solid var(--line);
+  color:var(--ink-dim);
+  transition:all .2s;
+  flex-shrink:0;
+}
+.layer-nav a:hover{
+  border-color:var(--amber-dim);
+  color:var(--amber);
+  background:var(--amber-glow);
+}
+
+/* ============ SECTION SHELL ============ */
+.section{
+  margin-top:64px;
+  scroll-margin-top:90px;
+}
+.section-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  margin-bottom:28px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--line);
+}
+.section-head .num{
+  font-family:var(--mono);
+  color:var(--amber);
+  font-size:13px;
+  border:1px solid var(--amber-dim);
+  border-radius:6px;
+  padding:3px 8px;
+  flex-shrink:0;
+}
+.section-head h2{
+  font-family:var(--serif);
+  font-size:clamp(22px,3.4vw,32px);
+  font-weight:600;
+  color:var(--ink);
+}
+.section-head .tag{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--ink-faint);
+  margin-left:auto;
+  text-align:right;
+}
+
+/* ============ BIG PICTURE ============ */
+.big-picture{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:32px;
+  font-size:17px;
+  color:var(--ink-dim);
+  line-height:1.75;
+}
+.big-picture strong{color:var(--ink);}
+.big-picture .highlight{
+  color:var(--amber);
+  font-weight:600;
+}
+
+/* ============ MEMORY PALACE / JOURNEY ============ */
+.journey{
+  position:relative;
+  padding-left:32px;
+}
+.journey::before{
+  content:'';
+  position:absolute;
+  left:9px; top:8px; bottom:8px;
+  width:2px;
+  background:linear-gradient(180deg, var(--amber-dim), var(--teal), var(--blue));
+  opacity:0.5;
+}
+.stop{
+  position:relative;
+  padding-bottom:32px;
+}
+.stop:last-child{padding-bottom:0;}
+.stop::before{
+  content:'';
+  position:absolute;
+  left:-32px; top:4px;
+  width:18px; height:18px;
+  border-radius:50%;
+  background:var(--bg);
+  border:2px solid var(--amber);
+  box-shadow:0 0 0 4px var(--bg);
+}
+.stop h4{
+  font-family:var(--serif);
+  font-size:19px;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.stop h4 .loc{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--amber);
+  font-weight:400;
+  margin-left:10px;
+}
+.stop p{
+  color:var(--ink-dim);
+  font-size:15px;
+  max-width:680px;
+}
+.stop p em{
+  color:var(--teal);
+  font-style:normal;
+  font-weight:600;
+}
+
+/* ============ NOTES GRID / CARDS ============ */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+  gap:16px;
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+}
+.card h4{
+  font-family:var(--serif);
+  font-size:16px;
+  color:var(--amber);
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.card ul{list-style:none;}
+.card li{
+  font-size:14px;
+  color:var(--ink-dim);
+  padding:7px 0;
+  border-bottom:1px dashed var(--line-soft);
+}
+.card li:last-child{border-bottom:none;}
+.card li b{color:var(--ink); font-weight:600;}
+
+/* priority tags */
+.tag-pill{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:0.04em;
+  padding:2px 8px;
+  border-radius:20px;
+  font-weight:600;
+}
+.tag-must{background:var(--red-glow); color:var(--red);}
+.tag-imp{background:var(--amber-glow); color:var(--amber);}
+.tag-good{background:var(--teal-glow); color:var(--teal);}
+
+/* ============ DATA TABLE ============ */
+.dtable{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+  background:var(--panel);
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--line);
+}
+.dtable th{
+  background:var(--panel-raised);
+  color:var(--amber);
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  text-align:left;
+  padding:12px 16px;
+  border-bottom:1px solid var(--line);
+}
+.dtable td{
+  padding:10px 16px;
+  border-bottom:1px solid var(--line-soft);
+  color:var(--ink-dim);
+}
+.dtable td.k{color:var(--ink); font-weight:600;}
+.dtable td.num{font-family:var(--mono); color:var(--teal);}
+.dtable tr:last-child td{border-bottom:none;}
+.dtable tr:hover td{background:rgba(255,255,255,0.015);}
+
+/* ============ BORDER CHECKPOINT STRIP (signature element) ============ */
+.checkpoints{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(150px,1fr));
+  gap:2px;
+  background:var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid var(--line);
+}
+.checkpoint{
+  background:var(--panel);
+  padding:18px 16px;
+  position:relative;
+  transition:background .2s;
+}
+.checkpoint:hover{background:var(--panel-raised);}
+.checkpoint .rank{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--ink-faint);
+}
+.checkpoint .country{
+  font-family:var(--serif);
+  font-size:18px;
+  font-weight:600;
+  color:var(--ink);
+  margin:4px 0 8px;
+}
+.checkpoint .km{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--amber);
+  margin-bottom:8px;
+}
+.checkpoint .guard{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:10px;
+  background:var(--blue-glow);
+  color:var(--blue);
+  padding:2px 7px;
+  border-radius:5px;
+  margin-bottom:6px;
+}
+.checkpoint .states{
+  font-size:12px;
+  color:var(--ink-faint);
+  line-height:1.5;
+}
+
+/* ============ EXAM TRAPS ============ */
+.trap{
+  background:linear-gradient(135deg, rgba(229,86,75,0.07), var(--panel));
+  border:1px solid rgba(229,86,75,0.25);
+  border-radius:14px;
+  padding:18px 20px;
+  margin-bottom:12px;
+}
+.trap .vs{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--red);
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.trap p{font-size:14px; color:var(--ink-dim);}
+.trap p b{color:var(--ink);}
+.trap .resolve{
+  margin-top:8px;
+  font-size:13px;
+  color:var(--teal);
+  font-style:italic;
+}
+
+/* ============ EXAMINER QUESTIONS ============ */
+.qcard{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-left:3px solid var(--blue);
+  border-radius:10px;
+  padding:16px 18px;
+  margin-bottom:10px;
+  font-size:14.5px;
+  color:var(--ink-dim);
+}
+.qcard .qtype{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--blue);
+  text-transform:uppercase;
+  margin-bottom:6px;
+  display:block;
+}
+.qcard .ans{color:var(--teal); font-weight:600;}
+
+/* ============ ACTIVE RECALL ============ */
+.recall-box{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:8px;
+}
+.recall-q{
+  padding:14px 18px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:14.5px;
+  color:var(--ink);
+  user-select:none;
+}
+.recall-q::after{
+  content:'+';
+  font-family:var(--mono);
+  color:var(--amber);
+  font-size:16px;
+  transition:transform .2s;
+  flex-shrink:0;
+  margin-left:12px;
+}
+.recall-box.open .recall-q::after{transform:rotate(45deg);}
+.recall-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .25s ease;
+  background:var(--bg-soft);
+}
+.recall-box.open .recall-a{max-height:300px;}
+.recall-a-inner{
+  padding:0 18px 16px;
+  font-size:14px;
+  color:var(--teal);
+  font-family:var(--mono);
+}
+
+/* ============ ACCORDION (5 layers) ============ */
+.layer-block{
+  border:1px solid var(--line);
+  border-radius:16px;
+  margin-bottom:14px;
+  overflow:hidden;
+  background:var(--panel);
+}
+.layer-head{
+  padding:20px 24px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  user-select:none;
+}
+.layer-head .lnum{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--bg);
+  background:var(--amber);
+  border-radius:6px;
+  padding:3px 9px;
+  font-weight:700;
+}
+.layer-head h3{
+  font-family:var(--serif);
+  font-size:19px;
+  font-weight:600;
+  color:var(--ink);
+}
+.layer-head .desc{
+  font-size:12px;
+  color:var(--ink-faint);
+  margin-left:auto;
+  text-align:right;
+  display:none;
+}
+@media(min-width:640px){.layer-head .desc{display:block;}}
+.layer-head .chev{
+  font-family:var(--mono);
+  color:var(--amber);
+  transition:transform .25s;
+  flex-shrink:0;
+}
+.layer-block.open .layer-head .chev{transform:rotate(180deg);}
+.layer-body{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .35s ease;
+}
+.layer-block.open .layer-body{max-height:6000px;}
+.layer-body-inner{
+  padding:0 24px 28px;
+  border-top:1px solid var(--line);
+  padding-top:24px;
+}
+
+/* ============ COMPACT REVISION TEXT BLOCKS ============ */
+.note-block{margin-bottom:22px;}
+.note-block h4{
+  font-family:var(--serif);
+  font-size:16px;
+  color:var(--amber);
+  margin-bottom:10px;
+}
+.note-block ul, .note-block ol{
+  padding-left:20px;
+  color:var(--ink-dim);
+  font-size:14.5px;
+}
+.note-block li{margin-bottom:6px;}
+.note-block li b{color:var(--ink);}
+.note-block p{color:var(--ink-dim); font-size:14.5px; margin-bottom:8px;}
+
+/* ultra fast / 30 sec / last night sheets */
+.flash-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+  gap:10px;
+}
+.flash{
+  background:var(--bg-soft);
+  border:1px solid var(--line-soft);
+  border-radius:10px;
+  padding:12px 14px;
+  font-size:13.5px;
+}
+.flash b{
+  display:block;
+  color:var(--amber);
+  font-family:var(--mono);
+  font-size:11px;
+  margin-bottom:4px;
+}
+.flash span{color:var(--ink-dim);}
+
+.lastnight{
+  background:linear-gradient(135deg, rgba(229,86,75,0.06), rgba(242,163,60,0.04));
+  border:1px solid rgba(242,163,60,0.25);
+  border-radius:14px;
+  padding:22px;
+}
+.lastnight ol{counter-reset:ln; list-style:none; padding-left:0;}
+.lastnight li{
+  counter-increment:ln;
+  position:relative;
+  padding-left:34px;
+  margin-bottom:12px;
+  font-size:14.5px;
+  color:var(--ink-dim);
+}
+.lastnight li::before{
+  content:counter(ln);
+  position:absolute;
+  left:0; top:-1px;
+  width:22px; height:22px;
+  border-radius:50%;
+  background:var(--amber);
+  color:var(--bg);
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.lastnight li b{color:var(--ink);}
+
+/* progress / footer */
+.progress-bar{
+  position:fixed;
+  top:0; left:0;
+  height:2px;
+  background:var(--amber);
+  z-index:100;
+  transition:width .1s;
+  width:0%;
+}
+.footer-note{
+  text-align:center;
+  margin-top:80px;
+  padding-top:32px;
+  border-top:1px solid var(--line);
+  color:var(--ink-faint);
+  font-family:var(--mono);
+  font-size:12px;
+}
+
+/* mobile */
+@media(max-width:640px){
+  .masthead{padding:48px 18px 36px;}
+  .wrap{padding:0 16px 100px;}
+  .section{margin-top:48px;}
+  .layer-head{padding:16px 18px;}
+  .layer-body-inner{padding:0 18px 22px; padding-top:18px;}
+}
+
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--line); border-radius:6px;}
+::-webkit-scrollbar-thumb:hover{background:var(--amber-dim);}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header class="masthead">
+  <div class="eyebrow">FRB 2.0 · Indian Geography</div>
+  <h1>India & Its <em>Location</em></h1>
+  <p class="sub">A revision system built to survive 100 rereads — not a summary. Built for SSC CGL.</p>
+  <div class="coords">
+    <span><b>Lat</b> 8°4′N – 37°6′N</span>
+    <span><b>Lon</b> 68°7′E – 97°25′E</span>
+    <span><b>Rank</b> 7th by area</span>
+    <span><b>IST</b> 82.5°E</span>
+  </div>
+</header>
+
+<nav class="layer-nav">
+  <a href="#bigpicture">Big Picture</a>
+  <a href="#palace">Memory Palace</a>
+  <a href="#complete">Complete Notes</a>
+  <a href="#hooks">Memory Hooks</a>
+  <a href="#connections">Connections</a>
+  <a href="#traps">Exam Traps</a>
+  <a href="#examiner">Examiner Qs</a>
+  <a href="#recall">Active Recall</a>
+  <a href="#highyield">High-Yield</a>
+  <a href="#ultrafast">Ultra-Fast</a>
+  <a href="#thirtysec">30-Second</a>
+  <a href="#lastnight">Last Night</a>
+</nav>
+
+<div class="wrap">
+  <!-- BIG PICTURE -->
+  <section class="section" id="bigpicture">
+    <div class="section-head">
+      <span class="num">00</span>
+      <h2>Big Picture</h2>
+    </div>
+    <div class="big-picture">
+      <p>This chapter answers one question examiners love to twist: <strong>"Where exactly is India, and what touches its edges?"</strong> Everything here is built from <span class="highlight">one country with eight edges</span> — north, south, east, west extremes; the line that gives it noon; the line that gives it summer; and seven neighbours plus two sea-only ones pressing against its borders.</p>
+      <p style="margin-top:14px;">Think of India as a <strong>plot of land with a survey map.</strong> First you fix its shape on Earth (Gondwana origin, hemisphere, rank). Then you walk its four extreme corners. Then you draw two lines through its middle (Tropic of Cancer, 82.5°E). Then you walk its fence — 7 countries, 2 sea-neighbours, and the forces guarding each gate. That's the whole chapter.</p>
+    </div>
+  </section>
+
+  <!-- MEMORY PALACE -->
+  <section class="section" id="palace">
+    <div class="section-head">
+      <span class="num">01</span>
+      <h2>Chapter Memory Palace</h2>
+      <span class="tag">🧠 walk it, don't read it</span>
+    </div>
+    <p style="color:var(--ink-dim); margin-bottom:24px; max-width:700px;">Picture yourself as a surveyor starting at the very bottom tip of India and walking the entire border clockwise. Each stop below is a real location — visualise standing there.</p>
+    <div class="journey">
+      <div class="stop">
+        <h4>STOP 1 · Kanyakumari <span class="loc">8°4′N — mainland's southern tip</span></h4>
+        <p>You're standing at <em>Cape Comorin</em>, waves on three sides. This is the southernmost point of <strong>mainland</strong> India — but not of India overall. Look out to sea: somewhere far south, past a chain of islands, is a point that beats you. That's your first trap, planted immediately.</p>
+      </div>
+      <div class="stop">
+        <h4>STOP 2 · Indira Point <span class="loc">Great Nicobar Island</span></h4>
+        <p>Swim south-east to Great Nicobar Island. Here is <em>Indira Point</em>, also called <strong>Pygmalion Point</strong> — the TRUE southernmost point of India (overall, not mainland). Tamil Nadu, not Kerala, is the southernmost <em>state</em> — fix that image: Kerala dangles below Tamil Nadu on the map, but Tamil Nadu's tip pokes further down.</p>
+      </div>
+      <div class="stop">
+        <h4>STOP 3 · 82.5°E Mirzapur <span class="loc">near Naini, Allahabad — UP</span></h4>
+        <p>Now teleport to the dead-center spine of India: a clock tower near Mirzapur marks the <strong>Indian Standard Time meridian</strong>. Walk this line top to bottom — it threads through 5 states: <em>M-O-U-C-A</em> (Mauka → Mauka): Madhya Pradesh, Orissa, Uttar Pradesh, Chhattisgarh, Andhra Pradesh.</p>
+      </div>
+      <div class="stop">
+        <h4>STOP 4 · Korea, Chhattisgarh <span class="loc">Baikunthpur division</span></h4>
+        <p>Walking the 82.5°E line, you cross another line — the <strong>Tropic of Cancer</strong> — exactly in <em>Korea district, Chhattisgarh</em>. Two famous lines of this chapter physically cross at one small town. Lock that image: an X marked "Korea."</p>
+      </div>
+      <div class="stop">
+        <h4>STOP 5 · Guhar Moti <span class="loc">Gujarat — westernmost point</span></h4>
+        <p>Head west to the edge of Gujarat. This sandy point is India's westernmost tip. Gujarat is also the westernmost <em>state</em> and — remember this — owns the <strong>longest coastline among all states</strong>.</p>
+      </div>
+      <div class="stop">
+        <h4>STOP 6 · Indira Col <span class="loc">Ladakh — northernmost point</span></h4>
+        <p>Climb all the way north into Ladakh's glaciers. <em>Indira Col</em> is India's northernmost point. Once, Jammu & Kashmir held this title as a state; now it's split into two UTs, and Ladakh inherits "northernmost."</p>
+      </div>
+      <div class="stop">
+        <h4>STOP 7 · Kibithu / Sitithi <span class="loc">Arunachal Pradesh — easternmost</span></h4>
+        <p>Swing all the way east. Arunachal Pradesh is both the easternmost <em>and</em> the northeasternmost state — and its tip at Kibithu is the easternmost point. You've now walked all four corners.</p>
+      </div>
+      <div class="stop">
+        <h4>STOP 8 · The Fence — 7 Gates <span class="loc">clockwise from Bangladesh</span></h4>
+        <p>Now walk the international boundary clockwise by length, longest first: <em>Bangladesh → China → Pakistan → Nepal → Myanmar → Bhutan → Afghanistan.</em> Each gate has its own guard force and its own drawn line — detailed fully below.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLETE REVISION NOTES -->
+  <section class="section" id="complete">
+    <div class="section-head">
+      <span class="num">02</span>
+      <h2>Complete Revision Notes</h2>
+      <span class="tag">layer 1 — full depth</span>
+    </div>
+
+    <div class="note-block">
+      <h4>A. Origin & Global Standing <span class="tag-pill tag-must">MUST KNOW</span></h4>
+      <ul>
+        <li>India was part of <b>Gondwanaland</b> (southern supercontinent after Pangaea split into Laurasia ↑ and Gondwanaland ↓).</li>
+        <li>Gondwanaland fragments: <b>South America, Africa, Australia, India</b> — India then drifted north and collided with the Eurasian Plate (→ Himalaya formation).</li>
+        <li>India's area rank: <b>7th in the world</b> — after Russia, Canada, USA, China, Brazil, Australia. Argentina is 8th.</li>
+        <li>India holds <b>~17% of world's population.</b></li>
+        <li>Hemisphere: <b>Northern + Eastern</b> (North-Eastern Hemisphere) — because Tropic of Cancer (23.5°N) passes through it and it lies east of the Prime Meridian (Greenwich, 0°).</li>
+      </ul>
+    </div>
+
+    <div class="note-block">
+      <h4>B. Political Units</h4>
+      <ul>
+        <li><b>28 States + 8 Union Territories</b> = current count.</li>
+        <li>8 UTs: J&K, Ladakh, Lakshadweep, Andaman & Nicobar, Chandigarh, Dadra & Nagar Haveli + Daman & Diu (merged 2019), Delhi, Puducherry.</li>
+        <li><b>Puducherry</b> is spread over 3 different states as enclaves: <b>Yanam</b> (Andhra Pradesh), <b>Puducherry + Karaikal</b> (Tamil Nadu), <b>Mahe</b> (Kerala).</li>
+        <li>Exam fact: among Puducherry's parts, <b>Karaikal</b> is nearest to Sri Lanka (asked in SSC CGL Tier-1, 2024).</li>
+      </ul>
+    </div>
+
+    <table class="dtable" style="margin-top:14px;">
+      <tr><th>Extent</th><th>From → To</th><th>Value</th></tr>
+      <tr><td class="k">North–South extent</td><td>Kashmir → Kanyakumari</td><td class="num">3,214 km</td></tr>
+      <tr><td class="k">East–West extent</td><td>Westernmost → Easternmost point</td><td class="num">2,933 km</td></tr>
+      <tr><td class="k">Latitudinal extent</td><td>8°4′N → 37°6′N</td><td class="num">≈ 30° difference</td></tr>
+      <tr><td class="k">Longitudinal extent</td><td>68°7′E → 97°25′E</td><td class="num">≈ 30° difference</td></tr>
+    </table>
+
+    <div class="note-block" style="margin-top:24px;">
+      <h4>C. Why N–S distance > E–W distance, despite equal 30° spans</h4>
+      <ul>
+        <li><b>Latitude</b> distance is constant everywhere: 1° latitude ≈ <b>111 km</b> (always).</li>
+        <li><b>Longitude</b> distance shrinks from equator to poles, reaching <b>0 at the poles</b>; it's maximum at the equator: 1° longitude at equator ≈ <b>111.32 km</b>.</li>
+        <li>India's longitudes lie further from the equator on average than a flat comparison suggests → so the same "30°" buys more real km in the N–S (latitude) direction than in E–W (longitude) direction here.</li>
+      </ul>
+    </div>
+
+    <div class="note-block">
+      <h4>D. Time Zone & IST <span class="tag-pill tag-must">MUST KNOW</span></h4>
+      <ul>
+        <li>India has <b>only ONE time zone</b>, despite a 2-hour natural time gap between Gujarat (west) and Arunachal Pradesh (east) — calculated from their 30° longitude difference (15° = 1 hour → 30° = 2 hours).</li>
+        <li>Comparison: <b>France has the most time zones (13)</b>, due to overseas territories.</li>
+        <li>IST meridian = <b>82°30′E</b> — passes near <b>Mirzapur</b> (Naini, Allahabad, UP), marked by a clock tower.</li>
+        <li>IST vs GMT: IST is <b>5 hours 30 minutes ahead</b> of GMT.
+          <br><span style="font-family:var(--mono); font-size:13px; color:var(--ink-faint);">Working: 15°=1hr → 75°=5hr. Remaining 7.5° (between 75° and 82.5°) = 30 min. Total = 5h30m. India is east of Greenwich → time is ADDED.</span>
+        </li>
+        <li>IST meridian passes through <b>5 states</b> — remember as <b>"Mauka Mauka"</b>: <b>M</b>adhya Pradesh, <b>O</b>rissa, <b>U</b>ttar Pradesh, <b>C</b>hhattisgarh, <b>A</b>ndhra Pradesh.</li>
+      </ul>
+    </div>
+
+    <div class="note-block">
+      <h4>E. Tropic of Cancer in India <span class="tag-pill tag-must">MUST KNOW</span></h4>
+      <ul>
+        <li>Passes through <b>8 states</b> — mnemonic: <b>"Gujarati Raja made Chief Justice won the meeting"</b> → Gujarat, Rajasthan, Madhya Pradesh, Chhattisgarh, Jharkhand, West Bengal, Tripura, Mizoram.</li>
+        <li>Order west→east: Gujarat (edge) → Rajasthan → Madhya Pradesh (through middle) → Chhattisgarh → Jharkhand → West Bengal → then two NE states: Tripura, Mizoram.</li>
+        <li>Mizoram and Chhattisgarh both have unusually large <b>North–South extent</b> compared to East–West.</li>
+        <li><b>TOC meets the 82.5°E IST line</b> in <b>Korea district, Chhattisgarh</b> (Baikunthpur division).</li>
+        <li>Capitals ABOVE the Tropic of Cancer: <b>Jaipur (Rajasthan), Agartala (Tripura), Aizawl (Mizoram).</b> All other 5 state capitals (Gandhinagar, Bhopal, Raipur, Ranchi, Kolkata) lie BELOW it.</li>
+      </ul>
+    </div>
+
+    <div class="note-block">
+      <h4>F. Four Extreme Points <span class="tag-pill tag-must">MUST KNOW</span></h4>
+      <table class="dtable">
+        <tr><th>Direction</th><th>Point</th><th>State/UT</th></tr>
+        <tr><td class="k">North</td><td>Indira Col</td><td>Ladakh (UT) — Himachal is northernmost <i>state</i> now; Ladakh is northernmost <i>UT</i> (post J&K split)</td></tr>
+        <tr><td class="k">South (mainland)</td><td>Kanyakumari / Cape Comorin</td><td>Tamil Nadu — southernmost <b>state</b></td></tr>
+        <tr><td class="k">South (overall)</td><td>Indira Point / Pygmalion Point</td><td>Great Nicobar Island, A&N</td></tr>
+        <tr><td class="k">East</td><td>Kibithu (also seen as Sitithi)</td><td>Arunachal Pradesh — easternmost state</td></tr>
+        <tr><td class="k">West</td><td>Guhar Moti</td><td>Gujarat — westernmost state</td></tr>
+      </table>
+    </div>
+
+    <div class="note-block">
+      <h4>G. Coastal Boundary <span class="tag-pill tag-must">MUST KNOW — recently updated</span></h4>
+      <ul>
+        <li><b>9 coastal states:</b> Gujarat, Maharashtra, Goa, Karnataka, Kerala, Tamil Nadu, Andhra Pradesh, Odisha, West Bengal.</li>
+        <li><b>4 coastal UTs:</b> Andaman & Nicobar, Lakshadweep, Daman & Diu, Puducherry.</li>
+        <li>Data updated per PIB release, <b>29 April 2025</b> (now reflected in current Fatman/handbook):</li>
+      </ul>
+      <table class="dtable">
+        <tr><th>Boundary</th><th>Length</th></tr>
+        <tr><td class="k">Total coastline (incl. islands)</td><td class="num">7,516 km</td></tr>
+        <tr><td class="k">Mainland coastline</td><td class="num">6,100 km (approx. — 1198−383−144 island contribution)</td></tr>
+        <tr><td class="k">Andaman & Nicobar coastline</td><td class="num">1,198 km (overall longest, incl. all islands)</td></tr>
+        <tr><td class="k">Gujarat coastline</td><td class="num">Longest among <i>states</i></td></tr>
+        <tr><td class="k">Goa coastline</td><td class="num">Shortest among states (≈193... check exact figure)</td></tr>
+        <tr><td class="k">Puducherry coastline</td><td class="num">42 km — shortest among coastal UTs/units overall</td></tr>
+      </table>
+      <p style="margin-top:10px; font-size:13px; color:var(--ink-faint);">Order among states (longest→): <b>Gujarat &gt; Tamil Nadu &gt; Andhra Pradesh</b> ("GTA" — remembered as "we got SSC notification before GTA").</p>
+    </div>
+  </section>
+
+  <!-- SMART MEMORY HOOKS -->
+  <section class="section" id="hooks">
+    <div class="section-head">
+      <span class="num">03</span>
+      <h2>Smart Memory Hooks</h2>
+      <span class="tag">visual · story · sticky</span>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>🌍 Gondwana Split</h4>
+        <ul>
+          <li>Picture a cake (Pangaea) cut in two: top half = <b>Laurasia</b> (rises north), bottom half = <b>Gondwanaland</b> (sinks south, crumbles into S.America + Africa + Australia + India).</li>
+          <li>India then "runs away" upward — like a child leaving the bottom half to join the top — and crashes into Asia, crumpling the Himalayas like a rug pushed against a wall.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🕐 Mauka Mauka Meridian</h4>
+        <ul>
+          <li>The 82.5°E line is the cricket-fan's meridian: <b>M</b>adhya Pradesh, <b>O</b>rissa, <b>U</b>ttar Pradesh, <b>C</b>hhattisgarh, <b>A</b>ndhra Pradesh — "Mauka Mauka" jingle, 5 letters, 5 states.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>☀️ Gujarati Raja Mnemonic</h4>
+        <ul>
+          <li>"<b>G</b>ujarati <b>R</b>aja made <b>C</b>hief <b>J</b>ustice <b>w</b>on the <b>m</b>eeting" → Gujarat, Rajasthan, MP, Chhattisgarh, Jharkhand, West Bengal, Tripura, Mizoram. 8 states, in west→east order.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🇳🇵 Subu Subu (Nepal border)</h4>
+        <ul>
+          <li>"<b>S</b>ubu <b>S</b>ubu <b>S</b>ubu" → <b>S</b>ikkim, <b>U</b>P, <b>B</b>ihar, <b>B</b>engal, <b>U</b>ttarakhand. Sing it like a chant — it's nonsense syllables but the S-U-B-B-U pattern locks 5 states in order.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🇧🇹 Basa (Bhutan border)</h4>
+        <ul>
+          <li>"<b>BASA</b>" → <b>B</b>engal, <b>A</b>ssam, <b>S</b>ikkim, <b>A</b>runachal — the 4 states touching Bhutan, guarded by SSB (same force as Nepal border).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🇲🇲 Arunamami (Myanmar border)</h4>
+        <ul>
+          <li>"<b>Aru-na-ma-mi</b>" → <b>Aru</b>nachal, <b>Na</b>galand, <b>Ma</b>nipur, <b>Mi</b>zoram — sounds like a person's name, top-to-bottom order down the NE.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>📍 Two Indira Points</h4>
+        <ul>
+          <li>Picture two flags both named "Indira": one stuck in <b>ice</b> at the very top (<b>Indira Col</b>, Ladakh — northernmost) and one stuck in <b>sea</b> at the very bottom (<b>Indira Point</b>, Great Nicobar — southernmost). Same name, opposite extremes — that's exactly why this is a trap.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>🚪 Lines That Cross at "Korea"</h4>
+        <ul>
+          <li>Imagine a giant X drawn on the map of Chhattisgarh — one stroke is the IST meridian (time), the other is the Tropic of Cancer (latitude/season). They cross exactly at a town called <b>Korea</b>. Odd name, easy to remember once visualised.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCEPT CONNECTIONS -->
+  <section class="section" id="connections">
+    <div class="section-head">
+      <span class="num">04</span>
+      <h2>Concept Connections</h2>
+      <span class="tag">build the network, not islands of fact</span>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>CAUSE → EFFECT</h4>
+        <ul>
+          <li>Pangaea splits → Laurasia + Gondwanaland → Gondwanaland splits → India drifts north → collides with Eurasian Plate → <b>Himalayas form.</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>FEATURE → EXCEPTION</h4>
+        <ul>
+          <li>India spans 2-hour natural time difference (Gujarat↔Arunachal) → <b>but</b> keeps only 1 time zone (IST), unlike France's 13.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>EVENT → CONSEQUENCE</h4>
+        <ul>
+          <li>J&K reorganised into 2 UTs (J&K + Ladakh, 2019) → "northernmost state" title shifts to Himachal Pradesh, "northernmost UT" stays with Ladakh.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>POLICY → PROBLEM SOLVED</h4>
+        <ul>
+          <li>Border villages near China underdeveloped → Government launches <b>Vibrant Villages Programme (2022)</b>, centrally sponsored → VVP-II (2025) launched as central sector scheme (100% central funding) for villages missed in phase 1, ₹6,829 crore allocated.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>HISTORY → PRESENT NAME</h4>
+        <ul>
+          <li>East Pakistan → independence in 1971 → renamed <b>Bangladesh.</b> Radcliffe Line (drawn for India-Pakistan) therefore also became the India-Bangladesh boundary.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>FORCE → MINISTRY</h4>
+        <ul>
+          <li>Army, Navy, Air Force → Ministry of Defence.<br>BSF, CRPF, CISF, ITBP, SSB (all CAPFs) → Ministry of Home Affairs.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>LAW → ZONE STRUCTURE</h4>
+        <ul>
+          <li><b>UNCLOS (1982)</b> → divides a coastal nation's sea into 5 zones: Internal Waters → Territorial Sea (12 nm) → Contiguous Zone (24 nm) → EEZ (200 nm) → High Seas (beyond, common to all).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>GEOGRAPHY → STRATEGIC NAME</h4>
+        <ul>
+          <li>West Bengal's narrow northern stretch connecting NE India to the mainland (touching Nepal, Bhutan, Bangladesh) = <b>Siliguri Corridor</b> (includes Darjeeling).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BORDER CHECKPOINTS — signature visual -->
+  <section class="section" id="borders">
+    <div class="section-head">
+      <span class="num">04.1</span>
+      <h2>The Seven Gates — Border Checkpoint Strip</h2>
+      <span class="tag">ranked by length, longest → shortest</span>
+    </div>
+    <div class="checkpoints">
+      <div class="checkpoint">
+        <span class="rank">#1 LONGEST</span>
+        <div class="country">Bangladesh</div>
+        <div class="km">4,096 km*</div>
+        <span class="guard">BSF</span>
+        <div class="states">Radcliffe Line · WB, Assam, Meghalaya, Tripura, Mizoram</div>
+      </div>
+      <div class="checkpoint">
+        <span class="rank">#2</span>
+        <div class="country">China</div>
+        <div class="km">3,488 km</div>
+        <span class="guard">ITBP</span>
+        <div class="states">McMahon Line · Ladakh, HP, Uttarakhand, Sikkim, Arunachal — 3 sectors: Western / Middle / Eastern</div>
+      </div>
+      <div class="checkpoint">
+        <span class="rank">#3</span>
+        <div class="country">Pakistan</div>
+        <div class="km">3,323 km</div>
+        <span class="guard">BSF</span>
+        <div class="states">Radcliffe Line · Gujarat, Rajasthan, Punjab + J&K, Ladakh (UTs)</div>
+      </div>
+      <div class="checkpoint">
+        <span class="rank">#4</span>
+        <div class="country">Nepal</div>
+        <div class="km">~1,751 km</div>
+        <span class="guard">SSB</span>
+        <div class="states">Open border · Sikkim, UP, Bihar, WBengal, Uttarakhand ("Subu Subu")</div>
+      </div>
+      <div class="checkpoint">
+        <span class="rank">#5</span>
+        <div class="country">Myanmar</div>
+        <div class="km">~1,643 km</div>
+        <span class="guard">Assam Rifles</span>
+        <div class="states">Arunachal, Nagaland, Manipur, Mizoram ("Arunamami")</div>
+      </div>
+      <div class="checkpoint">
+        <span class="rank">#6</span>
+        <div class="country">Bhutan</div>
+        <div class="km">~699 km</div>
+        <span class="guard">SSB</span>
+        <div class="states">Open border · Bengal, Assam, Sikkim, Arunachal ("Basa")</div>
+      </div>
+      <div class="checkpoint">
+        <span class="rank">#7 SHORTEST</span>
+        <div class="country">Afghanistan</div>
+        <div class="km">shortest</div>
+        <span class="guard">—</span>
+        <div class="states">Via PoK / Ladakh region only</div>
+      </div>
+    </div>
+    <p style="font-size:12px; color:var(--ink-faint); margin-top:10px;">*Total international boundary ≈ 15,106 km. The lecture states the Bangladesh share as the longest single-country boundary; exact published figures vary slightly by source/year — verify current figure in your handbook before exam, but the <b>rank order (Bangladesh &gt; China &gt; Pakistan...)</b> and mnemonic order is the safe takeaway.</p>
+
+    <div class="card-grid" style="margin-top:24px;">
+      <div class="card">
+        <h4>Sea-only neighbours <span class="tag-pill tag-good">+2</span></h4>
+        <ul>
+          <li>Sri Lanka <b>Palk Strait</b></li>
+          <li>Maldives <b>8° Channel</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Named water bodies near Tamil Nadu</h4>
+        <ul>
+          <li>Palk Bay <b>narrower</b></li>
+          <li>Gulf of Mannar <b>wider (Gulf &gt; Bay)</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Biggest Bay / Gulf in the world</h4>
+        <ul>
+          <li>Largest bay <b>Bay of Bengal</b></li>
+          <li>Largest gulf <b>Gulf of Mexico</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Border superlatives</h4>
+        <ul>
+          <li>Most state borders <b>Uttar Pradesh (8 states + Delhi)</b></li>
+          <li>Fewest (1 state each) <b>Sikkim (WB) · Meghalaya (Assam)</b></li>
+          <li>Border w/ 3 countries (states) <b>Sikkim, Arunachal, WBengal</b></li>
+          <li>Border w/ 3 countries (UT) <b>Ladakh (Pak, China, Afghanistan)</b></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAM TRAPS -->
+  <section class="section" id="traps">
+    <div class="section-head">
+      <span class="num">05</span>
+      <h2>⚠ Exam Traps</h2>
+      <span class="tag">where toppers lose marks</span>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 1 — Southernmost confusion</div>
+      <p><b>Kerala</b> is commonly guessed as southernmost state — it is <b>NOT</b>. <b>Tamil Nadu</b> is the southernmost state (mainland).</p>
+      <p class="resolve">Resolve: Tamil Nadu's tip (Kanyakumari) pokes further south than Kerala's tip on the map.</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 2 — Mainland vs Overall</div>
+      <p>"Southernmost point of India" is ambiguous unless qualified. <b>Mainland</b> southernmost = Kanyakumari/Cape Comorin. <b>Overall</b> (incl. islands) southernmost = <b>Indira Point</b>, Great Nicobar.</p>
+      <p class="resolve">Resolve: Always check if the question says "mainland" — that one word flips the answer.</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 3 — Two "Indira" landmarks</div>
+      <p><b>Indira Col</b> (northernmost point, Ladakh) vs <b>Indira Point</b> (southernmost point, Great Nicobar) — same first name, opposite ends of the country.</p>
+      <p class="resolve">Resolve: Col = cold/north (ice pass terminology); Point = a point sticking into southern sea.</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 4 — Northernmost State vs UT</div>
+      <p>Before 2019: J&K was northernmost <b>state</b>. After J&K reorganisation into 2 UTs: <b>Himachal Pradesh</b> becomes northernmost <i>state</i>, while <b>Ladakh</b> remains northernmost <i>UT</i>.</p>
+      <p class="resolve">Resolve: "State" and "UT" are different categories now — always check which the question asks for.</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 5 — IST meridian states vs TOC states</div>
+      <p>5 states carry the IST meridian (82.5°E); 8 states carry the Tropic of Cancer. Students mix up counts or mix up which states belong to which line.</p>
+      <p class="resolve">Resolve: "Mauka Mauka" = 5 (IST). "Gujarati Raja..." = 8 (TOC). Different mnemonics, different numbers.</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 6 — Radcliffe Line used twice</div>
+      <p>The Radcliffe Line separates <b>both</b> India-Pakistan AND India-Bangladesh — because Bangladesh was originally East Pakistan (split off in 1971). Students think it's only the Pakistan border.</p>
+      <p class="resolve">Resolve: One man, one line, drawn once in 1947 — it just got a second name when East Pakistan became Bangladesh.</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 7 — Three similar-sounding boundary lines</div>
+      <p><b>LoC</b> (Line of Control — India/Pakistan, in J&K) vs <b>LAC</b> (Line of Actual Control — India/China) vs <b>McMahon Line</b> (the formally surveyed India-China boundary line, distinct concept from LAC).</p>
+      <p class="resolve">Resolve: LoC = Pakistan, ends in "C" for Control. McMahon = China's official line. LAC = the practical/actual control line with China, not always same as McMahon.</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 8 — National sport confusion</div>
+      <p>Bhutan's national sport is <b>archery</b> (Chilone/Datse), <b>not</b> Kabaddi. Kabaddi is Bangladesh's national sport.</p>
+      <p class="resolve">Resolve: Archery = mountain kingdom Bhutan. Kabaddi = flat delta Bangladesh.</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 9 — Gulf vs Bay terminology</div>
+      <p>Gulf of Mannar (wider) vs Palk Bay/Strait (narrower) near Tamil Nadu/Sri Lanka — students confuse Gulf with Bay sizes.</p>
+      <p class="resolve">Resolve: A Gulf is generally larger/wider than a Bay. Largest gulf = Gulf of Mexico; largest bay = Bay of Bengal.</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 10 — Strait vs Channel separating neighbours</div>
+      <p>India–Sri Lanka separated by <b>Palk Strait</b>; India–Maldives separated by <b>8° Channel</b> — easy to swap which water body goes with which country.</p>
+      <p class="resolve">Resolve: Sri Lanka is close/landlike → "Strait." Maldives is the 8° latitude marker → "8° Channel."</p>
+    </div>
+
+    <div class="trap">
+      <div class="vs">⚠ Trap 11 — Dadra/Daman merger date</div>
+      <p>Dadra & Nagar Haveli and Daman & Diu were separate UTs until they <b>merged in 2019</b>, new capital <b>Daman</b>. Older sources may still list them separately.</p>
+      <p class="resolve">Resolve: Pre-2019 = 2 separate UTs (9 UTs total historically). Post-2019 = merged (now part of today's 8 UT count).</p>
+    </div>
+  </section>
+
+  <!-- EXAMINER'S FAVOURITE QUESTIONS -->
+  <section class="section" id="examiner">
+    <div class="section-head">
+      <span class="num">06</span>
+      <h2>Examiner's Favourite Questions</h2>
+      <span class="tag">how this topic gets attacked</span>
+    </div>
+
+    <div class="qcard">
+      <span class="qtype">Statement-based</span>
+      Which of the following statements is/are correct? (i) Tamil Nadu is the southernmost state of India (ii) Kerala is the southernmost state of India
+      <br><span class="ans">→ Only (i) is correct.</span>
+    </div>
+    <div class="qcard">
+      <span class="qtype">Match the Following</span>
+      Match: Indira Col / Indira Point / Guhar Moti / Kibithu — with North / South / West / East.
+      <br><span class="ans">→ Indira Col–North, Indira Point–South, Guhar Moti–West, Kibithu–East.</span>
+    </div>
+    <div class="qcard">
+      <span class="qtype">Chronology</span>
+      Arrange in chronological order: (a) Bangladesh independence (b) UNCLOS adopted (c) J&K reorganisation into UTs (d) Vibrant Villages Programme launched.
+      <br><span class="ans">→ a (1971) → b (1982) → d (2022) → c (2019)... note: check c vs d order carefully — J&K reorg (2019) actually precedes VVP (2022). Correct order: a → b → c → d.</span>
+    </div>
+    <div class="qcard">
+      <span class="qtype">Assertion–Reason</span>
+      Assertion: India has only one time zone. Reason: The longitudinal extent of India is small.
+      <br><span class="ans">→ Assertion is true, Reason is false — extent is ~30° (large enough for 2-hour difference); India chooses one zone for administrative uniformity, not because the extent is small.</span>
+    </div>
+    <div class="qcard">
+      <span class="qtype">Frequently misread fact</span>
+      "Which CAPF guards the India-Nepal AND India-Bhutan border?" — students often answer BSF (wrong) instead of <b>SSB</b> (correct), confusing it with the Pakistan/Bangladesh guard force.
+    </div>
+    <div class="qcard">
+      <span class="qtype">Confusing facts</span>
+      "Name the UT that shares a border with 3 countries." Often confused with the state answer (Sikkim/Arunachal/WBengal share with 3 countries too) — but the UT answer is <b>Ladakh</b> (Pakistan, China, Afghanistan).
+    </div>
+    <div class="qcard">
+      <span class="qtype">Statement-based (updated data)</span>
+      As per the latest data (PIB, April 2025), which has the longest coastline overall including islands?
+      <br><span class="ans">→ Andaman & Nicobar Islands (not Gujarat — Gujarat is longest only among <i>states</i>).</span>
+    </div>
+  </section>
+
+  <!-- ACTIVE RECALL -->
+  <section class="section" id="recall">
+    <div class="section-head">
+      <span class="num">07</span>
+      <h2>Active Recall</h2>
+      <span class="tag">tap to reveal — test before you peek</span>
+    </div>
+
+    <div class="recall-box"><div class="recall-q">India's area rank in the world?</div><div class="recall-a"><div class="recall-a-inner">7th — after Russia, Canada, USA, China, Brazil, Australia.</div></div></div>
+    <div class="recall-box"><div class="recall-q">Fill in the blank: India's population is ___% of the world's population.</div><div class="recall-a"><div class="recall-a-inner">17%</div></div></div>
+    <div class="recall-box"><div class="recall-q">Southernmost STATE of India?</div><div class="recall-a"><div class="recall-a-inner">Tamil Nadu (not Kerala)</div></div></div>
+    <div class="recall-box"><div class="recall-q">Southernmost POINT of India overall (incl. islands)?</div><div class="recall-a"><div class="recall-a-inner">Indira Point (Pygmalion Point), Great Nicobar Island</div></div></div>
+    <div class="recall-box"><div class="recall-q">Northernmost point of India?</div><div class="recall-a"><div class="recall-a-inner">Indira Col, Ladakh</div></div></div>
+    <div class="recall-box"><div class="recall-q">One-liner: Westernmost point and state?</div><div class="recall-a"><div class="recall-a-inner">Guhar Moti, in Gujarat (also westernmost state)</div></div></div>
+    <div class="recall-box"><div class="recall-q">How many time zones does India have?</div><div class="recall-a"><div class="recall-a-inner">Just 1 (despite a natural 2-hour gap Gujarat↔Arunachal)</div></div></div>
+    <div class="recall-box"><div class="recall-q">Reverse question: Which country has the most time zones?</div><div class="recall-a"><div class="recall-a-inner">France — 13 time zones</div></div></div>
+    <div class="recall-box"><div class="recall-q">IST meridian value?</div><div class="recall-a"><div class="recall-a-inner">82°30′E (82.5°E)</div></div></div>
+    <div class="recall-box"><div class="recall-q">IST is how far ahead of GMT?</div><div class="recall-a"><div class="recall-a-inner">5 hours 30 minutes</div></div></div>
+    <div class="recall-box"><div class="recall-q">Number of states the Tropic of Cancer passes through?</div><div class="recall-a"><div class="recall-a-inner">8 states</div></div></div>
+    <div class="recall-box"><div class="recall-q">Where do the IST meridian and Tropic of Cancer intersect?</div><div class="recall-a"><div class="recall-a-inner">Korea district, Chhattisgarh (Baikunthpur division)</div></div></div>
+    <div class="recall-box"><div class="recall-q">Fill in the blank: India's coastal boundary line, redrawn (updated) data was published by PIB on ___.</div><div class="recall-a"><div class="recall-a-inner">29 April 2025</div></div></div>
+    <div class="recall-box"><div class="recall-q">Number of countries India shares a LAND boundary with?</div><div class="recall-a"><div class="recall-a-inner">7 — Bangladesh, China, Pakistan, Nepal, Myanmar, Bhutan, Afghanistan</div></div></div>
+    <div class="recall-box"><div class="recall-q">Which line separates India and Bangladesh? India and China?</div><div class="recall-a"><div class="recall-a-inner">Radcliffe Line (Bangladesh); McMahon Line (China)</div></div></div>
+    <div class="recall-box"><div class="recall-q">CAPF guarding India-China border?</div><div class="recall-a"><div class="recall-a-inner">ITBP (Indo-Tibetan Border Police)</div></div></div>
+    <div class="recall-box"><div class="recall-q">CAPF guarding India-Nepal and India-Bhutan border?</div><div class="recall-a"><div class="recall-a-inner">SSB (Sashastra Seema Bal)</div></div></div>
+    <div class="recall-box"><div class="recall-q">State with maximum number of state-border-sharing (8 states)?</div><div class="recall-a"><div class="recall-a-inner">Uttar Pradesh (8 states + Delhi)</div></div></div>
+    <div class="recall-box"><div class="recall-q">Two states sharing a border with only ONE other state each?</div><div class="recall-a"><div class="recall-a-inner">Sikkim (West Bengal) and Meghalaya (Assam)</div></div></div>
+    <div class="recall-box"><div class="recall-q">UNCLOS was adopted in which year?</div><div class="recall-a"><div class="recall-a-inner">1982</div></div></div>
+    <div class="recall-box"><div class="recall-q">Territorial Sea extends how far from coast?</div><div class="recall-a"><div class="recall-a-inner">12 nautical miles (≈22 km)</div></div></div>
+    <div class="recall-box"><div class="recall-q">EEZ extends how far from coast?</div><div class="recall-a"><div class="recall-a-inner">200 nautical miles</div></div></div>
+    <div class="recall-box"><div class="recall-q">Vibrant Villages Programme — launch year and which border?</div><div class="recall-a"><div class="recall-a-inner">2022, India-China northern border villages (centrally sponsored)</div></div></div>
+    <div class="recall-box"><div class="recall-q">National sport of Bhutan?</div><div class="recall-a"><div class="recall-a-inner">Archery</div></div></div>
+    <div class="recall-box"><div class="recall-q">Old name of Myanmar? Its capital and currency?</div><div class="recall-a"><div class="recall-a-inner">Burma; Capital: Naypyidaw; Currency: Kyat</div></div></div>
+    <div class="recall-box"><div class="recall-q">Bhutan's capital and currency?</div><div class="recall-a"><div class="recall-a-inner">Thimphu; Ngultrum</div></div></div>
+    <div class="recall-box"><div class="recall-q">Which UT shares a border with 3 countries?</div><div class="recall-a"><div class="recall-a-inner">Ladakh (Pakistan, China, Afghanistan)</div></div></div>
+    <div class="recall-box"><div class="recall-q">Water bodies separating India from Sri Lanka and Maldives respectively?</div><div class="recall-a"><div class="recall-a-inner">Palk Strait (Sri Lanka); 8° Channel (Maldives)</div></div></div>
+  </section>
+
+  <!-- ============ THE 5 LAYERS (ACCORDION) ============ -->
+
+  <section class="section" id="highyield">
+    <div class="section-head">
+      <span class="num">08</span>
+      <h2>Revision Layers</h2>
+      <span class="tag">progressively shorter, same recall power</span>
+    </div>
+
+    <div class="layer-block">
+      <div class="layer-head">
+        <span class="lnum">L2</span>
+        <h3>High-Yield Revision Notes</h3>
+        <span class="desc">read in 5–7 minutes</span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="layer-body">
+        <div class="layer-body-inner">
+          <div class="card-grid">
+            <div class="card">
+              <h4>Identity <span class="tag-pill tag-must">🔥</span></h4>
+              <ul>
+                <li>Part of <b>Gondwanaland</b></li>
+                <li>Rank <b>7th</b> by area</li>
+                <li><b>17%</b> of world population</li>
+                <li>N-E Hemisphere</li>
+                <li>28 states + 8 UTs</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Extent <span class="tag-pill tag-must">🔥</span></h4>
+              <ul>
+                <li>N–S: <b>3,214 km</b></li>
+                <li>E–W: <b>2,933 km</b></li>
+                <li>Lat: 8°4′N – 37°6′N</li>
+                <li>Lon: 68°7′E – 97°25′E</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Time <span class="tag-pill tag-must">🔥</span></h4>
+              <ul>
+                <li>IST = <b>82.5°E</b></li>
+                <li>Near <b>Mirzapur</b></li>
+                <li>1 zone only; +5:30 GMT</li>
+                <li>Passes 5 states (Mauka Mauka)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Tropic of Cancer <span class="tag-pill tag-must">🔥</span></h4>
+              <ul>
+                <li>8 states (Gujarati Raja...)</li>
+                <li>Meets IST line at <b>Korea, CG</b></li>
+                <li>3 capitals above: Jaipur, Agartala, Aizawl</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Extremes <span class="tag-pill tag-must">🔥</span></h4>
+              <ul>
+                <li>N: Indira Col (Ladakh)</li>
+                <li>S: Indira Point (Gr. Nicobar)</li>
+                <li>E: Kibithu (Arunachal)</li>
+                <li>W: Guhar Moti (Gujarat)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h4>Borders <span class="tag-pill tag-imp">⭐</span></h4>
+              <ul>
+                <li>7 countries (land)</li>
+                <li>Bangladesh-China-Pak-Nepal-Myanmar-Bhutan-Afg</li>
+                <li>2 sea-only: Sri Lanka, Maldives</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-block">
+      <div class="layer-head">
+        <span class="lnum">L3</span>
+        <h3 id="ultrafast">Ultra-Fast Revision Sheet</h3>
+        <span class="desc">read in 90 seconds</span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="layer-body">
+        <div class="layer-body-inner">
+          <div class="flash-grid">
+            <div class="flash"><b>RANK</b><span>7th by area</span></div>
+            <div class="flash"><b>POP %</b><span>17% of world</span></div>
+            <div class="flash"><b>UNITS</b><span>28 states + 8 UTs</span></div>
+            <div class="flash"><b>N–S</b><span>3,214 km</span></div>
+            <div class="flash"><b>E–W</b><span>2,933 km</span></div>
+            <div class="flash"><b>IST</b><span>82.5°E · Mirzapur · +5:30</span></div>
+            <div class="flash"><b>IST STATES</b><span>MP-Orissa-UP-CG-AP (5)</span></div>
+            <div class="flash"><b>TOC STATES</b><span>Guj-Raj-MP-CG-Jhk-WB-Tri-Miz (8)</span></div>
+            <div class="flash"><b>TOC ∩ IST</b><span>Korea, Chhattisgarh</span></div>
+            <div class="flash"><b>N POINT</b><span>Indira Col, Ladakh</span></div>
+            <div class="flash"><b>S POINT</b><span>Indira Point, Gr. Nicobar</span></div>
+            <div class="flash"><b>E POINT</b><span>Kibithu, Arunachal</span></div>
+            <div class="flash"><b>W POINT</b><span>Guhar Moti, Gujarat</span></div>
+            <div class="flash"><b>S STATE</b><span>Tamil Nadu (not Kerala!)</span></div>
+            <div class="flash"><b>BORDERS</b><span>7 land + 2 sea-only</span></div>
+            <div class="flash"><b>ORDER</b><span>Bangladesh&gt;China&gt;Pak&gt;Nepal&gt;Myanmar&gt;Bhutan&gt;Afg</span></div>
+            <div class="flash"><b>GUARDS</b><span>BSF (Bang/Pak) · ITBP (China) · SSB (Nepal/Bhutan)</span></div>
+            <div class="flash"><b>LINES</b><span>Radcliffe (Pak/Bang) · McMahon (China)</span></div>
+            <div class="flash"><b>SEA ZONES</b><span>Internal→12nm Territorial→24nm Contiguous→200nm EEZ→High Seas</span></div>
+            <div class="flash"><b>COAST</b><span>9 states + 4 UTs; A&N longest overall, Gujarat longest state</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-block">
+      <div class="layer-head">
+        <span class="lnum">L4</span>
+        <h3 id="thirtysec">30-Second Revision Sheet</h3>
+        <span class="desc">the absolute skeleton</span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="layer-body">
+        <div class="layer-body-inner">
+          <div class="flash-grid">
+            <div class="flash"><b>7th</b><span>area rank</span></div>
+            <div class="flash"><b>17%</b><span>world population</span></div>
+            <div class="flash"><b>28+8</b><span>states + UTs</span></div>
+            <div class="flash"><b>3214 / 2933</b><span>N-S / E-W km</span></div>
+            <div class="flash"><b>82.5°E</b><span>IST · +5:30 GMT</span></div>
+            <div class="flash"><b>5 / 8</b><span>IST states / TOC states</span></div>
+            <div class="flash"><b>Korea, CG</b><span>IST × TOC meet</span></div>
+            <div class="flash"><b>TN</b><span>southernmost state</span></div>
+            <div class="flash"><b>7+2</b><span>land + sea-only neighbours</span></div>
+            <div class="flash"><b>Indira Col/Point</b><span>N / S extreme points</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layer-block">
+      <div class="layer-head">
+        <span class="lnum">L5</span>
+        <h3 id="lastnight">Last-Night-Before-Exam Sheet</h3>
+        <span class="desc">only the traps that bite</span>
+        <span class="chev">▾</span>
+      </div>
+      <div class="layer-body">
+        <div class="layer-body-inner">
+          <div class="lastnight">
+            <ol>
+              <li><b>Tamil Nadu</b> is southernmost state — NOT Kerala.</li>
+              <li>"Southernmost point" — check if question says <b>mainland</b> (Kanyakumari) or <b>overall</b> (Indira Point).</li>
+              <li><b>Indira Col</b> = north. <b>Indira Point</b> = south. Don't swap them under pressure.</li>
+              <li>Northernmost <b>state</b> = Himachal Pradesh; northernmost <b>UT</b> = Ladakh. (Post-2019 split.)</li>
+              <li>IST states = 5 ("Mauka Mauka"). TOC states = 8 ("Gujarati Raja..."). Don't confuse counts.</li>
+              <li>IST and TOC cross at <b>Korea, Chhattisgarh.</b></li>
+              <li>Radcliffe Line = Pakistan <i>and</i> Bangladesh border (Bangladesh was East Pakistan till 1971).</li>
+              <li>SSB guards Nepal + Bhutan (open borders). ITBP guards China. BSF guards Pakistan + Bangladesh.</li>
+              <li>Bhutan's national sport = <b>archery</b>, not Kabaddi (Kabaddi is Bangladesh's).</li>
+              <li>Ladakh is the only UT bordering <b>3 countries</b> (Pakistan, China, Afghanistan).</li>
+              <li>India–Sri Lanka = Palk Strait. India–Maldives = 8° Channel. Don't swap.</li>
+              <li>Coastline data updated <b>29 April 2025</b> — Andaman & Nicobar is longest overall; Gujarat is longest among states only.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-note">PARMAR SSC · FRB 2.0 — INDIA & ITS LOCATION · Revise. Forget less. Recall faster.</div>
+</div>
+
+<script>
+// progress bar
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+});
+
+// accordion logic (delegated, works for dynamically injected content)
+document.addEventListener('click', (e) => {
+  const head = e.target.closest('.layer-head');
+  if(head){
+    head.closest('.layer-block').classList.toggle('open');
+  }
+  const rq = e.target.closest('.recall-q');
+  if(rq){
+    rq.closest('.recall-box').classList.toggle('open');
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌿 Forests & Grasslands | SSC CGL Revision Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2330;
+    --surface3: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+    --green: #3fb950;
+    --green-dim: #1a3a22;
+    --green-glow: rgba(63,185,80,0.15);
+    --amber: #d29922;
+    --amber-dim: #3d2b00;
+    --red: #f85149;
+    --red-dim: #3d0f0b;
+    --blue: #58a6ff;
+    --blue-dim: #0d2846;
+    --purple: #bc8cff;
+    --purple-dim: #2d1f4a;
+    --teal: #39d353;
+    --orange: #e3b341;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  .hero {
+    background: linear-gradient(135deg, #0d1117 0%, #0f2027 40%, #101820 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(63,185,80,0.08) 0%, transparent 70%);
+  }
+  .hero-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--green); }
+  .hero-sub {
+    color: var(--text-muted);
+    font-size: 14px;
+    max-width: 600px;
+    margin: 0 auto 24px;
+  }
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* NAV */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .nav::-webkit-scrollbar { height: 2px; }
+  .nav::-webkit-scrollbar-thumb { background: var(--border); }
+  .nav-inner { display: inline-flex; gap: 0; min-width: 100%; }
+  .nav a {
+    display: inline-block;
+    padding: 14px 16px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav a:hover { color: var(--green); border-bottom-color: var(--green); }
+
+  /* LAYOUT */
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+
+  /* SECTIONS */
+  .section { margin-bottom: 56px; }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* FOREST CARDS */
+  .forest-grid { display: grid; gap: 16px; }
+  .forest-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    border-left: 3px solid var(--green);
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .forest-card:hover { transform: translateX(4px); border-left-color: var(--teal); }
+  .forest-card.amber { border-left-color: var(--amber); }
+  .forest-card.blue { border-left-color: var(--blue); }
+  .forest-card.purple { border-left-color: var(--purple); }
+  .forest-card.red { border-left-color: var(--red); }
+  .forest-card.teal { border-left-color: var(--teal); }
+
+  .fc-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .fc-icon { font-size: 22px; }
+  .fc-title { font-size: 16px; font-weight: 600; color: var(--text); }
+  .fc-rainfall {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--blue);
+    background: var(--blue-dim);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .fc-body { color: var(--text-muted); font-size: 14px; }
+  .fc-body strong { color: var(--text); }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .tag {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: var(--surface3);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+  .tag.fire { background: #3d1a00; color: #ff8c42; border-color: #5c2800; }
+  .tag.green { background: var(--green-dim); color: var(--green); border-color: #2a5e2a; }
+
+  /* PRIORITY TAGS */
+  .priority { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 600; margin-right: 8px; }
+  .priority.must { color: var(--red); }
+  .priority.imp { color: var(--amber); }
+  .priority.good { color: var(--blue); }
+
+  /* MEMORY PALACE */
+  .palace {
+    background: linear-gradient(135deg, #0f1a2e, #1a0f2e);
+    border: 1px solid #2a1f4a;
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .palace::before {
+    content: '🧠';
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    font-size: 48px;
+    opacity: 0.08;
+  }
+  .palace-room {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding: 14px;
+    background: rgba(188,140,255,0.06);
+    border-radius: 10px;
+    border: 1px solid rgba(188,140,255,0.12);
+  }
+  .palace-room:last-child { margin-bottom: 0; }
+  .palace-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--purple);
+    opacity: 0.5;
+    min-width: 36px;
+    line-height: 1;
+    padding-top: 4px;
+  }
+  .palace-content strong { color: var(--purple); font-size: 14px; }
+  .palace-content p { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th {
+    background: var(--surface2);
+    padding: 11px 16px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+  td { padding: 11px 16px; border-bottom: 1px solid #21262d; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+  td strong { color: var(--green); }
+
+  /* TRAPS */
+  .trap-box {
+    background: #1a0a0a;
+    border: 1px solid #4a1515;
+    border-left: 3px solid var(--red);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .trap-box h4 { color: var(--red); font-size: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .trap-box p { color: #c9a0a0; font-size: 13.5px; }
+  .trap-box code {
+    background: #2d1515;
+    color: var(--red);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* EXAM Q */
+  .exam-q {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--amber);
+    background: var(--amber-dim);
+    padding: 3px 8px;
+    border-radius: 4px;
+    min-width: 28px;
+    text-align: center;
+    margin-top: 2px;
+  }
+  .q-text { font-size: 14px; color: var(--text); }
+  .q-hint { font-size: 12px; color: var(--text-dim); margin-top: 5px; font-family: 'JetBrains Mono', monospace; }
+
+  /* ACTIVE RECALL */
+  .recall-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .recall-q {
+    padding: 14px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  .recall-q:hover { background: var(--surface2); }
+  .recall-q span:last-child {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'JetBrains Mono', monospace;
+    transition: transform 0.2s;
+  }
+  .recall-a {
+    display: none;
+    padding: 12px 18px 16px;
+    background: var(--green-dim);
+    border-top: 1px solid var(--border);
+    font-size: 13.5px;
+    color: var(--green);
+  }
+  .recall-card.open .recall-a { display: block; }
+  .recall-card.open .recall-q span:last-child { transform: rotate(180deg); }
+
+  /* HOOKS */
+  .hook-box {
+    background: linear-gradient(135deg, #1a1400, #1a0f00);
+    border: 1px solid #4a3300;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 12px;
+  }
+  .hook-box h4 { color: var(--orange); font-size: 13px; margin-bottom: 8px; letter-spacing: 0.5px; }
+  .hook-box p { color: #c8b07a; font-size: 13.5px; }
+
+  /* LAYERS */
+  .layer-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+  .layer-tab {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .layer-tab.active, .layer-tab:hover { background: var(--green-dim); color: var(--green); border-color: #2a5e2a; }
+  .layer-panel { display: none; }
+  .layer-panel.active { display: block; }
+
+  /* QUICK SHEET */
+  .quick-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .quick-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .quick-item h5 {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--green);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .quick-item ul { list-style: none; }
+  .quick-item li { font-size: 13px; color: var(--text-muted); padding: 2px 0; }
+  .quick-item li::before { content: '→ '; color: var(--green); font-size: 11px; }
+
+  /* LAST NIGHT */
+  .lastnight {
+    background: linear-gradient(135deg, #0a0f1a, #0f1a0a);
+    border: 1px solid #1a3322;
+    border-radius: 16px;
+    padding: 28px;
+  }
+  .ln-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a2620;
+    font-size: 14px;
+  }
+  .ln-item:last-child { border-bottom: none; }
+  .ln-bullet {
+    width: 6px;
+    height: 6px;
+    background: var(--green);
+    border-radius: 50%;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+
+  /* CONNECTIONS */
+  .connection {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .conn-arrow { color: var(--blue); font-weight: 700; font-size: 18px; flex-shrink: 0; margin-top: -2px; }
+  
+  /* GRASSLAND TABLE */
+  .grass-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
+  }
+  .grass-card h4 { color: var(--amber); font-size: 15px; margin-bottom: 10px; }
+
+  /* MOUNTAIN CLIMB */
+  .mountain {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    position: relative;
+  }
+  .mt-level {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .mt-level:last-child { border-bottom: none; }
+  .mt-height {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 80px;
+  }
+  .mt-type { font-size: 14px; font-weight: 600; color: var(--text); }
+  .mt-detail { font-size: 13px; color: var(--text-muted); }
+
+  /* 30 SEC */
+  .thirty {
+    background: var(--surface2);
+    border-radius: 14px;
+    padding: 20px 24px;
+    border: 1px solid var(--border);
+  }
+  .thirty ol { padding-left: 20px; }
+  .thirty li {
+    padding: 5px 0;
+    font-size: 14px;
+    color: var(--text-muted);
+    border-bottom: 1px dashed var(--border);
+  }
+  .thirty li:last-child { border-bottom: none; }
+  .thirty li strong { color: var(--text); }
+
+  /* INFO BOX */
+  .info-box {
+    background: var(--blue-dim);
+    border: 1px solid #1a3a5c;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    color: #a0c4f0;
+  }
+  .info-box strong { color: var(--blue); }
+
+  /* FILL BLANK */
+  .fill-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .blank {
+    display: inline-block;
+    background: var(--surface3);
+    border-bottom: 2px solid var(--green);
+    min-width: 80px;
+    height: 20px;
+    margin: 0 4px;
+    vertical-align: middle;
+    cursor: pointer;
+    border-radius: 4px 4px 0 0;
+    transition: background 0.2s;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--green);
+    text-align: center;
+    line-height: 20px;
+  }
+  .blank:hover, .blank.revealed { background: var(--green-dim); }
+
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--text-dim);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 32px 16px 24px; }
+    .container { padding: 24px 14px; }
+    .palace-room { flex-direction: column; gap: 8px; }
+    .palace-num { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-eyebrow">SSC CGL · Geography · Revision System</div>
+  <h1>🌿 Forests & <span>Grasslands</span></h1>
+  <p class="hero-sub">A high-retention, exam-oriented revision system. Designed to make every fact stick for 6+ months.</p>
+  <div class="badge-row">
+    <span class="badge">🔥 99% CGL Probability</span>
+    <span class="badge">5 Revision Layers</span>
+    <span class="badge">Active Recall Included</span>
+    <span class="badge">Memory Hooks</span>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#bigpicture">Big Picture</a>
+    <a href="#palace">Memory Palace</a>
+    <a href="#forests">Forest Types</a>
+    <a href="#mountain">Mountain Forests</a>
+    <a href="#policy">Policy & Reports</a>
+    <a href="#mangrove">Mangrove</a>
+    <a href="#grasslands">Grasslands</a>
+    <a href="#hooks">Memory Hooks</a>
+    <a href="#connections">Connections</a>
+    <a href="#traps">⚠ Traps</a>
+    <a href="#examq">Exam Qs</a>
+    <a href="#recall">Active Recall</a>
+    <a href="#higgyield">High-Yield</a>
+    <a href="#ultrafast">Ultra-Fast</a>
+    <a href="#thirtysec">30 Sec</a>
+    <a href="#lastnight">Last Night</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- BIG PICTURE -->
+  <section class="section" id="bigpicture">
+    <div class="section-label">Layer 0</div>
+    <div class="section-title">🌍 Big Picture</div>
+    <div class="info-box">
+      This chapter is about <strong>what grows where and why</strong>. Every forest type is just rainfall + temperature deciding what trees get to live. The exam loves asking about trees, grassland names by country, policy years, and the India State of Forest Report data. Master the cause-effect logic and everything else falls into place.
+    </div>
+    <div class="info-box" style="background:#1a0f2e; border-color:#2a1f4a; color:#b0a0d0;">
+      <strong style="color:var(--purple);">The Golden Formula:</strong> More rainfall + high temp → Evergreen → Deciduous → Thorn forest (as rainfall decreases). Altitude changes the sequence vertically. This single logic explains 80% of the chapter.
+    </div>
+  </section>
+
+  <!-- MEMORY PALACE -->
+  <section class="section" id="palace">
+    <div class="section-label">Layer 1 · Story Framework</div>
+    <div class="section-title">🧠 Chapter Memory Palace — "The Rain Train"</div>
+    <div class="palace">
+      <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Imagine a train journey from the Equator to the Himalayas. Each station = one forest type. As rainfall drops, stations become drier. When you take the elevator up the Himalayas, each floor is a different forest.</p>
+      
+      <div class="palace-room">
+        <div class="palace-num">1</div>
+        <div class="palace-content">
+          <strong>🚂 Station AMAZON — Evergreen Forest</strong>
+          <p>You step off at Amazon. It's raining non-stop (200cm+). Trees so tall they block the sun. Epiphytes are climbing up walls like lazy vines. The soil smells rotten — humus burns up fast in the heat. You spot: Rosewood, Ebony, Mahogany, Cinchona (malaria pills), Epiphytes.</p>
+        </div>
+      </div>
+      <div class="palace-room">
+        <div class="palace-num">2</div>
+        <div class="palace-content">
+          <strong>🌧️ Station MONSOON — Deciduous Forest</strong>
+          <p>The rain slows down (70–200cm). Trees start shedding leaves in dry season — they're "deciding" whether to die. On the wetter side (150–200cm): Teak, Sal, Sheesham, Sandalwood. On the dry side (70–150cm): Tendu leaves (biris!), Khair, Palas, Mahua.</p>
+        </div>
+      </div>
+      <div class="palace-room">
+        <div class="palace-num">3</div>
+        <div class="palace-content">
+          <strong>🌵 Station RAJASTHAN — Thorn Forest</strong>
+          <p>Almost no rain (&lt;70cm). Trees grew thorns instead of leaves to stop losing water. The park looks like... well, a parkland! Acacia, Khejari, Cactus. Tuski (bunch grass) grows in bunches. This is Rajasthan/Gujarat/Punjab.</p>
+        </div>
+      </div>
+      <div class="palace-room">
+        <div class="palace-num">4</div>
+        <div class="palace-content">
+          <strong>🏔️ The Himalaya Elevator — Mountain Forests</strong>
+          <p>You take the Himalaya elevator. Ground floor = Deciduous. 2nd floor = Temperate/Wet. 3rd floor = Coniferous (Chir Pine, Cedar, Deodar, Spruce). 4th floor = Alpine grasslands (Bugyals in Uttarakhand). Rooftop = Tundra (Mosses, Lichens, Rhododendron).</p>
+        </div>
+      </div>
+      <div class="palace-room">
+        <div class="palace-num">5</div>
+        <div class="palace-content">
+          <strong>🌊 Station SUNDARBANS — Mangroves</strong>
+          <p>The swampy coastal terminal. Ganga + Brahmaputra dump mud here, creating the world's largest delta. West Bengal = most mangroves. The trees are knee-deep in saltwater. Called: Anup Vana (Hindi), Littoral & Swamp forests.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOREST TYPES -->
+  <section class="section" id="forests">
+    <div class="section-label">Layer 1 · Complete Notes</div>
+    <div class="section-title">🌲 Forest Types — Complete Revision Notes</div>
+
+    <div class="forest-grid">
+
+      <!-- EVERGREEN -->
+      <div class="forest-card">
+        <div class="fc-header">
+          <span class="fc-icon">🌿</span>
+          <span class="fc-title">Tropical Evergreen Forest</span>
+          <span class="fc-rainfall">200–250 cm+</span>
+        </div>
+        <div class="fc-body">
+          <p><span class="priority must">🔥 MUST KNOW</span></p>
+          <p><strong>Why "Evergreen"?</strong> Leaves never all fall together — they fall one by one, so tree always looks green.</p>
+          <p style="margin-top:8px;"><strong>Key Features:</strong> Layered (tall + mid + shrubs), forms canopy/umbrella shape. Dense biodiversity. Temp &gt;20°C + rainfall &gt;200cm.</p>
+          <p style="margin-top:8px;"><strong>⚠ Insolation Trick:</strong> Despite hot equator, insolation (sunlight received) is LESS here than tropics — because clouds block sunlight. Max insolation = just north/south of equator.</p>
+          <p style="margin-top:8px;"><strong>Soil Problem:</strong> Called "Desert covered by Forest" — humus decomposes very fast due to high temp, so soil fertility is poor despite dense biomass.</p>
+          <p style="margin-top:8px;"><strong>Epiphytes:</strong> Vine-type plants that use other trees as support to reach sunlight. Competition for light drives this.</p>
+        </div>
+        <div class="tags">
+          <span class="tag green">Rosewood</span>
+          <span class="tag green">Ebony</span>
+          <span class="tag green">Mahogany</span>
+          <span class="tag green">Cinchona (malaria)</span>
+          <span class="tag green">Epiphytes</span>
+        </div>
+        <div class="tags" style="margin-top:6px;">
+          <span class="tag fire">India: Western Ghats</span>
+          <span class="tag fire">Andaman &amp; Nicobar</span>
+          <span class="tag fire">Meghalaya (Garo, Khasi, Jaintia)</span>
+          <span class="tag fire">Lakshadweep</span>
+        </div>
+        <div class="tags" style="margin-top:6px;">
+          <span class="tag">World: Amazon Brazil (Lungs of Earth)</span>
+        </div>
+      </div>
+
+      <!-- DECIDUOUS -->
+      <div class="forest-card amber">
+        <div class="fc-header">
+          <span class="fc-icon">🍂</span>
+          <span class="fc-title">Tropical Deciduous Forest</span>
+          <span class="fc-rainfall">70–200 cm</span>
+        </div>
+        <div class="fc-body">
+          <p><span class="priority must">🔥 MUST KNOW</span></p>
+          <p><strong>Also called:</strong> Monsoon Forests — because monsoon dominates India, and these are India's most widespread forests.</p>
+          <p style="margin-top:8px;"><strong>Location:</strong> Peninsular Plateau + North Indian Plains</p>
+
+          <p style="margin-top:12px;"><strong>🌧️ Moist Deciduous (150–200 cm):</strong></p>
+          <div class="tags" style="margin-top:4px;">
+            <span class="tag green">Teak (Sagoon)</span>
+            <span class="tag green">Sal</span>
+            <span class="tag green">Sheesham</span>
+            <span class="tag green">Sandalwood</span>
+            <span class="tag green">Neem</span>
+            <span class="tag green">Mahua</span>
+          </div>
+
+          <p style="margin-top:12px;"><strong>☀️ Dry Deciduous (70–150 cm):</strong></p>
+          <p style="font-size:13px; margin-top:4px;">Biri (cigarette) is made from <strong>Tendu leaves</strong> — asked in CGL!</p>
+          <div class="tags" style="margin-top:4px;">
+            <span class="tag">Tendu</span>
+            <span class="tag">Khair</span>
+            <span class="tag">Palas</span>
+            <span class="tag">Shows PARKLAND LANDSCAPE</span>
+          </div>
+          <p style="margin-top:10px; font-size:13px;"><strong>Parkland Landscape:</strong> Like a park — grass with scattered trees. Seen in dry deciduous areas.</p>
+        </div>
+      </div>
+
+      <!-- THORN -->
+      <div class="forest-card red">
+        <div class="fc-header">
+          <span class="fc-icon">🌵</span>
+          <span class="fc-title">Tropical Thorn Forest</span>
+          <span class="fc-rainfall">&lt;70 cm (NCERT says 50)</span>
+        </div>
+        <div class="fc-body">
+          <p><span class="priority must">🔥 MUST KNOW</span></p>
+          <p><strong>Why thorns?</strong> Thorns = modified leaves. Leaves have stomata (water loss) + hydathodes (guttation at night). By converting to thorns → no stomata → no water loss. Survival adaptation.</p>
+          <p style="margin-top:8px;"><strong>⚠ NCERT says &lt;50 cm</strong> but teacher wrote 70. If exam says 50, don't panic — apply logic.</p>
+          <p style="margin-top:8px;"><strong>Tuski Grass:</strong> Bunch grass (Bunchy/Tussock grass). Grows in clumps in dry areas.</p>
+          <p style="margin-top:8px;"><strong>Guttation vs Transpiration:</strong><br>
+          • Stomata → Transpiration (day, from leaf surface)<br>
+          • Hydathodes (leaf edges) → Guttation (night, liquid drops, NOT dew)</p>
+        </div>
+        <div class="tags" style="margin-top:10px;">
+          <span class="tag fire">Acacia</span>
+          <span class="tag fire">Khejari</span>
+          <span class="tag fire">Cactus</span>
+          <span class="tag fire">Tuski/Bunch Grass</span>
+        </div>
+        <div class="tags" style="margin-top:6px;">
+          <span class="tag">India: Rajasthan, Punjab, Gujarat</span>
+        </div>
+      </div>
+
+      <!-- CONIFEROUS -->
+      <div class="forest-card blue">
+        <div class="fc-header">
+          <span class="fc-icon">🎄</span>
+          <span class="fc-title">Coniferous Forest</span>
+          <span class="fc-rainfall">High Snowfall Areas</span>
+        </div>
+        <div class="fc-body">
+          <p><span class="priority imp">⭐ IMPORTANT</span></p>
+          <p><strong>Why cone-shaped?</strong> Snow slides off the sloping sides instead of accumulating and breaking branches. Pure engineering.</p>
+          <p style="margin-top:8px;"><strong>Location:</strong> Upper Himalayas (India). Soft wood trees.</p>
+        </div>
+        <div class="tags" style="margin-top:10px;">
+          <span class="tag green">Chir Pine</span>
+          <span class="tag green">Cedar</span>
+          <span class="tag green">Deodar</span>
+          <span class="tag green">Spruce</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MOUNTAIN FORESTS -->
+  <section class="section" id="mountain">
+    <div class="section-label">Layer 1 · Complete Notes</div>
+    <div class="section-title">🏔️ Mountain Forests — Bottom to Top</div>
+
+    <div class="mountain">
+      <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">Think of it as a vertical journey. Each 1000m = change in forest type.</p>
+
+      <div class="mt-level">
+        <div class="mt-height">GROUND<br>(Foothills)</div>
+        <div>
+          <div class="mt-type">Deciduous Forest 🍂</div>
+          <div class="mt-detail">At the Himalayan foot (Giripad). Good rainfall, warm temp → similar to plains.</div>
+        </div>
+      </div>
+      <div class="mt-level">
+        <div class="mt-height">MEDIUM<br>altitude</div>
+        <div>
+          <div class="mt-type">Wet Temperate Forest 🌲</div>
+          <div class="mt-detail">Like temperate regions — cooler, still moist.</div>
+        </div>
+      </div>
+      <div class="mt-level">
+        <div class="mt-height">~3000m<br>Snowy</div>
+        <div>
+          <div class="mt-type">Coniferous Forest 🎄</div>
+          <div class="mt-detail">Chir Pine, Cedar, Deodar, Spruce. Cone-shaped to shed snow.</div>
+        </div>
+      </div>
+      <div class="mt-level">
+        <div class="mt-height">~4000m<br>Alpine</div>
+        <div>
+          <div class="mt-type">Alpine Grasslands 🏔️</div>
+          <div class="mt-detail">Called <strong>Bugyals</strong> in Uttarakhand. Open meadows above tree line. (Helicopter crash in Bugyal — memorable news!)</div>
+        </div>
+      </div>
+      <div class="mt-level">
+        <div class="mt-height">Peak<br>Summit</div>
+        <div>
+          <div class="mt-type">Tundra Type 🧊</div>
+          <div class="mt-detail">Mosses, Lichens, Rhododendron. Extreme cold. Same as polar tundra conditions.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top:16px;">
+      <strong>South India (Western Ghats, avg 1200m):</strong> Only goes Evergreen → <strong>Shola forests</strong> (temperate). No coniferous, no alpine, no tundra — not high enough! Eastern Ghats (600m avg) = even less variation.
+    </div>
+    <div class="info-box" style="background:#1a0f2e; border-color:#2a1f4a; color:#b0a0d0;">
+      <strong style="color:var(--purple);">Great Himalayas avg:</strong> 6000m | Middle Himalayas: 4000m | Shivalik: 1000m
+    </div>
+  </section>
+
+  <!-- POLICY & REPORTS -->
+  <section class="section" id="policy">
+    <div class="section-label">Layer 1 · 🔥 High Exam Value</div>
+    <div class="section-title">📋 Forest Policy & India State of Forest Report</div>
+
+    <div class="table-wrap" style="margin-bottom:20px;">
+      <table>
+        <thead>
+          <tr>
+            <th>FACT</th>
+            <th>DETAIL</th>
+            <th>PRIORITY</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>National Forest Policy</strong></td>
+            <td>First: <strong>1952</strong> | Amended: <strong>1988</strong> (2nd edition)</td>
+            <td><span class="priority must">🔥</span></td>
+          </tr>
+          <tr>
+            <td><strong>Forest Cover Target</strong></td>
+            <td><strong>33%</strong> of India's geographical area (as per 1988 policy)</td>
+            <td><span class="priority must">🔥</span></td>
+          </tr>
+          <tr>
+            <td><strong>India State of Forest Report</strong></td>
+            <td>Biannual report (every 2 years). First published: <strong>1987</strong></td>
+            <td><span class="priority must">🔥</span></td>
+          </tr>
+          <tr>
+            <td><strong>2023 Report Data</strong></td>
+            <td>Forest cover: <strong>21.76%</strong> | Tree cover: <strong>3.41%</strong> | Total: <strong>25.17%</strong></td>
+            <td><span class="priority must">🔥</span></td>
+          </tr>
+          <tr>
+            <td><strong>Highest Forest Cover (Area)</strong></td>
+            <td><strong>Madhya Pradesh</strong> &gt; Arunachal Pradesh &gt; Chhattisgarh</td>
+            <td><span class="priority must">🔥</span></td>
+          </tr>
+          <tr>
+            <td><strong>Highest Forest % (State)</strong></td>
+            <td><strong>Mizoram</strong> (state) | Lakshadweep (UT — overall first)</td>
+            <td><span class="priority must">🔥</span></td>
+          </tr>
+          <tr>
+            <td><strong>Maximum Increase (Forest+Tree)</strong></td>
+            <td><strong>Chhattisgarh</strong>, then Uttar Pradesh</td>
+            <td><span class="priority imp">⭐</span></td>
+          </tr>
+          <tr>
+            <td><strong>Maximum Decrease</strong></td>
+            <td><strong>Mizoram</strong> and <strong>Gujarat</strong></td>
+            <td><span class="priority imp">⭐</span></td>
+          </tr>
+          <tr>
+            <td><strong>Largest Decrease (MP &amp; Karnataka)</strong></td>
+            <td>Mentioned in report; big states, large absolute decrease</td>
+            <td><span class="priority good">➕</span></td>
+          </tr>
+          <tr>
+            <td><strong>Chipko Movement</strong></td>
+            <td>Started <strong>1973</strong> (mainstream) by <strong>Sunderlal Bahuguna</strong>. Against deforestation. Location: present-day Uttarakhand (then UP)</td>
+            <td><span class="priority imp">⭐</span></td>
+          </tr>
+          <tr>
+            <td><strong>Forest Day</strong></td>
+            <td><strong>21 March</strong></td>
+            <td><span class="priority imp">⭐</span></td>
+          </tr>
+          <tr>
+            <td><strong>Indian Forest Research Institute</strong></td>
+            <td>Located in <strong>Dehradun, Uttarakhand</strong></td>
+            <td><span class="priority imp">⭐</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-box">
+      <strong>🔥 Teacher's Warning:</strong> The India State of Forest Report 2023 (released late 2024) has a <strong>99% probability</strong> of appearing in the upcoming CGL exam. Memorize all data above.
+    </div>
+
+    <div style="margin-top:16px;">
+      <p style="color:var(--text-muted); font-size:13px; margin-bottom:8px;">Important Days (often asked with forest context):</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>DATE</th><th>DAY</th></tr></thead>
+          <tbody>
+            <tr><td><strong>21 March</strong></td><td>Forest Day / World Forestry Day</td></tr>
+            <tr><td><strong>22 March</strong></td><td>World Water Day</td></tr>
+            <tr><td><strong>22 April</strong></td><td>Earth Day</td></tr>
+            <tr><td><strong>22 May</strong></td><td>Biodiversity Day</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANGROVE -->
+  <section class="section" id="mangrove">
+    <div class="section-label">Layer 1 · Complete Notes</div>
+    <div class="section-title">🌊 Mangrove / Littoral Forests</div>
+
+    <div class="forest-card teal">
+      <div class="fc-header">
+        <span class="fc-icon">🦀</span>
+        <span class="fc-title">Mangrove (Littoral & Swamp) Forests</span>
+        <span class="fc-rainfall">Coastal Areas</span>
+      </div>
+      <div class="fc-body">
+        <p><strong>Hindi:</strong> Anup Vana (Anup Forest)</p>
+        <p style="margin-top:8px;"><strong>Found in:</strong> Coastal areas — swampy, marshy conditions</p>
+        <p style="margin-top:8px;"><strong>Best location:</strong> Sundarban Delta (largest delta in world) — formed by Ganga (Padma) + Brahmaputra + Meghna rivers</p>
+        <p style="margin-top:8px;"><strong>Highest mangroves in India:</strong> <strong>West Bengal</strong></p>
+        <p style="margin-top:8px;"><strong>Mangrove cover:</strong> <strong>0.15%</strong> of total geographical area (per India State of Forest Report)</p>
+        <p style="margin-top:8px;"><strong>Sundarbans:</strong> Ganga = Padma (Bangladesh), Brahmaputra = Jamuna (Bangladesh), then merges as Meghna → forms world's largest delta. Barak river = Surma in Bangladesh.</p>
+        <p style="margin-top:8px;"><strong>Tributaries note:</strong> Damodar tributary → Barakar (Maithon & Tilaiya dams). Hooghly is also a tributary of Ganga.</p>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top:14px;">
+      <strong>River Name Changes (exam trap!):</strong> Ganga → Padma | Brahmaputra → Jamuna | Combined → Meghna | Barak → Surma
+    </div>
+  </section>
+
+  <!-- GRASSLANDS -->
+  <section class="section" id="grasslands">
+    <div class="section-label">Layer 1 · Complete Notes</div>
+    <div class="section-title">🌾 World Grasslands — The Name Map</div>
+
+    <div class="info-box" style="margin-bottom:16px;">
+      <strong>The Core Divide:</strong> Tropical grasslands = tall, not nutritious, found in tropics. Temperate grasslands = short, nutritious, juicy → supports agriculture + livestock (mixed farming).
+    </div>
+
+    <div class="grass-card">
+      <h4>🌡️ Tropical Grasslands (Tall, Less Nutritious)</h4>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>COUNTRY/REGION</th><th>NAME</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Africa</strong></td><td>Savannah — "Big game country" (poaching of animals)</td></tr>
+            <tr><td><strong>Brazil</strong></td><td>Campos</td></tr>
+            <tr><td><strong>Venezuela</strong></td><td>Llanos</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grass-card" style="margin-top:12px;">
+      <h4>❄️ Temperate Grasslands (Short, Nutritious, Supports Livestock)</h4>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>COUNTRY/REGION</th><th>NAME</th><th>MEMORY HOOK</th></tr></thead>
+          <tbody>
+            <tr><td><strong>North America</strong></td><td>Prairies</td><td>"Wheat granary of the world" 🌾</td></tr>
+            <tr><td><strong>Asia &amp; Europe</strong></td><td>Steppes</td><td>"Step by step" — go step by step like SSC → UPSC</td></tr>
+            <tr><td><strong>South Africa</strong></td><td>Veld (Wales)</td><td>AB de Villiers = SA → welding/veld</td></tr>
+            <tr><td><strong>Australia</strong></td><td>Downs</td><td>Go "down" to Australia on map</td></tr>
+            <tr><td><strong>Hungary</strong></td><td>Puszta (Pustas)</td><td>Hungary → Pasta → Puszta</td></tr>
+            <tr><td><strong>New Zealand</strong></td><td>Canterbury</td><td>Tina has passed — "New Cadbury Canterbury"</td></tr>
+            <tr><td><strong>Argentina</strong></td><td>Pampas</td><td>Alpha alpha grass is found here</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top:14px;">
+      <strong>Savannah = "Big Game Country"</strong> — Poaching is rampant (animals killed for skin, horns, etc.). Prairies = "Wheat Granary of the World."
+    </div>
+  </section>
+
+  <!-- MEASUREMENT INSTRUMENTS -->
+  <section class="section" id="instruments">
+    <div class="section-label">Layer 1 · Quick Facts</div>
+    <div class="section-title">🔬 Measurement Instruments (Teacher Extras)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>WHAT IS MEASURED</th><th>INSTRUMENT</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Rainfall</strong></td><td>Rain Gauge / Hyetometer</td></tr>
+          <tr><td><strong>Wind Speed</strong></td><td>Anemometer</td></tr>
+          <tr><td><strong>Wind Direction</strong></td><td>Wind Vane</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div class="section-label">Biology Extras (mentioned in lecture)</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>TERM</th><th>DETAIL</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Stomata</strong></td><td>Openings on underside of leaves. Guarded by kidney-shaped guard cells. Water loss via transpiration (day).</td></tr>
+            <tr><td><strong>Hydathodes</strong></td><td>Located at leaf edges. Water loss at night = Guttation (NOT dew).</td></tr>
+            <tr><td><strong>Guttation</strong></td><td>Night water loss from leaf edges via hydathodes. ≠ Transpiration (which is via stomata, daytime).</td></tr>
+            <tr><td><strong>Dendritic Drainage</strong></td><td>Pattern like veins of leaves.</td></tr>
+            <tr><td><strong>Humus</strong></td><td>Dark-coloured amorphous solid organic compound. Degrades fast in high temperature → poor soil in evergreen forests.</td></tr>
+            <tr><td><strong>Amazon River</strong></td><td>Largest (volume) river. Nile = Longest river (Africa).</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMORY HOOKS -->
+  <section class="section" id="hooks">
+    <div class="section-label">Layer 2 · Memory Engineering</div>
+    <div class="section-title">🧲 Smart Memory Hooks</div>
+
+    <div class="hook-box">
+      <h4>🌾 Grassland Names — The "PASSPORT" Journey</h4>
+      <p><strong>P</strong>rairies (North America) → <strong>S</strong>teppe (Asia/Europe) → <strong>V</strong>eld (South Africa = <em>AB de Villiers is welding now</em>) → <strong>D</strong>owns (Australia = go DOWN to Australia) → <strong>P</strong>uszta (<em>Hungary → hungry for PASTA → Puszta</em>) → <strong>C</strong>anterbury (New Zealand = <em>New Cadbury Dairy Milk</em>) → <strong>P</strong>ampas (Argentina = Tina has passed!)</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🌳 Evergreen Forest Trees — "REM + CE"</h4>
+      <p><strong>R</strong>osewood → <strong>E</strong>bony → <strong>M</strong>ahogany → <strong>C</strong>inchona (malaria medicine from bark) → <strong>E</strong>piphytes (climbers). Imagine walking through Amazon and getting bitten by mosquito → you need Cinchona → look up → Epiphyte vine is blocking sky → push it aside → touch Rosewood, Ebony, Mahogany trees.</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🍂 Moist Deciduous Trees — "Teak Sal Said No to Mud"</h4>
+      <p><strong>Teak</strong> (Sagoon) → <strong>Sal</strong> → <strong>Sheesham</strong> → <strong>Sandalwood</strong> → <strong>N</strong>eem → <strong>M</strong>ahua. "Teak Sal Said No More" = T, S, S, N, M. Moist means MORE trees.</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>📅 Policy Dates — "The 52-Year Gap"</h4>
+      <p>Forest Policy born in <strong>1952</strong>. Lived 36 years. Died and reborn as a new edition in <strong>1988</strong>. Target: <strong>33%</strong>. Current reality: <strong>25.17%</strong>. Gap = 7.83% — still working on it.</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🏔️ Himalaya Vertical Order — "Dad Calls Conifer, Alice Takes Rest"</h4>
+      <p><strong>D</strong>eciduous (foothills) → <strong>W</strong>et Temperate → <strong>C</strong>oniferous → <strong>A</strong>lpine Grasslands (Bugyal) → <strong>T</strong>undra (top). Bottom to top = D → WT → C → A → T</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🎋 Cinchona — The Life-Saver Tree</h4>
+      <p>Cinchona bark → quinine → malaria medicine. Found in evergreen forests. If you see Cinchona in any MCQ option for evergreen forests, it's almost always the answer they want.</p>
+    </div>
+  </section>
+
+  <!-- CONNECTIONS -->
+  <section class="section" id="connections">
+    <div class="section-label">Layer 2 · Network Thinking</div>
+    <div class="section-title">🔗 Concept Connections</div>
+
+    <div class="connection">
+      <span class="conn-arrow">→</span>
+      <span>High rainfall (200cm+) <strong>CAUSES</strong> dense canopy <strong>CAUSES</strong> competition for sunlight <strong>CAUSES</strong> epiphytes to climb other trees</span>
+    </div>
+    <div class="connection">
+      <span class="conn-arrow">→</span>
+      <span>High temp in equator <strong>CAUSES</strong> fast humus decomposition <strong>CAUSES</strong> poor soil fertility despite dense vegetation → "Desert covered by forest"</span>
+    </div>
+    <div class="connection">
+      <span class="conn-arrow">→</span>
+      <span>Equatorial region has many clouds (high rain) <strong>MEANS</strong> less direct sunlight reaches surface → lower insolation than tropical regions just above/below equator</span>
+    </div>
+    <div class="connection">
+      <span class="conn-arrow">→</span>
+      <span>Thorny forest plants have no true leaves <strong>BECAUSE</strong> leaves → stomata → water loss → dangerous in dry areas → thorns solve this</span>
+    </div>
+    <div class="connection">
+      <span class="conn-arrow">→</span>
+      <span>Ganga + Brahmaputra delta → swampy marshy conditions → perfect for mangrove → West Bengal has most mangroves → Sundarbans UNESCO site</span>
+    </div>
+    <div class="connection">
+      <span class="conn-arrow">→</span>
+      <span>Temperate grasslands = nutritious short grass <strong>THEREFORE</strong> cattle thrive <strong>THEREFORE</strong> mixed farming (agriculture + livestock) flourishes there</span>
+    </div>
+    <div class="connection">
+      <span class="conn-arrow">→</span>
+      <span>Altitude increases → temperature drops → vegetation changes from deciduous → temperate → coniferous → alpine → tundra (Himalaya sequence)</span>
+    </div>
+    <div class="connection">
+      <span class="conn-arrow">→</span>
+      <span>Mizoram = small state but highest % forest cover (state) | MP = large state so highest absolute forest area. Small vs large = % vs absolute.</span>
+    </div>
+  </section>
+
+  <!-- EXAM TRAPS -->
+  <section class="section" id="traps">
+    <div class="section-label">Layer 2 · Danger Zone</div>
+    <div class="section-title">⚠️ Exam Traps</div>
+
+    <div class="trap-box">
+      <h4>⚠️ Mizoram vs Lakshadweep vs Madhya Pradesh</h4>
+      <p><code>Area-wise (highest)</code> → Madhya Pradesh | <code>Percentage-wise (state)</code> → Mizoram | <code>Percentage-wise (UT/overall)</code> → Lakshadweep. Exam will word the question one of these three ways. Read carefully!</p>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ Guttation ≠ Dew</h4>
+      <p>Dew forms on the surface from condensation. Guttation = water released from inside the leaf through <code>hydathodes</code> at leaf edges, at night. They look similar but are completely different phenomena.</p>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ Amazon = Largest ≠ Longest</h4>
+      <p><code>Nile</code> = longest river (Africa). <code>Amazon</code> = largest by volume/discharge (South America). "Largest" in river context usually means by water volume, not length.</p>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ Thorn Forest Rainfall: 50 vs 70</h4>
+      <p>NCERT says <code>&lt;50cm</code>. Teacher noted <code>70cm</code> as practical cutoff. If option says 50cm, choose it. If it says 70cm, choose that. Apply logic — don't freeze.</p>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ Chipko Movement Year</h4>
+      <p>Chipko started in <code>1973</code> (the actual movement). Teacher mentioned 1978 (possibly the Bahuguna phase). Most standard sources = 1973. Sunderlal Bahuguna = key leader.</p>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ India State of Forest Report: Biannual ≠ Twice a Year</h4>
+      <p>Biannual = once every two years (biennial). NOT bi-annual (twice/year). The report comes every <code>2 years</code>. First published: <code>1987</code>.</p>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ Savannah = Tropical, not Temperate</h4>
+      <p>Savannah (Africa) = tropical grassland = tall, not nutritious, "big game country". Veld (South Africa) = temperate grassland. Same continent, different zone — easily confused!</p>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ Shola Forests = Western Ghats Temperate</h4>
+      <p>Shola = temperate forests in Western Ghats at higher altitudes. Not a separate major category — subset of mountain forests in South India. Don't confuse with alpine.</p>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ Insolation Paradox</h4>
+      <p>Equator gets LESS insolation than just-north/south of equator. Reason: heavy clouds at equator block sunlight. Max insolation = tropics (Tropic of Cancer/Capricorn zone).</p>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ Tendu Leaves → Biri (NOT cigarette)</h4>
+      <p>Biri is made from <code>Tendu leaves</code> (dry deciduous forest). Biri ≠ cigarette (cigarettes use tobacco wrapped in paper). Tendu = asked in CGL. Don't mix with any other leaf.</p>
+    </div>
+  </section>
+
+  <!-- EXAMINER'S QUESTIONS -->
+  <section class="section" id="examq">
+    <div class="section-label">Layer 2 · Think Like an Examiner</div>
+    <div class="section-title">🎯 Examiner's Favourite Questions</div>
+
+    <div class="exam-q">
+      <span class="q-num">Q1</span>
+      <div>
+        <div class="q-text">Which state has the highest forest cover in terms of percentage in India?</div>
+        <div class="q-hint">→ Mizoram (state) | Lakshadweep (UT) [CGL TRAP!]</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q2</span>
+      <div>
+        <div class="q-text">Which state has the highest forest cover by area?</div>
+        <div class="q-hint">→ Madhya Pradesh</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q3</span>
+      <div>
+        <div class="q-text">Biris are made from the leaves of which plant?</div>
+        <div class="q-hint">→ Tendu (dry deciduous forest) [Previously asked in CGL]</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q4</span>
+      <div>
+        <div class="q-text">What is the target of forest cover set by the National Forest Policy?</div>
+        <div class="q-hint">→ 33% of geographical area (1988 policy)</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q5</span>
+      <div>
+        <div class="q-text">What is the Parkland Landscape associated with?</div>
+        <div class="q-hint">→ Dry Deciduous Forests (scattered trees in grassy area)</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q6</span>
+      <div>
+        <div class="q-text">Prairies are the temperate grasslands of which country/continent?</div>
+        <div class="q-hint">→ North America | Also known as "Wheat Granary of the World"</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q7</span>
+      <div>
+        <div class="q-text">The India State of Forest Report is published every __ years. First published in __?</div>
+        <div class="q-hint">→ 2 years (biannual) | First: 1987</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q8</span>
+      <div>
+        <div class="q-text">Which medicine is derived from the bark of Cinchona tree?</div>
+        <div class="q-hint">→ Quinine / Anti-malaria medicine | Found in Evergreen Forests</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q9</span>
+      <div>
+        <div class="q-text">Mangrove forests are called __ in Hindi?</div>
+        <div class="q-hint">→ Anup Vana (Anup Forest) | Also: Littoral and Swamp Forests</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q10</span>
+      <div>
+        <div class="q-text">Bugyals are associated with which state and which forest type?</div>
+        <div class="q-hint">→ Uttarakhand | Alpine Grasslands (above coniferous zone in Himalayas)</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q11</span>
+      <div>
+        <div class="q-text">Indian Forest Research Institute is located in?</div>
+        <div class="q-hint">→ Dehradun, Uttarakhand</div>
+      </div>
+    </div>
+    <div class="exam-q">
+      <span class="q-num">Q12</span>
+      <div>
+        <div class="q-text">Savannahs are called what in tropical context? Why "big game country"?</div>
+        <div class="q-hint">→ Africa's tropical grasslands. "Big game" = large animal hunting/poaching for skin, horns, etc.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACTIVE RECALL -->
+  <section class="section" id="recall">
+    <div class="section-label">Layer 2 · Active Recall Training</div>
+    <div class="section-title">❓ Active Recall — Click to Reveal</div>
+    <p style="color:var(--text-dim); font-size:12px; margin-bottom:16px; font-family:'JetBrains Mono',monospace;">Click each question to see the answer. Test yourself first!</p>
+
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>What rainfall range produces evergreen forests?</span><span>▼</span></div>
+      <div class="recall-a">Above 200 cm (some sources say 250 cm). Temperature also must be above 20°C.</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>Name three trees of evergreen forests.</span><span>▼</span></div>
+      <div class="recall-a">Rosewood, Ebony, Mahogany, Cinchona, Epiphytes (any three). Remember: REM + CE.</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>What are the two types of deciduous forests and their rainfall?</span><span>▼</span></div>
+      <div class="recall-a">Moist Deciduous: 150–200 cm | Dry Deciduous: 70–150 cm</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>Biris are made from which tree's leaves?</span><span>▼</span></div>
+      <div class="recall-a">Tendu leaves — found in Dry Deciduous forests.</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>What are grasslands called in Argentina?</span><span>▼</span></div>
+      <div class="recall-a">Pampas — alpha alpha grass is found here.</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>What is the current forest+tree cover % in India (2023 ISFR)?</span><span>▼</span></div>
+      <div class="recall-a">21.76% (forest) + 3.41% (tree) = 25.17% total. Target = 33%.</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>Name the vertical sequence of forests in the Himalayas (bottom to top).</span><span>▼</span></div>
+      <div class="recall-a">Deciduous → Wet Temperate → Coniferous → Alpine (Bugyal) → Tundra</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>What is guttation? How is it different from transpiration?</span><span>▼</span></div>
+      <div class="recall-a">Guttation = water loss at night from leaf EDGES via hydathodes. Transpiration = water loss during day via stomata on leaf surface.</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>Why are coniferous trees cone-shaped?</span><span>▼</span></div>
+      <div class="recall-a">So snow slides off without accumulating. Prevents branch breakage in high snowfall areas.</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>National Forest Policy: year of first policy and amendment?</span><span>▼</span></div>
+      <div class="recall-a">First: 1952 | Amended: 1988 | Target: 33% forest cover</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>Fill: Steppes are in __, Veld in __, Downs in __, Puszta in __.</span><span>▼</span></div>
+      <div class="recall-a">Steppes → Asia/Europe | Veld → South Africa | Downs → Australia | Puszta → Hungary</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>Which state has the MAXIMUM INCREASE in forest+tree cover (2023 report)?</span><span>▼</span></div>
+      <div class="recall-a">Chhattisgarh (first), then Uttar Pradesh.</div>
+    </div>
+    <div class="recall-card" onclick="this.classList.toggle('open')">
+      <div class="recall-q"><span>What is the soil called in evergreen forests? Why?</span><span>▼</span></div>
+      <div class="recall-a">"Desert covered by forest" — because humus decomposes very fast in high temperature, making the soil infertile despite dense vegetation.</div>
+    </div>
+
+    <!-- FILL IN THE BLANKS -->
+    <p style="color:var(--text-muted); font-size:13px; margin: 20px 0 10px; font-weight:600;">Fill in the Blanks — Click blank to reveal:</p>
+
+    <div class="fill-item">The Amazon rainforest in Brazil is called the <span class="blank" onclick="this.textContent='Lungs of Earth'; this.classList.add('revealed')">___?___</span> of the world.</div>
+    <div class="fill-item">Monsoon forests are also called <span class="blank" onclick="this.textContent='Tropical Deciduous'; this.classList.add('revealed')">___?___</span> forests.</div>
+    <div class="fill-item">Indian Forest Research Institute is in <span class="blank" onclick="this.textContent='Dehradun'; this.classList.add('revealed')">___?___</span>.</div>
+    <div class="fill-item">Alpha alpha grass is found in <span class="blank" onclick="this.textContent='Pampas, Argentina'; this.classList.add('revealed')">___?___</span>.</div>
+    <div class="fill-item">ISFR was first published in <span class="blank" onclick="this.textContent='1987'; this.classList.add('revealed')">___?___</span> and is published every <span class="blank" onclick="this.textContent='2 years'; this.classList.add('revealed')">___?___</span>.</div>
+    <div class="fill-item">Mangrove forests in Hindi are called <span class="blank" onclick="this.textContent='Anup Vana'; this.classList.add('revealed')">___?___</span>.</div>
+  </section>
+
+  <!-- HIGH YIELD -->
+  <section class="section" id="higgyield">
+    <div class="section-label">Layer 3 · Condensed</div>
+    <div class="section-title">⭐ High-Yield Revision Notes</div>
+
+    <div class="quick-grid">
+      <div class="quick-item">
+        <h5>EVERGREEN FORESTS</h5>
+        <ul>
+          <li>200cm+ rainfall, 20°C+ temp</li>
+          <li>Layered, canopy-forming</li>
+          <li>Never fully shed leaves</li>
+          <li>Poor soil (humus decomposes fast)</li>
+          <li>India: W.Ghats, A&N, Meghalaya, Lakshadweep</li>
+          <li>Trees: Rosewood, Ebony, Mahogany, Cinchona, Epiphytes</li>
+        </ul>
+      </div>
+      <div class="quick-item">
+        <h5>DECIDUOUS FORESTS</h5>
+        <ul>
+          <li>70–200cm. Most widespread in India</li>
+          <li>Moist (150–200): Teak, Sal, Sheesham, Sandalwood</li>
+          <li>Dry (70–150): Tendu (biri!), Khair, Palas</li>
+          <li>Also called: Monsoon Forests</li>
+          <li>Parkland landscape = Dry Deciduous</li>
+        </ul>
+      </div>
+      <div class="quick-item">
+        <h5>THORN FORESTS</h5>
+        <ul>
+          <li>&lt;70cm (NCERT: &lt;50cm)</li>
+          <li>Thorns = modified leaves</li>
+          <li>Rajasthan, Punjab, Gujarat</li>
+          <li>Acacia, Khejari, Cactus, Tuski grass</li>
+          <li>Guttation (hydathodes) ≠ Transpiration (stomata)</li>
+        </ul>
+      </div>
+      <div class="quick-item">
+        <h5>CONIFEROUS + MOUNTAIN</h5>
+        <ul>
+          <li>Cone shape → sheds snow</li>
+          <li>Trees: Chir Pine, Cedar, Deodar, Spruce</li>
+          <li>Himalayas: Deciduous→Temperate→Coniferous→Alpine→Tundra</li>
+          <li>Bugyals = alpine grasslands in Uttarakhand</li>
+          <li>Shola = temperate in W.Ghats</li>
+        </ul>
+      </div>
+      <div class="quick-item">
+        <h5>POLICY & REPORTS 🔥</h5>
+        <ul>
+          <li>Policy: 1952 → amended 1988</li>
+          <li>Target: 33% cover</li>
+          <li>ISFR 2023: 25.17% (forest+tree)</li>
+          <li>First ISFR: 1987</li>
+          <li>Highest area: MP | Highest %: Mizoram</li>
+          <li>Max increase: Chhattisgarh</li>
+        </ul>
+      </div>
+      <div class="quick-item">
+        <h5>GRASSLANDS 🔥</h5>
+        <ul>
+          <li>Prairies = N.America (wheat granary)</li>
+          <li>Savannah = Africa (big game)</li>
+          <li>Campos = Brazil | Llanos = Venezuela</li>
+          <li>Steppes = Asia/Europe</li>
+          <li>Veld = S.Africa | Downs = Australia</li>
+          <li>Puszta = Hungary | Canterbury = NZ | Pampas = Argentina</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ULTRA FAST -->
+  <section class="section" id="ultrafast">
+    <div class="section-label">Layer 4 · Ultra Condensed</div>
+    <div class="section-title">⚡ Ultra-Fast Revision Sheet</div>
+
+    <div class="thirty">
+      <ol>
+        <li><strong>Evergreen</strong> → 200cm+, Rosewood/Ebony/Mahogany/Cinchona/Epiphytes, W.Ghats/A&N/Meghalaya. Desert-covered-by-forest soil.</li>
+        <li><strong>Moist Deciduous</strong> → 150–200cm. Teak, Sal, Sheesham, Sandalwood, Neem, Mahua.</li>
+        <li><strong>Dry Deciduous</strong> → 70–150cm. Tendu (biri), Khair, Palas. Parkland landscape.</li>
+        <li><strong>Thorn</strong> → &lt;70cm. Acacia, Khejari, Cactus, Tuski grass. Raj/Guj/Punjab.</li>
+        <li><strong>Coniferous</strong> → High snowfall. Chir Pine, Cedar, Deodar, Spruce. Cone = snow shedder.</li>
+        <li><strong>Mountain Order</strong> → Deciduous→Wet Temperate→Coniferous→Alpine (Bugyal)→Tundra</li>
+        <li><strong>Mangrove</strong> → Coastal/swampy. Anup Vana. West Bengal (most). Sundarbans delta.</li>
+        <li><strong>Policy</strong> → 1952 (first), 1988 (amended), 33% target. ISFR first: 1987, biannual.</li>
+        <li><strong>ISFR 2023</strong> → Forest 21.76% + Tree 3.41% = 25.17%. MP (area), Mizoram (%), CG (max increase).</li>
+        <li><strong>Grasslands</strong> → Prairies(NA), Steppes(Asia/EU), Veld(SA), Downs(AU), Puszta(HU), Canterbury(NZ), Pampas(Arg), Savannah/Campos/Llanos (tropical)</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 30 SEC -->
+  <section class="section" id="thirtysec">
+    <div class="section-label">Layer 5a · 30 Seconds</div>
+    <div class="section-title">⏱️ 30-Second Revision Sheet</div>
+
+    <div class="thirty" style="background: #0f1a0a; border-color:#1a3322;">
+      <ol>
+        <li>Rain: 200+ → Evergreen | 150–200 → Moist Dec | 70–150 → Dry Dec | &lt;70 → Thorn</li>
+        <li>Biri = <strong>Tendu</strong>. Malaria = <strong>Cinchona</strong>. Bugyal = Alpine grassland (Uttarakhand).</li>
+        <li>Policy: <strong>1952 → 1988</strong>. Target: <strong>33%</strong>. Current: <strong>25.17%</strong>. ISFR first: <strong>1987</strong>.</li>
+        <li>Highest area: <strong>MP</strong>. Highest %: <strong>Mizoram</strong>. Max increase: <strong>Chhattisgarh</strong>.</li>
+        <li>Prairies=NA | Steppes=Asia/EU | Veld=SA | Downs=AU | Puszta=HU | Pampas=Arg</li>
+        <li>Mangrove = Anup Vana. Most in <strong>West Bengal</strong>. Sundarbans delta.</li>
+        <li>Himalaya order: Dec → Wet Temp → Conifer → Alpine → Tundra</li>
+        <li>Guttation (night, hydathodes) ≠ Transpiration (day, stomata)</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- LAST NIGHT -->
+  <section class="section" id="lastnight">
+    <div class="section-label">Layer 5b · Exam Eve</div>
+    <div class="section-title">🌙 Last-Night-Before-Exam Sheet</div>
+
+    <div class="lastnight">
+      <div class="ln-item"><div class="ln-bullet"></div><div><strong>Tendu leaves → Biri</strong> (dry deciduous). <strong>Cinchona bark → Malaria medicine</strong> (evergreen).</div></div>
+      <div class="ln-item"><div class="ln-bullet"></div><div><strong>MP = highest forest area | Mizoram = highest % (state) | CG = max increase</strong></div></div>
+      <div class="ln-item"><div class="ln-bullet"></div><div>ISFR: <strong>25.17%</strong> cover. Target: <strong>33%</strong>. Policy: <strong>1952, 1988</strong>. ISFR first: <strong>1987</strong>.</div></div>
+      <div class="ln-item"><div class="ln-bullet"></div><div>Prairies (N.America) = Wheat Granary. Savannah (Africa) = Big Game Country.</div></div>
+      <div class="ln-item"><div class="ln-bullet"></div><div>Pampas = Argentina | Puszta = Hungary | Downs = Australia | Veld = South Africa | Steppes = Asia/Europe</div></div>
+      <div class="ln-item"><div class="ln-bullet"></div><div>Mangrove = <strong>West Bengal</strong> (most). Hindi = Anup Vana. Sundarbans = world's largest delta.</div></div>
+      <div class="ln-item"><div class="ln-bullet"></div><div>Himalaya: Deciduous → Wet Temp → <strong>Coniferous</strong> → <strong>Alpine/Bugyal</strong> → <strong>Tundra</strong></div></div>
+      <div class="ln-item"><div class="ln-bullet"></div><div>Forest Day = <strong>21 March</strong> | IFRI = <strong>Dehradun</strong> | Chipko = <strong>Sunderlal Bahuguna</strong>, Uttarakhand</div></div>
+      <div class="ln-item"><div class="ln-bullet"></div><div>Guttation ≠ Dew. Amazon ≠ Longest (Nile is). Biannual = every 2 years (NOT twice/year).</div></div>
+      <div class="ln-item"><div class="ln-bullet"></div><div>🔥 Lakshadweep = highest % overall (UT). If Q says "state" → Mizoram. Don't mix!</div></div>
+    </div>
+
+    <div class="info-box" style="margin-top:20px; text-align:center;">
+      <strong style="font-size:15px;">You've got this. Trust the revision system. 🎯</strong><br>
+      <span style="font-size:12px; color:var(--text-dim);">Created for SSC CGL · Forests & Grasslands · Designed for 20–100 revisions</span>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  SSC CGL · Geography · Forests & Grasslands · Revision System v1.0<br>
+  Designed for high-retention, exam-oriented revision | Dark Mode Optimized
+</footer>
+
+<script>
+  // Smooth nav highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav a');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = '';
+          link.style.borderBottomColor = '';
+          if (link.getAttribute('href') === '#' + entry.target.id) {
+            link.style.color = '#3fb950';
+            link.style.borderBottomColor = '#3fb950';
+          }
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

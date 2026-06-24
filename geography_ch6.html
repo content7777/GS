@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌍 Atmosphere — SSC CGL Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg: #0a0d14;
+    --bg2: #0f1320;
+    --bg3: #141926;
+    --card: #161c2e;
+    --card2: #1a2035;
+    --border: #242d45;
+    --border2: #2d3a56;
+    --text: #c8d4e8;
+    --text-dim: #7a8aaa;
+    --text-bright: #eaf0ff;
+    --fire: #ff6b35;
+    --star: #f5c842;
+    --plus: #4ade80;
+    --blue: #60a5fa;
+    --violet: #a78bfa;
+    --cyan: #22d3ee;
+    --pink: #f472b6;
+    --red: #f87171;
+    --orange: #fb923c;
+    --glow-fire: 0 0 20px rgba(255,107,53,0.3);
+    --glow-blue: 0 0 20px rgba(96,165,250,0.2);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .hero {
+    background: linear-gradient(135deg, #0a0d14 0%, #0d1528 40%, #0f1a2e 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 200px;
+    background: radial-gradient(ellipse, rgba(96,165,250,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(96,165,250,0.12);
+    border: 1px solid rgba(96,165,250,0.3);
+    color: var(--blue);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .hero h1 span { color: var(--blue); }
+  .hero-sub {
+    margin-top: 0.8rem;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── NAV TABS ── */
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,13,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-wrap::-webkit-scrollbar { display: none; }
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+    white-space: nowrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .nav-tab {
+    padding: 0.85rem 1.1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    user-select: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-tab:hover { color: var(--text-bright); }
+  .nav-tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+  /* ── SECTIONS ── */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+  }
+
+  /* ── SECTION TITLE ── */
+  .sec-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .sec-sub {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .card p, .card li { font-size: 0.9rem; line-height: 1.8; color: var(--text); }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    margin-right: 0.3rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .tag-fire { background: rgba(255,107,53,0.15); color: var(--fire); border: 1px solid rgba(255,107,53,0.3); }
+  .tag-star { background: rgba(245,200,66,0.12); color: var(--star); border: 1px solid rgba(245,200,66,0.3); }
+  .tag-plus { background: rgba(74,222,128,0.1); color: var(--plus); border: 1px solid rgba(74,222,128,0.25); }
+
+  /* ── LAYER CARDS (atmosphere) ── */
+  .layer-card {
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .layer-head {
+    padding: 1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    user-select: none;
+  }
+  .layer-head:hover { filter: brightness(1.1); }
+  .layer-body {
+    padding: 1.2rem 1.4rem;
+    border-top: 1px solid var(--border);
+    background: var(--card);
+    font-size: 0.88rem;
+    display: none;
+  }
+  .layer-body.open { display: block; }
+  .layer-body ul { padding-left: 1.2rem; }
+  .layer-body li { margin-bottom: 0.4rem; }
+
+  /* layer colours */
+  .l-tropo { background: rgba(96,165,250,0.1); color: var(--blue); }
+  .l-strato { background: rgba(167,139,250,0.1); color: var(--violet); }
+  .l-meso   { background: rgba(34,211,238,0.1); color: var(--cyan); }
+  .l-thermo { background: rgba(255,107,53,0.1); color: var(--fire); }
+  .l-exo    { background: rgba(245,200,66,0.1); color: var(--star); }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .hl-box {
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    line-height: 1.75;
+    border-left: 3px solid;
+  }
+  .hl-fire { background: rgba(255,107,53,0.07); border-color: var(--fire); }
+  .hl-blue { background: rgba(96,165,250,0.07); border-color: var(--blue); }
+  .hl-violet { background: rgba(167,139,250,0.08); border-color: var(--violet); }
+  .hl-cyan { background: rgba(34,211,238,0.07); border-color: var(--cyan); }
+  .hl-green { background: rgba(74,222,128,0.07); border-color: var(--plus); }
+  .hl-yellow { background: rgba(245,200,66,0.07); border-color: var(--star); }
+  .hl-red { background: rgba(248,113,113,0.08); border-color: var(--red); }
+  .hl-pink { background: rgba(244,114,182,0.07); border-color: var(--pink); }
+
+  .hl-box strong { color: var(--text-bright); }
+
+  /* ── TRAP CARDS ── */
+  .trap {
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.25);
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.88rem;
+  }
+  .trap-title { color: var(--red); font-weight: 700; margin-bottom: 0.4rem; }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .quiz-q:hover { border-color: var(--blue); }
+  .quiz-q .q-text { color: var(--text-bright); font-weight: 600; margin-bottom: 0.4rem; }
+  .quiz-q .q-ans {
+    color: var(--plus);
+    font-size: 0.83rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .quiz-q.revealed .q-ans { max-height: 200px; }
+  .quiz-q .hint { color: var(--text-dim); font-size: 0.75rem; margin-top: 0.3rem; }
+
+  /* ── MEMORY PALACE ── */
+  .palace-stop {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    align-items: flex-start;
+  }
+  .palace-num {
+    background: linear-gradient(135deg, var(--blue), var(--violet));
+    color: white;
+    font-weight: 700;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+  }
+  .palace-content { flex: 1; }
+  .palace-content h4 { color: var(--text-bright); font-size: 0.95rem; margin-bottom: 0.25rem; }
+  .palace-content p { color: var(--text); font-size: 0.85rem; font-style: italic; }
+
+  /* ── FORMULA BOX ── */
+  .formula {
+    background: var(--bg2);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--cyan);
+    margin: 0.8rem 0;
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── ISO TABLE ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.87rem;
+    margin: 0.5rem 0;
+  }
+  th {
+    background: var(--bg2);
+    color: var(--blue);
+    font-weight: 700;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(96,165,250,0.04); }
+
+  /* ── SPEED REVIEW ── */
+  .speed-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.87rem;
+  }
+  .speed-item:last-child { border-bottom: none; }
+  .speed-key {
+    font-weight: 700;
+    color: var(--text-bright);
+    min-width: 160px;
+    flex-shrink: 0;
+  }
+  .speed-val { color: var(--text); }
+
+  /* ── LAST NIGHT ── */
+  .ln-item {
+    background: var(--card2);
+    border-left: 3px solid var(--fire);
+    padding: 0.7rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.87rem;
+    line-height: 1.6;
+  }
+
+  /* ── HOOK ── */
+  .hook {
+    background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(96,165,250,0.05));
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 10px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.88rem;
+  }
+  .hook-title { color: var(--violet); font-weight: 700; margin-bottom: 0.4rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ── BADGE ── */
+  .badge {
+    font-size: 0.72rem;
+    background: rgba(96,165,250,0.12);
+    color: var(--blue);
+    border: 1px solid rgba(96,165,250,0.25);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.8rem 0; }
+
+  /* ── PROGRESS DOT (30s sheet) ── */
+  .dot-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0.6rem 0;
+  }
+  .dot {
+    background: var(--card2);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text);
+  }
+
+  /* ── FILL BLANK ── */
+  .fill {
+    background: var(--card);
+    border: 1px dashed var(--border2);
+    border-radius: 8px;
+    padding: 0.8rem 1.1rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.88rem;
+    cursor: pointer;
+  }
+  .fill .blank {
+    display: inline-block;
+    background: rgba(96,165,250,0.15);
+    border-radius: 4px;
+    min-width: 80px;
+    color: transparent;
+    border-bottom: 2px solid var(--blue);
+    transition: all 0.3s;
+    padding: 0 0.3rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .fill.show .blank { color: var(--cyan); }
+
+  /* ── CONNECTIONS ── */
+  .conn-arrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.87rem;
+    flex-wrap: wrap;
+  }
+  .conn-node {
+    background: var(--card2);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem;
+    color: var(--text-bright);
+    font-weight: 600;
+  }
+  .conn-arrow-sym { color: var(--blue); font-size: 1.1rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .container { padding: 1.5rem 1rem; }
+    .palace-stop { flex-direction: column; }
+    .speed-key { min-width: 100px; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+  /* ── UTILS ── */
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  .text-fire { color: var(--fire); }
+  .text-blue { color: var(--blue); }
+  .text-cyan { color: var(--cyan); }
+  .text-violet { color: var(--violet); }
+  .text-star { color: var(--star); }
+  .text-green { color: var(--plus); }
+  .text-red { color: var(--red); }
+  .text-bright { color: var(--text-bright); }
+  .text-dim { color: var(--text-dim); }
+  .fw7 { font-weight: 700; }
+  .mb1 { margin-bottom: 0.5rem; }
+  .mb2 { margin-bottom: 1rem; }
+  .list-clean { list-style: none; padding: 0; }
+  .list-clean li { padding: 0.3rem 0; border-bottom: 1px solid var(--border); }
+  .list-clean li:last-child { border-bottom: none; }
+  ul.bullets { padding-left: 1.2rem; }
+  ul.bullets li { margin-bottom: 0.35rem; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">SSC CGL · Geography · FRB 2.0</div>
+  <h1>🌍 <span>Atmosphere</span> (वायुमण्डल)</h1>
+  <p class="hero-sub">High-Retention Revision System · Tap a tab to navigate</p>
+</div>
+
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="showSection('full')">📚 Full Notes</div>
+    <div class="nav-tab" onclick="showSection('palace')">🧠 Memory Palace</div>
+    <div class="nav-tab" onclick="showSection('hooks')">🪝 Hooks</div>
+    <div class="nav-tab" onclick="showSection('connections')">🔗 Connections</div>
+    <div class="nav-tab" onclick="showSection('traps')">⚠️ Traps</div>
+    <div class="nav-tab" onclick="showSection('examiner')">🎯 Examiner</div>
+    <div class="nav-tab" onclick="showSection('quiz')">❓ Quiz</div>
+    <div class="nav-tab" onclick="showSection('highyield')">⚡ High-Yield</div>
+    <div class="nav-tab" onclick="showSection('ultrafast')">🚀 Ultra-Fast</div>
+    <div class="nav-tab" onclick="showSection('thirtySeconds')">⏱ 30-Second</div>
+    <div class="nav-tab" onclick="showSection('lastnight')">🌙 Last Night</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1 — FULL NOTES
+══════════════════════════════════════════ -->
+<div id="full" class="section active">
+<div class="container">
+
+  <div class="sec-title">📚 Complete Revision Notes</div>
+  <p class="sec-sub">Every fact from the lecture — structured for retention</p>
+
+  <!-- BIG PICTURE -->
+  <div class="card mb2">
+    <div class="card-title">🌐 Big Picture</div>
+    <p>The atmosphere is Earth's gaseous envelope held by gravity. It evolved in 3 stages, has 5 distinct layers with alternating temperature patterns, regulates all weather, and is the arena of every phenomenon tested in Geography — from rainfall types to ozone to insolation. Master the <strong class="text-bright">layer order + what happens in each</strong> and 80% of atmosphere MCQs become trivial.</p>
+  </div>
+
+  <hr>
+
+  <!-- EVOLUTION -->
+  <div class="card-title">🔬 1. Evolution of the Atmosphere</div>
+  <span class="tag tag-fire">🔥 Must Know</span>
+  <div class="grid-3 mb2">
+    <div class="hl-box hl-blue">
+      <strong>Stage 1 — Loss of Primordial Atmosphere</strong><br>
+      Original atmosphere had <span class="text-bright">H₂ & He</span> → lost via <span class="text-cyan">solar flares</span> (from photosphere). Neither H₂ nor He appear in top gases today.
+    </div>
+    <div class="hl-box hl-violet">
+      <strong>Stage 2 — Degassing</strong><br>
+      Gases released from Earth's interior through <span class="text-bright">volcanism</span> → pyroclastic debris, sulphur & nitrogen compounds emerged.
+    </div>
+    <div class="hl-box hl-green">
+      <strong>Stage 3 — Modification by Living Organisms</strong><br>
+      Bacteria consumed CO₂, released O₂ → present-day atmosphere formed.
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- COMPOSITION -->
+  <div class="card-title">🧪 2. Composition of Atmosphere</div>
+  <span class="tag tag-fire">🔥 Must Know</span>
+  <div class="card mb2">
+    <table>
+      <tr><th>Gas</th><th>%</th><th>Exam Note</th></tr>
+      <tr><td><strong class="text-blue">Nitrogen (N₂)</strong></td><td class="text-bright">78%</td><td>Used in chip packets, tyre manufacturing</td></tr>
+      <tr><td><strong class="text-cyan">Oxygen (O₂)</strong></td><td class="text-bright">21%</td><td>—</td></tr>
+      <tr><td>Argon (Ar)</td><td>0.9%</td><td>"Stranger gas" starts with X → <strong class="text-star">Xenon</strong> (from chemistry)</td></tr>
+      <tr><td>CO₂</td><td>0.036%</td><td>Most emitted greenhouse gas by humans</td></tr>
+      <tr><td>Helium</td><td>Trace</td><td>Was dominant in primordial atm → now negligible</td></tr>
+    </table>
+    <div class="hl-box hl-yellow mt2" style="margin-top:0.8rem">
+      <strong>Greenhouse Gases (GHG) — order of abundance:</strong><br>
+      <span class="text-bright">Water Vapor</span> (most present, NOT from human emission) → <span class="text-bright">CO₂</span> (most human-emitted) → Methane → <strong class="text-star">Nitrous Oxide (N₂O)</strong> = Laughing Gas = <span class="text-bright">longest atmospheric lifetime ≈ 122 years</span> (asked in CDS)
+    </div>
+    <p class="text-dim" style="font-size:0.8rem;">Tropospheric ozone = <strong class="text-red">bad</strong> | Stratospheric ozone = <strong class="text-green">good (protects from UV)</strong></p>
+  </div>
+
+  <hr>
+
+  <!-- LAYERS -->
+  <div class="card-title">🌐 3. Atmospheric Layers</div>
+  <span class="tag tag-fire">🔥 Must Know</span>
+  <p class="text-dim mb2" style="font-size:0.83rem; margin-bottom:1rem;">Temperature alternates: ↓ ↑ ↓ ↑ — click each layer to expand</p>
+
+  <!-- TROPOSPHERE -->
+  <div class="layer-card">
+    <div class="layer-head l-tropo" onclick="toggleLayer(this)">
+      <span>🌦 Troposphere &nbsp;<span style="font-size:0.78rem;font-weight:400;opacity:0.7">Layer 1 · Surface → ~13 km avg</span></span>
+      <span>+</span>
+    </div>
+    <div class="layer-body">
+      <span class="tag tag-fire">🔥</span>
+      <ul class="bullets">
+        <li>Height: <strong class="text-bright">8 km at poles</strong>, <strong class="text-bright">18 km at equator</strong>, average ~13 km</li>
+        <li><strong>All weather occurs here</strong> — rain, fog, clouds, storms</li>
+        <li>Temperature <strong class="text-red">decreases</strong> with altitude (∵ heating from terrestrial radiation, not direct sun)</li>
+        <li><strong class="text-cyan">Lapse Rate:</strong> 6.5°C per km ↑ OR 1°C per 165 metres ↑</li>
+        <li>Boundary to stratosphere = <strong class="text-star">Tropopause</strong></li>
+        <li><strong>Positive lapse rate</strong> = temp decreasing going up (normal) | <strong>Negative lapse rate</strong> = temp increasing going up (temperature inversion)</li>
+        <li>Troposphere is wider at equator because convection currents are stronger (more heat → more upward air movement)</li>
+      </ul>
+      <div class="hl-box hl-blue" style="margin-top:0.8rem">
+        <strong>Why does atmosphere heat via terrestrial radiation (not direct solar)?</strong><br>
+        Greenhouse gases are <strong>transparent</strong> to incoming short-wave solar radiation (let it pass) but <strong>opaque</strong> to outgoing long-wave terrestrial radiation (trap it). So heat builds up near the surface — farther up = less heat.
+      </div>
+      <div class="hl-box hl-cyan">
+        <strong>Temperature Inversion</strong> (negative lapse rate)<br>
+        Condition: Long cold winter night + Still air + Cloudless sky<br>
+        What happens: Earth surface loses all heat → air near surface becomes <em>colder</em> than air above → temp now <em>increases</em> going up → inversion<br>
+        Promotes <strong class="text-bright">atmospheric stability</strong>. Most common near <strong>poles</strong>.
+      </div>
+    </div>
+  </div>
+
+  <!-- STRATOSPHERE -->
+  <div class="layer-card">
+    <div class="layer-head l-strato" onclick="toggleLayer(this)">
+      <span>🛫 Stratosphere &nbsp;<span style="font-size:0.78rem;font-weight:400;opacity:0.7">Layer 2 · ~13 → ~50 km</span></span>
+      <span>+</span>
+    </div>
+    <div class="layer-body">
+      <span class="tag tag-fire">🔥</span>
+      <ul class="bullets">
+        <li>Temperature <strong class="text-green">increases</strong> with altitude (ozone absorbs UV)</li>
+        <li><strong class="text-violet">Ozone Layer at 30–35 km</strong> — shields from harmful UV rays</li>
+        <li>Jet planes fly here (no turbulence, no clouds)</li>
+        <li><strong class="text-star">Ozone Day: September 16</strong></li>
+        <li>Montreal Protocol (1987, Canada) — treaty to phase out CFCs (biggest ozone threat)</li>
+        <li>Ozone thickness measured in <strong class="text-cyan">Dobson Units</strong></li>
+        <li>Boundary to mesosphere = <strong>Stratopause</strong></li>
+        <li>Insolation arrives mainly as <strong class="text-fire">infrared radiation</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MESOSPHERE -->
+  <div class="layer-card">
+    <div class="layer-head l-meso" onclick="toggleLayer(this)">
+      <span>☄️ Mesosphere &nbsp;<span style="font-size:0.78rem;font-weight:400;opacity:0.7">Layer 3 · ~50 → ~80–85 km</span></span>
+      <span>+</span>
+    </div>
+    <div class="layer-body">
+      <span class="tag tag-fire">🔥</span>
+      <ul class="bullets">
+        <li>Temperature <strong class="text-red">decreases</strong> with altitude</li>
+        <li><strong class="text-cyan">Coldest layer</strong> of the atmosphere</li>
+        <li>Meteorites burn and get destroyed here</li>
+        <li>Those that survive = <strong class="text-star">Meteors</strong> (reach Earth's surface)</li>
+        <li>Boundary = <strong>Mesopause</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- THERMOSPHERE -->
+  <div class="layer-card">
+    <div class="layer-head l-thermo" onclick="toggleLayer(this)">
+      <span>🔥 Thermosphere / Ionosphere &nbsp;<span style="font-size:0.78rem;font-weight:400;opacity:0.7">Layer 4 · ~85 → ~700 km</span></span>
+      <span>+</span>
+    </div>
+    <div class="layer-body">
+      <span class="tag tag-fire">🔥</span>
+      <ul class="bullets">
+        <li>Temperature <strong class="text-green">increases</strong> with altitude — <strong class="text-fire">hottest layer</strong></li>
+        <li>Also called <strong>Ionosphere</strong> — solar flares ionize gases here</li>
+        <li><strong class="text-star">Aurora Borealis</strong> = Northern Hemisphere lights (North Pole)</li>
+        <li><strong class="text-star">Aurora Australis</strong> = Southern Hemisphere lights (South Pole)</li>
+        <li>Cause: Solar winds + Earth's magnetosphere interaction</li>
+        <li>Auroras seen in Ladakh (2021) during high solar activity</li>
+        <li><strong class="text-cyan">Karman Line</strong> = where Earth's atmosphere ends / exosphere begins</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EXOSPHERE -->
+  <div class="layer-card">
+    <div class="layer-head l-exo" onclick="toggleLayer(this)">
+      <span>🌌 Exosphere &nbsp;<span style="font-size:0.78rem;font-weight:400;opacity:0.7">Layer 5 · Outermost</span></span>
+      <span>+</span>
+    </div>
+    <div class="layer-body">
+      <ul class="bullets">
+        <li>Outermost layer — merges into space</li>
+        <li>Very thin, gases here can escape Earth's gravity</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="hl-box hl-fire mt2" style="margin-top:1rem;">
+    <strong>🔑 Temperature Pattern (must memorize):</strong><br>
+    Troposphere ↓ → Stratosphere ↑ → Mesosphere ↓ → Thermosphere ↑<br>
+    <span class="mono text-cyan">Alternates: DOWN UP DOWN UP</span>
+  </div>
+
+  <hr>
+
+  <!-- INSOLATION -->
+  <div class="card-title">☀️ 4. Insolation & Heat Budget</div>
+  <span class="tag tag-fire">🔥 Must Know</span>
+  <div class="card mb2">
+    <p class="mb1"><strong class="text-bright">Insolation</strong> = Incoming Solar Radiation (short-wave)</p>
+    <p class="mb1"><strong class="text-bright">Terrestrial Radiation</strong> = Heat reflected back by Earth (long-wave)</p>
+    <div class="hl-box hl-blue">
+      <strong>Where is insolation highest?</strong> <span class="text-red">NOT</span> at equator (too much cloud cover) → <strong class="text-bright">Tropics</strong> (slightly north/south of equator) receive most insolation.
+    </div>
+
+    <strong class="text-bright">Factors Affecting Insolation:</strong>
+    <ul class="bullets" style="margin-top:0.5rem;">
+      <li><strong>Transparency of atmosphere</strong> — more clouds = less insolation</li>
+      <li><strong>Length of day</strong> — June 21 > Dec 22 (more insolation on summer solstice)</li>
+      <li><strong>Tilt of Earth</strong> — no tilt → no seasons, equal day/night everywhere</li>
+      <li><strong>Rotation</strong> — day vs night determines insolation</li>
+      <li><strong>Latitude</strong> — direct rays between tropics, oblique rays beyond → less heat per area</li>
+      <li><strong>Altitude</strong> — Agra vs Sikkim (same latitude but Sikkim is colder due to altitude)</li>
+      <li><strong>Aphelion</strong> = Earth farthest from Sun → less insolation</li>
+      <li><strong>Perihelion</strong> = Earth closest to Sun → more insolation</li>
+    </ul>
+
+    <div class="hl-box hl-violet" style="margin-top:0.8rem">
+      <strong>Albedo</strong> = proportion of incident light reflected by a surface<br>
+      <span class="text-bright">Fresh Snow: 80%</span> | Old Snow: 59% | Sea Ice: 35% | Desert/Sand (lower) | Ocean/Lakes (lowest)<br>
+      <span class="text-star">Highest albedo in solar system = VENUS</span>
+    </div>
+
+    <strong class="text-bright">Heating Processes:</strong>
+    <ul class="bullets" style="margin-top:0.4rem">
+      <li><strong>Conduction</strong> — direct contact (air touching Earth's surface)</li>
+      <li><strong>Convection</strong> — vertical transfer of heat (heated air rises)</li>
+      <li><strong>Advection</strong> — horizontal transfer of heat (e.g., <em>loo</em> winds in Indian summer). Major temperature changes in mid-latitudes (30–40°) due to advection.</li>
+      <li><strong>Radiation</strong> — energy transfer without medium</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <!-- ISO LINES -->
+  <div class="card-title">📏 5. Iso Lines (Frequently Asked)</div>
+  <span class="tag tag-fire">🔥</span>
+  <div class="card mb2">
+    <table>
+      <tr><th>Term</th><th>Connects points of same…</th></tr>
+      <tr><td class="text-bright">Isotherm</td><td>Temperature</td></tr>
+      <tr><td class="text-bright">Isobar</td><td>Pressure</td></tr>
+      <tr><td class="text-bright">Isohyet</td><td>Rainfall</td></tr>
+      <tr><td class="text-bright">Isohaline</td><td>Salinity (in sea)</td></tr>
+      <tr><td class="text-bright">Isoneph</td><td>Cloudiness (amount of cloud)</td></tr>
+      <tr><td class="text-bright">Isohele</td><td>Amount of sunlight received</td></tr>
+    </table>
+  </div>
+
+  <hr>
+
+  <!-- WATER CYCLE -->
+  <div class="card-title">💧 6. Water Cycle (Hydrological Cycle)</div>
+  <span class="tag tag-fire">🔥</span>
+  <div class="grid-3 mb2">
+    <div class="hl-box hl-blue"><strong>Evaporation</strong><br>Liquid → Gas (water heats up, becomes vapor)</div>
+    <div class="hl-box hl-violet"><strong>Condensation</strong><br>Gas → Liquid (vapor cools, forms droplets)</div>
+    <div class="hl-box hl-cyan"><strong>Precipitation</strong><br>Water falls in any form: rain, snow, hail, sleet</div>
+  </div>
+  <div class="card mb2">
+    <strong class="text-bright">Distribution of Water on Earth:</strong>
+    <ul class="bullets" style="margin-top:0.5rem">
+      <li><strong class="text-cyan">97.2%</strong> = Saline water</li>
+      <li><strong class="text-green">2.8%</strong> = Fresh water, of which:<br>
+        <span class="mono text-bright">68.7%</span> in Ice Caps & Glaciers → Ground Water → Lakes & Atmosphere → Rivers</li>
+    </ul>
+    <div class="hl-box hl-yellow" style="margin-top:0.7rem">
+      Order of freshwater storage: <strong>Ice Caps/Glaciers → Groundwater → Lakes/Atmosphere → Rivers</strong>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- HUMIDITY -->
+  <div class="card-title">💦 7. Humidity</div>
+  <span class="tag tag-fire">🔥</span>
+  <div class="card mb2">
+    <div class="grid-2">
+      <div>
+        <strong class="text-bright">Absolute Humidity</strong><br>
+        <p style="font-size:0.86rem">Actual amount of water vapor in air. Measured in g/m³.</p>
+      </div>
+      <div>
+        <strong class="text-bright">Relative Humidity (RH)</strong><br>
+        <p style="font-size:0.86rem">How saturated the air is relative to its capacity.</p>
+      </div>
+    </div>
+    <div class="formula">RH = (Absolute Humidity ÷ Capacity of Air) × 100</div>
+    <div class="hl-box hl-fire">
+      <strong>Key Relationship:</strong><br>
+      ↑ Temperature → ↑ Capacity of air → <strong class="text-red">↓ Relative Humidity</strong><br>
+      ↓ Temperature → ↓ Capacity of air → <strong class="text-green">↑ Relative Humidity → reaches Dew Point → precipitation</strong>
+    </div>
+    <p class="mb1"><strong class="text-bright">Dew Point</strong> = Temperature at which air becomes fully saturated (RH = 100%) and begins to condense/precipitate.</p>
+    <p><strong class="text-bright">Hygrometer</strong> = Instrument to measure humidity (hygro = moisture, NOT hydro = water density)</p>
+  </div>
+
+  <hr>
+
+  <!-- CLOUDS & CONDENSATION -->
+  <div class="card-title">☁️ 8. Condensation & Clouds</div>
+  <span class="tag tag-fire">🔥</span>
+  <div class="card mb2">
+    <strong class="text-bright">Forms of Condensation:</strong>
+    <ul class="bullets" style="margin-top:0.4rem; margin-bottom:0.8rem">
+      <li><strong>Cloud</strong> — water droplets suspended high (condense around dust/smoke nuclei)</li>
+      <li><strong>Fog</strong> — cloud formed near Earth's surface</li>
+      <li><strong>Mist</strong> — fog with higher moisture content</li>
+      <li><strong>Dew</strong> — water droplets on surfaces (morning)</li>
+      <li><strong>Frost</strong> — ice crystals on surfaces (in cold areas/poles)</li>
+    </ul>
+
+    <strong class="text-bright">Cloud Types:</strong>
+    <table style="margin-top:0.5rem">
+      <tr><th>Level</th><th>Cloud Name</th><th>Height</th><th>Key Feature</th></tr>
+      <tr><td><span class="text-red fw7">Low</span></td><td>Nimbus / Nimbostratus</td><td>0–2 km</td><td class="text-star">Rain-bearing, dark/grey, opaque</td></tr>
+      <tr><td><span class="text-red fw7">Low</span></td><td>Stratus</td><td>0–2 km</td><td>Layer clouds, uniform grey</td></tr>
+      <tr><td><span class="text-star fw7">Mid</span></td><td>Cumulus</td><td>4–7 km</td><td>Cotton-wool/cauliflower shape, flat base. Fair weather. Rain when grouped.</td></tr>
+      <tr><td><span class="text-green fw7">High</span></td><td>Cirrus</td><td>8–12 km</td><td>Feathery, ice crystals, <em>never rains</em></td></tr>
+      <tr><td><span class="text-fire fw7">All</span></td><td>Cumulonimbus</td><td>All levels</td><td class="text-fire">Thunderstorms, hailstorms, cyclone clouds</td></tr>
+    </table>
+    <div class="hl-box hl-violet" style="margin-top:0.8rem">
+      <strong>SSC Shortcut for mixed cloud names:</strong><br>
+      🔹 <span class="text-cyan">Cirro-</span> prefix → Always <strong>High level</strong><br>
+      🔹 <span class="text-red">Nimbo-</span> prefix/suffix → Always <strong>Low level</strong><br>
+      🔹 <span class="text-star">Alto-</span> prefix → Always <strong>Middle level</strong> (Alto = middle class)
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- RAINFALL -->
+  <div class="card-title">🌧 9. Types of Rainfall</div>
+  <span class="tag tag-fire">🔥</span>
+  <div class="grid-3 mb2">
+    <div class="hl-box hl-blue">
+      <strong>Convectional Rainfall</strong><br>
+      Heat → air rises → cools → rains. Common in tropics and equatorial regions.
+    </div>
+    <div class="hl-box hl-violet">
+      <strong>Orographic (Relief) Rainfall</strong><br>
+      Moist air hits mountain → rises → cools → rains on <span class="text-cyan">windward side</span> → <span class="text-red">leeward side = rain shadow (dry)</span>
+    </div>
+    <div class="hl-box hl-cyan">
+      <strong>Cyclonic (Frontal) Rainfall</strong><br>
+      Due to cyclone/fronts. Cumulonimbus clouds form. Will study with cyclones.
+    </div>
+  </div>
+  <div class="card mb2">
+    <strong class="text-bright">Solid Precipitation Forms:</strong>
+    <ul class="bullets" style="margin-top:0.4rem">
+      <li><strong class="text-star">Hail</strong> — big ice chunks, forms in <em>summer</em>. Water droplets repeatedly thrown up by thunderstorm updrafts, each cycle adds a layer → concentric rings. <span class="text-cyan">Cumulonimbus clouds</span>.</li>
+      <li><strong class="text-blue">Sleet</strong> — small frozen drops, seen in <em>winters</em>. Liquid drops freeze and refreeze as they fall through cold layers.</li>
+      <li><strong class="text-green">Snowfall</strong> — water vapor directly crystallizes below 0°C.</li>
+    </ul>
+  </div>
+
+</div><!-- /container -->
+</div><!-- /section -->
+
+
+<!-- ══════════════════════════════════════════
+     SECTION 2 — MEMORY PALACE
+══════════════════════════════════════════ -->
+<div id="palace" class="section">
+<div class="container">
+  <div class="sec-title">🧠 Chapter Memory Palace</div>
+  <p class="sec-sub">Walk through this story to recall the entire chapter</p>
+
+  <div class="card mb2">
+    <div class="card-title text-violet">🏛 "The Flying School" — A Story of the Atmosphere</div>
+    <p style="font-size:0.85rem; color:var(--text-dim); margin-bottom:1.2rem; font-style:italic;">Imagine a vertical school building with 5 floors, rising from Earth into space. Walk up floor by floor.</p>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">0</div>
+    <div class="palace-content">
+      <h4>🌋 The School's History Board (Evolution — 3 Stages)</h4>
+      <p>At the entrance is a history board. It says: "This school once had only H₂ and He students (primordial), but the Sun expelled them with solar flares. Then the Earth's volcanoes sent their children (degassing). Finally the bacteria students started changing the curriculum (modification) — and now we have N₂, O₂, CO₂."</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">1</div>
+    <div class="palace-content">
+      <h4>🌦 Ground Floor — Troposphere (Weather Hall)</h4>
+      <p>The ground floor is CHAOTIC — rain, fog, clouds everywhere. The thermostat shows temperature FALLING as you go up (6.5°C per km). The janitor says "Lapse rate! Lapse rate!" The floor is 8 metres at the back (poles) and 18 metres at the front (equator). A notice says: "Exit to 1st floor = Tropopause."</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">2</div>
+    <div class="palace-content">
+      <h4>🛡 1st Floor — Stratosphere (Ozone Shield Room)</h4>
+      <p>The 1st floor is CALM — no clouds, jet planes park here. On September 16, a giant ozone birthday party happens (Ozone Day). The protection shield (ozone at 30–35 km) is measured in Dobson units. A sign: "CFCs are banned since Montreal 1987." Temperature RISES here (ozone absorbs UV).</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">3</div>
+    <div class="palace-content">
+      <h4>☄️ 2nd Floor — Mesosphere (Space Dustbin)</h4>
+      <p>The 2nd floor is FREEZING — the coldest room in the school. Outside the window, you see meteorites sizzling and burning up. A few escape and fall to Earth as meteors. Temperature FALLS here again.</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">4</div>
+    <div class="palace-content">
+      <h4>🔥 3rd Floor — Thermosphere / Ionosphere (Disco Floor)</h4>
+      <p>HOTTEST floor. Full of ions dancing (ionosphere). Solar winds crash into the magnetosphere outside and create colourful disco lights — Aurora Borealis upstairs (north), Aurora Australis downstairs (south). Temperature RISES. The door to outside space is the Karman Line.</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">5</div>
+    <div class="palace-content">
+      <h4>🌌 Rooftop — Exosphere (The Escape Hatch)</h4>
+      <p>The rooftop merges with space. Gravity is so weak here that gases simply float away. This is where the school ends.</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">💧</div>
+    <div class="palace-content">
+      <h4>The School's Water System (Humidity & Clouds)</h4>
+      <p>The school water tank (humidity) has two readings: absolute (actual water) and relative (how full is it vs capacity). Hot days = tank is bigger (more capacity) but looks less full (RH drops). When the tank overflows → dew point → precipitation. Clouds are students who float: Low (nimbus, dark, troublemakers who rain), Mid (cumulus, cauliflower, fair weather kids), High (cirrus, thin ice crystal artists, never rain).</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">🌧</div>
+    <div class="palace-content">
+      <h4>The 3 Rain Rules (Outside the School)</h4>
+      <p>When students leave: some go straight up (convectional), some hit a mountain wall and rise (orographic — windward side rains, leeward side is dry), some get caught in a cyclone (cyclonic). Hailstones = students thrown up and down repeatedly by a rowdy storm, gaining a layer each time.</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3 — MEMORY HOOKS
+══════════════════════════════════════════ -->
+<div id="hooks" class="section">
+<div class="container">
+  <div class="sec-title">🪝 Smart Memory Hooks</div>
+  <p class="sec-sub">Vivid associations to fight forgetting</p>
+
+  <div class="hook">
+    <div class="hook-title">🌡 Temperature Pattern</div>
+    <p>Imagine climbing a <strong class="text-bright">rollercoaster</strong>: you go DOWN the first hill (tropo↓), UP the second (strato↑), DOWN again in the scary dark (meso↓), then UP into fire (thermo↑). "The atmosphere is a rollercoaster with 4 hills."</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🔥 Greenhouse Gases in Order</div>
+    <p><strong class="text-bright">W-C-M-N</strong> = <em>"Water Can Make Nitrogen"</em>: <strong>W</strong>ater Vapor → <strong>C</strong>O₂ → <strong>M</strong>ethane → <strong>N</strong>itrous Oxide. Remember: Water vapor is most present but humans emit CO₂ most.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">☄️ Mesosphere = Coldest</div>
+    <p>Meteors burn here. Burning sounds hot — but actually the layer is the <strong class="text-cyan">COLDEST</strong>. Why do they burn? Friction with air particles, not heat. This is the classic trap. Remember: "The dustbin (mesosphere) is so cold it freezes meteors then friction burns them."</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">❄️ Albedo Champion = Fresh Snow (80%)</div>
+    <p>Fresh snow is like a <strong class="text-bright">mirror selfie</strong> — it reflects everything, keeps nothing. That's why Ladakh needs goggles. Planet Venus = even more reflective. If exam asks "planet with highest albedo" → Venus (not Earth).</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🌊 Water Distribution Order</div>
+    <p><strong class="text-bright">Ice Giant → Ground Dweller → Lake Lover → River Kid</strong>: Ice Caps (68.7%) → Groundwater → Lakes/Atmosphere → Rivers. Think: "The richest freshwater is <em>frozen</em>, not flowing."</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">☁️ Alto = Middle Class</div>
+    <p>In India, "Alto" is the car of the middle class. Altocumulus, Altostratus → middle-level clouds. Easy.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🌨 Hail in Summer, Sleet in Winter</div>
+    <p>Hail is a summer bully — forms when thunderstorm updrafts throw water droplets up repeatedly. Sleet is a winter ghost — frozen drops that melt and refreeze near cold ground layers.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">🎭 Aurora Names</div>
+    <p>Borealis = <strong class="text-bright">B</strong>orn in the <strong class="text-bright">B</strong>ays of the North. Australis = sounds like <strong class="text-bright">Australia</strong> = south. Borealis = North. Australis = South. Done.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">📅 N₂O = 122 years = Laughing Gas Lives Long</div>
+    <p>Nitrous Oxide (N₂O) laughs and stays at the party the longest — 122 years residence time. It's the <strong class="text-star">laughing gas</strong> that never leaves.</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-title">💦 Hygrometer vs Hydrometer</div>
+    <p><strong class="text-cyan">Hygro</strong>meter = moisture/humidity. <strong class="text-blue">Hydro</strong>meter = water density. G = gas/humidity. D = density/water. Simple letter trick.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4 — CONNECTIONS
+══════════════════════════════════════════ -->
+<div id="connections" class="section">
+<div class="container">
+  <div class="sec-title">🔗 Concept Connections</div>
+  <p class="sec-sub">Cause–Effect chains that show how everything links</p>
+
+  <div class="card mb2">
+    <div class="card-title">Temperature & Relative Humidity Chain</div>
+    <div class="conn-arrow"><div class="conn-node">↑ Temperature</div><span class="conn-arrow-sym">→</span><div class="conn-node">↑ Air Capacity</div><span class="conn-arrow-sym">→</span><div class="conn-node">↓ RH</div><span class="conn-arrow-sym">→</span><div class="conn-node">No Condensation</div></div>
+    <div class="conn-arrow"><div class="conn-node">↓ Temperature</div><span class="conn-arrow-sym">→</span><div class="conn-node">↓ Air Capacity</div><span class="conn-arrow-sym">→</span><div class="conn-node">↑ RH</div><span class="conn-arrow-sym">→</span><div class="conn-node">Dew Point Reached</div><span class="conn-arrow-sym">→</span><div class="conn-node">Fog / Cloud / Rain</div></div>
+  </div>
+
+  <div class="card mb2">
+    <div class="card-title">Greenhouse Effect Chain</div>
+    <div class="conn-arrow"><div class="conn-node">Short-wave solar radiation</div><span class="conn-arrow-sym">→</span><div class="conn-node">Passes through GHGs (transparent)</div><span class="conn-arrow-sym">→</span><div class="conn-node">Hits Earth surface</div></div>
+    <div class="conn-arrow"><div class="conn-node">Earth emits long-wave (terrestrial)</div><span class="conn-arrow-sym">→</span><div class="conn-node">GHGs trap it (opaque)</div><span class="conn-arrow-sym">→</span><div class="conn-node">Atmosphere heats up</div></div>
+    <p style="font-size:0.83rem; color:var(--text-dim); margin-top:0.5rem;">This is WHY troposphere heats from bottom up → temp decreases with altitude.</p>
+  </div>
+
+  <div class="card mb2">
+    <div class="card-title">Orographic Rainfall Chain</div>
+    <div class="conn-arrow"><div class="conn-node">Moist air from sea</div><span class="conn-arrow-sym">→</span><div class="conn-node">Hits mountain</div><span class="conn-arrow-sym">→</span><div class="conn-node">Forced to rise</div><span class="conn-arrow-sym">→</span><div class="conn-node">Cools, dew point reached</div><span class="conn-arrow-sym">→</span><div class="conn-node">Windward side: RAIN</div></div>
+    <div class="conn-arrow"><div class="conn-node">Air descends</div><span class="conn-arrow-sym">→</span><div class="conn-node">Warms up</div><span class="conn-arrow-sym">→</span><div class="conn-node">Capacity increases</div><span class="conn-arrow-sym">→</span><div class="conn-node">Leeward side: DRY (Rain Shadow)</div></div>
+  </div>
+
+  <div class="card mb2">
+    <div class="card-title">Temperature Inversion Chain</div>
+    <div class="conn-arrow"><div class="conn-node">Long cold winter night</div><span class="conn-arrow-sym">→</span><div class="conn-node">Earth radiates all heat</div><span class="conn-arrow-sym">→</span><div class="conn-node">Surface air becomes cold</div><span class="conn-arrow-sym">→</span><div class="conn-node">Upper air remains relatively warm</div><span class="conn-arrow-sym">→</span><div class="conn-node">TEMPERATURE INVERSION</div></div>
+    <p style="font-size:0.83rem; color:var(--text-dim); margin-top:0.4rem;">Conditions needed: Still air + Cloudless sky + Long winter night (poles are ideal)</p>
+  </div>
+
+  <div class="card mb2">
+    <div class="card-title">Solar Flare → Aurora Chain</div>
+    <div class="conn-arrow"><div class="conn-node">Solar flares/winds</div><span class="conn-arrow-sym">→</span><div class="conn-node">Hit Earth's magnetosphere</div><span class="conn-arrow-sym">→</span><div class="conn-node">Ionize gases in thermosphere</div><span class="conn-arrow-sym">→</span><div class="conn-node">Aurora lights</div></div>
+    <p style="font-size:0.83rem; color:var(--text-dim); margin-top:0.3rem;">North → Borealis | South → Australis</p>
+  </div>
+
+  <div class="card mb2">
+    <div class="card-title">Hail Formation Chain</div>
+    <div class="conn-arrow"><div class="conn-node">Thunderstorm updraft</div><span class="conn-arrow-sym">→</span><div class="conn-node">Throws water droplets upward</div><span class="conn-arrow-sym">→</span><div class="conn-node">Freezes at high altitude</div><span class="conn-arrow-sym">→</span><div class="conn-node">Falls → updraft throws again</div><span class="conn-arrow-sym">→</span><div class="conn-node">Adds layer each cycle</div><span class="conn-arrow-sym">→</span><div class="conn-node">Heavy hailstone falls</div></div>
+    <p style="font-size:0.83rem; color:var(--text-dim); margin-top:0.3rem;">Layers = number of times thrown up. Hail = SUMMER. Sleet = WINTER.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5 — TRAPS
+══════════════════════════════════════════ -->
+<div id="traps" class="section">
+<div class="container">
+  <div class="sec-title">⚠️ Exam Traps</div>
+  <p class="sec-sub">What students get wrong — memorise these to gain 2-3 extra marks</p>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 1 — Insolation is highest WHERE?</div>
+    <p>Most students say <strong class="text-red">Equator</strong> — WRONG. Equator has maximum cloud cover, blocking insolation. Correct answer: <strong class="text-green">Tropics</strong> (slightly north/south of equator).</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 2 — Mesosphere = Coldest, NOT Hottest</div>
+    <p>Students confuse mesosphere (meteors burn here) with being hot. Burning is due to <strong>friction</strong>, not ambient temperature. Mesosphere is the <strong class="text-green">coldest</strong> layer. Thermosphere is hottest.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 3 — Water Vapor is Most Abundant GHG, NOT CO₂</div>
+    <p>Water vapor = most present in atmosphere. CO₂ = most emitted by humans. Two different questions. Don't confuse.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 4 — Temperature ↑ → Relative Humidity ↓</div>
+    <p>Counter-intuitive: when it's HOT, the air can hold MORE moisture, so its relative humidity actually DECREASES (denominator grows). Sticky heat = warm air already loaded with vapor from recent rain, not just hot air.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 5 — Hygrometer vs Hydrometer</div>
+    <p><strong class="text-cyan">Hygrometer</strong> = humidity. <strong class="text-blue">Hydrometer</strong> = density of liquids. Very common spelling confusion in exam.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 6 — Albedo: Highest Planet = Venus, NOT Earth</div>
+    <p>Earth's albedo is ~30%. <strong class="text-star">Venus has the highest albedo</strong> of any planet due to its thick cloud cover (sulphuric acid clouds).</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 7 — Fresh Snow vs Old Snow Albedo</div>
+    <p>Fresh snow = 80%. Old snow = 59%. Exam may ask specifically about "freshly prepared snow." Don't say 59%.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 8 — Hail in SUMMER, Sleet in WINTER</div>
+    <p>Hailstorms occur in <strong class="text-fire">summer</strong> (thunderstorm updrafts needed). Sleet occurs in <strong class="text-blue">winter</strong> (frozen/refrozen drops).</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 9 — Fog is NOT Different from Cloud (just location)</div>
+    <p>Fog = cloud formed at/near Earth's surface. Technically the same phenomenon — just location differs. If you're in mountains, what looks like fog IS a cloud.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 10 — Cirrus clouds can NEVER rain</div>
+    <p>Cirrus = high altitude ice crystals. They look wispy and harmless. They <strong class="text-red">NEVER</strong> cause rainfall. Nimbus = rain clouds (low level).</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 11 — Nitrogen vs Oxygen % (Easy to flip)</div>
+    <p>Nitrogen = <strong class="text-bright">78%</strong>, Oxygen = <strong class="text-bright">21%</strong>. Many students flip this. N comes before O in the alphabet → N is more.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 12 — Ozone Day = September 16 (Montreal Protocol 1987)</div>
+    <p>Don't confuse date (Sept 16) with year (1987). Both can be asked. Location: <strong>Montreal, Canada</strong>. Not Kyoto, not Paris.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠️ TRAP 13 — Isoneph vs Isohele</div>
+    <p><strong class="text-cyan">Isoneph</strong> = same cloudiness. <strong class="text-violet">Isohele</strong> = same sunlight received. Opposite concepts, similar-sounding. Neph = clouds (nephology), Hele = sun.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 6 — EXAMINER
+══════════════════════════════════════════ -->
+<div id="examiner" class="section">
+<div class="container">
+  <div class="sec-title">🎯 Examiner's Favourite Questions</div>
+  <p class="sec-sub">How the examiner will attack this topic</p>
+
+  <div class="card mb2">
+    <div class="card-title">🎯 High Probability Direct Questions</div>
+    <ul class="bullets">
+      <li>Which layer has the ozone layer? → <strong class="text-violet">Stratosphere (30–35 km)</strong></li>
+      <li>Which is the coldest layer? → <strong class="text-cyan">Mesosphere</strong></li>
+      <li>Which is the hottest layer? → <strong class="text-fire">Thermosphere</strong></li>
+      <li>Temperature decreases at what rate in troposphere? → <strong class="text-bright">6.5°C per km OR 1°C per 165m</strong></li>
+      <li>What is Aurora Borealis? → <strong class="text-blue">Northern lights (North Pole)</strong></li>
+      <li>Dobson units measure? → <strong class="text-violet">Ozone thickness</strong></li>
+      <li>Montreal Protocol is related to? → <strong class="text-green">Ozone / CFCs (1987)</strong></li>
+      <li>Laughing gas = ? → <strong class="text-star">Nitrous Oxide (N₂O)</strong></li>
+      <li>Longest residence time GHG → <strong class="text-star">N₂O (~122 years)</strong></li>
+      <li>Which planet has highest albedo? → <strong class="text-star">Venus</strong></li>
+      <li>Fresh snow albedo? → <strong class="text-bright">80%</strong></li>
+    </ul>
+  </div>
+
+  <div class="card mb2">
+    <div class="card-title">🎯 Statement-Based (True/False Style)</div>
+    <ul class="bullets">
+      <li>"Insolation is highest at the equator" → <strong class="text-red">FALSE</strong> (highest at tropics)</li>
+      <li>"Cirrus clouds are rain-bearing clouds" → <strong class="text-red">FALSE</strong> (never rain)</li>
+      <li>"Water vapor is the most human-emitted GHG" → <strong class="text-red">FALSE</strong> (CO₂ is)</li>
+      <li>"Temperature inversion promotes atmospheric instability" → <strong class="text-red">FALSE</strong> (promotes stability)</li>
+      <li>"Hail is common in winters" → <strong class="text-red">FALSE</strong> (summers)</li>
+      <li>"Thermosphere and ionosphere are different layers" → <strong class="text-red">FALSE</strong> (same)</li>
+    </ul>
+  </div>
+
+  <div class="card mb2">
+    <div class="card-title">🎯 Match-the-Following Favourites</div>
+    <div class="grid-2">
+      <div>
+        <strong class="text-blue">ISO Lines Match:</strong>
+        <table style="margin-top:0.4rem; font-size:0.83rem;">
+          <tr><td>Isotherm</td><td>→ Temperature</td></tr>
+          <tr><td>Isohyet</td><td>→ Rainfall</td></tr>
+          <tr><td>Isoneph</td><td>→ Cloudiness</td></tr>
+          <tr><td>Isohaline</td><td>→ Salinity</td></tr>
+          <tr><td>Isohele</td><td>→ Sunlight</td></tr>
+        </table>
+      </div>
+      <div>
+        <strong class="text-violet">Clouds Match:</strong>
+        <table style="margin-top:0.4rem; font-size:0.83rem;">
+          <tr><td>Cirrus</td><td>→ High, feathery, no rain</td></tr>
+          <tr><td>Cumulus</td><td>→ Mid, cauliflower, fair weather</td></tr>
+          <tr><td>Nimbus</td><td>→ Low, dark, rain</td></tr>
+          <tr><td>Cumulonimbus</td><td>→ All levels, thunderstorm</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb2">
+    <div class="card-title">🎯 Assertion-Reason Traps</div>
+    <div class="hl-box hl-blue">
+      <strong>A:</strong> Troposphere is thicker at equator. <strong>R:</strong> Equator receives more heat, creating stronger convection currents that push the layer higher.<br>
+      <strong class="text-green">→ Both correct, R is correct explanation of A.</strong>
+    </div>
+    <div class="hl-box hl-violet">
+      <strong>A:</strong> Temperature increases in stratosphere. <strong>R:</strong> Ozone absorbs UV radiation and converts it to heat.<br>
+      <strong class="text-green">→ Both correct, R is correct explanation of A.</strong>
+    </div>
+    <div class="hl-box hl-red">
+      <strong>A:</strong> Thermosphere is the hottest layer. <strong>R:</strong> Meteors burn up in thermosphere.<br>
+      <strong class="text-red">→ A correct but R is wrong (meteors burn in mesosphere).</strong>
+    </div>
+  </div>
+
+  <div class="card mb2">
+    <div class="card-title">🎯 Chronology / Numerical Questions</div>
+    <ul class="bullets">
+      <li>Layers in order from surface: <strong class="text-bright">Troposphere → Stratosphere → Mesosphere → Thermosphere → Exosphere</strong></li>
+      <li>Freshwater storage order: <strong class="text-bright">Ice caps → Groundwater → Lakes/Atm → Rivers</strong></li>
+      <li>Troposphere heights: <strong class="text-blue">8 km (poles) | 18 km (equator) | ~13 km (average)</strong></li>
+      <li>Ozone layer: <strong class="text-violet">30–35 km</strong></li>
+      <li>Cirrus clouds: <strong class="text-green">8–12 km</strong></li>
+      <li>Mesosphere ends at: <strong class="text-cyan">80–85 km</strong></li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 7 — QUIZ
+══════════════════════════════════════════ -->
+<div id="quiz" class="section">
+<div class="container">
+  <div class="sec-title">❓ Active Recall Quiz</div>
+  <p class="sec-sub">Click each question to reveal the answer — test yourself first!</p>
+
+  <div id="fill-section">
+    <strong class="text-violet" style="display:block; margin-bottom:0.8rem;">📝 Fill in the Blanks (click to reveal)</strong>
+
+    <div class="fill" onclick="this.classList.toggle('show')">
+      The temperature in the troposphere decreases at <span class="blank">6.5°C per km</span> with altitude.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      The boundary between troposphere and stratosphere is called <span class="blank">Tropopause</span>.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      Ozone layer is found at <span class="blank">30–35 km</span> in the <span class="blank">Stratosphere</span>.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      The coldest layer of the atmosphere is <span class="blank">Mesosphere</span>.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      Ozone thickness is measured in <span class="blank">Dobson Units</span>.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      Montreal Protocol (1987) aimed to phase out <span class="blank">CFCs (Chlorofluorocarbons)</span>.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      Aurora lights in the northern hemisphere = <span class="blank">Aurora Borealis</span>.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      Fresh snow reflects <span class="blank">80%</span> of sunlight (albedo).
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      The planet with highest albedo is <span class="blank">Venus</span>.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      RH = <span class="blank">Absolute Humidity ÷ Capacity of Air × 100</span>.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      N₂O is also called <span class="blank">Laughing Gas</span> and has residence time of <span class="blank">~122 years</span>.
+    </div>
+    <div class="fill" onclick="this.classList.toggle('show')">
+      The side of a mountain that receives rain = <span class="blank">Windward Side</span>. Dry side = <span class="blank">Leeward Side</span>.
+    </div>
+  </div>
+
+  <hr>
+
+  <strong class="text-violet" style="display:block; margin-bottom:0.8rem;">⚡ Rapid-Fire Q&A (click to reveal)</strong>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q1. Which layer do jet planes fly in?</div>
+    <div class="q-ans">✅ Stratosphere (calm, no clouds, no turbulence)</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q2. What is the Karman Line?</div>
+    <div class="q-ans">✅ The boundary where Earth's atmosphere ends and space begins (exosphere starts)</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q3. Why is insolation NOT highest at the equator?</div>
+    <div class="q-ans">✅ Equatorial region has heavy cloud cover which blocks insolation. Maximum insolation received in the Tropics.</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q4. Name three conditions required for temperature inversion.</div>
+    <div class="q-ans">✅ 1) Long cold winter night 2) Still air (no wind) 3) Cloudless sky</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q5. What happens to Relative Humidity when temperature increases?</div>
+    <div class="q-ans">✅ RH DECREASES. Higher temp → higher air capacity → denominator in formula increases → RH drops.</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q6. Differentiate between Hail and Sleet.</div>
+    <div class="q-ans">✅ Hail = large ice chunks, forms in SUMMER via thunderstorm updrafts. Sleet = small frozen drops, seen in WINTER, formed by freezing/refreezing rain.</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q7. Which cloud NEVER causes rainfall?</div>
+    <div class="q-ans">✅ Cirrus clouds (high altitude, made of ice crystals, 8-12 km). They are feathery and appear in fair weather.</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q8. What is advection? Where is it significant?</div>
+    <div class="q-ans">✅ Horizontal transfer of heat (wind blowing sideways). Significant in mid-latitudes (30–40°). "Loo" winds in India = advection.</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q9. Evolution of atmosphere: What happened in Stage 2?</div>
+    <div class="q-ans">✅ Degassing — gases released from Earth's interior through volcanic activity (sulphur, nitrogen compounds, pyroclastic debris)</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q10. Which form of freshwater is most abundant?</div>
+    <div class="q-ans">✅ Ice Caps and Glaciers (~68.7% of total freshwater). NOT rivers or groundwater.</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q11. What is Isoneph? What is Isohele?</div>
+    <div class="q-ans">✅ Isoneph = lines joining points of equal CLOUDINESS. Isohele = lines joining points of equal SUNLIGHT received.</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Q12. Why does fog form on cold mornings after a sunny day?</div>
+    <div class="q-ans">✅ Sunny day → lots of evaporation → water vapor in air. Cold night → temperature drops → RH increases → dew point reached → condensation → fog.</div>
+    <div class="hint">Click to reveal</div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 8 — HIGH YIELD
+══════════════════════════════════════════ -->
+<div id="highyield" class="section">
+<div class="container">
+  <div class="sec-title">⚡ High-Yield Revision Notes</div>
+  <p class="sec-sub">60% of exam questions come from these 20% of facts</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title text-fire">🔥 Layers — Must Know</div>
+      <ul class="list-clean">
+        <li>Tropo → Strato → Meso → Thermo → Exo</li>
+        <li>Temp: ↓ ↑ ↓ ↑ (alternates)</li>
+        <li>All weather = Troposphere</li>
+        <li>Ozone = Stratosphere (30–35 km)</li>
+        <li>Coldest = Mesosphere</li>
+        <li>Hottest = Thermosphere (= Ionosphere)</li>
+        <li>Jet planes = Stratosphere</li>
+        <li>Meteors burn = Mesosphere</li>
+        <li>Aurora = Thermosphere</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title text-blue">📊 Key Numbers</div>
+      <ul class="list-clean">
+        <li>N₂ = 78%, O₂ = 21%, Ar = 0.9%</li>
+        <li>Lapse rate = 6.5°C/km</li>
+        <li>Tropo height: 8 (poles) / 18 (equator)</li>
+        <li>Ozone: 30–35 km | Dobson units</li>
+        <li>Mesosphere ends: 80–85 km</li>
+        <li>Cirrus: 8–12 km</li>
+        <li>Fresh snow albedo: 80%</li>
+        <li>Old snow: 59% | Sea ice: 35%</li>
+        <li>N₂O residence: ~122 years</li>
+        <li>Freshwater: 97.2% saline / 2.8% fresh</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title text-violet">☁️ Clouds — Fast Reference</div>
+      <ul class="list-clean">
+        <li>CIRRO- prefix = High always</li>
+        <li>NIMBO- prefix = Low always (rain)</li>
+        <li>ALTO- prefix = Middle always</li>
+        <li>Cumulus = Mid, cotton, fair weather</li>
+        <li>Cumulonimbus = All levels, storms, cyclones</li>
+        <li>Cirrus = High, ice, NEVER rains</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title text-cyan">🌧 Rainfall & Precipitation</div>
+      <ul class="list-clean">
+        <li>Convectional = heat rises, common equatorial</li>
+        <li>Orographic = mountain barrier; windward=rain</li>
+        <li>Cyclonic = frontal, cumulonimbus</li>
+        <li>Hail = SUMMER, big, thunderstorm updrafts</li>
+        <li>Sleet = WINTER, small, frozen/refrozen</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title text-star">🏆 Exam Favourites</div>
+      <ul class="list-clean">
+        <li>Ozone Day = Sept 16 | Montreal 1987</li>
+        <li>Highest albedo planet = Venus</li>
+        <li>Max insolation = Tropics (NOT equator)</li>
+        <li>Aurora Borealis = North | Australis = South</li>
+        <li>Karman Line = Earth's atmosphere ends</li>
+        <li>Hygrometer = humidity (NOT hydrometer)</li>
+        <li>N₂O = laughing gas, longest GHG life</li>
+        <li>Water vapor = most abundant GHG</li>
+        <li>CO₂ = most human-emitted GHG</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title text-green">📐 ISO Lines Quick Ref</div>
+      <ul class="list-clean">
+        <li>Isotherm = Temperature</li>
+        <li>Isohyet = Rainfall</li>
+        <li>Isoneph = Cloudiness</li>
+        <li>Isohele = Sunlight</li>
+        <li>Isohaline = Salinity</li>
+        <li>Isobar = Pressure</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 9 — ULTRA-FAST
+══════════════════════════════════════════ -->
+<div id="ultrafast" class="section">
+<div class="container">
+  <div class="sec-title">🚀 Ultra-Fast Revision Sheet</div>
+  <p class="sec-sub">Read this in 5 minutes — covers everything</p>
+
+  <div class="card mb2">
+    <div class="speed-item"><span class="speed-key">Evolution (3 stages)</span><span class="speed-val">Primordial lost (H₂+He+solar flares) → Degassing (volcanoes) → Modification (bacteria)</span></div>
+    <div class="speed-item"><span class="speed-key">Composition</span><span class="speed-val">N₂ 78% | O₂ 21% | Ar 0.9% | CO₂ 0.036%</span></div>
+    <div class="speed-item"><span class="speed-key">GHGs</span><span class="speed-val">Water vapor (most) > CO₂ (most human) > Methane > N₂O (122yr, laughing gas)</span></div>
+    <div class="speed-item"><span class="speed-key">Layers & Temp</span><span class="speed-val">Tropo↓ | Strato↑ | Meso↓ | Thermo↑ | Exo</span></div>
+    <div class="speed-item"><span class="speed-key">Troposphere</span><span class="speed-val">8-18km, all weather, lapse rate 6.5°C/km</span></div>
+    <div class="speed-item"><span class="speed-key">Stratosphere</span><span class="speed-val">Ozone 30-35km, Dobson units, jet planes, Sept 16 Ozone Day</span></div>
+    <div class="speed-item"><span class="speed-key">Mesosphere</span><span class="speed-val">COLDEST, meteors burn, 80-85km</span></div>
+    <div class="speed-item"><span class="speed-key">Thermosphere</span><span class="speed-val">HOTTEST = Ionosphere, Aurora, Karman Line</span></div>
+    <div class="speed-item"><span class="speed-key">Aurora</span><span class="speed-val">Borealis=North, Australis=South, cause=solar winds+magnetosphere</span></div>
+    <div class="speed-item"><span class="speed-key">Insolation</span><span class="speed-val">Max at Tropics NOT equator (clouds block). Short-wave in, long-wave out.</span></div>
+    <div class="speed-item"><span class="speed-key">Albedo</span><span class="speed-val">Fresh snow 80%, Old snow 59%, Sea ice 35%. Venus = highest planet.</span></div>
+    <div class="speed-item"><span class="speed-key">Temp Inversion</span><span class="speed-val">Long cold night + still air + cloudless → surface cold, above warm → stability</span></div>
+    <div class="speed-item"><span class="speed-key">Humidity</span><span class="speed-val">RH = Abs Hum ÷ Capacity × 100. ↑Temp → ↓RH. Dew point = saturation.</span></div>
+    <div class="speed-item"><span class="speed-key">Hygrometer</span><span class="speed-val">Measures humidity (G=humidity, not D=density)</span></div>
+    <div class="speed-item"><span class="speed-key">Clouds</span><span class="speed-val">Cirro=High, Nimbo=Low(rain), Alto=Middle. Cumulus=mid/fair. Cirrus=no rain.</span></div>
+    <div class="speed-item"><span class="speed-key">Rainfall types</span><span class="speed-val">Convectional | Orographic (windward=rain, leeward=dry) | Cyclonic</span></div>
+    <div class="speed-item"><span class="speed-key">Hail vs Sleet</span><span class="speed-val">Hail=big,summer,updrafts. Sleet=small,winter,frozen.</span></div>
+    <div class="speed-item"><span class="speed-key">Freshwater order</span><span class="speed-val">Ice caps (68.7%) → Groundwater → Lakes/Atm → Rivers</span></div>
+    <div class="speed-item"><span class="speed-key">ISO lines</span><span class="speed-val">Isotherm=temp | Isohyet=rain | Isoneph=cloud | Isohaline=salinity | Isohele=sun</span></div>
+    <div class="speed-item"><span class="speed-key">Montreal Protocol</span><span class="speed-val">1987, Canada, phase out CFCs, ozone protection</span></div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 10 — 30-SECOND SHEET
+══════════════════════════════════════════ -->
+<div id="thirtySeconds" class="section">
+<div class="container">
+  <div class="sec-title">⏱ 30-Second Revision Sheet</div>
+  <p class="sec-sub">Scan this in 30 seconds — the most essential facts</p>
+
+  <div class="card mb2">
+    <strong class="text-blue" style="display:block; margin-bottom:0.6rem;">🌐 LAYERS (temp pattern: ↓↑↓↑)</strong>
+    <div class="dot-row">
+      <div class="dot">Tropo=weather↓</div>
+      <div class="dot">Strato=ozone↑</div>
+      <div class="dot">Meso=coldest↓</div>
+      <div class="dot">Thermo=hottest↑</div>
+      <div class="dot">Exo=space</div>
+    </div>
+  </div>
+
+  <div class="card mb2">
+    <strong class="text-fire" style="display:block; margin-bottom:0.6rem;">🔥 KEY NUMBERS</strong>
+    <div class="dot-row">
+      <div class="dot">N₂=78%</div>
+      <div class="dot">O₂=21%</div>
+      <div class="dot">Lapse=6.5°C/km</div>
+      <div class="dot">Ozone=30-35km</div>
+      <div class="dot">Snow albedo=80%</div>
+      <div class="dot">N₂O=122yr</div>
+      <div class="dot">Fresh H₂O=2.8%</div>
+      <div class="dot">Ice caps=68.7%</div>
+    </div>
+  </div>
+
+  <div class="card mb2">
+    <strong class="text-violet" style="display:block; margin-bottom:0.6rem;">🏆 EXAM WINNERS</strong>
+    <div class="dot-row">
+      <div class="dot">Max insolation=Tropics</div>
+      <div class="dot">Venus=highest albedo</div>
+      <div class="dot">Borealis=North</div>
+      <div class="dot">Australis=South</div>
+      <div class="dot">Ozone Day=Sept16</div>
+      <div class="dot">Montreal=1987</div>
+      <div class="dot">Laughing gas=N₂O</div>
+      <div class="dot">Hygrometer=humidity</div>
+      <div class="dot">Hail=summer</div>
+      <div class="dot">Sleet=winter</div>
+      <div class="dot">Cirrus=no rain</div>
+      <div class="dot">Cumulonimbus=cyclone</div>
+    </div>
+  </div>
+
+  <div class="card mb2">
+    <strong class="text-cyan" style="display:block; margin-bottom:0.6rem;">📏 ISO LINES (quick pairs)</strong>
+    <div class="dot-row">
+      <div class="dot">Isotherm→temp</div>
+      <div class="dot">Isohyet→rain</div>
+      <div class="dot">Isoneph→cloud</div>
+      <div class="dot">Isohaline→salinity</div>
+      <div class="dot">Isohele→sunlight</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 11 — LAST NIGHT
+══════════════════════════════════════════ -->
+<div id="lastnight" class="section">
+<div class="container">
+  <div class="sec-title">🌙 Last-Night-Before-Exam Sheet</div>
+  <p class="sec-sub">Read these 20 points just before you sleep — wake up ready</p>
+
+  <div class="ln-item">1. Layers (surface to space): <strong class="text-bright">Troposphere → Stratosphere → Mesosphere → Thermosphere → Exosphere</strong></div>
+  <div class="ln-item">2. Temperature pattern: <strong class="text-cyan">DOWN UP DOWN UP</strong> (alternates)</div>
+  <div class="ln-item">3. All weather phenomena happen in: <strong class="text-bright">Troposphere</strong></div>
+  <div class="ln-item">4. Ozone layer = <strong class="text-violet">Stratosphere at 30-35 km</strong>. Measured in Dobson units.</div>
+  <div class="ln-item">5. Coldest layer = <strong class="text-cyan">Mesosphere</strong>. Meteorites burn here.</div>
+  <div class="ln-item">6. Hottest layer = <strong class="text-fire">Thermosphere = Ionosphere</strong>. Auroras form here.</div>
+  <div class="ln-item">7. Aurora Borealis = <strong class="text-blue">North Pole</strong>. Aurora Australis = <strong class="text-green">South Pole</strong>.</div>
+  <div class="ln-item">8. Montreal Protocol = <strong class="text-star">1987, Canada</strong> — banned CFCs to protect ozone. Ozone Day = Sept 16.</div>
+  <div class="ln-item">9. Max insolation = <strong class="text-fire">Tropics</strong> (NOT equator — too cloudy there).</div>
+  <div class="ln-item">10. Albedo: Fresh snow = <strong class="text-bright">80%</strong>. Planet with highest albedo = <strong class="text-star">Venus</strong>.</div>
+  <div class="ln-item">11. GHGs: Most present = <strong class="text-blue">Water vapor</strong>. Most human-emitted = <strong class="text-bright">CO₂</strong>. Longest life = <strong class="text-star">N₂O (~122 yrs) = Laughing Gas</strong>.</div>
+  <div class="ln-item">12. Lapse rate = <strong class="text-cyan">6.5°C per km</strong> (temp decreases going up in troposphere).</div>
+  <div class="ln-item">13. Temp Inversion = temp increases going up. Conditions: long night + still air + no clouds. <strong class="text-bright">Promotes atmospheric stability.</strong></div>
+  <div class="ln-item">14. RH formula: <strong class="text-cyan">Abs Humidity ÷ Capacity × 100</strong>. ↑Temp → ↓RH.</div>
+  <div class="ln-item">15. Hygrometer = humidity. Hydrometer = liquid density.</div>
+  <div class="ln-item">16. Clouds: <strong class="text-green">Cirro=high(no rain)</strong>, <strong class="text-star">Alto=mid</strong>, <strong class="text-red">Nimbo=low(rain)</strong>. Cumulonimbus = thunderstorm/cyclone.</div>
+  <div class="ln-item">17. Rainfall types: <strong class="text-bright">Convectional | Orographic (windward=rain, leeward=dry) | Cyclonic</strong></div>
+  <div class="ln-item">18. Hail = <strong class="text-fire">summer</strong> (big, updrafts). Sleet = <strong class="text-blue">winter</strong> (small, refrozen).</div>
+  <div class="ln-item">19. Freshwater: <strong class="text-bright">Ice caps (68.7%) > Groundwater > Lakes > Rivers</strong>.</div>
+  <div class="ln-item">20. ISO lines: <strong class="text-cyan">Isotherm=temp | Isohyet=rain | Isoneph=cloud | Isohaline=salinity | Isohele=sun</strong></div>
+
+  <div class="hl-box hl-fire" style="margin-top:1.5rem; text-align:center;">
+    <strong class="text-bright" style="font-size:1rem;">🎯 You've got this. Sleep well. Go ace SSC CGL.</strong>
+  </div>
+</div>
+</div>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const tabs = document.querySelectorAll('.nav-tab');
+    const ids = ['full','palace','hooks','connections','traps','examiner','quiz','highyield','ultrafast','thirtySeconds','lastnight'];
+    const idx = ids.indexOf(id);
+    if (idx !== -1) tabs[idx].classList.add('active');
+  }
+
+  function toggleLayer(el) {
+    const body = el.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open');
+    el.querySelector('span:last-child').textContent = isOpen ? '+' : '−';
+  }
+</script>
+
+</body>
+</html>

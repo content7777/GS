@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minerals & Energy Resources — SSC CGL Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap');
+
+  :root {
+    --bg-primary: #0d0f14;
+    --bg-card: #13161e;
+    --bg-card2: #181c26;
+    --bg-highlight: #1e2330;
+    --accent-gold: #f0c040;
+    --accent-amber: #e8891a;
+    --accent-emerald: #2dd4a0;
+    --accent-red: #e85555;
+    --accent-blue: #5b9cf6;
+    --accent-purple: #a78bfa;
+    --accent-pink: #f472b6;
+    --text-primary: #e8eaf0;
+    --text-secondary: #9aa0b8;
+    --text-muted: #5c6280;
+    --border: #232840;
+    --border-bright: #2e3655;
+    --fire: #ff6b35;
+    --star: #fbbf24;
+    --plus: #34d399;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ─── NAVIGATION ─── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,15,20,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1rem;
+  }
+  .nav-inner {
+    max-width: 1100px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 52px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-inner a {
+    white-space: nowrap;
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .nav-inner a:hover {
+    color: var(--accent-gold);
+    border-color: var(--accent-gold);
+    background: rgba(240,192,64,0.07);
+  }
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px !important;
+    color: var(--accent-gold) !important;
+    border-color: var(--accent-gold) !important;
+    background: rgba(240,192,64,0.1) !important;
+  }
+
+  /* ─── LAYOUT ─── */
+  .page { max-width: 1100px; margin: auto; padding: 2rem 1.5rem 6rem; }
+
+  /* ─── HERO ─── */
+  .hero {
+    text-align: center;
+    padding: 3.5rem 1rem 2.5rem;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(240,192,64,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent-amber);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #f0c040, #e8891a, #f0c040);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+  .hero-sub {
+    color: var(--text-secondary);
+    font-size: 14px;
+    max-width: 500px;
+    margin: auto;
+  }
+  .badges {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.2rem;
+  }
+  .badge {
+    padding: 0.2rem 0.7rem;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .badge-gold { background: rgba(240,192,64,0.15); color: var(--accent-gold); border: 1px solid rgba(240,192,64,0.3); }
+  .badge-green { background: rgba(45,212,160,0.1); color: var(--accent-emerald); border: 1px solid rgba(45,212,160,0.25); }
+  .badge-red { background: rgba(232,85,85,0.1); color: var(--accent-red); border: 1px solid rgba(232,85,85,0.25); }
+
+  /* ─── SECTION HEADERS ─── */
+  .section { margin-top: 2.5rem; scroll-margin-top: 60px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.7rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-icon { font-size: 1.3rem; }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .section-header .tag {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 0.8rem;
+    position: relative;
+  }
+  .card:hover { border-color: var(--border-bright); }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-amber);
+    margin-bottom: 0.6rem;
+  }
+
+  /* ─── PRIORITY TAGS ─── */
+  .must { color: var(--fire); font-weight: 700; margin-right: 0.3rem; }
+  .imp { color: var(--star); font-weight: 700; margin-right: 0.3rem; }
+  .good { color: var(--plus); font-weight: 700; margin-right: 0.3rem; }
+
+  /* ─── GRID ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; }
+  @media (max-width: 700px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ─── TABLE ─── */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: var(--bg-highlight);
+    color: var(--accent-gold);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-bright);
+  }
+  td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+    color: var(--text-primary);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .td-key { color: var(--accent-emerald); font-weight: 600; }
+  .td-state { color: var(--accent-blue); font-weight: 600; }
+
+  /* ─── MEMORY PALACE ─── */
+  .palace {
+    background: linear-gradient(135deg, #0d1420 0%, #141022 100%);
+    border: 1px solid rgba(167,139,250,0.3);
+    border-radius: 14px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .palace::before {
+    content: '🧠';
+    font-size: 5rem;
+    position: absolute;
+    right: -0.5rem;
+    top: -0.5rem;
+    opacity: 0.07;
+  }
+  .palace-stop {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(167,139,250,0.1);
+  }
+  .palace-stop:last-child { border-bottom: none; }
+  .palace-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(167,139,250,0.2);
+    color: var(--accent-purple);
+    font-size: 12px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .palace-content strong { color: var(--accent-purple); }
+  .palace-content { font-size: 14px; }
+
+  /* ─── MEMORY HOOK ─── */
+  .hook {
+    background: linear-gradient(135deg, #131a10 0%, #0f1a15 100%);
+    border: 1px solid rgba(45,212,160,0.25);
+    border-left: 3px solid var(--accent-emerald);
+    border-radius: 0 10px 10px 0;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.7rem;
+    font-size: 14px;
+  }
+  .hook-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--accent-emerald);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  /* ─── TRAP BOX ─── */
+  .trap {
+    background: rgba(232,85,85,0.07);
+    border: 1px solid rgba(232,85,85,0.3);
+    border-left: 3px solid var(--accent-red);
+    border-radius: 0 10px 10px 0;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.7rem;
+    font-size: 14px;
+  }
+  .trap-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--accent-red);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  /* ─── EXAM Q BOX ─── */
+  .exam-q {
+    background: var(--bg-card2);
+    border: 1px solid var(--border-bright);
+    border-radius: 10px;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.6rem;
+    font-size: 14px;
+  }
+  .exam-q-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .exam-q .ans {
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: rgba(91,156,246,0.08);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--accent-blue);
+    display: none;
+  }
+  .reveal-btn {
+    margin-top: 0.5rem;
+    background: none;
+    border: 1px solid var(--border-bright);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    padding: 0.25rem 0.7rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .reveal-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+
+  /* ─── QUICK SHEET ─── */
+  .quick-sheet {
+    background: var(--bg-card);
+    border: 2px solid var(--accent-gold);
+    border-radius: 14px;
+    padding: 1.5rem;
+  }
+  .quick-sheet h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-gold);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  .qs-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    padding: 0.35rem 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 13.5px;
+  }
+  .qs-row:last-child { border-bottom: none; }
+  .qs-key {
+    color: var(--accent-emerald);
+    font-weight: 700;
+    white-space: nowrap;
+    font-size: 12px;
+  }
+  .qs-val { color: var(--text-primary); }
+
+  /* ─── FILL BLANK ─── */
+  .fill-blank {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-size: 14px;
+    margin-bottom: 0.5rem;
+  }
+  .blank { 
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 2px solid var(--accent-purple);
+    color: transparent;
+    background: rgba(167,139,250,0.08);
+    border-radius: 3px;
+    padding: 0 0.3rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 700;
+    user-select: none;
+  }
+  .blank.revealed {
+    color: var(--accent-purple);
+    background: rgba(167,139,250,0.15);
+  }
+
+  /* ─── LAST NIGHT SHEET ─── */
+  .last-night {
+    background: linear-gradient(135deg, #0d0f14 0%, #130d1a 100%);
+    border: 2px solid rgba(244,114,182,0.4);
+    border-radius: 16px;
+    padding: 1.8rem;
+  }
+  .last-night h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent-pink);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .ln-item {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(244,114,182,0.1);
+    font-size: 14px;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .ln-item:last-child { border-bottom: none; }
+  .ln-bullet { color: var(--accent-pink); font-weight: 800; flex-shrink: 0; }
+
+  /* ─── MONO TEXT ─── */
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* ─── DIVIDER ─── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  /* ─── COAL TYPES ─── */
+  .coal-bar { margin-bottom: 0.8rem; }
+  .coal-bar .label { font-size: 12px; font-weight: 700; margin-bottom: 0.3rem; display: flex; justify-content: space-between; }
+  .bar { height: 22px; border-radius: 4px; display: flex; align-items: center; padding-left: 0.6rem; font-size: 11px; font-weight: 700; color: white; }
+
+  /* ─── PROGRESS ─── */
+  .progress-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    margin-left: 0.4rem;
+  }
+  .pt-must { background: rgba(255,107,53,0.2); color: var(--fire); }
+  .pt-imp { background: rgba(251,191,36,0.15); color: var(--star); }
+  .pt-good { background: rgba(52,211,153,0.12); color: var(--plus); }
+
+  /* ─── FLOW ARROWS ─── */
+  .flow { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; font-size: 14px; }
+  .flow-arrow { color: var(--accent-amber); font-weight: 800; }
+  .flow-box {
+    background: var(--bg-highlight);
+    border: 1px solid var(--border-bright);
+    border-radius: 6px;
+    padding: 0.2rem 0.6rem;
+    font-size: 13px;
+  }
+
+  /* ─── BIG PICTURE ─── */
+  .big-picture {
+    background: linear-gradient(135deg, #131b12 0%, #11181a 100%);
+    border: 1px solid rgba(45,212,160,0.2);
+    border-radius: 14px;
+    padding: 1.5rem;
+  }
+
+  /* ─── COLLAPSIBLE ─── */
+  details { margin-bottom: 0.6rem; }
+  summary {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+  details[open] summary { border-color: var(--accent-gold); border-radius: 8px 8px 0 0; color: var(--accent-gold); }
+  details[open] summary::before { content: '▾ '; }
+  summary::before { content: '▸ '; color: var(--accent-amber); }
+  .details-body {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 1rem 1.2rem;
+    font-size: 14px;
+  }
+
+  /* pill */
+  .pill {
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .pill-gold { background: rgba(240,192,64,0.12); color: var(--accent-gold); }
+  .pill-blue { background: rgba(91,156,246,0.12); color: var(--accent-blue); }
+  .pill-green { background: rgba(45,212,160,0.1); color: var(--accent-emerald); }
+  .pill-red { background: rgba(232,85,85,0.1); color: var(--accent-red); }
+
+  ul.dot { padding-left: 1.2rem; }
+  ul.dot li { margin-bottom: 0.3rem; }
+  ul.dot li::marker { color: var(--accent-amber); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-brand">⛏ Minerals</a>
+    <a href="#bigpicture">Big Picture</a>
+    <a href="#palace">Memory Palace</a>
+    <a href="#notes">Full Notes</a>
+    <a href="#hooks">Memory Hooks</a>
+    <a href="#connections">Connections</a>
+    <a href="#traps">⚠ Traps</a>
+    <a href="#examq">Exam Qs</a>
+    <a href="#recall">Active Recall</a>
+    <a href="#highyield">High-Yield</a>
+    <a href="#ultrafast">Ultra-Fast</a>
+    <a href="#30sec">30-Second</a>
+    <a href="#lastnight">Last Night</a>
+  </div>
+</nav>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-eyebrow">SSC CGL · Geography · FRB 2.0</div>
+  <h1>Minerals & Energy Resources</h1>
+  <p class="hero-sub">A complete high-retention revision system — built to survive 100 revisions and still fire under exam pressure.</p>
+  <div class="badges">
+    <span class="badge badge-gold">🔥 High Priority Chapter</span>
+    <span class="badge badge-green">♻ Renewable vs Non-Renewable</span>
+    <span class="badge badge-red">⚠ Many Exam Traps</span>
+  </div>
+</div>
+
+<!-- BIG PICTURE -->
+<div class="section" id="bigpicture">
+  <div class="section-header">
+    <span class="section-icon">🌐</span>
+    <h2>Big Picture</h2>
+    <span class="tag">What This Chapter Is Really About</span>
+  </div>
+  <div class="big-picture">
+    <p>This chapter answers <strong>three core questions</strong> that SSC loves to test:</p>
+    <br>
+    <p><span class="must">🔥</span> <strong>WHERE</strong> are specific minerals found in India? (state, mine, district, belt)</p>
+    <p style="margin-top:0.5rem"><span class="must">🔥</span> <strong>WHAT TYPE</strong> is each mineral? (metallic/non-metallic, ferrous/non-ferrous, conventional/non-conventional)</p>
+    <p style="margin-top:0.5rem"><span class="imp">⭐</span> <strong>WHO IS #1</strong> in reserves vs production? (they're often different states!)</p>
+    <br>
+    <p style="color:var(--text-secondary); font-size:14px;">The chapter splits into two halves: <span class="pill pill-gold">Minerals</span> (where to find them) and <span class="pill pill-green">Energy Sources</span> (conventional vs non-conventional, renewable vs non-renewable). Know both halves and the examiner has nowhere to hide.</p>
+  </div>
+</div>
+
+<!-- MEMORY PALACE -->
+<div class="section" id="palace">
+  <div class="section-header">
+    <span class="section-icon">🧠</span>
+    <h2>Chapter Memory Palace</h2>
+    <span class="tag">The Museum of Indian Earth Treasures</span>
+  </div>
+  <div class="palace">
+    <p style="color:var(--text-secondary); font-size:13px; margin-bottom:1rem;">Imagine you're walking through a massive underground museum. Each room holds a different mineral. Walk through it every time you revise.</p>
+    
+    <div class="palace-stop">
+      <div class="palace-num">1</div>
+      <div class="palace-content"><strong>ENTRANCE GATE — "The Iron Triangle"</strong><br>
+      Three guards stand at the gate: <em>Odisha, Jharkhand, Chhattisgarh</em>. They're made of iron. Behind them are four belts painted on the wall: Orissa-Jharkhand, Durg-Bastar-Chandrapur, Maharashtra-Goa, Bellary-Chitradurga belt.</div>
+    </div>
+    
+    <div class="palace-stop">
+      <div class="palace-num">2</div>
+      <div class="palace-content"><strong>ROOM 1 — The Coal Vault</strong><br>
+      The floor is made of black diamonds. In the corner, a <em>Damodar River</em> flows. On the wall: "97% of India's coal is in Damodar, Son, Mahanadi, Godavari valleys." Two clocks on the wall: one says <em>200 million yrs</em> (Gondwana), other says <em>55 million yrs</em> (Tertiary). The older clock is glowing brighter — older = better coal.</div>
+    </div>
+    
+    <div class="palace-stop">
+      <div class="palace-num">3</div>
+      <div class="palace-content"><strong>ROOM 2 — The Gold Vault</strong><br>
+      A Kannadiga guard (Karnataka) stands with a key labelled <em>Kolar Gold Field + Hutti Mines</em>. A Bihar sign on the safe says "Largest Gold Reserves in India" — everyone is shocked because they expected Karnataka. China sits at #1 globally, Australia at #2.</div>
+    </div>
+    
+    <div class="palace-stop">
+      <div class="palace-num">4</div>
+      <div class="palace-content"><strong>ROOM 3 — The Mica Crystal Room</strong><br>
+      Electric sparks everywhere (mica = electrical insulation). Three windows: <em>Andhra Pradesh (biggest), Rajasthan (2nd), Bihar (3rd), Jharkhand (4th)</em>. A sign on the door: "Koderma-Gaya-Hazaribagh belt, Jharkhand."</div>
+    </div>
+    
+    <div class="palace-stop">
+      <div class="palace-num">5</div>
+      <div class="palace-content"><strong>ROOM 4 — The Energy Control Room</strong><br>
+      Two panels: <em>CONVENTIONAL</em> (dusty, old levers — coal, oil, gas) and <em>NON-CONVENTIONAL</em> (bright new switches — solar, wind, tidal, geothermal). A calendar on the wall shows 1986: both Chernobyl disaster and GAIL formation happened that year!</div>
+    </div>
+    
+    <div class="palace-stop">
+      <div class="palace-num">6</div>
+      <div class="palace-content"><strong>EXIT — The Refinery Gate</strong><br>
+      You pass through <em>Digboi (Asia's oldest, 1901, Assam)</em>. A sign says: "Petroleum = fault traps between porous and non-porous rocks. Gas is always lighter, floats on top of oil."</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPLETE NOTES -->
+<div class="section" id="notes">
+  <div class="section-header">
+    <span class="section-icon">📋</span>
+    <h2>Complete Revision Notes</h2>
+    <span class="tag">Layer 1 — Full Details</span>
+  </div>
+
+  <!-- Classification -->
+  <details open>
+    <summary>🗂 Mineral Classification</summary>
+    <div class="details-body">
+      <div class="grid-2">
+        <div>
+          <div class="card-title">Metallic Minerals</div>
+          <p><span class="must">🔥</span> <strong>Ferrous</strong> (contain iron): Iron, Manganese, Nickel, Cobalt</p>
+          <p style="margin-top:0.5rem"><span class="must">🔥</span> <strong>Non-Ferrous</strong> (no iron): Copper, Lead, Tin, Bauxite (→Aluminium)</p>
+          <p style="margin-top:0.5rem"><span class="imp">⭐</span> <strong>Precious</strong>: Gold, Silver, Platinum</p>
+        </div>
+        <div>
+          <div class="card-title">Non-Metallic &amp; Energy</div>
+          <p><span class="imp">⭐</span> <strong>Non-Metallic</strong>: Mica, Salt, Potash, Sulphur, Granite, Limestone, Marble, Sandstone</p>
+          <p style="margin-top:0.5rem"><span class="must">🔥</span> <strong>Energy Minerals</strong>: Coal, Petroleum, Natural Gas</p>
+          <p style="margin-top:0.5rem"><span class="good">➕</span> <strong>Diamond</strong>: Only Madhya Pradesh produces it</p>
+        </div>
+      </div>
+      <div style="margin-top:1rem; padding:0.7rem 1rem; background:rgba(240,192,64,0.07); border-radius:8px; font-size:13.5px;">
+        <strong style="color:var(--accent-gold)">KEY GEOGRAPHY FACT:</strong> Most minerals found <strong>East of the Bengaluru–Kanpur line</strong>. Mainly in Gondwana region. Dharwad & Cudapah systems → Gold & Iron. Vindhyan → Non-metallic minerals.
+      </div>
+    </div>
+  </details>
+
+  <!-- Iron Ore -->
+  <details>
+    <summary>⚙ Iron Ore — Belts, Mines & States</summary>
+    <div class="details-body">
+      <p style="margin-bottom:0.8rem; font-size:13.5px;"><span class="must">🔥</span> Types: <span class="pill pill-gold">Magnetite</span> (best quality, highest iron %) → <span class="pill pill-blue">Hematite</span> → <span class="pill pill-green">Limonite</span> → <span class="pill pill-red">Siderite</span></p>
+      <p style="margin-bottom:0.8rem; font-size:13.5px;"><span class="must">🔥</span> #1 Reserves & Production: <strong>Odisha</strong> → then Chhattisgarh → then Karnataka</p>
+      
+      <div class="table-wrap" style="margin-top:0.8rem">
+        <table>
+          <thead>
+            <tr><th>Belt</th><th>States</th><th>Key Mines/Places</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="td-key">Orissa–Jharkhand Belt</td><td class="td-state">Odisha + Jharkhand + W.Bengal</td><td>Singhbhum (Jharkhand): <strong>Noamundi, Gua</strong><br>Odisha: <strong>Sundargarh, Mayurbhanj, Jhar</strong> — Badampahar Mines</td></tr>
+            <tr><td class="td-key">Durg–Bastar–Chandrapur Belt</td><td class="td-state">Chhattisgarh</td><td><strong>Bailadila</strong> (bull-hump shaped hill, "Baila"=bull), <strong>Rajhara Mines</strong></td></tr>
+            <tr><td class="td-key">Maharashtra–Goa Belt</td><td class="td-state">Maharashtra + Goa</td><td><strong>Marmagao</strong></td></tr>
+            <tr><td class="td-key">Bellary–Chitradurga–Chikmagalur–Tumkur Belt</td><td class="td-state">Karnataka</td><td><strong>Kudremukh</strong> (horse-face shaped hill, "Kudre"=horse in Kannada), Bababudan Hills — also has coffee plantations. District: <strong>Shivamogga</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </details>
+
+  <!-- Other Metallic Minerals -->
+  <details>
+    <summary>🔩 Other Metallic Minerals</summary>
+    <div class="details-body">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Mineral</th><th>Key Facts</th><th>#1 State/Area</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-key">Manganese</td>
+              <td>Ferro-manganese alloy → contains iron (ferrous category). Used in steel.</td>
+              <td class="td-state"><strong>Madhya Pradesh</strong> (#1 producer). Sundargarh, Odisha also important.<br><em>Memory: M=Manganese=MP</em></td>
+            </tr>
+            <tr>
+              <td class="td-key">Copper</td>
+              <td>First metal discovered by humans (Chalcolithic Age). Non-ferrous.</td>
+              <td class="td-state">MP: <strong>Balaghat Mines</strong><br>Rajasthan: <strong>Khetri Mines</strong> (Jhunjhunu-Alwar)<br>Jharkhand: <strong>Singhbhum</strong></td>
+            </tr>
+            <tr>
+              <td class="td-key">Aluminium / Bauxite</td>
+              <td>Bauxite → primary ore of Aluminium. Used in aircraft (lightweight). Non-ferrous.</td>
+              <td class="td-state"><strong>Odisha</strong> (#1 producer) — Panchpat Mali deposits, Koraput<br>Source: Amarkantak Plateau (Maikal Hills), Bilaspur/Katni in Chhattisgarh</td>
+            </tr>
+            <tr>
+              <td class="td-key">Gold</td>
+              <td>Precious. World #1: China → Australia → then India.</td>
+              <td class="td-state">Karnataka: <strong>Kolar Gold Field, Hutti Gold Mines</strong><br>Andhra Pradesh: <strong>Ramgiri</strong><br><strong>LARGEST RESERVES IN INDIA → BIHAR</strong> ⚠</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </details>
+
+  <!-- Non-Metallic -->
+  <details>
+    <summary>💎 Non-Metallic Minerals — Mica, Limestone, Diamond</summary>
+    <div class="details-body">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">Mica <span class="must">🔥</span></div>
+          <p style="font-size:13.5px;">Used in electrical industry — excellent <strong>dielectric strength</strong>, low power loss. Found at Northern edge of Chota Nagpur Plateau.</p>
+          <p style="font-size:13px; margin-top:0.5rem; color:var(--accent-emerald)">Ranking: <strong>Andhra Pradesh (1) → Rajasthan (2) → Bihar (3) → Jharkhand (4)</strong></p>
+          <p style="font-size:13px; margin-top:0.4rem;">Key belt: <strong>Koderma–Gaya–Hazaribagh</strong> (Jharkhand). Also: Ajmer belt (Rajasthan), Nellore belt (AP).</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Limestone <span class="imp">⭐</span></div>
+          <p style="font-size:13.5px;">From <strong>sedimentary rock</strong>. Chemical formula: CaCO₃. Three forms: Limestone, Marble, Chalk — all CaCO₃!</p>
+          <p style="font-size:13px; margin-top:0.5rem; color:var(--accent-blue)">Porous → karst topography (sinkholes, dolines, stalactites, stalagmites)</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Diamond <span class="must">🔥</span></div>
+          <p style="font-size:13.5px;"><strong>Madhya Pradesh</strong> is the only/largest diamond producing state in India. (SSC asked this as "only state" — accept MP.)</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- Coal -->
+  <details>
+    <summary>🪨 Coal — Types, Distribution & States</summary>
+    <div class="details-body">
+      <p style="font-size:13.5px; margin-bottom:1rem;">Coal = "Black Diamond" = "Black Gold" = "Buried Sunshine"</p>
+      <p style="font-size:13.5px; margin-bottom:0.8rem;"><span class="must">🔥</span> <strong>97% of India's coal reserves</strong> in valleys of: Damodar → Son → Mahanadi → Godavari</p>
+      
+      <div style="margin-bottom:1rem;">
+        <div class="card-title">Coal Quality Ranking (Carbon Content)</div>
+        <div class="coal-bar">
+          <div class="label"><span style="color:var(--text-primary)">Anthracite — Best</span><span style="color:var(--accent-gold)">80–90% Carbon</span></div>
+          <div class="bar" style="background: linear-gradient(90deg, #4a5568, #2d3748); width:90%">Anthracite — also called "Metallic Coal" / Coking Coal (metallurgy)</div>
+        </div>
+        <div class="coal-bar">
+          <div class="label"><span>Bituminous</span><span style="color:var(--accent-amber)">70–80%</span></div>
+          <div class="bar" style="background: linear-gradient(90deg, #553c1e, #3d2a12); width:78%">Bituminous</div>
+        </div>
+        <div class="coal-bar">
+          <div class="label"><span>Lignite (Brown Coal)</span><span style="color:var(--accent-blue)">50–70%</span></div>
+          <div class="bar" style="background: linear-gradient(90deg, #2a4a3e, #1e3530); width:60%">Lignite — HIGH moisture content. Main source: Neyveli, Tamil Nadu</div>
+        </div>
+        <div class="coal-bar">
+          <div class="label"><span>Peat — Worst</span><span style="color:var(--text-muted)">&lt;50%</span></div>
+          <div class="bar" style="background: linear-gradient(90deg, #1a2a1e, #111a14); width:40%">Peat</div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Type</th><th>Age</th><th>Location</th><th>Quality</th></tr></thead>
+          <tbody>
+            <tr><td class="td-key">Gondwana Coal</td><td>200 million yrs</td><td class="td-state">Peninsular India (Damodar, Son, Godavari valleys)</td><td style="color:var(--accent-emerald)">BETTER (older)</td></tr>
+            <tr><td class="td-key">Tertiary Coal</td><td>55 million yrs</td><td class="td-state">North-East (Meghalaya, Assam, Arunachal, Nagaland), J&K</td><td style="color:var(--accent-red)">WORSE (younger)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:0.8rem; font-size:13.5px;"><span class="must">🔥</span> <strong>Max Reserves → Odisha</strong> | <strong>Max Production → Chhattisgarh</strong></p>
+    </div>
+  </details>
+
+  <!-- Petroleum -->
+  <details>
+    <summary>🛢 Petroleum & Natural Gas</summary>
+    <div class="details-body">
+      <div class="hook" style="margin-bottom:1rem;">
+        <div class="hook-label">Key Concept</div>
+        Petroleum found in <strong>fault traps between porous and non-porous rocks</strong>. Gas (lighter) always floats <strong>above</strong> the oil. So wherever oil = gas on top.
+      </div>
+      
+      <div class="grid-2">
+        <div>
+          <div class="card-title">Petroleum Locations</div>
+          <ul class="dot" style="font-size:13.5px;">
+            <li>Mumbai High, Gujarat, Assam — main production</li>
+            <li><strong>Digboi, Assam (1901)</strong> — Asia's oldest oil refinery still in operation</li>
+            <li>Also in Assam: Canakti, Moran-Hugrijan</li>
+            <li>Andhra Pradesh: <strong>Tatipaka</strong></li>
+            <li>Gujarat: <strong>Ankleshwar, Khambat, Kalol</strong></li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-title">Natural Gas</div>
+          <ul class="dot" style="font-size:13.5px;">
+            <li>Main component: <strong>Methane (70–90%)</strong></li>
+            <li>Methane also called <strong>Marsh Gas</strong></li>
+            <li>Released from: paddy fields, wells (anaerobic decomposition)</li>
+            <li>Found: Mumbai High, Cambay Basin, Krishna-Godavari Belt</li>
+            <li><strong>HVJ Pipeline (1986)</strong> — 1700 km — Hazira (Gujarat) → Vijaypur (MP) → Jagdishpur (UP)</li>
+            <li>Built under <strong>GAIL</strong> — Gas Authority of India Limited</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- Nuclear Energy -->
+  <details>
+    <summary>⚛ Nuclear Energy & Reactors</summary>
+    <div class="details-body">
+      <div class="grid-2">
+        <div>
+          <div class="card-title">Nuclear Reactor Components <span class="must">🔥</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Component</th><th>Function</th><th>Material Used</th></tr></thead>
+              <tbody>
+                <tr><td class="td-key">Moderator</td><td>Slows down fast neutrons</td><td class="td-state">Heavy Water (D₂O), Normal Water, Graphite</td></tr>
+                <tr><td class="td-key">Control Rods</td><td>Absorb neutrons; prevent chain reaction from becoming uncontrolled</td><td class="td-state">Boron, Cadmium, Silver rods</td></tr>
+                <tr><td class="td-key">Coolant</td><td>Remove heat; convert to steam for electricity</td><td class="td-state">Heavy water, Helium gas, CO₂</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:13px; margin-top:0.7rem; color:var(--accent-red)">⚠ Chernobyl disaster (1986) — Ukraine (then USSR) — control rod insertion worsened fission reaction instead of stopping it.</p>
+        </div>
+        <div>
+          <div class="card-title">Nuclear Power Plants of India</div>
+          <ul class="dot" style="font-size:13.5px;">
+            <li><strong>Tarapur</strong> — first, 1969 (Maharashtra)</li>
+            <li>Kundankulam, Kalpakkam — Tamil Nadu</li>
+            <li>Kaiga — Karnataka</li>
+            <li>Narora — UP</li>
+            <li>Rawatbhata — Rajasthan</li>
+            <li>Kakrapar — Gujarat</li>
+          </ul>
+          <div style="margin-top:0.8rem; padding:0.6rem 0.8rem; background:rgba(240,192,64,0.07); border-radius:8px; font-size:13px;">
+            <strong style="color:var(--accent-gold)">Father of India's Nuclear Program:</strong> Dr. Homi J. Bhabha<br>
+            <strong style="color:var(--accent-gold)">Apsara:</strong> First nuclear reactor in Asia<br>
+            <strong style="color:var(--accent-gold)">Thorium:</strong> Found in Monazite sand of Kerala &amp; Tamil Nadu coast. India = world's largest thorium reserves!<br>
+            <strong style="color:var(--accent-gold)">Fuel used:</strong> ⁹²U²³⁵ → Barium + Krypton + 3 neutrons (chain reaction)
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- Non-Conventional Energy -->
+  <details>
+    <summary>🌱 Non-Conventional Energy Sources</summary>
+    <div class="details-body">
+      <div class="grid-2">
+        <div>
+          <div class="card-title">Tidal Energy</div>
+          <p style="font-size:13.5px;">Best where coast is <strong>funnel-shaped</strong>. In India:</p>
+          <ul class="dot" style="font-size:13.5px; margin-top:0.4rem;">
+            <li><strong>Gulf of Khambhat (Cambay)</strong></li>
+            <li><strong>Gulf of Kutch</strong> — both in Gujarat, funnel-shaped</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-title">Geothermal Energy</div>
+          <p style="font-size:13.5px;">Heat from earth's interior heats groundwater (aquifer) → hot springs → energy.</p>
+          <ul class="dot" style="font-size:13.5px; margin-top:0.4rem;">
+            <li>India: <strong>Parvati Valley, Manikaran — Himachal Pradesh</strong></li>
+            <li>India: <strong>Puga Valley — Ladakh</strong></li>
+            <li>World's most famous: <strong>Yellowstone National Park, USA</strong> (geyser)</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-title">Wind Energy</div>
+          <p style="font-size:13.5px;">India's largest wind farm cluster: <strong>Tamil Nadu</strong> — between <strong>Nagarkoil and Madurai</strong>.</p>
+        </div>
+        <div>
+          <div class="card-title">Biogas</div>
+          <p style="font-size:13.5px;">Gas from farm waste, animal dung, crop stubble = <strong>Biogas / Cow-dung gas</strong>. Mainly used at local/rural level.</p>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- Energy Classification -->
+  <details>
+    <summary>⚡ Energy Classification — Conventional vs Non-Conventional</summary>
+    <div class="details-body">
+      <div class="grid-2">
+        <div>
+          <div class="card-title" style="color:var(--accent-red)">Conventional ≈ Non-Renewable</div>
+          <ul class="dot" style="font-size:13.5px;">
+            <li>Coal, Oil, Natural Gas (fossil fuels)</li>
+            <li>Commercial + Non-commercial sources</li>
+            <li>Used for a very long time</li>
+            <li>Mostly polluting</li>
+          </ul>
+        </div>
+        <div>
+          <div class="card-title" style="color:var(--accent-emerald)">Non-Conventional ≈ Mostly Renewable</div>
+          <ul class="dot" style="font-size:13.5px;">
+            <li>Solar, Wind, Tidal, Geothermal, Biogas</li>
+            <li>Nuclear — Non-conventional but NON-RENEWABLE ⚠</li>
+            <li>Mostly non-polluting</li>
+            <li>Emerged prominently in recent times</li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top:0.8rem; padding:0.7rem 1rem; background:rgba(232,85,85,0.07); border-radius:8px; font-size:13.5px; border:1px solid rgba(232,85,85,0.2)">
+        <strong style="color:var(--accent-red)">⚠ COMMON EXAM CONFUSION:</strong> Nuclear energy is classified as <strong>NON-CONVENTIONAL</strong> but it is also <strong>NON-RENEWABLE</strong>. Most non-conventional sources ARE renewable — but nuclear is the exception.
+      </div>
+    </div>
+  </details>
+</div>
+
+<!-- MEMORY HOOKS -->
+<div class="section" id="hooks">
+  <div class="section-header">
+    <span class="section-icon">🪝</span>
+    <h2>Smart Memory Hooks</h2>
+    <span class="tag">Retention Over Aesthetics</span>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 1 — Coal Rivers</div>
+    <strong>"Damodar's Son ate Maha rice near Goda-vari river"</strong> → <strong>D</strong>amodar → <strong>Son</strong> → <strong>Maha</strong>nadi → <strong>Goda</strong>vari = 97% coal reserves
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 2 — The BULL of Chhattisgarh</div>
+    <strong>Bailadila</strong> = "Baila" = Bull. The iron-rich hill is shaped like a <strong>bull's hump</strong>. Imagine a giant iron bull sitting in Chhattisgarh. You'll never forget Bailadila = Chhattisgarh = iron.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 3 — KUDREMUKH = Horse Face</div>
+    "Kudre" = Horse in Kannada. "Mukh" = Face/Mouth. Imagine a horse-faced mountain in Karnataka. That's Kudremukh — iron reserves + Karnataka. Bababudan Hills next door also has coffee.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 4 — Gold Reserves SHOCK</div>
+    Everyone expects Karnataka (Kolar Gold Field) to have max reserves. But the SAFE with the most gold is in <strong>BIHAR</strong>. Imagine a Bihar farmer digging his field and finding a gold vault. That's your exam trap and your hook.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 5 — DIGBOI: "Dig Boy, Dig!"</div>
+    Workers were told "Dig, boy, dig!" in Assam in 1901 — Asia's oldest oil refinery. Digboi = Assam = 1901 = Asia's oldest refinery. Easy.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 6 — HVJ Pipeline: "Have Very good Gas"</div>
+    <strong>H</strong>azira (Gujarat) → <strong>V</strong>ijaypur (MP) → <strong>J</strong>agdishpur (UP) = HVJ Pipeline. 1700 km. Built 1986 under GAIL. Same year as Chernobyl! Two disasters and one pipeline in 1986.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 7 — Mica Order: "And Rabi Jhanks"</div>
+    <strong>And</strong>hra Pradesh (1) → <strong>Ra</strong>jasthan (2) → <strong>Bi</strong>har (3) → <strong>Jhank</strong>hand (4) — MICA PRODUCTION ORDER. "And Rabi Jhanks" (And Rabi Jhankta Hai).
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 8 — Coal Type Ladder: "A Bit Low, Poor"</div>
+    <strong>A</strong>nthracite → <strong>Bit</strong>uminous → <strong>L</strong>ignite → <strong>P</strong>eat. Quality falls down the ladder. Carbon content: 90% → 75% → 60% → &lt;50%.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 9 — Methane is Marsh Gas from Paddy</div>
+    Picture a paddy field in a swamp. Bubbles rising = Methane = Marsh Gas. Same gas that kills people in old wells = natural gas main component. Same gas that makes biogas.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Hook 10 — Tidal Energy = Funnel Gujarat</div>
+    Imagine Gujarat as a funnel pouring tidal energy. Gulf of Kutch (left spout) + Gulf of Khambhat (right spout) = two funnels = tidal energy sites.
+  </div>
+</div>
+
+<!-- CONCEPT CONNECTIONS -->
+<div class="section" id="connections">
+  <div class="section-header">
+    <span class="section-icon">🔗</span>
+    <h2>Concept Connections</h2>
+    <span class="tag">Mental Network Building</span>
+  </div>
+  
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">The Ore → Metal Chain</div>
+      <div class="flow">
+        <span class="flow-box">Ore extracted</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-box">Metal + Gang (impurity)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-box">Metallurgical process (refining)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-box">Pure Metal</span>
+      </div>
+      <p style="font-size:12.5px; color:var(--text-secondary); margin-top:0.5rem">Gang = impurity in ore. Anthracite = Coking Coal = used in metallurgy. This is why it's called "metallic coal".</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Limestone → Karst Connection</div>
+      <div class="flow">
+        <span class="flow-box">CaCO₃ Limestone</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-box">Porous + Soft</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-box">Water percolates</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-box">Karst Topography</span>
+      </div>
+      <p style="font-size:12.5px; color:var(--text-secondary); margin-top:0.5rem">Erosional: Sinkhole, Doline, Boyle, Lapies | Depositional: Stalactite (top), Stalagmite (bottom), Pillar</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Age → Coal Quality</div>
+      <p style="font-size:13.5px;">Gondwana (200M yr) = BETTER than Tertiary (55M yr). <strong>Older = Higher carbon = Better quality.</strong> Like aged wine → older is richer.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Nuclear Fission Chain</div>
+      <div class="flow" style="flex-wrap:wrap;">
+        <span class="flow-box">⁹²U²³⁵ + Neutron</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-box">Barium + Krypton</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-box">3 Neutrons released</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-box">Hit more U²³⁵ → Chain Reaction</span>
+      </div>
+      <p style="font-size:12.5px; color:var(--text-secondary); margin-top:0.5rem">Moderator slows neutrons → Control rods absorb excess → Coolant removes heat → Steam → Electricity</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Petroleum + Gas Geometry</div>
+      <p style="font-size:13.5px;">Petroleum found in <strong>fault traps</strong> between porous + non-porous rock layers. Gas (lighter) always sits <strong>above</strong> oil. So drilling for oil = also finding gas.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Copper Age → Chalcolithic</div>
+      <p style="font-size:13.5px;">Copper = first metal discovered by humans. This gives us the <strong>Chalcolithic Age</strong> in history. Connect minerals chapter to history chapter here.</p>
+    </div>
+  </div>
+</div>
+
+<!-- EXAM TRAPS -->
+<div class="section" id="traps">
+  <div class="section-header">
+    <span class="section-icon">⚠️</span>
+    <h2>Exam Traps</h2>
+    <span class="tag">What Students Usually Get Wrong</span>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 1 — Reserves ≠ Production</div>
+    <strong>Iron Ore:</strong> Max Reserves = <em>Odisha</em> | Max Production = <em>Odisha</em> (both same here ✓)<br>
+    <strong>Coal:</strong> Max Reserves = <em>Odisha</em> | Max Production = <em>Chhattisgarh</em> (DIFFERENT ⚠)<br>
+    <strong>Gold:</strong> Max Reserves = <em>Bihar</em> (shocking!) | Main mines = <em>Karnataka</em>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 2 — Nuclear = Non-Conventional BUT Non-Renewable</div>
+    Most students think Non-Conventional = Renewable. Nuclear energy is NON-CONVENTIONAL but also NON-RENEWABLE. The question will say "which non-conventional source is non-renewable?" → Answer: Nuclear.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 3 — Bauxite ≠ Aluminium</div>
+    Bauxite is the <em>ore</em>. Aluminium is the <em>metal</em>. Q: "Primary ore of aluminium?" → Bauxite. Q: "What is bauxite used for?" → Making aluminium.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 4 — Diamond only MP (but not the "only" state anymore)</div>
+    SSC asked "which state is the only producer of diamond?" with answer Madhya Pradesh. But technically, diamond traces exist elsewhere. Follow what SSC's source says — MP is the answer for exam purposes.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 5 — Manganese is Ferrous (has iron content)</div>
+    Manganese sounds like it should be non-ferrous. But ferromanganese alloy has iron content → so Manganese goes under <em>Ferrous</em> category. Don't put it in Non-Ferrous.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 6 — Stalactite vs Stalagmite</div>
+    Stalactite hangs from <strong>C</strong>eiling → <strong>C</strong>-tite. Stalagmite rises from <strong>G</strong>round → <strong>G</strong>-mite. "Stalactite holds tight to the ceiling."
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 7 — Digboi: Asia's oldest, not India's</div>
+    Digboi (1901, Assam) is described as Asia's oldest oil refinery still in operation — not just India's. The question will say "oldest oil refinery in Asia" → Digboi.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 8 — Lignite = Brown Coal (high moisture)</div>
+    Lignite has HIGH moisture content and LOW calorific value. Main Indian source: Neyveli, Tamil Nadu. Brown coal = Lignite. Don't confuse with Bituminous.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 9 — Gondwana Coal Age</div>
+    Gondwana = 200 million years. Tertiary = 55 million years. <em>Not</em> 100 million or 250 million. Exact numbers can appear in questions.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">Trap 10 — CaCO₃ appears as Limestone AND Marble AND Chalk</div>
+    All three are CaCO₃ = calcium carbonate. SSC may ask which ones are CaCO₃ in MCQ options — select all three: Limestone ✓ Marble ✓ Chalk ✓
+  </div>
+</div>
+
+<!-- EXAMINER'S QUESTIONS -->
+<div class="section" id="examq">
+  <div class="section-header">
+    <span class="section-icon">🎯</span>
+    <h2>Examiner's Favourite Questions</h2>
+    <span class="tag">High Probability Attack Points</span>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Direct Fact</div>
+    Q: Where are Noamundi and Gua mines located?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">Singhbhum district, Jharkhand (under Orissa-Jharkhand Iron Ore Belt)</div>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Direct Fact</div>
+    Q: Asia's oldest oil refinery in operation? Where? When established?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">Digboi, Assam — 1901</div>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Confusing Fact</div>
+    Q: Which state has the largest gold RESERVES in India?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">Bihar (NOT Karnataka — that's where mines/production is)</div>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Match-the-Following</div>
+    Q: Match — Kudremukh / Bailadila / Hutti / Kolar with their correct descriptions
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">Kudremukh = Iron, Karnataka (horse-face hill) | Bailadila = Iron, Chhattisgarh (bull-hump hill) | Hutti = Gold Mines, Karnataka | Kolar = Gold Field, Karnataka</div>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Classification</div>
+    Q: Which of the following is a non-conventional but non-renewable energy source?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">Nuclear Energy (non-conventional + non-renewable)</div>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Pipeline Question</div>
+    Q: What is HVJ Pipeline? What year? How long? Under which organization?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">Hazira–Vijaypur–Jagdishpur Gas Pipeline | 1986 | 1700 km | Under GAIL (Gas Authority of India Limited)</div>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Nuclear</div>
+    Q: What is the function of moderator in a nuclear reactor? What materials are used?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">Slows down fast neutrons. Materials: Heavy Water (D₂O), Normal Water, Graphite</div>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Tidal Energy</div>
+    Q: Which areas of India are most suitable for tidal energy and why?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">Gulf of Khambhat and Gulf of Kutch (Gujarat) — because of funnel-shaped coastline that amplifies tidal force</div>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Statement-Based</div>
+    Q: Statement: "Anthracite is used in metallurgical processes and is also called coking coal." Is this correct?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">YES — Anthracite (best coal) = Coking Coal = Metallic Coal, used in metallurgy for high heat</div>
+  </div>
+
+  <div class="exam-q">
+    <div class="exam-q-label">🎯 Mica Ranking</div>
+    Q: Arrange in order of mica production: Rajasthan, Andhra Pradesh, Bihar, Jharkhand
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal Answer</button>
+    <div class="ans">Andhra Pradesh (1) → Rajasthan (2) → Bihar (3) → Jharkhand (4)</div>
+  </div>
+</div>
+
+<!-- ACTIVE RECALL -->
+<div class="section" id="recall">
+  <div class="section-header">
+    <span class="section-icon">❓</span>
+    <h2>Active Recall Section</h2>
+    <span class="tag">Train Your Memory — Don't Just Read</span>
+  </div>
+
+  <div class="card-title" style="margin-bottom:0.8rem">Fill in the Blanks — click to reveal</div>
+
+  <div class="fill-blank">The oldest oil refinery in Asia is <span class="blank" onclick="this.classList.toggle('revealed')">Digboi, Assam</span>, established in <span class="blank" onclick="this.classList.toggle('revealed')">1901</span>.</div>
+
+  <div class="fill-blank">97% of India's coal reserves are in the valleys of <span class="blank" onclick="this.classList.toggle('revealed')">Damodar, Son, Mahanadi, Godavari</span>.</div>
+
+  <div class="fill-blank">The best quality coal with 80–90% carbon content is called <span class="blank" onclick="this.classList.toggle('revealed')">Anthracite</span>.</div>
+
+  <div class="fill-blank">Lignite is also known as <span class="blank" onclick="this.classList.toggle('revealed')">Brown Coal</span> and is found mainly at <span class="blank" onclick="this.classList.toggle('revealed')">Neyveli, Tamil Nadu</span>.</div>
+
+  <div class="fill-blank">The primary ore of aluminium is <span class="blank" onclick="this.classList.toggle('revealed')">Bauxite</span>. India's #1 bauxite producer is <span class="blank" onclick="this.classList.toggle('revealed')">Odisha</span>.</div>
+
+  <div class="fill-blank">HVJ Pipeline stands for <span class="blank" onclick="this.classList.toggle('revealed')">Hazira–Vijaypur–Jagdishpur</span>, built in <span class="blank" onclick="this.classList.toggle('revealed')">1986</span> under <span class="blank" onclick="this.classList.toggle('revealed')">GAIL</span>.</div>
+
+  <div class="fill-blank">India's largest wind farm cluster is in <span class="blank" onclick="this.classList.toggle('revealed')">Tamil Nadu</span>, between <span class="blank" onclick="this.classList.toggle('revealed')">Nagarkoil and Madurai</span>.</div>
+
+  <div class="fill-blank">The first nuclear power plant in India was <span class="blank" onclick="this.classList.toggle('revealed')">Tarapur</span>, set up in <span class="blank" onclick="this.classList.toggle('revealed')">1969</span>.</div>
+
+  <div class="fill-blank">The Father of India's Nuclear Programme is <span class="blank" onclick="this.classList.toggle('revealed')">Dr. Homi J. Bhabha</span>.</div>
+
+  <div class="fill-blank">India's geothermal energy sites: <span class="blank" onclick="this.classList.toggle('revealed')">Parvati Valley (Himachal Pradesh)</span> and <span class="blank" onclick="this.classList.toggle('revealed')">Puga Valley (Ladakh)</span>.</div>
+
+  <div class="fill-blank">Manganese top producer in India: <span class="blank" onclick="this.classList.toggle('revealed')">Madhya Pradesh</span>.</div>
+
+  <div class="fill-blank">Khetri Copper Mines are in <span class="blank" onclick="this.classList.toggle('revealed')">Jhunjhunu–Alwar region, Rajasthan</span>.</div>
+
+  <div class="fill-blank">First nuclear reactor in Asia: <span class="blank" onclick="this.classList.toggle('revealed')">Apsara</span>.</div>
+
+  <div class="fill-blank">Chernobyl disaster year: <span class="blank" onclick="this.classList.toggle('revealed')">1986</span>. Present country: <span class="blank" onclick="this.classList.toggle('revealed')">Ukraine</span>.</div>
+
+  <br>
+  <div class="card-title" style="margin-bottom:0.8rem">Rapid-Fire Reverse Questions</div>
+  <div class="exam-q">
+    <div class="exam-q-label">🔁 Reverse</div>
+    "Gold + Karnataka + named after a horse" → What place?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+    <div class="ans">Kudremukh (Kudre = horse in Kannada) — actually iron ore here, not gold. Gold = Kolar/Hutti. Trick question!</div>
+  </div>
+  <div class="exam-q">
+    <div class="exam-q-label">🔁 Reverse</div>
+    "Non-conventional + non-renewable + chain reaction" → What energy?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+    <div class="ans">Nuclear Energy</div>
+  </div>
+  <div class="exam-q">
+    <div class="exam-q-label">🔁 Reverse</div>
+    "Funnel coast + tides + Gujarat" → What energy source?
+    <button class="reveal-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Reveal</button>
+    <div class="ans">Tidal Energy from Gulf of Kutch and Gulf of Khambhat</div>
+  </div>
+</div>
+
+<!-- HIGH YIELD -->
+<div class="section" id="highyield">
+  <div class="section-header">
+    <span class="section-icon">⭐</span>
+    <h2>High-Yield Revision Notes</h2>
+    <span class="tag">Layer 2 — Most Exam-Relevant Points Only</span>
+  </div>
+  <div class="quick-sheet">
+    <h3>⭐ Top 30 High-Yield Facts</h3>
+    <div class="qs-row"><span class="qs-key">Coal Reserves 97%</span><span class="qs-val">Damodar, Son, Mahanadi, Godavari valleys</span></div>
+    <div class="qs-row"><span class="qs-key">Coal Reserves #1 State</span><span class="qs-val">Odisha</span></div>
+    <div class="qs-row"><span class="qs-key">Coal Production #1</span><span class="qs-val">Chhattisgarh</span></div>
+    <div class="qs-row"><span class="qs-key">Coal Types (best→worst)</span><span class="qs-val">Anthracite → Bituminous → Lignite → Peat</span></div>
+    <div class="qs-row"><span class="qs-key">Gondwana Coal Age</span><span class="qs-val">200 million years (better)</span></div>
+    <div class="qs-row"><span class="qs-key">Tertiary Coal</span><span class="qs-val">55 million years (NE India + J&K)</span></div>
+    <div class="qs-row"><span class="qs-key">Lignite = Brown Coal</span><span class="qs-val">Neyveli, Tamil Nadu</span></div>
+    <div class="qs-row"><span class="qs-key">Iron #1 Reserves + Production</span><span class="qs-val">Odisha</span></div>
+    <div class="qs-row"><span class="qs-key">Iron Belts (4)</span><span class="qs-val">Orissa-JH | Durg-Bastar-Chandrapur | MH-Goa | Bellary-Chitradurga belt</span></div>
+    <div class="qs-row"><span class="qs-key">Bailadila</span><span class="qs-val">Chhattisgarh, iron mine, bull-hump shaped hill</span></div>
+    <div class="qs-row"><span class="qs-key">Kudremukh</span><span class="qs-val">Karnataka, iron, horse-face shaped (Kudre=horse)</span></div>
+    <div class="qs-row"><span class="qs-key">Gold Reserves #1</span><span class="qs-val">Bihar (NOT Karnataka!)</span></div>
+    <div class="qs-row"><span class="qs-key">Gold Mines</span><span class="qs-val">Karnataka: Kolar Gold Field + Hutti | AP: Ramgiri</span></div>
+    <div class="qs-row"><span class="qs-key">Gold World #1</span><span class="qs-val">China (then Australia)</span></div>
+    <div class="qs-row"><span class="qs-key">Mica Production Order</span><span class="qs-val">AP → Rajasthan → Bihar → Jharkhand</span></div>
+    <div class="qs-row"><span class="qs-key">Mica Belt (Jharkhand)</span><span class="qs-val">Koderma–Gaya–Hazaribagh</span></div>
+    <div class="qs-row"><span class="qs-key">Bauxite #1 India</span><span class="qs-val">Odisha (Panchpat Mali, Koraput)</span></div>
+    <div class="qs-row"><span class="qs-key">Diamond</span><span class="qs-val">Only/largest producer: Madhya Pradesh</span></div>
+    <div class="qs-row"><span class="qs-key">Copper</span><span class="qs-val">First metal discovered (Chalcolithic). Khetri (Raj), Balaghat (MP), Singhbhum (JH)</span></div>
+    <div class="qs-row"><span class="qs-key">Digboi</span><span class="qs-val">Asia's oldest oil refinery, Assam, 1901</span></div>
+    <div class="qs-row"><span class="qs-key">HVJ Pipeline</span><span class="qs-val">Hazira–Vijaypur–Jagdishpur, 1700km, 1986, GAIL</span></div>
+    <div class="qs-row"><span class="qs-key">Methane</span><span class="qs-val">= Marsh Gas = 70–90% of Natural Gas</span></div>
+    <div class="qs-row"><span class="qs-key">Tarapur</span><span class="qs-val">India's first nuclear power plant, 1969</span></div>
+    <div class="qs-row"><span class="qs-key">Apsara</span><span class="qs-val">First nuclear reactor in Asia</span></div>
+    <div class="qs-row"><span class="qs-key">Thorium</span><span class="qs-val">Monazite sand, Kerala + Tamil Nadu coast. India = world's largest reserves</span></div>
+    <div class="qs-row"><span class="qs-key">Control Rods material</span><span class="qs-val">Boron, Cadmium, Silver</span></div>
+    <div class="qs-row"><span class="qs-key">Chernobyl</span><span class="qs-val">1986, Ukraine (then USSR), nuclear disaster</span></div>
+    <div class="qs-row"><span class="qs-key">Wind Farm India</span><span class="qs-val">Tamil Nadu (Nagarkoil–Madurai)</span></div>
+    <div class="qs-row"><span class="qs-key">Tidal Energy Sites</span><span class="qs-val">Gulf of Kutch + Gulf of Khambhat (Gujarat)</span></div>
+    <div class="qs-row"><span class="qs-key">Geothermal India</span><span class="qs-val">Parvati Valley HP + Puga Valley Ladakh. World: Yellowstone, USA</span></div>
+  </div>
+</div>
+
+<!-- ULTRA FAST -->
+<div class="section" id="ultrafast">
+  <div class="section-header">
+    <span class="section-icon">⚡</span>
+    <h2>Ultra-Fast Revision Sheet</h2>
+    <span class="tag">Layer 3 — Scan in 5 Minutes</span>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">MINERALS — Where?</div>
+      <p style="font-size:13px;"><strong style="color:var(--accent-gold)">Iron</strong>: Odisha #1 | Bailadila (CG) | Kudremukh (KA)<br>
+      <strong style="color:var(--accent-gold)">Coal</strong>: Damodar-Son-Mahanadi-Godavari | Reserves: Odisha | Prod: CG<br>
+      <strong style="color:var(--accent-gold)">Gold</strong>: Reserves: Bihar | Mines: Karnataka (Kolar, Hutti)<br>
+      <strong style="color:var(--accent-gold)">Mica</strong>: AP > Raj > Bihar > JH<br>
+      <strong style="color:var(--accent-gold)">Copper</strong>: Khetri(Raj) | Balaghat(MP) | Singhbhum(JH)<br>
+      <strong style="color:var(--accent-gold)">Bauxite</strong>: Odisha #1 (Panchpat Mali)<br>
+      <strong style="color:var(--accent-gold)">Diamond</strong>: MP only<br>
+      <strong style="color:var(--accent-gold)">Manganese</strong>: MP #1<br>
+      <strong style="color:var(--accent-gold)">Petroleum</strong>: Digboi 1901 Assam | Ankleshwar-Khambat-Kalol (Gujarat)</p>
+    </div>
+    <div class="card">
+      <div class="card-title">ENERGY — Key Numbers</div>
+      <p style="font-size:13px;"><strong style="color:var(--accent-emerald)">Gondwana Coal</strong>: 200M yrs | <strong style="color:var(--accent-red)">Tertiary</strong>: 55M yrs<br>
+      <strong style="color:var(--accent-emerald)">Anthracite</strong>: 80–90% C | <strong>Bituminous</strong>: 70–80% | <strong style="color:var(--accent-blue)">Lignite</strong>: 50–70% | <strong style="color:var(--text-muted)">Peat</strong>: &lt;50%<br>
+      <strong style="color:var(--accent-gold)">HVJ</strong>: 1986 | 1700 km | GAIL<br>
+      <strong style="color:var(--accent-gold)">Tarapur</strong>: 1969 (1st nuclear plant)<br>
+      <strong style="color:var(--accent-gold)">Apsara</strong>: Asia's 1st nuclear reactor<br>
+      <strong style="color:var(--accent-gold)">Chernobyl</strong>: 1986 | Ukraine<br>
+      <strong style="color:var(--accent-gold)">Wind</strong>: TN (Nagarkoil–Madurai)<br>
+      <strong style="color:var(--accent-gold)">Tidal</strong>: Gulf of Kutch + Khambhat<br>
+      <strong style="color:var(--accent-gold)">Geothermal</strong>: Parvati (HP) + Puga (Ladakh)<br>
+      <strong style="color:var(--accent-gold)">Thorium</strong>: India = World #1 | Monazite sand, Kerala+TN</p>
+    </div>
+  </div>
+</div>
+
+<!-- 30 SECOND -->
+<div class="section" id="30sec">
+  <div class="section-header">
+    <span class="section-icon">⏱</span>
+    <h2>30-Second Revision Sheet</h2>
+    <span class="tag">Layer 4 — Read This Before Any Test</span>
+  </div>
+  <div style="background: var(--bg-card); border: 1px solid var(--accent-amber); border-radius:14px; padding:1.5rem;">
+    <div style="columns: 2; column-gap: 2rem; font-size: 13.5px;">
+      <p>🔥 Coal: 97% in Damodar-Son-Mahanadi-Godavari</p>
+      <p>🔥 Coal Reserves→Odisha | Production→Chhattisgarh</p>
+      <p>🔥 Best coal: Anthracite (80–90% C) | Worst: Peat</p>
+      <p>🔥 Gondwana coal: 200M yrs (better) | Tertiary: 55M yrs</p>
+      <p>🔥 Lignite = Brown Coal = Neyveli, TN</p>
+      <p>🔥 Iron reserves+prod #1: Odisha</p>
+      <p>🔥 Gold reserves #1: Bihar (NOT Karnataka)</p>
+      <p>🔥 Mica: AP(1) > Raj(2) > Bihar(3) > JH(4)</p>
+      <p>🔥 Diamond: Only MP</p>
+      <p>🔥 Digboi: Asia's oldest refinery, Assam, 1901</p>
+      <p>🔥 HVJ Pipeline: 1986, 1700km, GAIL</p>
+      <p>🔥 Tarapur: 1st nuclear plant, 1969</p>
+      <p>🔥 Apsara: Asia's 1st nuclear reactor</p>
+      <p>🔥 Nuclear = Non-conventional + Non-renewable</p>
+      <p>🔥 Tidal: Gulf of Kutch + Khambhat (Gujarat)</p>
+      <p>🔥 Wind #1: Tamil Nadu (Nagarkoil–Madurai)</p>
+      <p>🔥 Geothermal India: Parvati HP + Puga Ladakh</p>
+      <p>🔥 Thorium: India = World's largest. Monazite sand, Kerala</p>
+      <p>🔥 Control rods: Boron, Cadmium, Silver</p>
+      <p>🔥 Chernobyl: 1986, Ukraine</p>
+    </div>
+  </div>
+</div>
+
+<!-- LAST NIGHT -->
+<div class="section" id="lastnight">
+  <div class="section-header">
+    <span class="section-icon">🌙</span>
+    <h2>Last-Night-Before-Exam Sheet</h2>
+    <span class="tag">Layer 5 — The Final Firewall</span>
+  </div>
+  <div class="last-night">
+    <h3>🌙 Read This Tonight, Crush It Tomorrow</h3>
+    <div class="ln-item"><span class="ln-bullet">01</span><span>Coal 97% → Damodar | Reserves→Odisha | Production→<strong>Chhattisgarh</strong></span></div>
+    <div class="ln-item"><span class="ln-bullet">02</span><span>Oldest to newest coal: Anthracite → Bituminous → Lignite → Peat | Lignite = Brown Coal = Neyveli TN</span></div>
+    <div class="ln-item"><span class="ln-bullet">03</span><span>Gondwana (200M yr) = BETTER than Tertiary (55M yr)</span></div>
+    <div class="ln-item"><span class="ln-bullet">04</span><span>Gold biggest RESERVES = <strong>BIHAR</strong> (shocking but true)</span></div>
+    <div class="ln-item"><span class="ln-bullet">05</span><span>Gold Mines = Karnataka: Kolar Gold Field + Hutti Mines</span></div>
+    <div class="ln-item"><span class="ln-bullet">06</span><span>Mica: Andhra > Rajasthan > Bihar > Jharkhand</span></div>
+    <div class="ln-item"><span class="ln-bullet">07</span><span>Diamond = Madhya Pradesh (only/largest)</span></div>
+    <div class="ln-item"><span class="ln-bullet">08</span><span>Digboi = Assam = 1901 = Asia's oldest oil refinery</span></div>
+    <div class="ln-item"><span class="ln-bullet">09</span><span>HVJ Pipeline = Hazira–Vijaypur–Jagdishpur = 1700 km = 1986 = GAIL</span></div>
+    <div class="ln-item"><span class="ln-bullet">10</span><span>Nuclear = NON-conventional but also NON-renewable (exception!)</span></div>
+    <div class="ln-item"><span class="ln-bullet">11</span><span>Tarapur (1969) = India's first nuclear plant | Apsara = Asia's first nuclear reactor</span></div>
+    <div class="ln-item"><span class="ln-bullet">12</span><span>Control Rods = Boron + Cadmium + Silver | Moderator = Heavy Water + Graphite</span></div>
+    <div class="ln-item"><span class="ln-bullet">13</span><span>Thorium → India = World #1 reserves → Monazite sand, Kerala + TN coast</span></div>
+    <div class="ln-item"><span class="ln-bullet">14</span><span>Tidal = Gulf of Kutch + Gulf of Khambhat | Wind = TN (Nagarkoil–Madurai)</span></div>
+    <div class="ln-item"><span class="ln-bullet">15</span><span>Geothermal India = Parvati Valley (HP) + Puga Valley (Ladakh) | World = Yellowstone USA</span></div>
+    <div style="margin-top:1.2rem; padding:0.8rem 1rem; background:rgba(244,114,182,0.07); border-radius:8px; font-size:13px; border: 1px solid rgba(244,114,182,0.15); color:var(--text-secondary)">
+      You've done the work. The information is in there. Trust your preparation. 💪
+    </div>
+  </div>
+</div>
+
+</div><!-- end .page -->
+
+<script>
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Track revealed answers count
+let revealCount = 0;
+document.querySelectorAll('.reveal-btn').forEach(btn => {
+  btn.addEventListener('click', () => { revealCount++; });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌌 Solar System — SSC CGL Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --bg-deep:    #0a0d14;
+    --bg-card:    #111622;
+    --bg-card2:   #161d2e;
+    --bg-hover:   #1c2540;
+    --border:     #1e2d4a;
+    --border-bright: #2a3f6f;
+    --text:       #d4dff5;
+    --text-dim:   #7a8fb5;
+    --text-muted: #465577;
+    --accent:     #4f8ef7;
+    --accent2:    #7c5cf6;
+    --gold:       #f5c842;
+    --green:      #3dd68c;
+    --red:        #f05b5b;
+    --orange:     #f5874a;
+    --cyan:       #3dc9e8;
+    --pink:       #e85d9e;
+    --glow:       0 0 24px rgba(79,142,247,0.18);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── STARFIELD HEADER ── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 60% 40%, #0d1b3e 0%, #080c18 60%, var(--bg-deep) 100%);
+    padding: 60px 32px 48px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='300'%3E%3Ccircle cx='50' cy='30' r='1.2' fill='%23fff' opacity='.5'/%3E%3Ccircle cx='120' cy='80' r='.8' fill='%23fff' opacity='.4'/%3E%3Ccircle cx='200' cy='20' r='1.5' fill='%23fff' opacity='.6'/%3E%3Ccircle cx='300' cy='60' r='1' fill='%23fff' opacity='.3'/%3E%3Ccircle cx='400' cy='15' r='.9' fill='%23fff' opacity='.5'/%3E%3Ccircle cx='500' cy='50' r='1.3' fill='%23fff' opacity='.4'/%3E%3Ccircle cx='550' cy='110' r='.7' fill='%23fff' opacity='.6'/%3E%3Ccircle cx='80' cy='150' r='1' fill='%23fff' opacity='.3'/%3E%3Ccircle cx='170' cy='140' r='.8' fill='%23fff' opacity='.5'/%3E%3Ccircle cx='250' cy='170' r='1.2' fill='%23fff' opacity='.4'/%3E%3Ccircle cx='370' cy='130' r='.9' fill='%23fff' opacity='.6'/%3E%3Ccircle cx='450' cy='160' r='1.1' fill='%23fff' opacity='.3'/%3E%3Ccircle cx='30' cy='220' r='.8' fill='%23fff' opacity='.5'/%3E%3Ccircle cx='140' cy='240' r='1.3' fill='%23fff' opacity='.4'/%3E%3Ccircle cx='320' cy='220' r='.7' fill='%23fff' opacity='.6'/%3E%3Ccircle cx='480' cy='230' r='1' fill='%23fff' opacity='.3'/%3E%3Ccircle cx='570' cy='200' r='1.2' fill='%23fff' opacity='.5'/%3E%3C/svg%3E") repeat;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 700;
+    background: linear-gradient(135deg, #e8f0ff 0%, var(--accent) 50%, var(--cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    color: var(--text-dim);
+    font-size: 14px;
+    max-width: 560px;
+    margin: 0 auto 24px;
+  }
+  .hero-tags { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+  .tag {
+    background: rgba(79,142,247,0.12);
+    border: 1px solid rgba(79,142,247,0.25);
+    color: var(--accent);
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  /* ── NAV ── */
+  .nav-wrap {
+    position: sticky; top:0; z-index:100;
+    background: rgba(10,13,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav { display:flex; gap:2px; min-width:max-content; }
+  .nav a {
+    display: inline-block;
+    padding: 12px 14px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  /* ── SECTIONS ── */
+  section { margin-bottom: 56px; scroll-margin-top: 70px; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after { content:''; flex:1; height:1px; background: var(--border); }
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #e8f0ff;
+    margin-bottom: 20px;
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--cyan);
+    margin: 20px 0 8px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .card:hover { border-color: var(--border-bright); box-shadow: var(--glow); }
+
+  /* ── PLANET GRID ── */
+  .planet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .planet-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    transition: all .2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .planet-card::before {
+    content: '';
+    position: absolute; top:0; left:0; right:0;
+    height: 2px;
+  }
+  .planet-card:hover { border-color: var(--border-bright); transform: translateY(-2px); box-shadow: var(--glow); }
+  .planet-card .p-name {
+    font-size: 17px; font-weight: 700;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .planet-card ul { list-style: none; }
+  .planet-card ul li { font-size: 13px; color: var(--text-dim); padding: 3px 0; padding-left: 14px; position: relative; }
+  .planet-card ul li::before { content:'›'; position:absolute; left:0; color: var(--accent); }
+  .planet-card ul li strong { color: var(--text); }
+
+  /* planet accent colors */
+  .p-mercury::before { background: #b0b0b0; }
+  .p-venus::before   { background: #e8c46a; }
+  .p-earth::before   { background: #3dd68c; }
+  .p-mars::before    { background: #f05b5b; }
+  .p-jupiter::before { background: #f5874a; }
+  .p-saturn::before  { background: #f5c842; }
+  .p-uranus::before  { background: #3dc9e8; }
+  .p-neptune::before { background: #4f8ef7; }
+
+  /* ── TAGS (priority) ── */
+  .fire { color: var(--red); font-weight: 700; }
+  .star-tag { color: var(--gold); font-weight: 600; }
+  .plus-tag { color: var(--green); }
+
+  /* ── MEMORY HOOKS ── */
+  .hook-box {
+    background: linear-gradient(135deg, rgba(124,92,246,0.08), rgba(79,142,247,0.08));
+    border: 1px solid rgba(124,92,246,0.3);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+  .hook-box .hook-icon { font-size: 22px; margin-bottom: 8px; }
+  .hook-box strong { color: var(--accent2); }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: linear-gradient(135deg, rgba(240,91,91,0.07), rgba(245,135,74,0.05));
+    border: 1px solid rgba(240,91,91,0.3);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 12px;
+  }
+  .trap-box .trap-head { color: var(--red); font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+
+  /* ── RECALL QUESTIONS ── */
+  .q-item {
+    border-left: 3px solid var(--accent);
+    padding: 10px 16px;
+    margin-bottom: 10px;
+    background: var(--bg-card2);
+    border-radius: 0 8px 8px 0;
+  }
+  .q-item .q-text { font-size: 14px; color: var(--text); margin-bottom: 6px; }
+  .q-item .q-ans {
+    font-size: 13px; color: var(--text-dim);
+    background: rgba(79,142,247,0.08);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    display: none;
+    margin-top: 4px;
+  }
+  .q-item .reveal-btn {
+    font-size: 11px; font-weight: 600; letter-spacing: 1px;
+    background: rgba(79,142,247,0.12);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .q-item .reveal-btn:hover { background: var(--accent); color: #fff; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--bg-card2); color: var(--accent); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
+  td:first-child { color: var(--text); font-weight: 500; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(79,142,247,0.05); }
+
+  /* ── PALACE ── */
+  .palace-stop {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .palace-stop:last-child { border-bottom: none; }
+  .palace-stop .stop-num {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+  }
+  .palace-stop .stop-body .stop-title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .palace-stop .stop-body .stop-fact { font-size: 13px; color: var(--text-dim); }
+
+  /* ── LAYER PILLS ── */
+  .layer-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+  .layer-tab {
+    padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    cursor: pointer; border: 1px solid var(--border); color: var(--text-dim);
+    background: var(--bg-card); transition: all .15s;
+  }
+  .layer-tab.active, .layer-tab:hover {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+  .layer-content { display: none; }
+  .layer-content.active { display: block; }
+
+  /* ── HIGH YIELD CHIPS ── */
+  .chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    background: var(--bg-card2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 12px;
+    font-size: 12.5px; color: var(--text);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .chip .chip-key { color: var(--accent); font-weight: 600; }
+
+  /* ── LAST NIGHT SHEET ── */
+  .lns { background: linear-gradient(135deg, #0d1b3e 0%, #0a0d14 100%); border: 1px solid var(--border-bright); border-radius: 14px; padding: 28px; }
+  .lns h3 { color: var(--gold); font-size: 18px; margin-bottom: 16px; }
+  .lns-row { display:flex; gap:8px; align-items:flex-start; margin-bottom:8px; }
+  .lns-dot { min-width:8px; height:8px; border-radius:50%; background:var(--gold); margin-top:7px; }
+  .lns-text { font-size:13.5px; color: var(--text); }
+  .lns-text strong { color: var(--gold); }
+
+  /* ── CONNECTIONS ── */
+  .conn-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .conn-row:last-child { border-bottom: none; }
+  .conn-left { color: var(--cyan); font-weight: 600; min-width:130px; }
+  .conn-arrow { color: var(--text-muted); font-size: 18px; }
+  .conn-right { color: var(--text-dim); }
+
+  /* ── EXAMINER ── */
+  .exam-q {
+    background: var(--bg-card2); border-radius: 8px;
+    padding: 10px 14px; margin-bottom: 8px; font-size: 13.5px;
+    border-left: 3px solid var(--gold);
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
+  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+  code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: rgba(79,142,247,0.1); padding: 1px 6px; border-radius: 4px; color: var(--cyan); }
+
+  @media(max-width:600px) {
+    .planet-grid { grid-template-columns: 1fr; }
+    .hero { padding: 40px 16px 32px; }
+    .container { padding: 24px 14px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">SSC CGL · FRB 2.0 · Geography</div>
+  <h1>🌌 The Solar System</h1>
+  <p>High-retention revision system — designed for 20–100 revisions over 6 months</p>
+  <div class="hero-tags">
+    <span class="tag">🔥 High Priority Chapter</span>
+    <span class="tag">⭐ 8 Planets</span>
+    <span class="tag">⭐ Universe Theories</span>
+    <span class="tag">⭐ Stars & Constellations</span>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<div class="nav-wrap">
+  <nav class="nav">
+    <a href="#bigpicture">Big Picture</a>
+    <a href="#palace">Memory Palace</a>
+    <a href="#universe">Universe</a>
+    <a href="#celestial">Celestial Bodies</a>
+    <a href="#sun">Sun & Moon</a>
+    <a href="#planets">Planets</a>
+    <a href="#dwarf">Dwarf Planets</a>
+    <a href="#hooks">Memory Hooks</a>
+    <a href="#connections">Connections</a>
+    <a href="#traps">⚠ Traps</a>
+    <a href="#examiner">Examiner</a>
+    <a href="#recall">Self-Test</a>
+    <a href="#layers">Revision Layers</a>
+  </nav>
+</div>
+
+<div class="container">
+
+  <!-- BIG PICTURE -->
+  <section id="bigpicture">
+    <div class="section-label">01 · Big Picture</div>
+    <h2>What This Chapter Is Really About</h2>
+    <div class="card">
+      <p>This chapter is a <strong>fact-dense, date-heavy, name-heavy</strong> chapter where SSC loves to test you on <em>who gave which theory, which planet has which unique property, and which came first</em>. Almost every single planet has at least one "only planet that…" fact — memorise those. Theories of the universe and solar system formation are a goldmine for 1-mark questions. The chapter tests breadth, not depth.</p>
+      <p style="margin-top:10px;color:var(--text-dim);font-size:13px;">🔑 Key insight: If you know every planet's <strong>2–3 unique facts</strong> and every <strong>theory + its year + its giver</strong>, you've covered ~80% of what can be asked.</p>
+    </div>
+  </section>
+
+  <!-- MEMORY PALACE -->
+  <section id="palace">
+    <div class="section-label">02 · Chapter Memory Palace</div>
+    <h2>🧠 The Space Museum Story</h2>
+    <div class="card">
+      <p style="color:var(--text-dim);font-size:13px;margin-bottom:16px;">Imagine you are walking through a grand <strong>Space Museum</strong>. Each room is a topic. You walk room to room, and everything attaches itself to your mental map.</p>
+      <div class="palace-stop">
+        <div class="stop-num">1</div>
+        <div class="stop-body">
+          <div class="stop-title">🚪 Museum Entrance — "BOOM Room"</div>
+          <div class="stop-fact">A massive explosion painting on the wall. Label: <strong>"George Lemaitre, 1927 (published 1931)"</strong>. Next to it, a steady dial with "Fred Hoyle" written — the museum guard who says "everything is steady here."</div>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">2</div>
+        <div class="stop-body">
+          <div class="stop-title">🌀 Room 2 — The Spinning Cloud Room</div>
+          <div class="stop-fact"><strong>Kant (1755)</strong> first spun the cloud. <strong>Laplace (1796)</strong> modified it. Then <strong>Chamberlain + Moulton (1905)</strong> — the year Bengal was partitioned — threw in the Planetesimal theory.</div>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">3</div>
+        <div class="stop-body">
+          <div class="stop-title">☀️ Room 3 — The Sun Throne Room</div>
+          <div class="stop-fact">A massive glowing throne (Sun) at the center. 99% of mass here. Corona visible only during eclipse. Photosphere glows. Sunspots are dark cold patches. Solar flares shoot out.</div>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">4</div>
+        <div class="stop-body">
+          <div class="stop-title">🪨 Room 4 — The Rocky Inner 4</div>
+          <div class="stop-fact">Four rocky chairs: Mercury (fastest lap, no air), Venus (hottest, backward spinner, beautiful goddess name), Earth (blue water world), Mars (red, twin volcanos, Phobos & Deimos).</div>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">5</div>
+        <div class="stop-body">
+          <div class="stop-title">💨 Room 5 — The Gas Giants Hall</div>
+          <div class="stop-fact">Jupiter: largest, fastest spin, Great Red Spot, Galileo's moons (1610). Saturn: rings (Huygens 1655), lowest density, floats on water. Uranus: rolls sideways, green (methane), William Herschel 1781. Neptune: farthest, slowest revolution, Le Verrier's math prediction.</div>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">6</div>
+        <div class="stop-body">
+          <div class="stop-title">🔮 Room 6 — The Dwarf Corner</div>
+          <div class="stop-fact">Pluto (demoted 2006, Clyde Tombaugh), Eris (2nd largest), Haumea (fastest spin), Makemake (310 yrs), Ceres (asteroid belt — all others in Kuiper belt).</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNIVERSE SECTION -->
+  <section id="universe">
+    <div class="section-label">03 · Complete Revision Notes</div>
+    <h2>Origin of the Universe</h2>
+
+    <h3>Scale: Universe → Galaxy → Solar System → Planet</h3>
+    <div class="card">
+      <p><span class="fire">🔥</span> Universe = Cosmos. Study of universe = <strong>Cosmology</strong>. Universe contains many galaxies; galaxies contain thousands of solar systems.</p>
+    </div>
+
+    <div class="table-wrap" style="margin-bottom:14px;">
+      <table>
+        <tr><th>Theory</th><th>Given By</th><th>Year</th><th>Key Idea</th></tr>
+        <tr><td>Big Bang Theory</td><td>George Lemaître</td><td>1927 (pub. 1931)</td><td>Infinitely hot dense point exploded → universe formed. Universe still expanding.</td></tr>
+        <tr><td>Steady State Theory</td><td>Fred Hoyle, Herman Bondi, Thomas Gold</td><td>—</td><td>Average density of universe remains constant even as it expands.</td></tr>
+        <tr><td>Heliocentric Theory</td><td>Nicholas Copernicus</td><td>1543</td><td>Planets revolve around Sun in concentric circles.</td></tr>
+        <tr><td>Nebular / Kant-Laplace Theory</td><td>Immanuel Kant (1755), modified by Laplace (1796)</td><td>1755 / 1796</td><td>Rotating cloud of dust & gas → center became Sun, rings became planets.</td></tr>
+        <tr><td>Planetesimal Theory</td><td>Chamberlain & Moulton</td><td>1905</td><td>Small solid bodies (planetesimals) clumped to form planets.</td></tr>
+      </table>
+    </div>
+    <div class="hook-box">
+      <div class="hook-icon">🧠</div>
+      <p><strong>Memory trick for 1905:</strong> Bengal partition happened in 1905. The Chamberlain-Moulton theory also split from the nebular theory in that same year. Two splits in 1905!</p>
+    </div>
+  </section>
+
+  <!-- CELESTIAL BODIES -->
+  <section id="celestial">
+    <h2>Celestial Bodies</h2>
+    <div class="card">
+      <h3>Luminous vs Non-Luminous</h3>
+      <p><strong class="fire">Luminous</strong> = self-glowing (produce own light) → <strong>Stars</strong> (e.g., the Sun)</p>
+      <p><strong>Non-Luminous</strong> = reflect light of others → <strong>Moon, planets, asteroids</strong></p>
+    </div>
+
+    <div class="table-wrap" style="margin-bottom:14px;">
+      <table>
+        <tr><th>Object</th><th>What it is</th><th>Key Fact</th></tr>
+        <tr><td>Asteroid</td><td>Large rocky objects</td><td>Found in Asteroid Belt (between Mars & Jupiter)</td></tr>
+        <tr><td>Meteoroid</td><td>Small stones in space</td><td>Smaller than asteroids</td></tr>
+        <tr><td>Meteor</td><td>Meteoroid entering atmosphere</td><td>Burns up in mesosphere → "shooting star"</td></tr>
+        <tr><td>Meteorite</td><td>Meteor that survives + hits Earth</td><td>It strikes the ground</td></tr>
+        <tr><td>Comet</td><td>Ball of ice & dirt</td><td>Glows when near Sun; Halley's Comet = 75–76 years</td></tr>
+      </table>
+    </div>
+    <div class="hook-box">
+      <div class="hook-icon">☄️</div>
+      <p><strong>Meteor journey:</strong> Meteoroid → enters atmosphere → <em>burns</em> = Meteor (shooting star) → <em>survives & lands</em> = Meteorite. Think: <strong>Meteor = Moving. Meteorite = Resting on ground.</strong></p>
+    </div>
+
+    <h3>Constellations 🔥</h3>
+    <div class="card">
+      <ul style="list-style:none;">
+        <li style="padding:5px 0; border-bottom:1px solid var(--border);">🌟 <strong>Constellation</strong> = Group of stars forming a pattern</li>
+        <li style="padding:5px 0; border-bottom:1px solid var(--border);">🌟 <strong>Asterism</strong> = Pattern of stars within a constellation (e.g., Big Dipper within Ursa Major)</li>
+        <li style="padding:5px 0; border-bottom:1px solid var(--border);">🌟 <strong>Largest constellation</strong> = <strong>Hydra</strong></li>
+        <li style="padding:5px 0; border-bottom:1px solid var(--border);">🌟 <strong>Ursa Major</strong> = Saptarishi (7 stars, Big Dipper asterism)</li>
+        <li style="padding:5px 0; border-bottom:1px solid var(--border);">🌟 <strong>Cassiopeia</strong> = W-shaped, 5 stars</li>
+        <li style="padding:5px 0; border-bottom:1px solid var(--border);">🌟 <strong>Cygnus</strong> = Cross-shaped</li>
+        <li style="padding:5px 0; border-bottom:1px solid var(--border);">🌟 <strong>Orion</strong> = Hunter-shaped (hunter holding bow & arrow); also contains Sagittarius</li>
+        <li style="padding:5px 0; border-bottom:1px solid var(--border);">⭐ <strong>Pole Star / Polaris</strong> = always points North; visible just above North Pole; found in Ursa Major</li>
+        <li style="padding:5px 0; border-bottom:1px solid var(--border);"><span class="fire">🔥</span> <strong>Sirius</strong> = Brightest star in the night sky; called <em>Dog Star</em></li>
+        <li style="padding:5px 0;"><span class="fire">🔥</span> <strong>Proxima Centauri</strong> = Nearest star to Earth after the Sun</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SUN & MOON -->
+  <section id="sun">
+    <h2>☀️ The Sun</h2>
+    <div class="card">
+      <p><span class="fire">🔥</span> Only star of our solar system. <strong>Powerhouse of the solar system.</strong></p>
+      <p>Contains <strong>99%</strong> of total mass of solar system.</p>
+      <p>Composition: <strong>73% Hydrogen · 25% Helium · ~2% others</strong></p>
+      <p>Size: <strong>109 times</strong> the diameter of Earth.</p>
+      <p>Distance from Earth: <strong>150 million km</strong> (average); perihelion = 147M km, aphelion = 152M km.</p>
+      <p>Light travel time: <strong>~8 min 20 sec</strong> to reach Earth.</p>
+    </div>
+
+    <h3>Layers of the Sun</h3>
+    <div class="table-wrap" style="margin-bottom:14px;">
+      <table>
+        <tr><th>Layer</th><th>Position</th><th>Special Feature</th></tr>
+        <tr><td>Core</td><td>Innermost</td><td>Highest temperature</td></tr>
+        <tr><td>Photosphere</td><td>Middle / visible</td><td>Glowing visible surface; source of solar flares</td></tr>
+        <tr><td>Corona</td><td>Outermost</td><td>Visible ONLY during total solar eclipse</td></tr>
+      </table>
+    </div>
+    <div class="trap-box">
+      <div class="trap-head">⚠ Sunspot Trap</div>
+      <p>Sunspots = <strong>darker, cooler</strong> areas on the Sun's surface. NOT hotter. Examiner loves reversing this!</p>
+    </div>
+
+    <h2 style="margin-top:30px;">🌕 The Moon</h2>
+    <div class="card">
+      <ul style="list-style:none;">
+        <li style="padding:4px 0">• Natural satellite of Earth; <strong>non-luminous</strong> (reflects sunlight)</li>
+        <li style="padding:4px 0">• Distance from Earth: <strong>3,84,000 km</strong></li>
+        <li style="padding:4px 0">• Moon's gravity = <strong>1/6 of Earth's gravity</strong></li>
+        <li style="padding:4px 0">• Rotation = Revolution = <strong>27.3 days</strong> → We always see only <strong>one side</strong> of Moon</li>
+        <li style="padding:4px 0">• Highest point: <strong>Mons Huygens</strong> (also called Leibnitz Mountains)</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PLANETS -->
+  <section id="planets">
+    <h2>🪐 The Eight Planets</h2>
+
+    <div class="card" style="margin-bottom:20px;">
+      <h3 style="margin-top:0;">Interior (Terrestrial) vs Exterior (Jovian)</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th></th><th>Terrestrial (Inner 4)</th><th>Jovian (Outer 4)</th></tr>
+          <tr><td>Planets</td><td>Mercury, Venus, Earth, Mars</td><td>Jupiter, Saturn, Uranus, Neptune</td></tr>
+          <tr><td>Composition</td><td>Rocky</td><td>Gas (J, S) / Ice (U, N)</td></tr>
+          <tr><td>Density</td><td>Higher</td><td>Lower</td></tr>
+          <tr><td>Size</td><td>Smaller</td><td>Larger</td></tr>
+          <tr><td>Ring System</td><td>None</td><td>Present (clear in Saturn)</td></tr>
+        </table>
+      </div>
+      <div style="margin-top:14px;">
+        <p style="font-size:13px;color:var(--text-dim);">📏 <strong>Decreasing size order:</strong></p>
+        <p style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--cyan); margin-top:4px;"><span class="fire">🔥</span> <strong>J</strong>upiter → <strong>S</strong>aturn → <strong>U</strong>ranus → <strong>N</strong>eptune → <strong>E</strong>arth → <strong>V</strong>enus → <strong>M</strong>ars → <strong>M</strong>ercury</p>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Hook: <strong>"Jason and EVM"</strong> — All outer planets are bigger, then Earth-Venus-Mars-Mercury.</p>
+      </div>
+    </div>
+
+    <div class="planet-grid">
+
+      <!-- MERCURY -->
+      <div class="planet-card p-mercury">
+        <div class="p-name">☿ Mercury <span style="font-size:12px;color:var(--text-muted);">Budh</span></div>
+        <ul>
+          <li><strong>Closest</strong> to Sun &amp; <strong>smallest</strong> planet</li>
+          <li><strong>Fastest revolution</strong> — shortest year (88 days)</li>
+          <li><strong>No atmosphere</strong> — only planet with no atmosphere</li>
+          <li><strong>No satellite</strong></li>
+        </ul>
+      </div>
+
+      <!-- VENUS -->
+      <div class="planet-card p-venus">
+        <div class="p-name">♀ Venus <span style="font-size:12px;color:var(--text-muted);">Shukra</span></div>
+        <ul>
+          <li><strong>Hottest planet</strong> (thick H₂SO₄ + CO₂ = greenhouse effect)</li>
+          <li><strong>Brightest</strong> in night sky; called <em>Lucifer</em> (light bringer)</li>
+          <li><strong>Morning Star + Evening Star</strong></li>
+          <li><strong>No satellite</strong></li>
+          <li>Named after goddess of <strong>beauty</strong></li>
+          <li><strong>Rotates clockwise</strong> (east→west); slowest rotation (243 days)</li>
+          <li><strong>Earth's twin</strong> (similar size, closest to Earth)</li>
+        </ul>
+      </div>
+
+      <!-- EARTH -->
+      <div class="planet-card p-earth">
+        <div class="p-name">🌍 Earth <span style="font-size:12px;color:var(--text-muted);">Prithvi</span></div>
+        <ul>
+          <li><strong>Blue Planet</strong> — 70% water</li>
+          <li>Only planet known to <strong>support life</strong></li>
+          <li><strong>1 satellite</strong> — Moon</li>
+          <li><strong>Densest planet</strong> in solar system — 5.5 g/cm³</li>
+          <li>Axial tilt: <strong>23.5°</strong></li>
+        </ul>
+      </div>
+
+      <!-- MARS -->
+      <div class="planet-card p-mars">
+        <div class="p-name">♂ Mars <span style="font-size:12px;color:var(--text-muted);">Mangal</span></div>
+        <ul>
+          <li><strong>Red Planet</strong> — due to <strong>iron oxide</strong></li>
+          <li><strong>2nd smallest</strong> planet</li>
+          <li><strong>2 satellites</strong>: <em>Phobos</em> &amp; <em>Deimos</em></li>
+          <li><strong>Deimos</strong> = smallest satellite in solar system</li>
+          <li><strong>Olympus Mons</strong> = largest volcano + tallest mountain in solar system</li>
+        </ul>
+      </div>
+
+      <!-- JUPITER -->
+      <div class="planet-card p-jupiter">
+        <div class="p-name">♃ Jupiter <span style="font-size:12px;color:var(--text-muted);">Brahaspati</span></div>
+        <ul>
+          <li><strong>Largest planet</strong></li>
+          <li><strong>Fastest rotation</strong> — ~9 hrs 55 mins</li>
+          <li><strong>3rd brightest</strong> after Moon &amp; Venus</li>
+          <li><strong>Most satellites</strong> (currently #1)</li>
+          <li><strong>Great Red Spot</strong> — massive storm on Jupiter</li>
+          <li>4 largest moons = <strong>Galilean Moons</strong> (Io, Europa, Callisto, <em>Ganymede</em>)</li>
+          <li>Discovered by <strong>Galileo Galilei, 1610</strong></li>
+          <li><strong>Ganymede</strong> = largest moon in solar system</li>
+        </ul>
+      </div>
+
+      <!-- SATURN -->
+      <div class="planet-card p-saturn">
+        <div class="p-name">♄ Saturn <span style="font-size:12px;color:var(--text-muted);">Shani</span></div>
+        <ul>
+          <li><strong>2nd largest</strong> planet</li>
+          <li><strong>Lowest density</strong> (~0.69 g/cm³) — <em>would float on water</em></li>
+          <li><strong>Bright concentric rings</strong> = rock + gas + dust + ice</li>
+          <li>Rings discovered: <strong>Huygens, 1655</strong></li>
+          <li>Gap in rings: discovered by <strong>Cassini</strong></li>
+          <li>Largest moon: <strong>Titan</strong> (possibility of life)</li>
+        </ul>
+      </div>
+
+      <!-- URANUS -->
+      <div class="planet-card p-uranus">
+        <div class="p-name">⛢ Uranus <span style="font-size:12px;color:var(--text-muted);">Arun</span></div>
+        <ul>
+          <li><strong>1st planet discovered by humans</strong></li>
+          <li>Discoverer: <strong>William Herschel, 1781</strong></li>
+          <li><strong>Green Planet</strong> — presence of <strong>methane</strong></li>
+          <li><strong>Coldest planet</strong></li>
+          <li>Axial tilt: <strong>98°</strong> → known as <em>rolling/lopsided planet</em></li>
+          <li><strong>Rotates clockwise</strong> (like Venus)</li>
+        </ul>
+      </div>
+
+      <!-- NEPTUNE -->
+      <div class="planet-card p-neptune">
+        <div class="p-name">♆ Neptune <span style="font-size:12px;color:var(--text-muted);">Varun</span></div>
+        <ul>
+          <li><strong>Farthest planet</strong> from Sun</li>
+          <li><strong>Slowest revolution</strong> — 165 years</li>
+          <li><strong>2nd planet discovered by humans</strong></li>
+          <li><strong>1st discovered via mathematical prediction</strong></li>
+          <li>Discoverer: <strong>John Galle + Le Verrier, 1846</strong></li>
+          <li>Famous moon: <strong>Triton</strong></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="hook-box" style="margin-top:20px;">
+      <div class="hook-icon">🔄</div>
+      <p><strong>Clockwise Rotation Club (only 2 members):</strong> <span style="color:var(--red)">Venus</span> and <span style="color:var(--cyan)">Uranus</span> — both end in <strong>"-nus"</strong>! All others rotate anti-clockwise (west→east). These two go east→west.</p>
+    </div>
+  </section>
+
+  <!-- DWARF PLANETS -->
+  <section id="dwarf">
+    <h2>🔵 Dwarf Planets</h2>
+    <div class="card">
+      <p>Pluto demoted in <strong>2006</strong> by <strong>International Astronomical Union (IAU)</strong>.</p>
+      <p style="margin-top:8px;">Dwarf planets don't clear their orbital neighbourhood — that's why they're dwarf, not full planets.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Dwarf Planet</th><th>Location</th><th>Special Fact</th></tr>
+        <tr><td>Pluto</td><td>Kuiper Belt</td><td>Discovered by <strong>Clyde Tombaugh</strong>; 5 moons; rev. takes 248 yrs; <strong>largest in Kuiper Belt</strong></td></tr>
+        <tr><td>Eris</td><td>Kuiper Belt</td><td><strong>2nd largest</strong> dwarf planet</td></tr>
+        <tr><td>Haumea</td><td>Kuiper Belt</td><td><strong>Fastest rotating</strong> dwarf planet</td></tr>
+        <tr><td>Makemake</td><td>Kuiper Belt</td><td>Revolution = <strong>310 years</strong></td></tr>
+        <tr><td>Ceres</td><td><strong>Asteroid Belt</strong> ⚠</td><td><strong>3rd largest</strong> dwarf planet; ONLY dwarf in asteroid belt — rest in Kuiper belt</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- MEMORY HOOKS -->
+  <section id="hooks">
+    <div class="section-label">04 · Smart Memory Hooks</div>
+    <h2>🧠 Memory Hooks</h2>
+
+    <div class="hook-box">
+      <div class="hook-icon">💣</div>
+      <p><strong>Big Bang = A bomb that created everything.</strong> The bomb-maker? <strong>Lemaitre</strong>. His bomb exploded in <strong>1927</strong>, and the explosion report was published in <strong>1931</strong>. The universe is still expanding from that blast. Fred Hoyle (the opposing guard) says "relax, it's steady!"</p>
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-icon">🏃</div>
+      <p><strong>Revolution Speed = Distance from Sun.</strong> Close to Sun → short orbit → fast revolution. Far from Sun → long orbit → slow revolution. Mercury (closest) = fastest. Neptune (farthest) = slowest. No exception needed, just remember the logic!</p>
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-icon">♀️</div>
+      <p><strong>Venus = The Rebel Planet.</strong> Hottest (not Mercury!), Brightest, Morning Star, Evening Star, No satellite, Goddess name, Rotates backwards, Earth's twin, Slowest rotation. If a question says "the most ___ planet," always consider Venus first.</p>
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-icon">🔭</div>
+      <p><strong>Galileo's discovery: 1610.</strong> Galileo Galilei saw Jupiter's 4 big moons through his telescope. Those 4 moons are called Galilean moons in his honour. The largest is Ganymede — remember: "G for Galileo, G for Ganymede = Grandest moon."</p>
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-icon">🪐</div>
+      <p><strong>Saturn floats!</strong> Density = 0.69 g/cm³ (water = 1.0). So if you had a giant bathtub, Saturn would float in it. Every other planet sinks. Great exam fodder: "Which planet has the lowest density?" → Saturn.</p>
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-icon">🔬</div>
+      <p><strong>William Herschel discovered TWO things in 1781:</strong> Uranus (planet) AND infrared rays. One man, one year, two discoveries. Remember: <em>"Herschel went outside in 1781, felt heat (infrared) and looked up to see Uranus."</em></p>
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-icon">📐</div>
+      <p><strong>Neptune found by maths, not eyes.</strong> Le Verrier calculated where an unknown planet must be based on gravitational anomalies. John Galle pointed the telescope exactly there in 1846 and found Neptune. <em>"Le Verrier did the math, Galle did the looking."</em></p>
+    </div>
+  </section>
+
+  <!-- CONNECTIONS -->
+  <section id="connections">
+    <div class="section-label">05 · Concept Connections</div>
+    <h2>🔗 Connections Network</h2>
+    <div class="card">
+      <div class="conn-row">
+        <div class="conn-left">Venus thick atmosphere</div>
+        <div class="conn-arrow">→</div>
+        <div class="conn-right">Traps heat → Venus = hottest (NOT Mercury, even though Mercury is closer to Sun)</div>
+      </div>
+      <div class="conn-row">
+        <div class="conn-left">Earth 70% water</div>
+        <div class="conn-arrow">→</div>
+        <div class="conn-right">Appears blue from space → Blue Planet</div>
+      </div>
+      <div class="conn-row">
+        <div class="conn-left">Mars iron oxide</div>
+        <div class="conn-arrow">→</div>
+        <div class="conn-right">Rusted surface → Red Planet</div>
+      </div>
+      <div class="conn-row">
+        <div class="conn-left">Uranus methane atmosphere</div>
+        <div class="conn-arrow">→</div>
+        <div class="conn-right">Absorbs red light → reflects green/blue → Green Planet</div>
+      </div>
+      <div class="conn-row">
+        <div class="conn-left">Uranus 98° axial tilt</div>
+        <div class="conn-arrow">→</div>
+        <div class="conn-right">Almost on its side → "rolls" around Sun → Rolling/Lopsided planet</div>
+      </div>
+      <div class="conn-row">
+        <div class="conn-left">Moon: rotation = revolution</div>
+        <div class="conn-arrow">→</div>
+        <div class="conn-right">We always see the same side of Moon (synchronous rotation)</div>
+      </div>
+      <div class="conn-row">
+        <div class="conn-left">Solar eclipse (Sun-Moon-Earth aligned)</div>
+        <div class="conn-arrow">→</div>
+        <div class="conn-right">Corona becomes visible (normally hidden by photosphere glare)</div>
+      </div>
+      <div class="conn-row">
+        <div class="conn-left">Pluto doesn't clear orbital neighbourhood</div>
+        <div class="conn-arrow">→</div>
+        <div class="conn-right">IAU criteria not met → Demoted to dwarf planet in 2006</div>
+      </div>
+      <div class="conn-row">
+        <div class="conn-left">Ceres in asteroid belt</div>
+        <div class="conn-arrow">→</div>
+        <div class="conn-right">Exception! All other dwarf planets are in Kuiper Belt (beyond Neptune)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXAM TRAPS -->
+  <section id="traps">
+    <div class="section-label">06 · Exam Traps</div>
+    <h2>⚠️ Exam Traps & Common Confusions</h2>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Mercury vs Venus — Hottest Planet</div>
+      <p>Mercury is CLOSEST to Sun but <strong>Venus is HOTTER</strong>. Mercury has no atmosphere, so heat escapes. Venus has thick CO₂ + H₂SO₄ atmosphere — traps heat = extreme greenhouse effect.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Meteor vs Meteorite vs Meteoroid</div>
+      <p><strong>Meteoroid</strong> = in space. <strong>Meteor</strong> = burning in atmosphere (shooting star). <strong>Meteorite</strong> = survived, landed on Earth. Exam often swaps meteor and meteorite!</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Big Bang: 1927 or 1931?</div>
+      <p>Lemaître proposed it in <strong>1927</strong>, but it was published/widely recognised in <strong>1931</strong>. Some books say 1931. Know BOTH.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Largest Constellation = Hydra (NOT Ursa Major)</div>
+      <p>Ursa Major is famous (Saptarishi) but <strong>Hydra is the largest constellation</strong>. Students confuse fame with size.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Sunspots are COOLER (not hotter)</div>
+      <p>Sunspots appear dark because they are <strong>cooler</strong> than surrounding surface. Examiner will say "hottest part" — wrong!</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Ceres is in Asteroid Belt, NOT Kuiper Belt</div>
+      <p>All other dwarf planets (Pluto, Eris, Haumea, Makemake) are in Kuiper Belt. <strong>Ceres alone is in Asteroid Belt.</strong></p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Venus has no satellite (nor does Mercury)</div>
+      <p>Only Mercury & Venus have NO natural satellites. Mars has 2 (Phobos, Deimos). Don't confuse.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Earth is densest planet (NOT largest)</div>
+      <p>Earth's density = 5.5 g/cm³ = highest. Jupiter is biggest but much lower density.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Deimos = smallest satellite (not Phobos)</div>
+      <p>Mars has 2 moons — Phobos and Deimos. <strong>Deimos</strong> is the smallest satellite in the solar system. Examiners like to reverse this.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠ Mons Huygens ≠ Huygens who discovered Saturn's rings</div>
+      <p>Mons Huygens = highest point on Moon. Huygens (Christian Huygens) = discovered Saturn's rings in 1655. Same name, different contexts!</p>
+    </div>
+  </section>
+
+  <!-- EXAMINER'S QUESTIONS -->
+  <section id="examiner">
+    <div class="section-label">07 · Examiner's Mind</div>
+    <h2>🎯 Examiner's Favourite Questions</h2>
+
+    <div class="exam-q">🎯 Which is the hottest planet? → <strong>Venus</strong> (NOT Mercury)</div>
+    <div class="exam-q">🎯 Which planet has the most satellites? → <strong>Jupiter</strong> (currently)</div>
+    <div class="exam-q">🎯 Which planet has the lowest density? → <strong>Saturn</strong></div>
+    <div class="exam-q">🎯 Which is the largest planet? → <strong>Jupiter</strong></div>
+    <div class="exam-q">🎯 Which planets rotate clockwise? → <strong>Venus and Uranus</strong></div>
+    <div class="exam-q">🎯 Who proposed Big Bang Theory and when? → <strong>George Lemaître, 1927</strong></div>
+    <div class="exam-q">🎯 Brightest star in night sky? → <strong>Sirius</strong> (Dog Star)</div>
+    <div class="exam-q">🎯 Nearest star to Earth after Sun? → <strong>Proxima Centauri</strong></div>
+    <div class="exam-q">🎯 Which planet was first discovered by humans? → <strong>Uranus (1781, William Herschel)</strong></div>
+    <div class="exam-q">🎯 Which was first discovered by mathematical calculation? → <strong>Neptune (Le Verrier + Galle, 1846)</strong></div>
+    <div class="exam-q">🎯 Largest volcano in solar system? → <strong>Olympus Mons (Mars)</strong></div>
+    <div class="exam-q">🎯 Galilean moons discovered when? → <strong>1610 by Galileo Galilei</strong></div>
+    <div class="exam-q">🎯 Largest moon of solar system? → <strong>Ganymede</strong> (moon of Jupiter)</div>
+    <div class="exam-q">🎯 Largest moon of Saturn? → <strong>Titan</strong></div>
+    <div class="exam-q">🎯 Pluto demoted in which year? → <strong>2006 by IAU</strong></div>
+    <div class="exam-q">🎯 Which dwarf planet is in asteroid belt? → <strong>Ceres</strong></div>
+    <div class="exam-q">🎯 Saturn's rings discovered by? → <strong>Huygens (1655)</strong></div>
+    <div class="exam-q">🎯 What is Corona? → Outermost layer of Sun, visible only during solar eclipse</div>
+    <div class="exam-q">🎯 Halley's comet returns every? → <strong>75–76 years</strong></div>
+    <div class="exam-q">🎯 Which planet has no atmosphere? → <strong>Mercury</strong></div>
+  </section>
+
+  <!-- SELF-TEST / RECALL -->
+  <section id="recall">
+    <div class="section-label">08 · Active Recall</div>
+    <h2>❓ Self-Test Questions</h2>
+    <p style="color:var(--text-dim);font-size:13px;margin-bottom:16px;">Try to answer each question in your head, then reveal the answer.</p>
+
+    <div class="q-item">
+      <div class="q-text">Q1. Which planet is hottest and why — even though it's not closest to the Sun?</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">Venus. Thick atmosphere of CO₂ + H₂SO₄ creates extreme greenhouse effect, trapping heat. Mercury has no atmosphere so heat escapes.</div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">Q2. Fill in the blank: Moon's rotation period = _____ days = Revolution period. This causes us to always see _____ side of the Moon.</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">27.3 days. One (same) side.</div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">Q3. Name the two planets that rotate clockwise. What direction do others rotate?</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">Venus and Uranus rotate clockwise (east→west). All other planets rotate anti-clockwise (west→east).</div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">Q4. The Big Bang theory was given by _______ in _______ (two years — explain the difference).</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">George Lemaître. Proposed in 1927, published in 1931. Both years may appear in different books/exams.</div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">Q5. What is the Galilean Moons? Who discovered them and when? Which is the largest?</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">4 largest moons of Jupiter: Io, Europa, Callisto, Ganymede. Discovered by Galileo Galilei in 1610. Ganymede is the largest (also largest moon in solar system).</div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">Q6. Arrange in increasing order of density: Saturn, Jupiter, Earth, Mars.</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">Saturn (0.69) &lt; Jupiter &lt; Mars &lt; Earth (5.5 g/cm³ — densest planet).</div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">Q7. A meteoroid enters Earth's atmosphere and partially burns but some lands on Earth. What is it called when burning? What when it lands?</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">While burning in atmosphere = Meteor (shooting star). After landing on Earth = Meteorite.</div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">Q8. Which dwarf planet is in the asteroid belt? Where are the rest?</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">Ceres is in the asteroid belt. All others (Pluto, Eris, Haumea, Makemake) are in the Kuiper Belt.</div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">Q9. Name the planet: largest volcano, smallest satellite in solar system, red colour, 2 moons.</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">Mars. Olympus Mons (largest volcano), Deimos (smallest satellite), Iron oxide = red, Moons = Phobos & Deimos.</div>
+    </div>
+
+    <div class="q-item">
+      <div class="q-text">Q10. What is William Herschel famous for discovering in 1781? (Hint: two things)</div>
+      <button class="reveal-btn" onclick="toggle(this)">Reveal Answer</button>
+      <div class="q-ans">William Herschel discovered: (1) Uranus — first planet discovered by humans. (2) Infrared rays.</div>
+    </div>
+  </section>
+
+  <!-- REVISION LAYERS -->
+  <section id="layers">
+    <div class="section-label">09 · Multi-Layer Revision System</div>
+    <h2>📚 Revision Layers</h2>
+
+    <div class="layer-tabs">
+      <div class="layer-tab active" onclick="switchLayer(this,'l2')">Layer 2: High-Yield</div>
+      <div class="layer-tab" onclick="switchLayer(this,'l3')">Layer 3: Ultra-Fast</div>
+      <div class="layer-tab" onclick="switchLayer(this,'l4')">Layer 4: 30-Second</div>
+      <div class="layer-tab" onclick="switchLayer(this,'l5')">Layer 5: Last Night</div>
+    </div>
+
+    <!-- LAYER 2 -->
+    <div class="layer-content active" id="l2">
+      <div class="card">
+        <h3 style="margin-top:0; color:var(--gold);">⭐ High-Yield Revision Notes</h3>
+        <div class="chip-grid">
+          <div class="chip"><span class="chip-key">Big Bang</span> → Lemaître 1927/1931</div>
+          <div class="chip"><span class="chip-key">Steady State</span> → Fred Hoyle</div>
+          <div class="chip"><span class="chip-key">Heliocentric</span> → Copernicus 1543</div>
+          <div class="chip"><span class="chip-key">Nebular</span> → Kant 1755 / Laplace 1796</div>
+          <div class="chip"><span class="chip-key">Planetesimal</span> → Chamberlain + Moulton 1905</div>
+          <div class="chip"><span class="chip-key">Hottest planet</span> → Venus</div>
+          <div class="chip"><span class="chip-key">Closest to Sun</span> → Mercury</div>
+          <div class="chip"><span class="chip-key">Largest planet</span> → Jupiter</div>
+          <div class="chip"><span class="chip-key">Smallest planet</span> → Mercury</div>
+          <div class="chip"><span class="chip-key">Densest planet</span> → Earth (5.5 g/cm³)</div>
+          <div class="chip"><span class="chip-key">Lowest density</span> → Saturn (floats on water)</div>
+          <div class="chip"><span class="chip-key">Fastest revolution</span> → Mercury</div>
+          <div class="chip"><span class="chip-key">Slowest revolution</span> → Neptune (165 yrs)</div>
+          <div class="chip"><span class="chip-key">Fastest rotation</span> → Jupiter (~10 hrs)</div>
+          <div class="chip"><span class="chip-key">Slowest rotation</span> → Venus (243 days)</div>
+          <div class="chip"><span class="chip-key">Clockwise rotation</span> → Venus + Uranus</div>
+          <div class="chip"><span class="chip-key">No atmosphere</span> → Mercury</div>
+          <div class="chip"><span class="chip-key">No satellites</span> → Mercury + Venus</div>
+          <div class="chip"><span class="chip-key">Red Planet</span> → Mars (iron oxide)</div>
+          <div class="chip"><span class="chip-key">Blue Planet</span> → Earth</div>
+          <div class="chip"><span class="chip-key">Green Planet</span> → Uranus (methane)</div>
+          <div class="chip"><span class="chip-key">Largest volcano</span> → Olympus Mons (Mars)</div>
+          <div class="chip"><span class="chip-key">Mars satellites</span> → Phobos + Deimos</div>
+          <div class="chip"><span class="chip-key">Smallest satellite</span> → Deimos (Mars)</div>
+          <div class="chip"><span class="chip-key">Galilean moons</span> → 1610, Galileo</div>
+          <div class="chip"><span class="chip-key">Largest moon</span> → Ganymede (Jupiter)</div>
+          <div class="chip"><span class="chip-key">Saturn's rings</span> → Huygens 1655</div>
+          <div class="chip"><span class="chip-key">Cassini gap</span> → gap in Saturn's rings</div>
+          <div class="chip"><span class="chip-key">Saturn moon</span> → Titan (life possible)</div>
+          <div class="chip"><span class="chip-key">Uranus discovery</span> → Herschel 1781</div>
+          <div class="chip"><span class="chip-key">Neptune discovery</span> → Galle + Le Verrier 1846</div>
+          <div class="chip"><span class="chip-key">Uranus tilt</span> → 98° (rolling)</div>
+          <div class="chip"><span class="chip-key">Pluto demoted</span> → 2006, IAU</div>
+          <div class="chip"><span class="chip-key">Pluto discoverer</span> → Clyde Tombaugh</div>
+          <div class="chip"><span class="chip-key">Ceres location</span> → Asteroid Belt (not Kuiper)</div>
+          <div class="chip"><span class="chip-key">Sirius</span> → brightest star (Dog Star)</div>
+          <div class="chip"><span class="chip-key">Proxima Centauri</span> → nearest star after Sun</div>
+          <div class="chip"><span class="chip-key">Pole Star</span> → Polaris → North direction</div>
+          <div class="chip"><span class="chip-key">Largest constellation</span> → Hydra</div>
+          <div class="chip"><span class="chip-key">Halley's Comet</span> → 75–76 years</div>
+          <div class="chip"><span class="chip-key">Corona visible</span> → only during solar eclipse</div>
+          <div class="chip"><span class="chip-key">Moon gravity</span> → 1/6 of Earth</div>
+          <div class="chip"><span class="chip-key">Moon's highest point</span> → Mons Huygens</div>
+          <div class="chip"><span class="chip-key">Sun mass</span> → 99% of solar system</div>
+          <div class="chip"><span class="chip-key">Sun composition</span> → 73% H, 25% He</div>
+          <div class="chip"><span class="chip-key">Light to Earth</span> → 8 min 20 sec</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAYER 3 -->
+    <div class="layer-content" id="l3">
+      <div class="card">
+        <h3 style="margin-top:0; color:var(--cyan);">⚡ Ultra-Fast Revision Sheet</h3>
+        <p style="font-size:13px;"><span class="fire">🔥</span> <strong>THEORIES:</strong> Big Bang=Lemaître(1927/31) | Steady State=Hoyle | Heliocentric=Copernicus(1543) | Nebular=Kant(1755)/Laplace(1796) | Planetesimal=Chamberlain+Moulton(1905)</p>
+        <p style="font-size:13px;margin-top:10px;"><span class="fire">🔥</span> <strong>PLANET EXTREMES:</strong> Hottest=Venus | Smallest+No atm=Mercury | Largest=Jupiter | Densest=Earth | Lowest density=Saturn | Fastest rev=Mercury | Slowest rev=Neptune | Fastest rot=Jupiter | Slowest rot=Venus | Clockwise=Venus+Uranus</p>
+        <p style="font-size:13px;margin-top:10px;"><span class="fire">🔥</span> <strong>SIZES (decreasing):</strong> Jupiter>Saturn>Uranus>Neptune>Earth>Venus>Mars>Mercury</p>
+        <p style="font-size:13px;margin-top:10px;"><span class="fire">🔥</span> <strong>DISCOVERIES:</strong> Uranus=Herschel 1781 | Neptune=Galle+Le Verrier 1846 | Saturn rings=Huygens 1655 | Galilean moons=Galileo 1610 | Pluto demoted=2006 IAU</p>
+        <p style="font-size:13px;margin-top:10px;"><span class="fire">🔥</span> <strong>MOONS:</strong> No moon=Mercury+Venus | Mars=Phobos+Deimos(Deimos=smallest) | Jupiter=most (Ganymede=largest) | Saturn=Titan(life?) | Neptune=Triton | Pluto=5 moons</p>
+        <p style="font-size:13px;margin-top:10px;"><span class="fire">🔥</span> <strong>STARS:</strong> Sirius=brightest | Proxima Centauri=nearest after Sun | Polaris=Pole Star | Hydra=largest constellation | Halley's comet=75-76 yrs</p>
+        <p style="font-size:13px;margin-top:10px;"><span class="fire">🔥</span> <strong>DWARF PLANETS:</strong> Pluto(Kuiper) Eris(2nd largest) Haumea(fastest rot) Makemake(310yrs) Ceres(ASTEROID BELT!)</p>
+      </div>
+    </div>
+
+    <!-- LAYER 4 -->
+    <div class="layer-content" id="l4">
+      <div class="card">
+        <h3 style="margin-top:0; color:var(--green);">⚡ 30-Second Revision</h3>
+        <p><strong>Hottest:</strong> Venus &nbsp;|&nbsp; <strong>Smallest/No atm:</strong> Mercury &nbsp;|&nbsp; <strong>Largest:</strong> Jupiter &nbsp;|&nbsp; <strong>Densest:</strong> Earth &nbsp;|&nbsp; <strong>Floats:</strong> Saturn</p>
+        <p style="margin-top:8px;"><strong>Clockwise:</strong> Venus + Uranus &nbsp;|&nbsp; <strong>No moon:</strong> Mercury + Venus &nbsp;|&nbsp; <strong>Deimos</strong> = smallest satellite</p>
+        <p style="margin-top:8px;"><strong>Ganymede</strong> = largest moon &nbsp;|&nbsp; <strong>Olympus Mons</strong> = largest volcano (Mars)</p>
+        <p style="margin-top:8px;"><strong>Big Bang:</strong> Lemaître 1927 &nbsp;|&nbsp; <strong>Uranus:</strong> Herschel 1781 &nbsp;|&nbsp; <strong>Neptune:</strong> Le Verrier + Galle 1846</p>
+        <p style="margin-top:8px;"><strong>Sirius</strong> = brightest star &nbsp;|&nbsp; <strong>Proxima Centauri</strong> = nearest (after Sun) &nbsp;|&nbsp; <strong>Hydra</strong> = largest constellation</p>
+        <p style="margin-top:8px;"><strong>Ceres</strong> = asteroid belt (only dwarf here) &nbsp;|&nbsp; <strong>Pluto demoted:</strong> 2006 IAU</p>
+      </div>
+    </div>
+
+    <!-- LAYER 5: LAST NIGHT -->
+    <div class="layer-content" id="l5">
+      <div class="lns">
+        <h3>🌙 Last Night Before Exam</h3>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Hottest ≠ Closest</strong> → Venus hottest (not Mercury). Thick CO₂ traps heat.</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Clockwise only 2</strong> → Venus + Uranus (both end in -nus)</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Densest = Earth (5.5)</strong> | Floats = Saturn (0.69)</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Largest moon = Ganymede</strong> (Jupiter, found by Galileo 1610)</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Smallest satellite = Deimos</strong> (Mars, NOT Phobos)</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Ceres = Asteroid Belt</strong>. All other dwarfs = Kuiper Belt.</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Neptune = 1st from maths</strong> (Le Verrier + Galle, 1846)</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Uranus = 1st discovered by humans</strong> (Herschel, 1781)</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Big Bang = Lemaître</strong> (1927 proposed, 1931 published)</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Saturn rings = Huygens 1655</strong>. Gap in rings = Cassini.</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>No moon: Mercury + Venus</strong>. No atm: Mercury only.</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Hydra</strong> = largest constellation. Sirius = brightest star. Proxima Centauri = nearest (after Sun).</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Sunspots = COOLER</strong> (dark, not hot). Solar flares from photosphere.</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Corona</strong> = outermost Sun layer. Visible only in solar eclipse.</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Olympus Mons</strong> (Mars) = tallest mountain + largest volcano in solar system.</div></div>
+        <div class="lns-row"><div class="lns-dot"></div><div class="lns-text"><strong>Pluto 2006</strong> (demoted by IAU). Discovered by Clyde Tombaugh. Rev = 248 yrs.</div></div>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+<script>
+function toggle(btn) {
+  const ans = btn.nextElementSibling;
+  if (ans.style.display === 'block') {
+    ans.style.display = 'none';
+    btn.textContent = 'Reveal Answer';
+  } else {
+    ans.style.display = 'block';
+    btn.textContent = 'Hide Answer';
+  }
+}
+
+function switchLayer(tab, layerId) {
+  document.querySelectorAll('.layer-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.layer-content').forEach(c => c.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById(layerId).classList.add('active');
+}
+</script>
+
+</body>
+</html>

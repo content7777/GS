@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earth's Interior — Revision System</title>
+<style>
+:root{
+  --void:#0c0a08;
+  --crust:#1c140e;
+  --mantle:#3d2615;
+  --core:#c44a2c;
+  --core-bright:#e8703f;
+  --gold:#e3b04b;
+  --bone:#eee6d6;
+  --slate:#a89a85;
+  --slate-dim:#6e6253;
+  --line:#3a2c1f;
+  --must:#e3b04b;
+  --imp:#7fa688;
+  --good:#7a93a8;
+  --trap:#c44a2c;
+  --serif:'Iowan Old Style','Palatino Linotype',Georgia,'Bitter',serif;
+  --grotesk:'Avenir Next','Helvetica Neue',Arial,sans-serif;
+  --mono:'JetBrains Mono','SF Mono',Consolas,monospace;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--void);
+  background-image:
+    radial-gradient(ellipse 1200px 800px at 50% -10%, rgba(196,74,44,0.07), transparent 60%),
+    radial-gradient(ellipse 900px 600px at 90% 40%, rgba(227,176,75,0.04), transparent 60%);
+  color:var(--bone);
+  font-family:var(--serif);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--core-bright);text-decoration:none;}
+
+/* ===== DEPTH RULER NAV ===== */
+.depth-ruler{
+  position:fixed;
+  left:0; top:0; bottom:0;
+  width:54px;
+  background:linear-gradient(180deg,#15100c 0%, var(--crust) 20%, var(--mantle) 55%, #2a1208 85%, #1a0805 100%);
+  border-right:1px solid var(--line);
+  z-index:100;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  overflow-y:auto;
+}
+.depth-ruler::-webkit-scrollbar{display:none;}
+.ruler-tick{
+  width:100%;
+  text-align:center;
+  padding:14px 0;
+  cursor:pointer;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  position:relative;
+  transition:background .2s;
+}
+.ruler-tick:hover{background:rgba(227,176,75,0.12);}
+.ruler-tick .km{
+  display:block;
+  font-family:var(--mono);
+  font-size:9px;
+  color:var(--gold);
+  letter-spacing:0.5px;
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  margin:0 auto;
+}
+.ruler-tick .lbl{
+  display:block;
+  font-family:var(--grotesk);
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--slate);
+  writing-mode:vertical-rl;
+  margin-top:6px;
+}
+.ruler-tick.active{background:rgba(227,176,75,0.18);}
+.ruler-tick.active .km{color:var(--core-bright);}
+
+@media (max-width:768px){
+  .depth-ruler{width:38px;}
+  .ruler-tick{padding:10px 0;}
+  .ruler-tick .km{font-size:7px;}
+  .ruler-tick .lbl{font-size:6.5px;}
+}
+
+/* ===== LAYOUT ===== */
+.page{
+  margin-left:54px;
+  max-width:880px;
+  padding:0 28px 120px;
+}
+@media (max-width:768px){.page{margin-left:38px;padding:0 16px 100px;}}
+
+.masthead{
+  padding:64px 0 36px;
+  border-bottom:2px solid var(--line);
+  margin-bottom:48px;
+}
+.eyebrow{
+  font-family:var(--grotesk);
+  font-size:12px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--core-bright);
+  margin-bottom:14px;
+}
+h1.title{
+  font-family:var(--serif);
+  font-size:clamp(34px,6vw,58px);
+  font-weight:600;
+  margin:0 0 12px;
+  color:var(--bone);
+  letter-spacing:-0.5px;
+  line-height:1.05;
+}
+.subtitle{
+  font-family:var(--grotesk);
+  color:var(--slate);
+  font-size:15px;
+  max-width:560px;
+}
+.meta-row{
+  display:flex;
+  gap:18px;
+  margin-top:20px;
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--slate-dim);
+  flex-wrap:wrap;
+}
+.meta-row span{padding:4px 10px;border:1px solid var(--line);border-radius:20px;}
+
+/* section chrome */
+section.block{margin:56px 0;}
+.sec-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  margin-bottom:22px;
+}
+.sec-num{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--core-bright);
+  border:1px solid var(--core);
+  border-radius:50%;
+  width:30px;height:30px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+h2{
+  font-family:var(--serif);
+  font-size:27px;
+  font-weight:600;
+  margin:0;
+  color:var(--gold);
+  letter-spacing:-0.2px;
+}
+h3{
+  font-family:var(--grotesk);
+  font-size:15px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  color:var(--core-bright);
+  margin:28px 0 12px;
+  font-weight:600;
+}
+p{color:#d8cfc0;margin:10px 0;}
+ul,ol{padding-left:22px;color:#d8cfc0;}
+li{margin:6px 0;}
+strong{color:var(--bone);}
+.dim{color:var(--slate-dim);}
+
+/* tag chips */
+.tag{
+  display:inline-block;
+  font-family:var(--grotesk);
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:0.5px;
+  padding:2px 8px;
+  border-radius:4px;
+  margin-right:6px;
+  vertical-align:middle;
+}
+.tag.must{background:rgba(227,176,75,0.18);color:var(--must);border:1px solid rgba(227,176,75,0.4);}
+.tag.imp{background:rgba(127,166,136,0.16);color:var(--imp);border:1px solid rgba(127,166,136,0.4);}
+.tag.good{background:rgba(122,147,168,0.16);color:var(--good);border:1px solid rgba(122,147,168,0.4);}
+
+/* callout boxes */
+.box{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,0.02);
+  border-radius:10px;
+  padding:18px 20px;
+  margin:18px 0;
+}
+.box.story{
+  border-left:3px solid var(--core);
+  background:linear-gradient(90deg, rgba(196,74,44,0.08), transparent);
+}
+.box.trap{
+  border-left:3px solid var(--trap);
+  background:linear-gradient(90deg, rgba(196,74,44,0.1), transparent);
+}
+.box.trap h4{margin:0 0 8px;color:var(--core-bright);font-family:var(--grotesk);font-size:14px;letter-spacing:0.5px;}
+.box.hook{
+  border-left:3px solid var(--gold);
+  background:linear-gradient(90deg, rgba(227,176,75,0.08), transparent);
+}
+.box.hook h4{margin:0 0 8px;color:var(--gold);font-family:var(--grotesk);font-size:14px;letter-spacing:0.5px;}
+.box.recall{
+  border:1px dashed var(--slate-dim);
+  background:rgba(255,255,255,0.015);
+}
+
+/* tables */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;}
+th{
+  text-align:left;
+  font-family:var(--grotesk);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:0.8px;
+  color:var(--gold);
+  padding:8px 10px;
+  border-bottom:2px solid var(--line);
+}
+td{padding:9px 10px;border-bottom:1px solid var(--line);color:#d8cfc0;}
+tr:hover td{background:rgba(255,255,255,0.02);}
+
+/* layered earth diagram */
+.earth-diagram{
+  display:flex;
+  justify-content:center;
+  margin:24px 0;
+}
+.earth-rings{
+  position:relative;
+  width:280px;height:280px;
+}
+.ring{
+  position:absolute;
+  border-radius:50%;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+}
+.ring.crust{width:280px;height:280px;background:radial-gradient(circle at 35% 30%, #5a3d22, #2a1c10);}
+.ring.mantle{width:230px;height:230px;background:radial-gradient(circle at 35% 30%, #b5642f, #6e3415);}
+.ring.outer-core{width:140px;height:140px;background:radial-gradient(circle at 35% 30%, #f0974f, #c44a2c);}
+.ring.inner-core{width:64px;height:64px;background:radial-gradient(circle at 35% 30%, #ffe9b0, #e3b04b);box-shadow:0 0 30px rgba(227,176,75,0.6);}
+.ring-label{
+  position:absolute;
+  font-family:var(--grotesk);
+  font-size:11px;
+  color:var(--bone);
+  background:rgba(0,0,0,0.55);
+  padding:2px 7px;
+  border-radius:4px;
+  white-space:nowrap;
+}
+
+/* layer system grid (Layer 1-5) */
+.layer-nav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:16px 0 30px;
+  padding:14px;
+  background:rgba(255,255,255,0.02);
+  border:1px solid var(--line);
+  border-radius:10px;
+}
+.layer-nav a{
+  font-family:var(--grotesk);
+  font-size:11.5px;
+  letter-spacing:0.4px;
+  padding:7px 13px;
+  border:1px solid var(--line);
+  border-radius:20px;
+  color:var(--slate);
+  transition:all .2s;
+}
+.layer-nav a:hover{border-color:var(--core);color:var(--core-bright);background:rgba(196,74,44,0.08);}
+
+/* ultra fast sheet */
+.fast-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media (max-width:600px){.fast-grid{grid-template-columns:1fr;}}
+.fast-card{
+  background:rgba(255,255,255,0.025);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 16px;
+}
+.fast-card h4{margin:0 0 8px;color:var(--gold);font-family:var(--grotesk);font-size:12.5px;text-transform:uppercase;letter-spacing:0.6px;}
+.fast-card p,.fast-card ul{margin:4px 0;font-size:13.5px;}
+
+/* 30 second sheet */
+.thirty-sec{
+  background:linear-gradient(135deg, rgba(227,176,75,0.08), rgba(196,74,44,0.06));
+  border:1px solid var(--gold);
+  border-radius:14px;
+  padding:24px 26px;
+}
+.thirty-sec ol{counter-reset:item;list-style:none;padding-left:0;}
+.thirty-sec ol li{
+  counter-increment:item;
+  position:relative;
+  padding-left:34px;
+  margin:10px 0;
+  font-size:14.5px;
+}
+.thirty-sec ol li::before{
+  content:counter(item);
+  position:absolute;left:0;top:0;
+  width:22px;height:22px;
+  background:var(--gold);
+  color:#1a1410;
+  border-radius:50%;
+  font-family:var(--mono);
+  font-size:11px;
+  font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* last night sheet */
+.lastnight{
+  background:#170d0a;
+  border:2px solid var(--core);
+  border-radius:14px;
+  padding:26px 28px;
+  position:relative;
+}
+.lastnight::before{
+  content:"⏱ NIGHT BEFORE EXAM";
+  position:absolute;top:-13px;left:24px;
+  background:var(--core);
+  color:#170d0a;
+  font-family:var(--grotesk);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1px;
+  padding:4px 12px;
+  border-radius:20px;
+}
+
+/* self-test / flip cards */
+.flip-card{
+  background:rgba(255,255,255,0.025);
+  border:1px solid var(--line);
+  border-radius:10px;
+  margin:10px 0;
+  cursor:pointer;
+  overflow:hidden;
+}
+.flip-q{padding:14px 18px;font-size:14.5px;color:var(--bone);display:flex;justify-content:space-between;align-items:center;}
+.flip-q .chevron{color:var(--gold);font-size:13px;transition:transform .25s;}
+.flip-card.open .chevron{transform:rotate(180deg);}
+.flip-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s ease, padding .3s ease;
+  padding:0 18px;
+  font-size:14px;
+  color:var(--slate);
+  background:rgba(227,176,75,0.04);
+  border-top:0px solid var(--line);
+}
+.flip-card.open .flip-a{max-height:300px;padding:14px 18px;border-top:1px solid var(--line);}
+
+/* progress / priority legend pinned */
+.legend{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  background:rgba(20,15,11,0.92);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:10px 14px;
+  font-family:var(--grotesk);
+  font-size:10.5px;
+  z-index:90;
+  display:flex;
+  gap:12px;
+  backdrop-filter:blur(6px);
+}
+@media (max-width:768px){.legend{display:none;}}
+.legend span{display:flex;align-items:center;gap:5px;}
+.legend .dot{width:8px;height:8px;border-radius:50%;}
+
+hr.div{border:none;border-top:1px solid var(--line);margin:40px 0;}
+
+.palace-img{
+  width:100%;
+  border-radius:12px;
+  margin:18px 0;
+  border:1px solid var(--line);
+}
+
+footer{
+  margin-top:80px;
+  padding-top:24px;
+  border-top:1px solid var(--line);
+  color:var(--slate-dim);
+  font-family:var(--grotesk);
+  font-size:12px;
+  text-align:center;
+}
+</style>
+</head>
+<body>
+
+<!-- DEPTH RULER NAV -->
+<nav class="depth-ruler" id="ruler">
+  <div class="ruler-tick" data-target="top"><span class="km">0</span><span class="lbl">Surface</span></div>
+  <div class="ruler-tick" data-target="palace"><span class="km">·</span><span class="lbl">Palace</span></div>
+  <div class="ruler-tick" data-target="layers"><span class="km">5–70</span><span class="lbl">Crust</span></div>
+  <div class="ruler-tick" data-target="mantle"><span class="km">2900</span><span class="lbl">Mantle</span></div>
+  <div class="ruler-tick" data-target="discont"><span class="km">·</span><span class="lbl">Bounds</span></div>
+  <div class="ruler-tick" data-target="plates"><span class="km">·</span><span class="lbl">Plates</span></div>
+  <div class="ruler-tick" data-target="quake"><span class="km">·</span><span class="lbl">Quakes</span></div>
+  <div class="ruler-tick" data-target="waves"><span class="km">·</span><span class="lbl">Waves</span></div>
+  <div class="ruler-tick" data-target="sources"><span class="km">·</span><span class="lbl">Sources</span></div>
+  <div class="ruler-tick" data-target="ring"><span class="km">·</span><span class="lbl">Fire Ring</span></div>
+  <div class="ruler-tick" data-target="traps"><span class="km">⚠</span><span class="lbl">Traps</span></div>
+  <div class="ruler-tick" data-target="exam"><span class="km">🎯</span><span class="lbl">Exam</span></div>
+  <div class="ruler-tick" data-target="recall"><span class="km">❓</span><span class="lbl">Recall</span></div>
+  <div class="ruler-tick" data-target="highyield"><span class="km">⭐</span><span class="lbl">HiYield</span></div>
+  <div class="ruler-tick" data-target="fast"><span class="km">⚡</span><span class="lbl">Fast</span></div>
+  <div class="ruler-tick" data-target="thirtysec"><span class="km">30s</span><span class="lbl">30-Sec</span></div>
+  <div class="ruler-tick" data-target="lastnight"><span class="km">6371</span><span class="lbl">Core</span></div>
+</nav>
+
+<div class="page" id="top">
+
+  <div class="masthead">
+    <div class="eyebrow">SSC CGL · Geography · Physical Geography</div>
+    <h1 class="title">Earth's Interior</h1>
+    <p class="subtitle">Crust, Mantle, Core · Discontinuities · Plate Tectonics · Earthquakes & Seismic Waves — built as a high-retention revision system, not a summary.</p>
+    <div class="meta-row">
+      <span>📚 Source: FRB 3.0 Lecture</span>
+      <span>🔁 Designed for 20–100 revisions</span>
+      <span>🧠 Father of Geology: James Hutton</span>
+    </div>
+  </div>
+
+  <div class="layer-nav">
+    <a href="#palace">🧠 Memory Palace</a>
+    <a href="#layers">📖 Complete Notes</a>
+    <a href="#hooks">🪝 Memory Hooks</a>
+    <a href="#traps">⚠ Exam Traps</a>
+    <a href="#exam">🎯 Examiner's Qs</a>
+    <a href="#recall">❓ Active Recall</a>
+    <a href="#highyield">⭐ High-Yield</a>
+    <a href="#fast">⚡ Ultra-Fast</a>
+    <a href="#thirtysec">⏱ 30-Second</a>
+    <a href="#lastnight">🌙 Night-Before</a>
+  </div>
+
+  <!-- ============ BIG PICTURE ============ -->
+  <section class="block">
+    <div class="sec-head"><div class="sec-num">0</div><h2>Big Picture</h2></div>
+    <p>The Earth is not solid rock all the way down — it's a <strong>three-layer ball</strong> (crust → mantle → core), and each layer gets <strong>hotter, denser, and more pressured</strong> as you go deeper. The crust floats and cracks into <strong>plates</strong>; those plates grinding against each other is <em>why</em> earthquakes and volcanoes happen. Everything in this chapter — discontinuities, plate boundaries, seismic waves — is really just one story: <strong>"what happens at the boundary between two layers, and what happens when two plates meet."</strong></p>
+    <div class="earth-diagram">
+      <div class="earth-rings">
+        <div class="ring crust"></div>
+        <div class="ring mantle"></div>
+        <div class="ring outer-core"></div>
+        <div class="ring inner-core"></div>
+        <div class="ring-label" style="top:8%;left:50%;">CRUST (SIAL) · 5–70km</div>
+        <div class="ring-label" style="top:24%;left:78%;">MANTLE (SIMA) · 2900km</div>
+        <div class="ring-label" style="top:50%;left:84%;">OUTER CORE (liquid)</div>
+        <div class="ring-label" style="top:50%;left:50%;color:#1a1410;background:transparent;">INNER<br>CORE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MEMORY PALACE ============ -->
+  <section class="block" id="palace">
+    <div class="sec-head"><div class="sec-num">1</div><h2>Chapter Memory Palace</h2></div>
+    <div class="box story">
+      <p><strong>🏛 THE PALACE: "The Apartment Building of the Earth"</strong></p>
+      <p>Picture a 4-floor apartment building, but built <em>underground</em>, where Floor 1 is street level and Floor 4 is the basement vault.</p>
+      <p><strong>🏠 Floor 1 — The Garden (Crust):</strong> A thin garden patio, 5 to 70 metres of soil over concrete. Half the garden is "Continental" (thick soil, where the trees and house sit — 30km deep) and half dips into a "Pool" (Oceanic — thin, only 5km, but the pool water is denser than the soil). The patio is made of <strong>SiAl bricks</strong> — picture <em>silica + aluminium</em> bricks stacked as "SIAL" tiles.</p>
+      <p><strong>🛗 The Lift Lobby (Lithosphere + Asthenosphere):</strong> Right under the garden is a lobby floor that's solid (Lithosphere, 0–200km) sitting on a <em>wobbly waterbed</em> floor below it (Asthenosphere, up to 400km) — the waterbed is "weak" (Asthenos = weak in Greek), half-melted magma. This waterbed is what the whole building's plates float and slide on.</p>
+      <p><strong>🏠 Floor 2 — The Furnace Room (Mantle):</strong> A massive boiler room, 2900km tall, made of <strong>SiMa bricks</strong> (silica + magnesium). Split into Upper Furnace (solid top, molten waterbed below) and Lower Furnace (fully solid, dense).</p>
+      <p><strong>🔒 Floor 3 — The Vault Door Area (Outer Core):</strong> Liquid metal sloshing around like mercury — and this sloshing liquid metal is exactly what generates the building's <strong>security/magnetic field</strong> (Earth's magnetism).</p>
+      <p><strong>💎 Floor 4 — The Basement Safe (Inner Core):</strong> Solid metal ball, radius reaching ~6400km from street level, made of <strong>Ni + Fe</strong> → nicknamed <strong>"NiFe"</strong> (sounds like "knife" — a solid metal knife sits in the safe, solid because the pressure down here is crushing).</p>
+      <p><strong>🚪 Doormen between floors (Discontinuities):</strong> Each floor boundary has a doorman checking IDs — <em>"Someone Came Riding Like General Lehman"</em>: Mohorovičić guards Crust→Mantle, Repetti guards Upper→Lower Mantle, Gutenberg guards Mantle→Outer Core, Lehman guards Outer→Inner Core.</p>
+      <p><strong>🌍 The Building Sits on Rollers (Plate Tectonics):</strong> The whole ground floor isn't one slab — it's 7 big tectonic "rollers" (plates) + small ones, floating on the waterbed. When rollers drift apart → new floor material rises (constructive). When they crash together → one roller dives under and melts (destructive/subduction). When they grind sideways → nothing built, nothing destroyed, just an earthquake (transform).</p>
+      <p><strong>🔥 The Pacific Roller Has a Burning Edge (Ring of Fire):</strong> One giant roller — the Pacific Plate — has its entire rim on fire: 90% of the world's volcanoes sit right on this rim, the "Pacific Ring of Fire."</p>
+    </div>
+  </section>
+
+  <!-- ============ COMPLETE REVISION NOTES ============ -->
+  <section class="block" id="layers">
+    <div class="sec-head"><div class="sec-num">2</div><h2>Complete Revision Notes</h2></div>
+
+    <h3>① Studying the Interior</h3>
+    <p><span class="tag must">MUST KNOW</span> The study of the Earth's interior is called <strong>Geology</strong>. The <strong>Father of Geology</strong> is <strong>James Hutton</strong>.</p>
+    <p>The Earth is divided into <strong>3 main layers</strong>: <strong>Crust → Mantle → Core</strong> (top to centre).</p>
+
+    <h3>② Crust</h3>
+    <ul>
+      <li><span class="tag must">MUST</span> Also called <strong>SIAL</strong> — made of <strong>Si</strong>lica + <strong>Al</strong>uminium.</li>
+      <li>Thickness: roughly <strong>5–70 km</strong> (up to ~100 km at places like the Himalayas).</li>
+      <li>Divided into two types:
+        <table>
+          <tr><th></th><th>Continental Crust</th><th>Oceanic Crust</th></tr>
+          <tr><td>Location</td><td>Under land/mountains</td><td>Under the ocean floor</td></tr>
+          <tr><td>Thickness</td><td>Thicker (~30 km avg)</td><td>Thinner (~5 km avg)</td></tr>
+          <tr><td>Density</td><td>Lighter (~2.7 g/cm³) — Granitic</td><td>Denser (~3 g/cm³) — Basaltic</td></tr>
+        </table>
+      </li>
+      <li><span class="tag good">GOOD TO KNOW</span> Memory hook for rock type: <strong>"Granitic crust = Continental"</strong> (both start with hard consonant feel; continents have granite). Oceanic = Basaltic (salts in the ocean → "Basaltic").</li>
+      <li>By volume: Crust ≈ <strong>1%</strong>. By mass: Crust ≈ <strong>0.4–1%</strong> (lecture rounds to a small single-digit %).</li>
+    </ul>
+
+    <h3>③ Mantle</h3>
+    <ul>
+      <li><span class="tag must">MUST</span> Also called <strong>SIMA</strong> — made of <strong>Si</strong>licon + <strong>Ma</strong>gnesium.</li>
+      <li>Thickness: up to <strong>2900 km</strong> — by far the biggest layer (≈84% of Earth's volume).</li>
+      <li>Split into <strong>Upper Mantle</strong> and <strong>Lower Mantle</strong>.</li>
+      <li>Upper Mantle has two parts:
+        <ul>
+          <li><strong>Top part:</strong> solid.</li>
+          <li><strong>Below it:</strong> semi-molten / weak → this is the <strong>Asthenosphere</strong>.</li>
+        </ul>
+      </li>
+      <li><span class="tag must">MUST</span> <strong>Asthenosphere</strong> = "weak sphere" (Asthenos = weak, Greek). It is semi-molten magma/lava. Extends up to <strong>~400 km</strong>.</li>
+      <li><span class="tag must">MUST</span> <strong>Lithosphere</strong> = entire crust + the solid uppermost part of mantle (the part ABOVE the asthenosphere). Extends up to <strong>~200 km</strong>. This is literally what tectonic plates are made of.</li>
+    </ul>
+
+    <h3>④ Core</h3>
+    <ul>
+      <li>Divided into <strong>Outer Core</strong> and <strong>Inner Core</strong>.</li>
+      <li>Total radius of Earth ≈ <strong>6,371 km</strong> (rounded ~6400 km in lecture).</li>
+      <li><span class="tag must">MUST</span> <strong>Outer Core</strong> → <strong>liquid</strong> → responsible for Earth's <strong>magnetic field</strong>.</li>
+      <li><span class="tag must">MUST</span> <strong>Inner Core</strong> → <strong>solid</strong> (despite extreme heat) because of immense pressure at the centre.</li>
+      <li><span class="tag must">MUST</span> Core is called <strong>"NIFE"</strong> — made of <strong>Ni</strong>ckel + <strong>Fe</strong> (iron, Latin: Ferrum).</li>
+      <li>By volume: Core ≈ <strong>15%</strong>. By mass: Core ≈ <strong>31%</strong> (core is small in volume but heavy because metal is dense).</li>
+    </ul>
+
+    <h3>⑤ Volume vs Mass — Quick Table</h3>
+    <table>
+      <tr><th>Layer</th><th>% by Volume</th><th>% by Mass</th></tr>
+      <tr><td>Crust</td><td>~1%</td><td>~0.4–1%</td></tr>
+      <tr><td>Mantle</td><td>~84%</td><td>~68%</td></tr>
+      <tr><td>Core</td><td>~15%</td><td>~31%</td></tr>
+    </table>
+    <p class="dim">Logic: Mantle is biggest by volume AND by mass (it's the bulk of the Earth). Core is small in volume but punches above its weight in mass because nickel-iron is super dense. Crust is tiny in both.</p>
+
+    <h3>⑥ Thickness Summary (Ladder)</h3>
+    <table>
+      <tr><th>Zone</th><th>Depth Range</th></tr>
+      <tr><td>Lithosphere</td><td>up to ~200 km</td></tr>
+      <tr><td>Asthenosphere</td><td>up to ~400 km</td></tr>
+      <tr><td>Mantle (total)</td><td>up to ~2900 km</td></tr>
+      <tr><td>Core (total)</td><td>rest of the way to centre, ~6371 km radius</td></tr>
+    </table>
+
+    <h3 id="discont">⑦ Discontinuities (Boundaries Between Layers)</h3>
+    <div class="box hook">
+      <h4>🪝 MEMORY HOOK</h4>
+      <p>"<strong>Someone Bring Me A Red Rose</strong>" → <strong>S</strong>omeone=nothing, but think: <strong>M</strong>ohorovičić, <strong>R</strong>epetti, <strong>G</strong>utenberg, <strong>L</strong>ehmann — recite it as <strong>"My Russian Guard, Lehmann"</strong> walking floor to floor checking IDs at every boundary.</p>
+    </div>
+    <table>
+      <tr><th>Discontinuity</th><th>Separates</th></tr>
+      <tr><td><strong>Mohorovičić (Moho)</strong></td><td>Entire Crust ↔ Entire Mantle</td></tr>
+      <tr><td><strong>Repetti</strong></td><td>Upper Mantle ↔ Lower Mantle</td></tr>
+      <tr><td><strong>Gutenberg</strong></td><td>Entire Mantle ↔ Outer Core</td></tr>
+      <tr><td><strong>Lehmann</strong></td><td>Outer Core ↔ Inner Core</td></tr>
+    </table>
+
+    <h3 id="plates">⑧ Plate Tectonics</h3>
+    <ul>
+      <li><span class="tag must">MUST</span> The Lithosphere = a set of rigid <strong>plates</strong> sliding over the semi-molten Asthenosphere.</li>
+      <li><span class="tag must">MUST</span> <strong>Theory given by McKenzie and Parker</strong> — entire Earth's solid surface = <strong>7 major plates</strong> + several minor plates.</li>
+      <li><strong>7 Major Plates</strong> (named after continents/oceans): African, Eurasian, Australian (Indo-Australian), North American, South American, Pacific, Antarctic.</li>
+      <li><span class="tag good">GOOD TO KNOW</span> <strong>Pacific Plate</strong> = largest major plate. <strong>Juan de Fuca Plate</strong> = smallest (a minor plate).</li>
+      <li>Plate Boundary Types — three ways plates move:
+        <table>
+          <tr><th>Boundary Type</th><th>Movement</th><th>Result</th><th>Mostly Seen</th></tr>
+          <tr><td><strong>Divergent / Constructive</strong></td><td>Move apart</td><td>Magma rises → <strong>new crust formed</strong></td><td>Mid-ocean ridges; volcanic activity</td></tr>
+          <tr><td><strong>Convergent / Destructive</strong></td><td>Move together</td><td>Denser plate <strong>subducts</strong>, melts → crust destroyed</td><td>Heavy volcanic activity (most abundant here)</td></tr>
+          <tr><td><strong>Transform</strong></td><td>Slide past each other</td><td>Crust neither created nor destroyed</td><td>Mainly <strong>earthquakes</strong></td></tr>
+        </table>
+      </li>
+    </ul>
+
+    <h3 id="quake">⑨ Earthquakes</h3>
+    <ul>
+      <li><span class="tag must">MUST</span> <strong>Definition:</strong> a sudden release of energy along a fault line.</li>
+      <li><strong>Fault line</strong> = the point where two (irregular, not smooth) plate edges lock together due to friction while trying to slide.</li>
+      <li>Energy builds up until friction is overcome → sudden release → travels as <strong>seismic/earthquake waves</strong>.</li>
+      <li><span class="tag must">MUST</span> <strong>Hypocenter / Focus</strong> = point INSIDE the Earth where energy is released.</li>
+      <li><span class="tag must">MUST</span> <strong>Epicenter</strong> = point on the Earth's SURFACE directly above the focus — where the energy arrives first and destruction is maximum.</li>
+      <li><span class="tag imp">IMPORTANT</span> <strong>Tsunami</strong> = result of an earthquake occurring under the sea floor; waves hit the coast. ("Tsunami" literally means "harbor waves.") Example: the severe 2004 tsunami that hit India.</li>
+    </ul>
+
+    <h3 id="waves">⑩ Seismic Waves</h3>
+    <p>Recorded by a <strong>Seismograph</strong>. Two broad types: <strong>Body Waves</strong> and <strong>Surface Waves</strong>.</p>
+    <table>
+      <tr><th></th><th>P-Wave (Primary)</th><th>S-Wave (Secondary)</th></tr>
+      <tr><td>Recorded</td><td>First (fastest)</td><td>Second</td></tr>
+      <tr><td>Nature</td><td>Longitudinal</td><td>Transverse</td></tr>
+      <tr><td>Vibration direction</td><td>Same as wave direction (back & forth)</td><td>Perpendicular to wave direction</td></tr>
+      <tr><td>Creates</td><td>Compression & Rarefaction (like sound waves)</td><td>Crest & Trough</td></tr>
+      <tr><td>Travels through</td><td>Solid, Liquid, Gas (slows in liquid/gas)</td><td>Solid <strong>ONLY</strong> — cannot pass liquid/gas</td></tr>
+      <tr><td>Shadow zone</td><td>104°–140°/150° (smaller, due to refraction)</td><td>104°–104° onward (effectively the entire outer-core-blocked region — larger, ~40% of Earth's surface)</td></tr>
+    </table>
+    <div class="box hook">
+      <h4>🪝 MEMORY HOOK</h4>
+      <p>S-waves can't swim. They die the moment they hit the liquid outer core — that's why their "shadow zone" (the region where they're never recorded) is much bigger than the P-wave's. P-waves can swim (travel through liquid too, just slower), so they only get bent (refracted), not blocked.</p>
+    </div>
+    <p><strong>Surface Waves:</strong> formed when body waves reach Earth's surface rock. Known as <strong>Love waves</strong> or <strong>Rayleigh waves</strong>. <span class="tag must">MUST</span> These cause <strong>maximum destruction</strong>.</p>
+
+    <h3>⑪ Measuring Earthquakes</h3>
+    <table>
+      <tr><th>Scale</th><th>Measures</th><th>Range</th></tr>
+      <tr><td><strong>Richter Scale</strong></td><td><strong>Magnitude</strong></td><td>0–10, but technically <strong>no upper limit</strong></td></tr>
+      <tr><td><strong>Mercalli Scale</strong></td><td><strong>Intensity</strong> (denoted "M" — do NOT confuse with magnitude!)</td><td>I to XII (1 to 11/12 — has a fixed limit)</td></tr>
+    </table>
+
+    <h3 id="sources">⑫ How We Know About Earth's Interior — Direct vs Indirect Sources</h3>
+    <table>
+      <tr><th>Direct Sources</th><th>Indirect Sources</th></tr>
+      <tr><td>Volcanic eruptions (lava/magma coming OUT)</td><td>Seismic/earthquake waves (e.g., S-waves not recorded beyond a point told us outer core is liquid)</td></tr>
+      <tr><td>Rocks (formed from magma)</td><td>Meteorites (come from outside, but help us infer Earth's likely internal composition)</td></tr>
+      <tr><td>Deepest human drilling ≈ <strong>12 km</strong> (Kola Superdeep Borehole-type drilling, still just within the crust which itself goes to ~70km)</td><td>Temperature, Gravity, Magnetic field studies</td></tr>
+    </table>
+    <p class="dim">Logic: if it physically comes OUT of the Earth, it's direct. If we INFER the interior from behavior measured elsewhere (waves bending/disappearing, magnetic readings), it's indirect.</p>
+
+    <h3 id="ring">⑬ Pacific Ring of Fire vs Hotspot Volcanism</h3>
+    <ul>
+      <li><span class="tag must">MUST</span> <strong>Pacific Ring of Fire</strong>: a ring-shaped zone around the Pacific Ocean with the <strong>highest volcanic AND seismic activity</strong> on Earth. <strong>~90% of all the world's volcanoes</strong> lie on it.</li>
+      <li><span class="tag trap-text"></span><strong>Hotspot volcanism</strong>: volcanoes that occur <em>outside</em> the Ring of Fire, caused by a fixed heat source under the crust (NOT at a plate boundary). Example: <strong>Hawaiian volcanoes</strong>.</li>
+    </ul>
+  </section>
+
+  <!-- ============ MEMORY HOOKS ============ -->
+  <section class="block" id="hooks">
+    <div class="sec-head"><div class="sec-num">3</div><h2>Smart Memory Hooks</h2></div>
+    <div class="box hook"><h4>SIAL / SIMA / NIFE</h4><p>Crust = <strong>SI</strong>lica + <strong>AL</strong>uminium → "SIAL." Mantle = <strong>SI</strong>licon + <strong>MA</strong>gnesium → "SIMA." Core = <strong>NI</strong>ckel + <strong>FE</strong>rrum → "NIFE" (sounds exactly like "knife" — and a knife is a solid, hard, metal object, just like the solid inner core).</p></div>
+    <div class="box hook"><h4>Asthenosphere = "Weak"</h4><p>Greek <em>asthenos</em> = without strength. Picture an "asthma patient" who is weak and can barely hold shape — that's the semi-molten asthenosphere, weak and flowing, unlike the rigid lithosphere sitting on top of it.</p></div>
+    <div class="box hook"><h4>Discontinuity Order — "My Russian Guard, Lehmann"</h4><p>Moho (Crust-Mantle) → Repetti (Upper-Lower Mantle) → Gutenberg (Mantle-Core) → Lehmann (Outer-Inner Core). Each name is a "guard" standing exactly at a doorway going deeper into the building.</p></div>
+    <div class="box hook"><h4>P-wave vs S-wave — "P for Push, S for Shake"</h4><p><strong>P</strong>-wave = <strong>P</strong>ush/Pull motion (longitudinal, like a spring) = <strong>P</strong>asses through everything. <strong>S</strong>-wave = <strong>S</strong>ide-to-side <strong>S</strong>hake (transverse) = <strong>S</strong>tops at liquid (Solid-only traveler).</p></div>
+    <div class="box hook"><h4>Mercalli ≠ Magnitude</h4><p>Mercalli starts with "Me" — think "Mercalli measures ME, how IT FEELS to ME" → that's Intensity (subjective, felt effect). Richter has a number that can run away to infinity — "Richter has no Restrictions."</p></div>
+  </section>
+
+  <!-- ============ CONCEPT CONNECTIONS ============ -->
+  <section class="block">
+    <div class="sec-head"><div class="sec-num">4</div><h2>Concept Connections</h2></div>
+    <ul>
+      <li><strong>Plates float on Asthenosphere (CAUSE)</strong> → <strong>Plates can drift/collide/slide (EFFECT)</strong> → <strong>Earthquakes & Volcanism (CONSEQUENCE)</strong>.</li>
+      <li><strong>Plates diverge (CAUSE)</strong> → <strong>magma rises through gap (PROCESS)</strong> → <strong>new crust forms (EFFECT)</strong> = Constructive boundary.</li>
+      <li><strong>Plates converge, one denser (CAUSE)</strong> → <strong>denser plate subducts and melts (PROCESS)</strong> → <strong>crust destroyed (EFFECT)</strong> = Destructive boundary.</li>
+      <li><strong>Outer core is liquid (FEATURE)</strong> → <strong>generates Earth's magnetic field (APPLICATION)</strong>.</li>
+      <li><strong>S-waves cannot cross liquid (FEATURE)</strong> → <strong>cannot pass through outer core (EXCEPTION TO PATH)</strong> → <strong>this is how scientists DEDUCED the outer core is liquid (DISCOVERY METHOD)</strong> — this single fact is the entire logical bridge connecting "Seismic Waves" topic to "Indirect Sources of Knowledge" topic.</li>
+      <li><strong>Inner core has highest pressure (CAUSE)</strong> → <strong>stays solid despite highest heat (EFFECT, counter-intuitive)</strong>.</li>
+      <li><strong>Earthquake under seafloor (EVENT)</strong> → <strong>tsunami (CONSEQUENCE)</strong>.</li>
+    </ul>
+  </section>
+
+  <!-- ============ EXAM TRAPS ============ -->
+  <section class="block" id="traps">
+    <div class="sec-head"><div class="sec-num">5</div><h2>⚠ Exam Traps</h2></div>
+    <div class="box trap"><h4>TRAP 1 — Mercalli "M" ≠ Magnitude</h4><p>"M" notation for Mercalli tricks students into writing "magnitude." Mercalli = <strong>Intensity</strong>. Richter = <strong>Magnitude</strong>. Always pair: Richter→Magnitude, Mercalli→Intensity.</p></div>
+    <div class="box trap"><h4>TRAP 2 — Lithosphere vs Asthenosphere depths swapped</h4><p>Students often flip the numbers. <strong>Lithosphere = 200 km</strong> (smaller, because it's ABOVE/shallower). <strong>Asthenosphere = 400 km</strong> (bigger range, goes deeper into upper mantle).</p></div>
+    <div class="box trap"><h4>TRAP 3 — Continental vs Oceanic crust density/thickness reversed</h4><p>Continental crust is <strong>thicker but lighter</strong> (granitic). Oceanic crust is <strong>thinner but denser</strong> (basaltic). Exams flip these in statement questions — "Oceanic crust is thicker" = FALSE.</p></div>
+    <div class="box trap"><h4>TRAP 4 — Hotspot volcanism mistaken for Ring of Fire</h4><p>Hawaiian volcanoes are OUTSIDE the Pacific Ring of Fire — they're a separate phenomenon called hotspot volcanism (fixed magma plume, not a plate boundary). A common distractor option claims Hawaii is "part of the Ring of Fire."</p></div>
+    <div class="box trap"><h4>TRAP 5 — Discontinuity name-swap (Moho vs Gutenberg vs Lehmann)</h4><p>Match-the-following loves to mix these. Lock the order: Moho = Crust/Mantle. Repetti = within Mantle. Gutenberg = Mantle/Outer Core. Lehmann = Outer/Inner Core. Going deeper = alphabetically these don't follow any pattern, so rely on the "My Russian Guard, Lehmann" hook, not alphabetical guessing.</p></div>
+    <div class="box trap"><h4>TRAP 6 — P-wave and S-wave shadow zones reversed</h4><p>The <strong>S-wave shadow zone is BIGGER</strong> (~40% of Earth's surface) because it's fully blocked by the liquid outer core. The P-wave shadow zone is smaller and exists only due to refraction/bending, not total blockage. Don't say "P-wave has the larger shadow zone."</p></div>
+    <div class="box trap"><h4>TRAP 7 — Focus vs Epicenter</h4><p><strong>Focus/Hypocenter</strong> = inside the Earth (origin point). <strong>Epicenter</strong> = on the surface, directly above focus (point of max damage). A question may ask "where is destruction maximum" — answer is Epicenter, not Focus.</p></div>
+    <div class="box trap"><h4>TRAP 8 — McKenzie & Parker vs Wegener</h4><p>Don't confuse <strong>Alfred Wegener</strong> (Continental Drift Theory, an older/different theory) with <strong>McKenzie and Parker</strong> (Plate Tectonics Theory — the 7 major + minor plates framework used in this chapter). SSC sometimes tests both in the same set.</p></div>
+  </section>
+
+  <!-- ============ EXAMINER'S FAVOURITE QUESTIONS ============ -->
+  <section class="block" id="exam">
+    <div class="sec-head"><div class="sec-num">6</div><h2>🎯 Examiner's Favourite Questions</h2></div>
+
+    <h3>Statement-Based</h3>
+    <ol>
+      <li>"The outer core is solid and gives Earth its magnetic field." → <strong>FALSE</strong> (outer core is liquid; inner core is solid).</li>
+      <li>"S-waves can travel through solids, liquids and gases." → <strong>FALSE</strong> (S-waves: solids only).</li>
+      <li>"The Richter scale measures intensity while the Mercalli scale measures magnitude." → <strong>FALSE</strong> (reversed — fix using Trap 1).</li>
+    </ol>
+
+    <h3>Match the Following</h3>
+    <div class="box">
+      <p>Match Discontinuity (Column A) with Boundary (Column B):</p>
+      <p>A: 1.Moho 2.Repetti 3.Gutenberg 4.Lehmann<br>B: a. Outer-Inner Core b. Mantle-Outer Core c. Upper-Lower Mantle d. Crust-Mantle</p>
+      <p class="dim">Answer: 1-d, 2-c, 3-b, 4-a</p>
+    </div>
+
+    <h3>Chronology / Sequence</h3>
+    <p>"Arrange in the order energy travels during an earthquake": Fault line locks → friction overcome → energy released at Focus → travels as seismic waves → reaches surface at Epicenter.</p>
+
+    <h3>Assertion–Reason</h3>
+    <div class="box">
+      <p><strong>Assertion (A):</strong> The inner core remains solid despite having the highest temperature inside the Earth.</p>
+      <p><strong>Reason (R):</strong> The immense pressure at the centre of the Earth keeps the inner core in a solid state.</p>
+      <p class="dim">Answer: Both A and R are true, and R correctly explains A.</p>
+    </div>
+
+    <h3>Frequently Misread Facts</h3>
+    <ul>
+      <li>Plate tectonics theory is by <strong>McKenzie and Parker</strong> — not Wegener (often confused).</li>
+      <li>Father of Geology = <strong>James Hutton</strong> — not James Watt or Charles Darwin (sound-alike trap names).</li>
+      <li>Tsunami means "<strong>harbor wave</strong>," not "tidal wave" (a common mistranslation in MCQ options).</li>
+    </ul>
+  </section>
+
+  <!-- ============ ACTIVE RECALL ============ -->
+  <section class="block" id="recall">
+    <div class="sec-head"><div class="sec-num">7</div><h2>❓ Active Recall Section</h2></div>
+    <p class="dim">Tap each question to reveal the answer. Don't peek first — force the retrieval.</p>
+
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Who is the Father of Geology? <span class="chevron">▾</span></div>
+      <div class="flip-a">James Hutton.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Crust is also known as ___? <span class="chevron">▾</span></div>
+      <div class="flip-a">SIAL (Silica + Aluminium).</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Which is denser — Oceanic or Continental crust? <span class="chevron">▾</span></div>
+      <div class="flip-a">Oceanic crust (basaltic, ~3 g/cm³) is denser than Continental crust (granitic, ~2.7 g/cm³), even though continental crust is thicker.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">What does "Asthenosphere" mean, and why? <span class="chevron">▾</span></div>
+      <div class="flip-a">"Weak sphere" — because it's semi-molten magma/lava, not solid like the lithosphere above it.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Lithosphere thickness vs Asthenosphere thickness? <span class="chevron">▾</span></div>
+      <div class="flip-a">Lithosphere ≈ 200 km. Asthenosphere ≈ 400 km.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Why is the outer core liquid but the inner core solid? <span class="chevron">▾</span></div>
+      <div class="flip-a">Both are extremely hot, but the inner core experiences far greater pressure (being at the very centre), which forces it to stay solid despite the heat.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">What does NIFE stand for? <span class="chevron">▾</span></div>
+      <div class="flip-a">Nickel + Ferrum (Iron) — the composition of the core.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Name all 4 discontinuities in order from surface to centre. <span class="chevron">▾</span></div>
+      <div class="flip-a">Mohorovičić (Moho) → Repetti → Gutenberg → Lehmann.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Who proposed Plate Tectonics theory, and how many major plates are there? <span class="chevron">▾</span></div>
+      <div class="flip-a">McKenzie and Parker — 7 major plates + several minor plates.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Which is the largest plate and which is the smallest? <span class="chevron">▾</span></div>
+      <div class="flip-a">Largest: Pacific Plate. Smallest: Juan de Fuca Plate.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">At a divergent boundary, is crust created or destroyed? <span class="chevron">▾</span></div>
+      <div class="flip-a">Created — magma rises through the gap and forms new crust (constructive boundary).</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Define Focus/Hypocenter vs Epicenter. <span class="chevron">▾</span></div>
+      <div class="flip-a">Focus/Hypocenter = point INSIDE the Earth where the energy is released. Epicenter = point on the surface directly above the focus, where destruction is maximum.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">P-wave vs S-wave: which is faster, and which is transverse? <span class="chevron">▾</span></div>
+      <div class="flip-a">P-wave is faster (recorded first) and is longitudinal. S-wave is slower and is transverse.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Why does the S-wave have a bigger shadow zone than the P-wave? <span class="chevron">▾</span></div>
+      <div class="flip-a">Because S-waves cannot travel through the liquid outer core at all (total block), while P-waves only slow down and refract through it (partial deviation, not a total block).</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">What scale measures magnitude, and what measures intensity? <span class="chevron">▾</span></div>
+      <div class="flip-a">Richter scale = magnitude (0–10, technically unlimited). Mercalli scale = intensity (limited range, denoted "M").</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Give one direct source and one indirect source of knowledge about Earth's interior. <span class="chevron">▾</span></div>
+      <div class="flip-a">Direct: volcanic eruption / lava / rocks. Indirect: seismic waves, meteorites, temperature/gravity/magnetic field data.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">What % of the world's volcanoes lie on the Pacific Ring of Fire? <span class="chevron">▾</span></div>
+      <div class="flip-a">About 90%.</div>
+    </div>
+    <div class="flip-card" onclick="this.classList.toggle('open')">
+      <div class="flip-q">Is the Hawaiian volcano part of the Ring of Fire? <span class="chevron">▾</span></div>
+      <div class="flip-a">No — it's an example of hotspot volcanism, a separate phenomenon outside the Ring of Fire.</div>
+    </div>
+
+    <h3>Fill in the Blanks</h3>
+    <ol>
+      <li>The crust is divided into ______ and ______ crust. <span class="dim">(Continental, Oceanic)</span></li>
+      <li>The mantle is made up of ______ and ______. <span class="dim">(Silicon, Magnesium — SIMA)</span></li>
+      <li>An earthquake under the sea floor causes a ______. <span class="dim">(Tsunami)</span></li>
+      <li>Surface waves are also called ______ waves or ______ waves. <span class="dim">(Love, Rayleigh)</span></li>
+      <li>The theory of plate tectonics was proposed by ______ and ______. <span class="dim">(McKenzie, Parker)</span></li>
+    </ol>
+
+    <h3>Rapid-Fire (One-Liner)</h3>
+    <p class="dim">Answer in under 5 seconds each, out loud, before checking below.</p>
+    <ol>
+      <li>SIAL stands for? <strong>→ Silica + Aluminium</strong></li>
+      <li>Deepest humans have drilled? <strong>→ ~12 km</strong></li>
+      <li>Earth's radius (approx)? <strong>→ 6371 km</strong></li>
+      <li>Which wave creates crest and trough? <strong>→ S-wave</strong></li>
+      <li>Which wave creates compression and rarefaction? <strong>→ P-wave</strong></li>
+    </ol>
+  </section>
+
+  <!-- ============ HIGH-YIELD ============ -->
+  <section class="block" id="highyield">
+    <div class="sec-head"><div class="sec-num">8</div><h2>⭐ High-Yield Revision Notes</h2></div>
+    <div class="fast-grid">
+      <div class="fast-card"><h4>Layer Composition</h4><p>Crust=SIAL · Mantle=SIMA · Core=NIFE</p></div>
+      <div class="fast-card"><h4>Layer Depths</h4><p>Crust 5–70km · Mantle 2900km · Lithosphere 200km · Asthenosphere 400km</p></div>
+      <div class="fast-card"><h4>State of Matter</h4><p>Crust=solid · Asthenosphere=semi-molten · Outer Core=liquid · Inner Core=solid</p></div>
+      <div class="fast-card"><h4>Discontinuities</h4><p>Moho(Crust-Mantle) → Repetti(Up-Low Mantle) → Gutenberg(Mantle-OuterCore) → Lehmann(Outer-InnerCore)</p></div>
+      <div class="fast-card"><h4>Theory</h4><p>McKenzie & Parker → 7 major + minor plates</p></div>
+      <div class="fast-card"><h4>Boundary Types</h4><p>Divergent=create crust · Convergent=destroy crust (subduction) · Transform=neither (earthquakes)</p></div>
+      <div class="fast-card"><h4>Earthquake Anatomy</h4><p>Fault line locks → energy releases at Focus → surface point = Epicenter</p></div>
+      <div class="fast-card"><h4>Waves</h4><p>P=longitudinal, fast, all media. S=transverse, slow, solids only, big shadow zone (40%)</p></div>
+      <div class="fast-card"><h4>Scales</h4><p>Richter=Magnitude(0–∞) · Mercalli=Intensity(I–XII)</p></div>
+      <div class="fast-card"><h4>Ring of Fire</h4><p>90% volcanoes · Pacific basin · Hotspot (Hawaii) ≠ Ring of Fire</p></div>
+    </div>
+  </section>
+
+  <!-- ============ ULTRA-FAST ============ -->
+  <section class="block" id="fast">
+    <div class="sec-head"><div class="sec-num">9</div><h2>⚡ Ultra-Fast Revision Sheet</h2></div>
+    <div class="box">
+      <p><strong>Geology</strong> = study of interior. <strong>Father:</strong> James Hutton.<br>
+      <strong>3 layers:</strong> Crust(SIAL,5-70km) → Mantle(SIMA,2900km) → Core(NIFE).<br>
+      <strong>Lithosphere</strong>(200km,solid) sits on <strong>Asthenosphere</strong>(400km,weak/molten).<br>
+      <strong>Core:</strong> Outer=liquid=magnetism · Inner=solid(pressure).<br>
+      <strong>Discontinuities:</strong> Moho→Repetti→Gutenberg→Lehmann.<br>
+      <strong>Plates:</strong> McKenzie & Parker → 7 major+minor. Largest=Pacific. Smallest=Juan de Fuca.<br>
+      <strong>Boundaries:</strong> Divergent=create · Convergent=destroy(subduct) · Transform=neither(quakes).<br>
+      <strong>Earthquake:</strong> Focus(inside)→Epicenter(surface,max damage). Undersea quake=Tsunami.<br>
+      <strong>Waves:</strong> P=fast,longitudinal,all media. S=slow,transverse,solid-only,shadow zone 40%.<br>
+      <strong>Scales:</strong> Richter=Magnitude(no limit) · Mercalli=Intensity(limited).<br>
+      <strong>Sources:</strong> Direct=volcano/rock. Indirect=seismic waves/meteorite/gravity/magnetism.<br>
+      <strong>Ring of Fire</strong>=Pacific,90% volcanoes. <strong>Hotspot</strong>(Hawaii)≠Ring of Fire.</p>
+    </div>
+  </section>
+
+  <!-- ============ 30-SECOND SHEET ============ -->
+  <section class="block" id="thirtysec">
+    <div class="sec-head"><div class="sec-num">10</div><h2>⏱ 30-Second Revision Sheet</h2></div>
+    <div class="thirty-sec">
+      <ol>
+        <li>SIAL → SIMA → NIFE (Crust → Mantle → Core)</li>
+        <li>Lithosphere 200km (solid) on Asthenosphere 400km (weak)</li>
+        <li>Outer Core liquid = magnetism; Inner Core solid = pressure</li>
+        <li>Moho · Repetti · Gutenberg · Lehmann — in that depth order</li>
+        <li>McKenzie & Parker = 7 major plates + minor</li>
+        <li>Divergent=create, Convergent=destroy, Transform=neither</li>
+        <li>Focus=inside, Epicenter=surface (max damage)</li>
+        <li>P=fast/longitudinal/all-media · S=slow/transverse/solid-only</li>
+        <li>Richter=Magnitude(∞) · Mercalli=Intensity(limited)</li>
+        <li>Ring of Fire=90% volcanoes; Hawaii=hotspot, NOT Ring of Fire</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ LAST NIGHT BEFORE EXAM ============ -->
+  <section class="block" id="lastnight">
+    <div class="sec-head"><div class="sec-num">11</div><h2>🌙 Last-Night-Before-Exam Sheet</h2></div>
+    <div class="lastnight">
+      <p style="margin-top:18px;"><strong>SIAL · SIMA · NIFE</strong> — composition, top to bottom.</p>
+      <p><strong>200 / 400 / 2900</strong> — Lithosphere / Asthenosphere / Mantle, in km.</p>
+      <p><strong>Moho → Repetti → Gutenberg → Lehmann</strong> — the 4 doormen, in order.</p>
+      <p><strong>McKenzie & Parker</strong> — 7 major plates. Pacific=biggest, Juan de Fuca=smallest.</p>
+      <p><strong>Create / Destroy / Neither</strong> — Divergent / Convergent / Transform.</p>
+      <p><strong>Focus inside, Epicenter on top</strong> — max damage at Epicenter.</p>
+      <p><strong>P pushes through everything, S shakes and stops at liquid</strong> — bigger shadow zone for S.</p>
+      <p><strong>Richter = Magnitude (no ceiling). Mercalli = Intensity (has a ceiling).</strong></p>
+      <p><strong>90% of volcanoes → Pacific Ring of Fire. Hawaii ≠ Ring of Fire (it's a hotspot).</strong></p>
+      <p style="margin-top:16px;color:var(--gold);"><strong>Breathe. You already know this. Go top score it. 🔥</strong></p>
+    </div>
+  </section>
+
+  <footer>
+    Earth's Interior — High-Retention Revision System · Built from FRB 3.0 lecture transcript · Bookmark this page for repeat revision
+  </footer>
+
+</div>
+
+<div class="legend">
+  <span><div class="dot" style="background:var(--must)"></div>Must Know</span>
+  <span><div class="dot" style="background:var(--imp)"></div>Important</span>
+  <span><div class="dot" style="background:var(--good)"></div>Good to Know</span>
+</div>
+
+<script>
+// scroll spy + click nav for depth ruler
+const ticks = document.querySelectorAll('.ruler-tick');
+const sectionIds = ['top','palace','layers','mantle','discont','plates','quake','waves','sources','ring','traps','exam','recall','highyield','fast','thirtysec','lastnight'];
+
+ticks.forEach(t=>{
+  t.addEventListener('click', ()=>{
+    const id = t.getAttribute('data-target');
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+function onScroll(){
+  let current = sectionIds[0];
+  for(const id of sectionIds){
+    const el = document.getElementById(id);
+    if(el){
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 140) current = id;
+    }
+  }
+  ticks.forEach(t=>{
+    t.classList.toggle('active', t.getAttribute('data-target') === current);
+  });
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+</script>
+
+</body>
+</html>

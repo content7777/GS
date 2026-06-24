@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geomorphology — Revision Vault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0d12;
+  --bg-raised:#11151c;
+  --panel:#161b24;
+  --panel-soft:#13171f;
+  --line:#252b37;
+  --line-soft:#1b2129;
+  --text:#e9e6df;
+  --text-dim:#9aa3b2;
+  --text-faint:#5e6678;
+  --amber:#e8a23d;
+  --amber-soft:#e8a23d22;
+  --amber-line:#e8a23d55;
+  --blue:#5fa8d3;
+  --blue-soft:#5fa8d322;
+  --blue-line:#5fa8d355;
+  --violet:#9b8cd9;
+  --violet-soft:#9b8cd922;
+  --violet-line:#9b8cd955;
+  --rose:#d9707a;
+  --rose-soft:#d9707a22;
+  --rose-line:#d9707a55;
+  --green:#7ec99e;
+  --green-soft:#7ec99e22;
+  --green-line:#7ec99e55;
+  --serif:'Fraunces', serif;
+  --sans:'Inter', sans-serif;
+  --mono:'JetBrains Mono', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  line-height:1.6;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* texture: faint topographic noise */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  opacity:0.035;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, #fff 2px, #fff 3px);
+  mix-blend-mode:overlay;
+}
+
+a{color:var(--amber);text-decoration:none;}
+
+::selection{background:var(--amber-soft);color:var(--text);}
+
+/* ---------- LAYOUT ---------- */
+.shell{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  max-width:1400px;
+  margin:0 auto;
+  min-height:100vh;
+}
+
+/* ---------- SIDEBAR ---------- */
+.sidebar{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  padding:28px 20px 40px 28px;
+  border-right:1px solid var(--line-soft);
+  background:linear-gradient(180deg, var(--bg-raised), var(--bg));
+}
+.sidebar::-webkit-scrollbar{width:6px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+
+.brand{
+  font-family:var(--serif);
+  font-size:1.55rem;
+  font-weight:600;
+  letter-spacing:-0.01em;
+  color:var(--text);
+  margin-bottom:2px;
+}
+.brand span{color:var(--amber);}
+.brand-sub{
+  font-size:0.72rem;
+  color:var(--text-faint);
+  font-family:var(--mono);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  margin-bottom:26px;
+  display:block;
+}
+
+.nav-group{margin-bottom:4px;}
+.nav-label{
+  font-family:var(--mono);
+  font-size:0.65rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  margin:22px 0 8px;
+}
+.nav-link{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:0.85rem;
+  color:var(--text-dim);
+  padding:6px 10px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:background 0.15s, color 0.15s;
+  border-left:2px solid transparent;
+}
+.nav-link:hover{background:var(--panel-soft);color:var(--text);}
+.nav-link.active{color:var(--amber);background:var(--amber-soft);border-left-color:var(--amber);}
+.nav-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;background:currentColor;opacity:0.6;}
+
+/* ---------- MAIN ---------- */
+.main{
+  padding:48px 56px 120px;
+  max-width:920px;
+}
+
+.masthead{
+  margin-bottom:56px;
+  position:relative;
+}
+.masthead-eyebrow{
+  font-family:var(--mono);
+  font-size:0.72rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.masthead-eyebrow::before{
+  content:"";
+  width:24px;height:1px;
+  background:var(--amber);
+}
+.masthead h1{
+  font-family:var(--serif);
+  font-size:3rem;
+  font-weight:600;
+  line-height:1.05;
+  letter-spacing:-0.01em;
+  margin-bottom:14px;
+}
+.masthead h1 em{
+  font-style:italic;
+  color:var(--amber);
+  font-weight:500;
+}
+.masthead p{
+  color:var(--text-dim);
+  font-size:1.02rem;
+  max-width:600px;
+}
+
+/* fault-line divider — signature element */
+.fault{
+  position:relative;
+  height:40px;
+  margin:64px 0 48px;
+}
+.fault svg{width:100%;height:100%;display:block;}
+.fault-label{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  background:var(--bg);
+  padding:0 18px;
+  font-family:var(--mono);
+  font-size:0.68rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  white-space:nowrap;
+}
+
+section.chapter-section{
+  scroll-margin-top:24px;
+  margin-bottom:64px;
+}
+
+.sec-head{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  margin-bottom:18px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line-soft);
+}
+.sec-num{
+  font-family:var(--mono);
+  font-size:0.8rem;
+  color:var(--text-faint);
+}
+.sec-head h2{
+  font-family:var(--serif);
+  font-size:1.7rem;
+  font-weight:600;
+  letter-spacing:-0.01em;
+}
+.sec-head .tag{
+  margin-left:auto;
+  font-family:var(--mono);
+  font-size:0.65rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:3px 9px;
+  border-radius:20px;
+}
+.tag.endo{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-line);}
+.tag.exo{background:var(--blue-soft);color:var(--blue);border:1px solid var(--blue-line);}
+.tag.water{background:var(--violet-soft);color:var(--violet);border:1px solid var(--violet-line);}
+
+h3.sub{
+  font-family:var(--serif);
+  font-size:1.18rem;
+  font-weight:600;
+  margin:28px 0 12px;
+  color:var(--text);
+}
+h4.subsub{
+  font-family:var(--sans);
+  font-size:0.95rem;
+  font-weight:700;
+  margin:18px 0 8px;
+  color:var(--text-dim);
+}
+
+p{margin-bottom:12px;color:var(--text);}
+p.muted{color:var(--text-dim);}
+
+ul, ol{margin:0 0 14px 0;padding-left:22px;}
+li{margin-bottom:6px;}
+
+strong{color:var(--text);font-weight:700;}
+em.hl-amber{color:var(--amber);font-style:normal;font-weight:600;}
+em.hl-blue{color:var(--blue);font-style:normal;font-weight:600;}
+em.hl-violet{color:var(--violet);font-style:normal;font-weight:600;}
+
+code{
+  font-family:var(--mono);
+  background:var(--panel-soft);
+  padding:2px 6px;
+  border-radius:4px;
+  font-size:0.85em;
+  color:var(--green);
+}
+
+/* ---------- CARDS ---------- */
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:20px 22px;
+  margin-bottom:18px;
+}
+.card.amber{border-left:3px solid var(--amber);}
+.card.blue{border-left:3px solid var(--blue);}
+.card.violet{border-left:3px solid var(--violet);}
+.card.rose{border-left:3px solid var(--rose);}
+.card.green{border-left:3px solid var(--green);}
+
+.card-title{
+  font-family:var(--sans);
+  font-weight:700;
+  font-size:0.92rem;
+  margin-bottom:10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* memory palace box */
+.palace{
+  background:linear-gradient(135deg, var(--panel-soft), var(--bg-raised));
+  border:1px solid var(--violet-line);
+  border-radius:14px;
+  padding:26px 28px;
+  margin-bottom:24px;
+  position:relative;
+  overflow:hidden;
+}
+.palace::before{
+  content:"🧠";
+  position:absolute;
+  top:18px;
+  right:22px;
+  font-size:1.6rem;
+  opacity:0.25;
+}
+.palace-title{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.1rem;
+  color:var(--violet);
+  margin-bottom:12px;
+}
+.palace p{color:var(--text-dim);font-size:0.96rem;}
+.palace p strong{color:var(--text);}
+
+/* priority tags */
+.must{color:#ff8c5a;font-weight:700;}
+.imp{color:var(--amber);font-weight:700;}
+.good{color:var(--green);font-weight:700;}
+
+/* trap box */
+.trap{
+  background:var(--rose-soft);
+  border:1px solid var(--rose-line);
+  border-radius:10px;
+  padding:16px 18px;
+  margin-bottom:14px;
+}
+.trap-title{
+  font-weight:700;
+  color:var(--rose);
+  font-size:0.88rem;
+  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* table */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:18px;
+  font-size:0.92rem;
+}
+th{
+  text-align:left;
+  font-family:var(--mono);
+  font-size:0.7rem;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  color:var(--text-faint);
+  padding:8px 12px;
+  border-bottom:1px solid var(--line);
+}
+td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--line-soft);
+  color:var(--text-dim);
+  vertical-align:top;
+}
+tr:hover td{background:var(--panel-soft);}
+td strong{color:var(--text);}
+td.center{text-align:center;}
+
+/* recall / quiz */
+.quiz{
+  background:var(--panel);
+  border:1px dashed var(--line);
+  border-radius:10px;
+  padding:14px 18px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:border-color 0.15s;
+}
+.quiz:hover{border-color:var(--amber-line);}
+.quiz .q{font-weight:600;color:var(--text);font-size:0.94rem;}
+.quiz .a{
+  color:var(--green);
+  font-size:0.9rem;
+  margin-top:8px;
+  display:none;
+  padding-top:8px;
+  border-top:1px solid var(--line-soft);
+}
+.quiz.open .a{display:block;}
+.quiz .hint{font-family:var(--mono);font-size:0.68rem;color:var(--text-faint);margin-top:4px;}
+
+/* fast revision sheets */
+.flash-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+  gap:12px;
+  margin-bottom:18px;
+}
+.flash{
+  background:var(--bg-raised);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px 16px;
+}
+.flash .k{
+  font-family:var(--mono);
+  font-size:0.68rem;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:4px;
+}
+.flash .v{font-size:0.9rem;color:var(--text);}
+
+/* last night sheet — extreme compression */
+.lastnight{
+  background:linear-gradient(135deg, #1a1410, var(--panel));
+  border:2px solid var(--amber-line);
+  border-radius:16px;
+  padding:28px 30px;
+}
+.lastnight h4{color:var(--amber);font-family:var(--serif);font-size:1.05rem;margin:16px 0 8px;}
+.lastnight h4:first-child{margin-top:0;}
+.lastnight ul{padding-left:18px;}
+.lastnight li{font-size:0.92rem;color:var(--text);margin-bottom:5px;}
+
+/* diagram svg containers */
+.diagram-box{
+  background:var(--bg-raised);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:24px;
+  margin-bottom:20px;
+  text-align:center;
+}
+.diagram-box svg{max-width:100%;}
+.diagram-cap{
+  font-family:var(--mono);
+  font-size:0.72rem;
+  color:var(--text-faint);
+  margin-top:10px;
+}
+
+/* footer */
+.footer{
+  margin-top:80px;
+  padding-top:24px;
+  border-top:1px solid var(--line-soft);
+  color:var(--text-faint);
+  font-size:0.8rem;
+  font-family:var(--mono);
+}
+
+/* scroll progress */
+.progress-bar{
+  position:fixed;
+  top:0;left:0;
+  height:2px;
+  background:linear-gradient(90deg, var(--amber), var(--blue));
+  z-index:100;
+  width:0%;
+  transition:width 0.1s;
+}
+
+/* mobile */
+@media (max-width:880px){
+  .shell{grid-template-columns:1fr;}
+  .sidebar{
+    position:relative;
+    height:auto;
+    border-right:none;
+    border-bottom:1px solid var(--line-soft);
+    padding:20px;
+  }
+  .nav-group{display:none;}
+  .nav-group.show{display:block;}
+  .main{padding:32px 22px 80px;}
+  .masthead h1{font-size:2.1rem;}
+}
+
+.toggle-nav{
+  display:none;
+  font-family:var(--mono);
+  font-size:0.75rem;
+  color:var(--amber);
+  background:var(--panel-soft);
+  border:1px solid var(--line);
+  padding:8px 12px;
+  border-radius:8px;
+  margin-top:10px;
+  cursor:pointer;
+}
+@media (max-width:880px){.toggle-nav{display:inline-block;}}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progressBar"></div>
+<div class="shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <nav class="sidebar">
+    <div class="brand">Geo<span>morphology</span></div>
+    <span class="brand-sub">SSC CGL · Revision Vault</span>
+    <div class="toggle-nav" onclick="document.querySelector('.nav-group').classList.toggle('show')">☰ Sections</div>
+
+    <div class="nav-group show" id="navGroup">
+      <div class="nav-label">Orientation</div>
+      <a class="nav-link" href="#big-picture"><span class="nav-dot"></span>Big Picture</a>
+      <a class="nav-link" href="#memory-palace"><span class="nav-dot"></span>Memory Palace</a>
+
+      <div class="nav-label">Endogenic — Building</div>
+      <a class="nav-link" href="#plate-energy"><span class="nav-dot"></span>Source of Energy</a>
+      <a class="nav-link" href="#plate-boundaries"><span class="nav-dot"></span>Plate Boundaries</a>
+      <a class="nav-link" href="#fold-mountains"><span class="nav-dot"></span>Fold Mountains</a>
+      <a class="nav-link" href="#diastrophism"><span class="nav-dot"></span>Diastrophism</a>
+
+      <div class="nav-label">Exogenic — Breaking</div>
+      <a class="nav-link" href="#gradation"><span class="nav-dot"></span>Gradation / Denudation</a>
+      <a class="nav-link" href="#weathering"><span class="nav-dot"></span>Weathering</a>
+      <a class="nav-link" href="#mass-movement"><span class="nav-dot"></span>Mass Movement</a>
+
+      <div class="nav-label">Agents of Erosion</div>
+      <a class="nav-link" href="#river"><span class="nav-dot"></span>River Landforms</a>
+      <a class="nav-link" href="#groundwater"><span class="nav-dot"></span>Groundwater / Karst</a>
+      <a class="nav-link" href="#wind"><span class="nav-dot"></span>Wind / Desert</a>
+      <a class="nav-link" href="#glacier"><span class="nav-dot"></span>Glacier</a>
+      <a class="nav-link" href="#sea"><span class="nav-dot"></span>Sea Waves</a>
+
+      <div class="nav-label">Exam Layer</div>
+      <a class="nav-link" href="#exam-traps"><span class="nav-dot"></span>Exam Traps</a>
+      <a class="nav-link" href="#examiner"><span class="nav-dot"></span>Examiner's Favourites</a>
+      <a class="nav-link" href="#active-recall"><span class="nav-dot"></span>Active Recall</a>
+
+      <div class="nav-label">Speed Revision</div>
+      <a class="nav-link" href="#high-yield"><span class="nav-dot"></span>High-Yield Sheet</a>
+      <a class="nav-link" href="#ultra-fast"><span class="nav-dot"></span>Ultra-Fast Sheet</a>
+      <a class="nav-link" href="#thirty-sec"><span class="nav-dot"></span>30-Second Sheet</a>
+      <a class="nav-link" href="#last-night"><span class="nav-dot"></span>Last Night Before Exam</a>
+    </div>
+  </nav>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+
+    <div class="masthead">
+      <div class="masthead-eyebrow">Geography · Physical Geography</div>
+      <h1>Geomorphology<br><em>— the Earth building itself up, and tearing itself down.</em></h1>
+      <p>Every fact in this chapter is one half of a fight: something is always either <strong style="color:var(--amber)">forming</strong> or <strong style="color:var(--blue)">eroding</strong>. Hold onto that one fight and the whole chapter organizes itself.</p>
+    </div>
+
+    <!-- ============ BIG PICTURE ============ -->
+    <section class="chapter-section" id="big-picture">
+      <div class="sec-head">
+        <span class="sec-num">00</span>
+        <h2>The Big Picture</h2>
+      </div>
+      <p><strong>Geomorphology</strong> = study of changing landforms on Earth's surface. Only two things ever happen to land:</p>
+      <div class="flash-grid">
+        <div class="flash">
+          <div class="k">Building up</div>
+          <div class="v">Caused by <em class="hl-amber">Endogenic forces</em> (from inside Earth) → general name: <strong>Diastrophism</strong></div>
+        </div>
+        <div class="flash">
+          <div class="k">Breaking down</div>
+          <div class="v">Caused by <em class="hl-blue">Exogenic forces</em> (from outside Earth) → general name: <strong>Gradation / Denudation</strong></div>
+        </div>
+      </div>
+      <div class="card amber">
+        <div class="card-title">🔥 The one sentence that explains 80% of this chapter</div>
+        <p class="muted" style="margin-bottom:0">Endogenic energy comes from <strong>inside the Earth</strong> (radioactive decay + primordial heat → convection currents → plate movement). Exogenic energy ultimately comes from the <strong>Sun</strong> (heat → pressure difference → wind; heat + rain → weathering). Two energy sources, two directions of change — that's the entire chapter.</p>
+      </div>
+    </section>
+
+    <!-- ============ MEMORY PALACE ============ -->
+    <section class="chapter-section" id="memory-palace">
+      <div class="sec-head">
+        <span class="sec-num">00</span>
+        <h2>Chapter Memory Palace</h2>
+      </div>
+      <div class="palace">
+        <div class="palace-title">The Battlefield Between Two Kingdoms</div>
+        <p>Picture a <strong>battlefield</strong>. On the left, the <strong style="color:var(--amber)">Kingdom of Endo</strong> — workers underground, shovelling magma, pushing land upward, slow and patient, ruled by heat from below. On the right, the <strong style="color:var(--blue)">Kingdom of Exo</strong> — soldiers of water, wind, ice, and waves, ruled by the Sun, constantly attacking and tearing down whatever Endo builds.</p>
+        <p>Walk further into the battlefield and you find <strong>five mercenary armies</strong> working for Exo, each attacking the land with a different weapon: the <strong>River</strong> (cuts with speed), <strong>Groundwater</strong> (dissolves slowly underground), <strong>Wind</strong> (sandblasts in deserts), <strong>Glacier</strong> (crushes with mass and ice), and <strong>Sea Waves</strong> (pounds the coast). Each army leaves its own signature wreckage (erosional landforms) and its own dumping grounds (depositional landforms) behind it.</p>
+        <p>Whenever you forget a fact, just ask: <strong>"Which kingdom — Endo or Exo? And if Exo, which of the five armies?"</strong> That question alone will retrieve most of this chapter.</p>
+      </div>
+    </section>
+
+    <div class="fault">
+      <svg viewBox="0 0 800 40" preserveAspectRatio="none">
+        <polyline points="0,20 40,20 60,8 90,32 120,20 800,20" fill="none" stroke="#e8a23d" stroke-width="1.5" opacity="0.5"/>
+      </svg>
+      <span class="fault-label">⛰ Endogenic Forces — Things Building Up</span>
+    </div>
+
+    <!-- ============ PLATE ENERGY ============ -->
+    <section class="chapter-section" id="plate-energy">
+      <div class="sec-head">
+        <span class="sec-num">01</span>
+        <h2>Where Endogenic Energy Comes From</h2>
+        <span class="tag endo">Endogenic</span>
+      </div>
+      <p>Convection currents develop in the <strong>asthenosphere</strong>, pushing magma out. This was proposed by <em class="hl-amber">Arthur Holmes</em> in the <strong>1930s</strong>.</p>
+      <h4 class="subsub">Two sources of this internal heat:</h4>
+      <ol>
+        <li><strong>Radioactive decay</strong></li>
+        <li><strong>Primordial heat</strong> (heat already trapped inside Earth since its formation)</li>
+      </ol>
+      <p>This heat → convection currents → plates move. Recall <strong>McKenzie–Parker Plate Tectonics Theory</strong>.</p>
+      <div class="card violet">
+        <div class="card-title">🧠 Memory Hook — Arthur Holmes</div>
+        <p style="margin-bottom:0" class="muted">Imagine <strong>Arthur Holmes</strong> in the 1930s holding two torches lighting up the Earth's belly: one torch labelled "Radioactive Decay," one labelled "Primordial Heat." Both torches keep the convection currents boiling — that's the engine room of the entire chapter.</p>
+      </div>
+    </section>
+
+    <!-- ============ PLATE BOUNDARIES ============ -->
+    <section class="chapter-section" id="plate-boundaries">
+      <div class="sec-head">
+        <span class="sec-num">02</span>
+        <h2>Plate Movements & Boundaries</h2>
+        <span class="tag endo">Endogenic</span>
+      </div>
+      <p>Plates move in <strong>three ways</strong>:</p>
+      <table>
+        <tr><th>Movement</th><th>Type of Boundary</th><th>What Forms</th><th>Key Example</th></tr>
+        <tr><td><strong>Move apart</strong></td><td>Divergent</td><td>New crust, mid-oceanic ridge</td><td>Mid-Atlantic Ridge</td></tr>
+        <tr><td><strong>Move closer</strong></td><td>Convergent</td><td>Subduction zone → fold mountains</td><td>Himalayas</td></tr>
+        <tr><td><strong>Slide past each other</strong></td><td>Transform</td><td>Earthquakes (no new landform built)</td><td>—</td></tr>
+      </table>
+      <h4 class="subsub">Divergent boundary — how the Mid-Atlantic Ridge formed</h4>
+      <p>Plates slide apart → magma rises from below, solidifies on contact, new crust is constructed → mid-oceanic ridge. Theory given by <em class="hl-amber">Harry Hess</em> in the <strong>1960s</strong>, explaining how ocean crust is constantly renewed.</p>
+      <div class="card amber">
+        <div class="card-title">🧠 Memory Hook — Triple H</div>
+        <p style="margin-bottom:0" class="muted"><strong>Harry Hammond Hess = "Triple H."</strong> Picture wrestler Triple H doing the splits — legs moving apart — exactly like a divergent plate boundary pulling apart to build new ocean crust. 1960s, ocean floor spreading.</p>
+      </div>
+      <h4 class="subsub">Convergent boundary — how the Himalayas formed</h4>
+      <p>The <strong>Indian Plate collided with the Eurasian Plate</strong> → collision pushed up the crust → <strong>Himalayas</strong> were formed.</p>
+      <div class="trap">
+        <div class="trap-title">⚠ Trap</div>
+        <p style="margin-bottom:0">Mountains aren't only formed by plate collision. They can also form due to <strong>volcanism</strong>, or as <strong>block mountains</strong> (faulting). Don't assume "mountain = fold mountain" automatically in a question.</p>
+      </div>
+    </section>
+
+    <!-- ============ FOLD MOUNTAINS ============ -->
+    <section class="chapter-section" id="fold-mountains">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
+        <h2>Fold Mountains — Young vs Old</h2>
+        <span class="tag endo">Endogenic</span>
+      </div>
+      <p>Fold mountains form when plates <strong>converge</strong>. The Himalayas are still being built (endogenic rate &gt; erosion rate), but even mighty mountains eventually stop rising and only erode. That gives us two categories:</p>
+      <table>
+        <tr><th>Type</th><th>Meaning</th><th>Plate Status</th><th>Examples</th></tr>
+        <tr><td><strong>Old fold mountains</strong></td><td>Plate movement has stopped; only erosion happening now</td><td>Inactive</td><td>Aravallis, Urals, Appalachians</td></tr>
+        <tr><td><strong>Young fold mountains</strong></td><td>Still actively rising</td><td>Active</td><td>Himalayas, Andes, Rockies</td></tr>
+      </table>
+      <div class="flash-grid">
+        <div class="flash"><div class="k">Aravallis</div><div class="v">Believed once <em>taller than the Himalayas</em>; now one of the oldest fold mountains on Earth (India)</div></div>
+        <div class="flash"><div class="k">Urals</div><div class="v">Border / demarcate <strong>Asia and Europe</strong></div></div>
+        <div class="flash"><div class="k">Appalachians</div><div class="v">Eastern side of <strong>North America</strong></div></div>
+        <div class="flash"><div class="k">Andes</div><div class="v"><strong>Longest mountain range in the world</strong>, South America. Highest peak: <strong>Mt. Aconcagua</strong></div></div>
+        <div class="flash"><div class="k">Rockies</div><div class="v">Western side of <strong>North America</strong>. Highest peak: <strong>Mt. Denali</strong> (highest in North America)</div></div>
+        <div class="flash"><div class="k">Mid-Atlantic Ridge</div><div class="v">Longest <em>landform</em> in the world overall (not a mountain range on land — a ridge)</div></div>
+      </div>
+      <div class="trap">
+        <div class="trap-title">⚠ Trap — "Longest" gets asked two different ways</div>
+        <p style="margin-bottom:0"><strong>Longest landform in the world</strong> → Mid-Atlantic Ridge. <strong>Longest mountain range</strong> → Andes. These are two different questions with two different answers — examiners love swapping them.</p>
+      </div>
+      <div class="card violet">
+        <div class="card-title">🧠 Memory Hook — Young vs Old Folds</div>
+        <p style="margin-bottom:0" class="muted">Think of <strong>young folds as teenagers still growing</strong> (Himalayas, Andes, Rockies — still gaining height) and <strong>old folds as retired grandparents</strong> sitting still while wind and rain slowly wear them down (Aravalli, Urals, Appalachians). Grandparents don't grow taller anymore — they just age (erode).</p>
+      </div>
+    </section>
+
+    <!-- ============ DIASTROPHISM ============ -->
+    <section class="chapter-section" id="diastrophism">
+      <div class="sec-head">
+        <span class="sec-num">04</span>
+        <h2>Diastrophism — Fast vs Slow Building</h2>
+        <span class="tag endo">Endogenic</span>
+      </div>
+      <p><strong>Diastrophism</strong> = umbrella term for all endogenic building processes. Two speeds:</p>
+      <table>
+        <tr><th>Speed</th><th>Processes</th><th>Meaning of name</th></tr>
+        <tr><td><strong>Fast</strong></td><td>Earthquakes, Volcanism</td><td>Sudden, dramatic</td></tr>
+        <tr><td><strong>Slow</strong></td><td><strong>Orogenic</strong> & <strong>Epeirogenic</strong></td><td>"Oro" = mountain → mountain-building. Epeirogenic = continent-building (everything besides mountains)</td></tr>
+      </table>
+      <div class="card amber">
+        <div class="card-title">🧠 Memory Hook — "Oro" means mountain</div>
+        <p style="margin-bottom:0" class="muted">Lock this word: <strong>ORO = MOUNTAIN</strong>. Orogenic = mountain-building (slow). Epeirogenic = the rest of the continent rising/sinking (also slow). Both take millions of years — the Himalayas didn't appear "from the road" overnight.</p>
+      </div>
+    </section>
+
+    <div class="fault">
+      <svg viewBox="0 0 800 40" preserveAspectRatio="none">
+        <polyline points="0,20 40,20 60,32 90,8 120,20 800,20" fill="none" stroke="#5fa8d3" stroke-width="1.5" opacity="0.5"/>
+      </svg>
+      <span class="fault-label">🌊 Exogenic Forces — Things Breaking Down</span>
+    </div>
+
+    <!-- ============ GRADATION ============ -->
+    <section class="chapter-section" id="gradation">
+      <div class="sec-head">
+        <span class="sec-num">05</span>
+        <h2>Gradation / Denudation</h2>
+        <span class="tag exo">Exogenic</span>
+      </div>
+      <p>Just as endogenic processes are collectively called <em class="hl-amber">Diastrophism</em>, exogenic processes are collectively called <strong>Gradation</strong> or <strong>Denudation</strong> — meaning "wearing down of the relief features of the Earth."</p>
+      <h4 class="subsub">Where does exogenic energy ultimately come from?</h4>
+      <p>The plate movement (endogenic) gets its energy from inside the Earth. But the breaking forces (exogenic) get their energy from the <strong>Sun</strong>:</p>
+      <ul>
+        <li>Sun → heat → temperature change → rocks break</li>
+        <li>Sun → uneven heating → pressure difference → wind blows</li>
+        <li>Sun's heat cycle → precipitation (rain) → weathering</li>
+        <li>Sun's heat distribution → glaciers form in cold zones</li>
+      </ul>
+      <p><strong>Exogenic agents</strong> ("agents" = the destroyers/workers carrying out the breaking): Water (river), Wind, Sea waves, Groundwater, Glacier.</p>
+      <div class="card blue">
+        <div class="card-title">🔥 Must Know</div>
+        <p style="margin-bottom:0" class="muted">Endogenic energy source = <strong>inside Earth</strong> (radioactivity + primordial heat). Exogenic energy source = <strong>the Sun</strong>. This single contrast is a guaranteed concept-based question.</p>
+      </div>
+    </section>
+
+    <!-- ============ WEATHERING ============ -->
+    <section class="chapter-section" id="weathering">
+      <div class="sec-head">
+        <span class="sec-num">06</span>
+        <h2>Weathering</h2>
+        <span class="tag exo">Exogenic</span>
+      </div>
+      <p><strong>Weathering</strong> = a rock breaking down right where it lies — in situ. No movement involved, unlike erosion. "Action of elements of weather and climate over earth materials."</p>
+      <p>Three types: <strong>Chemical, Physical (Mechanical), Biological.</strong></p>
+
+      <h4 class="subsub">A. Chemical Weathering</h4>
+      <table>
+        <tr><th>Process</th><th>What happens</th></tr>
+        <tr><td><strong>Oxidation</strong></td><td>Addition of oxygen</td></tr>
+        <tr><td><strong>Reduction</strong></td><td>Removal of oxygen</td></tr>
+        <tr><td><strong>Hydration</strong></td><td>Rock absorbs water, swells, eventually breaks</td></tr>
+        <tr><td><strong>Solution</strong></td><td>Minerals dissolve directly in water</td></tr>
+        <tr><td><strong>Carbonation</strong></td><td>Rainwater + CO₂ → carbonic acid → seeps into rock → loosens & breaks it</td></tr>
+      </table>
+
+      <h4 class="subsub">B. Physical / Mechanical Weathering</h4>
+      <p>Caused by <strong>unloading and expansion</strong> due to temperature change, and especially <strong>freezing–thawing</strong>.</p>
+      <div class="card blue">
+        <div class="card-title">How freeze-thaw breaks rock (frost wedging)</div>
+        <p style="margin-bottom:0" class="muted">Water enters a crack in rock → freezes into ice (ice occupies <em>more</em> volume than water) → this expansion forces the crack wider → ice melts, water seeps deeper → cycle repeats → rock eventually splits. Common in <strong>permafrost regions</strong>.</p>
+      </div>
+      <p><strong>Effect: Exfoliation</strong> — high surface temperature causes the upper rock layer to peel/disintegrate, revealing a fresh surface underneath. Can lead to dome formation.</p>
+      <div class="card violet">
+        <div class="card-title">🧠 Memory Hook — Exfoliation</div>
+        <p style="margin-bottom:0" class="muted">Just like an <strong>exfoliation face mask</strong> peels off the top layer of dead skin to reveal brighter skin underneath, exfoliation weathering peels off the outer layer of a rock due to heat — leaving it looking "brand new."</p>
+      </div>
+
+      <h4 class="subsub">C. Biological Weathering</h4>
+      <p>Caused by living agents — <strong>plant roots, animals, rodents, insects</strong> — physically breaking rock apart over time.</p>
+    </section>
+
+    <!-- ============ MASS MOVEMENT ============ -->
+    <section class="chapter-section" id="mass-movement">
+      <div class="sec-head">
+        <span class="sec-num">07</span>
+        <h2>Mass Movement</h2>
+        <span class="tag exo">Exogenic</span>
+      </div>
+      <p>Mass movement = movement of material downslope <strong>under gravity</strong>. Two speeds:</p>
+      <table>
+        <tr><th>Speed</th><th>Types</th></tr>
+        <tr><td><strong>Slow</strong></td><td>Creep, Solifluction</td></tr>
+        <tr><td><strong>Fast</strong></td><td>Landslide, Earth flow, Mud flow, Avalanche</td></tr>
+      </table>
+      <ul>
+        <li><strong>Creep</strong> — soil slides extremely slowly, on gentle slopes with little vegetation cover</li>
+        <li><strong>Solifluction</strong> — slow, progressive downslope movement of saturated soil</li>
+        <li><strong>Landslide</strong> — a mass of land suddenly falls from a height</li>
+        <li><strong>Avalanche</strong> — a mass of ice/snow suddenly falls from a height</li>
+      </ul>
+      <div class="trap">
+        <div class="trap-title">⚠ Critical Trap — Most commonly misunderstood line in this topic</div>
+        <p style="margin-bottom:0"><strong>Weathering is NOT a prerequisite for mass movement.</strong> Gravity alone can pull down a rock/land mass even if it hasn't weathered at all. Weathering simply <em>helps/accelerates</em> mass movement — it doesn't cause it. Exam options often try to make you say "mass movement cannot happen without prior weathering" — that is <strong>false</strong>.</p>
+      </div>
+    </section>
+
+    <!-- ============ RIVER ============ -->
+    <section class="chapter-section" id="river">
+      <div class="sec-head">
+        <span class="sec-num">08</span>
+        <h2>River — Erosional & Depositional Landforms</h2>
+        <span class="tag exo">Exogenic Agent</span>
+      </div>
+      <p>A river passes through three stages: <strong>Youthful → Mature → Old</strong> (source → mouth).</p>
+      <div class="flash-grid">
+        <div class="flash"><div class="k">Youthful Stage</div><div class="v">Near the <strong>source</strong>. Very fast, fierce flow → <strong>erosional</strong> features dominate</div></div>
+        <div class="flash"><div class="k">Mature Stage</div><div class="v">Transitional — meanders begin appearing</div></div>
+        <div class="flash"><div class="k">Old Stage</div><div class="v">Near the <strong>mouth</strong>. Slow flow → <strong>depositional</strong> features dominate; meanders, oxbow lakes</div></div>
+      </div>
+
+      <h4 class="subsub">Erosional Landforms (mainly Youthful stage)</h4>
+      <table>
+        <tr><th>Landform</th><th>Shape / Notes</th></tr>
+        <tr><td><strong>V-shaped valley</strong></td><td>Classic erosional valley shape</td></tr>
+        <tr><td><strong>Gorge</strong></td><td>Completely parallel walls (true V, narrow throughout)</td></tr>
+        <tr><td><strong>Canyon</strong></td><td>Wide at top, narrow at bottom — NOT a clean V</td></tr>
+        <tr><td><strong>Waterfall</strong></td><td>Sudden vertical drop in river course</td></tr>
+        <tr><td><strong>Pothole</strong></td><td>Circular depression cut into the riverbed mid-channel</td></tr>
+        <tr><td><strong>Plunge pool</strong></td><td>Pothole formed specifically at the base of a waterfall</td></tr>
+        <tr><td><strong>River terraces</strong></td><td>Step-like flats formed as floodwater spreads and cuts sideways</td></tr>
+        <tr><td><strong>Incised / entrenched meander</strong></td><td>Meander cut deep into mountains — classified as <strong>erosional</strong> (exception, see trap below)</td></tr>
+      </table>
+
+      <h4 class="subsub">Depositional Landforms (mainly Old stage)</h4>
+      <table>
+        <tr><th>Landform</th><th>Notes</th></tr>
+        <tr><td><strong>Flood plain</strong></td><td>Alluvial plain built up by repeated annual floods</td></tr>
+        <tr><td><strong>Alluvial fan</strong></td><td>River emerges from mountain onto flat land and spreads/dumps its full sediment load in a fan shape</td></tr>
+        <tr><td><strong>Delta</strong></td><td>Formed at the river's mouth (old stage), sediment deposited as it meets the sea</td></tr>
+        <tr><td><strong>Levees</strong></td><td>Natural embankments built up by flood deposits along the banks</td></tr>
+        <tr><td><strong>Point bar</strong></td><td>Deposit on the convex (inner) side of a meander bend</td></tr>
+        <tr><td><strong>Oxbow lake</strong></td><td>Cut-off meander loop, abandoned when the river straightens its course</td></tr>
+      </table>
+
+      <div class="diagram-box">
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40,180 Q120,160 160,120 Q200,80 280,90 Q360,100 380,60 Q400,30 460,40" fill="none" stroke="#5fa8d3" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="280" cy="90" r="34" fill="none" stroke="#e8a23d" stroke-width="2" stroke-dasharray="4 3" opacity="0.7"/>
+          <text x="280" y="138" fill="#9aa3b2" font-size="11" text-anchor="middle" font-family="monospace">meander loop</text>
+          <ellipse cx="430" cy="170" rx="38" ry="20" fill="none" stroke="#7ec99e" stroke-width="2"/>
+          <text x="430" y="200" fill="#9aa3b2" font-size="11" text-anchor="middle" font-family="monospace">oxbow lake (cut off)</text>
+          <text x="40" y="50" fill="#e8a23d" font-size="12" font-family="monospace">source / youthful</text>
+          <text x="460" y="20" fill="#9aa3b2" font-size="12" font-family="monospace">old stage / mouth →</text>
+        </svg>
+        <div class="diagram-cap">Meander tightens until the loop's neck is cut off → oxbow lake forms</div>
+      </div>
+
+      <div class="trap">
+        <div class="trap-title">⚠ Trap — Is a meander a "landform"?</div>
+        <p style="margin-bottom:0">Generally <strong>meander is treated as a pattern of flow, NOT a landform</strong> (it doesn't deposit or erode anything by itself). <strong>Exception:</strong> an <strong>entrenched/incised meander</strong> (cut deep into mountains) IS counted, and is classified as <strong>erosional</strong>.</p>
+      </div>
+      <div class="card green">
+        <div class="card-title">🎯 Asked before in Civil Services</div>
+        <p style="margin-bottom:0" class="muted">Asia's largest oxbow lake is <strong>Kabartal (Kanwar Lake), Bihar</strong> — formed by the old <strong>Gandak river</strong>.</p>
+      </div>
+    </section>
+
+    <!-- ============ GROUNDWATER ============ -->
+    <section class="chapter-section" id="groundwater">
+      <div class="sec-head">
+        <span class="sec-num">09</span>
+        <h2>Groundwater — Karst Topography</h2>
+        <span class="tag water">Exogenic Agent</span>
+      </div>
+      <p>Groundwater = water percolating slowly underground. It dissolves soft rock — this requires <strong>limestone or dolomite</strong> (sedimentary, layered rocks that water penetrates easily). The resulting terrain is called <strong>Karst topography</strong>, named after the Karst region near the <strong>Mediterranean Sea</strong>. In India, seen in parts of <strong>South India</strong>.</p>
+
+      <h4 class="subsub">Surface Erosional Landforms (small → large)</h4>
+      <ol>
+        <li><strong>Sink hole</strong> — small collapsed pit</li>
+        <li><strong>Doline</strong> — sink holes that have grown bigger</li>
+        <li><strong>Uvala</strong> — multiple dolines merging into one long valley-type depression</li>
+        <li><strong>Lapiaz (lapies)</strong> — uneven, jagged, bone-like limestone surface from extensive percolation; surrounded by a "pavement of limestone"</li>
+      </ol>
+
+      <h4 class="subsub">Underground (Cave) Depositional Landforms</h4>
+      <table>
+        <tr><th>Landform</th><th>Where</th><th>Memory cue</th></tr>
+        <tr><td><strong>Stalactite</strong></td><td>Hangs from the cave <strong>ceiling</strong></td><td>"C" in stala<strong>c</strong>tite = <strong>C</strong>eiling</td></tr>
+        <tr><td><strong>Stalagmite</strong></td><td>Builds up from the cave <strong>ground/floor</strong></td><td>"G" in stalag<strong>m</strong>ite ~ <strong>G</strong>round (rises from below)</td></tr>
+        <tr><td><strong>Pillar</strong></td><td>When stalactite + stalagmite meet</td><td>Forms a continuous column</td></tr>
+      </table>
+      <div class="card violet">
+        <div class="card-title">🧠 Memory Hook — Stalactite vs Stalagmite</div>
+        <p style="margin-bottom:0" class="muted">Stala<strong>C</strong>tite hangs from the <strong>C</strong>eiling. You have to hold "tight" onto the ceiling, or it falls — <strong>"tite"</strong> = holding tight up top. Stala<strong>g</strong>mite <strong>g</strong>rows up from the <strong>g</strong>round. When the two finally meet in the middle, you get a <strong>Pillar</strong>.</p>
+      </div>
+      <div class="trap">
+        <div class="trap-title">⚠ Trap</div>
+        <p style="margin-bottom:0"><strong>Pediplain (wind) ≠ Peneplain (water/river).</strong> These sound nearly identical but come from completely different agents — pediplain is desert/wind-formed, peneplain is the river's final flattened landscape. Examiners use this near-identical spelling deliberately.</p>
+      </div>
+    </section>
+
+    <!-- ============ WIND ============ -->
+    <section class="chapter-section" id="wind">
+      <div class="sec-head">
+        <span class="sec-num">10</span>
+        <h2>Wind — Desert Landforms</h2>
+        <span class="tag water">Exogenic Agent</span>
+      </div>
+      <p>Wind is most effective in <strong>deserts</strong> (open, vegetation-free land, high wind speed). Main erosional process: <strong>Abrasion</strong> — wind carries sand, sand grains scrape and break rock surfaces on contact.</p>
+
+      <h4 class="subsub">Erosional Landforms</h4>
+      <ul>
+        <li><strong>Mushroom rock</strong> — rock eroded into a mushroom shape (narrow base, wide top) — also called <strong>zeugen</strong></li>
+        <li><strong>Pediplain</strong> — wind erodes an entire area until it becomes a completely flat plain</li>
+      </ul>
+
+      <h4 class="subsub">Depositional Landforms</h4>
+      <ul>
+        <li><strong>Loess</strong> — very fine silt, light-coloured, deposited as a flat plain-like layer</li>
+        <li><strong>Sand dunes</strong> — two main types:</li>
+      </ul>
+      <table>
+        <tr><th>Type</th><th>Shape</th><th>Detail</th></tr>
+        <tr><td><strong>Barchan</strong></td><td>Crescent, two pointed "wings"</td><td>Wings point in the direction the wind is blowing toward (downwind)</td></tr>
+        <tr><td><strong>Seif</strong></td><td>One pointed wing (longitudinal ridge)</td><td>Forms parallel to wind direction</td></tr>
+      </table>
+      <p>On a barchan: <strong>windward side</strong> = convex side (faces the wind, gentler slope); <strong>leeward side</strong> = concave side (sheltered side, steeper slope).</p>
+      <div class="card violet">
+        <div class="card-title">🧠 Memory Hook — Barchan</div>
+        <p style="margin-bottom:0" class="muted">Like making a sandcastle by pressing your foot into wet sand and slowly pulling it out — the sand collapses into a crescent shape with two "horns" pointing the way the disturbance moved. Barchan = crescent with <strong>2</strong> wings; Seif = elongated ridge with effectively <strong>1</strong> wing.</p>
+      </div>
+      <div class="card good">
+        <div class="card-title">➕ Good to Know (beyond SSC depth, but useful for SSC CGL Tier-2/CPO/CDS overlap)</div>
+        <p style="margin-bottom:0" class="muted">Windward/leeward and barchan/seif fine detail is asked more often in CDS/CAPF than plain SSC CGL — know it, but don't over-invest revision time here.</p>
+      </div>
+    </section>
+
+    <!-- ============ GLACIER ============ -->
+    <section class="chapter-section" id="glacier">
+      <div class="sec-head">
+        <span class="sec-num">11</span>
+        <h2>Glacier Landforms</h2>
+        <span class="tag water">Exogenic Agent</span>
+      </div>
+      <p>Glaciers have very high mass → strong erosional power as they slide down slowly.</p>
+
+      <h4 class="subsub">Erosional Landforms</h4>
+      <table>
+        <tr><th>Landform</th><th>Formed how</th></tr>
+        <tr><td><strong>Cirque</strong></td><td>Glacier slides and carves out a bowl/armchair-shaped hollow on a mountainside</td></tr>
+        <tr><td><strong>Horn</strong></td><td>A pointed peak left when cirques erode a mountain from multiple sides</td></tr>
+        <tr><td><strong>Arête (serrated ridge)</strong></td><td>A sharp, jagged ridge left between two adjacent cirques</td></tr>
+        <tr><td><strong>Tarn lake</strong></td><td>A cirque basin filled with meltwater after the glacier retreats</td></tr>
+        <tr><td><strong>U-shaped (glacial) valley</strong></td><td>Glacier's immense mass + friction deepens and widens a valley into a U-shape</td></tr>
+        <tr><td><strong>Hanging valley</strong></td><td>A smaller tributary glacial valley left elevated above the main U-shaped valley — some erosion, but less than the main valley</td></tr>
+      </table>
+
+      <h4 class="subsub">Depositional Landforms</h4>
+      <p><strong>Esker, Moraine, Drumlin, Outwash plain.</strong></p>
+      <div class="card violet">
+        <div class="card-title">🧠 Memory Hook — Glacial Deposits</div>
+        <p style="margin-bottom:0" class="muted">"The people of <strong>Morena</strong> are playing <strong>drums</strong> in <strong>Ishq</strong> (love), in the <strong>plains</strong>." → <strong>Mo</strong>raine, <strong>Dru</strong>mlin (drums), <strong>Esk</strong>er (Ishq), Outwash <strong>plain</strong>s. A silly sentence, but it locks all four depositional glacier landforms together.</p>
+      </div>
+    </section>
+
+    <!-- ============ SEA ============ -->
+    <section class="chapter-section" id="sea">
+      <div class="sec-head">
+        <span class="sec-num">12</span>
+        <h2>Sea Wave Landforms</h2>
+        <span class="tag water">Exogenic Agent</span>
+      </div>
+      <h4 class="subsub">Erosional Landforms</h4>
+      <ul>
+        <li><strong>Cliff</strong> — strong wave action carves the coast into a steep rock face</li>
+        <li><strong>Cave</strong> — strong waves hollow out a coastal rock</li>
+        <li><strong>Stack</strong> — an isolated pillar of resistant rock left standing after surrounding rock erodes away</li>
+        <li><strong>Arch</strong> — erosion connects two caves through a headland, leaving an arch shape</li>
+      </ul>
+      <h4 class="subsub">Depositional Landforms</h4>
+      <ul>
+        <li><strong>Beach</strong> — sand deposited along the shore</li>
+        <li><strong>Sand dunes</strong> — wind-blown coastal sand piles</li>
+        <li><strong>Spit</strong> — a sand ridge attached to the coast at one end, projecting into the sea</li>
+        <li><strong>Bar</strong> — a ridge of sand/sediment that may close off a bay</li>
+        <li><strong>Tombolo</strong> — a sand bar connecting an island to the mainland</li>
+        <li><strong>Lagoon</strong> — a body of seawater cut off / separated from the open sea by a barrier (bar/spit)</li>
+      </ul>
+      <div class="card blue">
+        <div class="card-title">🧠 Memory Hook — Barrier & Lagoon</div>
+        <p style="margin-bottom:0" class="muted">A <strong>barrier</strong> (bar/spit) grows until it locks off a stretch of sea water from the open ocean — that trapped water becomes a <strong>lagoon</strong>. Think of the barrier as a gatekeeper standing between the lagoon (calm, enclosed) and the sea (open, rough).</p>
+      </div>
+    </section>
+
+
+    <div class="footer">
+      Geomorphology Revision Vault · Built for spaced revision, not first reading · Revise in layers: top→bottom on day 1, bottom→top from day 2 onward.
+    </div>
+
+  </main>
+</div>
+
+<script>
+// scroll progress
+const bar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+  bar.style.width = pct + '%';
+});
+
+// active nav highlighting
+const links = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('section.chapter-section');
+const obs = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const link = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+      if(link) link.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+sections.forEach(s=>obs.observe(s));
+
+// quiz toggles
+document.addEventListener('click', (e)=>{
+  const quiz = e.target.closest('.quiz');
+  if(quiz) quiz.classList.toggle('open');
+});
+</script>
+</body>
+</html>

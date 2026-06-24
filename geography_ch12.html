@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peninsular Rivers — SSC CGL Revision System</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0a0c10;
+    --bg-card: #111318;
+    --bg-card2: #161920;
+    --bg-highlight: #1a1f2e;
+    --border: #232736;
+    --border-bright: #2e3448;
+
+    --text-primary: #e8eaf0;
+    --text-secondary: #9ba3b8;
+    --text-muted: #5c6480;
+
+    --fire: #ff6b35;
+    --fire-dim: #3d1a0d;
+    --star: #f5c842;
+    --star-dim: #2e2608;
+    --plus: #42d6a4;
+    --plus-dim: #0d2e22;
+
+    --accent-blue: #5b8cff;
+    --accent-blue-dim: #0d1a3d;
+    --accent-purple: #a78bfa;
+    --accent-purple-dim: #1e1635;
+    --accent-red: #f87171;
+    --accent-red-dim: #2d0f0f;
+    --accent-teal: #2dd4bf;
+    --accent-teal-dim: #0a2421;
+    --accent-orange: #fb923c;
+    --accent-yellow: #fbbf24;
+
+    --font-head: 'Space Grotesk', sans-serif;
+    --font-body: 'Crimson Pro', Georgia, serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,12,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    height: 52px;
+  }
+  nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-family: var(--font-head);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+  nav a:hover { color: var(--accent-blue); background: var(--accent-blue-dim); }
+  .nav-brand {
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--accent-blue);
+    margin-right: 1rem;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+  .nav-sep { color: var(--border-bright); margin: 0 4px; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 5rem 2rem 3rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .chapter-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent-blue);
+    background: var(--accent-blue-dim);
+    border: 1px solid rgba(91,140,255,0.3);
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  h1.title {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  h1.title span { color: var(--accent-blue); }
+  .hero-sub {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 600px;
+    font-family: var(--font-head);
+    font-weight: 400;
+  }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  /* ── SECTION HEADERS ── */
+  .section {
+    margin-top: 4rem;
+    scroll-margin-top: 70px;
+  }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+  h2 {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  h2 .emoji { margin-right: 0.5rem; }
+  h3 {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 1.8rem 0 0.8rem;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .card-river {
+    border-left: 3px solid var(--accent-blue);
+  }
+  .card-memory {
+    background: var(--accent-purple-dim);
+    border: 1px solid rgba(167,139,250,0.25);
+    border-left: 3px solid var(--accent-purple);
+  }
+  .card-trap {
+    background: var(--accent-red-dim);
+    border: 1px solid rgba(248,113,113,0.25);
+    border-left: 3px solid var(--accent-red);
+  }
+  .card-exam {
+    background: var(--star-dim);
+    border: 1px solid rgba(245,200,66,0.25);
+    border-left: 3px solid var(--star);
+  }
+  .card-recall {
+    background: var(--plus-dim);
+    border: 1px solid rgba(66,214,164,0.25);
+    border-left: 3px solid var(--plus);
+  }
+  .card-palace {
+    background: linear-gradient(135deg, #0d1a3d 0%, #1e1635 100%);
+    border: 1px solid rgba(91,140,255,0.2);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+
+  /* ── RIVER NAME TITLE ── */
+  .river-name {
+    font-family: var(--font-head);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .river-name .badge {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    background: var(--accent-blue-dim);
+    color: var(--accent-blue);
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+    font-weight: 400;
+  }
+
+  /* ── PRIORITY TAGS ── */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+  }
+  .tag-fire { background: var(--fire-dim); color: var(--fire); border: 1px solid rgba(255,107,53,0.3); }
+  .tag-star { background: var(--star-dim); color: var(--star); border: 1px solid rgba(245,200,66,0.3); }
+  .tag-plus { background: var(--plus-dim); color: var(--plus); border: 1px solid rgba(66,214,164,0.3); }
+
+  /* ── FACTS LIST ── */
+  .fact-list {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .fact-list li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg-card2);
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+  .fact-list li::before {
+    content: '→';
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .fact-key {
+    color: var(--accent-yellow);
+    font-weight: 600;
+    font-family: var(--font-head);
+    font-size: 0.85rem;
+    min-width: 110px;
+    flex-shrink: 0;
+  }
+
+  /* ── MEMORY HOOK BOX ── */
+  .hook-box {
+    background: var(--accent-purple-dim);
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-top: 0.75rem;
+    font-size: 0.92rem;
+  }
+  .hook-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--accent-purple);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+
+  /* ── TRAP BOX ── */
+  .trap-item {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(248,113,113,0.06);
+    border-radius: 8px;
+    margin-bottom: 0.6rem;
+    align-items: flex-start;
+    font-size: 0.93rem;
+  }
+  .trap-icon { color: var(--accent-red); font-size: 1.1rem; flex-shrink: 0; }
+
+  /* ── QUICK FACTS GRID ── */
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .quick-item {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    font-size: 0.88rem;
+  }
+  .quick-item .qk { color: var(--text-muted); font-size: 0.75rem; font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+  .quick-item .qv { color: var(--accent-teal); font-family: var(--font-head); font-weight: 600; font-size: 0.95rem; }
+
+  /* ── EXAM Q ── */
+  .exam-q {
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    background: var(--bg-card2);
+    margin-bottom: 0.6rem;
+    font-size: 0.93rem;
+    border-left: 2px solid var(--star);
+  }
+  .exam-q .q-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--star);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.2rem;
+  }
+
+  /* ── RECALL ── */
+  .recall-item {
+    padding: 0.9rem 1.1rem;
+    background: var(--bg-card2);
+    border-radius: 8px;
+    margin-bottom: 0.6rem;
+    border-left: 2px solid var(--plus);
+    font-size: 0.93rem;
+    cursor: pointer;
+    position: relative;
+  }
+  .recall-item .answer {
+    display: none;
+    margin-top: 0.6rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+    color: var(--plus);
+    font-weight: 500;
+    font-family: var(--font-head);
+  }
+  .recall-item.revealed .answer { display: block; }
+  .recall-toggle {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.4rem;
+  }
+
+  /* ── PALACE STOP ── */
+  .palace-stop {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+  }
+  .palace-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .palace-content { flex: 1; }
+  .palace-content strong {
+    font-family: var(--font-head);
+    font-size: 0.95rem;
+    color: var(--accent-blue);
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+  .palace-content p { font-size: 0.9rem; color: var(--text-secondary); }
+
+  /* ── LAYER SYSTEM ── */
+  .layer-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .layer-btn {
+    font-family: var(--font-head);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .layer-btn.active, .layer-btn:hover {
+    background: var(--accent-blue);
+    border-color: var(--accent-blue);
+    color: #fff;
+  }
+  .layer-content { display: none; }
+  .layer-content.active { display: block; }
+
+  /* ── HIGHLIGHT ── */
+  mark {
+    background: rgba(251,191,36,0.2);
+    color: var(--accent-yellow);
+    border-radius: 3px;
+    padding: 0 3px;
+  }
+  .hl-blue { color: var(--accent-blue); font-weight: 600; }
+  .hl-red { color: var(--accent-red); font-weight: 600; }
+  .hl-teal { color: var(--accent-teal); font-weight: 600; }
+  .hl-orange { color: var(--accent-orange); font-weight: 600; }
+  .hl-purple { color: var(--accent-purple); font-weight: 600; }
+  .hl-yellow { color: var(--accent-yellow); font-weight: 600; }
+
+  /* ── TABLE ── */
+  .rev-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    font-family: var(--font-head);
+    margin-top: 0.5rem;
+  }
+  .rev-table th {
+    background: var(--bg-highlight);
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .rev-table td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    vertical-align: top;
+  }
+  .rev-table tr:hover td { background: var(--bg-highlight); }
+  .rev-table td:first-child { color: var(--accent-blue); font-weight: 600; }
+
+  /* ── CONNECT BOX ── */
+  .connect {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    background: var(--bg-card2);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.88rem;
+    flex-wrap: wrap;
+  }
+  .connect .node {
+    background: var(--accent-blue-dim);
+    color: var(--accent-blue);
+    border-radius: 5px;
+    padding: 2px 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .connect .arrow { color: var(--text-muted); font-size: 0.8rem; }
+
+  /* ── ULTRA FAST / 30s SHEETS ── */
+  .ultra-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0.75rem;
+  }
+  .ultra-item {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    font-size: 0.85rem;
+  }
+  .ultra-item .uh { font-family: var(--font-head); font-weight: 700; color: var(--accent-teal); font-size: 0.95rem; margin-bottom: 0.35rem; }
+
+  .last-night {
+    background: linear-gradient(135deg, #0d1520, #0d1a0d);
+    border: 1px solid rgba(66,214,164,0.2);
+    border-radius: 12px;
+    padding: 2rem;
+  }
+  .last-night h3 { color: var(--plus); margin-top: 1.2rem; font-size: 1rem; }
+  .last-night ul { list-style: none; padding: 0; }
+  .last-night ul li {
+    padding: 0.35rem 0;
+    border-bottom: 1px solid rgba(66,214,164,0.1);
+    font-size: 0.9rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .last-night ul li::before { content: '✓'; color: var(--plus); font-family: var(--font-mono); flex-shrink: 0; }
+
+  /* ── TRIBUTE CHAIN ── */
+  .trib-chain {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+    margin-top: 0.5rem;
+  }
+  .trib-pill {
+    background: var(--bg-highlight);
+    border: 1px solid var(--border-bright);
+    color: var(--text-secondary);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.82rem;
+    font-family: var(--font-head);
+  }
+  .trib-pill.highlight { background: var(--accent-blue-dim); border-color: rgba(91,140,255,0.4); color: var(--accent-blue); }
+  .trib-plus { color: var(--text-muted); font-size: 0.75rem; }
+
+  /* ── SCROLL PROGRESS ── */
+  .progress-bar {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    width: 0%;
+    z-index: 200;
+    transition: width 0.1s;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .container { padding: 0 1rem 4rem; }
+    .hero { padding: 3rem 1rem 2rem; }
+    nav { padding: 0 1rem; }
+    .quick-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 2rem 0;
+  }
+
+  p { margin-bottom: 0.75rem; }
+  p:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<nav>
+  <span class="nav-brand">🗺 RIVERS</span>
+  <a href="#bigpicture">Big Picture</a>
+  <span class="nav-sep">·</span>
+  <a href="#palace">Memory Palace</a>
+  <span class="nav-sep">·</span>
+  <a href="#notes">Full Notes</a>
+  <span class="nav-sep">·</span>
+  <a href="#traps">⚠ Traps</a>
+  <span class="nav-sep">·</span>
+  <a href="#examfavs">Exam Favs</a>
+  <span class="nav-sep">·</span>
+  <a href="#recall">Recall</a>
+  <span class="nav-sep">·</span>
+  <a href="#layers">Fast Revise</a>
+</nav>
+
+<div class="hero">
+  <span class="chapter-tag">SSC CGL · Geography · Chapter</span>
+  <h1 class="title">Peninsular <span>Rivers</span></h1>
+  <p class="hero-sub">The complete high-retention revision system for competitive exams. Tap any recall card to reveal its answer.</p>
+</div>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════ BIG PICTURE ═══════════════════════════════ -->
+  <div class="section" id="bigpicture">
+    <div class="section-label">Section 01</div>
+    <h2><span class="emoji">🌍</span> Big Picture</h2>
+
+    <div class="card">
+      <p>The <strong>Peninsular Plateau</strong> (mainly the Deccan Plateau) is a <mark>tilted triangular landmass</mark> — high in the west, low in the east. Because of this tilt (west-to-east gradient), <strong>most rivers flow eastward</strong> into the Bay of Bengal and form <span class="hl-blue">deltas</span>. A few flow west into the Arabian Sea and form <span class="hl-red">estuaries</span> (Jwar Badonmukh).</p>
+      <p>Unlike Himalayan rivers (perennial, fed by glaciers), peninsular rivers are <strong>ephemeral / seasonal</strong> — except <span class="hl-teal">Cauvery</span>, which gets two monsoons.</p>
+    </div>
+
+    <div class="quick-grid">
+      <div class="quick-item"><div class="qk">Nature</div><div class="qv">Ephemeral (Seasonal)</div></div>
+      <div class="quick-item"><div class="qk">Main divide</div><div class="qv">East flowing vs West flowing</div></div>
+      <div class="quick-item"><div class="qk">East drains into</div><div class="qv">Bay of Bengal (delta)</div></div>
+      <div class="quick-item"><div class="qk">West drains into</div><div class="qv">Arabian Sea (estuary)</div></div>
+      <div class="quick-item"><div class="qk">Largest Bay (World)</div><div class="qv">Bay of Bengal</div></div>
+      <div class="quick-item"><div class="qk">Longest Peninsular R.</div><div class="qv">Godavari (1450 km)</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ MEMORY PALACE ═══════════════════════════════ -->
+  <div class="section" id="palace">
+    <div class="section-label">Section 02</div>
+    <h2><span class="emoji">🧠</span> Chapter Memory Palace</h2>
+
+    <div class="card-palace">
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.95rem;">Imagine you're on a <strong style="color:#fff">train journey from Jharkhand to Kerala</strong>, stopping at 10 stations. At each station, a river greets you with its unique personality.</p>
+
+      <div class="palace-stop">
+        <div class="palace-icon">🏭</div>
+        <div class="palace-content">
+          <strong>Station 1 — Jharkhand Mining Town (Damodar)</strong>
+          <p>You see a <em>sorrow-filled worker in a rift valley</em>, panning gold. That's Damodar — the "River of Bengal's Sorrow", flowing through a Rift Valley, joins Hooghly, coal belt tributaries Barakar &amp; Konar.</p>
+        </div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-icon">✨</div>
+        <div class="palace-content">
+          <strong>Station 2 — Gold Jewellery Shop (Suvarnarekha)</strong>
+          <p>The shopkeeper wears gold. Swarna = Gold. Suvarnarekha = "Golden Line". Also from Chota Nagpur Plateau, has gold particles.</p>
+        </div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-icon">🌊</div>
+        <div class="palace-content">
+          <strong>Station 3 — Mahanadi's Dam (Odisha)</strong>
+          <p>You see India's <em>longest dam (Hirakud)</em>. The river is 850 km and called "Saugor of Odisha". Origin: Sihawa Hills (E. Ghats).</p>
+        </div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-icon">👵</div>
+        <div class="palace-content">
+          <strong>Station 4 — Nashik Pilgrimage (Godavari)</strong>
+          <p>An old grandmother (Vriddha Ganga) doing pilgrimage at Trimbakeshwar, Nashik. She's the eldest, 1450 km, largest peninsular river. She's also called "Dakshin Ganga".</p>
+        </div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-icon">🎵</div>
+        <div class="palace-content">
+          <strong>Station 5 — Mahabaleshwar Hill Station (Krishna)</strong>
+          <p>Your aunt is dancing with Tungabhadra at Mahabaleshwar. Remember: "Bhima, take aunt to the ghat to receive milk (Doodhganga)." 1400 km, 2nd longest of South India.</p>
+        </div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-icon">🌸</div>
+        <div class="palace-content">
+          <strong>Station 6 — Cauvery Coffee Plantation (Kodagu, Karnataka)</strong>
+          <p>You sip coffee in Kodagu. Cauvery = Ganga of South India (the real one!). Brahmagiri Hills. Flows only in Karnataka &amp; Tamil Nadu. Gets SW + NE monsoon = perennial. Delta = Garden of South India.</p>
+        </div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-icon">🔥</div>
+        <div class="palace-content">
+          <strong>Station 7 — Rift Valley Tunnel (Narmada &amp; Tapi)</strong>
+          <p>Train enters a dark rift valley tunnel — both Narmada &amp; Tapi flow through Rift Valleys between Vindhya (above) and Satpura (below). Narmada = longest west-flowing river. Amarkantak origin.</p>
+        </div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-icon">🐢</div>
+        <div class="palace-content">
+          <strong>Station 8 — Olive Ridley Nest (Rishikulya / Vamsdhara)</strong>
+          <p>You spot Olive Ridley turtles nesting at the mouth. That's Rishikulya river. Vamsdhara originates from Eastern Ghats.</p>
+        </div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-icon">🌊</div>
+        <div class="palace-content">
+          <strong>Station 9 — Jog Falls (Sharavati, Karnataka)</strong>
+          <p>Spectacular waterfall. Sharavati River. Also remember Varahi = Kunchikal Falls (India's highest waterfall).</p>
+        </div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-icon">🏖</div>
+        <div class="palace-content">
+          <strong>Station 10 — Kerala Backwaters (Periyar, Bharatapuzha, Pamba)</strong>
+          <p>All three drain into Vembanad Lake — longest lake of India. Bharatapuzha is slightly longer than Periyar. Lifeline of Kerala = Periyar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ COMPLETE NOTES ═══════════════════════════════ -->
+  <div class="section" id="notes">
+    <div class="section-label">Section 03</div>
+    <h2><span class="emoji">📖</span> Complete Revision Notes</h2>
+
+    <!-- INTRO CONCEPTS -->
+    <h3>Core Framework</h3>
+    <div class="card">
+      <ul class="fact-list">
+        <li><span class="fact-key">Nature</span>Peninsular rivers are <mark>ephemeral (seasonal)</mark>; Himalayan rivers are perennial</li>
+        <li><span class="fact-key">Division</span>East Flowing (→ Bay of Bengal) + West Flowing (→ Arabian Sea)</li>
+        <li><span class="fact-key">Why east?</span>Deccan Plateau tilts W→E; general gradient from west to east</li>
+        <li><span class="fact-key">East rivers</span>Form <span class="hl-blue">Deltas</span> (wide eastern coastal plains, emerging coast)</li>
+        <li><span class="fact-key">West rivers</span>Form <span class="hl-red">Estuaries</span> (Jwar Badonmukh) — submerging western coast, steep slope, sediment sinks</li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- EAST FLOWING ORDER -->
+    <h3>East Flowing Rivers — Order (North to South)</h3>
+    <div class="card" style="padding: 1rem 1.5rem;">
+      <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em;">Top → Bottom along eastern coast</div>
+      <div class="trib-chain">
+        <span class="trib-pill highlight">Damodar</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Suvarnarekha</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Baitarani</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Brahmani</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Mahanadi</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Rishikulya</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Vamsdhara</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Godavari</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Krishna</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Pennar</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill highlight">Cauvery</span>
+        <span class="trib-plus">→</span>
+        <span class="trib-pill">Vaigai</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- DAMODAR -->
+    <div class="card card-river">
+      <div class="tag tag-fire">🔥 Must Know</div>
+      <div class="river-name">Damodar <span class="badge">EAST FLOWING</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Origin</span>Chota Nagpur Plateau, Jharkhand</li>
+        <li><span class="fact-key">Nature</span>Flows in <mark>Rift Valley (Abhransh Valley)</mark></li>
+        <li><span class="fact-key">Joins</span>Hooghly (distributor of Ganga, not tributary)</li>
+        <li><span class="fact-key">Nickname</span><span class="hl-red">"River of Sorrow of Bengal"</span></li>
+        <li><span class="fact-key">Tributaries</span>Barakar, Konar</li>
+        <li><span class="fact-key">Port nearby</span>Haldia Port (river port on Hooghly)</li>
+      </ul>
+      <div class="hook-box">
+        <div class="hook-label">🧠 Memory Hook</div>
+        A <strong>sad, sorrowful coal miner</strong> working in a dark RIFT VALLEY in Jharkhand, joining Hooghly — not Ganga directly. His sadness = "Sorrow of Bengal".
+      </div>
+    </div>
+
+    <!-- SUVARNAREKHA -->
+    <div class="card card-river">
+      <div class="tag tag-star">⭐ Important</div>
+      <div class="river-name">Suvarnarekha <span class="badge">EAST FLOWING</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Origin</span>Chota Nagpur Plateau</li>
+        <li><span class="fact-key">Meaning</span>Swarna = Gold, Rekha = Line → <mark>"Golden Line"</mark></li>
+        <li><span class="fact-key">Why Gold?</span>Gold particles found in this river</li>
+      </ul>
+    </div>
+
+    <!-- BAITARANI & BRAHMANI -->
+    <div class="card card-river">
+      <div class="tag tag-plus">➕ Good to Know</div>
+      <div class="river-name">Baitarani &amp; Brahmani <span class="badge">EAST FLOWING</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Brahmani</span>Formed by confluence of Sankh + South Koel rivers</li>
+        <li><span class="fact-key">North Koel</span>Tributary of Son (Son = right-bank tributary of Ganga)</li>
+        <li><span class="fact-key">Son origin</span>Amarkantak Plateau</li>
+        <li><span class="fact-key">Both</span>Independent rivers, not tributaries of each other</li>
+      </ul>
+    </div>
+
+    <!-- MAHANADI -->
+    <div class="card card-river">
+      <div class="tag tag-fire">🔥 Must Know</div>
+      <div class="river-name">Mahanadi <span class="badge">EAST FLOWING</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Length</span>850 km</li>
+        <li><span class="fact-key">Origin</span>Sihawa Hills (part of Eastern Ghats)</li>
+        <li><span class="fact-key">Nickname</span><span class="hl-orange">"Saugor of Odisha"</span></li>
+        <li><span class="fact-key">Major Dam</span><mark>Hirakud Dam — India's longest dam</mark></li>
+        <li><span class="fact-key">Tributaries</span>Tel, Jong, Ong, Hasdeo, Mand, Sevanath</li>
+      </ul>
+      <div class="hook-box">
+        <div class="hook-label">🧠 Memory Hook — Tributaries</div>
+        <strong>T-J-O-H-M-S</strong>: "Tel Jong Ong Hasdeo Mand Sevanath" → Say it as a chant: <em>"Tel ne Jong Ong ko Hasdeo Mand se Sevanath bola"</em>
+      </div>
+    </div>
+
+    <!-- RISHIKULYA & VAMSDHARA -->
+    <div class="card card-river">
+      <div class="tag tag-star">⭐ Important</div>
+      <div class="river-name">Rishikulya &amp; Vamsdhara <span class="badge">EAST FLOWING</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Rishikulya</span><mark>Mouth = Olive Ridley Turtle nesting ground</mark></li>
+        <li><span class="fact-key">Vamsdhara</span>Originates from Eastern Ghats → flows into Andhra Pradesh</li>
+        <li><span class="fact-key">Order</span>Mahanadi → Rishikulya → Vamsdhara (top to bottom)</li>
+      </ul>
+    </div>
+
+    <!-- GODAVARI -->
+    <div class="card card-river">
+      <div class="tag tag-fire">🔥 Must Know</div>
+      <div class="river-name">Godavari <span class="badge">LARGEST PENINSULAR RIVER</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Length</span><mark>1450 km</mark> — Largest Peninsular River</li>
+        <li><span class="fact-key">Origin</span>Trimbakeshwar Plateau, Nashik, Maharashtra (Western Ghats = Sahyadri)</li>
+        <li><span class="fact-key">States</span>Maharashtra → Telangana → Andhra Pradesh (delta here)</li>
+        <li><span class="fact-key">Basin extends</span>MP, Karnataka, Chhattisgarh also (wider than flow path)</li>
+        <li><span class="fact-key">Nicknames</span><span class="hl-orange">Dakshin Ganga</span> + <span class="hl-orange">Vriddha Ganga</span> (Old Ganga)</li>
+        <li><span class="fact-key">Kolleru Lake</span>Between Godavari and Krishna deltas</li>
+      </ul>
+      <div class="hook-box">
+        <div class="hook-label">🧠 Tributary Memory — Godavari</div>
+        <strong>WWI → PP → MS</strong><br>
+        W = <span class="hl-blue">Wardha</span>, W = <span class="hl-blue">Venganga</span> (Penganga), I = <span class="hl-blue">Indravati</span><br>
+        P = <span class="hl-blue">Pranhita</span>, P = <span class="hl-blue">Purna</span><br>
+        M = <span class="hl-blue">Manjhra</span>, S = <span class="hl-blue">Sabri</span><br>
+        <em>Full list: Penganga, Venganga, Wardha, Purna, Indravati, Pranhita, Manjhra, Sabri</em>
+      </div>
+    </div>
+
+    <!-- KRISHNA -->
+    <div class="card card-river">
+      <div class="tag tag-fire">🔥 Must Know</div>
+      <div class="river-name">Krishna <span class="badge">2ND LONGEST SOUTH INDIA</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Length</span>~1400 km</li>
+        <li><span class="fact-key">Origin</span>Mahabaleshwar, Maharashtra (Western Ghats)</li>
+        <li><span class="fact-key">States</span>Maharashtra → Karnataka → Telangana → Andhra</li>
+        <li><span class="fact-key">Raichur Doab</span><mark>Area between Krishna &amp; Tungabhadra = Raichur Doab</mark> (Vijayanagar Kingdom context)</li>
+        <li><span class="fact-key">Hyderabad</span>On banks of <span class="hl-yellow">Musi</span> river (tributary of Krishna)</li>
+      </ul>
+      <div class="hook-box">
+        <div class="hook-label">🧠 Tributary Memory — Krishna</div>
+        "<strong>Bhima, take Aunt to the Ghat, receive Milk (Doodhganga)</strong>"<br>
+        <span class="hl-blue">Bhima</span> · <span class="hl-blue">Tungabhadra</span> (Aunt) · <span class="hl-blue">Malprabha</span> (Ghat) · <span class="hl-blue">Prabha</span> · <span class="hl-blue">Doodhganga</span> (Milk) · <span class="hl-blue">Musi</span> · <span class="hl-blue">Koyana</span>
+      </div>
+    </div>
+
+    <!-- PENNAR -->
+    <div class="card card-river">
+      <div class="tag tag-fire">🔥 Must Know (Trap Alert!)</div>
+      <div class="river-name">Pennar <span class="badge">ANDHRA PRADESH</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Location</span>River of Andhra Pradesh, flows East</li>
+        <li><span class="fact-key">Position</span>Flows <mark>between Krishna and Cauvery</mark></li>
+        <li><span class="fact-key">Nature</span>Independent river — NOT tributary of anyone</li>
+        <li><span class="fact-key">Dam</span>Somasheela Dam is on Pennar</li>
+        <li><span class="fact-key">Trap</span>Often confused with Periyar (Kerala river). <span class="hl-red">Pennar = Andhra, East flowing. Periyar = Kerala, West flowing.</span></li>
+        <li><span class="fact-key">Exam Note</span>Asked in SSC CGL Tier 1, 2024!</li>
+      </ul>
+    </div>
+
+    <!-- CAUVERY -->
+    <div class="card card-river">
+      <div class="tag tag-fire">🔥 Must Know</div>
+      <div class="river-name">Cauvery (Kaveri) <span class="badge">GANGA OF SOUTH INDIA</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Length</span>800 km</li>
+        <li><span class="fact-key">Origin</span>Brahmagiri Hills, Kodagu district, Karnataka (Western Ghats)</li>
+        <li><span class="fact-key">Place of origin</span>Talakaveri (name has Cauvery, so easy!)</li>
+        <li><span class="fact-key">States (flows)</span><mark>Only Karnataka &amp; Tamil Nadu</mark> (not more)</li>
+        <li><span class="fact-key">Why Perennial?</span>Gets SW monsoon (Jun-Aug) + NE monsoon (Oct-Nov) = water year-round</li>
+        <li><span class="fact-key">Delta</span><mark>"Garden of South India"</mark></li>
+        <li><span class="fact-key">Nickname</span>Ganga of South India</li>
+      </ul>
+      <div class="hook-box">
+        <div class="hook-label">🧠 Tributary Memory — Cauvery</div>
+        <strong>If name ends in "NI" or "TI" = Cauvery tributary</strong><br>
+        <span class="hl-teal">Kabini</span>, <span class="hl-teal">Bhavani</span>, <span class="hl-teal">Hemavati</span>, <span class="hl-teal">Amravati</span>, <span class="hl-teal">Shimsha</span>, <span class="hl-teal">Arkavati</span><br>
+        ⚠ <span class="hl-red">Exception: Indravati ends in "TI" but is a Godavari tributary!</span>
+      </div>
+    </div>
+
+    <!-- VAIGAI -->
+    <div class="card card-river">
+      <div class="tag tag-plus">➕ Good to Know</div>
+      <div class="river-name">Vaigai &amp; Palar</div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Vaigai</span>Southernmost major river of India (below Cauvery in Tamil Nadu)</li>
+        <li><span class="fact-key">Palar</span>Small river south of Pennar</li>
+        <li><span class="fact-key">Pulicat Lake</span>On border of Andhra Pradesh &amp; Tamil Nadu</li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- WEST FLOWING -->
+    <h3>West Flowing Rivers</h3>
+
+    <!-- NARMADA -->
+    <div class="card card-river" style="border-left-color: var(--accent-orange);">
+      <div class="tag tag-fire">🔥 Must Know</div>
+      <div class="river-name" style="color: var(--accent-orange);">Narmada <span class="badge" style="background: rgba(251,146,60,0.15); color: var(--accent-orange);">WEST FLOWING · LONGEST</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Length</span>~1312 km — <mark>Longest west-flowing river into Arabian Sea</mark></li>
+        <li><span class="fact-key">Origin</span>Amarkantak Plateau (MP–Chhattisgarh border)</li>
+        <li><span class="fact-key">States</span>MP → Gujarat → Gulf of Khambhat (Cambay)</li>
+        <li><span class="fact-key">Valley type</span><mark>Rift Valley</mark> (between Vindhya above + Satpura below)</li>
+        <li><span class="fact-key">Drains into</span>Gulf of Khambhat (Gulf of Cambay)</li>
+        <li><span class="fact-key">Jabalpur</span>Located on Narmada's banks</li>
+        <li><span class="fact-key">Tributaries</span>Banjar, Tawa, Sher</li>
+      </ul>
+      <div class="hook-box">
+        <div class="hook-label">🧠 Memory Hook</div>
+        "Put <strong>Sugar in Banjar Tawa</strong> and shake it!" → Sher, Banjar, Tawa are Narmada's tributaries.<br><br>
+        Vindhya is <strong>above</strong>, Satpura is <strong>South/below</strong>. Narmada flows in the Rift = the crack between two block mountains. World examples: Harz (Germany), Vosges (France).
+      </div>
+    </div>
+
+    <!-- TAPI -->
+    <div class="card card-river" style="border-left-color: var(--accent-orange);">
+      <div class="tag tag-star">⭐ Important</div>
+      <div class="river-name" style="color: var(--accent-orange);">Tapi (Tapti) <span class="badge" style="background: rgba(251,146,60,0.15); color: var(--accent-orange);">WEST FLOWING</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Length</span>724 km (shorter than Narmada)</li>
+        <li><span class="fact-key">Origin</span>Betul Plateau, Madhya Pradesh (near Amarkantak but in MP, not CG)</li>
+        <li><span class="fact-key">States</span>MP → Maharashtra → Gujarat</li>
+        <li><span class="fact-key">Valley type</span><mark>Rift Valley</mark> (like Narmada)</li>
+        <li><span class="fact-key">Drains into</span>Gulf of Khambhat near Surat</li>
+        <li><span class="fact-key">Tributaries</span>Aner, Gomai, Girna, Purna</li>
+      </ul>
+      <div class="hook-box">
+        <div class="hook-label">🧠 Memory Hook</div>
+        "The scorching <strong>Tapti (heat)</strong> spoils your face near Surat!" → Surat on Tapi's banks. Tributaries: <strong>A</strong>ner <strong>G</strong>omai <strong>G</strong>irna <strong>P</strong>urna = <em>AGGP</em>
+      </div>
+    </div>
+
+    <!-- GOA RIVERS -->
+    <div class="card card-river" style="border-left-color: var(--accent-teal);">
+      <div class="tag tag-star">⭐ Important</div>
+      <div class="river-name" style="color: var(--accent-teal);">Mandovi &amp; Zuari (Goa) <span class="badge" style="background: rgba(45,212,191,0.1); color: var(--accent-teal);">WEST FLOWING</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Mandovi</span><mark>Lifeline of Goa</mark>; Panaji (capital of Goa) on its banks</li>
+        <li><span class="fact-key">Zuari</span>Marmugao Port is on Zuari river; Konkan Coast</li>
+        <li><span class="fact-key">Dudhsagar Falls</span>On Mandovi river</li>
+      </ul>
+    </div>
+
+    <!-- KARNATAKA RIVERS -->
+    <div class="card card-river" style="border-left-color: var(--accent-teal);">
+      <div class="tag tag-star">⭐ Important</div>
+      <div class="river-name" style="color: var(--accent-teal);">Kali &amp; Sharavati (Karnataka) <span class="badge" style="background: rgba(45,212,191,0.1); color: var(--accent-teal);">WEST FLOWING</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Sharavati</span><mark>Jog Falls</mark> (famous waterfall) is on Sharavati</li>
+        <li><span class="fact-key">Varahi</span>Kunchikal Falls = <mark>India's highest waterfall</mark></li>
+        <li><span class="fact-key">Kali</span>Also called Kali river (Karnataka)</li>
+      </ul>
+    </div>
+
+    <!-- KERALA RIVERS -->
+    <div class="card card-river" style="border-left-color: var(--accent-teal);">
+      <div class="tag tag-fire">🔥 Must Know</div>
+      <div class="river-name" style="color: var(--accent-teal);">Kerala Rivers <span class="badge" style="background: rgba(45,212,191,0.1); color: var(--accent-teal);">WEST FLOWING</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Three rivers</span>Bharatapuzha, Periyar, Pamba</li>
+        <li><span class="fact-key">All drain into</span><mark>Vembanad Lake</mark> — India's longest lake</li>
+        <li><span class="fact-key">Lifeline of Kerala</span>Periyar</li>
+        <li><span class="fact-key">Longer river</span><mark>Bharatapuzha is slightly longer than Periyar</mark> (NCERT fact)</li>
+        <li><span class="fact-key">Rule</span>If option has Bharatapuzha → pick it. If not → pick Periyar.</li>
+      </ul>
+    </div>
+
+    <!-- LUNI -->
+    <div class="card card-river" style="border-left-color: var(--accent-purple);">
+      <div class="tag tag-star">⭐ Important</div>
+      <div class="river-name" style="color: var(--accent-purple);">Luni (Rajasthan) <span class="badge" style="background: rgba(167,139,250,0.15); color: var(--accent-purple);">SPECIAL CASE</span></div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Origin</span>Nag Hills (Aravalli), Rajasthan</li>
+        <li><span class="fact-key">Also called</span><span class="hl-purple">Lavanwari</span> (Lavan = Salt)</li>
+        <li><span class="fact-key">Why salty?</span>Evaporation rate > precipitation rate (high temp area)</li>
+        <li><span class="fact-key">Fate</span><mark>Dies in Rann of Kutch — never reaches sea</mark></li>
+        <li><span class="fact-key">Salt river</span>High evaporation → salt accumulates</li>
+      </ul>
+    </div>
+
+    <!-- SABARMATI -->
+    <div class="card card-river" style="border-left-color: var(--accent-purple);">
+      <div class="tag tag-star">⭐ Important</div>
+      <div class="river-name" style="color: var(--accent-purple);">Sabarmati</div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Origin</span>Aravalli Mountains, Rajasthan</li>
+        <li><span class="fact-key">Cities</span><mark>Gandhinagar + Ahmedabad</mark> on Sabarmati's banks</li>
+        <li><span class="fact-key">States</span>Rajasthan → Gujarat</li>
+      </ul>
+    </div>
+
+    <!-- MAHI -->
+    <div class="card card-river" style="border-left-color: var(--accent-purple);">
+      <div class="tag tag-fire">🔥 Must Know</div>
+      <div class="river-name" style="color: var(--accent-purple);">Mahi</div>
+      <ul class="fact-list">
+        <li><span class="fact-key">Origin</span>Vindhya Mountains, Madhya Pradesh</li>
+        <li><span class="fact-key">States</span>MP → Rajasthan → Gujarat → Gulf of Khambhat</li>
+        <li><span class="fact-key">Special fact</span><mark>Crosses Tropic of Cancer TWICE</mark> (unique feature!)</li>
+        <li><span class="fact-key">Drains into</span>Gulf of Khambhat (Cambay)</li>
+      </ul>
+      <div class="hook-box">
+        <div class="hook-label">🧠 Memory Hook</div>
+        Mahi is naughty — it crosses the <strong>Tropic of Cancer line twice</strong>, once while going into Rajasthan and once while entering Gujarat. Like a train crossing the same track twice.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CITIES ON RIVERS -->
+    <h3>Important Cities on River Banks</h3>
+    <div class="card">
+      <table class="rev-table">
+        <thead><tr><th>City</th><th>River</th><th>State</th></tr></thead>
+        <tbody>
+          <tr><td>Jabalpur</td><td>Narmada</td><td>MP</td></tr>
+          <tr><td>Surat</td><td>Tapi</td><td>Gujarat</td></tr>
+          <tr><td>Panaji</td><td>Mandovi</td><td>Goa</td></tr>
+          <tr><td>Gandhinagar + Ahmedabad</td><td>Sabarmati</td><td>Gujarat</td></tr>
+          <tr><td>Hyderabad</td><td>Musi</td><td>Telangana</td></tr>
+          <tr><td>Lucknow</td><td>Gomti</td><td>UP</td></tr>
+          <tr><td>Delhi</td><td>Yamuna</td><td>Delhi</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- AMARKANTAK -->
+    <h3>Amarkantak Plateau — The Multiple Origin Point</h3>
+    <div class="card">
+      <ul class="fact-list">
+        <li><span class="fact-key">Location</span>Border of MP and Chhattisgarh</li>
+        <li><span class="fact-key">Rivers born</span>Narmada (west), Son (north), Mahanadi (east)</li>
+        <li><span class="fact-key">Drainage pattern</span><mark>Radial drainage pattern</mark> (central dome, rivers flow out in all directions)</li>
+        <li><span class="fact-key">Son River</span>Right-bank tributary of Ganga</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ CONNECTIONS ═══════════════════════════════ -->
+  <div class="section" id="connections">
+    <div class="section-label">Section 04</div>
+    <h2><span class="emoji">🔗</span> Concept Connections</h2>
+
+    <div class="connect">
+      <span class="node">Deccan Plateau tilts W→E</span>
+      <span class="arrow">→ CAUSES</span>
+      <span class="node">Most rivers flow East</span>
+      <span class="arrow">→ CAUSES</span>
+      <span class="node">Bay of Bengal deltas</span>
+    </div>
+    <div class="connect">
+      <span class="node">Western Coast = Submerging</span>
+      <span class="arrow">→ CAUSES</span>
+      <span class="node">Sediment sinks fast</span>
+      <span class="arrow">→ CAUSES</span>
+      <span class="node">Estuaries (not deltas)</span>
+    </div>
+    <div class="connect">
+      <span class="node">Narmada &amp; Tapi in Rift Valley</span>
+      <span class="arrow">= SAME AS</span>
+      <span class="node">Damodar in Rift Valley</span>
+      <span class="arrow">≠</span>
+      <span class="node">All other Peninsular rivers</span>
+    </div>
+    <div class="connect">
+      <span class="node">Cauvery gets 2 Monsoons</span>
+      <span class="arrow">→ THEREFORE</span>
+      <span class="node">Only Perennial Peninsular River</span>
+    </div>
+    <div class="connect">
+      <span class="node">Amarkantak Plateau</span>
+      <span class="arrow">→ BIRTHS</span>
+      <span class="node">Narmada + Son + Mahanadi</span>
+      <span class="arrow">→ Radial Drainage</span>
+    </div>
+    <div class="connect">
+      <span class="node">Indravati (ends in -TI)</span>
+      <span class="arrow">⚠ EXCEPTION → Godavari, NOT Cauvery</span>
+    </div>
+    <div class="connect">
+      <span class="node">Kolleru Lake</span>
+      <span class="arrow">BETWEEN</span>
+      <span class="node">Godavari delta + Krishna delta</span>
+    </div>
+    <div class="connect">
+      <span class="node">Raichur Doab</span>
+      <span class="arrow">BETWEEN</span>
+      <span class="node">Krishna + Tungabhadra</span>
+      <span class="arrow">CONTEXT</span>
+      <span class="node">Vijayanagar Kingdom (History)</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ EXAM TRAPS ═══════════════════════════════ -->
+  <div class="section" id="traps">
+    <div class="section-label">Section 05</div>
+    <h2><span class="emoji">⚠️</span> Exam Traps</h2>
+
+    <div class="card card-trap">
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Pennar vs Periyar:</strong> Pennar = Andhra Pradesh, flows EAST. Periyar = Kerala, flows WEST. Both asked in exams. SSC CGL 2024 Tier 1 had Pennar question.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Vriddha Ganga vs Dakshin Ganga:</strong> BOTH are nicknames of Godavari, not Cauvery. If asked "Ganga of South India" and Cauvery is absent, pick Godavari.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Hooghly vs Ganga:</strong> Damodar joins Hooghly, not Ganga directly. Hooghly is a <em>distributary</em> of Ganga, not a tributary.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Indravati ending in "-TI":</strong> Usually "-NI / -TI" = Cauvery tributary. But Indravati is a Godavari tributary! Classic trick question.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Narmada origin:</strong> Amarkantak Plateau is on the MP-Chhattisgarh border. Tapi's origin (Betul Plateau) is in MP only, not in Chhattisgarh!</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Bharatapuzha vs Periyar:</strong> Both in Kerala, both drain into Vembanad. Bharatapuzha is VERY SLIGHTLY longer. If both options present, choose Bharatapuzha.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Purna River Confusion:</strong> Purna is a tributary of BOTH Godavari AND Tapi. Don't mix them up — context of the question will tell you which one.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Mahanadi vs Hirakud:</strong> Hirakud = India's longest dam. On Mahanadi. Not the longest river — Godavari is the longest peninsular river.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Barak River (NOT peninsular):</strong> Barak originates from Nagaland-Manipur border; becomes Meghna in Bangladesh. NOT a Damodar tributary.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Somasheela Dam:</strong> This dam is on Pennar (Andhra Pradesh), NOT on Cauvery or Krishna.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Cauvery flows in how many states?</strong> Only 2 states (Karnataka + Tamil Nadu). Its BASIN may touch more states, but the river itself flows through only these two.</div>
+      </div>
+
+      <div class="trap-item">
+        <span class="trap-icon">⚡</span>
+        <div><strong>Mahi crosses Tropic of Cancer TWICE:</strong> Very unique exam fact. No other peninsular river does this.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ EXAMINER'S FAVOURITES ═══════════════════════════════ -->
+  <div class="section" id="examfavs">
+    <div class="section-label">Section 06</div>
+    <h2><span class="emoji">🎯</span> Examiner's Favourite Questions</h2>
+
+    <div class="exam-q">
+      <div class="q-label">🎯 High Probability</div>
+      Which is the largest Peninsular River of India? → <strong>Godavari (1450 km)</strong>
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 High Probability</div>
+      Which river is known as Dakshin Ganga / Vriddha Ganga? → <strong>Godavari</strong>
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 High Probability</div>
+      Which dam is the longest in India? → <strong>Hirakud Dam (on Mahanadi)</strong>
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 High Probability</div>
+      Which river flows through a Rift Valley and is called "River of Sorrow of Bengal"? → <strong>Damodar</strong>
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 Confusing</div>
+      Which is the only perennial Peninsular River? → <strong>Cauvery</strong> (gets both SW and NE monsoon)
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 Match the Following</div>
+      Panaji → Mandovi | Hyderabad → Musi | Surat → Tapi | Ahmedabad → Sabarmati
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 Trap Question</div>
+      Cauvery tributaries: Kabini, Bhavani, Hemavati, Amravati. Which is NOT? → <strong>Indravati</strong> (Godavari tributary)
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 Special Fact</div>
+      Which river crosses the Tropic of Cancer twice? → <strong>Mahi</strong>
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 Assertion-Reason Type</div>
+      A: West-flowing rivers form estuaries. R: Western coast is submerging and slope is steep. → <strong>Both true, R correctly explains A</strong>
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 Chronology / Order</div>
+      Order East-flowing rivers N→S: Damodar → Suvarnarekha → Baitarani → Brahmani → Mahanadi → Rishikulya → Vamsdhara → Godavari → Krishna → Pennar → Cauvery
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 Special Identification</div>
+      Where is Olive Ridley turtle nesting ground (river mouth)? → <strong>Rishikulya river</strong>
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 High Probability</div>
+      India's longest lake? → <strong>Vembanad Lake, Kerala</strong> (Bharatapuzha, Periyar, Pamba drain into it)
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 High Probability</div>
+      India's highest waterfall? → <strong>Kunchikal Falls</strong> (on Varahi river, Karnataka)
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 Medium Probability</div>
+      Lake between Godavari and Krishna deltas? → <strong>Kolleru Lake</strong>
+    </div>
+    <div class="exam-q">
+      <div class="q-label">🎯 Medium Probability</div>
+      Marmugao Port is on which river? → <strong>Zuari river</strong>, Goa (Konkan Coast)
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ ACTIVE RECALL ═══════════════════════════════ -->
+  <div class="section" id="recall">
+    <div class="section-label">Section 07</div>
+    <h2><span class="emoji">❓</span> Active Recall Section</h2>
+    <p style="color: var(--text-secondary); font-family: var(--font-head); font-size: 0.9rem; margin-bottom: 1.2rem;">Click any card to reveal the answer. Test yourself before looking!</p>
+
+    <div class="card-recall" style="padding: 1rem 1.5rem; margin-bottom: 1.5rem;">
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        What is the nickname of Damodar river?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🔴 River of Sorrow of Bengal (flows in Rift Valley, joins Hooghly)</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Which river's mouth is the nesting ground of Olive Ridley Turtles?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Rishikulya river (Odisha)</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Name the longest dam in India and the river it's built on.
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Hirakud Dam → Mahanadi river</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Why is Cauvery perennial while other Peninsular rivers are not?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Gets water from SW Monsoon (Jun-Aug) AND NE Monsoon (Oct-Nov) = water all year</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Narmada and Tapi both flow in what kind of valley?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Rift Valley (between Vindhya above and Satpura below)</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Fill in: Cauvery originates from ___ Hills in ___ district of Karnataka.
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Brahmagiri Hills, Kodagu district</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Which river crosses the Tropic of Cancer twice?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Mahi river (MP → Rajasthan → Gujarat → Gulf of Khambhat)</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        What is the area between Krishna and Tungabhadra called?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Raichur Doab (linked to Vijayanagar Kingdom in History)</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Name the three rivers that drain into Vembanad Lake.
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Bharatapuzha + Periyar + Pamba (all Kerala rivers, west-flowing)</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Which waterfall is on the Sharavati river? And which is India's highest waterfall?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Jog Falls = Sharavati | Kunchikal Falls = Varahi river (India's highest)</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Godavari originates from which place? In which state?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Trimbakeshwar Plateau, Nashik, Maharashtra (Western Ghats = Sahyadri)</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Luni river is called Lavanwari. Why is it salty and where does it end?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 High evaporation rate → salt accumulates. It dies in Rann of Kutch, never reaches sea.</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Name tributaries of Krishna river using your memory hook.
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Bhima, Tungabhadra, Musi, Malprabha, Prabha, Koyana, Doodhganga</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Which lake lies between Godavari and Krishna deltas? Where is Pulicat Lake?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Kolleru Lake = between Godavari + Krishna | Pulicat Lake = AP-Tamil Nadu border</div>
+      </div>
+      <div class="recall-item" onclick="this.classList.toggle('revealed')">
+        Which is longer: Bharatapuzha or Periyar? Which is Kerala's lifeline?
+        <div class="recall-toggle">tap to reveal</div>
+        <div class="answer">🟢 Bharatapuzha (slightly longer per NCERT) | Periyar = Lifeline of Kerala</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ LAYERED REVISION ═══════════════════════════════ -->
+  <div class="section" id="layers">
+    <div class="section-label">Section 08</div>
+    <h2><span class="emoji">⚡</span> Multi-Layer Revision System</h2>
+
+    <div class="layer-tabs">
+      <button class="layer-btn active" onclick="switchLayer('layer2')">High-Yield Notes</button>
+      <button class="layer-btn" onclick="switchLayer('layer3')">Ultra-Fast Sheet</button>
+      <button class="layer-btn" onclick="switchLayer('layer4')">30-Second Sheet</button>
+      <button class="layer-btn" onclick="switchLayer('layer5')">Last Night Sheet</button>
+    </div>
+
+    <!-- LAYER 2 -->
+    <div class="layer-content active" id="layer2">
+      <div class="ultra-grid">
+        <div class="ultra-item">
+          <div class="uh">Damodar</div>
+          Chota Nagpur → Rift Valley → Hooghly (not Ganga) → "Sorrow of Bengal"
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Mahanadi</div>
+          850 km · Sihawa Hills · "Saugor of Odisha" · Hirakud Dam = India's LONGEST dam
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Godavari</div>
+          1450 km · Trimbakeshwar, Nashik · Largest Peninsular · Dakshin Ganga · Vriddha Ganga
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Krishna</div>
+          1400 km · Mahabaleshwar · 2nd longest S. India · Raichur Doab (Krishna–Tungabhadra)
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Pennar</div>
+          Andhra Pradesh · East-flowing · Between Krishna &amp; Cauvery · Independent · Somasheela Dam
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Cauvery</div>
+          800 km · Brahmagiri Hills, Kodagu · Only perennial peninsular · SW+NE monsoon · Garden of S. India
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Narmada</div>
+          Longest west-flowing · Amarkantak (MP-CG border) · Rift Valley · Gulf of Khambhat · Jabalpur
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Tapi</div>
+          724 km · Betul Plateau MP · Rift Valley · MP→Maharashtra→Gujarat → Surat
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Mahi</div>
+          Vindhya MP · MP→Rajasthan→Gujarat · Crosses Tropic of Cancer TWICE · Gulf of Khambhat
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Kerala Rivers</div>
+          Bharatapuzha &gt; Periyar (length) · Both + Pamba → Vembanad Lake (India's longest lake)
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Rishikulya</div>
+          Olive Ridley Turtle nesting at mouth! Odisha.
+        </div>
+        <div class="ultra-item">
+          <div class="uh">Luni</div>
+          Aravalli · Lavanwari (salty) · Dies in Rann of Kutch, never reaches sea
+        </div>
+      </div>
+    </div>
+
+    <!-- LAYER 3 -->
+    <div class="layer-content" id="layer3">
+      <div class="card" style="font-family: var(--font-head); font-size: 0.9rem; line-height: 2;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.3rem 1rem;">
+          <div>🔵 <strong>Largest Peninsular River</strong> = Godavari (1450 km)</div>
+          <div>🔵 <strong>2nd Longest S. India</strong> = Krishna (1400 km)</div>
+          <div>🔵 <strong>India's Longest Dam</strong> = Hirakud (Mahanadi)</div>
+          <div>🔵 <strong>Longest West-flowing</strong> = Narmada</div>
+          <div>🔵 <strong>Only Perennial Peninsular</strong> = Cauvery</div>
+          <div>🔵 <strong>Sorrow of Bengal</strong> = Damodar (Rift Valley)</div>
+          <div>🔵 <strong>Ganga of South India</strong> = Cauvery (Godavari if no option)</div>
+          <div>🔵 <strong>Vriddha+Dakshin Ganga</strong> = Godavari</div>
+          <div>🔵 <strong>River crosses Cancer 2x</strong> = Mahi</div>
+          <div>🔵 <strong>India's Longest Lake</strong> = Vembanad (Kerala)</div>
+          <div>🔵 <strong>India's Highest Waterfall</strong> = Kunchikal (Varahi)</div>
+          <div>🔵 <strong>Jog Falls</strong> = Sharavati river</div>
+          <div>🔵 <strong>Olive Ridley Nesting</strong> = Rishikulya mouth</div>
+          <div>🔵 <strong>Lifeline of Goa</strong> = Mandovi</div>
+          <div>🔵 <strong>Lifeline of Kerala</strong> = Periyar</div>
+          <div>🔵 <strong>Kolleru Lake</strong> = b/w Godavari+Krishna</div>
+          <div>🔵 <strong>Pulicat Lake</strong> = AP–TN border</div>
+          <div>🔵 <strong>Raichur Doab</strong> = Krishna + Tungabhadra</div>
+          <div>🔵 <strong>Marmugao Port</strong> = Zuari river, Goa</div>
+          <div>🔵 <strong>Saugor of Odisha</strong> = Mahanadi</div>
+          <div>🔵 <strong>Luni</strong> = Salty river, dies in Rann of Kutch</div>
+          <div>🔵 <strong>Narmada+Tapi+Damodar</strong> = Rift Valleys</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAYER 4 -->
+    <div class="layer-content" id="layer4">
+      <div class="card" style="font-family: var(--font-mono); font-size: 0.85rem; line-height: 2.2;">
+        <div style="color: var(--accent-teal); font-weight: 700; margin-bottom: 0.5rem; font-size: 0.95rem;">30-SECOND DRILL — Read Fast!</div>
+        GODAVARI = 1450km · Nashik · Dakshin+Vriddha Ganga<br>
+        KRISHNA = 1400km · Mahabaleshwar · Raichur Doab<br>
+        CAUVERY = 800km · Kodagu · PERENNIAL · Garden of S. India<br>
+        MAHANADI = 850km · Sihawa Hills · HIRAKUD DAM (Longest)<br>
+        DAMODAR = Chota Nagpur · RIFT · Hooghly · SORROW of Bengal<br>
+        NARMADA = Amarkantak · RIFT · Longest West-Flowing<br>
+        TAPI = Betul Plateau · RIFT · Surat<br>
+        MAHI = Vindhya · Cancer 2x · Gulf Khambhat<br>
+        LUNI = Aravalli · Salty · Dies Rann of Kutch<br>
+        SABARMATI = Aravalli · Gandhinagar+Ahmedabad<br>
+        RISHIKULYA = Olive Ridley Turtles<br>
+        VEMBANAD = Longest Lake Kerala (Bharatapuzha+Periyar+Pamba)<br>
+        KUNCHIKAL = Highest Waterfall India (Varahi)<br>
+        JOG FALLS = Sharavati<br>
+        KOLLERU = b/w Godavari+Krishna · PULICAT = AP+TN border
+      </div>
+    </div>
+
+    <!-- LAYER 5 -->
+    <div class="layer-content" id="layer5">
+      <div class="last-night">
+        <div style="font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; color: var(--plus); margin-bottom: 1rem;">🌙 Last Night — Read This Only</div>
+
+        <h3>5 Must-Know Numbers</h3>
+        <ul>
+          <li>Godavari = 1450 km (largest peninsular)</li>
+          <li>Krishna = ~1400 km (2nd longest South India)</li>
+          <li>Cauvery = 800 km (perennial)</li>
+          <li>Mahanadi = 850 km (Hirakud = longest dam)</li>
+          <li>Tapi = 724 km</li>
+        </ul>
+
+        <h3>5 Must-Know Rift Valleys</h3>
+        <ul>
+          <li>Damodar — "Sorrow of Bengal"</li>
+          <li>Narmada — Between Vindhya &amp; Satpura</li>
+          <li>Tapi — Similar setup to Narmada</li>
+        </ul>
+
+        <h3>5 Deadly Traps</h3>
+        <ul>
+          <li>Pennar ≠ Periyar (East ≠ West)</li>
+          <li>Vriddha Ganga = Godavari (not Cauvery)</li>
+          <li>Indravati → Godavari (NOT Cauvery despite -ti ending)</li>
+          <li>Bharatapuzha slightly LONGER than Periyar</li>
+          <li>Mahi crosses Tropic of Cancer TWICE</li>
+        </ul>
+
+        <h3>5 Key Special Facts</h3>
+        <ul>
+          <li>Rishikulya = Olive Ridley Turtles nesting</li>
+          <li>Kunchikal Falls = India's highest (Varahi, Karnataka)</li>
+          <li>Cauvery alone perennial (two monsoons)</li>
+          <li>Luni dies in Rann of Kutch (never reaches sea)</li>
+          <li>Kolleru Lake = between Godavari and Krishna</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+  });
+
+  // Layer switching
+  function switchLayer(layerId) {
+    document.querySelectorAll('.layer-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.layer-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(layerId).classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>

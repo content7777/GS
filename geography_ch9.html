@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HIMALAYAS — The Revision Vault</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700;8..60,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --bg: #0a0e14;
+  --bg-soft: #0f1520;
+  --panel: #131a26;
+  --panel-2: #1a2333;
+  --line: #243044;
+  --line-soft: #1c2536;
+  --ink: #dde3ec;
+  --ink-dim: #8b97ad;
+  --ink-faint: #5d6a82;
+  --gold: #d4a857;
+  --gold-dim: #9c7f4d;
+  --ice: #6ec3dd;
+  --ice-dim: #3d6878;
+  --rose: #e0696f;
+  --rose-dim: #6b3438;
+  --moss: #79c08a;
+  --moss-dim: #3a5c44;
+  --violet: #a78bd6;
+  --serif: 'Source Serif 4', Georgia, serif;
+  --sans: 'Inter', -apple-system, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+
+*{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+body{
+  margin:0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.6;
+  font-size: 16px;
+}
+body::before{
+  content:"";
+  position: fixed; inset:0;
+  background:
+    radial-gradient(ellipse 900px 500px at 15% -5%, rgba(212,168,87,0.07), transparent 60%),
+    radial-gradient(ellipse 700px 600px at 100% 20%, rgba(110,195,221,0.06), transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+
+::selection{ background: var(--gold); color: #14100a; }
+
+/* ===== LAYOUT SHELL ===== */
+.shell{ display:flex; max-width: 1400px; margin: 0 auto; position:relative; z-index:1; }
+.toc{
+  width: 260px; flex-shrink:0;
+  position: sticky; top:0; height: 100vh; overflow-y:auto;
+  padding: 28px 18px 40px 24px;
+  border-right: 1px solid var(--line-soft);
+  scrollbar-width: thin;
+}
+.toc::-webkit-scrollbar{ width:6px; }
+.toc::-webkit-scrollbar-thumb{ background: var(--line); border-radius:3px; }
+.toc-brand{
+  font-family: var(--serif); font-weight:700; font-size: 1.1rem;
+  color: var(--gold); letter-spacing:0.02em; margin-bottom:4px;
+}
+.toc-sub{ font-size:0.72rem; color: var(--ink-faint); margin-bottom:22px; text-transform:uppercase; letter-spacing:0.08em;}
+.toc nav a{
+  display:block; font-size:0.85rem; color: var(--ink-dim); text-decoration:none;
+  padding:6px 10px; border-radius:6px; margin-bottom:1px; border-left:2px solid transparent;
+  transition: all .15s ease;
+}
+.toc nav a:hover{ background: var(--panel); color: var(--ink); }
+.toc nav a.active{ color: var(--gold); border-left-color: var(--gold); background: rgba(212,168,87,0.06); }
+.toc-group-label{
+  font-size:0.68rem; text-transform:uppercase; letter-spacing:0.1em; color: var(--ink-faint);
+  margin: 18px 0 6px 10px; font-weight:600;
+}
+
+.main{ flex:1; min-width:0; padding: 0 0 80px; }
+
+/* ===== HERO ===== */
+.hero{
+  padding: 70px 60px 50px;
+  border-bottom: 1px solid var(--line-soft);
+  position: relative;
+  overflow:hidden;
+}
+.hero-eyebrow{
+  font-family: var(--mono); font-size:0.75rem; color: var(--ice);
+  text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 18px;
+  display:flex; align-items:center; gap:10px;
+}
+.hero-eyebrow::before{ content:"";width:24px;height:1px;background:var(--ice); }
+.hero h1{
+  font-family: var(--serif); font-weight:900; font-size: clamp(2.6rem, 5vw, 4.2rem);
+  margin: 0 0 14px; line-height:1.02; color: #f1ede3;
+  letter-spacing:-0.01em;
+}
+.hero h1 span{ color: var(--gold); font-style:italic; }
+.hero p.lede{ font-size:1.05rem; color: var(--ink-dim); max-width:640px; margin:0 0 28px;}
+.hero-skyline{
+  position:absolute; right:30px; bottom:0; width: 420px; height:160px; opacity:0.5;
+}
+.stat-row{ display:flex; gap:28px; flex-wrap:wrap; margin-top:10px;}
+.stat{ font-family:var(--mono); }
+.stat b{ display:block; font-size:1.4rem; color:var(--gold); font-family:var(--serif); font-weight:700;}
+.stat span{ font-size:0.7rem; color:var(--ink-faint); text-transform:uppercase; letter-spacing:0.06em;}
+
+/* ===== SECTION GENERIC ===== */
+section.block{ padding: 50px 60px; border-bottom: 1px solid var(--line-soft); scroll-margin-top: 20px;}
+.block-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:26px; }
+.block-num{ font-family:var(--mono); color:var(--ink-faint); font-size:0.85rem; }
+.block-head h2{
+  font-family: var(--serif); font-size: 1.9rem; font-weight:700; margin:0; color:#f1ede3;
+}
+.block-tag{
+  font-size:0.68rem; padding:3px 10px; border-radius:20px; text-transform:uppercase;
+  letter-spacing:0.06em; font-weight:600; margin-left:auto; font-family:var(--mono);
+}
+.tag-must{ background: rgba(224,105,111,0.12); color: var(--rose); border:1px solid var(--rose-dim);}
+.tag-imp{ background: rgba(212,168,87,0.12); color: var(--gold); border:1px solid var(--gold-dim);}
+.tag-good{ background: rgba(110,195,221,0.1); color: var(--ice); border:1px solid var(--ice-dim);}
+
+/* ===== CHAPTER NAV CHIPS (sticky cross-section) ===== */
+.layer-sticky{
+  position: sticky; top:0; z-index:5; background: rgba(10,14,20,0.88);
+  backdrop-filter: blur(10px); border-bottom:1px solid var(--line-soft);
+  padding: 10px 60px; display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+}
+.layer-sticky span{ font-family:var(--mono); font-size:0.68rem; color:var(--ink-faint); margin-right:6px;}
+.chip{
+  font-size:0.74rem; padding:5px 12px; border-radius:20px; border:1px solid var(--line);
+  color:var(--ink-dim); text-decoration:none; transition: all .15s;
+}
+.chip:hover{ border-color: var(--gold); color: var(--gold); }
+
+/* ===== MEMORY PALACE ===== */
+.palace{
+  background: linear-gradient(160deg, var(--panel), var(--bg-soft));
+  border:1px solid var(--line); border-radius:16px; padding:32px 36px;
+  position:relative; overflow:hidden;
+}
+.palace::before{
+  content:"🏔"; position:absolute; right:24px; top:14px; font-size:5rem; opacity:0.06; filter: grayscale(1);
+}
+.palace h3{ font-family:var(--serif); color:var(--ice); font-size:1.25rem; margin:0 0 14px; }
+.palace-story p{ color:var(--ink-dim); margin: 0 0 14px; }
+.palace-story strong{ color: var(--ink); font-weight:600; }
+.station{
+  display:flex; gap:14px; padding:14px 0; border-top:1px dashed var(--line);
+}
+.station:first-of-type{ border-top:none; }
+.station-icon{ font-size:1.6rem; flex-shrink:0; width:36px; text-align:center; }
+.station-body b{ color: var(--gold); }
+.station-body{ color: var(--ink-dim); font-size:0.94rem; }
+
+/* ===== CARDS / GRID ===== */
+.grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+.grid3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; }
+@media (max-width: 900px){ .grid2, .grid3{ grid-template-columns: 1fr; } }
+
+.card{
+  background: var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px 22px;
+}
+.card h4{ margin:0 0 10px; color: var(--gold); font-family:var(--serif); font-size:1.05rem; }
+.card ul{ margin:0; padding-left:18px; }
+.card li{ margin-bottom:6px; color: var(--ink-dim); font-size:0.92rem; }
+.card li b, .card li strong{ color: var(--ink); }
+
+/* ===== TABLE ===== */
+.tbl-wrap{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
+table{ width:100%; border-collapse:collapse; font-size:0.88rem; }
+thead th{
+  background: var(--panel-2); color: var(--ice); text-align:left; padding:10px 14px;
+  font-family:var(--mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em;
+  border-bottom:1px solid var(--line);
+}
+tbody td{ padding:9px 14px; border-bottom:1px solid var(--line-soft); color: var(--ink-dim); }
+tbody tr:last-child td{ border-bottom:none; }
+tbody tr:hover{ background: rgba(212,168,87,0.04); }
+tbody td b{ color: var(--ink); }
+.hl-gold{ color: var(--gold); font-weight:600; }
+.hl-ice{ color: var(--ice); font-weight:600; }
+
+/* ===== HOOK BOXES ===== */
+.hook{
+  background: rgba(110,195,221,0.05); border:1px solid var(--ice-dim); border-left:4px solid var(--ice);
+  border-radius:8px; padding:16px 20px; margin: 14px 0;
+}
+.hook .hook-label{ font-family:var(--mono); font-size:0.7rem; color:var(--ice); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; display:block;}
+.hook p{ margin:0; color: var(--ink); font-size:0.95rem; }
+
+/* ===== TRAPS ===== */
+.trap{
+  background: rgba(224,105,111,0.06); border:1px solid var(--rose-dim); border-left:4px solid var(--rose);
+  border-radius:8px; padding:16px 20px; margin:12px 0;
+}
+.trap .trap-label{ font-family:var(--mono); font-size:0.7rem; color:var(--rose); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; display:block;}
+.trap p{ margin:0 0 4px; color:var(--ink); font-size:0.93rem; }
+.trap .vs{ color: var(--ink-faint); font-style:italic; }
+
+/* ===== EXAMINER QS ===== */
+.examq{
+  background: var(--panel); border:1px solid var(--line); border-radius:10px;
+  padding:14px 18px; margin-bottom:10px; font-size:0.92rem;
+}
+.examq .qtype{
+  font-family:var(--mono); font-size:0.65rem; color:var(--violet); text-transform:uppercase;
+  letter-spacing:0.07em; display:block; margin-bottom:6px;
+}
+.examq p{ margin:0; color: var(--ink-dim); }
+.examq p b{ color: var(--ink); }
+
+/* ===== ACTIVE RECALL / FLASHCARDS ===== */
+.flash-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:14px; }
+@media (max-width: 900px){ .flash-grid{ grid-template-columns: 1fr; } }
+.flash{
+  background: var(--panel); border:1px solid var(--line); border-radius:10px;
+  padding:16px 18px; cursor:pointer; position:relative; transition: border-color .15s;
+  min-height: 70px;
+}
+.flash:hover{ border-color: var(--gold-dim); }
+.flash .q{ color: var(--ink); font-size:0.92rem; font-weight:500; }
+.flash .a{
+  color: var(--moss); font-size:0.92rem; margin-top:8px; padding-top:8px;
+  border-top:1px dashed var(--line); display:none;
+}
+.flash.show .a{ display:block; }
+.flash .tap-hint{ font-family:var(--mono); font-size:0.62rem; color:var(--ink-faint); position:absolute; top:14px; right:16px; }
+.flash.show .tap-hint{ display:none; }
+
+/* ===== DETAILS / LAYERS ===== */
+details.layer{
+  background: var(--panel); border:1px solid var(--line); border-radius:12px;
+  margin-bottom:14px; overflow:hidden;
+}
+details.layer summary{
+  padding:16px 22px; cursor:pointer; font-family:var(--serif); font-weight:700; font-size:1.1rem;
+  color: var(--gold); list-style:none; display:flex; align-items:center; gap:12px;
+}
+details.layer summary::-webkit-details-marker{ display:none; }
+details.layer summary::before{
+  content:"+"; font-family:var(--mono); color: var(--ink-faint); font-size:1.1rem; width:18px;
+}
+details.layer[open] summary::before{ content:"−"; color: var(--gold); }
+details.layer .layer-body{ padding: 0 24px 22px; border-top:1px solid var(--line-soft); }
+details.layer .layer-body{ padding-top:18px; }
+
+.fast-sheet{ font-family: var(--mono); font-size:0.88rem; line-height:1.9; color: var(--ink); }
+.fast-sheet .row{ display:flex; gap:10px; padding:4px 0; border-bottom:1px dotted var(--line-soft); }
+.fast-sheet .row b{ color: var(--gold); min-width:170px; flex-shrink:0; }
+.fast-sheet .row span{ color: var(--ink-dim); }
+
+.ultra-grid{ display:flex; flex-wrap:wrap; gap:10px; }
+.ultra-pill{
+  background: var(--panel-2); border:1px solid var(--line); border-radius:8px;
+  padding:8px 14px; font-family:var(--mono); font-size:0.8rem; color: var(--ink);
+}
+.ultra-pill b{ color: var(--ice); }
+
+.last-night{
+  background: linear-gradient(135deg, rgba(212,168,87,0.08), rgba(224,105,111,0.05));
+  border: 1px solid var(--gold-dim); border-radius: 12px; padding: 24px;
+}
+.last-night h4{ color: var(--rose); font-family:var(--serif); margin-top:0; }
+.last-night ol{ padding-left:20px; }
+.last-night li{ margin-bottom:8px; color: var(--ink); font-size:0.93rem; }
+
+/* ===== MOUNTAIN DIAGRAM ===== */
+.diagram-box{
+  background: var(--bg-soft); border:1px solid var(--line); border-radius:14px;
+  padding: 24px; margin: 16px 0;
+}
+.diagram-box svg{ width:100%; height:auto; display:block; }
+
+/* ===== MISC ===== */
+.note-strip{
+  font-size:0.85rem; color: var(--ink-faint); font-style:italic; margin-top:6px;
+}
+.divider-label{
+  text-align:center; font-family:var(--mono); font-size:0.7rem; color:var(--ink-faint);
+  text-transform:uppercase; letter-spacing:0.15em; margin: 6px 0 22px;
+}
+.kicker{ color: var(--ink-dim); margin-bottom:18px; max-width: 760px; }
+.pill-row{ display:flex; gap:8px; flex-wrap:wrap; margin: 6px 0 18px; }
+.pill-row .p{
+  background: var(--panel-2); border:1px solid var(--line); border-radius:20px;
+  padding:5px 12px; font-size:0.78rem; color: var(--ink-dim);
+}
+footer.end{
+  text-align:center; padding: 50px 20px; color: var(--ink-faint); font-size:0.85rem;
+}
+footer.end b{ color: var(--gold); }
+
+.mobile-toc-toggle{ display:none; }
+@media (max-width: 920px){
+  .toc{ display:none; }
+  .hero, section.block{ padding: 36px 22px; }
+  .layer-sticky{ padding: 10px 22px; }
+  .grid2, .grid3{ gap:12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ============ STICKY TOC ============ -->
+  <aside class="toc">
+    <div class="toc-brand">🏔 HIMALAYAS</div>
+    <div class="toc-sub">The Revision Vault</div>
+    <nav id="tocNav">
+      <a href="#big-picture">Big Picture</a>
+      <a href="#memory-palace">Memory Palace</a>
+      <div class="toc-group-label">Foundations</div>
+      <a href="#formation">Formation Story</a>
+      <a href="#four-ranges">The Four Ranges</a>
+      <div class="toc-group-label">Range by Range</div>
+      <a href="#trans">Trans Himalayas</a>
+      <a href="#great">Great Himalayas</a>
+      <a href="#peaks">Peak Heights Table</a>
+      <a href="#lesser">Lesser Himalayas</a>
+      <a href="#shivalik">Shivalik</a>
+      <div class="toc-group-label">Regional Tour</div>
+      <a href="#regional">Regional Divisions</a>
+      <a href="#purvanchal">Purvanchal Himalayas</a>
+      <a href="#lakes">Lakes</a>
+      <div class="toc-group-label">Mountain Types</div>
+      <a href="#mountain-types">Fold / Block / Volcanic</a>
+      <a href="#passes">Mountain Passes</a>
+      <div class="toc-group-label">Exam Prep</div>
+      <a href="#traps">⚠️ Exam Traps</a>
+      <a href="#examiner">Examiner's Favourites</a>
+      <a href="#recall">Active Recall</a>
+      <div class="toc-group-label">Revision Layers</div>
+      <a href="#layers">Layer 2–5 Sheets</a>
+    </nav>
+  </aside>
+
+  <main class="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="big-picture">
+      <div class="hero-eyebrow">FRB 2.0 · Indian Geography · Chapter 02</div>
+      <h1>Himalayas: <span>Born from a Drowned Sea</span></h1>
+      <p class="lede">India was once stuck to Antarctica. It broke off, sailed north for 100+ million years, rammed into Asia, and squeezed a vanished ocean — the Tethys — straight up into the sky. That squeezed ocean is the mountain range you're about to memorize forever.</p>
+      <div class="stat-row">
+        <div class="stat"><b>4</b><span>Parallel Ranges</span></div>
+        <div class="stat"><b>8,848 m</b><span>Mount Everest</span></div>
+        <div class="stat"><b>2,500 km</b><span>Axial Length</span></div>
+        <div class="stat"><b>150 Mya</b><span>Collision Began</span></div>
+      </div>
+    </section>
+
+    <!-- ============ MEMORY PALACE ============ -->
+    <section class="block" id="memory-palace">
+      <div class="block-head">
+        <span class="block-num">01</span>
+        <h2>🧠 The Chapter Memory Palace</h2>
+        <span class="block-tag tag-must">Walk this before every revision</span>
+      </div>
+      <div class="palace">
+        <h3>The Himalayan Construction Site</h3>
+        <div class="palace-story">
+          <p>Picture a <strong>four-storey building under construction</strong>, rising out of the wreckage of a swimming pool. The pool was the <strong>Tethys Sea</strong> — and India spent 100 million years swimming north just to drain it.</p>
+        </div>
+        <div class="station">
+          <div class="station-icon">🌊</div>
+          <div class="station-body"><b>Foundation pit (mud):</b> The Tethys Sea's leftover mud and sediment got crushed upward first. This badly-mixed "foundation layer" is the <b>Trans Himalayas</b> — not even proper rock from the plates, just squeezed seabed gunk. It sits furthest <i>inside</i>, away from India.</div>
+        </div>
+        <div class="station">
+          <div class="station-icon">🏗️</div>
+          <div class="station-body"><b>Ground floor (granite skeleton):</b> Once the mud was dealt with, the actual Indian and Eurasian plates locked and pushed. The first true storey to rise is the <b>Great Himalayas (Himadri)</b> — tallest, iciest, the building's load-bearing core. Everest lives on this floor.</div>
+        </div>
+        <div class="station">
+          <div class="station-icon">🪜</div>
+          <div class="station-body"><b>First floor (the messy middle):</b> A shorter, second push created the <b>Lesser Himalayas (Himachal)</b> — a jumble of local hill-ranges, each region calling it by a different nickname (Pir Panjal, Dhauladhar, Nag Tibba, Mahabharat).</div>
+        </div>
+        <div class="station">
+          <div class="station-icon">🚪</div>
+          <div class="station-body"><b>Porch / doorstep (newest, lowest):</b> The last, weakest push only managed a low outer porch — the <b>Shivalik</b>. Loose gravel, low height, sits right at the doorstep facing the plains. The gap between porch and first floor often floods into a valley we call a <b>Doon</b> (Dehradun = biggest Doon).</div>
+        </div>
+        <div class="station">
+          <div class="station-icon">🧊</div>
+          <div class="station-body"><b>Behind the building (the icebox):</b> Tucked behind the foundation-mud layer, in J&K, is a special icebox room with three shelves stacked <b>Karakoram → Ladakh → Zanskar</b> (north to south) — this is where K2 and the Siachen Glacier live.</div>
+        </div>
+        <p class="note-strip">Walk this building floor by floor — mud → core → middle → porch → icebox — and the entire range order (Trans → Great → Lesser → Shivalik) plus the K-L-Z icebox falls out automatically.</p>
+      </div>
+    </section>
+
+    <!-- ============ STICKY MINI NAV ============ -->
+    <div class="layer-sticky">
+      <span>Jump:</span>
+      <a class="chip" href="#trans">Trans</a>
+      <a class="chip" href="#great">Great</a>
+      <a class="chip" href="#lesser">Lesser</a>
+      <a class="chip" href="#shivalik">Shivalik</a>
+      <a class="chip" href="#passes">Passes</a>
+      <a class="chip" href="#traps">Traps ⚠️</a>
+      <a class="chip" href="#recall">Self-Test</a>
+    </div>
+
+    <!-- ============ FORMATION STORY ============ -->
+    <section class="block" id="formation">
+      <div class="block-head">
+        <span class="block-num">02</span>
+        <h2>How the Himalayas Were Born</h2>
+        <span class="block-tag tag-must">🔥 Must Know</span>
+      </div>
+      <p class="kicker">This is the cause→effect chain every single fact in this chapter hangs off. Learn the chain, not the facts.</p>
+
+      <div class="diagram-box">
+        <svg viewBox="0 0 900 230" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="seaGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3d6878"/><stop offset="100%" stop-color="#1a2333"/>
+            </linearGradient>
+          </defs>
+          <text x="450" y="22" text-anchor="middle" fill="#8b97ad" font-family="JetBrains Mono" font-size="12">PANGEA → SPLIT → COLLISION → FOLD MOUNTAINS</text>
+          <!-- step 1 -->
+          <g transform="translate(20,40)">
+            <rect width="160" height="100" rx="10" fill="#131a26" stroke="#243044"/>
+            <text x="80" y="35" text-anchor="middle" fill="#d4a857" font-family="Source Serif 4" font-weight="700" font-size="14">Pangea</text>
+            <text x="80" y="58" text-anchor="middle" fill="#8b97ad" font-size="10">splits into</text>
+            <text x="80" y="78" text-anchor="middle" fill="#dde3ec" font-size="11">Laurasia (N)</text>
+            <text x="80" y="94" text-anchor="middle" fill="#dde3ec" font-size="11">Gondwana (S) — India here</text>
+          </g>
+          <text x="195" y="95" fill="#5d6a82" font-size="20">→</text>
+          <!-- step 2 -->
+          <g transform="translate(215,40)">
+            <rect width="160" height="100" rx="10" fill="#131a26" stroke="#243044"/>
+            <text x="80" y="35" text-anchor="middle" fill="#d4a857" font-family="Source Serif 4" font-weight="700" font-size="14">India Drifts</text>
+            <text x="80" y="58" text-anchor="middle" fill="#8b97ad" font-size="10">~150 Mya: starts moving</text>
+            <text x="80" y="78" text-anchor="middle" fill="#dde3ec" font-size="11">~100 Mya: moving fast</text>
+            <text x="80" y="94" text-anchor="middle" fill="#dde3ec" font-size="11">north, toward Eurasia</text>
+          </g>
+          <text x="390" y="95" fill="#5d6a82" font-size="20">→</text>
+          <!-- step 3 -->
+          <g transform="translate(410,40)">
+            <rect width="170" height="100" rx="10" fill="#131a26" stroke="#3d6878"/>
+            <text x="85" y="35" text-anchor="middle" fill="#6ec3dd" font-family="Source Serif 4" font-weight="700" font-size="14">Tethys Sea</text>
+            <text x="85" y="58" text-anchor="middle" fill="#8b97ad" font-size="10">(= Tethys Geosyncline)</text>
+            <text x="85" y="78" text-anchor="middle" fill="#dde3ec" font-size="11">sits between India</text>
+            <text x="85" y="94" text-anchor="middle" fill="#dde3ec" font-size="11">and Eurasia — gets squeezed</text>
+          </g>
+          <text x="595" y="95" fill="#5d6a82" font-size="20">→</text>
+          <!-- step 4 -->
+          <g transform="translate(615,40)">
+            <rect width="265" height="100" rx="10" fill="#131a26" stroke="#e0696f"/>
+            <text x="132" y="35" text-anchor="middle" fill="#e0696f" font-family="Source Serif 4" font-weight="700" font-size="14">Continent-Continent Convergence</text>
+            <text x="132" y="58" text-anchor="middle" fill="#8b97ad" font-size="10">Sediment + later, plate rock rises</text>
+            <text x="132" y="78" text-anchor="middle" fill="#dde3ec" font-size="11">in 4 separate pushes over time</text>
+            <text x="132" y="94" text-anchor="middle" fill="#dde3ec" font-size="11">→ 4 parallel mountain ranges</text>
+          </g>
+          <!-- bottom strip: 4 ranges -->
+          <g transform="translate(140,165)">
+            <rect width="620" height="50" rx="8" fill="#0f1520" stroke="#243044"/>
+            <text x="78" y="30" text-anchor="middle" fill="#a78bd6" font-family="JetBrains Mono" font-size="12">Trans</text>
+            <text x="233" y="30" text-anchor="middle" fill="#d4a857" font-family="JetBrains Mono" font-size="12">Great (Himadri)</text>
+            <text x="388" y="30" text-anchor="middle" fill="#79c08a" font-family="JetBrains Mono" font-size="12">Lesser (Himachal)</text>
+            <text x="540" y="30" text-anchor="middle" fill="#e0696f" font-family="JetBrains Mono" font-size="12">Shivalik (Outer)</text>
+            <line x1="155" y1="0" x2="155" y2="50" stroke="#243044"/>
+            <line x1="310" y1="0" x2="310" y2="50" stroke="#243044"/>
+            <line x1="465" y1="0" x2="465" y2="50" stroke="#243044"/>
+          </g>
+        </svg>
+      </div>
+
+      <div class="hook">
+        <span class="hook-label">Memory Hook</span>
+        <p>Think of the Tethys Sea as a <strong>sandwich filling that got squeezed out the top</strong> when you press two slices of bread (India + Eurasia) together. That squeezed-out filling rose first and cooled into the <strong>Trans Himalayas</strong> — which is why its rock origin is different (sediment, not plate rock) from the other three.</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h4>Cause → Effect Chain</h4>
+          <ul>
+            <li><b>Gondwanaland breaks</b> → India becomes an isolated drifting plate</li>
+            <li><b>India drifts north (150 Mya → 100 Mya)</b> → collides with Eurasian plate</li>
+            <li><b>Continent-continent convergence</b> → neither pure construction nor destruction in the volcanic sense — it's a <b>destructive boundary</b>, but the destruction folds rock upward instead of consuming it downward</li>
+            <li><b>Tethys Sea sediments squeezed first</b> → Trans Himalayas rise</li>
+            <li><b>Sustained collision over millions of years, in stages</b> → 3 more layers rise: Great, Lesser, Shivalik</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Why a Subduction Zone Forms — But No Volcano</h4>
+          <ul>
+            <li>Continental crust is <b>light</b>; oceanic crust is <b>dense</b> → in a normal convergence, the denser oceanic plate subducts (sinks)</li>
+            <li>Here, <b>both</b> plates are continental — similar low density, so true subduction struggles</li>
+            <li>Result: instead of sinking and melting (which causes volcanoes), the crust <b>buckles and rises</b> → fold mountains, not volcanic mountains</li>
+            <li>The Himalayas are still rising today because <b>India is still pushing north</b> — that's why they're called <b>young fold mountains</b></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOUR RANGES OVERVIEW ============ -->
+    <section class="block" id="four-ranges">
+      <div class="block-head">
+        <span class="block-num">03</span>
+        <h2>The Four Parallel Ranges — Master Table</h2>
+        <span class="block-tag tag-must">🔥 The spine of the whole chapter</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Range</th><th>Also Called</th><th>Avg. Height</th><th>Key Identity</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b>Trans Himalayas</b></td><td>—</td><td>(varies; K2 = 8,611 m)</td><td>Core = granitic rock; formed from <span class="hl-ice">Tethys sediment</span>, not plate rock. Contains Karakoram–Ladakh–Zanskar.</td></tr>
+            <tr><td><b>Great Himalayas</b></td><td>Himadri / Inner Himalayas</td><td class="hl-gold">6,000 m</td><td>Highest, continuous, snow-bound. Everest, K2's neighbours, Kanchenjunga.</td></tr>
+            <tr><td><b>Lesser Himalayas</b></td><td>Himachal / Middle Himalayas</td><td class="hl-gold">4,000 m</td><td>Different local names per state (Pir Panjal, Dhauladhar, Nag Tibba, Mahabharat). Axial length <b>2,500 km</b>.</td></tr>
+            <tr><td><b>Shivalik</b></td><td>Outer Himalayas / Churia Hills</td><td class="hl-gold">900–1,100 m (≈1,000)</td><td>Lowest, youngest, gravel-based. Forms <b>Doon</b> valleys with Lesser Himalayas (Dehradun = largest Doon).</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="hook">
+        <span class="hook-label">Memory Hook — The Height Ladder</span>
+        <p>Say it like a countdown rhyme: <strong>"Six, Four, leftover-poor"</strong> — Great = 6,000 m, Lesser = 4,000 m, Shivalik ≈ 1,000 m (the "poor leftover" porch). Heights shrink as you move from inner to outer, exactly like a layer cake getting thinner toward its edge.</p>
+      </div>
+    </section>
+
+    <!-- ============ TRANS HIMALAYAS ============ -->
+    <section class="block" id="trans">
+      <div class="block-head">
+        <span class="block-num">04</span>
+        <h2>Trans Himalayas — The Icebox Behind the Building</h2>
+        <span class="block-tag tag-imp">⭐ Important</span>
+      </div>
+      <p class="kicker">Three ranges, strict North → South order: <b class="hl-ice">Karakoram → Ladakh → Zanskar</b>. This exact sequence has appeared in both CDS and SSC.</p>
+
+      <div class="grid3">
+        <div class="card">
+          <h4>🏔 Karakoram</h4>
+          <ul>
+            <li>Northernmost of the three</li>
+            <li><b>K2 (Godwin Austen)</b> — world's <b>2nd highest peak</b>, <b>8,611 m</b>, in PoK region</li>
+            <li><b>Siachen Glacier</b> — world's longest <i>non-polar</i> glacier outside this list... actually 2nd longest non-polar glacier globally</li>
+            <li>Operation Meghdoot — <b>1984</b> (India secures Siachen)</li>
+            <li>Other glaciers here: Baltoro, Biafo, Hispar</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🏔 Ladakh</h4>
+          <ul>
+            <li>Middle of the three</li>
+            <li><b>Shyok River</b> flows between Karakoram & Ladakh</li>
+            <li>Remember only this one river fact for Ladakh's northern boundary</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🏔 Zanskar</h4>
+          <ul>
+            <li>Southernmost of the three</li>
+            <li><b>Indus River</b> flows between Ladakh & Zanskar</li>
+            <li>Contains the Fotu La pass</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hook">
+        <span class="hook-label">Memory Hook — The Two Rivers</span>
+        <p><strong>"Shyok separates the Shoulders (Karakoram) from the Legs (Ladakh); Indus separates the Legs from the Zigzag-bottom (Zanskar)."</strong> Shyok comes first alphabetically near the top (Karakoram-Ladakh boundary); Indus is the second, lower boundary (Ladakh-Zanskar).</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h4>Non-Polar Glaciers — Don't Mix These Up</h4>
+          <ul>
+            <li><b>#1 Longest non-polar glacier:</b> Fedchenko Glacier, <b>Tajikistan</b></li>
+            <li><b>Longest glacier overall:</b> Lambert Glacier, <b>Antarctica</b> (this is polar — different category)</li>
+            <li><b>#2 longest non-polar glacier:</b> <b class="hl-gold">Siachen</b>, Karakoram, India</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Geography Pin: Where Things Sit Near Siachen</h4>
+          <ul>
+            <li><b>Aksai Chin</b> — adjacent disputed plateau</li>
+            <li><b>Depsang Plains</b> — nearby high-altitude plain</li>
+            <li><b>Shaksgam Valley</b> — ceded by Pakistan to China</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GREAT HIMALAYAS ============ -->
+    <section class="block" id="great">
+      <div class="block-head">
+        <span class="block-num">05</span>
+        <h2>Great Himalayas — Himadri, the Core</h2>
+        <span class="block-tag tag-must">🔥 Must Know</span>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h4>Identity Card</h4>
+          <ul>
+            <li>Also called <b>Himadri</b> or <b>Inner Himalayas</b></li>
+            <li>Formed from the <b>rising of one continental plate</b> (not Tethys sediment, unlike Trans)</li>
+            <li>Average height: <b class="hl-gold">6,000 m</b> (some peaks 8,000 m+, some only 5,000–5,500 m)</li>
+            <li>Westernmost peak: <b>Nanga Parbat</b></li>
+            <li>Easternmost peak: <b>Namcha Barwa</b></li>
+            <li>Continuous, snow-covered, near-impassable except via high passes</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Why It's Called "Inner"</h4>
+          <ul>
+            <li>Geographic order outward-to-inward: <b>Trans (innermost by formation logic)</b> → Great → Lesser → Shivalik (outermost)</li>
+            <li>Trans is treated separately because it formed from <b>sediment</b>, not plate-rock uplift</li>
+            <li>Great, Lesser & Shivalik all formed by the <b>same plate-rising mechanism</b> → studied as one family</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hook">
+        <span class="hook-label">Memory Hook</span>
+        <p>"Nanga Parbat to Namcha Barwa" rhymes like a train route announcement: <strong>West Nanga → East Namcha</strong>. N for Nanga = "Now" (start, west); Namcha = "Near China" (end, east).</p>
+      </div>
+    </section>
+
+    <!-- ============ PEAKS TABLE ============ -->
+    <section class="block" id="peaks">
+      <div class="block-head">
+        <span class="block-num">06</span>
+        <h2>Peak Heights — The Exact Table Examiners Love</h2>
+        <span class="block-tag tag-must">🔥 Must Know</span>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Rank</th><th>Peak</th><th>Height</th><th>Location</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1 (World)</td><td><b>Mount Everest</b></td><td class="hl-gold">8,848 m</td><td>Nepal–China border</td></tr>
+            <tr><td>2 (World)</td><td><b>K2 (Godwin Austen)</b></td><td class="hl-gold">8,611 m</td><td>Karakoram, PoK</td></tr>
+            <tr><td>4 (World)</td><td><b>Mount Lhotse</b></td><td class="hl-gold">8,516 m</td><td>Tibet</td></tr>
+            <tr><td>3 / Highest in India</td><td><b>Kanchenjunga</b></td><td class="hl-gold">8,598 m</td><td>Sikkim</td></tr>
+            <tr><td>—</td><td>Mount Makalu</td><td>8,485 m</td><td>Nepal</td></tr>
+            <tr><td>—</td><td>Dhaulagiri</td><td>8,167 m</td><td>Nepal</td></tr>
+            <tr><td>—</td><td>Annapurna</td><td>8,091 m</td><td>Nepal</td></tr>
+            <tr><td>Highest in Uttarakhand</td><td>Nanda Devi</td><td class="hl-ice">7,817 m</td><td>Uttarakhand</td></tr>
+            <tr><td>2nd Highest in Uttarakhand</td><td>Kamet</td><td>—</td><td>Uttarakhand</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="hook">
+        <span class="hook-label">The Golden Shortcut</span>
+        <p><strong>"No Uttarakhand peak touches 8,000 m."</strong> Nanda Devi (the state's highest) is only 7,817 m. So in any options-based question: if the number is above 8,000 m, it is <em>never</em> Nanda Devi or Kamet. If it's a Nepal peak, it's almost always above 8,000 m.</p>
+      </div>
+
+      <div class="trap">
+        <span class="trap-label">⚠️ Trap: Dhaulagiri vs Dhauladhar</span>
+        <p><b>Dhaulagiri</b> = a peak (in Nepal, 8,167 m).</p>
+        <p class="vs"><b>Dhauladhar</b> = a mountain range (in Himachal Pradesh, part of Lesser Himalayas).</p>
+        <p>One letter (giri vs dhar) separates a Nepal peak from a Himachal range. This is a classic SSC confusion-pair.</p>
+      </div>
+
+      <div class="trap">
+        <span class="trap-label">⚠️ Trap: K2 vs Kanchenjunga as "India's Highest"</span>
+        <p>K2 (8,611 m) is technically taller and lies in territory India claims (PoK) — but since it's <b>not in Indian administrative control</b>, exam answers for "India's highest peak" go to <b>Kanchenjunga (8,598 m, Sikkim)</b>. If K2 is in the options, re-read the question stem carefully — it may be asking about the world or about the Karakoram specifically.</p>
+      </div>
+    </section>
+
+    <!-- ============ LESSER HIMALAYAS ============ -->
+    <section class="block" id="lesser">
+      <div class="block-head">
+        <span class="block-num">07</span>
+        <h2>Lesser Himalayas — One Range, Many Names</h2>
+        <span class="block-tag tag-must">🔥 Must Know</span>
+      </div>
+      <p class="kicker">Same mountain belt, different regional nicknames as you move west to east. This naming pattern is a guaranteed match-the-following target.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Region</th><th>Local Name of Lesser Himalayas</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Jammu & Kashmir</td><td class="hl-gold">Pir Panjal Range</td></tr>
+            <tr><td>Himachal Pradesh</td><td class="hl-gold">Dhauladhar Range</td></tr>
+            <tr><td>Uttarakhand</td><td class="hl-gold">Nag Tibba (also called Kumaon Himalayas)</td></tr>
+            <tr><td>Nepal</td><td class="hl-gold">Mahabharat Range</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="hook">
+        <span class="hook-label">Memory Hook — "P-D-N-M" Road Trip</span>
+        <p>Travel west to east across the Lesser Himalayas like a road trip with four toll-gate nicknames: <strong>Pir Panjal (J&K) → Dhauladhar (HP) → Nag Tibba (Uttarakhand) → Mahabharat (Nepal)</strong>. Say "Pandas Don't Need Mangoes" to lock the P-D-N-M order.</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h4>Vital Stats</h4>
+          <ul>
+            <li>Average height: <b class="hl-gold">4,000 m</b></li>
+            <li>Axial range (length): <b class="hl-gold">2,500 km</b></li>
+            <li>Height & width <b>decrease</b> moving west → east</li>
+            <li><b>Kashmir Valley</b> lies sandwiched between the Great Himalayas and the Lesser Himalayas</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Doon Valleys</h4>
+          <ul>
+            <li><b>Doon</b> = longitudinal valley between Lesser Himalayas and Shivalik</li>
+            <li>Formed along faults</li>
+            <li><b>Dehradun</b> = the largest and most famous Doon</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SHIVALIK ============ -->
+    <section class="block" id="shivalik">
+      <div class="block-head">
+        <span class="block-num">08</span>
+        <h2>Shivalik — The Outer Porch</h2>
+        <span class="block-tag tag-imp">⭐ Important</span>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h4>Identity Card</h4>
+          <ul>
+            <li>Also called <b>Outer Himalayas</b> or <b>Churia Hills</b></li>
+            <li>Lowest and <b>youngest</b> of the four ranges</li>
+            <li>Average height: <b class="hl-gold">900–1,100 m</b> (remember as ≈1,000 m)</li>
+            <li>Made of loose, unconsolidated sediment — least stable, most erodible</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>⚠️ Big Exception — Eastern Himalayas</h4>
+          <ul>
+            <li>Great, Lesser, and Shivalik Himalayas all <b>end</b> as you move east into Darjeeling / Jalpaiguri</li>
+            <li>The Shivalik <b>does not exist there</b> — its place is taken by low foothill tracts called <b>Duars</b></li>
+            <li>This is a frequently tested exception — don't assume Shivalik runs the entire length of the Himalayas</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REGIONAL DIVISIONS ============ -->
+    <section class="block" id="regional">
+      <div class="block-head">
+        <span class="block-num">09</span>
+        <h2>Regional Divisions — River-Bounded Sectors</h2>
+        <span class="block-tag tag-must">🔥 Must Know</span>
+      </div>
+      <p class="kicker">The Himalayas are also sliced longitudinally (east-west) into named regional sectors, each bounded by two rivers.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Sector</th><th>Bounded Between</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><b>Punjab Himalayas</b></td><td>Indus River — Sutlej River</td></tr>
+            <tr><td><b>Kumaon Himalayas</b></td><td>Sutlej River — Kali River</td></tr>
+            <tr><td><b>Nepal Himalayas</b></td><td>Kali River — Teesta River</td></tr>
+            <tr><td><b>Assam Himalayas</b></td><td>Teesta River — Brahmaputra (Dihang) River</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="hook">
+        <span class="hook-label">Memory Hook — "I-P-S" then a Domino Chain</span>
+        <p>Lock the first boundary with <strong>IPS</strong> = <b>I</b>ndus → <b>P</b>unjab Himalayas → <b>S</b>utlej. Then let each river hand off to the next sector like dominoes: <strong>Indus →(Punjab)→ Sutlej →(Kumaon)→ Kali →(Nepal)→ Teesta →(Assam)→ Brahmaputra</strong>. Each river appears exactly twice — once closing a sector, once opening the next.</p>
+      </div>
+
+      <div class="grid3">
+        <div class="card">
+          <h4>🌸 Kashmir Himalayas</h4>
+          <ul>
+            <li><b>Karewa</b>: glacial sediment deposits, excellent for cultivating saffron</li>
+            <li>Local saffron variety grown here is famous nationally</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>⛰️ Himachal & Uttarakhand Himalayas</h4>
+          <ul>
+            <li><b>Bhotiya</b> tribe — practices seasonal (transhumance) migration</li>
+            <li>Summer grasslands they migrate to are called <b>Bugyal</b></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🏞️ Darjeeling & Sikkim Himalayas</h4>
+          <ul>
+            <li>Home to <b>Kanchenjunga</b> (8,598 m, India's highest peak)</li>
+            <li>Tribes: <b>Lepcha</b> and <b>Bhutia</b></li>
+            <li>No Shivalik here — replaced by <b>Duars</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h4>🌿 Arunachal Himalayas</h4>
+        <div class="grid2">
+          <ul>
+            <li>Practice <b>Jhumming</b> — a form of shifting cultivation</li>
+            <li>Important peaks: <b>Kangtu</b> (highest in Arunachal) and <b>Gori Chen</b></li>
+            <li><b>Namcha Barwa</b> is also located near here (Great Himalayas' eastern end)</li>
+          </ul>
+          <ul>
+            <li>Key rivers: Kameng, Subansiri, Dihang</li>
+            <li>Tribes: <b>Monpa, Abor, Nishi, Naga, Dafla, Miri</b></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PURVANCHAL ============ -->
+    <section class="block" id="purvanchal">
+      <div class="block-head">
+        <span class="block-num">10</span>
+        <h2>Purvanchal Himalayas — The North-South Turn</h2>
+        <span class="block-tag tag-must">🔥 Must Know</span>
+      </div>
+      <p class="kicker">Here the Himalayas pivot — general orientation becomes <b>North–South</b> instead of the usual East–West. This belt runs through Arunachal → Nagaland → Manipur → Mizoram.</p>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>State / Area</th><th>Hill Range Name</th><th>Highest Peak</th></tr></thead>
+          <tbody>
+            <tr><td>Arunachal Pradesh</td><td>Patkai Bum</td><td><b class="hl-gold">Kangtu</b></td></tr>
+            <tr><td>Nagaland</td><td>Naga Hills</td><td><b class="hl-gold">Mount Saramati</b></td></tr>
+            <tr><td>Manipur</td><td>Manipur Hills</td><td><b class="hl-gold">Tempu (Iso Peak)</b></td></tr>
+            <tr><td>Mizoram</td><td><b>Lushai Hills</b></td><td><b class="hl-gold">Phawngpui — "Blue Mountain"</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="hook">
+        <span class="hook-label">Memory Hook — "ARU-NA-MA-MI"</span>
+        <p>Build the word <strong>ARU-NA-MA-MI</strong>: <b>ARU</b>nachal → <b>NA</b>galand → <b>MA</b>nipur → <b>MI</b>zoram — exactly the order this hill chain runs through, north to south. Each syllable is also the start of the state name.</p>
+      </div>
+
+      <div class="hook">
+        <span class="hook-label">Memory Hook — Blue Mountain</span>
+        <p>"<b>Phawngpui = Blue Mountain</b> in Mizoram." Picture a mountain painted Mizoram-flag blue. Tempu in Manipur rhymes with "tempo" — imagine a tempo (mini-truck) driving up Manipur's highest hill.</p>
+      </div>
+
+      <div class="card">
+        <h4>Other Purvanchal Landmarks</h4>
+        <ul>
+          <li><b>Barail Range</b> — sits on the Arunachal Pradesh–Nagaland border; <b>is</b> part of the Himalayan system</li>
+          <li><b>Garo, Khasi, Jaintia, Mikir Hills</b> — these are <b>NOT</b> part of the Himalayas; they belong to the <b>Peninsular Plateau</b></li>
+        </ul>
+      </div>
+
+      <div class="trap">
+        <span class="trap-label">⚠️ High-Value Trap</span>
+        <p>Garo–Khasi–Jaintia–Mikir sound like they belong with Patkai-Naga-Manipur-Mizo, but they are geologically and categorically different — part of the <b>Peninsular Plateau</b>, not the Himalayas. SSC loves testing this exact line.</p>
+      </div>
+    </section>
+
+    <!-- ============ LAKES ============ -->
+    <section class="block" id="lakes">
+      <div class="block-head">
+        <span class="block-num">11</span>
+        <h2>Himalayan Lakes</h2>
+        <span class="block-tag tag-imp">⭐ Important</span>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <h4>💧 Freshwater Lakes (J&K)</h4>
+          <ul>
+            <li><b>Dal Lake</b></li>
+            <li><b>Wular Lake</b></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🧂 Saltwater Lakes (Ladakh)</h4>
+          <ul>
+            <li><b>Pangong Tso</b></li>
+            <li><b>Tso Moriri</b></li>
+            <li><b>Tso Kar</b></li>
+          </ul>
+        </div>
+      </div>
+      <div class="hook">
+        <span class="hook-label">Memory Hook</span>
+        <p><strong>"Dal & Wular are sweet, the Tso-trio is salty."</strong> Any lake name starting with "Tso" → think Tibetan/Ladakhi high-altitude salt lake.</p>
+      </div>
+      <div class="card" style="margin-top:14px;">
+        <h4>🔁 Jhelum & Oxbow Lakes (Concept Link)</h4>
+        <ul>
+          <li>The Jhelum River shows <b>meandering</b> in its <b>youthful stage</b> — unusual, since meandering is normally a <b>mature-stage</b> river feature</li>
+          <li>When a meander gets cut off, it forms an <b>oxbow lake</b> (created by both erosion AND deposition)</li>
+          <li><b>Largest oxbow lake in Asia: Kabar Tal, Bihar</b> — formed by the <b>Budhi Gandak River</b></li>
+        </ul>
+      </div>
+      <div class="trap">
+        <span class="trap-label">⚠️ Trap: Jhelum's "Wrong-Stage" Meandering</span>
+        <p>Don't assume meandering = mature stage automatically when Jhelum is mentioned. This river is the textbook exception examiners use to test if you're memorizing rules blindly.</p>
+      </div>
+    </section>
+
+    <!-- ============ MOUNTAIN TYPES ============ -->
+    <section class="block" id="mountain-types">
+      <div class="block-head">
+        <span class="block-num">12</span>
+        <h2>Types of Mountains — Fold, Block & Volcanic</h2>
+        <span class="block-tag tag-must">🔥 Must Know</span>
+      </div>
+
+      <div class="card">
+        <h4>1️⃣ Fold Mountains</h4>
+        <p style="color:var(--ink-dim); margin:0 0 10px;">Formed at convergent plate boundaries when rock layers buckle upward. Two sub-types:</p>
+        <div class="grid2">
+          <ul>
+            <li><b>Young Fold Mountains</b> — still actively rising, jagged, high peaks. <b>Andes</b> (world's longest range, S. America), <b>Alps</b> (S. Europe), <b>Rockies</b> (W. North America), <b>Himalayas</b>, <b>Caucasus</b> (Europe–Asia border, between Black Sea & Caspian Sea).</li>
+            <li><b>Old Fold Mountains</b> — height now decreasing due to erosion (wind, water, glaciers). <b>Ural Mountains</b> (separates Europe & Asia), <b>Appalachians</b> (eastern North America), <b>Aravalli</b> (oldest mountain range in the world; also called a <b>residual mountain</b> due to erosion).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <h4>2️⃣ Block Mountains</h4>
+        <div class="diagram-box" style="margin:10px 0;">
+          <svg viewBox="0 0 500 140" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="60" width="140" height="60" fill="#243044"/>
+            <rect x="140" y="90" width="220" height="30" fill="#1a2333"/>
+            <rect x="360" y="60" width="140" height="60" fill="#243044"/>
+            <text x="70" y="50" text-anchor="middle" fill="#d4a857" font-size="13" font-family="Source Serif 4" font-weight="700">HORST</text>
+            <text x="250" y="138" text-anchor="middle" fill="#e0696f" font-size="13" font-family="Source Serif 4" font-weight="700">GRABEN (Rift Valley)</text>
+            <text x="430" y="50" text-anchor="middle" fill="#d4a857" font-size="13" font-family="Source Serif 4" font-weight="700">HORST</text>
+            <text x="250" y="108" text-anchor="middle" fill="#6ec3dd" font-size="11">river flows here (e.g. Narmada)</text>
+          </svg>
+        </div>
+        <ul>
+          <li><b>Horst</b> = the raised block(s) on either side → becomes the mountain</li>
+          <li><b>Graben</b> = the sunken block in between → becomes a <b>rift valley</b></li>
+          <li><b>India example:</b> Vindhya & Satpura = Horsts (block mountains); <b>Narmada River</b> flows through the Graben (rift valley) between them</li>
+          <li><b>World examples:</b> Vosges Mountains (France), Black Forest / Harz Mountains (Germany)</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <h4>3️⃣ Volcanic Peaks</h4>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Peak</th><th>Location</th><th>Special Note</th></tr></thead>
+            <tbody>
+              <tr><td><b>Mount Kilimanjaro</b></td><td>Tanzania</td><td>Africa's highest peak</td></tr>
+              <tr><td><b>Mount Stromboli</b></td><td>Italy (Mediterranean)</td><td>"Lighthouse of the Mediterranean"</td></tr>
+              <tr><td><b>Fujiyama</b></td><td>Japan</td><td>—</td></tr>
+              <tr><td><b>Ojos del Salado</b></td><td>Chile–Argentina border</td><td><b>Highest volcanic peak in the world</b></td></tr>
+              <tr><td><b>Mount Cotopaxi</b></td><td>Ecuador</td><td>Ecuador = 1st South American country crossed by the Equator (hence the name)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PASSES ============ -->
+    <section class="block" id="passes">
+      <div class="block-head">
+        <span class="block-num">13</span>
+        <h2>Mountain Passes — State by State</h2>
+        <span class="block-tag tag-must">🔥 Must Know</span>
+      </div>
+      <p class="kicker">A pass is simply a gap between mountains that allows crossing. Build this region by region — never as one giant list.</p>
+
+      <div class="grid2">
+        <div class="card">
+          <h4>🏔️ Jammu & Kashmir / Ladakh</h4>
+          <ul>
+            <li><b>Banihal</b> & <b>Pir Panjal</b> — Jammu ↔ Kashmir Valley</li>
+            <li><b>Zoji La</b> — Kashmir → Leh/Ladakh</li>
+            <li><b>Burzil Pass</b> — Kashmir → Gilgit-Baltistan</li>
+            <li><b>Fotu La</b> — within the Zanskar range, on the route from Kashmir toward Leh</li>
+            <li><b>Pensi La</b> — descent route into the Kashmir Valley from below</li>
+            <li><b>Khardung La</b> — Leh → Drass Valley direction</li>
+            <li><b>Mintaka</b> & <b>Aghil Pass</b> — in the Karakoram</li>
+            <li><b>Umling La</b> — highest pass; world's <b>highest motorable road</b>, built under the <b>Himank Project</b>; near Pangong Tso / Tso Moriri</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🏔️ Himachal Pradesh</h4>
+          <ul>
+            <li><b>Rohtang Pass</b> — Kullu → Lahaul (most commonly tested answer)</li>
+            <li><b>Kunzum Pass</b> — Lahaul → Spiti Valley (more precise/advanced version of the Kullu–Spiti route)</li>
+            <li><b>Bara Lacha La</b> — Lahaul → Leh/Ladakh</li>
+            <li><b>Shipki La</b> — entry point of the <b>Sutlej River</b> into India</li>
+            <li><b>Atal Tunnel</b> — under Rohtang Pass; India's longest tunnel, <b>9.02 km</b></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🏔️ Uttarakhand</h4>
+          <ul>
+            <li><b>Mulling La / Mula La</b>, <b>Mana Pass</b>, <b>Niti Pass</b>, <b>Mangsha Dhura</b></li>
+            <li><b>Lipulekh Pass</b> — sits at the <b>tri-junction of India, Nepal & China</b></li>
+            <li>Lipulekh, Limpiyadhura & Kalapani — region claimed by Nepal, contested area (mentioned in news)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>🏔️ Sikkim</h4>
+          <ul>
+            <li><b>Jelep La</b> & <b>Nathu La</b></li>
+            <li>Both sit at the <b>tri-junction of India, Bhutan & China</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px;">
+        <h4>🏔️ Arunachal Pradesh</h4>
+        <div class="grid2">
+          <ul>
+            <li><b>Bum La</b>, <b>Bomdi La</b>, <b>Yongyap La</b> passes</li>
+            <li><b>Dihang River</b> enters India in this area</li>
+          </ul>
+          <ul>
+            <li><b>Diphu Pass</b> — tri-junction of <b>India, Myanmar & China</b></li>
+            <li><b>Lake Pani</b> — landmark to remember in this stretch</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="hook">
+        <span class="hook-label">Memory Hook — The Three Tri-Junction Passes</span>
+        <p>Three passes each sit exactly where three countries meet — memorize as a trio: <strong>Lipulekh</strong> (India-Nepal-China, Uttarakhand) → <strong>Jelep La / Nathu La</strong> (India-Bhutan-China, Sikkim) → <strong>Diphu Pass</strong> (India-Myanmar-China, Arunachal). Notice China appears in <em>all three</em> — China borders India through every single tri-junction pass in this chapter.</p>
+      </div>
+    </section>
+
+    <!-- ============ EXAM TRAPS ============ -->
+    <section class="block" id="traps">
+      <div class="block-head">
+        <span class="block-num">14</span>
+        <h2>⚠️ Exam Traps — Master Collection</h2>
+        <span class="block-tag tag-must">🔥 Read before every mock test</span>
+      </div>
+
+      <div class="trap">
+        <span class="trap-label">Dhaulagiri (peak, Nepal) vs Dhauladhar (range, Himachal)</span>
+        <p>One is a mountain, one is a range. Different countries entirely.</p>
+      </div>
+      <div class="trap">
+        <span class="trap-label">Lesser Himalayas' Regional Names</span>
+        <p>Pir Panjal (J&K) / Dhauladhar (HP) / Nag Tibba (Uttarakhand) / Mahabharat (Nepal) — same range, four names. Match-the-following bait.</p>
+      </div>
+      <div class="trap">
+        <span class="trap-label">Garo-Khasi-Jaintia-Mikir vs Patkai-Naga-Manipur-Mizo</span>
+        <p>First group = Peninsular Plateau. Second group (Purvanchal) = Himalayas. Easily confused since both are in the Northeast.</p>
+      </div>
+      <div class="trap">
+        <span class="trap-label">K2 vs Kanchenjunga as "Highest in India"</span>
+        <p>K2 is taller but lies in PoK (not under Indian administration) — Kanchenjunga is the standard answer for India's highest peak.</p>
+      </div>
+      <div class="trap">
+        <span class="trap-label">No Uttarakhand Peak Crosses 8,000 m</span>
+        <p>Nanda Devi (7,817 m) is the state's highest. Any 8,000+ option is automatically NOT Nanda Devi or Kamet.</p>
+      </div>
+      <div class="trap">
+        <span class="trap-label">Fedchenko vs Lambert vs Siachen Glaciers</span>
+        <p>Lambert (Antarctica) = longest overall but <i>polar</i>. Fedchenko (Tajikistan) = longest <i>non-polar</i>. Siachen = 2nd longest non-polar. Three different "longest" claims — read the qualifier carefully.</p>
+      </div>
+      <div class="trap">
+        <span class="trap-label">Jhelum's Meandering Stage</span>
+        <p>Meandering is usually a mature-stage feature, but Jhelum shows it in its youthful stage — a deliberate exception examiners test.</p>
+      </div>
+      <div class="trap">
+        <span class="trap-label">Shivalik "Disappears" in the East</span>
+        <p>Shivalik does not extend into Darjeeling/Jalpaiguri — replaced there by Duars. Don't assume uniform structure across the whole Himalayan length.</p>
+      </div>
+      <div class="trap">
+        <span class="trap-label">Rohtang vs Kunzum for Kullu–Lahaul–Spiti</span>
+        <p>SSC's standard accepted answer for "Kullu to Lahaul-Spiti" is <b>Rohtang</b>. Technically Kunzum is the more precise Lahaul→Spiti link — know both, but default to Rohtang unless the question is more specific.</p>
+      </div>
+      <div class="trap">
+        <span class="trap-label">Ural vs Caucasus vs Aravalli — Old Fold Mountain Mix-Ups</span>
+        <p>Ural = separates Europe & Asia. Caucasus = also Europe-Asia border area (between Black & Caspian Seas) but is a <b>young</b> fold mountain, not old — don't lump it in with Ural by location alone.</p>
+      </div>
+    </section>
+
+    <!-- ============ EXAMINER FAVOURITES ============ -->
+    <section class="block" id="examiner">
+      <div class="block-head">
+        <span class="block-num">15</span>
+        <h2>🎯 Examiner's Favourite Question Patterns</h2>
+        <span class="block-tag tag-imp">⭐ Important</span>
+      </div>
+
+      <div class="examq">
+        <span class="qtype">Chronology / Sequence</span>
+        <p>Arrange the Trans Himalayan ranges from North to South: <b>(a) Zanskar (b) Karakoram (c) Ladakh</b> → Correct order: <b>b, c, a</b></p>
+      </div>
+      <div class="examq">
+        <span class="qtype">Match the Following</span>
+        <p>Match: Pir Panjal — J&K | Dhauladhar — Himachal | Nag Tibba — Uttarakhand | Mahabharat — Nepal</p>
+      </div>
+      <div class="examq">
+        <span class="qtype">Statement-Based</span>
+        <p>"Statement I: The Trans Himalayas formed from the rising of the Indian and Eurasian plates. Statement II: The Great, Lesser and Shivalik Himalayas formed from Tethys Sea sediment." → Both are <b>FALSE as stated</b> — it's reversed (Trans = sediment; the other three = plate rising).</p>
+      </div>
+      <div class="examq">
+        <span class="qtype">Assertion–Reason</span>
+        <p>Assertion: The Himalayas are young fold mountains. Reason: The Indian plate continues moving northward, still increasing Himalayan height. → Both true, Reason correctly explains Assertion.</p>
+      </div>
+      <div class="examq">
+        <span class="qtype">Odd One Out</span>
+        <p>Which is NOT part of the Himalayas: Garo Hills / Naga Hills / Mizo Hills / Patkai Bum → Answer: <b>Garo Hills</b> (Peninsular Plateau)</p>
+      </div>
+      <div class="examq">
+        <span class="qtype">Confusing Pair</span>
+        <p>Which one is a peak, which is a range: Dhaulagiri / Dhauladhar → Dhaulagiri = peak (Nepal); Dhauladhar = range (Himachal)</p>
+      </div>
+      <div class="examq">
+        <span class="qtype">Tri-Junction Identification</span>
+        <p>Which pass lies at the India-Bhutan-China tri-junction? → <b>Nathu La</b> or <b>Jelep La</b> (Sikkim)</p>
+      </div>
+      <div class="examq">
+        <span class="qtype">Frequently Misread Fact</span>
+        <p>"World's longest glacier" (Lambert, Antarctica, polar) is often confused with "World's longest <i>non-polar</i> glacier" (Fedchenko, Tajikistan). Always check for the word "non-polar" in the question.</p>
+      </div>
+    </section>
+
+    <!-- ============ ACTIVE RECALL ============ -->
+    <section class="block" id="recall">
+      <div class="block-head">
+        <span class="block-num">16</span>
+        <h2>❓ Active Recall — Tap to Reveal</h2>
+        <span class="block-tag tag-must">🔥 Do this with the screen covered first</span>
+      </div>
+      <p class="kicker">Tap any card to flip it. Try answering out loud before tapping — that's the whole point of active recall.</p>
+
+      <div class="flash-grid" id="flashGrid">
+        <div class="flash"><div class="q">Name the four parallel Himalayan ranges, inner to outer.</div><div class="a">Trans → Great (Himadri) → Lesser (Himachal) → Shivalik (Outer)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">What sea existed before the Himalayas formed?</div><div class="a">Tethys Sea (Tethys Geosyncline)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">North-to-South order of Trans Himalayan ranges?</div><div class="a">Karakoram → Ladakh → Zanskar</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Height of K2 / Godwin Austen?</div><div class="a">8,611 m — 2nd highest peak in the world</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">River between Karakoram and Ladakh?</div><div class="a">Shyok River</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">River between Ladakh and Zanskar?</div><div class="a">Indus River</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Average height of Great Himalayas?</div><div class="a">6,000 m</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Westernmost and easternmost peaks of Great Himalayas?</div><div class="a">Nanga Parbat (west) → Namcha Barwa (east)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">India's highest peak (by exam convention)?</div><div class="a">Kanchenjunga, 8,598 m, Sikkim</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Highest peak in Uttarakhand?</div><div class="a">Nanda Devi, 7,817 m (no UK peak crosses 8,000 m)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Lesser Himalayas' name in J&K / HP / Uttarakhand / Nepal?</div><div class="a">Pir Panjal / Dhauladhar / Nag Tibba / Mahabharat</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Average height & axial length of Lesser Himalayas?</div><div class="a">4,000 m average height; 2,500 km axial length</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">What replaces the Shivalik in the Eastern Himalayas?</div><div class="a">Duars (Darjeeling, Jalpaiguri area)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Largest Doon valley?</div><div class="a">Dehradun</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Four regional sectors, Indus to Brahmaputra?</div><div class="a">Punjab → Kumaon → Nepal → Assam Himalayas</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">What is "Karewa" and where?</div><div class="a">Glacial sediment in Kashmir; ideal for saffron cultivation</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">What is a "Bugyal"?</div><div class="a">High-altitude summer grassland used by the Bhotiya tribe (HP/Uttarakhand)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Purvanchal hill chain order, north to south?</div><div class="a">Patkai Bum (Arunachal) → Naga Hills → Manipur Hills → Lushai Hills (Mizoram)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Highest peaks of Nagaland, Manipur, Mizoram?</div><div class="a">Mount Saramati (Nagaland), Tempu (Manipur), Phawngpui/Blue Mountain (Mizoram)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Are Garo-Khasi-Jaintia-Mikir part of the Himalayas?</div><div class="a">No — they belong to the Peninsular Plateau</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Freshwater vs saltwater lakes of J&K/Ladakh?</div><div class="a">Fresh: Dal, Wular (J&K). Salt: Pangong Tso, Tso Moriri, Tso Kar (Ladakh)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Largest oxbow lake in Asia?</div><div class="a">Kabar Tal, Bihar (formed by Budhi Gandak River)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Examples of young vs old fold mountains?</div><div class="a">Young: Andes, Alps, Rockies, Himalayas, Caucasus. Old: Ural, Appalachians, Aravalli</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">What is a Horst vs a Graben?</div><div class="a">Horst = raised block (mountain). Graben = sunken block (rift valley)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">India's example of Horst & Graben?</div><div class="a">Vindhya & Satpura = Horsts; Narmada flows through the Graben (rift valley)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">World's highest volcanic peak?</div><div class="a">Ojos del Salado (Chile-Argentina border)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Pass connecting Kullu to Lahaul?</div><div class="a">Rohtang Pass (Kunzum continues Lahaul → Spiti)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">India's longest tunnel, and where?</div><div class="a">Atal Tunnel, 9.02 km, under Rohtang Pass</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Three tri-junction passes and their countries?</div><div class="a">Lipulekh (India-Nepal-China), Nathu La/Jelep La (India-Bhutan-China), Diphu Pass (India-Myanmar-China)</div><span class="tap-hint">tap</span></div>
+        <div class="flash"><div class="q">Highest motorable road in the world, and project name?</div><div class="a">Umling La Pass, built under the Himank Project</div><span class="tap-hint">tap</span></div>
+      </div>
+    </section>
+
+    <!-- ============ REVISION LAYERS ============ -->
+    <section class="block" id="layers">
+      <div class="block-head">
+        <span class="block-num">17</span>
+        <h2>Progressive Revision Layers</h2>
+        <span class="block-tag tag-must">🔥 Use these in the final 10 days</span>
+      </div>
+      <p class="kicker">Each layer below is shorter than the last. Layer 2 for weekly revision, Layer 3 for the week before, Layer 4 the morning of, Layer 5 in the exam waiting room.</p>
+
+      <details class="layer" open>
+        <summary>Layer 2 — High-Yield Revision Notes</summary>
+        <div class="layer-body fast-sheet">
+          <div class="row"><b>4 Ranges (in–out)</b><span>Trans → Great → Lesser → Shivalik</span></div>
+          <div class="row"><b>Heights</b><span>Trans (varies) / Great 6,000m / Lesser 4,000m / Shivalik ~1,000m</span></div>
+          <div class="row"><b>Trans 3 ranges (N→S)</b><span>Karakoram → Ladakh → Zanskar</span></div>
+          <div class="row"><b>Rivers in Trans</b><span>Shyok (Karakoram-Ladakh) / Indus (Ladakh-Zanskar)</span></div>
+          <div class="row"><b>K2 height</b><span>8,611 m (2nd world, in PoK)</span></div>
+          <div class="row"><b>Everest height</b><span>8,848 m (highest world)</span></div>
+          <div class="row"><b>India's highest</b><span>Kanchenjunga, 8,598 m, Sikkim</span></div>
+          <div class="row"><b>Uttarakhand's highest</b><span>Nanda Devi, 7,817 m (no peak crosses 8,000m)</span></div>
+          <div class="row"><b>Great Himalaya ends</b><span>Nanga Parbat (W) to Namcha Barwa (E)</span></div>
+          <div class="row"><b>Lesser Himalaya names</b><span>Pir Panjal / Dhauladhar / Nag Tibba / Mahabharat</span></div>
+          <div class="row"><b>Lesser axial length</b><span>2,500 km</span></div>
+          <div class="row"><b>Shivalik other names</b><span>Outer Himalayas / Churia Hills</span></div>
+          <div class="row"><b>Doon</b><span>Lesser–Shivalik valley; Dehradun = biggest</span></div>
+          <div class="row"><b>4 Regional Sectors</b><span>Punjab/Kumaon/Nepal/Assam (Indus→Sutlej→Kali→Teesta→Brahmaputra)</span></div>
+          <div class="row"><b>Purvanchal order</b><span>Patkai Bum (Aru) → Naga (Na) → Manipur (Ma) → Lushai/Mizo (Mi)</span></div>
+          <div class="row"><b>Non-Himalayan NE hills</b><span>Garo, Khasi, Jaintia, Mikir → Peninsular Plateau</span></div>
+          <div class="row"><b>Young fold mtns</b><span>Andes, Alps, Rockies, Himalayas, Caucasus</span></div>
+          <div class="row"><b>Old fold mtns</b><span>Ural, Appalachians, Aravalli (oldest, residual)</span></div>
+          <div class="row"><b>Block mtn (India)</b><span>Vindhya+Satpura (Horst); Narmada in Graben</span></div>
+          <div class="row"><b>Key tunnel</b><span>Atal Tunnel, 9.02 km, under Rohtang</span></div>
+          <div class="row"><b>Tri-junction passes</b><span>Lipulekh (Nep-China) / Nathu La (Bhu-China) / Diphu (Myan-China)</span></div>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary>Layer 3 — Ultra-Fast Revision Sheet</summary>
+        <div class="layer-body">
+          <div class="ultra-grid">
+            <div class="ultra-pill"><b>Order:</b> Trans-Great-Lesser-Shivalik</div>
+            <div class="ultra-pill"><b>Heights:</b> ?-6000-4000-1000</div>
+            <div class="ultra-pill"><b>Trans:</b> Karakoram-Ladakh-Zanskar</div>
+            <div class="ultra-pill"><b>K2:</b> 8611m</div>
+            <div class="ultra-pill"><b>Everest:</b> 8848m</div>
+            <div class="ultra-pill"><b>India top:</b> Kanchenjunga 8598m</div>
+            <div class="ultra-pill"><b>UK top:</b> Nanda Devi 7817m (no 8000)</div>
+            <div class="ultra-pill"><b>Lesser names:</b> Pir Panjal/Dhauladhar/Nag Tibba/Mahabharat</div>
+            <div class="ultra-pill"><b>Sectors:</b> Punjab-Kumaon-Nepal-Assam</div>
+            <div class="ultra-pill"><b>Purvanchal:</b> ARU-NA-MA-MI</div>
+            <div class="ultra-pill"><b>Not Himalaya:</b> Garo-Khasi-Jaintia-Mikir</div>
+            <div class="ultra-pill"><b>Young fold:</b> Andes/Alps/Rockies/Caucasus/Himalaya</div>
+            <div class="ultra-pill"><b>Old fold:</b> Ural/Appalachian/Aravalli</div>
+            <div class="ultra-pill"><b>Block:</b> Horst=mtn, Graben=rift valley</div>
+            <div class="ultra-pill"><b>Tri-junctions:</b> Lipulekh/Nathu La/Diphu</div>
+          </div>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary>Layer 4 — 30-Second Revision Sheet</summary>
+        <div class="layer-body">
+          <p style="color:var(--ink); font-size:0.95rem; line-height:1.9;">
+          Tethys → squeezed → 4 ranges (Trans-Great-Lesser-Shivalik) → heights 6000/4000/1000 → Karakoram-Ladakh-Zanskar (Shyok, Indus) → K2 8611, Everest 8848, Kanchenjunga 8598 (India), Nanda Devi 7817 (no UK peak hits 8000) → Lesser = Pir Panjal/Dhauladhar/Nag Tibba/Mahabharat → Sectors = Punjab/Kumaon/Nepal/Assam → Purvanchal = ARUNAMAMI → Garo-Khasi NOT Himalaya → Young fold = Himalaya+Andes+Alps+Rockies+Caucasus; Old fold = Ural+Aravalli+Appalachian → Horst=mountain, Graben=valley (Vindhya-Satpura-Narmada) → Tri-junctions = Lipulekh/Nathu La/Diphu, all touching China.
+          </p>
+        </div>
+      </details>
+
+      <details class="layer">
+        <summary>Layer 5 — Last-Night-Before-Exam Sheet</summary>
+        <div class="layer-body">
+          <div class="last-night">
+            <h4>If you remember ONLY these, you survive the paper:</h4>
+            <ol>
+              <li>4 ranges order: <b>Trans → Great → Lesser → Shivalik</b></li>
+              <li>Trans order: <b>Karakoram → Ladakh → Zanskar</b></li>
+              <li>3 highest peaks: <b>Everest 8848 / K2 8611 / Kanchenjunga 8598</b></li>
+              <li>Nanda Devi = <b>7817 m</b>, no Uttarakhand peak crosses 8000</li>
+              <li>Lesser Himalaya nicknames: <b>Pir Panjal / Dhauladhar / Nag Tibba / Mahabharat</b></li>
+              <li>Garo-Khasi-Jaintia-Mikir = <b>NOT Himalayas</b> (Peninsular Plateau)</li>
+              <li>Young fold = still rising (Himalaya, Andes, Alps); Old fold = eroding (Ural, Aravalli)</li>
+              <li>Tri-junction passes all touch <b>China</b>: Lipulekh, Nathu La, Diphu</li>
+            </ol>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <footer class="end">
+      Built for one purpose: so you remember this <b>six months later, inside the exam hall.</b><br>
+      Revise this page often. The mountains aren't going anywhere — make sure the facts don't either.
+    </footer>
+
+  </main>
+</div>
+
+<script>
+// Flashcard flip toggle
+document.querySelectorAll('.flash').forEach(card=>{
+  card.addEventListener('click', ()=> card.classList.toggle('show'));
+});
+
+// TOC active state on scroll
+const sections = document.querySelectorAll('section.block, .hero');
+const tocLinks = document.querySelectorAll('.toc nav a');
+const map = {};
+tocLinks.forEach(l=>{ map[l.getAttribute('href').slice(1)] = l; });
+
+function onScroll(){
+  let current = null;
+  sections.forEach(sec=>{
+    const rect = sec.getBoundingClientRect();
+    if(rect.top <= 140) current = sec.id;
+  });
+  tocLinks.forEach(l=>l.classList.remove('active'));
+  if(current && map[current]) map[current].classList.add('active');
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continents & Oceans — Revision Vault</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0f1c;
+  --bg-deep:#060a13;
+  --surface:#121b2e;
+  --surface-2:#16213a;
+  --border:#22304d;
+  --text:#e4e8f0;
+  --muted:#8392ad;
+  --muted-dim:#5d6b87;
+  --amber:#e8a33d;
+  --amber-dim:#a87a30;
+  --teal:#4fa3d1;
+  --teal-dim:#3a7a9c;
+  --mint:#7fd9a8;
+  --mint-dim:#5ba87e;
+  --rose:#d9728a;
+  --violet:#a98fd9;
+  --shadow: 0 8px 30px rgba(0,0,0,0.45);
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(79,163,209,0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(232,163,61,0.06), transparent),
+    var(--bg);
+  color:var(--text);
+  font-family:'Inter', sans-serif;
+  line-height:1.6;
+  min-height:100vh;
+}
+::selection{ background:var(--amber); color:#0a0f1c; }
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar{ width:10px; }
+::-webkit-scrollbar-track{ background:var(--bg-deep); }
+::-webkit-scrollbar-thumb{ background:var(--border); border-radius:6px; }
+::-webkit-scrollbar-thumb:hover{ background:var(--muted-dim); }
+
+h1,h2,h3,h4{ font-family:'Spectral', serif; font-weight:600; color:var(--text); letter-spacing:0.2px;}
+
+/* ===== Layout shell ===== */
+.shell{ display:flex; max-width:1400px; margin:0 auto; min-height:100vh; }
+
+/* ===== Strata rail (signature nav) ===== */
+.strata-rail{
+  width:230px;
+  flex-shrink:0;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  background:var(--bg-deep);
+  border-right:1px solid var(--border);
+  padding:20px 0 40px;
+  scrollbar-width:thin;
+}
+.rail-brand{
+  padding:0 20px 18px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:8px;
+}
+.rail-brand .mark{ font-family:'JetBrains Mono'; font-size:11px; letter-spacing:2px; color:var(--amber); text-transform:uppercase;}
+.rail-brand h1{ font-size:18px; margin-top:4px; line-height:1.25;}
+.rail-brand .sub{ font-size:11.5px; color:var(--muted-dim); margin-top:6px; font-family:'JetBrains Mono';}
+
+.strata-group{ margin-top:14px; }
+.strata-group-label{
+  font-family:'JetBrains Mono'; font-size:10px; letter-spacing:1.5px; text-transform:uppercase;
+  color:var(--muted-dim); padding:6px 20px 4px;
+}
+.strata-link{
+  display:flex; align-items:center; gap:10px;
+  padding:8px 20px;
+  font-size:13px;
+  color:var(--muted);
+  text-decoration:none;
+  border-left:3px solid transparent;
+  transition:background .15s, color .15s, border-color .15s;
+  cursor:pointer;
+}
+.strata-link .band{ width:9px; height:9px; border-radius:2px; flex-shrink:0; }
+.strata-link:hover{ background:rgba(255,255,255,0.03); color:var(--text); }
+.strata-link.active{ background:rgba(255,255,255,0.05); color:var(--text); border-left-color:var(--amber); font-weight:600; }
+
+/* band colors = rock-layer mnemonic */
+.band-pangea{ background:var(--violet); }
+.band-ocean{ background:var(--teal); }
+.band-volcano{ background:var(--amber); }
+.band-rock{ background:var(--mint); }
+.band-tide{ background:var(--rose); }
+.band-traps{ background:#e85d5d; }
+.band-recall{ background:#d9a8e8; }
+
+/* ===== Main column ===== */
+.main{ flex:1; min-width:0; padding:0 0 100px; }
+.hero{
+  padding:64px 56px 40px;
+  border-bottom:1px solid var(--border);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    repeating-linear-gradient(180deg,
+      transparent 0px, transparent 38px,
+      rgba(232,163,61,0.035) 38px, rgba(232,163,61,0.035) 40px);
+  pointer-events:none;
+}
+.hero .eyebrow{
+  font-family:'JetBrains Mono'; font-size:11.5px; letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--teal); position:relative; z-index:1;
+}
+.hero h1{ font-size:42px; margin-top:10px; position:relative; z-index:1; max-width:780px;}
+.hero p.lede{ color:var(--muted); max-width:680px; margin-top:14px; font-size:15.5px; position:relative; z-index:1;}
+.hero .stats{ display:flex; gap:28px; margin-top:28px; position:relative; z-index:1; flex-wrap:wrap;}
+.stat{ font-family:'JetBrains Mono'; }
+.stat .num{ font-size:22px; color:var(--amber); font-weight:700;}
+.stat .lbl{ font-size:11px; color:var(--muted-dim); text-transform:uppercase; letter-spacing:1px;}
+
+section{ padding:48px 56px; border-bottom:1px solid var(--border); }
+section.tight{ padding-top:28px; }
+.section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:24px; }
+.section-head .icon{ font-size:26px; }
+.section-head h2{ font-size:27px; }
+.section-head .count-tag{
+  font-family:'JetBrains Mono'; font-size:10.5px; color:var(--muted-dim);
+  border:1px solid var(--border); padding:3px 9px; border-radius:20px; margin-left:auto;
+}
+
+/* ===== Tags ===== */
+.tag{ font-family:'JetBrains Mono'; font-size:10.5px; padding:2px 8px; border-radius:4px; font-weight:600; letter-spacing:0.3px; white-space:nowrap;}
+.tag-must{ background:rgba(232,163,61,0.16); color:var(--amber); border:1px solid rgba(232,163,61,0.35);}
+.tag-imp{ background:rgba(127,217,168,0.14); color:var(--mint); border:1px solid rgba(127,217,168,0.32);}
+.tag-good{ background:rgba(79,163,209,0.14); color:var(--teal); border:1px solid rgba(79,163,209,0.32);}
+
+/* ===== Cards ===== */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:20px 22px;
+  margin-bottom:16px;
+  box-shadow:var(--shadow);
+}
+.card h3{ font-size:17px; margin-bottom:8px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+.card p{ color:var(--muted); font-size:14.5px; }
+.card ul, .card ol{ padding-left:20px; margin-top:8px; color:var(--text); font-size:14.5px;}
+.card li{ margin-bottom:6px; }
+.card li::marker{ color:var(--amber-dim); }
+
+.grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+@media(max-width:900px){ .grid-2, .grid-3{ grid-template-columns:1fr; } }
+
+/* ===== Memory palace narrative box ===== */
+.palace-box{
+  background:linear-gradient(160deg, rgba(169,143,217,0.10), rgba(79,163,209,0.06));
+  border:1px solid rgba(169,143,217,0.3);
+  border-radius:12px;
+  padding:26px 28px;
+  position:relative;
+}
+.palace-box::before{ content:"🧠"; position:absolute; top:-14px; left:24px; font-size:22px; background:var(--bg); padding:2px 8px; border-radius:50%; }
+.palace-box h3{ color:var(--violet); font-size:18px; margin-bottom:10px; margin-top:6px;}
+.palace-box .step{ display:flex; gap:12px; margin-bottom:12px; }
+.palace-box .step .marker{ font-family:'JetBrains Mono'; color:var(--violet); font-weight:700; flex-shrink:0; min-width:26px;}
+.palace-box .step p{ color:var(--text); font-size:14.5px; }
+.palace-box .step b{ color:var(--amber); }
+
+/* ===== Hook box ===== */
+.hook{
+  background:var(--surface-2);
+  border-left:3px solid var(--amber);
+  border-radius:0 8px 8px 0;
+  padding:14px 18px;
+  margin-bottom:12px;
+}
+.hook .hook-title{ font-weight:700; color:var(--amber); font-size:13.5px; margin-bottom:4px; display:flex; align-items:center; gap:6px;}
+.hook p{ color:var(--text); font-size:14px; }
+
+/* ===== Connection arrows ===== */
+.chain{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px;
+  background:var(--surface); border:1px solid var(--border); border-radius:8px;
+  padding:14px 18px; margin-bottom:12px; font-size:14px;
+}
+.chain .node{ background:var(--surface-2); border:1px solid var(--border); padding:5px 11px; border-radius:6px; font-weight:600; }
+.chain .arrow{ color:var(--amber); font-weight:700; }
+
+/* ===== Trap cards ===== */
+.trap-card{
+  background:linear-gradient(160deg, rgba(216,93,93,0.08), rgba(18,27,46,0.4));
+  border:1px solid rgba(216,93,93,0.3);
+  border-radius:10px;
+  padding:18px 20px;
+  margin-bottom:14px;
+}
+.trap-card h4{ color:#f08080; font-size:15px; display:flex; align-items:center; gap:8px; margin-bottom:8px;}
+.trap-card table{ width:100%; border-collapse:collapse; margin-top:8px; font-size:13.5px;}
+.trap-card td, .trap-card th{ border:1px solid var(--border); padding:7px 10px; text-align:left;}
+.trap-card th{ background:rgba(216,93,93,0.12); color:#f0a0a0; font-family:'JetBrains Mono'; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px;}
+.trap-card td{ color:var(--muted); }
+.trap-card td b{ color:var(--text); }
+
+/* ===== Question / Active recall ===== */
+.qa-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:16px 20px;
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:border-color .15s;
+}
+.qa-card:hover{ border-color:var(--teal-dim); }
+.qa-card .q{ font-size:14.5px; font-weight:600; color:var(--text); display:flex; gap:10px; align-items:flex-start;}
+.qa-card .q .qnum{ color:var(--teal); font-family:'JetBrains Mono'; flex-shrink:0;}
+.qa-card .a{
+  margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);
+  color:var(--mint); font-size:14px; display:none;
+}
+.qa-card.open .a{ display:block; }
+.qa-card .hint{ font-family:'JetBrains Mono'; font-size:10px; color:var(--muted-dim); margin-top:8px; text-transform:uppercase; letter-spacing:0.5px;}
+
+/* ===== Fast revision sheets ===== */
+.speed-table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+.speed-table th{ text-align:left; font-family:'JetBrains Mono'; font-size:10.5px; text-transform:uppercase; letter-spacing:0.8px; color:var(--muted-dim); padding:8px 12px; border-bottom:2px solid var(--border); }
+.speed-table td{ padding:9px 12px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:top;}
+.speed-table tr:hover td{ background:rgba(255,255,255,0.02); }
+.speed-table td.k{ color:var(--amber); font-weight:600; white-space:nowrap; }
+
+.flash-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+@media(max-width:700px){ .flash-grid{ grid-template-columns:1fr; } }
+.flash{
+  background:var(--surface-2); border:1px solid var(--border); border-radius:8px;
+  padding:12px 16px; font-size:13.5px;
+}
+.flash b{ color:var(--mint); }
+
+.last-night-box{
+  background:linear-gradient(160deg, rgba(232,163,61,0.12), rgba(10,15,28,0.3));
+  border:1.5px solid var(--amber-dim);
+  border-radius:14px;
+  padding:30px 32px;
+}
+.last-night-box h3{ color:var(--amber); margin-bottom:16px; font-size:19px;}
+.last-night-box .item{ padding:8px 0; border-bottom:1px solid rgba(232,163,61,0.15); font-size:14.5px;}
+.last-night-box .item:last-child{ border-bottom:none; }
+.last-night-box .item b{ color:var(--text); }
+
+.divider-label{
+  font-family:'JetBrains Mono'; font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--muted-dim); display:flex; align-items:center; gap:12px; margin:8px 0 20px;
+}
+.divider-label::after{ content:""; flex:1; height:1px; background:var(--border); }
+
+/* mobile nav toggle */
+.mobile-toggle{ display:none; }
+@media(max-width:880px){
+  .shell{ flex-direction:column; }
+  .strata-rail{ position:static; width:100%; height:auto; max-height:none; border-right:none; border-bottom:1px solid var(--border); }
+  .mobile-toggle{
+    display:block; position:fixed; bottom:20px; right:20px; z-index:50;
+    background:var(--amber); color:#0a0f1c; border:none; border-radius:50%;
+    width:52px; height:52px; font-size:20px; box-shadow:var(--shadow); cursor:pointer;
+  }
+  .strata-rail.collapsed{ display:none; }
+  .hero, section{ padding:32px 22px; }
+  .hero h1{ font-size:30px; }
+}
+
+footer{ padding:40px 56px; text-align:center; color:var(--muted-dim); font-size:12.5px; font-family:'JetBrains Mono';}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- STRATA RAIL (signature nav: page IS a rock core sample) -->
+  <nav class="strata-rail" id="rail">
+    <div class="rail-brand">
+      <div class="mark">FRB 2.0 // Geography</div>
+      <h1>Continents &amp; Oceans</h1>
+      <div class="sub">drill ↓ through the layers</div>
+    </div>
+
+    <div class="strata-group">
+      <div class="strata-group-label">Foundation</div>
+      <a class="strata-link" href="#bigpicture"><span class="band band-pangea"></span>Big Picture</a>
+      <a class="strata-link" href="#palace"><span class="band band-pangea"></span>Memory Palace</a>
+    </div>
+
+    <div class="strata-group">
+      <div class="strata-group-label">Layer 1 · Complete Notes</div>
+      <a class="strata-link" href="#continents"><span class="band band-pangea"></span>Continental Drift</a>
+      <a class="strata-link" href="#oceanfloor"><span class="band band-ocean"></span>Ocean Floor &amp; Relief</a>
+      <a class="strata-link" href="#corals"><span class="band band-ocean"></span>Corals</a>
+      <a class="strata-link" href="#oceanfacts"><span class="band band-ocean"></span>Oceans &amp; Continents Data</a>
+      <a class="strata-link" href="#volcanism"><span class="band band-volcano"></span>Volcanism</a>
+      <a class="strata-link" href="#landforms"><span class="band band-volcano"></span>Igneous Landforms</a>
+      <a class="strata-link" href="#rocks"><span class="band band-rock"></span>Rock Types &amp; Cycle</a>
+      <a class="strata-link" href="#tides"><span class="band band-tide"></span>Tides</a>
+    </div>
+
+    <div class="strata-group">
+      <div class="strata-group-label">Exam Prep</div>
+      <a class="strata-link" href="#traps"><span class="band band-traps"></span>Exam Traps</a>
+      <a class="strata-link" href="#examiner"><span class="band band-traps"></span>Examiner's Questions</a>
+      <a class="strata-link" href="#recall"><span class="band band-recall"></span>Active Recall</a>
+    </div>
+
+    <div class="strata-group">
+      <div class="strata-group-label">Layer 2–5 · Speed Layers</div>
+      <a class="strata-link" href="#highyield"><span class="band band-rock"></span>High-Yield Sheet</a>
+      <a class="strata-link" href="#ultrafast"><span class="band band-rock"></span>Ultra-Fast Sheet</a>
+      <a class="strata-link" href="#thirtysec"><span class="band band-volcano"></span>30-Second Sheet</a>
+      <a class="strata-link" href="#lastnight"><span class="band band-traps"></span>Last Night Sheet</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <div class="hero" id="bigpicture">
+      <div class="eyebrow">SSC CGL · Geography · Revision Vault</div>
+      <h1>Continents, Oceans, Volcanism &amp; Rocks</h1>
+      <p class="lede">This chapter is really the story of one supercontinent breaking apart, the ocean floor recording that breakup like a diary, and rock material endlessly recycling between three forms as a result of all that motion and heat. Every fact below connects back to that one story.</p>
+      <div class="stats">
+        <div class="stat"><div class="num">5</div><div class="lbl">Revision Layers</div></div>
+        <div class="stat"><div class="num">3</div><div class="lbl">Plate Boundaries</div></div>
+        <div class="stat"><div class="num">4+4</div><div class="lbl">Major+Minor Ocean Features</div></div>
+        <div class="stat"><div class="num">3</div><div class="lbl">Rock Types</div></div>
+        <div class="stat"><div class="num">22</div><div class="lbl">Active Recall Qs</div></div>
+      </div>
+    </div>
+
+    <!-- ===================== MEMORY PALACE ===================== -->
+    <section id="palace">
+      <div class="section-head"><span class="icon">🧠</span><h2>Chapter Memory Palace — The Cracked Dinner Plate Museum</h2></div>
+
+      <div class="palace-box">
+        <h3>Walk through this museum once, slowly. The whole chapter is the floor plan.</h3>
+
+        <div class="step"><div class="marker">ROOM 1</div><p><b>The Map Room.</b> A giant wall map shows one solid landmass. A curator named <b>Abraham Ortelius</b> first whispers "these coastlines fit together" — he only suspected it. Walk further: <b>Alfred Wegener (1912)</b> has actually drawn the full theory on the wall — <b>Continental Drift Theory</b>. He's labelled the land "Pangea" and the ocean "Panthalassa," like a kid naming his broken dinner plate before gluing it.</p></div>
+
+        <div class="step"><div class="marker">ROOM 2</div><p><b>The Evidence Vault.</b> Three glass cases: a jigsaw coastline (<b>fit of continents</b>), fossilised bones (<b>fossil deposits</b> → studied by <b>paleontology</b>), and a tray of gold dust (<b>placer deposits</b>). Wegener stands here pointing — "see, they match!"</p></div>
+
+        <div class="step"><div class="marker">ROOM 3</div><p><b>The Broken Theory Corner.</b> Wegener tried to explain HOW continents moved using "polar flight force" and tidal force — wrong answer, this corner is dim and roped off. A sign reads: tides can pull water, not whole landmasses.</p></div>
+
+        <div class="step"><div class="marker">ROOM 4</div><p><b>The Boiler Room (basement).</b> <b>Arthur Holmes</b> works here with a giant pot of soup (<b>magma in the asthenosphere</b>) that's boiling — rising, spreading, sinking: this circular motion is <b>convection</b>. Above the pot, floating crackers (<b>lithospheric plates</b>) drift apart because the soup underneath is moving. Two furnaces heat the pot: one labelled "leftover heat from Earth's birth" (<b>primordial heat</b>), one labelled "ticking radioactive clock" (<b>radioactive decay</b>).</p></div>
+
+        <div class="step"><div class="marker">ROOM 5</div><p><b>The Underwater Wing (built 1962, post-WWII).</b> Harry Hess stands at a glass floor showing the ocean bed splitting open down the middle, oozing fresh magma that hardens into a long underwater mountain range — the <b>Mid-Oceanic Ridge</b>. This is <b>Sea Floor Spreading Theory</b>. The plaque: rocks get OLDER the further you walk from the centre crack.</p></div>
+
+        <div class="step"><div class="marker">ROOM 6</div><p><b>The Beach Diorama.</b> A gentle ramp into the sea (<b>continental shelf</b>, &lt;1° slope, oil-rich), then it suddenly drops (<b>continental slope</b>), flattens into a long corridor (<b>abyssal plain</b>), and ends in a deep dark pit you can't see the bottom of (<b>deep ocean trench</b>). Tiny models on the side: underwater hills (<b>seamounts</b>), a flat-topped one that "lost its head" (<b>guyot</b>), and a coral ring with a lagoon hole in the middle (<b>atoll</b>).</p></div>
+
+        <div class="step"><div class="marker">ROOM 7</div><p><b>The Volcano Hall.</b> Two fountains: one thin and runny spreading far and wide (<b>shield volcano</b>, basaltic, low silica, gentle), one thick and gloopy piling up steep (<b>composite volcano</b>, acidic, high silica). A caldera display literally has its roof collapsed in. Around the fountains: ash, gas, and little rock pellets raining down (<b>pyroclastic debris</b>).</p></div>
+
+        <div class="step"><div class="marker">ROOM 8</div><p><b>The Underground Sculpture Gallery.</b> Frozen magma shapes trapped inside rock: a giant dome (<b>batholith</b>), a smaller dome fed by a pipe (<b>laccolith</b>), a wavy sheet (<b>phacolith</b>), a flat horizontal sheet (<b>sill</b>), a vertical standing wall (<b>dike</b>), and a saucer-shaped one (<b>lopolith</b>).</p></div>
+
+        <div class="step"><div class="marker">ROOM 9</div><p><b>The Rock Cycle Carousel.</b> Three horses going round forever: <b>Igneous</b> (cooled lava) → erosion breaks it → <b>Sedimentary</b> (layered, only one with fossils) → heat &amp; pressure → <b>Metamorphic</b> (recrystallised) → melts back into magma → Igneous again. Nothing ever leaves the carousel.</p></div>
+
+        <div class="step"><div class="marker">EXIT</div><p><b>The Moon Balcony.</b> Standing here you feel two pulls: the Moon tugging the water toward it (<b>gravitational pull</b> → high tide), and on the far side the Earth flinging water outward (<b>centrifugal force</b> → also high tide). When Sun, Earth, Moon line up — <b>spring tide</b> (extreme). When Sun and Moon pull at right angles — <b>neap tide</b> (mild).</p></div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTINENTAL DRIFT ===================== -->
+    <section id="continents">
+      <div class="section-head"><span class="icon">🌍</span><h2>Continental Drift Theory</h2><span class="count-tag">Layer 1 · Complete Notes</span></div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Who said what first</h3>
+        <ul>
+          <li><b>Abraham Ortelius</b> — first person to merely <i>suggest</i> that continents might once have been joined (no theory, just an observation).</li>
+          <li><b>Alfred Wegener</b> — German geographer who actually proposed the formal <b>Continental Drift Theory in 1912</b>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Wegener's core claims</h3>
+        <ul>
+          <li>All continents were once joined into a single supercontinent: <b>Pangea</b> (the land).</li>
+          <li>Surrounding it was one giant ocean: <b>Panthalassa</b> (the water).</li>
+          <li>Pangea broke into two pieces first: <b>Laurasia</b> (northern — became North America, Europe, Asia) and <b>Gondwanaland</b> (southern — became India, South America, Africa, Australia).</li>
+          <li>These pieces then drifted apart in different directions to reach today's positions.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Wegener's three evidences</h3>
+        <ul>
+          <li><b>Coastline/jigsaw fit</b> — coasts of separated continents fit like puzzle pieces.</li>
+          <li><b>Fossil deposits</b> — same fossils found on now-separated continents (study of fossils = <b>Paleontology</b>).</li>
+          <li><b>Placer deposits</b> — matching gold/mineral deposits found across continents that are now apart.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-good">GOOD TO KNOW</span> Wegener's wrong mechanism</h3>
+        <p>Wegener guessed continents moved due to <b>"polar flight force" (Pol-flucht)</b> and <b>tidal force</b>. This was rejected — tidal force is strong enough to move water, not entire rigid landmasses. His <i>observation</i> (Pangea existed) was right; his <i>mechanism</i> (why it moved) was wrong.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Arthur Holmes fixes the mechanism (the real "why")</h3>
+        <ul>
+          <li>The actual driver is the <b>Asthenosphere</b> — the semi-molten magma layer beneath the rigid lithospheric plates.</li>
+          <li>Inside the asthenosphere, magma undergoes <b>convection</b>: it rises, spreads sideways, cools, sinks, and rises again — a continuous cycle.</li>
+          <li>The rigid <b>lithospheric plates</b> sitting on top get dragged along by this convection — this is what actually moves continents.</li>
+          <li><b>Energy source for convection (2 reasons):</b> (1) Earth's <b>primordial heat</b> (leftover heat from formation), (2) continuous <b>radioactive decay</b> inside the Earth.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Plate Tectonic Theory — McKenzie &amp; Parker</h3>
+        <div class="grid-3">
+          <div><b>7</b> major lithospheric plates identified.</div>
+          <div><b>3</b> types of plate boundaries.</div>
+          <div>Lithosphere ~<b>200 km</b> deep; Asthenosphere ~<b>400 km</b> deep.</div>
+        </div>
+        <table class="speed-table" style="margin-top:14px;">
+          <tr><th>Boundary type</th><th>Nature</th><th>What happens</th></tr>
+          <tr><td class="k">Convergent</td><td>Destructive</td><td>Plates collide; one subducts (sinks below) the other — subduction zone forms.</td></tr>
+          <tr><td class="k">Divergent</td><td>Constructive</td><td>Plates move apart; new crust/magma rises up to fill the gap.</td></tr>
+          <tr><td class="k">Transform</td><td>Neither</td><td>Plates slide past each other sideways; no crust created or destroyed.</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-imp">IMPORTANT</span> Crust thickness — don't mix these up</h3>
+        <table class="speed-table">
+          <tr><th>Crust type</th><th>Average thickness</th></tr>
+          <tr><td class="k">Continental crust</td><td>~5 km</td></tr>
+          <tr><td class="k">Oceanic crust</td><td>~30 km</td></tr>
+        </table>
+        <p style="margin-top:8px; font-size:13px;">Counter-intuitive: continental crust is <i>thinner</i> than oceanic crust by this measure used in the lecture — lock this exact pairing in, it's a classic reversal trap.</p>
+      </div>
+
+      <div class="chain">
+        <span class="node">Asthenosphere heats up</span><span class="arrow">→</span>
+        <span class="node">Convection currents form</span><span class="arrow">→</span>
+        <span class="node">Lithospheric plates dragged</span><span class="arrow">→</span>
+        <span class="node">Continents drift</span><span class="arrow">→</span>
+        <span class="node">Pangea → Laurasia + Gondwanaland → today's continents</span>
+      </div>
+
+      <div class="hook">
+        <div class="hook-title">🎯 MEMORY HOOK</div>
+        <p>Think of Pangea as a <b>cracked dinner plate floating on hot soup</b>. Ortelius just noticed the crack lines fit. Wegener glued the story together (Pangea + Panthalassa) but blamed the wrong force (tides) for why the pieces slid. Arthur Holmes correctly blamed <b>the boiling soup underneath</b> (convection in the asthenosphere) — that's the actual stove burning beneath the plate.</p>
+      </div>
+    </section>
+
+    <!-- ===================== OCEAN FLOOR ===================== -->
+    <section id="oceanfloor">
+      <div class="section-head"><span class="icon">🌊</span><h2>Sea Floor Spreading &amp; Ocean Relief Features</h2><span class="count-tag">Layer 1 · Complete Notes</span></div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Sea Floor Spreading Theory — Harry Hess, 1962</h3>
+        <ul>
+          <li>Proposed after WWII when ocean exploration picked up.</li>
+          <li>Happens at a <b>divergent plate boundary</b> on the ocean floor — plates move apart, magma rises and solidifies, building a long underwater mountain chain: the <b>Mid-Oceanic Ridge</b>.</li>
+          <li>The <b>Mid-Atlantic Ridge</b> running through the middle of the Atlantic Ocean is the <b>longest mountain range / longest landform on Earth</b>.</li>
+          <li><b>Key rule:</b> the farther you move from the ridge, the <b>older</b> the rock — symmetrical on both sides (equidistant points have equal-aged rock).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Major Ocean Relief Features (4) — prefer NCERT naming</h3>
+        <table class="speed-table">
+          <tr><th>Feature</th><th>Description</th></tr>
+          <tr><td class="k">Continental Shelf</td><td>Shallow, gently sloping zone from coast into the sea; gradient <b>&lt; 1°</b>; rich in petroleum/fossil fuels (river-deposited sediment). <b>Widest:</b> Siberia. <b>Narrowest:</b> Chile-Argentina (West coast of South America).</td></tr>
+          <tr><td class="k">Continental Slope</td><td>Steeper drop after the shelf — depth increases more sharply.</td></tr>
+          <tr><td class="k">Abyssal / Deep Sea Plain</td><td>Long, flat plain on the ocean floor.</td></tr>
+          <tr><td class="k">Deep Ocean Trench</td><td>Deepest pits/depressions in the ocean.</td></tr>
+        </table>
+        <p style="margin-top:10px; font-size:13px;">⚠ Some sources show "rise" instead of "abyssal plain" in a 4-part list (Shelf–Slope–Rise–Abyssal Plain) — stick to the NCERT 4: Shelf, Slope, Abyssal Plain, Deep Ocean Trench.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-imp">IMPORTANT</span> Minor Ocean Relief Features</h3>
+        <ul>
+          <li><b>Seamount</b> — an underwater mountain that doesn't reach the surface.</li>
+          <li><b>Guyot</b> — a seamount whose flat top has been eroded/flattened (lost its peak).</li>
+          <li><b>Atoll</b> — coral reef forms a ring around a submerged volcanic peak (often a guyot); after the volcanic peak erodes/sinks, a central depression/lagoon remains, surrounded by the coral ring.</li>
+          <li><b>Mid-Oceanic Ridge</b> — also classified under minor features in this scheme.</li>
+        </ul>
+      </div>
+
+      <div class="chain">
+        <span class="node">Sea mount (underwater mountain)</span><span class="arrow">→</span>
+        <span class="node">loses its top</span><span class="arrow">→</span>
+        <span class="node">Guyot</span><span class="arrow">→</span>
+        <span class="node">coral deposits around it</span><span class="arrow">→</span>
+        <span class="node">Atoll (ring + central lagoon)</span>
+      </div>
+
+      <div class="hook">
+        <div class="hook-title">🎯 MEMORY HOOK</div>
+        <p>Beach walk analogy from the lecture: you wade in (Goa beach) — ground drops <i>gently</i> for a long distance, that's the <b>shelf</b> (&lt;1° — "you won't suddenly sink"); then your friends "disappear" as the floor drops fast — that's the <b>slope</b>; then it's flat and featureless for ages — <b>abyssal plain</b>; then somewhere there's a deep pit — <b>trench</b>.</p>
+      </div>
+    </section>
+
+    <!-- ===================== CORALS ===================== -->
+    <section id="corals">
+      <div class="section-head"><span class="icon">🪸</span><h2>Corals — "Rainforests of the Sea"</h2><span class="count-tag">Layer 1 · Complete Notes</span></div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Favourable conditions for coral growth</h3>
+        <ul>
+          <li><b>No fresh water</b> — corals need <b>saline</b> water, so they're absent near river mouths (e.g., the Ganga–Brahmaputra–Meghna delta region).</li>
+          <li><b>Clear water + sunlight</b> — needed for photosynthesis by symbiotic algae; muddy water blocks sunlight.</li>
+          <li><b>Temperature ~25–35°C</b> (lecture states 30–35°C as ideal, 25–35°C as the broader workable range).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-imp">IMPORTANT</span> The symbiotic relationship</h3>
+        <p>Corals and algae (zooxanthellae) live in <b>symbiosis</b> — mutual help: corals provide <b>shelter and minerals</b> to algae; algae perform <b>photosynthesis</b> and supply <b>food/energy</b> back to corals.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-good">GOOD TO KNOW</span> Great Barrier Reef</h3>
+        <p>Located off the coast of <b>Australia</b>; it is the <b>longest barrier reef</b> in the world. (Coral reef types — fringing, barrier, atoll — and coral bleaching are covered in Environment section, not here.)</p>
+      </div>
+
+      <div class="hook">
+        <div class="hook-title">🎯 MEMORY HOOK</div>
+        <p>Corals are like a strict houseguest: <b>no muddy water, no fresh water, no cold water</b> — only clean, salty, warm, sunlit water. That's why you'll never find coral reefs right where a big river dumps fresh muddy water into the sea.</p>
+      </div>
+    </section>
+
+    <!-- ===================== OCEAN & CONTINENT FACTS ===================== -->
+    <section id="oceanfacts">
+      <div class="section-head"><span class="icon">📊</span><h2>Continents &amp; Oceans — Ranking Data</h2><span class="count-tag">Layer 1 · Complete Notes</span></div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3><span class="tag tag-must">MUST KNOW</span> Continents — decreasing order (area &amp; population, both)</h3>
+          <ol>
+            <li>Asia</li>
+            <li>Africa</li>
+            <li>North America</li>
+            <li>Europe</li>
+          </ol>
+          <p style="margin-top:8px;">Asia and Africa hold the <b>top two spots in both area and population</b>. <b>Africa</b> is called the <b>"continent of continents"</b> — it has the <b>highest number of countries</b>.</p>
+        </div>
+
+        <div class="card">
+          <h3><span class="tag tag-must">MUST KNOW</span> Oceans — decreasing order (size)</h3>
+          <ol>
+            <li>Pacific (largest, also <b>deepest</b> — Mariana Trench)</li>
+            <li>Atlantic (<b>busiest</b> + <b>hottest</b>)</li>
+            <li>Indian (Java Trench = deepest point here)</li>
+            <li>Southern</li>
+            <li>Arctic (smallest)</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Deepest points — don't confuse oceans</h3>
+        <table class="speed-table">
+          <tr><th>Ocean</th><th>Deepest trench</th><th>Deepest point name</th><th>Depth</th></tr>
+          <tr><td class="k">Pacific</td><td>Mariana Trench</td><td>Challenger Deep</td><td>~11 km</td></tr>
+          <tr><td class="k">Indian</td><td>Java Trench</td><td>—</td><td>—</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-imp">IMPORTANT</span> Why is the Atlantic "busiest AND hottest"?</h3>
+        <ul>
+          <li><b>Busiest</b> — flanked by North America, South America, Europe, and Africa, all major trade economies → heavy trade flow.</li>
+          <li>Contains the <b>Mid-Atlantic Ridge</b> down its centre (sea floor spreading example).</li>
+          <li><b>Sargasso Sea</b> — a patch of <b>brown algae</b> called <b>Sargassum</b> collects in the North Atlantic due to rotating <b>ocean currents (a gyre)</b>. It's called a "sea without borders" because it has no land boundaries. (Study of algae = <b>Phycology</b>.)</li>
+        </ul>
+      </div>
+
+      <div class="hook">
+        <div class="hook-title">🎯 MEMORY HOOK</div>
+        <p><b>"PAIS"</b> for ocean size order — <b>P</b>acific, <b>A</b>tlantic, <b>I</b>ndian, <b>S</b>outhern, (Arctic last/smallest). For continents: <b>"AANE"</b> — <b>A</b>sia, <b>A</b>frica, <b>N</b>orth America, <b>E</b>urope.</p>
+      </div>
+    </section>
+
+    <!-- ===================== VOLCANISM ===================== -->
+    <section id="volcanism">
+      <div class="section-head"><span class="icon">🌋</span><h2>Volcanism</h2><span class="count-tag">Layer 1 · Complete Notes</span></div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Magma vs Lava — the only real difference</h3>
+        <p><b>Magma</b> = molten rock <i>inside</i> the Earth. <b>Lava</b> = the same molten rock once it comes <i>outside</i>. Same substance, different location.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Two lava types → two volcano types</h3>
+        <table class="speed-table">
+          <tr><th>Property</th><th>Basic / Basaltic lava (Shield)</th><th>Acidic lava (Composite)</th></tr>
+          <tr><td class="k">Viscosity</td><td>Low viscosity (fluid, thin)</td><td>High viscosity (thick, sticky)</td></tr>
+          <tr><td class="k">Silica content</td><td>Low</td><td>High</td></tr>
+          <tr><td class="k">Melting point</td><td>Lower</td><td>Higher</td></tr>
+          <tr><td class="k">Spread pattern</td><td>Spreads far &amp; wide, gentle slope</td><td>Piles up steep near the vent</td></tr>
+          <tr><td class="k">Volcano shape</td><td>Shield volcano (e.g., <b>Hawaii</b> — Mauna Loa, Mauna Kea)</td><td>Composite / Cinder cone volcano</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-imp">IMPORTANT</span> Caldera &amp; Flood Basalt Province</h3>
+        <ul>
+          <li><b>Caldera</b> — forms when the magma chamber empties/explodes and the volcano's structure <b>collapses inward</b> on itself.</li>
+          <li><b>Flood Basalt Province</b> — lava that's even <i>more fluid</i> than shield lava; spreads extremely fiercely over huge areas.</li>
+          <li><b>India's Deccan Plateau (north-western part)</b> is a Flood Basalt Province — formed ~100–150 million years ago during intense volcanic activity as the Indian Plate moved northward (volcanic activity was widespread then, including near the Himalayan region — though there's no active volcano there today; active volcanism in India today is in the <b>Andaman &amp; Nicobar</b> islands).</li>
+          <li>This basaltic lava weathered into <b>black soil (regur soil)</b> — which is why <b>cotton cultivation</b> is concentrated in this region.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-good">GOOD TO KNOW</span> What a volcano ejects</h3>
+        <ul>
+          <li><b>Pyroclastic debris</b> — broken rock fragments (small and big stones) thrown out.</li>
+          <li>Sulfur compounds, nitrogen compounds, and ash.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-imp">IMPORTANT</span> Anatomy of a volcano</h3>
+        <ul>
+          <li><b>Crater</b> — the bowl-shaped depression at the very top opening.</li>
+          <li><b>Vent</b> — the full pipe/opening through which magma travels up.</li>
+          <li><b>Magma chamber</b> — the underground reservoir feeding the eruption.</li>
+        </ul>
+      </div>
+
+      <div class="chain">
+        <span class="node">Magma chamber</span><span class="arrow">→</span>
+        <span class="node">rises through vent</span><span class="arrow">→</span>
+        <span class="node">erupts at crater</span><span class="arrow">→</span>
+        <span class="node">becomes lava outside</span><span class="arrow">→</span>
+        <span class="node">solidifies into igneous rock</span>
+      </div>
+
+      <div class="hook">
+        <div class="hook-title">🎯 MEMORY HOOK</div>
+        <p>Imagine pouring honey vs. pouring water down a slope. <b>Water (low viscosity, low silica)</b> = shield volcano, spreads thin and wide, like Hawaii. <b>Honey (high viscosity, high silica)</b> = composite volcano, piles up into a steep cone right where it's poured. The thicker the "goo," the steeper and more explosive the volcano.</p>
+      </div>
+    </section>
+
+    <!-- ===================== INTRUSIVE LANDFORMS ===================== -->
+    <section id="landforms">
+      <div class="section-head"><span class="icon">⛰️</span><h2>Intrusive Igneous Landforms</h2><span class="count-tag">Layer 1 · Complete Notes</span></div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Intrusive vs Extrusive</h3>
+        <ul>
+          <li>Magma that solidifies <b>inside</b> the Earth's crust → <b>Intrusive</b> igneous rock (also called <b>Plutonic</b>).</li>
+          <li>Magma/lava that solidifies <b>outside/above ground</b> → <b>Extrusive</b> igneous rock.</li>
+          <li>Both are still "igneous" — direct solidification of magma is the most primary/primitive rock-forming process.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> The 6 intrusive landform shapes</h3>
+        <table class="speed-table">
+          <tr><th>Landform</th><th>Shape / formation</th></tr>
+          <tr><td class="k">Batholith</td><td>Entire magma chamber solidifies in place → large <b>dome-shaped</b> mass.</td></tr>
+          <tr><td class="k">Laccolith</td><td>Magma rises through a <b>conduit/pipe</b>, pushes up, and solidifies into a smaller <b>dome</b> connected to that pipe.</td></tr>
+          <tr><td class="k">Phacolith</td><td><b>Wavy, lens-shaped</b> mass; associated with folded rock structures — forms where synclines and anticlines develop.</td></tr>
+          <tr><td class="k">Sill</td><td><b>Horizontal</b> sheet of solidified magma between rock layers. (If exam doesn't say "horizontal" but it's a sill, the horizontal nature is still implied.)</td></tr>
+          <tr><td class="k">Dike</td><td><b>Vertical / standing</b> sheet of solidified magma cutting across rock layers.</td></tr>
+          <tr><td class="k">Lopolith</td><td><b>Saucer-shaped</b>, shallow basin-like intrusion.</td></tr>
+        </table>
+      </div>
+
+      <div class="hook">
+        <div class="hook-title">🎯 MEMORY HOOK</div>
+        <p>Mortar-and-pestle from the lecture: the <b>pestle lying flat</b> in the bowl = <b>Sill</b> (horizontal). The <b>pestle standing upright</b> = <b>Dike</b> (vertical). "Sill sleeps, Dike stands."</p>
+      </div>
+    </section>
+
+    <!-- ===================== ROCKS ===================== -->
+    <section id="rocks">
+      <div class="section-head"><span class="icon">🪨</span><h2>Rock Types &amp; The Rock Cycle</h2><span class="count-tag">Layer 1 · Complete Notes</span></div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Three rock types — quick definitions</h3>
+        <p>Study of rocks = <b>Petrology</b>. Study of Earth's interior structure = <b>Structural Geology</b>. <b>Father of Geology = James Hutton.</b></p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>🔥 Igneous</h3>
+          <p>Formed by <b>cooling &amp; solidification of magma</b>. Two sub-types: <b>Intensive</b> (formed inside — e.g. <b>Granite</b>) and one formed outside — e.g. <b>Basalt</b>.</p>
+          <p style="margin-top:8px;"><b>Examples: Gabbro, Granite, Basalt, Pumice.</b><br>Pumice is so light it can <b>float on water</b>.</p>
+        </div>
+        <div class="card">
+          <h3>🏖️ Sedimentary</h3>
+          <p>Formed when erosional agents (<b>wind, water, glacier</b>) break rock → fragments collect and stick together via <b>lithification</b> (compaction). <b>Only rock type where fossils are found</b> (they get trapped between layers/sediments).</p>
+        </div>
+        <div class="card">
+          <h3>♻️ Metamorphic</h3>
+          <p>Formed when igneous or sedimentary rock undergoes <b>recrystallization and reorganization</b> under extreme <b>Pressure, Volume, Temperature (PVT)</b> changes — no melting, just transformation.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Sedimentary rock — 3 formation modes</h3>
+        <table class="speed-table">
+          <tr><th>Mode</th><th>Examples</th></tr>
+          <tr><td class="k">Mechanical / Clastic</td><td>Sandstone, Limestone, Shale, Loess, Conglomerate</td></tr>
+          <tr><td class="k">Organic</td><td>Chalk, Limestone, Coal, Gasserite</td></tr>
+          <tr><td class="k">Chemical</td><td>Limestone, Halite</td></tr>
+        </table>
+        <p style="margin-top:10px; font-size:13px;">⚠ <b>Limestone appears in all three modes</b> — this is the single most repeated exam trap in this topic. Watch spelling: it's <b>clastic</b>, not "elastic"/"plastic" — a frequently misprinted option.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Metamorphic rock — 2 main types</h3>
+        <table class="speed-table">
+          <tr><th>Type</th><th>Trigger</th><th>Sub-types</th></tr>
+          <tr><td class="k">Dynamic</td><td>No chemical change; due to pressure</td><td>Regional (caused by pressure)</td></tr>
+          <tr><td class="k">Thermal</td><td>Sudden temperature change</td><td>Contact (caused by temperature)</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Metamorphic rock — parent rock → product (very examinable)</h3>
+        <table class="speed-table">
+          <tr><th>Original (parent) rock</th><th>Becomes</th></tr>
+          <tr><td class="k">Limestone (sedimentary)</td><td>Marble</td></tr>
+          <tr><td class="k">Shale (sedimentary)</td><td>Slate</td></tr>
+          <tr><td class="k">Sandstone (sedimentary)</td><td>Quartzite</td></tr>
+          <tr><td class="k">Granite (igneous)</td><td>Gneiss</td></tr>
+        </table>
+        <p style="margin-top:10px; font-size:13px;">Note: <b>Granite</b> uniquely sits in BOTH igneous (as the original rock) and as the parent of a metamorphic rock (Gneiss).</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-imp">IMPORTANT</span> Minerals to not confuse with rocks</h3>
+        <ul>
+          <li><b>Quartz</b> — a mineral (not a rock); <b>insoluble in water</b>.</li>
+          <li><b>Feldspar</b> — a mineral made of silica + mainly aluminium; makes up about <b>50% of Earth's crust</b>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Earth's crust composition (by element, decreasing)</h3>
+        <table class="speed-table">
+          <tr><th>Element</th><th>Approx %</th></tr>
+          <tr><td class="k">Oxygen</td><td>~46%</td></tr>
+          <tr><td class="k">Silicon</td><td>~28%</td></tr>
+          <tr><td class="k">Aluminium</td><td>~8%</td></tr>
+        </table>
+        <p style="margin-top:8px;">Mnemonic used: <b>"O Sial"</b> → Oxygen, Silicon, Aluminium. <b>Oxygen is the most abundant element</b> in Earth's crust.</p>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-imp">IMPORTANT</span> Texture terms in metamorphic rocks</h3>
+        <ul>
+          <li><b>Lineation</b> — visible lines/streaks in the rock.</li>
+          <li><b>Foliation / Banding</b> — alternating light and dark bands/shades visible in the rock.</li>
+          <li><b>Bedding</b> — layered structure seen especially in sedimentary-origin metamorphics.</li>
+        </ul>
+      </div>
+
+      <div class="palace-box" style="margin-top:8px;">
+        <h3>🔁 The Rock Cycle — nothing is ever permanent</h3>
+        <div class="step"><div class="marker">①</div><p><b>Igneous → Sedimentary:</b> erosional agents (wind/water/glacier) break igneous rock → fragments → <b>lithification</b> → sedimentary rock.</p></div>
+        <div class="step"><div class="marker">②</div><p><b>Sedimentary/Igneous → Metamorphic:</b> apply intense <b>PVT (Pressure, Volume, Temperature)</b> → recrystallization → metamorphic rock.</p></div>
+        <div class="step"><div class="marker">③</div><p><b>Any rock → Igneous:</b> when two plates converge, one subducts and melts → becomes magma/lava → cools → igneous rock again.</p></div>
+        <p style="margin-top:6px; color:var(--muted); font-size:13.5px;">Everything is interchangeable. This circularity itself is called the <b>Rock Cycle</b>.</p>
+      </div>
+
+      <div class="hook">
+        <div class="hook-title">🎯 MEMORY HOOK</div>
+        <p>Chant it like the lecture does: <b>"Gabbro Granite, Basalt Pumice"</b> for igneous; remember <b>limestone is the common thread</b> running through all 3 sedimentary formation types — it's the "guest star" that appears in every episode.</p>
+      </div>
+    </section>
+
+    <!-- ===================== TIDES ===================== -->
+    <section id="tides">
+      <div class="section-head"><span class="icon">🌙</span><h2>Tides</h2><span class="count-tag">Layer 1 · Complete Notes</span></div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Why tides happen — 2 forces, always</h3>
+        <ul>
+          <li><b>Gravitational pull</b> of the Moon and Sun pulls ocean water toward them → causes <b>high tide</b> on the near side.</li>
+          <li>The Moon's gravitational pull is roughly <b>double</b> the Sun's (Moon is much closer, even though Sun is far larger).</li>
+          <li>To balance this pull, Earth generates a <b>centrifugal force</b> on the <b>opposite side</b> → causes a <b>second high tide</b> there too.</li>
+          <li>Water "missing" from the sides perpendicular to this axis → <b>low tide</b> there.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Tidal timing — exact numbers</h3>
+        <table class="speed-table">
+          <tr><th>Interval</th><th>Duration</th></tr>
+          <tr><td class="k">Full tidal cycle (2 high + 2 low tides)</td><td>24 hours 50 minutes</td></tr>
+          <tr><td class="k">One high tide → next high tide</td><td>~12 hours 25 minutes</td></tr>
+          <tr><td class="k">One high tide → next low tide</td><td>~6 hours 12 minutes (approx. half of 12h25m)</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3><span class="tag tag-must">MUST KNOW</span> Spring Tide vs Neap Tide</h3>
+        <table class="speed-table">
+          <tr><th></th><th>Spring Tide</th><th>Neap Tide</th></tr>
+          <tr><td class="k">Sun-Earth-Moon position</td><td><b>Syzygy</b> — all three in a straight line</td><td><b>Quadrature</b> — Sun and Moon at 90° to each other relative to Earth</td></tr>
+          <tr><td class="k">Sub-types</td><td>Syzygy <b>Conjunction</b> (Sun &amp; Moon same side) / Syzygy <b>Opposition</b> (Sun &amp; Moon opposite sides)</td><td>—</td></tr>
+          <tr><td class="k">Tide intensity</td><td>High tide very high, low tide very low (extreme)</td><td>High tide not very high, low tide not very low (mild — forces partly cancel)</td></tr>
+        </table>
+      </div>
+
+      <div class="hook">
+        <div class="hook-title">🎯 MEMORY HOOK</div>
+        <p><b>Syzygy = Straight line = Spring (extreme).</b> <b>Quadrature = Quarter-turn (90°) = Quiet/Neap (mild).</b> Both start sounds remind you: S-S and Q-Q.</p>
+      </div>
+    </section>
+
+    <!-- ===================== EXAM TRAPS ===================== -->
+    <section id="traps">
+      <div class="section-head"><span class="icon">⚠️</span><h2>Exam Traps</h2><span class="count-tag">Where students lose marks</span></div>
+
+      <div class="trap-card">
+        <h4>⚠ Ortelius vs Wegener</h4>
+        <p style="color:var(--text); font-size:14px;">Both names get attached to "continents were once joined" — but only ONE actually proposed a named theory with a year.</p>
+        <table>
+          <tr><th>Person</th><th>Did</th></tr>
+          <tr><td><b>Abraham Ortelius</b></td><td>Only suggested the possibility — no formal theory, no year given.</td></tr>
+          <tr><td><b>Alfred Wegener</b></td><td>Proposed the actual <b>Continental Drift Theory in 1912</b> with named pieces (Pangea, Panthalassa, Laurasia, Gondwanaland).</td></tr>
+        </table>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Wegener's mechanism vs Holmes's mechanism</h4>
+        <p>Don't credit Wegener with "convection currents" — that was <b>Arthur Holmes</b>. Wegener's own explanation (polar flight force + tidal force) was proven <b>wrong</b>.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Continental crust vs Oceanic crust thickness — easy to invert</h4>
+        <table>
+          <tr><th>Crust</th><th>Thickness</th></tr>
+          <tr><td>Continental</td><td><b>~5 km</b> (thinner)</td></tr>
+          <tr><td>Oceanic</td><td><b>~30 km</b> (thicker)</td></tr>
+        </table>
+        <p>This goes against intuition (you'd expect continents, being "solid land," to have thicker crust) — exactly why it's commonly flipped in MCQs.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Lithosphere vs Asthenosphere depth</h4>
+        <table>
+          <tr><th>Layer</th><th>Extent</th></tr>
+          <tr><td>Lithosphere</td><td>up to ~200 km</td></tr>
+          <tr><td>Asthenosphere</td><td>up to ~400 km</td></tr>
+        </table>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Pacific vs Indian Ocean — deepest trench/point</h4>
+        <table>
+          <tr><th>Ocean</th><th>Trench</th><th>Point</th></tr>
+          <tr><td>Pacific</td><td>Mariana Trench</td><td><b>Challenger Deep</b> (~11 km, deepest point on Earth)</td></tr>
+          <tr><td>Indian</td><td><b>Java Trench</b></td><td>deepest point of Indian Ocean</td></tr>
+        </table>
+        <p>Don't confuse "deepest ocean" (Pacific) with "deepest point in Indian Ocean" (Java Trench) — both facts get tested together as a matching question.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Atlantic Ocean's TWO superlatives in one</h4>
+        <p>Atlantic is BOTH <b>busiest</b> AND <b>hottest</b> — students usually remember only one. Pacific is largest AND deepest — same double-trap pattern.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ "Continent of continents" — Africa, not Europe</h4>
+        <p>The lecture itself momentarily misspeaks and self-corrects: <b>Africa</b> (not Europe) is called the "continent of continents" because it has the highest number of countries.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Shield vs Composite volcano — opposite on every parameter</h4>
+        <table>
+          <tr><th>Parameter</th><th>Shield</th><th>Composite</th></tr>
+          <tr><td>Lava type</td><td>Basic/Basaltic</td><td>Acidic</td></tr>
+          <tr><td>Viscosity</td><td>Low (fluid)</td><td>High (thick)</td></tr>
+          <tr><td>Silica</td><td>Low</td><td>High</td></tr>
+          <tr><td>Shape</td><td>Broad, gentle</td><td>Steep cone</td></tr>
+        </table>
+        <p>Every single property flips between the two — examiners love swapping just one cell in a table-based MCQ.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Sill vs Dike — orientation swap</h4>
+        <table>
+          <tr><th>Landform</th><th>Orientation</th></tr>
+          <tr><td>Sill</td><td><b>Horizontal</b></td></tr>
+          <tr><td>Dike</td><td><b>Vertical</b></td></tr>
+        </table>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Batholith vs Laccolith — both domes, different origin</h4>
+        <p><b>Batholith</b> = the entire magma chamber itself solidifies into a dome (no pipe feeding it specifically — it IS the chamber). <b>Laccolith</b> = magma travels up through a connecting <b>conduit/pipe</b> and solidifies into a smaller dome above. The presence/absence of a feeder pipe is the key differentiator tested.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Clastic, not "Elastic" or "Plastic"</h4>
+        <p>The mechanical formation mode of sedimentary rock is spelled <b>clastic</b>. Exam options sometimes swap in "elastic" — a pure spelling trap with zero conceptual basis, designed to catch careless reading.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Limestone is the repeat offender</h4>
+        <p><b>Limestone appears in ALL THREE</b> sedimentary formation categories (mechanical, organic, AND chemical) — students often assume a rock belongs to only one category.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Granite — igneous AND parent of a metamorphic rock</h4>
+        <p>Granite is an igneous rock, but it's also listed as the <b>parent rock that becomes Gneiss</b> under metamorphism. A question may ask "which rock is both igneous and gives rise to a metamorphic rock" — answer: Granite → Gneiss.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Quartz vs Quartzite</h4>
+        <p><b>Quartz</b> = a mineral (insoluble in water), found within rocks. <b>Quartzite</b> = a metamorphic <b>rock</b> formed from sandstone. Easy to mix the mineral with the rock derived from a totally different parent.</p>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Syzygy vs Quadrature — which tide is which</h4>
+        <table>
+          <tr><th>Position</th><th>Tide produced</th></tr>
+          <tr><td>Syzygy (straight line)</td><td><b>Spring</b> tide (extreme)</td></tr>
+          <tr><td>Quadrature (90°)</td><td><b>Neap</b> tide (mild)</td></tr>
+        </table>
+      </div>
+
+      <div class="trap-card">
+        <h4>⚠ Earth's crust composition order — O, Si, Al</h4>
+        <p>Don't swap the order: <b>Oxygen (~46%) &gt; Silicon (~28%) &gt; Aluminium (~8%)</b>. Oxygen is the most abundant element by a wide margin — a frequently misread fact since people assume silicon (being in "silicate") leads.</p>
+      </div>
+    </section>
+
+    <!-- ===================== EXAMINER'S QUESTIONS ===================== -->
+    <section id="examiner">
+      <div class="section-head"><span class="icon">🎯</span><h2>Examiner's Favourite Questions</h2><span class="count-tag">How this topic gets attacked</span></div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>Statement-based</h3>
+          <ul>
+            <li>"Statement I: Continental crust is thicker than oceanic crust. Statement II: ___. Which is correct?" → <b>Statement I is FALSE</b> — oceanic crust (~30km) is thicker than continental (~5km).</li>
+            <li>"Wegener's continental drift theory was based on the force of polar flight and ocean currents" → FALSE, it was tidal force + polar flight, not ocean currents.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Match the Following</h3>
+          <ul>
+            <li>Marble — Limestone | Slate — Shale | Quartzite — Sandstone | Gneiss — Granite</li>
+            <li>Pacific — Mariana Trench | Indian — Java Trench</li>
+            <li>Shield — Hawaii | Composite — steep cone shapes</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Chronology</h3>
+          <ul>
+            <li>Ortelius (suggestion) → Wegener 1912 (Continental Drift Theory) → Arthur Holmes (convection mechanism) → Harry Hess 1962 (Sea Floor Spreading) → McKenzie &amp; Parker (Plate Tectonic Theory)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Assertion–Reason</h3>
+          <ul>
+            <li>A: Cotton is cultivated heavily in the Deccan Plateau region. R: This region is a Flood Basalt Province with black/regur soil. → <b>Both true, R correctly explains A.</b></li>
+            <li>A: Corals are absent near major river deltas. R: Corals require saline water and rivers bring fresh water. → <b>Both true, R correctly explains A.</b></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Frequently misread facts</h3>
+        <ul>
+          <li>"Plate tectonic theory" is often wrongly attributed to Wegener — it's <b>McKenzie &amp; Parker</b>.</li>
+          <li>Atlantic Ocean's <b>Sargasso Sea</b> question — students forget WHY algae collects there (gyre / rotating ocean currents), not just that it does.</li>
+          <li>Number of major plate boundaries = <b>3</b> (convergent, divergent, transform) — not 2, not 4.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===================== ACTIVE RECALL ===================== -->
+    <section id="recall">
+      <div class="section-head"><span class="icon">❓</span><h2>Active Recall — Test Yourself</h2><span class="count-tag">Click each card to reveal the answer</span></div>
+      <p style="color:var(--muted); margin-bottom:18px; font-size:14px;">Don't peek before answering in your head. Retrieval, not re-reading, is what builds long-term memory.</p>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q1</span>Who first suggested continents may have been joined, before Wegener formalised it?</div><div class="a">Abraham Ortelius.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q2</span>In which year did Wegener propose the Continental Drift Theory?</div><div class="a">1912.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q3</span>Name the single landmass and single ocean Wegener proposed.</div><div class="a">Pangea (land) and Panthalassa (ocean).</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q4</span>Pangea broke into which two pieces first?</div><div class="a">Laurasia (north) and Gondwanaland (south).</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q5</span>What were Wegener's three lines of evidence?</div><div class="a">Coastline/jigsaw fit, fossil deposits, placer (gold) deposits.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q6</span>Why was Wegener's own explanation for continental movement rejected?</div><div class="a">He cited tidal force and polar flight force — tides can't move whole landmasses, only water.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q7</span>Who correctly explained the mechanism using convection currents, and where do these occur?</div><div class="a">Arthur Holmes; convection occurs in the asthenosphere.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q8</span>What are the two energy sources powering this convection?</div><div class="a">Earth's primordial heat and radioactive decay.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q9</span>Who proposed the Plate Tectonic Theory, and how many major lithospheric plates did they identify?</div><div class="a">McKenzie and Parker; 7 major plates.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q10</span>Name the three types of plate boundaries and their nature (constructive/destructive/neither).</div><div class="a">Convergent (destructive), Divergent (constructive), Transform (neither).</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q11</span>What is the average thickness of continental crust vs oceanic crust?</div><div class="a">Continental ~5 km; Oceanic ~30 km.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q12</span>Who proposed Sea Floor Spreading Theory, and in what year?</div><div class="a">Harry Hess, 1962.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q13</span>What forms at a divergent plate boundary on the ocean floor, and what's an example?</div><div class="a">A Mid-Oceanic Ridge; example: Mid-Atlantic Ridge (longest landform on Earth).</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q14</span>List the four major ocean relief features in order from coast outward.</div><div class="a">Continental Shelf → Continental Slope → Abyssal/Deep Sea Plain → Deep Ocean Trench.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q15</span>Which has the widest continental shelf, and which has the narrowest?</div><div class="a">Widest: Siberia. Narrowest: Chile-Argentina (West coast of South America).</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q16</span>What is a Guyot, and how does it relate to an Atoll?</div><div class="a">A Guyot is a seamount with a flattened top; coral deposits form around it, and after it submerges further, an Atoll (coral ring + central lagoon) results.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q17</span>State three favourable conditions for coral growth.</div><div class="a">Saline (not fresh) water, clear water for sunlight penetration, temperature ~25-35°C.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q18</span>Differentiate Shield volcano and Composite volcano on lava viscosity and silica content.</div><div class="a">Shield: low viscosity, low silica, basic lava. Composite: high viscosity, high silica, acidic lava.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q19</span>Which Indian plateau region is a Flood Basalt Province, and what soil/crop is associated with it?</div><div class="a">North-western Deccan Plateau; black/regur soil; cotton cultivation.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q20</span>Differentiate Sill and Dike by orientation.</div><div class="a">Sill = horizontal; Dike = vertical.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q21</span>Name the three rock types and what triggers the change from one to metamorphic.</div><div class="a">Igneous, Sedimentary, Metamorphic; metamorphic forms via intense Pressure-Volume-Temperature (PVT) changes causing recrystallization.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q22</span>Give the parent rock for: Marble, Slate, Quartzite, Gneiss.</div><div class="a">Marble ← Limestone; Slate ← Shale; Quartzite ← Sandstone; Gneiss ← Granite.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q23</span>What is the only rock type in which fossils are found, and why?</div><div class="a">Sedimentary rock — because fossils get trapped between layers of sediment during lithification.</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q24</span>State the Earth's crust composition order with approximate percentages.</div><div class="a">Oxygen ~46% > Silicon ~28% > Aluminium ~8% (mnemonic: "O Sial").</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q25</span>What position causes Spring tide, and what position causes Neap tide?</div><div class="a">Spring: Syzygy (Sun-Earth-Moon in a straight line). Neap: Quadrature (Sun and Moon at 90° to each other).</div></div>
+
+      <div class="qa-card"><div class="q"><span class="qnum">Q26</span>How long is the full tidal cycle (2 high + 2 low tides), and how long between one high tide and the next?</div><div class="a">24 hours 50 minutes total cycle; ~12 hours 25 minutes between successive high tides.</div></div>
+    </section>
+
+    <!-- ===================== HIGH-YIELD SHEET ===================== -->
+    <section id="highyield">
+      <div class="section-head"><span class="icon">⭐</span><h2>High-Yield Revision Notes</h2><span class="count-tag">Layer 2</span></div>
+      <div class="divider-label">Condensed — for your 10th+ revision pass</div>
+
+      <table class="speed-table">
+        <tr><th>Topic</th><th>Core fact</th></tr>
+        <tr><td class="k">Continental Drift</td><td>Wegener, 1912 — Pangea + Panthalassa → Laurasia + Gondwanaland. Evidence: jigsaw fit, fossils, placer deposits. Wrong mechanism: tidal/polar force.</td></tr>
+        <tr><td class="k">Real Mechanism</td><td>Arthur Holmes — convection in asthenosphere, powered by primordial heat + radioactive decay.</td></tr>
+        <tr><td class="k">Plate Tectonics</td><td>McKenzie &amp; Parker — 7 major plates, 3 boundary types (convergent-destructive, divergent-constructive, transform-neither).</td></tr>
+        <tr><td class="k">Crust thickness</td><td>Continental ~5 km (thin) / Oceanic ~30 km (thick).</td></tr>
+        <tr><td class="k">Sphere depths</td><td>Lithosphere ~200 km / Asthenosphere ~400 km.</td></tr>
+        <tr><td class="k">Sea Floor Spreading</td><td>Harry Hess, 1962 — divergent boundary → Mid-Oceanic Ridge → rocks older further from ridge.</td></tr>
+        <tr><td class="k">4 Major Ocean Features</td><td>Shelf (&lt;1°, petroleum) → Slope → Abyssal Plain → Trench.</td></tr>
+        <tr><td class="k">Minor Ocean Features</td><td>Seamount → Guyot (flat top) → Atoll (coral ring + lagoon); also Mid-Oceanic Ridge.</td></tr>
+        <tr><td class="k">Coral conditions</td><td>Saline + clear + warm (25-35°C); symbiosis with algae (shelter ↔ food).</td></tr>
+        <tr><td class="k">Continents order</td><td>Asia &gt; Africa &gt; N.America &gt; Europe. Africa = "continent of continents".</td></tr>
+        <tr><td class="k">Oceans order</td><td>Pacific (largest+deepest) &gt; Atlantic (busiest+hottest) &gt; Indian &gt; Southern &gt; Arctic.</td></tr>
+        <tr><td class="k">Deepest points</td><td>Pacific: Mariana Trench → Challenger Deep (~11 km). Indian: Java Trench.</td></tr>
+        <tr><td class="k">Volcano types</td><td>Shield = low viscosity/silica, basic lava (Hawaii). Composite = high viscosity/silica, acidic lava.</td></tr>
+        <tr><td class="k">Flood Basalt Province</td><td>NW Deccan Plateau, India → black soil → cotton.</td></tr>
+        <tr><td class="k">Intrusive landforms</td><td>Batholith (dome, no pipe) / Laccolith (dome + pipe) / Phacolith (wavy) / Sill (horizontal) / Dike (vertical) / Lopolith (saucer).</td></tr>
+        <tr><td class="k">Rock types</td><td>Igneous (cooled magma) → Sedimentary (lithified fragments, only one with fossils) → Metamorphic (PVT recrystallization) → cycle repeats.</td></tr>
+        <tr><td class="k">Sedimentary modes</td><td>Mechanical/Clastic (sandstone, shale, conglomerate) / Organic (chalk, coal) / Chemical (halite) — limestone in all 3.</td></tr>
+        <tr><td class="k">Metamorphic pairs</td><td>Limestone→Marble / Shale→Slate / Sandstone→Quartzite / Granite→Gneiss.</td></tr>
+        <tr><td class="k">Crust composition</td><td>O (~46%) &gt; Si (~28%) &gt; Al (~8%) — "O Sial".</td></tr>
+        <tr><td class="k">Tides</td><td>Gravitational pull (near side) + centrifugal force (far side) = 2 high + 2 low tides per 24h50m. Spring = Syzygy. Neap = Quadrature.</td></tr>
+      </table>
+    </section>
+
+    <!-- ===================== ULTRA-FAST SHEET ===================== -->
+    <section id="ultrafast">
+      <div class="section-head"><span class="icon">⚡</span><h2>Ultra-Fast Revision Sheet</h2><span class="count-tag">Layer 3</span></div>
+      <div class="divider-label">Scan in under 3 minutes</div>
+
+      <div class="flash-grid">
+        <div class="flash"><b>1912</b> — Wegener, Continental Drift</div>
+        <div class="flash"><b>1962</b> — Hess, Sea Floor Spreading</div>
+        <div class="flash"><b>Pangea / Panthalassa</b> — land / ocean</div>
+        <div class="flash"><b>Laurasia / Gondwanaland</b> — N / S split</div>
+        <div class="flash"><b>Holmes</b> — convection, asthenosphere</div>
+        <div class="flash"><b>McKenzie &amp; Parker</b> — 7 plates, 3 boundaries</div>
+        <div class="flash"><b>5 km / 30 km</b> — continental / oceanic crust</div>
+        <div class="flash"><b>200 km / 400 km</b> — lithosphere / asthenosphere</div>
+        <div class="flash"><b>Shelf-Slope-Plain-Trench</b> — major ocean relief</div>
+        <div class="flash"><b>Seamount-Guyot-Atoll</b> — minor ocean relief</div>
+        <div class="flash"><b>Mariana / Java</b> — Pacific / Indian deepest trench</div>
+        <div class="flash"><b>Challenger Deep</b> — ~11 km, deepest point</div>
+        <div class="flash"><b>Asia&gt;Africa&gt;NA&gt;Europe</b> — continent order</div>
+        <div class="flash"><b>Pacific&gt;Atlantic&gt;Indian&gt;Southern&gt;Arctic</b> — ocean order</div>
+        <div class="flash"><b>Shield</b> = low silica, fluid, Hawaii</div>
+        <div class="flash"><b>Composite</b> = high silica, viscous, steep</div>
+        <div class="flash"><b>Caldera</b> = collapsed magma chamber</div>
+        <div class="flash"><b>Deccan Plateau</b> = Flood Basalt → black soil → cotton</div>
+        <div class="flash"><b>Sill</b> = horizontal / <b>Dike</b> = vertical</div>
+        <div class="flash"><b>Batholith</b> = no pipe / <b>Laccolith</b> = has pipe</div>
+        <div class="flash"><b>Igneous→Sedimentary→Metamorphic→Igneous</b> — rock cycle</div>
+        <div class="flash"><b>Limestone</b> = in all 3 sedimentary modes</div>
+        <div class="flash"><b>Granite→Gneiss</b>, <b>Limestone→Marble</b>, <b>Shale→Slate</b>, <b>Sandstone→Quartzite</b></div>
+        <div class="flash"><b>O&gt;Si&gt;Al</b> = 46% / 28% / 8%</div>
+        <div class="flash"><b>Syzygy</b> = straight line = Spring tide</div>
+        <div class="flash"><b>Quadrature</b> = 90° = Neap tide</div>
+        <div class="flash"><b>24h50m</b> = full tidal cycle</div>
+        <div class="flash"><b>Paleontology</b> = study of fossils</div>
+        <div class="flash"><b>Petrology</b> = study of rocks</div>
+        <div class="flash"><b>James Hutton</b> = father of geology</div>
+      </div>
+    </section>
+
+    <!-- ===================== 30 SECOND SHEET ===================== -->
+    <section id="thirtysec">
+      <div class="section-head"><span class="icon">⏱️</span><h2>30-Second Revision Sheet</h2><span class="count-tag">Layer 4</span></div>
+      <div class="divider-label">One glance, whole chapter</div>
+
+      <div class="card">
+        <p style="font-size:15px; color:var(--text);">
+          <b>Wegener '12</b> → Pangea broke → Laurasia/Gondwana &nbsp;|&nbsp;
+          <b>Holmes</b> → convection drives it &nbsp;|&nbsp;
+          <b>Hess '62</b> → sea floor spreads at ridges &nbsp;|&nbsp;
+          <b>McKenzie/Parker</b> → 7 plates, 3 boundaries &nbsp;|&nbsp;
+          <b>Ocean floor:</b> shelf→slope→plain→trench, +seamount/guyot/atoll &nbsp;|&nbsp;
+          <b>Volcano:</b> shield=thin lava, composite=thick lava &nbsp;|&nbsp;
+          <b>Landforms:</b> sill=flat, dike=upright, batholith=no-pipe, laccolith=pipe &nbsp;|&nbsp;
+          <b>Rocks:</b> igneous↔sedimentary(fossils)↔metamorphic(PVT), cycle forever &nbsp;|&nbsp;
+          <b>Tides:</b> gravity+centrifugal, syzygy=spring, quadrature=neap.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== LAST NIGHT SHEET ===================== -->
+    <section id="lastnight">
+      <div class="section-head"><span class="icon">🌙</span><h2>Last-Night-Before-Exam Sheet</h2><span class="count-tag">Layer 5 · Final glance</span></div>
+
+      <div class="last-night-box">
+        <h3>If you forget everything else, remember this:</h3>
+        <div class="item">🔥 <b>Wegener, 1912</b> → Continental Drift → Pangea/Panthalassa → Laurasia/Gondwanaland. His evidence was real (fit, fossils, placer); his mechanism (tides) was wrong.</div>
+        <div class="item">🔥 <b>Holmes</b> fixed it: convection in the <b>asthenosphere</b>, powered by primordial heat + radioactivity.</div>
+        <div class="item">🔥 <b>Hess, 1962</b>: Sea floor spreading at divergent boundaries → Mid-Oceanic Ridge → farther = older rock.</div>
+        <div class="item">🔥 Crust: Continental <b>5 km</b>, Oceanic <b>30 km</b> — easy to flip, don't.</div>
+        <div class="item">🔥 4 major ocean features in order: <b>Shelf → Slope → Abyssal Plain → Trench.</b></div>
+        <div class="item">🔥 Shield volcano = thin lava, low silica (Hawaii). Composite = thick lava, high silica.</div>
+        <div class="item">🔥 <b>Sill = horizontal, Dike = vertical.</b> Batholith has no feeder pipe; Laccolith does.</div>
+        <div class="item">🔥 Only <b>sedimentary</b> rock has fossils. <b>Limestone</b> appears in all 3 sedimentary formation modes.</div>
+        <div class="item">🔥 Parent→Product: Limestone→Marble, Shale→Slate, Sandstone→Quartzite, <b>Granite→Gneiss.</b></div>
+        <div class="item">🔥 Crust elements: <b>O(46%) &gt; Si(28%) &gt; Al(8%).</b></div>
+        <div class="item">🔥 <b>Syzygy = Spring tide</b> (extreme). <b>Quadrature = Neap tide</b> (mild). Full cycle = 24h 50m.</div>
+        <div class="item">🔥 Ocean order: <b>Pacific &gt; Atlantic &gt; Indian &gt; Southern &gt; Arctic.</b> Pacific=deepest, Atlantic=busiest+hottest.</div>
+        <div class="item">🔥 Continent order: <b>Asia &gt; Africa &gt; N.America &gt; Europe.</b> Africa = most countries.</div>
+        <p style="margin-top:18px; color:var(--muted); font-size:13.5px;">Breathe. You've revised this enough times that it's no longer "information" — it's a story you already know the ending to. Go write it down.</p>
+      </div>
+    </section>
+
+    <footer>
+      FRB 2.0 — Geography Revision Vault · Continents &amp; Oceans · Built for spaced repetition, not one-time reading.
+    </footer>
+
+  </main>
+</div>
+
+<button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">☰</button>
+
+<script>
+// Active link highlighting on scroll
+const links = document.querySelectorAll('.strata-link');
+const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href'))).filter(Boolean);
+
+function onScroll(){
+  let current = sections[0];
+  const offset = 120;
+  for(const s of sections){
+    if(s.getBoundingClientRect().top - offset <= 0) current = s;
+  }
+  links.forEach(l => {
+    const target = document.querySelector(l.getAttribute('href'));
+    l.classList.toggle('active', target === current);
+  });
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+
+// Mobile nav toggle
+const rail = document.getElementById('rail');
+const toggle = document.getElementById('mobileToggle');
+let collapsed = window.innerWidth <= 880;
+if(collapsed) rail.classList.add('collapsed');
+toggle.addEventListener('click', () => {
+  rail.classList.toggle('collapsed');
+});
+links.forEach(l => l.addEventListener('click', () => {
+  if(window.innerWidth <= 880) rail.classList.add('collapsed');
+}));
+
+// Active recall toggle
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.qa-card');
+  if(card) card.classList.toggle('open');
+});
+</script>
+
+</body>
+</html>

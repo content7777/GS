@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌪️ Wind, Ocean & Cyclones — SSC CGL Revision</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --bg-deep: #0a0e1a;
+    --bg-card: #111827;
+    --bg-card2: #141c2e;
+    --bg-section: #0f1521;
+    --accent-blue: #3b82f6;
+    --accent-cyan: #06b6d4;
+    --accent-green: #10b981;
+    --accent-yellow: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-purple: #8b5cf6;
+    --accent-pink: #ec4899;
+    --accent-orange: #f97316;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border: #1e293b;
+    --border-bright: #2d3f5e;
+    --glow-blue: 0 0 20px rgba(59,130,246,0.3);
+    --glow-cyan: 0 0 20px rgba(6,182,212,0.3);
+    --glow-green: 0 0 20px rgba(16,185,129,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,14,26,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex; align-items: center; gap: 0; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--accent-cyan);
+    white-space: nowrap; margin-right: 2rem; padding: 1rem 0;
+    border-right: 1px solid var(--border); padding-right: 2rem;
+  }
+  .nav-links { display: flex; gap: 0; }
+  .nav-links a {
+    color: var(--text-secondary); text-decoration: none;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.05em;
+    padding: 1rem 1.2rem; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent-cyan); border-bottom-color: var(--accent-cyan); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0a0e1a 0%, #0f1a2e 50%, #0a1628 100%);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(6,182,212,0.08) 0%, transparent 70%);
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.15em;
+    color: var(--accent-cyan); background: rgba(6,182,212,0.1);
+    border: 1px solid rgba(6,182,212,0.3);
+    padding: 4px 16px; border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    background: linear-gradient(135deg, #e2e8f0 30%, var(--accent-cyan) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.15; margin-bottom: 1rem;
+  }
+  .hero-sub {
+    color: var(--text-secondary); font-size: 16px;
+    max-width: 600px; margin: 0 auto 2rem;
+  }
+  .hero-badges { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .badge {
+    font-size: 12px; font-weight: 600; padding: 6px 14px;
+    border-radius: 100px; border: 1px solid;
+  }
+  .badge-fire { color: var(--accent-orange); border-color: rgba(249,115,22,0.4); background: rgba(249,115,22,0.08); }
+  .badge-info { color: var(--accent-blue); border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.08); }
+  .badge-ok { color: var(--accent-green); border-color: rgba(16,185,129,0.4); background: rgba(16,185,129,0.08); }
+
+  /* LAYOUT */
+  .container { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem; }
+
+  /* SECTION HEADERS */
+  .section-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2rem; padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header .icon {
+    width: 44px; height: 44px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .icon-blue { background: rgba(59,130,246,0.15); }
+  .icon-cyan { background: rgba(6,182,212,0.15); }
+  .icon-green { background: rgba(16,185,129,0.15); }
+  .icon-yellow { background: rgba(245,158,11,0.15); }
+  .icon-red { background: rgba(239,68,68,0.15); }
+  .icon-purple { background: rgba(139,92,246,0.15); }
+  .icon-pink { background: rgba(236,72,153,0.15); }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; color: var(--text-primary);
+  }
+  .section-header p { color: var(--text-secondary); font-size: 13px; margin-top: 2px; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border-bright); }
+  .card-title {
+    font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 0.75rem;
+  }
+  .card-blue { border-left: 3px solid var(--accent-blue); }
+  .card-cyan { border-left: 3px solid var(--accent-cyan); }
+  .card-green { border-left: 3px solid var(--accent-green); }
+  .card-yellow { border-left: 3px solid var(--accent-yellow); }
+  .card-red { border-left: 3px solid var(--accent-red); }
+  .card-purple { border-left: 3px solid var(--accent-purple); }
+  .card-orange { border-left: 3px solid var(--accent-orange); }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
+
+  /* HIGHLIGHTS */
+  .highlight { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2); border-radius: 8px; padding: 1rem 1.25rem; margin: 0.75rem 0; }
+  .highlight-yellow { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.3); }
+  .highlight-red { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.3); }
+  .highlight-green { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.3); }
+  .highlight-purple { background: rgba(139,92,246,0.08); border-color: rgba(139,92,246,0.3); }
+
+  /* TAGS */
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 4px; margin-bottom: 2px; }
+  .tag-fire { background: rgba(239,68,68,0.2); color: #fca5a5; }
+  .tag-star { background: rgba(245,158,11,0.2); color: #fde68a; }
+  .tag-plus { background: rgba(16,185,129,0.2); color: #6ee7b7; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { background: var(--bg-section); color: var(--accent-cyan); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+  td { padding: 10px 14px; border-bottom: 1px solid rgba(30,41,59,0.5); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* MEMORY HOOKS */
+  .memory-hook {
+    background: linear-gradient(135deg, rgba(139,92,246,0.1) 0%, rgba(59,130,246,0.05) 100%);
+    border: 1px solid rgba(139,92,246,0.3);
+    border-radius: 12px; padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .memory-hook::before {
+    content: '🧠';
+    position: absolute; top: -10px; left: 20px;
+    font-size: 20px;
+    background: var(--bg-deep); padding: 0 6px;
+  }
+  .memory-hook-title { color: var(--accent-purple); font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .story { font-style: italic; color: #c4b5fd; line-height: 1.8; }
+
+  /* PALACE */
+  .palace {
+    background: linear-gradient(135deg, rgba(6,182,212,0.05) 0%, rgba(59,130,246,0.05) 100%);
+    border: 1px dashed rgba(6,182,212,0.4);
+    border-radius: 12px; padding: 2rem;
+    margin-bottom: 1.25rem;
+  }
+  .palace-title { color: var(--accent-cyan); font-weight: 700; font-size: 14px; margin-bottom: 1rem; }
+  .palace-stop { display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(6,182,212,0.1); }
+  .palace-stop:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .stop-num { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; color: var(--accent-cyan); min-width: 36px; }
+  .stop-title { color: var(--text-primary); font-weight: 600; margin-bottom: 4px; }
+  .stop-desc { color: var(--text-secondary); font-size: 14px; }
+
+  /* EXAM TRAPS */
+  .trap-box {
+    background: rgba(239,68,68,0.06);
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 12px; padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .trap-title { color: #f87171; font-weight: 700; font-size: 13px; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+
+  /* Q&A */
+  .qa-item {
+    border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden;
+    margin-bottom: 0.75rem;
+  }
+  .qa-q {
+    background: var(--bg-card2);
+    padding: 0.9rem 1.25rem;
+    cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    color: var(--text-primary); font-weight: 500; font-size: 14px;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .qa-q:hover { background: rgba(59,130,246,0.08); }
+  .qa-q .arrow { color: var(--accent-blue); transition: transform 0.3s; font-size: 12px; }
+  .qa-q.open .arrow { transform: rotate(180deg); }
+  .qa-a {
+    background: var(--bg-card);
+    padding: 0 1.25rem; max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s;
+    color: var(--accent-green); font-size: 14px;
+  }
+  .qa-a.open { max-height: 200px; padding: 0.9rem 1.25rem; }
+
+  /* REVISION LAYERS */
+  .layer-tab-bar {
+    display: flex; gap: 0; border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem; overflow-x: auto; scrollbar-width: none;
+  }
+  .layer-tab-bar::-webkit-scrollbar { display: none; }
+  .layer-tab {
+    padding: 10px 18px; font-size: 13px; font-weight: 600;
+    color: var(--text-muted); background: none; border: none;
+    border-bottom: 2px solid transparent; cursor: pointer;
+    white-space: nowrap; transition: all 0.2s;
+  }
+  .layer-tab:hover { color: var(--text-secondary); }
+  .layer-tab.active { color: var(--accent-cyan); border-bottom-color: var(--accent-cyan); }
+  .layer-content { display: none; }
+  .layer-content.active { display: block; }
+
+  /* RAPID FIRE */
+  .rapid-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 0.6rem 0; border-bottom: 1px solid rgba(30,41,59,0.5);
+    font-size: 14px;
+  }
+  .rapid-item:last-child { border-bottom: none; }
+  .rq { color: var(--text-secondary); min-width: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; margin-top: 2px; }
+  .ra { color: var(--accent-green); font-weight: 600; }
+
+  /* KEYWORD */
+  .kw { color: var(--accent-cyan); font-weight: 600; }
+  .kw-y { color: var(--accent-yellow); font-weight: 600; }
+  .kw-g { color: var(--accent-green); font-weight: 600; }
+  .kw-r { color: var(--accent-red); font-weight: 600; }
+  .kw-p { color: var(--accent-purple); font-weight: 600; }
+  .kw-o { color: var(--accent-orange); font-weight: 600; }
+
+  /* ARROWS / FLOW */
+  .flow { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin: 0.5rem 0; }
+  .flow-item { background: var(--bg-section); border: 1px solid var(--border); border-radius: 6px; padding: 4px 12px; font-size: 13px; }
+  .flow-arrow { color: var(--accent-yellow); font-weight: 700; }
+
+  /* PULSAR */
+  .live-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); animation: pulse 2s infinite; margin-right: 6px; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+  /* LAST NIGHT SHEET */
+  .last-night { background: linear-gradient(135deg, #0d1117 0%, #0a1628 100%); border: 2px solid rgba(245,158,11,0.4); border-radius: 16px; padding: 2rem; }
+  .last-night-title { text-align: center; font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--accent-yellow); margin-bottom: 1.5rem; }
+
+  /* WIND DIAGRAM ASCII */
+  .diagram {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; line-height: 1.6;
+    background: var(--bg-section);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 1rem 1.5rem;
+    color: #7dd3fc; overflow-x: auto;
+    white-space: pre;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .hero { padding: 3rem 1rem 2.5rem; }
+    .container { padding: 2rem 1rem; }
+    nav { padding: 0 1rem; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    table { font-size: 12px; }
+    td, th { padding: 8px 10px; }
+  }
+
+  /* SECTION DIVIDER */
+  .section-divider { margin: 4rem 0 3rem; height: 1px; background: linear-gradient(to right, transparent, var(--border-bright), transparent); }
+
+  /* FILL BLANK */
+  .blank { display: inline-block; border-bottom: 2px solid var(--accent-blue); min-width: 80px; color: transparent; background: rgba(59,130,246,0.1); border-radius: 4px; padding: 1px 8px; margin: 0 4px; font-size: 13px; cursor: pointer; transition: all 0.3s; }
+  .blank.revealed { color: var(--accent-green); border-color: var(--accent-green); background: rgba(16,185,129,0.1); }
+
+  p { margin-bottom: 0.5rem; }
+  ul, ol { padding-left: 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  strong { color: var(--text-primary); }
+
+  .section { padding: 3.5rem 0; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">🌪️ SSC CGL GEO</div>
+  <div class="nav-links">
+    <a href="#palace">Memory Palace</a>
+    <a href="#notes">Full Notes</a>
+    <a href="#winds">Winds</a>
+    <a href="#cyclone">Cyclones</a>
+    <a href="#ocean">Ocean</a>
+    <a href="#traps">⚠ Traps</a>
+    <a href="#examq">Exam Qs</a>
+    <a href="#recall">Active Recall</a>
+    <a href="#layers">Revision Layers</a>
+    <a href="#lastnight">Last Night</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div style="position:relative; z-index:1;">
+    <div class="hero-tag">GEOGRAPHY · SSC CGL</div>
+    <h1>Wind, Ocean Currents<br>& Cyclones</h1>
+    <p class="hero-sub">A complete high-retention revision system — designed to make this chapter unforgettable for 6+ months</p>
+    <div class="hero-badges">
+      <span class="badge badge-fire">🔥 Must Know</span>
+      <span class="badge badge-info">⭐ Important</span>
+      <span class="badge badge-ok">➕ Good to Know</span>
+    </div>
+  </div>
+</div>
+
+<!-- CONTAINER START -->
+<div class="container">
+
+<!-- BIG PICTURE -->
+<div class="section" id="bigpicture">
+  <div class="section-header">
+    <div class="icon icon-blue">🌍</div>
+    <div>
+      <h2>Big Picture</h2>
+      <p>What this chapter is REALLY about</p>
+    </div>
+  </div>
+  <div class="highlight highlight-purple">
+    <strong>Core Idea:</strong> Everything in this chapter flows from ONE principle — <span class="kw">the Sun heats the Earth unevenly</span>. This creates pressure differences → wind blows → wind drives ocean currents → currents affect climate → climate affects deserts, fishing zones, cyclones. Every concept is a domino effect from that first inequality.
+  </div>
+  <div class="flow">
+    <div class="flow-item">☀️ Unequal Heating</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item">🔴 Pressure Diff</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item">💨 Wind Blows</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item">🌊 Ocean Currents</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item">🌪️ Cyclones</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-item">🏜️ Deserts / 🐟 Fishing</div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- MEMORY PALACE -->
+<div class="section" id="palace">
+  <div class="section-header">
+    <div class="icon icon-purple">🧠</div>
+    <div>
+      <h2>Chapter Memory Palace</h2>
+      <p>Walk through a weather station — recall everything</p>
+    </div>
+  </div>
+  <div class="palace">
+    <div class="palace-title">🏛️ THE ATMOSPHERIC WEATHER STATION — Your Memory Journey</div>
+    <p style="color:var(--text-secondary); font-size:13px; margin-bottom:1.5rem;">Imagine you are walking through a 10-floor vertical weather station, from the equator to the poles. Each floor has something memorable.</p>
+
+    <div class="palace-stop">
+      <div class="stop-num">01</div>
+      <div>
+        <div class="stop-title">🔥 GROUND FLOOR — The Equator Boiler Room</div>
+        <div class="stop-desc">Intense heat → air rises → LOW pressure. Extremely weak winds (doldrums). The ITCZ is the reception desk that <em>shifts with the sun</em> — near Cancer in June, near Capricorn in December.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">02</div>
+      <div>
+        <div class="stop-title">🐎 2nd FLOOR — The Horse Stable (30–35°)</div>
+        <div class="stop-desc">Air from equator subsides here → HIGH pressure → subtropical high = <strong>Horse Latitude</strong>. Winds are weak, sailors once threw horses overboard to save water here. Easterlies (Trade Winds) form below and Westerlies form above.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">03</div>
+      <div>
+        <div class="stop-title">💨 3rd FLOOR — Trade Wind Corridor</div>
+        <div class="stop-desc">High (Horse) → Low (ITCZ). Northern hemisphere → deflected RIGHT = <span class="kw">North East Trades</span>. Southern hemisphere → deflected LEFT = <span class="kw">South East Trades</span>. They MEET at ITCZ.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">04</div>
+      <div>
+        <div class="stop-title">🌊 4th FLOOR — Westerlies Rooftop Terrace</div>
+        <div class="stop-desc">Horse Latitude (High) → Sub-Polar Low. Blow from <em>west to east</em>. In Southern Hemisphere — no land friction → insane speed → <strong>Roaring 40s, Furious 50s, Screaming 60s</strong>!</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">05</div>
+      <div>
+        <div class="stop-title">❄️ 5th FLOOR — Polar Ice Vault (60–90°)</div>
+        <div class="stop-desc">Cold air sinks at poles → HIGH pressure. Blows towards sub-polar low → becomes <span class="kw">Polar Easterlies</span>. Coriolis deflects RIGHT in North → they come from the East.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">06</div>
+      <div>
+        <div class="stop-title">🌀 6th FLOOR — Cyclone Lab</div>
+        <div class="stop-desc">Tropical: Ocean-born, 27°C+, East→West. Temperate: Land+Sea, West→East (Westerlies carry them). Eye = calm, no cloud. Eye Wall = furious cumulonimbus. Anticyclone = high pressure, clear weather.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">07</div>
+      <div>
+        <div class="stop-title">🌊 7th FLOOR — Ocean Current Observatory</div>
+        <div class="stop-desc"><strong>"BP Company played Golf World Cup in California"</strong> → B=Benguela, P=Peru/Bolts, G=Greenland, O=Oyashio, L=Labrador, F=Falkland, W=West Australian, C=California/Canary → ALL COLD. Rest = WARM.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">08</div>
+      <div>
+        <div class="stop-title">🏜️ 8th FLOOR — Desert Gallery (Western Coasts)</div>
+        <div class="stop-desc">Cold currents on western coasts → cool the air → no rain → DESERT! Mojave, Atacama (world's driest), Kalahari, Namib, Great Australian. The easterlies dump rain on east coasts first.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">09</div>
+      <div>
+        <div class="stop-title">🐟 9th FLOOR — Fishing Zone Hall of Fame</div>
+        <div class="stop-desc">Where warm + cold currents meet → BEST FISHING. Oyashio + Kuroshio (Japan East Coast). Grand Banks, Newfoundland (Canada). Dense fog as bonus!</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="stop-num">10</div>
+      <div>
+        <div class="stop-title">🌡️ TOP FLOOR — Temperature Control Room</div>
+        <div class="stop-desc">Thermocline (temp drops suddenly at ~1000m). Halocline (salinity rises suddenly). Continentality effect: interiors = extreme temperature range. Coasts = moderate (sea breeze/land breeze cycle).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- COMPLETE REVISION NOTES -->
+<div class="section" id="notes">
+  <div class="section-header">
+    <div class="icon icon-cyan">📖</div>
+    <div>
+      <h2>Complete Revision Notes</h2>
+      <p>Every fact from the lecture — zero information lost</p>
+    </div>
+  </div>
+
+  <!-- WHY WIND BLOWS -->
+  <div id="winds">
+  <div class="card card-blue">
+    <div class="card-title" style="color:var(--accent-blue);">🔥 WHY WIND BLOWS — The Root Cause Chain</div>
+    <div class="flow" style="font-size:13px;">
+      <div class="flow-item">Earth's tilt (23.5° axis / 66.5° orbital)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">Unequal insolation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">Differential heating</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">Pressure difference</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-item">Wind blows (High → Low)</div>
+    </div>
+    <div class="highlight highlight-yellow" style="margin-top:1rem;">
+      <strong>Golden Rules:</strong><br>
+      • <span class="kw-y">Hot air = RISES = LOW pressure</span> (less weight pressing down)<br>
+      • <span class="kw">Cold air = SINKS = HIGH pressure</span><br>
+      • Wind ALWAYS blows from <strong>HIGH → LOW pressure</strong>
+    </div>
+  </div>
+
+  <!-- PRESSURE BELTS & CELLS -->
+  <div class="card card-cyan">
+    <div class="card-title" style="color:var(--accent-cyan);">🔥 PRESSURE BELTS & CIRCULATION CELLS</div>
+    <table style="margin-bottom:1rem;">
+      <tr><th>Zone / Belt</th><th>Latitude</th><th>Pressure</th><th>Reason</th></tr>
+      <tr><td><span class="kw">Equator / ITCZ</span></td><td>0°</td><td>LOW</td><td>Max heating → air rises</td></tr>
+      <tr><td><span class="kw-y">Sub-Tropical High</span> = <strong>Horse Latitude</strong></td><td>30–35° N/S</td><td>HIGH</td><td>Subsiding air from equator</td></tr>
+      <tr><td><span class="kw-g">Sub-Polar Low</span></td><td>60–65° N/S</td><td>LOW</td><td>Cold polar + warm westerlies converge → air rises</td></tr>
+      <tr><td><span class="kw">Polar High</span></td><td>90° N/S</td><td>HIGH</td><td>Extreme cold → air sinks</td></tr>
+    </table>
+    <div class="grid-3">
+      <div class="highlight">
+        <strong style="color:var(--accent-cyan);">Hadley Cell</strong><br>
+        Equator → 30° N/S<br><small style="color:var(--text-secondary);">Primary cell, driven by equatorial heat</small>
+      </div>
+      <div class="highlight highlight-purple">
+        <strong style="color:var(--accent-purple);">Ferrel Cell</strong><br>
+        30° → 60° N/S<br><small style="color:var(--text-secondary);">Mechanical/indirect — forms automatically</small>
+      </div>
+      <div class="highlight" style="background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.3);">
+        <strong style="color:var(--accent-green);">Polar Cell</strong><br>
+        60° → 90° N/S<br><small style="color:var(--text-secondary);">Polar high pushes cold air outwards</small>
+      </div>
+    </div>
+    <div class="highlight highlight-yellow" style="margin-top:0.75rem;">
+      <strong>Memory hook:</strong> <em>"Had a Ferret as a Polar pet"</em> → Hadley → Ferrel → Polar (equator to pole order)
+    </div>
+  </div>
+
+  <!-- CORIOLIS FORCE -->
+  <div class="card card-purple">
+    <div class="card-title" style="color:var(--accent-purple);">🔥 CORIOLIS FORCE — The Deflector</div>
+    <ul>
+      <li><strong>Cause:</strong> Rotation of Earth</li>
+      <li><span class="kw-p">Northern Hemisphere → deflects to the RIGHT</span></li>
+      <li><span class="kw-g">Southern Hemisphere → deflects to the LEFT</span></li>
+      <li><span class="kw-r">At Equator → Coriolis = ZERO</span> (why ITCZ has no cyclones!)</li>
+      <li><strong>At Poles → Coriolis = MAXIMUM</strong></li>
+      <li>Coriolis increases with: (1) latitude and (2) speed of wind — faster wind = more deflection</li>
+      <li>Acts on: wind, ocean currents, projectiles — anything moving horizontally</li>
+    </ul>
+    <div class="memory-hook" style="margin-top:1rem;">
+      <div class="memory-hook-title">Memory Hook</div>
+      <div class="story">Imagine you're rolling a ball from the Equator towards the North Pole. The Earth is rotating under it, so the ball <em>curves to the RIGHT</em>. Now roll from South Pole — it curves to the RIGHT of ITS direction = to the LEFT of our view. Easy!</div>
+    </div>
+  </div>
+
+  <!-- GLOBAL WINDS TABLE -->
+  <div class="card card-green">
+    <div class="card-title" style="color:var(--accent-green);">🔥 GLOBAL WIND SYSTEMS</div>
+    <table>
+      <tr><th>Wind Name</th><th>Blows FROM</th><th>Zone</th><th>Direction</th><th>Special Note</th></tr>
+      <tr><td><strong>NE Trade Winds</strong></td><td>NE</td><td>0–30° N</td><td>Towards ITCZ</td><td rowspan="2">Collectively called <span class="kw">Trade Winds</span></td></tr>
+      <tr><td><strong>SE Trade Winds</strong></td><td>SE</td><td>0–30° S</td><td>Towards ITCZ</td></tr>
+      <tr><td><strong>Westerlies</strong></td><td>West</td><td>30–60° N/S</td><td>W → E</td><td>In S.Hemisphere: Roaring 40s, Furious 50s, Screaming 60s</td></tr>
+      <tr><td><strong>Polar Easterlies</strong></td><td>East</td><td>60–90° N/S</td><td>E → W</td><td>Cold, dry winds from poles</td></tr>
+    </table>
+    <div class="highlight highlight-yellow" style="margin-top:0.75rem;">
+      <strong>Why Westerlies are SO fast in Southern Hemisphere?</strong> Less land mass = less friction = higher speed = Roaring 40s, Furious 50s, Screaming 60s (at 40°, 50°, 60° latitude)
+    </div>
+  </div>
+
+  <!-- SPECIAL ZONES -->
+  <div class="grid-2">
+    <div class="card card-yellow">
+      <div class="card-title" style="color:var(--accent-yellow);">⭐ DOLDRUMS</div>
+      <ul>
+        <li>Zone near the EQUATOR</li>
+        <li>Calm, weak, unpredictable winds</li>
+        <li>Hot, humid, unstable</li>
+        <li>Sailors feared it — ships got stuck</li>
+        <li>Same zone as ITCZ</li>
+      </ul>
+    </div>
+    <div class="card card-orange">
+      <div class="card-title" style="color:var(--accent-orange);">🐎 HORSE LATITUDE</div>
+      <ul>
+        <li>30–35° North and South</li>
+        <li>Also called Sub-Tropical High</li>
+        <li>Calm, dry, descending air</li>
+        <li>Sailors threw horses overboard to save water (hence the name!)</li>
+        <li>These zones → Deserts form here</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ITCZ -->
+  <div class="card card-cyan">
+    <div class="card-title" style="color:var(--accent-cyan);">🔥 ITCZ — Inter Tropical Convergence Zone</div>
+    <ul>
+      <li>Where NE & SE Trade Winds meet</li>
+      <li>Not fixed — <span class="kw">shifts with apparent movement of sun</span></li>
+      <li><strong>June:</strong> shifts near Tropic of Cancer (23.5°N)</li>
+      <li><strong>December:</strong> shifts near Tropic of Capricorn (23.5°S)</li>
+      <li>Critical for Indian Monsoon — ITCZ shift → monsoon arrives</li>
+    </ul>
+  </div>
+
+  <!-- GEOSTROPHIC WINDS -->
+  <div class="card card-purple">
+    <div class="card-title" style="color:var(--accent-purple);">⭐ GEOSTROPHIC WINDS</div>
+    <ul>
+      <li>Blow <span class="kw-p">parallel to isobars</span> (lines of equal pressure)</li>
+      <li>Found at high altitudes near tropopause</li>
+      <li>How they form: Pressure Gradient Force pushes → Coriolis deflects so much → wind ends up running parallel to isobars</li>
+      <li><strong>Isobars</strong> = lines connecting points of equal pressure (roughly parallel to latitudes)</li>
+      <li><strong>Isotherms</strong> = lines connecting points of equal temperature (also parallel to latitudes)</li>
+    </ul>
+  </div>
+  </div><!-- end winds -->
+
+  <div class="section-divider"></div>
+
+  <!-- LOCAL WINDS -->
+  <div class="section-header" style="margin-top:0;">
+    <div class="icon icon-yellow">🌬️</div>
+    <div><h2>Local Winds</h2><p>Region-specific winds — exam favourites</p></div>
+  </div>
+
+  <div class="card card-yellow">
+    <div class="card-title" style="color:var(--accent-yellow);">🔥 LOCAL WINDS — WORLD MAP</div>
+    <table>
+      <tr><th>Wind</th><th>Region</th><th>Type</th><th>Special Feature</th></tr>
+      <tr><td><strong>Chinook</strong></td><td>Rocky Mountains, W. USA</td><td><span class="kw-o">Warm</span></td><td><span class="kw">"Snow Eater"</span> — melts snow rapidly</td></tr>
+      <tr><td><strong>Foehn</strong></td><td>Alps, Europe</td><td><span class="kw-o">Warm</span></td><td>Warm, dry leeward wind</td></tr>
+      <tr><td><strong>Blizzard</strong></td><td>N. America</td><td><span class="kw-r">Cold</span></td><td>Cold snowstorm</td></tr>
+      <tr><td><strong>Pampero</strong></td><td>Argentina (Pampas)</td><td><span class="kw-r">Cold</span></td><td>Sudden cold blast from south</td></tr>
+      <tr><td><strong>Harmattan</strong></td><td>W. Africa / Gulf of Guinea</td><td><span class="kw-o">Warm, Dry</span></td><td><span class="kw">"Doctor Wind"</span> — brings relief from humidity</td></tr>
+      <tr><td><strong>Sirocco</strong></td><td>N. Africa → Mediterranean Sea</td><td><span class="kw-o">Hot, Dry</span></td><td>From Sahara, picks up dust; causes <span class="kw-r">blood rain</span></td></tr>
+      <tr><td><strong>Khamsin</strong></td><td>Egypt / N. Africa</td><td><span class="kw-o">Hot</span></td><td>Blows ~50 days (khamsin = 50 in Arabic)</td></tr>
+      <tr><td><strong>Bora</strong></td><td>Adriatic Sea / Yugoslavia</td><td><span class="kw-r">Cold</span></td><td>Strong cold bora = Alps cold descent</td></tr>
+      <tr><td><strong>Mistral</strong></td><td>France (Rhône Valley)</td><td><span class="kw-r">Cold</span></td><td>Cold, dry northerly wind</td></tr>
+      <tr><td><strong>Loo</strong></td><td>India (N. Plains)</td><td><span class="kw-o">Hot, Dry</span></td><td>Blows in summer afternoons (Rajasthan, UP, Punjab)</td></tr>
+      <tr><td><strong>Brick Fielder</strong></td><td>Australia</td><td><span class="kw-o">Hot</span></td><td>Hot northerly wind; only one to remember for Australia!</td></tr>
+    </table>
+    <div class="highlight highlight-yellow" style="margin-top:0.75rem;">
+      <strong>Blood Rain trick:</strong> Sirocco crosses Sahara → picks up red dust → reaches Europe → mixes with rain → BLOOD RAIN. (Sirocco = Sahara dust carrier)
+    </div>
+    <div class="highlight" style="margin-top:0.5rem;">
+      <strong>Cold European trio:</strong> <span class="kw-r">Bora (Adriatic), Mistral (France), Blizzard (N. America)</span> — remember BMW — Bora, Mistral, Winds cold
+    </div>
+  </div>
+
+  <!-- LAND & SEA BREEZE -->
+  <div class="card card-green">
+    <div class="card-title" style="color:var(--accent-green);">⭐ LAND BREEZE & SEA BREEZE</div>
+    <div class="grid-2">
+      <div>
+        <strong style="color:var(--accent-cyan);">☀️ DAY → SEA BREEZE</strong>
+        <p>Land heats faster (low specific heat capacity) → LOW pressure on land<br>Sea stays cooler → HIGH pressure<br>Wind: Sea → Land = <span class="kw">SEA BREEZE</span></p>
+      </div>
+      <div>
+        <strong style="color:var(--accent-purple);">🌙 NIGHT → LAND BREEZE</strong>
+        <p>Land cools faster → HIGH pressure on land<br>Sea stays warmer → LOW pressure<br>Wind: Land → Sea = <span class="kw-p">LAND BREEZE</span></p>
+      </div>
+    </div>
+    <div class="highlight highlight-yellow" style="margin-top:0.75rem;">
+      <strong>Wind naming rule:</strong> Wind is named after its <strong>SOURCE direction</strong>, not where it goes. A wind coming FROM the sea = Sea Breeze. A wind coming FROM the north-east = North East Trade.
+    </div>
+    <p style="margin-top:0.5rem; color:var(--text-secondary); font-size:13px;">Key: <strong>Specific heat capacity of land is LOW</strong> → heats & cools quickly. Sea has HIGH specific heat → heats & cools slowly.</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- CYCLONES -->
+  <div id="cyclone">
+  <div class="section-header" style="margin-top:0;">
+    <div class="icon icon-red">🌪️</div>
+    <div><h2>Cyclones</h2><p>Formation, types, names, behaviour</p></div>
+  </div>
+
+  <div class="card card-red">
+    <div class="card-title" style="color:var(--accent-red);">🔥 CYCLONE vs ANTICYCLONE</div>
+    <div class="grid-2">
+      <div class="highlight highlight-red">
+        <strong>CYCLONE</strong><br>
+        • Forms around <span class="kw-r">LOW pressure</span><br>
+        • Air rushes IN (inward circulation)<br>
+        • Northern Hemisphere: <span class="kw-r">ANTICLOCKWISE</span><br>
+        • Southern Hemisphere: CLOCKWISE<br>
+        • Brings heavy rain, storms, destruction
+      </div>
+      <div class="highlight highlight-green">
+        <strong>ANTICYCLONE</strong><br>
+        • Forms around <span class="kw-g">HIGH pressure</span><br>
+        • Air flows OUT (outward circulation)<br>
+        • Northern Hemisphere: <span class="kw-g">CLOCKWISE</span><br>
+        • Southern Hemisphere: ANTICLOCKWISE<br>
+        • Brings <strong>clear, calm weather</strong> (LOW conditions)
+      </div>
+    </div>
+    <div class="memory-hook" style="margin-top:1rem;">
+      <div class="memory-hook-title">One Rule to Remember All</div>
+      <div class="story">CYCLONE in Northern Hemisphere = ANTICLOCKWISE. Flip EVERYTHING for the other → Cyclone SH = Clockwise. Anticyclone NH = Clockwise (opposite of cyclone). Anticyclone SH = Anticlockwise. Just memorise "Cyclone NH = Anticlockwise" and derive the rest!</div>
+    </div>
+  </div>
+
+  <!-- TROPICAL VS TEMPERATE -->
+  <div class="card card-orange">
+    <div class="card-title" style="color:var(--accent-orange);">🔥 TROPICAL vs TEMPERATE CYCLONE</div>
+    <table>
+      <tr><th>Feature</th><th>Tropical Cyclone</th><th>Temperate Cyclone</th></tr>
+      <tr><td>Location</td><td>Tropics (Cancer to Capricorn)</td><td>Temperate zone (above 35° approx)</td></tr>
+      <tr><td>Forms over</td><td>Sea ONLY</td><td>Land AND Sea</td></tr>
+      <tr><td>Cause</td><td>Heating of ocean surface</td><td>Frontogenesis (warm meets cold air)</td></tr>
+      <tr><td>Movement</td><td><span class="kw-r">East → West</span> (Trade winds carry)</td><td><span class="kw-g">West → East</span> (Westerlies carry)</td></tr>
+      <tr><td>Frequency</td><td>Less frequent</td><td>More frequent</td></tr>
+      <tr><td>Destruction</td><td>Very destructive</td><td>Less destructive</td></tr>
+      <tr><td>Size</td><td>Smaller</td><td>Larger</td></tr>
+    </table>
+  </div>
+
+  <!-- TROPICAL CYCLONE CONDITIONS -->
+  <div class="card card-blue">
+    <div class="card-title" style="color:var(--accent-blue);">⭐ CONDITIONS FOR TROPICAL CYCLONE FORMATION</div>
+    <ol>
+      <li>Sea Surface Temperature ≥ <span class="kw-y">27°C</span></li>
+      <li>Coriolis Force must be present (not at equator!)</li>
+      <li>Small variation in vertical wind speed (weak wind shear)</li>
+      <li>Pre-existing weak low pressure area</li>
+      <li>Warm, moist air (ocean provides it)</li>
+    </ol>
+    <div class="highlight highlight-red" style="margin-top:0.75rem;">
+      <strong>Critical:</strong> Cyclones do NOT form at the equator because <span class="kw-r">Coriolis Force = Zero at equator</span>. No Coriolis = no spinning = no cyclone!
+    </div>
+  </div>
+
+  <!-- EYE OF CYCLONE -->
+  <div class="card card-cyan">
+    <div class="card-title" style="color:var(--accent-cyan);">🔥 ANATOMY OF A CYCLONE</div>
+    <div class="grid-2">
+      <div class="highlight" style="background:rgba(6,182,212,0.08);border-color:rgba(6,182,212,0.3);">
+        <strong style="color:var(--accent-cyan);">👁️ EYE of Cyclone</strong><br>
+        • Centre of cyclone<br>
+        • <span class="kw">CALM conditions</span><br>
+        • <strong>No cloud formation</strong><br>
+        • Clear sky, low wind<br>
+        • Why "false calm": Coast gets rain → stops (eye passes) → rain resumes (other wall hits)
+      </div>
+      <div class="highlight highlight-red">
+        <strong style="color:var(--accent-red);">💀 EYE WALL</strong><br>
+        • Ring around the eye<br>
+        • Most violent part<br>
+        • <span class="kw-r">Cumulonimbus clouds</span><br>
+        • Extremely heavy rain + thunderstorm<br>
+        • Highest wind speeds here
+      </div>
+    </div>
+    <div class="highlight highlight-purple" style="margin-top:0.75rem;">
+      <strong>Cumulonimbus clouds:</strong> Clouds with extensive vertical development. Have <span class="kw-p">anvil-top shape</span> (like a cobbler's iron — flat top). Bring thunderstorms, hail, heavy rain.
+    </div>
+  </div>
+
+  <!-- CYCLONE NAMES WORLDWIDE -->
+  <div class="card card-green">
+    <div class="card-title" style="color:var(--accent-green);">🔥 CYCLONE NAMES BY REGION</div>
+    <table>
+      <tr><th>Region</th><th>Name Used</th></tr>
+      <tr><td>Indian Ocean</td><td><span class="kw-g">Cyclone</span></td></tr>
+      <tr><td>Atlantic Ocean / Gulf of Mexico</td><td><span class="kw-y">Hurricane</span></td></tr>
+      <tr><td>Western Pacific (Japan, Philippines, S. China Sea)</td><td><span class="kw-r">Typhoon</span></td></tr>
+      <tr><td>Australia</td><td><span class="kw-p">Willy-Willy</span></td></tr>
+    </table>
+    <div class="highlight highlight-red" style="margin-top:0.75rem;">
+      <strong>Cyclones do NOT form in:</strong><br>
+      <span class="kw-r">South Atlantic Ocean</span> & <span class="kw-r">South-Eastern Pacific Ocean</span> — exceptions to remember!
+    </div>
+    <div class="memory-hook" style="margin-top:0.75rem;">
+      <div class="memory-hook-title">Name trick</div>
+      <div class="story">"India Cycles, America Hurries, Japan Types, Australia Willy-Nilly" → Cyclone, Hurricane, Typhoon, Willy-Willy</div>
+    </div>
+  </div>
+
+  <!-- FRONTOGENESIS -->
+  <div class="card card-purple">
+    <div class="card-title" style="color:var(--accent-purple);">⭐ FRONTOGENESIS (Temperate Cyclones)</div>
+    <ul>
+      <li><strong>Front</strong> = boundary between warm and cold air masses</li>
+      <li><strong>Warm Front</strong> = warm air advances towards cold air</li>
+      <li><strong>Cold Front</strong> = cold air advances towards warm air</li>
+      <li>In BOTH cases: warm air always rises (cold is denser) → clouds form → rain</li>
+      <li>Warm front → slow rise → stratus (layered) clouds</li>
+      <li>Cold front → rapid rise → cumulonimbus clouds</li>
+      <li><span class="kw-p">Occluded Front</span> = cold air completely lifts the warm air off the ground; no warm air left at surface</li>
+    </ul>
+  </div>
+  </div><!-- end cyclone -->
+
+  <div class="section-divider"></div>
+
+  <!-- OCEAN CURRENTS -->
+  <div id="ocean">
+  <div class="section-header" style="margin-top:0;">
+    <div class="icon icon-cyan">🌊</div>
+    <div><h2>Ocean Currents</h2><p>Flow, types, causes, consequences</p></div>
+  </div>
+
+  <div class="card card-cyan">
+    <div class="card-title" style="color:var(--accent-cyan);">🔥 BASICS OF OCEAN CURRENTS</div>
+    <div class="grid-2">
+      <div>
+        <p><strong>Surface Water:</strong> <span class="kw-y">10%</span> of ocean</p>
+        <p><strong>Deep Sea Water:</strong> <span class="kw">90%</span> of ocean</p>
+        <p><strong>Thermocline:</strong> Zone where temperature <span class="kw-r">suddenly drops</span> (~1000m depth)</p>
+        <p><strong>Halocline:</strong> Zone where salinity <span class="kw-r">suddenly increases</span></p>
+      </div>
+      <div>
+        <p><strong>Causes of ocean currents:</strong></p>
+        <ol>
+          <li>Differential heating by sun</li>
+          <li>Winds (main driver of surface water)</li>
+          <li>Coriolis force (deflection)</li>
+          <li>Density differences (temperature + salinity)</li>
+        </ol>
+      </div>
+    </div>
+    <div class="highlight highlight-yellow" style="margin-top:0.75rem;">
+      <strong>Salinity facts:</strong> Water is called saline when salinity &gt; <span class="kw-y">27 parts per 1000</span> (NCERT: 24.7‰)<br>
+      <strong>Lake Van (Turkey):</strong> 330‰ | <strong>Dead Sea (Israel/Jordan):</strong> 238‰
+    </div>
+  </div>
+
+  <!-- COLD vs WARM CURRENTS -->
+  <div class="card card-blue">
+    <div class="card-title" style="color:var(--accent-blue);">🔥 COLD vs WARM CURRENTS — THE BP TRICK</div>
+    <div class="memory-hook">
+      <div class="memory-hook-title">The Legend — "BP Company played Golf World Cup in California"</div>
+      <div class="story">
+        <strong>B</strong> = Benguela Current (W. Africa)<br>
+        <strong>P</strong> = Peru Current / Bolt Current (W. S. America — also called Humboldt)<br>
+        <strong>G</strong> = Greenland Current (N. Atlantic)<br>
+        <strong>O</strong> = Oyashio Current (E. Japan)<br>
+        <strong>L</strong> = Labrador Current (W. N. Atlantic)<br>
+        <strong>F</strong> = Falkland Current (E. S. America)<br>
+        <strong>W</strong> = West Australian Current<br>
+        <strong>C</strong> = California Current / Canary Current<br>
+        <br>→ <strong>ALL of these are COLD CURRENTS</strong>. Every other current = WARM!
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top:1rem;">
+      <div>
+        <strong style="color:var(--accent-red);">❄️ COLD Currents (BP + California):</strong>
+        <ul style="font-size:13px;">
+          <li>Benguela (SW Africa coast)</li>
+          <li>Peru / Humboldt (W. S. America)</li>
+          <li>Greenland</li>
+          <li>Oyashio (NE Japan)</li>
+          <li>Labrador (NE N. America)</li>
+          <li>Falkland (SE S. America)</li>
+          <li>West Australian</li>
+          <li>California</li>
+          <li>Canary (NW Africa)</li>
+        </ul>
+      </div>
+      <div>
+        <strong style="color:var(--accent-orange);">🔥 WARM Currents (All others):</strong>
+        <ul style="font-size:13px;">
+          <li><strong>Gulf Stream</strong> (N. Atlantic → Europe)</li>
+          <li>Alaska</li>
+          <li>Brazil (E. S. America)</li>
+          <li>Agulhas (SE Africa)</li>
+          <li>East Australian</li>
+          <li>Kuroshio (E. Japan)</li>
+          <li>North Atlantic Drift</li>
+          <li>Norway Current</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONSEQUENCES -->
+  <div class="card card-green">
+    <div class="card-title" style="color:var(--accent-green);">🔥 CONSEQUENCES OF OCEAN CURRENTS</div>
+    <div class="card card-orange" style="margin-bottom:0.75rem;">
+      <div class="card-title" style="color:var(--accent-orange);">1. Western Coast Deserts</div>
+      <p><strong>Reason:</strong> Cold currents flow along western coasts → cool the air → air cannot hold moisture → no rain → desert</p>
+      <p><strong>Plus:</strong> Trade winds blow east → dump rain on eastern coasts first → nothing left for western side</p>
+      <p><strong>Plus:</strong> Offshore winds on western coasts bring dry air</p>
+      <div class="highlight highlight-yellow" style="margin-top:0.75rem;">
+        <strong>Western coast deserts:</strong> Mojave & Sonoran (W. USA), <strong>Atacama</strong> (world's driest desert — W. S. America), Kalahari & Namib (W. Africa), Great Australian Desert
+      </div>
+    </div>
+    <div class="card card-blue" style="margin-bottom:0.75rem;">
+      <div class="card-title" style="color:var(--accent-blue);">2. Best Fishing Zones (where warm + cold currents meet)</div>
+      <ul>
+        <li>Meeting of currents brings nutrients from deep → plankton bloom → fish</li>
+        <li>Also causes dense fog</li>
+        <li><strong>Oyashio + Kuroshio</strong> → East Coast of Japan (best fishing zone)</li>
+        <li><strong>Labrador + Gulf Stream</strong> → Grand Banks, Newfoundland (Canada)</li>
+      </ul>
+    </div>
+    <div class="card card-purple">
+      <div class="card-title" style="color:var(--accent-purple);">3. Continentality Effect</div>
+      <ul>
+        <li>Coastal cities (Mumbai, Chennai, Kochi): moderate temperatures — sea breeze/land breeze keep extremes low</li>
+        <li>Interior cities (Delhi, Kanpur, Jalandhar): extreme heat in summer, extreme cold in winter</li>
+        <li><strong>Annual temperature range</strong> is HIGH in interiors, LOW on coasts</li>
+        <li>Gobi Desert (China-Mongolia): No ocean influence → extreme continentality</li>
+      </ul>
+    </div>
+  </div>
+  </div><!-- end ocean -->
+</div><!-- end complete notes -->
+
+<div class="section-divider"></div>
+
+<!-- EXAM TRAPS -->
+<div class="section" id="traps">
+  <div class="section-header">
+    <div class="icon icon-red">⚠️</div>
+    <div><h2>Exam Traps</h2><p>What students get wrong — don't be one of them</p></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 1: Cyclone Rotation Direction</div>
+      <p>Students confuse cyclone & anticyclone directions.</p>
+      <p><strong>Fix:</strong> Cyclone NH = ANTICLOCKWISE (ACW). That's the anchor. Derive rest.</p>
+      <p style="color:#f87171; font-size:13px;">❌ "Cyclone clockwise in N. Hemisphere" → WRONG</p>
+    </div>
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 2: Gulf Stream is NOT Cold</div>
+      <p>Gulf Stream starts with G — many put it in the cold "BP" list.</p>
+      <p><strong>Fix:</strong> BP list uses G = GREENLAND (cold). Gulf Stream is warm. It's NOT in the trick.</p>
+    </div>
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 3: ITCZ is NOT fixed</div>
+      <p>Students assume ITCZ is always at equator.</p>
+      <p><strong>Fix:</strong> ITCZ shifts — near Tropic of Cancer in June, Tropic of Capricorn in December.</p>
+    </div>
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 4: Eye of Cyclone = Calm (NOT Safe)</div>
+      <p>People think when rain stops during a cyclone = cyclone is over.</p>
+      <p><strong>Fix:</strong> Rain stops because the calm EYE has passed. The destructive eyewall is coming next!</p>
+    </div>
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 5: Cyclones in South Atlantic?</div>
+      <p>Students assume cyclones form in every ocean.</p>
+      <p><strong>Fix:</strong> Cyclones do NOT form in South Atlantic & South-Eastern Pacific — these are exceptions.</p>
+    </div>
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 6: Willy-Willy = Typhoon?</div>
+      <p>Students mix up regional names.</p>
+      <p><strong>Fix:</strong> Australia = Willy-Willy. Japan/Philippines = Typhoon. Atlantic = Hurricane. Indian Ocean = Cyclone.</p>
+    </div>
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 7: Harmattan vs Sirocco</div>
+      <p>Both are African hot winds but different regions.</p>
+      <p><strong>Fix:</strong> Harmattan = Gulf of Guinea (W. Africa) = "Doctor Wind". Sirocco = Mediterranean side = causes blood rain from Sahara dust.</p>
+    </div>
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 8: Tropical Cyclone forms over land?</div>
+      <p>Students think both types form over sea.</p>
+      <p><strong>Fix:</strong> Tropical cyclone = SEA ONLY. Temperate cyclone = both land and sea.</p>
+    </div>
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 9: Anticyclone = Heavy Rain?</div>
+      <p>Students associate "anti" with more intensity = more rain.</p>
+      <p><strong>Fix:</strong> ANTICYCLONE = HIGH pressure = clear, calm, dry weather. CYCLONE = LOW pressure = heavy rain, storms.</p>
+    </div>
+    <div class="trap-box">
+      <div class="trap-title">⚠️ TRAP 10: Coriolis at Equator</div>
+      <p>Students forget this exception.</p>
+      <p><strong>Fix:</strong> Coriolis = ZERO at equator. Maximum at poles. It's why no cyclones form right at the equator!</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- EXAMINER'S FAVOURITE QUESTIONS -->
+<div class="section" id="examq">
+  <div class="section-header">
+    <div class="icon icon-yellow">🎯</div>
+    <div><h2>Examiner's Favourite Questions</h2><p>High-probability attack points</p></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-yellow">
+      <div class="card-title" style="color:var(--accent-yellow);">🎯 High Probability — Direct Questions</div>
+      <ul style="font-size:14px;">
+        <li>Which wind is called "Snow Eater"? → <span class="kw-g">Chinook</span></li>
+        <li>Which wind is called "Doctor Wind"? → <span class="kw-g">Harmattan</span></li>
+        <li>What is the eye of a cyclone? → <span class="kw-g">Calm centre, no clouds</span></li>
+        <li>Cyclone rotation in N. Hemisphere? → <span class="kw-g">Anticlockwise</span></li>
+        <li>What is ITCZ? → <span class="kw-g">Inter Tropical Convergence Zone</span></li>
+        <li>Name for cyclone in Australia? → <span class="kw-g">Willy-Willy</span></li>
+        <li>Name for cyclone in W. Pacific? → <span class="kw-g">Typhoon</span></li>
+        <li>World's driest desert? → <span class="kw-g">Atacama (S. America)</span></li>
+        <li>Salinity of Dead Sea? → <span class="kw-g">238 ppt</span></li>
+        <li>What is Thermocline? → <span class="kw-g">Zone of sudden temp drop in ocean</span></li>
+      </ul>
+    </div>
+    <div class="card card-blue">
+      <div class="card-title" style="color:var(--accent-blue);">🎯 Statement/Assertion Type</div>
+      <ul style="font-size:14px;">
+        <li>Assertion: Westerlies are stronger in S. Hemisphere. Reason: Less land = less friction → TRUE</li>
+        <li>Assertion: No cyclone forms at equator. Reason: Coriolis = 0 → TRUE</li>
+        <li>Assertion: Eye of cyclone is calm. Reason: Low pressure centre → TRUE (but calm because convergence)</li>
+        <li>Assertion: Anticyclone brings clear weather. Reason: High pressure, air descends → TRUE</li>
+        <li>Assertion: Sirocco causes blood rain. Reason: Carries Sahara dust → TRUE</li>
+        <li>Assertion: Cold currents cause deserts on western coasts. Reason: Cool air cannot hold moisture → TRUE</li>
+      </ul>
+    </div>
+    <div class="card card-purple">
+      <div class="card-title" style="color:var(--accent-purple);">🎯 Match the Following</div>
+      <table style="font-size:13px;">
+        <tr><th>Wind</th><th>Feature</th></tr>
+        <tr><td>Chinook</td><td>Snow Eater</td></tr>
+        <tr><td>Harmattan</td><td>Doctor Wind</td></tr>
+        <tr><td>Sirocco</td><td>Blood Rain</td></tr>
+        <tr><td>Roaring 40s</td><td>Westerlies, 40°S</td></tr>
+        <tr><td>Hadley Cell</td><td>Equator to 30°</td></tr>
+        <tr><td>Ferrel Cell</td><td>30° to 60°</td></tr>
+        <tr><td>ITCZ</td><td>Doldrums zone</td></tr>
+        <tr><td>Horse Latitude</td><td>30–35° N/S</td></tr>
+      </table>
+    </div>
+    <div class="card card-green">
+      <div class="card-title" style="color:var(--accent-green);">🎯 Confusing Facts to Crack</div>
+      <ul style="font-size:14px;">
+        <li>Trade winds blow from <strong>subtropical high → equatorial low</strong> (East to West)</li>
+        <li>Westerlies blow from <strong>subtropical high → sub-polar low</strong> (West to East)</li>
+        <li>Tropical cyclone: E→W (trade winds). Temperate: W→E (westerlies)</li>
+        <li>Gulf Stream ≠ cold (despite starting with G like Greenland)</li>
+        <li>Peru Current = Humboldt Current (same thing, different names)</li>
+        <li>Geostrophic winds = parallel to isobars (not perpendicular)</li>
+        <li>Fronts: warm air ALWAYS rises regardless of who is moving</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ACTIVE RECALL -->
+<div class="section" id="recall">
+  <div class="section-header">
+    <div class="icon icon-pink">❓</div>
+    <div><h2>Active Recall</h2><p>Click to reveal answers — train your memory</p></div>
+  </div>
+
+  <div class="card card-pink">
+    <div class="card-title" style="color:var(--accent-pink);">❓ RAPID-FIRE Q&A — Click to reveal</div>
+
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Wind always blows from _____ to _____ pressure? <span class="arrow">▼</span></div><div class="qa-a">A: HIGH to LOW pressure</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Coriolis force deflects to which side in Northern Hemisphere? <span class="arrow">▼</span></div><div class="qa-a">A: RIGHT side</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: What is the Coriolis force at the equator? <span class="arrow">▼</span></div><div class="qa-a">A: ZERO</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Name the 3 atmospheric cells from equator to pole. <span class="arrow">▼</span></div><div class="qa-a">A: Hadley → Ferrel → Polar</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Why is Chinook called "Snow Eater"? <span class="arrow">▼</span></div><div class="qa-a">A: It's a warm wind that rapidly melts snow in the Rocky Mountains</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Which wind causes "blood rain" in Europe? <span class="arrow">▼</span></div><div class="qa-a">A: Sirocco — carries red Sahara dust, mixes with rain</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: What direction do cyclones rotate in the Southern Hemisphere? <span class="arrow">▼</span></div><div class="qa-a">A: CLOCKWISE</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: What weather does an anticyclone bring? <span class="arrow">▼</span></div><div class="qa-a">A: Clear, calm, dry weather (not storms!)</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Name the 2 oceans where cyclones do NOT form. <span class="arrow">▼</span></div><div class="qa-a">A: South Atlantic Ocean & South-Eastern Pacific Ocean</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Minimum sea surface temperature for tropical cyclone? <span class="arrow">▼</span></div><div class="qa-a">A: 27°C (above 27°C)</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: What % of ocean water is surface water? <span class="arrow">▼</span></div><div class="qa-a">A: 10% (deep sea = 90%)</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Salinity of Dead Sea? <span class="arrow">▼</span></div><div class="qa-a">A: 238 parts per thousand</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Gulf Stream is warm or cold? <span class="arrow">▼</span></div><div class="qa-a">A: WARM current (don't confuse with Greenland which is cold!)</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Where do warm + cold currents meet near Japan? <span class="arrow">▼</span></div><div class="qa-a">A: Oyashio (cold) + Kuroshio (warm) — best fishing grounds of Japan</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Which local wind in Australia is to remember for exam? <span class="arrow">▼</span></div><div class="qa-a">A: Brick Fielder (hot wind)</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: What is "Occluded Front"? <span class="arrow">▼</span></div><div class="qa-a">A: When cold air completely lifts warm air off the ground — no warm air at surface level</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: What shape are Cumulonimbus clouds? <span class="arrow">▼</span></div><div class="qa-a">A: Anvil top — flat top, massive vertical development</div></div>
+    <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)">Q: Roaring 40s, Furious 50s, Screaming 60s — which wind? <span class="arrow">▼</span></div><div class="qa-a">A: Westerlies in the Southern Hemisphere (at 40°, 50°, 60° S latitude)</div></div>
+  </div>
+
+  <!-- FILL IN THE BLANKS -->
+  <div class="card card-green" style="margin-top:1.25rem;">
+    <div class="card-title" style="color:var(--accent-green);">📝 FILL IN THE BLANKS — Click blanks to reveal</div>
+    <p>1. The wind blows from <span class="blank" onclick="revealBlank(this)" data-ans="HIGH">_______</span> pressure to <span class="blank" onclick="revealBlank(this)" data-ans="LOW">_______</span> pressure.</p>
+    <p>2. The calm centre of a cyclone is called the <span class="blank" onclick="revealBlank(this)" data-ans="Eye">_______</span>.</p>
+    <p>3. NE and SE Trade winds meet at the <span class="blank" onclick="revealBlank(this)" data-ans="ITCZ">_______</span>.</p>
+    <p>4. Coriolis force is <span class="blank" onclick="revealBlank(this)" data-ans="ZERO">_______</span> at the equator and <span class="blank" onclick="revealBlank(this)" data-ans="MAXIMUM">_______</span> at the poles.</p>
+    <p>5. Cyclone in Australia is called <span class="blank" onclick="revealBlank(this)" data-ans="Willy-Willy">_______</span>.</p>
+    <p>6. World's driest desert is <span class="blank" onclick="revealBlank(this)" data-ans="Atacama">_______</span>.</p>
+    <p>7. Zone where ocean temperature suddenly drops is called <span class="blank" onclick="revealBlank(this)" data-ans="Thermocline">_______</span>.</p>
+    <p>8. Chinook is called "Snow Eater" because it is a <span class="blank" onclick="revealBlank(this)" data-ans="warm">_______</span> wind.</p>
+    <p>9. <span class="blank" onclick="revealBlank(this)" data-ans="Harmattan">_______</span> is called Doctor Wind.</p>
+    <p>10. The Ferrel cell lies between <span class="blank" onclick="revealBlank(this)" data-ans="30°–60°">_______</span> latitude.</p>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- REVISION LAYERS -->
+<div class="section" id="layers">
+  <div class="section-header">
+    <div class="icon icon-green">📚</div>
+    <div><h2>Revision Layers</h2><p>5-layer system — from full notes to 30-second recall</p></div>
+  </div>
+
+  <div class="layer-tab-bar">
+    <button class="layer-tab active" onclick="switchLayer(this, 'l2')">⭐ High-Yield</button>
+    <button class="layer-tab" onclick="switchLayer(this, 'l3')">⚡ Ultra-Fast</button>
+    <button class="layer-tab" onclick="switchLayer(this, 'l4')">🔥 30-Second</button>
+  </div>
+
+  <div class="layer-content active" id="l2">
+    <div class="card card-yellow">
+      <div class="card-title" style="color:var(--accent-yellow);">⭐ HIGH-YIELD REVISION NOTES</div>
+      <div class="rapid-item"><span class="rq">01</span><span>Wind: High → Low pressure. Coriolis: RIGHT in NH, LEFT in SH. Zero at equator, max at poles.</span></div>
+      <div class="rapid-item"><span class="rq">02</span><span>Pressure belts: Equatorial Low → Horse Latitude (30-35° High) → Sub-Polar Low (60°) → Polar High</span></div>
+      <div class="rapid-item"><span class="rq">03</span><span>Cells: Hadley (0-30°), Ferrel (30-60°), Polar (60-90°)</span></div>
+      <div class="rapid-item"><span class="rq">04</span><span>Winds: Trade (0-30°), Westerlies (30-60°), Polar Easterlies (60-90°)</span></div>
+      <div class="rapid-item"><span class="rq">05</span><span>Westerlies in SH: Roaring 40s, Furious 50s, Screaming 60s (less land = less friction)</span></div>
+      <div class="rapid-item"><span class="rq">06</span><span>ITCZ shifts: Cancer (June) → Capricorn (December)</span></div>
+      <div class="rapid-item"><span class="rq">07</span><span>Chinook = Snow Eater. Harmattan = Doctor Wind. Sirocco = Blood Rain. Loo = India.</span></div>
+      <div class="rapid-item"><span class="rq">08</span><span>Cyclone NH = ACW. Anticyclone NH = CW. SH = opposite.</span></div>
+      <div class="rapid-item"><span class="rq">09</span><span>Tropical Cyclone: 27°C+ ocean, no Coriolis at equator, sea only, E→W movement</span></div>
+      <div class="rapid-item"><span class="rq">10</span><span>Eye = calm, no clouds. Eyewall = cumulonimbus, max destruction.</span></div>
+      <div class="rapid-item"><span class="rq">11</span><span>Names: Indian Ocean=Cyclone, Atlantic=Hurricane, W.Pacific=Typhoon, Australia=Willy-Willy</span></div>
+      <div class="rapid-item"><span class="rq">12</span><span>No cyclone in: South Atlantic & SE Pacific</span></div>
+      <div class="rapid-item"><span class="rq">13</span><span>BP Company → Cold currents. Gulf Stream = WARM. Oyashio+Kuroshio = Japan fishing.</span></div>
+      <div class="rapid-item"><span class="rq">14</span><span>Cold current on western coasts → deserts. Atacama = world's driest.</span></div>
+      <div class="rapid-item"><span class="rq">15</span><span>Thermocline = sudden temp drop. Halocline = sudden salinity rise. Dead Sea = 238‰.</span></div>
+    </div>
+  </div>
+
+  <div class="layer-content" id="l3">
+    <div class="card card-cyan">
+      <div class="card-title" style="color:var(--accent-cyan);">⚡ ULTRA-FAST REVISION SHEET</div>
+      <div class="grid-2">
+        <div>
+          <p>🔵 Hot air → rises → LOW P | Cold → sinks → HIGH P</p>
+          <p>🔵 Wind: High → Low always</p>
+          <p>🔵 Coriolis: NH=Right | SH=Left | Eq=Zero | Poles=Max</p>
+          <p>🔵 Cells: Hadley > Ferrel > Polar</p>
+          <p>🔵 Trade winds → Westerlies → Polar Easterlies</p>
+          <p>🔵 Roaring 40s/Furious 50s/Screaming 60s = SH Westerlies</p>
+          <p>🔵 ITCZ: Shifts with sun. Cancer=June, Capricorn=Dec</p>
+          <p>🔵 Horse Lat = 30-35° | Doldrums = Equator</p>
+        </div>
+        <div>
+          <p>🌪️ Cyclone NH = ACW | SH = CW</p>
+          <p>🌪️ Anticyclone = opposite + clear weather</p>
+          <p>🌪️ Tropical: sea only, 27°C+, E→W</p>
+          <p>🌪️ Eye = calm | Eyewall = destruction</p>
+          <p>🌪️ Hurricane(Atl) | Typhoon(W.Pac) | Willy-Willy(Aus)</p>
+          <p>🌪️ No cyclone: S. Atlantic + SE Pacific</p>
+          <p>🌊 BP=Cold | Gulf Stream=Warm</p>
+          <p>🌊 Cold coast→desert | Warm+Cold meet→fishing</p>
+          <p>🌊 Atacama=driest | Dead Sea=238‰</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layer-content" id="l4">
+    <div class="card" style="background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(245,158,11,0.05));">
+      <div class="card-title" style="color:var(--accent-red);">🔥 30-SECOND REVISION SHEET</div>
+      <div style="font-size:15px; line-height:2.2;">
+        <p>Hot=Low P, Cold=High P → Wind: High→Low</p>
+        <p>Coriolis: NH=Right, SH=Left, Eq=0, Pole=Max</p>
+        <p>Cells: <strong>Hadley(0-30) Ferrel(30-60) Polar(60-90)</strong></p>
+        <p>Winds: Trade(0-30) Westerlies(30-60) Polar E(60-90)</p>
+        <p>Roaring40s/Furious50s/Screaming60s = SH Westerlies</p>
+        <p>ITCZ shifts | Horse Lat=30-35° | Doldrums=Eq</p>
+        <p>Chinook=SnowEater | Harmattan=DoctorWind | Sirocco=BloodRain</p>
+        <p>Cyclone NH=ACW | Anticyclone NH=CW | Eye=calm</p>
+        <p>Tropical: sea only, 27°C+, E→W | Temperate: land+sea, W→E</p>
+        <p>Hurricane(Atl) | Typhoon(W.Pac) | Willy-Willy(Aus)</p>
+        <p>NO cyclone: S.Atlantic + SE Pacific</p>
+        <p>BP Company = Cold currents. Rest = Warm. Gulf Stream=WARM.</p>
+        <p>Cold current→Western coast deserts (Atacama=driest)</p>
+        <p>Warm+Cold meeting = Best fishing (Oyashio+Kuroshio=Japan)</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- LAST NIGHT SHEET -->
+<div class="section" id="lastnight">
+  <div class="last-night">
+    <div class="last-night-title">⭐ LAST NIGHT BEFORE EXAM SHEET ⭐</div>
+    <div class="grid-2">
+      <div>
+        <p style="color:var(--accent-cyan); font-weight:700; margin-bottom:0.5rem;">PRESSURE & WIND</p>
+        <p>✅ High→Low = Wind direction</p>
+        <p>✅ NH Coriolis = Right | SH = Left</p>
+        <p>✅ Equator = Zero Coriolis</p>
+        <p>✅ Hadley(0-30) > Ferrel(30-60) > Polar(60-90)</p>
+        <p>✅ Horse Latitude = 30-35° HIGH pressure</p>
+        <p>✅ Doldrums = weak winds near equator</p>
+        <p>✅ ITCZ = Cancer(June) / Capricorn(Dec)</p>
+        <br>
+        <p style="color:var(--accent-cyan); font-weight:700; margin-bottom:0.5rem;">LOCAL WINDS</p>
+        <p>✅ Chinook = Snow Eater (Rocky Mts)</p>
+        <p>✅ Harmattan = Doctor Wind (W. Africa)</p>
+        <p>✅ Sirocco = Blood Rain (Mediterranean)</p>
+        <p>✅ Bora + Mistral = COLD European winds</p>
+        <p>✅ Loo = India summers</p>
+        <p>✅ Brick Fielder = Australia</p>
+      </div>
+      <div>
+        <p style="color:var(--accent-red); font-weight:700; margin-bottom:0.5rem;">CYCLONES</p>
+        <p>✅ Cyclone NH = ANTICLOCKWISE</p>
+        <p>✅ Anticyclone = CLEAR weather</p>
+        <p>✅ Eye = calm, NO clouds</p>
+        <p>✅ Tropical: 27°C+ sea, E→W, sea only</p>
+        <p>✅ Temperate: frontogenesis, W→E</p>
+        <p>✅ Hurricane(Atl) | Typhoon(W.Pac) | Willy-Willy(Aus)</p>
+        <p>✅ NO cyclone in S.Atlantic & SE Pacific</p>
+        <br>
+        <p style="color:var(--accent-green); font-weight:700; margin-bottom:0.5rem;">OCEAN CURRENTS</p>
+        <p>✅ BP Cold (B=Benguela P=Peru G=Greenland...)</p>
+        <p>✅ Gulf Stream = WARM (NOT in cold list!)</p>
+        <p>✅ Cold west coast → Desert</p>
+        <p>✅ Atacama = World's Driest Desert</p>
+        <p>✅ Oyashio+Kuroshio = Japan fishing</p>
+        <p>✅ Dead Sea = 238‰ | Lake Van = 330‰</p>
+        <p>✅ Thermocline = temp drop | Halocline = salinity rise</p>
+      </div>
+    </div>
+    <div class="highlight highlight-red" style="margin-top:1.5rem; text-align:center;">
+      <strong>🔥 NEVER FORGET:</strong> Coriolis=0 at equator (no cyclone there) | Eye=calm | Anticyclone=clear weather | Gulf Stream=WARM | BP=COLD | South Atlantic & SE Pacific = No cyclones
+    </div>
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<footer style="background:var(--bg-section); border-top:1px solid var(--border); text-align:center; padding:2rem; color:var(--text-muted); font-size:13px;">
+  <p>🌪️ Wind, Ocean & Cyclones — SSC CGL High-Retention Revision System</p>
+  <p style="margin-top:0.25rem;">Revise → Recall → Repeat. All the best! 🔥</p>
+</footer>
+
+<script>
+function toggleQA(el) {
+  el.classList.toggle('open');
+  const ans = el.nextElementSibling;
+  ans.classList.toggle('open');
+}
+
+function revealBlank(el) {
+  el.textContent = el.dataset.ans;
+  el.classList.add('revealed');
+}
+
+function switchLayer(btn, id) {
+  document.querySelectorAll('.layer-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.layer-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+</body>
+</html>
