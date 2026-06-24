@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animal Tissue — Elite Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+  :root {
+    --bg-primary: #0b0e14;
+    --bg-secondary: #111620;
+    --bg-card: #161c28;
+    --bg-card-hover: #1e2638;
+    --border: #232d42;
+    --border-bright: #2e3d5e;
+    --green: #39e07a;
+    --green-dim: #1f6e40;
+    --green-glow: rgba(57,224,122,0.12);
+    --blue: #4db8ff;
+    --blue-dim: #1a4e78;
+    --blue-glow: rgba(77,184,255,0.10);
+    --orange: #ff8c42;
+    --orange-dim: rgba(255,140,66,0.15);
+    --red: #ff5c6a;
+    --red-dim: rgba(255,92,106,0.13);
+    --yellow: #f5c842;
+    --yellow-dim: rgba(245,200,66,0.12);
+    --purple: #b57aff;
+    --text-primary: #e8edf5;
+    --text-secondary: #8b96ad;
+    --text-muted: #505c72;
+    --sidebar-w: 270px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: var(--sidebar-w);
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .sidebar-logo {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-logo .tag {
+    font-size: 9px;
+    font-family: 'Fira Code', monospace;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .sidebar-logo h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .sidebar-logo .sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  .nav-section-label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 16px 18px 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 18px;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    border-left: 3px solid transparent;
+    transition: all 0.18s ease;
+    user-select: none;
+  }
+  .nav-item:hover { color: var(--text-primary); background: var(--bg-card); }
+  .nav-item.active {
+    color: var(--green);
+    background: var(--green-glow);
+    border-left-color: var(--green);
+    font-weight: 600;
+  }
+  .nav-item .icon { font-size: 14px; width: 18px; text-align: center; flex-shrink:0; }
+  .nav-progress {
+    padding: 14px 18px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+  .progress-label { font-size: 10.5px; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--blue)); border-radius: 2px; transition: width 0.4s ease; }
+
+  /* ── MAIN ── */
+  #main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #topbar {
+    height: 52px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    flex-shrink: 0;
+  }
+  .topbar-title { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+  .topbar-title span { color: var(--text-primary); }
+  .topbar-badges { display: flex; gap: 8px; }
+  .badge {
+    font-size: 10px;
+    font-family: 'Fira Code', monospace;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .badge-green { color: var(--green); border-color: var(--green-dim); background: var(--green-glow); }
+  .badge-blue { color: var(--blue); border-color: var(--blue-dim); background: var(--blue-glow); }
+
+  #content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px;
+    scroll-behavior: smooth;
+  }
+
+  /* ── PAGE ── */
+  .page { display: none; animation: fadeSlide 0.28s ease; }
+  .page.active { display: block; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── TYPOGRAPHY ── */
+  h2.page-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 24px 0 12px;
+  }
+  h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue);
+    margin: 16px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 10px; }
+  strong { color: var(--text-primary); font-weight: 600; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border-bright); }
+  .card-green { border-left: 3px solid var(--green); }
+  .card-blue { border-left: 3px solid var(--blue); }
+  .card-orange { border-left: 3px solid var(--orange); }
+  .card-red { border-left: 3px solid var(--red); }
+  .card-purple { border-left: 3px solid var(--purple); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  /* ── TAGS ── */
+  .tag-fire { display: inline-block; background: var(--red-dim); color: var(--red); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 6px; border: 1px solid rgba(255,92,106,0.3); }
+  .tag-star { display: inline-block; background: var(--yellow-dim); color: var(--yellow); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 6px; border: 1px solid rgba(245,200,66,0.3); }
+  .tag-plus { display: inline-block; background: var(--blue-glow); color: var(--blue); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-right: 6px; border: 1px solid rgba(77,184,255,0.25); }
+
+  /* ── TABLE ── */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  .tbl th { background: var(--bg-card-hover); color: var(--green); text-align: left; padding: 9px 12px; font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+  .tbl td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text-secondary); vertical-align: top; }
+  .tbl tr:hover td { background: var(--bg-card-hover); color: var(--text-primary); }
+
+  /* ── MEMORY HOOK ── */
+  .memory-hook {
+    background: linear-gradient(135deg, rgba(57,224,122,0.07), rgba(77,184,255,0.05));
+    border: 1px solid rgba(57,224,122,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .memory-hook::before {
+    content: '🧠';
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    font-size: 22px;
+    opacity: 0.35;
+  }
+  .memory-hook .hook-label {
+    font-size: 9px;
+    font-family: 'Fira Code', monospace;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .memory-hook p { color: var(--text-primary); font-size: 13px; }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: var(--red-dim);
+    border: 1px solid rgba(255,92,106,0.35);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .trap-box .trap-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .trap-box p, .trap-box li { color: #ffbfc4; font-size: 13px; }
+  .trap-box ul { padding-left: 18px; }
+  .trap-box li { margin-bottom: 5px; }
+
+  /* ── QUIZ ── */
+  .quiz-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .quiz-q { font-size: 13.5px; color: var(--text-primary); font-weight: 500; margin-bottom: 12px; }
+  .quiz-reveal {
+    background: var(--bg-card-hover);
+    border: 1px dashed var(--border-bright);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--green);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    font-family: 'Fira Code', monospace;
+    user-select: none;
+  }
+  .quiz-reveal:hover { background: var(--green-glow); border-color: var(--green); }
+  .quiz-answer { display: none; margin-top: 10px; padding: 10px 14px; background: var(--green-glow); border-radius: 6px; font-size: 13px; color: var(--text-primary); border: 1px solid rgba(57,224,122,0.2); }
+
+  /* ── PALACE ── */
+  .palace-stop {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .palace-num {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #000;
+    flex-shrink: 0;
+  }
+  .palace-text { font-size: 13px; color: var(--text-secondary); line-height: 1.7; padding-top: 5px; }
+  .palace-text strong { color: var(--text-primary); }
+
+  /* ── FACT CHIP ── */
+  .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .chip {
+    font-size: 11.5px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: var(--bg-card-hover);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: 'Fira Code', monospace;
+  }
+  .chip-g { border-color: rgba(57,224,122,0.35); color: var(--green); background: var(--green-glow); }
+  .chip-b { border-color: rgba(77,184,255,0.3); color: var(--blue); background: var(--blue-glow); }
+  .chip-o { border-color: rgba(255,140,66,0.3); color: var(--orange); background: var(--orange-dim); }
+
+  /* ── RAPID FIRE ── */
+  .rf-item {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .rf-q { color: var(--text-secondary); flex: 1; }
+  .rf-a { color: var(--green); font-weight: 600; font-family: 'Fira Code', monospace; min-width: 160px; text-align: right; }
+
+  /* ── ULTRA SHEET ── */
+  .ultra-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  .ultra-block .ub-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-family: 'Fira Code', monospace;
+  }
+  .ultra-block ul { list-style: none; padding: 0; }
+  .ultra-block li {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .ultra-block li::before { content: '→'; position: absolute; left: 0; color: var(--green); font-size: 11px; }
+
+  /* ── LAST NIGHT ── */
+  .ln-box {
+    background: linear-gradient(135deg, rgba(255,92,106,0.08), rgba(245,200,66,0.06));
+    border: 1px solid rgba(255,92,106,0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .ln-box h4 { color: var(--orange); font-size: 12px; margin-bottom: 10px; }
+  .ln-box li { font-size: 13px; color: var(--text-primary); line-height: 1.8; }
+  .ln-box ul { padding-left: 18px; }
+
+  /* ── NAV BUTTONS ── */
+  .page-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 36px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .nav-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); border-color: var(--border-bright); }
+  .nav-btn.primary { background: var(--green-glow); border-color: rgba(57,224,122,0.4); color: var(--green); font-weight: 600; }
+  .nav-btn.primary:hover { background: rgba(57,224,122,0.2); }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+  /* ── HOME GRID ── */
+  .home-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .home-card:hover { border-color: var(--green); background: var(--bg-card-hover); transform: translateY(-2px); }
+  .home-card .hc-icon { font-size: 22px; margin-bottom: 10px; }
+  .home-card .hc-title { font-size: 13.5px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .home-card .hc-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--border-bright); }
+
+  /* ── 30-SEC SHEET ── */
+  .sec30 {
+    background: linear-gradient(135deg, rgba(77,184,255,0.07), rgba(57,224,122,0.05));
+    border: 1px solid rgba(77,184,255,0.25);
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 13px;
+  }
+  .sec30 .s30-head {
+    font-size: 10px;
+    font-family: 'Fira Code', monospace;
+    color: var(--blue);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .sec30 li { color: var(--text-primary); line-height: 2; }
+  .sec30 ul { padding-left: 18px; }
+
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+  .highlight { color: var(--yellow); font-weight: 600; }
+  .text-green { color: var(--green); }
+  .text-blue { color: var(--blue); }
+  .text-orange { color: var(--orange); }
+  .text-red { color: var(--red); }
+
+  .fill-blank {
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 1.5px dashed var(--border-bright);
+    color: transparent;
+    background: var(--bg-card-hover);
+    border-radius: 3px;
+    padding: 0 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .fill-blank.revealed { color: var(--green); background: var(--green-glow); border-color: var(--green); }
+
+  @media (max-width: 900px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr 1fr; }
+    #sidebar { width: 220px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="tag">Biology · SSC CGL</div>
+    <h1>Animal Tissue</h1>
+    <div class="sub">Elite Revision System</div>
+  </div>
+
+  <div class="nav-section-label">Sections</div>
+  <div class="nav-item active" onclick="goTo(0)" id="nav-0"><span class="icon">🏠</span> Home & Big Picture</div>
+  <div class="nav-item" onclick="goTo(1)" id="nav-1"><span class="icon">🧩</span> Memory Palace</div>
+  <div class="nav-item" onclick="goTo(2)" id="nav-2"><span class="icon">📋</span> Epithelial Tissue</div>
+  <div class="nav-item" onclick="goTo(3)" id="nav-3"><span class="icon">💪</span> Muscular Tissue</div>
+  <div class="nav-item" onclick="goTo(4)" id="nav-4"><span class="icon">⚡</span> Nervous Tissue</div>
+  <div class="nav-item" onclick="goTo(5)" id="nav-5"><span class="icon">🔗</span> Connective Tissue</div>
+  <div class="nav-item" onclick="goTo(6)" id="nav-6"><span class="icon">🩸</span> Blood & Lymph</div>
+  <div class="nav-item" onclick="goTo(7)" id="nav-7"><span class="icon">⚠️</span> Exam Traps</div>
+  <div class="nav-item" onclick="goTo(8)" id="nav-8"><span class="icon">🎯</span> Examiner's Questions</div>
+  <div class="nav-item" onclick="goTo(9)" id="nav-9"><span class="icon">❓</span> Active Recall</div>
+  <div class="nav-item" onclick="goTo(10)" id="nav-10"><span class="icon">⭐</span> High-Yield Notes</div>
+  <div class="nav-item" onclick="goTo(11)" id="nav-11"><span class="icon">⚡</span> Ultra-Fast Sheet</div>
+  <div class="nav-item" onclick="goTo(12)" id="nav-12"><span class="icon">🕐</span> 30-Second Sheet</div>
+  <div class="nav-item" onclick="goTo(13)" id="nav-13"><span class="icon">🌙</span> Last-Night Sheet</div>
+
+  <div class="nav-progress">
+    <div class="progress-label"><span>Chapter Progress</span><span id="prog-pct">0%</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <div class="topbar-title">Animal Tissue — <span id="topbar-section">Home & Big Picture</span></div>
+    <div class="topbar-badges">
+      <span class="badge badge-green">🔥 SSC CGL</span>
+      <span class="badge badge-blue">Biology</span>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <!-- PAGE 0: HOME -->
+    <div class="page active" id="page-0">
+      <h2 class="page-title">Animal Tissue</h2>
+      <p class="page-subtitle">Your complete high-retention revision system. 14 sections. Navigate using the sidebar or Prev/Next buttons. Every section is crafted so you remember this six months later — in the exam hall.</p>
+
+      <div class="grid-3">
+        <div class="home-card" onclick="goTo(2)">
+          <div class="hc-icon">🛡️</div>
+          <div class="hc-title">Epithelial Tissue</div>
+          <div class="hc-desc">Squamous, Cuboidal, Columnar, Ciliated — types, shapes, locations</div>
+        </div>
+        <div class="home-card" onclick="goTo(3)">
+          <div class="hc-icon">💪</div>
+          <div class="hc-title">Muscular Tissue</div>
+          <div class="hc-desc">Skeletal vs Smooth vs Cardiac — voluntary, nuclei, striations</div>
+        </div>
+        <div class="home-card" onclick="goTo(4)">
+          <div class="hc-icon">⚡</div>
+          <div class="hc-title">Nervous Tissue</div>
+          <div class="hc-desc">Neuron structure, synapse, myelin sheath, node of Ranvier</div>
+        </div>
+        <div class="home-card" onclick="goTo(5)">
+          <div class="hc-icon">🔗</div>
+          <div class="hc-title">Connective Tissue</div>
+          <div class="hc-desc">Areolar, Adipose, Skeletal (Cartilage & Bone) — 206 bones</div>
+        </div>
+        <div class="home-card" onclick="goTo(6)">
+          <div class="hc-icon">🩸</div>
+          <div class="hc-title">Blood & Lymph</div>
+          <div class="hc-desc">RBC, WBC, Platelets — plasma, life spans, counts</div>
+        </div>
+        <div class="home-card" onclick="goTo(7)">
+          <div class="hc-icon">⚠️</div>
+          <div class="hc-title">Exam Traps</div>
+          <div class="hc-desc">The exact confusions that cost marks every year</div>
+        </div>
+        <div class="home-card" onclick="goTo(8)">
+          <div class="hc-icon">🎯</div>
+          <div class="hc-title">Examiner's Questions</div>
+          <div class="hc-desc">High-probability question formats + predicted MCQs</div>
+        </div>
+        <div class="home-card" onclick="goTo(9)">
+          <div class="hc-icon">❓</div>
+          <div class="hc-title">Active Recall</div>
+          <div class="hc-desc">Quiz yourself — reveal answers, fill blanks, rapid fire</div>
+        </div>
+        <div class="home-card" onclick="goTo(13)">
+          <div class="hc-icon">🌙</div>
+          <div class="hc-title">Last-Night Sheet</div>
+          <div class="hc-desc">Everything that matters, one page, exam eve</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <h3>Big Picture — What This Chapter Is Really About</h3>
+      <div class="card card-blue">
+        <p>Animals need <strong>4 tissue types</strong> to survive. Think of them as <strong>4 departments of a company</strong>:</p>
+        <div class="chip-row" style="margin-top:10px">
+          <span class="chip chip-g">🛡️ Epithelial = Security (Protection)</span>
+          <span class="chip chip-b">⚡ Nervous = Management (Communication)</span>
+          <span class="chip chip-o">💪 Muscular = Operations (Movement)</span>
+          <span class="chip">🔗 Connective = Infrastructure (Support)</span>
+        </div>
+        <p style="margin-top:12px">Exams attack this chapter from <strong>3 angles</strong>: (1) Which tissue does X function? (2) Which tissue is found at Y location? (3) Property comparisons (Voluntary? Nuclei count? Striated?)</p>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" disabled>← Previous</button>
+        <button class="nav-btn primary" onclick="goTo(1)">Memory Palace →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 1: MEMORY PALACE -->
+    <div class="page" id="page-1">
+      <h2 class="page-title">🧠 Chapter Memory Palace</h2>
+      <p class="page-subtitle">Walk through a <strong>Hospital Building</strong>. Each floor = one tissue type. This story lets you recall everything in sequence.</p>
+
+      <div class="card card-green">
+        <h4>THE BODY-HOSPITAL STORY</h4>
+        <p>You enter a <strong>massive hospital</strong>. Your mission: visit every floor and remember what happens there.</p>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-num">G</div>
+        <div class="palace-text"><strong>Ground Floor — RECEPTION (Epithelial)</strong><br>
+          The <em>receptionist</em> at the entrance wears a <em>flat uniform</em> (squamous). She is a <em>single person</em> (simple) or has a <em>layer of staff</em> (stratified). Walk in and the walls are lined with <em>cube-shaped tiles</em> (cuboidal) in the restroom area. The hallway to the cafeteria has <em>tall column pillars</em> (columnar) and the staircase has <em>tiny hairs on the rail</em> to guide your hand (ciliated). <strong>This entire floor PROTECTS you and LINES the entry</strong>.</div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-num">1</div>
+        <div class="palace-text"><strong>Floor 1 — GYM (Muscular)</strong><br>
+          On the first floor is the hospital gym. You see three types of exercise equipment: <em>Skeleton-shaped barbells</em> (skeletal — voluntary, multinucleate, striated). A <em>smooth yoga mat</em> in the corner where people lie and relax — you cannot control it, it moves on its own (smooth — involuntary, uninucleate, non-striated). In the centre, a <em>heart-shaped machine</em> that never stops, beats rhythmically, has branching cables everywhere (cardiac — involuntary, uninucleate, branched, striated). <strong>Remember: the Heart-Shaped machine has BRANCHES everywhere.</strong></div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-num">2</div>
+        <div class="palace-text"><strong>Floor 2 — CONTROL ROOM (Nervous)</strong><br>
+          The control room has <em>Camilo Golgi</em> (yes, that Italian scientist) drawing wiring diagrams in <em>black ink</em> on the wall. The wires are <em>neurons</em>. Each wire has a long rod (axon), a fuzzy input end (dendrites), and a fatty rubber coating (myelin sheath). Between any two wires, there's a tiny <em>air gap</em> — the synapse. The exposed sections of wire = nodes of Ranvier. <strong>This floor senses everything — touch, smell, taste, sound.</strong></div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-num">3</div>
+        <div class="palace-text"><strong>Floor 3 — STRUCTURE DEPARTMENT (Connective)</strong><br>
+          This floor connects everything. Loose areolar tissue = the <em>fluffy insulation</em> in the walls. Tendon = a <em>metal cable</em> bolted from the engine (muscle) to the pillar (bone). Ligament = another cable going from pillar to pillar. Adipose = the <em>fat insulation pads</em> protecting fragile equipment. A camel hump decoration on the wall reminds you: camel's hump = adipose. Cartilage = the <em>rubber door-seal</em> — not hard, not liquid. Bone = the <em>solid concrete pillar</em> made of calcium and phosphorus.</div>
+      </div>
+
+      <div class="palace-stop">
+        <div class="palace-num">4</div>
+        <div class="palace-text"><strong>Floor 4 — LAB (Blood & Lymph)</strong><br>
+          The lab has <em>red test tubes</em> (RBC — biconcave, iron/haemoglobin, 120 days). <em>White test tubes</em> (WBC — leukocytes, 12–20 days, defense). <em>Clear tiny vials</em> (Platelets — thrombocytes, 7–10 days, clotting). The <em>yellow liquid</em> in the base is plasma (92% water). A colourless container in the corner is lymph (no RBC, no blood protein).</div>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(0)">← Home</button>
+        <button class="nav-btn primary" onclick="goTo(2)">Epithelial Tissue →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 2: EPITHELIAL -->
+    <div class="page" id="page-2">
+      <h2 class="page-title">🛡️ Epithelial Tissue</h2>
+      <p class="page-subtitle"><span class="tag-fire">🔥 MUST KNOW</span> The body's security guard. Covers and protects. No intercellular space. Forms a continuous sheet.</p>
+
+      <div class="memory-hook">
+        <div class="hook-label">Memory Hook</div>
+        <p><strong>"The FLAT SECRETARY (squamous) sits at a CUBE desk (cuboidal) next to a TALL COLUMN (columnar) and she fans herself with HAIR (ciliated)."</strong> — One sentence, four types locked in.</p>
+      </div>
+
+      <h3>Core Properties</h3>
+      <div class="grid-2">
+        <div class="card card-green">
+          <h4>What it does</h4>
+          <ul style="padding-left:16px; color: var(--text-secondary); font-size:13px; line-height:2">
+            <li>Protects from injury, infection, damage</li>
+            <li>Forms continuous sheet — no intercellular space</li>
+            <li>Lines body surfaces, organs, glands</li>
+          </ul>
+        </div>
+        <div class="card card-blue">
+          <h4>Key Property</h4>
+          <p>No visible intercellular space. Think of tiles on a floor — no gap between them. That is epithelial tissue.</p>
+        </div>
+      </div>
+
+      <h3>Types of Epithelial Tissue</h3>
+      <table class="tbl">
+        <tr>
+          <th>Type</th><th>Shape</th><th>Subtypes</th><th>Location</th><th>Function</th>
+        </tr>
+        <tr>
+          <td><strong class="text-green">Squamous</strong></td>
+          <td>Thin, flat, irregular</td>
+          <td>Simple / Stratified</td>
+          <td>Simple: Mouth, Esophagus | Stratified: Skin</td>
+          <td>Simple = delicate lining; Stratified = tough protection (layers)</td>
+        </tr>
+        <tr>
+          <td><strong class="text-blue">Cuboidal</strong></td>
+          <td>Height ≈ Width (cube)</td>
+          <td>—</td>
+          <td>Sweat glands, Salivary glands, Thyroid, Kidney tubules</td>
+          <td>Secretion, absorption</td>
+        </tr>
+        <tr>
+          <td><strong class="text-orange">Columnar</strong></td>
+          <td>Height > Width (tall column)</td>
+          <td>—</td>
+          <td>Stomach, Intestine, Gall bladder</td>
+          <td>Secretion, absorption</td>
+        </tr>
+        <tr>
+          <td><strong class="text-red">Ciliated</strong></td>
+          <td>Has hair-like cilia on surface</td>
+          <td>—</td>
+          <td>Uterus, Respiratory tract, Urinary bladder</td>
+          <td>Facilitates movement of mucus, egg, urine</td>
+        </tr>
+      </table>
+
+      <h3>Squamous Deep Dive</h3>
+      <div class="grid-2">
+        <div class="card">
+          <h4>Simple Squamous</h4>
+          <p>Single layer. Delicate lining. Found in <strong>mouth</strong> and <strong>esophagus</strong> (food pipe).</p>
+          <div class="memory-hook" style="margin-top:10px">
+            <div class="hook-label">Hook</div>
+            <p>Simple = one person sitting at the door. The door is your <strong>mouth → esophagus</strong>.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Stratified Squamous</h4>
+          <p>Multiple layers (strata = layers, like sedimentary rock). Found in <strong>skin</strong>.</p>
+          <div class="memory-hook" style="margin-top:10px">
+            <div class="hook-label">Hook</div>
+            <p>Stratified = many layers like sedimentary rock. Skin = outermost layer of body = maximum protection = stratified.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>Ciliated — Remember the Locations</h3>
+      <div class="card card-purple">
+        <p>Cilia = hair-like projections on surface. <strong>Purpose: facilitate movement.</strong></p>
+        <div class="chip-row" style="margin-top:10px">
+          <span class="chip chip-b">Uterus → moves the egg</span>
+          <span class="chip chip-g">Respiratory tract → moves mucus</span>
+          <span class="chip chip-o">Urinary bladder → moves urine</span>
+          <span class="chip chip-b">Nose → moves mucus (nose hair)</span>
+        </div>
+        <div class="memory-hook" style="margin-top:12px">
+          <div class="hook-label">Hook — "EURO"</div>
+          <p><strong>U</strong>terus, <strong>R</strong>espiratory tract, <strong>U</strong>rinary bladder — all have ciliated tissue because they need things MOVED through them.</p>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(1)">← Memory Palace</button>
+        <button class="nav-btn primary" onclick="goTo(3)">Muscular Tissue →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 3: MUSCULAR -->
+    <div class="page" id="page-3">
+      <h2 class="page-title">💪 Muscular Tissue</h2>
+      <p class="page-subtitle"><span class="tag-fire">🔥 MUST KNOW</span> Movement specialists. Contractile proteins in fibres enable contraction and relaxation.</p>
+
+      <div class="memory-hook">
+        <div class="hook-label">Master Memory Hook</div>
+        <p><strong>Skeletal = Soldier (commanded/voluntary, many generals/multinucleate, has war stripes/striated, no branches = simple soldier)</strong><br>
+        <strong>Smooth = Monk (meditates on its own/involuntary, one mind/uninucleate, peaceful/non-striated, simple/unbranched)</strong><br>
+        <strong>Cardiac = Politician (independent/involuntary, one soul/uninucleate, has many connections/branched, wears a striped suit/striated, never tires)</strong></p>
+      </div>
+
+      <h3>Comparison Table — The Exam Will Use This</h3>
+      <table class="tbl">
+        <tr>
+          <th>Property</th><th>Skeletal</th><th>Smooth</th><th>Cardiac</th>
+        </tr>
+        <tr>
+          <td>Control</td>
+          <td class="text-green">Voluntary ✓</td>
+          <td class="text-red">Involuntary ✗</td>
+          <td class="text-red">Involuntary ✗</td>
+        </tr>
+        <tr>
+          <td>Nuclei</td>
+          <td class="text-orange">Multinucleate</td>
+          <td class="text-green">Uninucleate</td>
+          <td class="text-green">Uninucleate</td>
+        </tr>
+        <tr>
+          <td>Striations (bands)</td>
+          <td class="text-green">Striated ✓</td>
+          <td class="text-red">Non-striated ✗</td>
+          <td class="text-green">Striated ✓</td>
+        </tr>
+        <tr>
+          <td>Branching</td>
+          <td class="text-red">Unbranched</td>
+          <td class="text-red">Unbranched</td>
+          <td class="text-green">Branched ✓</td>
+        </tr>
+        <tr>
+          <td>Fatigue</td>
+          <td class="text-red">Fatigues</td>
+          <td class="text-green">Does not fatigue</td>
+          <td class="text-green">Does not fatigue</td>
+        </tr>
+        <tr>
+          <td>Location</td>
+          <td>Arms, legs (bone-attached)</td>
+          <td>Iris, lungs, liver, intestines, stomach, abdomen</td>
+          <td>Heart only</td>
+        </tr>
+      </table>
+
+      <h3>Quick Recall Rules</h3>
+      <div class="grid-2">
+        <div class="card card-green">
+          <h4>Rule 1 — Only One Voluntary</h4>
+          <p>Skeletal is the ONLY voluntary muscle. Remember: you flex your biceps <strong>when you choose</strong>. The heart and iris move <strong>without your permission</strong>.</p>
+        </div>
+        <div class="card card-blue">
+          <h4>Rule 2 — Only One Branched</h4>
+          <p>Cardiac is the ONLY branched muscle. <strong>"The heart doesn't feel attached to one — it branches out to many."</strong> Use this joke to lock it in forever.</p>
+        </div>
+        <div class="card card-orange">
+          <h4>Rule 3 — Only One Multinucleate</h4>
+          <p>Skeletal is the ONLY multinucleate. Many nuclei = needs many "commanders" to control such large voluntary muscles.</p>
+        </div>
+        <div class="card card-red">
+          <h4>Rule 4 — Only One Non-Striated</h4>
+          <p>Smooth is the ONLY non-striated. Smooth = no bands = calm like a monk. Skeletal and Cardiac both have light-and-dark alternate bands.</p>
+        </div>
+      </div>
+
+      <h3>Iris Example — Why Smooth is Involuntary</h3>
+      <div class="card card-purple">
+        <p>When you go from <strong>bright sunlight into darkness</strong>, your iris <strong>dilates automatically</strong>. You have zero control over this. The iris has smooth muscle — involuntary. This is the teacher's key example. Expect this in exams.</p>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(2)">← Epithelial Tissue</button>
+        <button class="nav-btn primary" onclick="goTo(4)">Nervous Tissue →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 4: NERVOUS -->
+    <div class="page" id="page-4">
+      <h2 class="page-title">⚡ Nervous Tissue</h2>
+      <p class="page-subtitle"><span class="tag-fire">🔥 MUST KNOW</span> The body's communication network. Found in brain, spinal cord, nerves. Fundamental unit = Neuron.</p>
+
+      <div class="memory-hook">
+        <div class="hook-label">Memory Hook — Camilo Golgi's Black Ink</div>
+        <p>Camilo Golgi (Italian scientist) <strong>drew the first neuron diagram using black ink reaction</strong>. Imagine a black-ink portrait of a tree — trunk (axon), branches at top (dendrites), roots at bottom (nerve terminals), with rubber insulation (myelin sheath) and exposed knots (nodes of Ranvier).</p>
+      </div>
+
+      <h3>Neuron Structure — Every Part Matters</h3>
+      <div class="card card-blue">
+        <table class="tbl">
+          <tr><th>Part</th><th>What It Is</th><th>Function</th></tr>
+          <tr><td><strong class="text-green">Dendrites</strong></td><td>Branching input ends</td><td>Receive signals (input)</td></tr>
+          <tr><td><strong class="text-blue">Cell Body</strong></td><td>Contains nucleus</td><td>Processes information</td></tr>
+          <tr><td><strong class="text-orange">Axon</strong></td><td>Long rod-like projection</td><td>Carries signal away from cell body</td></tr>
+          <tr><td><strong class="text-red">Myelin Sheath</strong></td><td>Fatty covering around axon</td><td>Insulates & speeds up signal</td></tr>
+          <tr><td><strong class="text-purple">Node of Ranvier</strong></td><td>Gap in myelin sheath</td><td>Exposed section — signal jumps here</td></tr>
+          <tr><td><strong class="text-green">Nerve Terminal</strong></td><td>End of axon</td><td>Sends signal to next neuron</td></tr>
+          <tr><td><strong class="text-blue">Synapse</strong></td><td>Gap between two neurons</td><td>Signal transfer between neurons</td></tr>
+        </table>
+      </div>
+
+      <h3>Synapse vs Node of Ranvier — Critical Distinction</h3>
+      <div class="grid-2">
+        <div class="card card-green">
+          <h4>Node of Ranvier</h4>
+          <p>Gap <strong>within ONE neuron</strong> — gaps in the myelin sheath along the axon. Signal "jumps" from node to node for speed.</p>
+        </div>
+        <div class="card card-orange">
+          <h4>Synapse</h4>
+          <p>Gap <strong>between TWO neurons</strong> — the space between the nerve terminal of one and the dendrite of the next.</p>
+        </div>
+      </div>
+
+      <div class="memory-hook">
+        <div class="hook-label">Hook — Train Analogy</div>
+        <p>Node of Ranvier = gaps between the <strong>rubber coating on a single electric wire</strong>. Synapse = the gap at the <strong>junction between two separate trains</strong> passing a baton.</p>
+      </div>
+
+      <h3>What Neurons Sense</h3>
+      <div class="chip-row">
+        <span class="chip chip-g">Touch</span>
+        <span class="chip chip-b">Smell</span>
+        <span class="chip chip-g">Taste</span>
+        <span class="chip chip-o">Hearing</span>
+        <span class="chip chip-b">Vision</span>
+        <span class="chip">Temperature</span>
+        <span class="chip">Pain</span>
+      </div>
+
+      <h3>Key Facts</h3>
+      <div class="card card-green">
+        <ul style="padding-left:16px; color: var(--text-secondary); font-size:13px; line-height:2.2">
+          <li>Fundamental unit of nervous system = <strong class="text-green">Neuron</strong></li>
+          <li>Found in: <strong>Brain, Spinal Cord, Nerves</strong></li>
+          <li>Camilo Golgi = first to illustrate neuron (black ink / silver staining method)</li>
+          <li>Signal direction: Dendrite → Cell Body → Axon → Nerve Terminal → Synapse → Next Neuron</li>
+        </ul>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(3)">← Muscular Tissue</button>
+        <button class="nav-btn primary" onclick="goTo(5)">Connective Tissue →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 5: CONNECTIVE -->
+    <div class="page" id="page-5">
+      <h2 class="page-title">🔗 Connective Tissue</h2>
+      <p class="page-subtitle"><span class="tag-star">⭐ IMPORTANT</span> The body's infrastructure. Connects, supports, stores, protects. Types: Areolar, Adipose, Skeletal (Cartilage + Bone), Fluid (Blood + Lymph).</p>
+
+      <div class="memory-hook">
+        <div class="hook-label">Master Hook — The Building Analogy</div>
+        <p><strong>Areolar = Loose insulation in walls | Tendon = Steel cable (Muscle→Pillar) | Ligament = Bolt (Pillar→Pillar) | Adipose = Bubble wrap padding | Cartilage = Rubber seal | Bone = Concrete pillar | Blood = Water pipes | Lymph = Drainage pipes</strong></p>
+      </div>
+
+      <h3>Areolar Connective Tissue</h3>
+      <div class="grid-2">
+        <div class="card card-green">
+          <h4>Loose Areolar</h4>
+          <ul style="padding-left:16px; color:var(--text-secondary); font-size:13px; line-height:2">
+            <li>Cells + gel-like matrix</li>
+            <li>Found around blood vessels and nerves</li>
+            <li>Found in bone marrow (where blood forms)</li>
+            <li>Connects <strong>skin to muscle</strong></li>
+            <li>Supports internal organs</li>
+            <li>Helps repair tissues</li>
+          </ul>
+        </div>
+        <div class="card card-blue">
+          <h4>Dense Areolar — Tendons & Ligaments</h4>
+          <div class="memory-hook" style="margin-bottom:10px">
+            <div class="hook-label">MTB Hook</div>
+            <p><strong>M</strong>uscle → <strong>T</strong>endon → <strong>B</strong>one (MTB bike). Ligament = Bone to Bone (BB gun).</p>
+          </div>
+          <p><strong>Tendon</strong> = Muscle → Bone<br><strong>Ligament</strong> = Bone → Bone</p>
+        </div>
+      </div>
+
+      <h3>Adipose Tissue</h3>
+      <div class="card card-orange">
+        <div class="chip-row">
+          <span class="chip chip-o">Shape: Rounded & Oval</span>
+          <span class="chip chip-o">Cells: Adipocytes</span>
+          <span class="chip chip-o">Function: Fat Storage</span>
+        </div>
+        <p style="margin-top:10px">Stores fat beneath the skin. Acts as <strong>insulation + shock absorber</strong>. The <strong>camel's hump</strong> = adipose tissue. The <strong>bull's hump</strong> = adipose tissue. <em>"Thick-skinned people" = rich in adipose tissue — they absorb mechanical shocks!</em></p>
+      </div>
+
+      <h3>Skeletal Connective Tissue</h3>
+      <div class="grid-2">
+        <div class="card">
+          <h4>Cartilage</h4>
+          <ul style="padding-left:16px; color:var(--text-secondary); font-size:13px; line-height:2">
+            <li>Flexible (not as hard as bone)</li>
+            <li>Widely spaced cells</li>
+            <li>Matrix: semi-solid (neither fluid nor solid)</li>
+            <li>Location: <strong>Ear pinna, Nose tip, Trachea (rings), Larynx</strong></li>
+          </ul>
+          <div class="memory-hook" style="margin-top:10px">
+            <div class="hook-label">Feel It</div>
+            <p>Bend your ear → that's cartilage. Press your nose tip → that's cartilage. Trachea has cartilage rings to prevent collapse.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Bone</h4>
+          <ul style="padding-left:16px; color:var(--text-secondary); font-size:13px; line-height:2">
+            <li>Hard, rigid, non-flexible</li>
+            <li>Matrix: <strong>Calcium + Phosphorus</strong></li>
+            <li>Adults: <strong>206 bones</strong></li>
+            <li>Children: <strong>300 bones</strong> (fuse over time → 206)</li>
+            <li>Longest + Strongest: <strong>Femur</strong></li>
+            <li>Smallest: <strong>Stapes</strong> (ear — also malleus, incus)</li>
+            <li>Protects: Brain, Lungs, vital organs</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>The 3 Ear Bones (Ossicles)</h3>
+      <div class="card card-purple">
+        <div class="chip-row">
+          <span class="chip chip-b">Malleus</span>
+          <span class="chip chip-b">Incus</span>
+          <span class="chip chip-g">Stapes (SMALLEST)</span>
+        </div>
+        <div class="memory-hook" style="margin-top:10px">
+          <div class="hook-label">Hook — MIS (Miss the Stapes!)</div>
+          <p><strong>M</strong>alleus → <strong>I</strong>ncus → <strong>S</strong>tapes. Stapes is the <strong>shortest bone in the human body</strong>. Femur is the <strong>longest</strong>.</p>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(4)">← Nervous Tissue</button>
+        <button class="nav-btn primary" onclick="goTo(6)">Blood & Lymph →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 6: BLOOD -->
+    <div class="page" id="page-6">
+      <h2 class="page-title">🩸 Blood & Lymph</h2>
+      <p class="page-subtitle"><span class="tag-fire">🔥 MUST KNOW</span> Fluid connective tissues. Blood = Plasma (55%) + Formed elements (45%). Lymph = colourless, no RBC.</p>
+
+      <div class="memory-hook">
+        <div class="hook-label">Big Picture Hook</div>
+        <p><strong>Blood = Red Army [RBC] + White Guards [WBC] + Tiny Clot-Plugs [Platelets] all swimming in Yellow Sea [Plasma]</strong></p>
+      </div>
+
+      <h3>Blood Composition</h3>
+      <div class="card card-blue">
+        <table class="tbl">
+          <tr><th>Component</th><th>% of Blood</th><th>Details</th></tr>
+          <tr><td><strong class="text-blue">Plasma</strong></td><td>55%</td><td>92% water + hormones, proteins, sugars. Yellow coloured liquid.</td></tr>
+          <tr><td><strong class="text-red">Formed Elements (RBC+WBC+Platelets)</strong></td><td>45%</td><td>Solid component</td></tr>
+        </table>
+      </div>
+
+      <h3>RBC (Red Blood Cells / Erythrocytes)</h3>
+      <div class="card card-red">
+        <div class="chip-row">
+          <span class="chip chip-o">Biconcave disc shape</span>
+          <span class="chip chip-o">No nucleus (mature RBC)</span>
+          <span class="chip chip-o">Life: 120 days</span>
+          <span class="chip chip-o">Iron → Haemoglobin</span>
+        </div>
+        <table class="tbl" style="margin-top:12px">
+          <tr><th>Property</th><th>Detail</th></tr>
+          <tr><td>Colour</td><td>Red — because of <strong>Haemoglobin</strong></td></tr>
+          <tr><td>Element in Hb</td><td><strong>Iron (Fe)</strong></td></tr>
+          <tr><td>Function</td><td>Transport Oxygen (Hb has high affinity for O₂)</td></tr>
+          <tr><td>Nucleus</td><td>Absent in mature RBC (lost when maturing)</td></tr>
+          <tr><td>Formation</td><td>Bone Marrow</td></tr>
+          <tr><td>Destruction</td><td>Spleen ("graveyard of RBCs")</td></tr>
+          <tr><td>Scientific name</td><td>Erythrocytes</td></tr>
+          <tr><td>Life span</td><td><strong>120 days</strong></td></tr>
+        </table>
+        <div class="memory-hook" style="margin-top:10px">
+          <div class="hook-label">Biconcave Hook</div>
+          <p>Press a cream tube from the middle — the shape that forms is biconcave disc. Like a donut that didn't fully hole out.</p>
+        </div>
+      </div>
+
+      <h3>WBC (White Blood Cells / Leukocytes)</h3>
+      <div class="card card-green">
+        <div class="chip-row">
+          <span class="chip chip-g">Body's Defense Army</span>
+          <span class="chip chip-g">No Haemoglobin (white)</span>
+          <span class="chip chip-g">Life: 12–20 days</span>
+        </div>
+        <p style="margin-top:10px">Kill bacteria and foreign invaders. Scientific name: <strong>Leukocytes</strong>. Formed in: <strong>Bone Marrow</strong>.</p>
+        <h4 style="margin-top:12px">5 Types of WBC</h4>
+        <div class="chip-row">
+          <span class="chip">Monocytes</span>
+          <span class="chip">Lymphocytes</span>
+          <span class="chip">Neutrophils</span>
+          <span class="chip">Basophils</span>
+          <span class="chip">Eosinophils</span>
+        </div>
+        <div class="memory-hook" style="margin-top:10px">
+          <div class="hook-label">Hook — "MoLy NeBaEo" (Moly Na Ba Eo)</div>
+          <p><strong>Mo</strong>nocytes, <strong>Ly</strong>mphocytes, <strong>Ne</strong>utrophils, <strong>Ba</strong>sophils, <strong>Eo</strong>sinophils</p>
+        </div>
+      </div>
+
+      <h3>Platelets (Thrombocytes)</h3>
+      <div class="card card-purple">
+        <div class="chip-row">
+          <span class="chip chip-b">Function: Blood Clotting</span>
+          <span class="chip chip-b">Life: 7–10 days</span>
+          <span class="chip chip-b">Name: Thrombocytes</span>
+        </div>
+        <p style="margin-top:10px">Dengue fever = platelet count drops drastically. Disease term: <strong>Thrombocytopenia</strong> (low platelets). Excess platelets: <strong>Thrombocytosis</strong>.</p>
+      </div>
+
+      <h3>Number Order: Most to Least in Blood</h3>
+      <div class="card card-orange">
+        <p style="font-size:16px; text-align:center; padding:8px 0"><strong class="text-red">RBC</strong> (Trillions) &gt; <strong class="text-purple">Platelets</strong> (Millions) &gt; <strong class="text-green">WBC</strong> (Thousands)</p>
+        <div class="memory-hook" style="margin-top:10px">
+          <div class="hook-label">Hook — RPW (Rich People Win)</div>
+          <p><strong>R</strong>BC &gt; <strong>P</strong>latelets &gt; <strong>W</strong>BC in count order. RBC = trillions (richest count), WBC = thousands (fewest).</p>
+        </div>
+      </div>
+
+      <h3>Life Span Comparison</h3>
+      <table class="tbl">
+        <tr><th>Cell</th><th>Life Span</th><th>Memory</th></tr>
+        <tr><td>RBC</td><td class="text-green"><strong>120 days</strong></td><td>120 = 1-2-0, like a countdown</td></tr>
+        <tr><td>WBC</td><td class="text-blue"><strong>12–20 days</strong></td><td>12 to 20 days (WAY shorter)</td></tr>
+        <tr><td>Platelets</td><td class="text-orange"><strong>7–10 days</strong></td><td>Shortest life — like a week vacation</td></tr>
+      </table>
+
+      <h3>Lymph</h3>
+      <div class="card">
+        <ul style="padding-left:16px; color:var(--text-secondary); font-size:13px; line-height:2.2">
+          <li>Colourless (no RBC → no haemoglobin → no colour)</li>
+          <li>No blood proteins</li>
+          <li>Contains: proteins, salts, glucose, water</li>
+          <li>Function: defense mechanism (similar to WBC)</li>
+          <li>It is a <strong>fluid connective tissue</strong></li>
+        </ul>
+      </div>
+
+      <h3>Study of Blood</h3>
+      <div class="card card-blue">
+        <p>Study of blood = <span class="tag-fire">🔥</span> <strong class="text-green">Haematology</strong></p>
+        <p style="margin-top:8px">Fibrinogen = <strong>anti-coagulant</strong> (prevents blood from clotting inappropriately → prevents heart attacks).</p>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(5)">← Connective Tissue</button>
+        <button class="nav-btn primary" onclick="goTo(7)">Exam Traps →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 7: TRAPS -->
+    <div class="page" id="page-7">
+      <h2 class="page-title">⚠️ Exam Traps</h2>
+      <p class="page-subtitle">These are the exact confusions that cost students marks every single year. Read these until they feel obvious.</p>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 1 — Node of Ranvier vs Synapse</div>
+        <ul>
+          <li><strong>Node of Ranvier</strong> = gap WITHIN one neuron (in the myelin sheath along the axon)</li>
+          <li><strong>Synapse</strong> = gap BETWEEN two neurons</li>
+          <li>❌ Common error: calling the gap between neurons "node of Ranvier"</li>
+        </ul>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 2 — Tendon vs Ligament</div>
+        <ul>
+          <li><strong>Tendon</strong> = Muscle to Bone (MTB)</li>
+          <li><strong>Ligament</strong> = Bone to Bone (BBgun)</li>
+          <li>❌ Common error: reversing these. Remember MTB bike: Muscle→Tendon→Bone</li>
+        </ul>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 3 — Cardiac Muscle Properties</div>
+        <ul>
+          <li>Cardiac is <strong>involuntary</strong> (not voluntary like skeletal)</li>
+          <li>Cardiac is <strong>uninucleate</strong> (not multinucleate like skeletal)</li>
+          <li>Cardiac is <strong>branched</strong> (unique — only one that is branched)</li>
+          <li>Cardiac is <strong>striated</strong> (not smooth like smooth muscle)</li>
+          <li>Cardiac does <strong>NOT fatigue</strong> (unlike skeletal)</li>
+          <li>❌ Most confused property: branching. Only cardiac is branched.</li>
+        </ul>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 4 — RBC Life Span vs WBC</div>
+        <ul>
+          <li>RBC = 120 days | WBC = 12–20 days | Platelets = 7–10 days</li>
+          <li>❌ Common error: confusing 120 (RBC) with 12 (WBC)</li>
+          <li>Lock it: RBC lasts as long as one school semester (120 days ≈ 4 months)</li>
+        </ul>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 5 — Spleen vs Bone Marrow</div>
+        <ul>
+          <li><strong>Bone Marrow</strong> = Formation of RBC, WBC</li>
+          <li><strong>Spleen</strong> = Destruction of RBC (graveyard of RBCs)</li>
+          <li>❌ Common error: saying spleen forms RBC or bone marrow destroys them</li>
+        </ul>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 6 — Stapes vs Femur</div>
+        <ul>
+          <li><strong>Femur</strong> = Longest AND Strongest bone</li>
+          <li><strong>Stapes</strong> = Smallest bone</li>
+          <li>❌ If Femur is NOT in options, look for the next answer — but Femur is almost always in the "strongest/longest" question</li>
+        </ul>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 7 — Smooth Muscle Locations</div>
+        <ul>
+          <li>Smooth muscle = lungs, liver, abdomen, intestines, iris, stomach</li>
+          <li>❌ Students forget IRIS has smooth muscle (because it's in the eye — feels odd)</li>
+          <li>Key: iris moves involuntarily (in/out of sunlight) = smooth = involuntary. This is a DIRECT exam question.</li>
+        </ul>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 8 — Lymph vs Blood</div>
+        <ul>
+          <li>Lymph is <strong>colourless</strong> (no RBC, no blood proteins)</li>
+          <li>Plasma is <strong>yellow</strong></li>
+          <li>❌ Common error: saying lymph is yellow or plasma is colourless</li>
+        </ul>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 9 — Adult vs Child Bone Count</div>
+        <ul>
+          <li>Adult = <strong>206 bones</strong></li>
+          <li>Child = <strong>300 bones</strong> (fuse as they grow)</li>
+          <li>❌ Students often say child has 206. No — child has MORE bones, they fuse to become 206.</li>
+        </ul>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">⚠️ TRAP 10 — Haematology vs Hepatology</div>
+        <ul>
+          <li><strong>Haematology</strong> = Study of Blood</li>
+          <li><strong>Hepatology</strong> = Study of Liver</li>
+          <li>❌ The teacher mentioned both — do not confuse them. Exam may test this directly.</li>
+        </ul>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(6)">← Blood & Lymph</button>
+        <button class="nav-btn primary" onclick="goTo(8)">Examiner's Questions →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 8: EXAMINER'S Q -->
+    <div class="page" id="page-8">
+      <h2 class="page-title">🎯 Examiner's Favourite Questions</h2>
+      <p class="page-subtitle">How the SSC CGL examiner will attack this chapter. Study these patterns — not just facts.</p>
+
+      <h3>🎯 High Probability MCQs</h3>
+      <div class="card card-green">
+        <p><strong>Q1.</strong> Which tissue is protective and forms a continuous sheet with no intercellular space?<br><span class="text-green">→ Epithelial Tissue</span></p>
+      </div>
+      <div class="card card-green">
+        <p><strong>Q2.</strong> Which is the longest bone in the human body?<br><span class="text-green">→ Femur</span></p>
+      </div>
+      <div class="card card-green">
+        <p><strong>Q3.</strong> What is the graveyard of RBCs?<br><span class="text-green">→ Spleen</span></p>
+      </div>
+      <div class="card card-green">
+        <p><strong>Q4.</strong> The gap between two neurons is called ___?<br><span class="text-green">→ Synapse</span></p>
+      </div>
+      <div class="card card-green">
+        <p><strong>Q5.</strong> Which muscle is voluntary AND striated AND multinucleate?<br><span class="text-green">→ Skeletal Muscle</span></p>
+      </div>
+      <div class="card card-green">
+        <p><strong>Q6.</strong> RBCs are known as ___?<br><span class="text-green">→ Erythrocytes</span></p>
+      </div>
+      <div class="card card-green">
+        <p><strong>Q7.</strong> Study of blood is called ___?<br><span class="text-green">→ Haematology</span></p>
+      </div>
+
+      <h3>🎯 Tricky Comparison Questions</h3>
+      <div class="card card-blue">
+        <p><strong>Q8.</strong> Which of the following muscle is BRANCHED?<br>A) Skeletal B) Smooth C) Cardiac D) Both A and C<br><span class="text-green">→ C) Cardiac only</span></p>
+      </div>
+      <div class="card card-blue">
+        <p><strong>Q9.</strong> Which of these is involuntary AND non-striated?<br>A) Skeletal B) Cardiac C) Smooth D) None<br><span class="text-green">→ C) Smooth</span></p>
+      </div>
+      <div class="card card-blue">
+        <p><strong>Q10.</strong> Tendon connects:<br>A) Bone to Bone B) Muscle to Muscle C) Muscle to Bone D) Organ to Bone<br><span class="text-green">→ C) Muscle to Bone</span></p>
+      </div>
+
+      <h3>🎯 Match the Following — Likely Combinations</h3>
+      <table class="tbl">
+        <tr><th>Match Column A</th><th>With Column B</th></tr>
+        <tr><td>Erythrocyte</td><td>RBC</td></tr>
+        <tr><td>Leukocyte</td><td>WBC</td></tr>
+        <tr><td>Thrombocyte</td><td>Platelet</td></tr>
+        <tr><td>Stapes</td><td>Smallest bone</td></tr>
+        <tr><td>Femur</td><td>Longest bone</td></tr>
+        <tr><td>Spleen</td><td>Graveyard of RBCs</td></tr>
+        <tr><td>Synapse</td><td>Gap between neurons</td></tr>
+        <tr><td>Myelin Sheath</td><td>Covering of axon</td></tr>
+        <tr><td>Adipocyte</td><td>Fat-storing cell</td></tr>
+        <tr><td>Haematology</td><td>Study of blood</td></tr>
+      </table>
+
+      <h3>🎯 Statement-Based Questions (Assertion-Reason)</h3>
+      <div class="card card-orange">
+        <p><strong>A:</strong> RBCs do not have a nucleus.<br><strong>R:</strong> The nucleus is lost when RBCs mature.<br><span class="text-green">→ Both A and R are correct, and R is the correct explanation of A. ✓</span></p>
+      </div>
+      <div class="card card-orange">
+        <p><strong>A:</strong> Cardiac muscle never fatigues.<br><strong>R:</strong> Cardiac muscle is voluntary.<br><span class="text-red">→ A is correct, but R is WRONG (Cardiac is INVOLUNTARY). ✗</span></p>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(7)">← Exam Traps</button>
+        <button class="nav-btn primary" onclick="goTo(9)">Active Recall →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 9: ACTIVE RECALL -->
+    <div class="page" id="page-9">
+      <h2 class="page-title">❓ Active Recall Section</h2>
+      <p class="page-subtitle">Click "Reveal Answer" after attempting each question mentally. The act of trying to recall is what builds memory.</p>
+
+      <h3>Quiz — Click to Reveal</h3>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q1. Name the 4 types of animal tissues.</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">Epithelial, Muscular, Nervous, Connective</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q2. Which muscle type is: Involuntary + Uninucleate + NON-striated + Unbranched?</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">Smooth Muscle</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q3. What is the life span of RBC, WBC, and Platelets?</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">RBC = 120 days | WBC = 12–20 days | Platelets = 7–10 days</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q4. What does MTB stand for in connective tissue context?</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">Muscle → Tendon → Bone (Tendon connects Muscle to Bone)</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q5. Name the 5 types of WBC.</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">Monocytes, Lymphocytes, Neutrophils, Basophils, Eosinophils</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q6. What is the covering around the axon called? And what is the gap in that covering called?</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">Covering = Myelin Sheath | Gap = Node of Ranvier</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q7. Camel's hump is made of which tissue? What are those cells called?</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">Adipose tissue. Cells = Adipocytes.</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q8. Where are RBCs formed? Where are they destroyed?</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">Formed: Bone Marrow | Destroyed: Spleen (graveyard of RBCs)</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q9. How many bones in adult vs child? What is special about this difference?</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">Adult = 206 | Child = 300. Child has more bones that gradually fuse to become 206.</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Q10. What does thrombocytopenia mean? What causes it in dengue?</div>
+        <div class="quiz-reveal" onclick="revealAnswer(this)">Click to Reveal Answer</div>
+        <div class="quiz-answer">Thrombocytopenia = LOW platelet count. Dengue fever destroys platelets causing dangerously low levels.</div>
+      </div>
+
+      <h3 style="margin-top:28px">Fill in the Blanks</h3>
+      <div class="card">
+        <p>1. Epithelial tissue is a <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent = this.classList.contains('revealed') ? 'protective' : ''">protective</span> tissue.</p>
+        <p>2. Skeletal muscle is the only <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent = this.classList.contains('revealed') ? 'voluntary' : ''">voluntary</span> muscle.</p>
+        <p>3. The smallest bone is <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent = this.classList.contains('revealed') ? 'Stapes' : ''">Stapes</span> and the longest is <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent = this.classList.contains('revealed') ? 'Femur' : ''">Femur</span>.</p>
+        <p>4. Plasma is <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent = this.classList.contains('revealed') ? 'yellow' : ''">yellow</span> and constitutes <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent = this.classList.contains('revealed') ? '55%' : ''">55%</span> of blood.</p>
+        <p>5. The fundamental unit of the nervous system is the <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent = this.classList.contains('revealed') ? 'neuron' : ''">neuron</span>.</p>
+        <p>6. Matrix of bone is made of <span class="fill-blank" onclick="this.classList.toggle('revealed'); this.textContent = this.classList.contains('revealed') ? 'calcium & phosphorus' : ''">calcium & phosphorus</span>.</p>
+        <p style="margin-top:8px; font-size:12px; color:var(--text-muted)">👆 Click the blanks to toggle answers</p>
+      </div>
+
+      <h3>Rapid-Fire Round</h3>
+      <div class="card">
+        <div class="rf-item"><span class="rf-q">Scientific name for RBC?</span><span class="rf-a">Erythrocytes</span></div>
+        <div class="rf-item"><span class="rf-q">Scientific name for WBC?</span><span class="rf-a">Leukocytes</span></div>
+        <div class="rf-item"><span class="rf-q">Scientific name for Platelets?</span><span class="rf-a">Thrombocytes</span></div>
+        <div class="rf-item"><span class="rf-q">Study of blood?</span><span class="rf-a">Haematology</span></div>
+        <div class="rf-item"><span class="rf-q">Ligament connects?</span><span class="rf-a">Bone to Bone</span></div>
+        <div class="rf-item"><span class="rf-q">Which tissue lines kidney tubules?</span><span class="rf-a">Cuboidal epithelial</span></div>
+        <div class="rf-item"><span class="rf-q">Which tissue lines intestine?</span><span class="rf-a">Columnar epithelial</span></div>
+        <div class="rf-item"><span class="rf-q">Cartilage rings in trachea prevent?</span><span class="rf-a">Trachea from collapsing</span></div>
+        <div class="rf-item"><span class="rf-q">Camilo Golgi is known for?</span><span class="rf-a">First neuron illustration (black ink/silver staining)</span></div>
+        <div class="rf-item"><span class="rf-q">Fibrinogen is a?</span><span class="rf-a">Anti-coagulant (prevents clotting)</span></div>
+        <div class="rf-item"><span class="rf-q">Only BRANCHED muscle?</span><span class="rf-a">Cardiac</span></div>
+        <div class="rf-item"><span class="rf-q">Only MULTINUCLEATE muscle?</span><span class="rf-a">Skeletal</span></div>
+        <div class="rf-item"><span class="rf-q">Only NON-STRIATED muscle?</span><span class="rf-a">Smooth</span></div>
+        <div class="rf-item"><span class="rf-q">Which muscle FATIGUES?</span><span class="rf-a">Skeletal only</span></div>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(8)">← Examiner's Questions</button>
+        <button class="nav-btn primary" onclick="goTo(10)">High-Yield Notes →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 10: HIGH YIELD -->
+    <div class="page" id="page-10">
+      <h2 class="page-title">⭐ High-Yield Revision Notes</h2>
+      <p class="page-subtitle">Everything an examiner cares about, stripped of explanation. Use this after your 3rd revision onwards.</p>
+
+      <div class="grid-2">
+        <div class="ultra-block" style="border-left:3px solid var(--green)">
+          <div class="ub-title">Epithelial Tissue</div>
+          <ul>
+            <li>Protective, no intercellular space, continuous sheet</li>
+            <li>Squamous Simple → Mouth, Esophagus</li>
+            <li>Squamous Stratified → Skin</li>
+            <li>Cuboidal → Sweat/Salivary/Thyroid glands, Kidney tubules</li>
+            <li>Columnar → Stomach, Intestine, Gall bladder</li>
+            <li>Ciliated → Uterus, Respiratory tract, Urinary bladder (moves egg/mucus/urine)</li>
+          </ul>
+        </div>
+        <div class="ultra-block" style="border-left:3px solid var(--blue)">
+          <div class="ub-title">Muscular Tissue</div>
+          <ul>
+            <li>Skeletal: Voluntary, Multinucleate, Striated, Unbranched, FATIGUES</li>
+            <li>Smooth: Involuntary, Uninucleate, Non-striated, Unbranched, no fatigue</li>
+            <li>Cardiac: Involuntary, Uninucleate, Striated, BRANCHED, no fatigue</li>
+            <li>Smooth locations: iris, lungs, liver, abdomen, intestines</li>
+          </ul>
+        </div>
+        <div class="ultra-block" style="border-left:3px solid var(--orange)">
+          <div class="ub-title">Nervous Tissue</div>
+          <ul>
+            <li>Neuron = fundamental unit</li>
+            <li>Dendrites → Cell body → Axon → Terminal</li>
+            <li>Myelin sheath = axon covering</li>
+            <li>Node of Ranvier = gap in myelin (within 1 neuron)</li>
+            <li>Synapse = gap between 2 neurons</li>
+            <li>Camilo Golgi = first neuron illustration</li>
+          </ul>
+        </div>
+        <div class="ultra-block" style="border-left:3px solid var(--purple)">
+          <div class="ub-title">Connective Tissue</div>
+          <ul>
+            <li>Tendon = Muscle→Bone | Ligament = Bone→Bone</li>
+            <li>Adipose = fat storage, adipocytes, camel hump</li>
+            <li>Cartilage = ear pinna, nose tip, trachea, larynx</li>
+            <li>Bone matrix = Calcium + Phosphorus</li>
+            <li>Adult = 206 bones | Child = 300 bones</li>
+            <li>Longest = Femur | Smallest = Stapes</li>
+            <li>Ear ossicles: Malleus → Incus → Stapes</li>
+          </ul>
+        </div>
+        <div class="ultra-block" style="border-left:3px solid var(--red)">
+          <div class="ub-title">Blood</div>
+          <ul>
+            <li>Plasma 55% (92% water, yellow) | Formed elements 45%</li>
+            <li>RBC = Erythrocytes, 120 days, biconcave, iron/Hb, no nucleus, made in bone marrow, destroyed in spleen</li>
+            <li>WBC = Leukocytes, 12–20 days, defense, 5 types (MoLyNeBaEo)</li>
+            <li>Platelets = Thrombocytes, 7–10 days, clotting</li>
+            <li>Count: RBC > Platelets > WBC</li>
+            <li>Dengue → Thrombocytopenia</li>
+            <li>Haematology = study of blood</li>
+            <li>Fibrinogen = anti-coagulant</li>
+          </ul>
+        </div>
+        <div class="ultra-block" style="border-left:3px solid var(--blue)">
+          <div class="ub-title">Lymph</div>
+          <ul>
+            <li>Colourless (no RBC, no blood protein)</li>
+            <li>Contains proteins, salts, glucose, water</li>
+            <li>Function = defense (like WBC)</li>
+            <li>Fluid connective tissue</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(9)">← Active Recall</button>
+        <button class="nav-btn primary" onclick="goTo(11)">Ultra-Fast Sheet →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 11: ULTRA FAST -->
+    <div class="page" id="page-11">
+      <h2 class="page-title">⚡ Ultra-Fast Revision Sheet</h2>
+      <p class="page-subtitle">For revision 5 onwards. Read this in under 5 minutes. Everything is compressed.</p>
+
+      <div class="sec30">
+        <div class="s30-head">Animal Tissue — Master Snapshot</div>
+
+        <p style="color:var(--green); font-weight:600; font-size:12px; margin:10px 0 4px">EPITHELIAL</p>
+        <ul>
+          <li>Protective | No intercellular space | Continuous sheet</li>
+          <li>Squamous Simple → Mouth/Esophagus | Stratified → Skin</li>
+          <li>Cuboidal (H=W) → Kidney tubules, Sweat/Salivary/Thyroid glands</li>
+          <li>Columnar (H>W) → Stomach, Intestine, Gall bladder</li>
+          <li>Ciliated → Uterus (egg), Respiratory tract (mucus), Urinary bladder (urine)</li>
+        </ul>
+
+        <p style="color:var(--blue); font-weight:600; font-size:12px; margin:14px 0 4px">MUSCULAR — KEY COMPARISON</p>
+        <ul>
+          <li>Skeletal: Vol | Multi | Striated | Unbranched | Fatigues</li>
+          <li>Smooth: Invol | Uni | NON-striated | Unbranched | No fatigue | (iris, intestines, lungs)</li>
+          <li>Cardiac: Invol | Uni | Striated | BRANCHED | No fatigue | (heart)</li>
+        </ul>
+
+        <p style="color:var(--orange); font-weight:600; font-size:12px; margin:14px 0 4px">NERVOUS</p>
+        <ul>
+          <li>Neuron = fundamental unit | Brain, spinal cord, nerves</li>
+          <li>Dendrite→Cell body→Axon (myelin sheath)→Terminal | Synapse = between neurons</li>
+          <li>Node of Ranvier = gap in myelin sheath (within 1 neuron)</li>
+          <li>Camilo Golgi = first neuron illustration (black ink)</li>
+        </ul>
+
+        <p style="color:var(--purple); font-weight:600; font-size:12px; margin:14px 0 4px">CONNECTIVE</p>
+        <ul>
+          <li>Tendon = Muscle→Bone | Ligament = Bone→Bone (MTB hook)</li>
+          <li>Adipose = fat storage | Adipocytes | Camel hump | Shock absorber</li>
+          <li>Cartilage = ear, nose tip, trachea | Flexible semi-solid</li>
+          <li>Bone = Calcium+Phosphorus | Adult 206 | Child 300 | Femur (longest) | Stapes (smallest)</li>
+          <li>Ear ossicles: Malleus→Incus→Stapes</li>
+        </ul>
+
+        <p style="color:var(--red); font-weight:600; font-size:12px; margin:14px 0 4px">BLOOD & LYMPH</p>
+        <ul>
+          <li>Plasma 55% (yellow, 92% water) | Formed elements 45%</li>
+          <li>RBC=Erythrocytes | 120d | Biconcave | Hb+Iron | No nucleus | Formed:BM | Destroyed:Spleen</li>
+          <li>WBC=Leukocytes | 12–20d | Defense | 5 types: Mo Ly Ne Ba Eo</li>
+          <li>Platelets=Thrombocytes | 7–10d | Clotting | Dengue → Thrombocytopenia</li>
+          <li>Count: RBC > Platelets > WBC</li>
+          <li>Lymph = colourless, no RBC, defense</li>
+          <li>Haematology = study of blood | Fibrinogen = anti-coagulant</li>
+        </ul>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(10)">← High-Yield Notes</button>
+        <button class="nav-btn primary" onclick="goTo(12)">30-Second Sheet →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 12: 30 SEC -->
+    <div class="page" id="page-12">
+      <h2 class="page-title">🕐 30-Second Revision Sheet</h2>
+      <p class="page-subtitle">Use this on exam morning. Read once, recall everything. If you can read this and explain each line, you own this chapter.</p>
+
+      <div class="sec30">
+        <div class="s30-head">30 Seconds — Animal Tissue</div>
+        <ul>
+          <li><strong>4 Tissues:</strong> Epithelial (protection), Muscular (movement), Nervous (signals), Connective (support)</li>
+          <li><strong>Epithelial types:</strong> Squamous (simple→mouth, stratified→skin) | Cuboidal→kidney | Columnar→intestine | Ciliated→uterus/respiratory</li>
+          <li><strong>Muscle rules:</strong> Skeletal=Vol+Multi+Striated | Smooth=Invol+Uni+NON-striated | Cardiac=Invol+Uni+Striated+BRANCHED</li>
+          <li><strong>Only one voluntary:</strong> Skeletal | <strong>Only one branched:</strong> Cardiac | <strong>Only one non-striated:</strong> Smooth</li>
+          <li><strong>Neuron:</strong> Dendrite→Axon (myelin)→Terminal | Node of Ranvier (within neuron) | Synapse (between neurons)</li>
+          <li><strong>Connective:</strong> Tendon=M→B | Ligament=B→B | Adipose=fat/adipocytes | Cartilage=ear/trachea | Bone=Ca+P, 206 adult, 300 child</li>
+          <li><strong>Longest=Femur | Smallest=Stapes (ear: Malleus→Incus→Stapes)</strong></li>
+          <li><strong>Blood:</strong> Plasma 55% yellow | RBC=120d=Erythrocytes | WBC=12–20d=Leukocytes | Platelets=7–10d=Thrombocytes</li>
+          <li><strong>RBC:</strong> Biconcave, no nucleus, iron/Hb, made in BM, destroyed in Spleen</li>
+          <li><strong>Count: RBC>Platelets>WBC | Haematology=study of blood | Fibrinogen=anti-coagulant</strong></li>
+          <li><strong>Lymph:</strong> Colourless (no RBC) | Dengue→Thrombocytopenia</li>
+        </ul>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(11)">← Ultra-Fast Sheet</button>
+        <button class="nav-btn primary" onclick="goTo(13)">Last-Night Sheet →</button>
+      </div>
+    </div>
+
+    <!-- PAGE 13: LAST NIGHT -->
+    <div class="page" id="page-13">
+      <h2 class="page-title">🌙 Last-Night-Before-Exam Sheet</h2>
+      <p class="page-subtitle">The night before the exam. Read this once slowly. Trust your preparation. Then sleep.</p>
+
+      <div class="ln-box">
+        <h4>⭐ THE 10 THINGS YOU CANNOT AFFORD TO FORGET</h4>
+        <ul>
+          <li><strong>1.</strong> Only SKELETAL = Voluntary. Both Smooth and Cardiac = Involuntary.</li>
+          <li><strong>2.</strong> Only CARDIAC = Branched. Other two = Unbranched.</li>
+          <li><strong>3.</strong> Only SKELETAL = Multinucleate. Smooth & Cardiac = Uninucleate.</li>
+          <li><strong>4.</strong> Only SMOOTH = Non-striated. Skeletal & Cardiac = Striated.</li>
+          <li><strong>5.</strong> Node of Ranvier = WITHIN one neuron (myelin gap). Synapse = BETWEEN two neurons.</li>
+          <li><strong>6.</strong> Tendon = Muscle→Bone. Ligament = Bone→Bone. (MTB hook!)</li>
+          <li><strong>7.</strong> RBC life = 120 days | WBC = 12–20 days | Platelets = 7–10 days.</li>
+          <li><strong>8.</strong> RBC formed = Bone Marrow. RBC destroyed = Spleen.</li>
+          <li><strong>9.</strong> Adult = 206 bones. Child = 300 bones. Femur = Longest. Stapes = Smallest.</li>
+          <li><strong>10.</strong> Study of blood = Haematology. Fibrinogen = Anti-coagulant.</li>
+        </ul>
+      </div>
+
+      <div class="ln-box">
+        <h4>🎯 EXAMINER'S 5 FAVOURITE TRICKS</h4>
+        <ul>
+          <li>Saying "cardiac is voluntary" → <strong>WRONG, it's involuntary</strong></li>
+          <li>Saying "ligament connects muscle to bone" → <strong>WRONG, that's tendon</strong></li>
+          <li>Confusing Node of Ranvier with Synapse → <strong>Node=within 1, Synapse=between 2</strong></li>
+          <li>Saying "child has 206 bones" → <strong>WRONG, child has 300</strong></li>
+          <li>Saying "spleen forms RBC" → <strong>WRONG, Bone Marrow forms. Spleen destroys.</strong></li>
+        </ul>
+      </div>
+
+      <div class="ln-box">
+        <h4>🧠 QUICK SCIENCE NAMES</h4>
+        <ul>
+          <li>RBC = Erythrocytes</li>
+          <li>WBC = Leukocytes</li>
+          <li>Platelets = Thrombocytes</li>
+          <li>Fat cells = Adipocytes</li>
+          <li>Study of blood = Haematology</li>
+          <li>Low platelets = Thrombocytopenia</li>
+          <li>High platelets = Thrombocytosis</li>
+        </ul>
+      </div>
+
+      <div class="card" style="background: linear-gradient(135deg, rgba(57,224,122,0.08), rgba(77,184,255,0.06)); border-color: rgba(57,224,122,0.3); text-align:center; padding:24px">
+        <p style="font-size:16px; color:var(--green); font-weight:600; margin-bottom:8px">You've got this. 💪</p>
+        <p style="color:var(--text-secondary)">You've revised this chapter multiple times. The facts are inside you. Trust the process. Go ace the exam.</p>
+      </div>
+
+      <div class="page-nav">
+        <button class="nav-btn" onclick="goTo(12)">← 30-Second Sheet</button>
+        <button class="nav-btn primary" onclick="goTo(0)">↩ Back to Home</button>
+      </div>
+    </div>
+
+  </div><!-- #content -->
+</div><!-- #main -->
+
+<script>
+  const PAGES = [
+    'Home & Big Picture', 'Memory Palace', 'Epithelial Tissue',
+    'Muscular Tissue', 'Nervous Tissue', 'Connective Tissue',
+    'Blood & Lymph', 'Exam Traps', "Examiner's Questions",
+    'Active Recall', 'High-Yield Notes', 'Ultra-Fast Sheet',
+    '30-Second Sheet', 'Last-Night Sheet'
+  ];
+
+  let currentPage = 0;
+  const visited = new Set([0]);
+
+  function goTo(idx) {
+    document.getElementById('page-' + currentPage).classList.remove('active');
+    document.getElementById('nav-' + currentPage).classList.remove('active');
+
+    currentPage = idx;
+    visited.add(idx);
+
+    const page = document.getElementById('page-' + idx);
+    page.classList.add('active');
+    document.getElementById('nav-' + idx).classList.add('active');
+    document.getElementById('topbar-section').textContent = PAGES[idx];
+    document.getElementById('content').scrollTop = 0;
+
+    const pct = Math.round((visited.size / PAGES.length) * 100);
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-pct').textContent = pct + '%';
+  }
+
+  function revealAnswer(btn) {
+    const answer = btn.nextElementSibling;
+    if (answer.style.display === 'block') {
+      answer.style.display = 'none';
+      btn.textContent = 'Click to Reveal Answer';
+    } else {
+      answer.style.display = 'block';
+      btn.textContent = 'Hide Answer';
+    }
+  }
+</script>
+</body>
+</html>
