@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animalia Revision Vault — SSC CGL</title>
+<style>
+  :root{
+    --bg:#0f1117;
+    --bg-panel:#151822;
+    --bg-card:#1a1e2a;
+    --bg-card-2:#1f2433;
+    --border:#262c3d;
+    --text:#e7e9ee;
+    --text-dim:#9aa3b8;
+    --text-faint:#6b7388;
+    --green:#7ee0a8;
+    --green-dim:#3f7a5c;
+    --blue:#7ec8ee;
+    --blue-dim:#3f6a8a;
+    --amber:#f0c674;
+    --red:#f08a8a;
+    --radius:14px;
+    --shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    line-height:1.6;
+    min-height:100vh;
+  }
+  a{color:var(--blue);}
+  ::selection{background:var(--green-dim);}
+
+  /* layout */
+  .app{display:flex; min-height:100vh;}
+  .sidebar{
+    width:280px; flex-shrink:0;
+    background:var(--bg-panel);
+    border-right:1px solid var(--border);
+    padding:22px 16px 90px;
+    position:fixed; top:0; left:0; height:100vh; overflow-y:auto;
+    transition: transform .25s ease;
+    z-index:50;
+  }
+  .sidebar::-webkit-scrollbar{width:6px;}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--border); border-radius:3px;}
+
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    padding:4px 8px 18px; margin-bottom:10px;
+    border-bottom:1px solid var(--border);
+  }
+  .brand .logo{
+    width:36px;height:36px;border-radius:10px;
+    background:linear-gradient(135deg, var(--green), var(--blue));
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px; flex-shrink:0;
+  }
+  .brand .name{font-weight:700; font-size:15px; letter-spacing:.2px;}
+  .brand .sub{font-size:11px; color:var(--text-faint);}
+
+  .navgroup{margin-top:18px;}
+  .navgroup-title{
+    font-size:11px; text-transform:uppercase; letter-spacing:1.2px;
+    color:var(--text-faint); padding:0 10px 8px; font-weight:700;
+  }
+  .navitem{
+    display:flex; align-items:center; gap:10px;
+    padding:9px 10px; border-radius:10px; cursor:pointer;
+    color:var(--text-dim); font-size:13.5px; margin-bottom:2px;
+    border:1px solid transparent;
+    user-select:none;
+  }
+  .navitem:hover{background:var(--bg-card); color:var(--text);}
+  .navitem.active{
+    background:linear-gradient(90deg, rgba(126,224,168,0.12), rgba(126,200,238,0.08));
+    border-color:var(--green-dim);
+    color:var(--text);
+    font-weight:600;
+  }
+  .navitem .ico{width:18px; text-align:center; flex-shrink:0;}
+  .navitem .check{
+    margin-left:auto; width:16px; height:16px; border-radius:50%;
+    border:1.5px solid var(--text-faint); flex-shrink:0;
+  }
+  .navitem.done .check{background:var(--green); border-color:var(--green);}
+
+  .progress-wrap{
+    margin-top:20px; padding:12px; background:var(--bg-card);
+    border-radius:12px; border:1px solid var(--border);
+  }
+  .progress-label{font-size:11px; color:var(--text-faint); margin-bottom:6px; display:flex; justify-content:space-between;}
+  .progress-bar{height:6px; background:var(--bg); border-radius:6px; overflow:hidden;}
+  .progress-fill{height:100%; background:linear-gradient(90deg,var(--green),var(--blue)); width:0%; transition:width .3s ease;}
+
+  .menu-toggle{
+    display:none; position:fixed; top:14px; left:14px; z-index:60;
+    background:var(--bg-card); border:1px solid var(--border); color:var(--text);
+    width:42px; height:42px; border-radius:10px; font-size:18px; cursor:pointer;
+  }
+
+  .main{
+    margin-left:280px; flex:1; padding:34px 42px 80px; max-width:1000px;
+  }
+  .page{display:none; animation: fadeIn .25s ease;}
+  .page.active{display:block;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .page-header{margin-bottom:26px;}
+  .eyebrow{
+    font-size:11.5px; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--green); font-weight:700; margin-bottom:8px;
+  }
+  h1.page-title{font-size:30px; margin:0 0 6px; letter-spacing:-0.3px;}
+  .page-desc{color:var(--text-dim); font-size:14.5px; max-width:680px;}
+
+  .card{
+    background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--radius); padding:20px 22px; margin-bottom:18px;
+    box-shadow:var(--shadow);
+  }
+  .card h3{margin-top:0; color:var(--blue); font-size:16.5px;}
+  .card h4{color:var(--green); font-size:14.5px; margin-bottom:6px;}
+
+  .tag{
+    display:inline-block; font-size:11px; font-weight:700; padding:2px 9px;
+    border-radius:20px; margin-right:6px; letter-spacing:.3px;
+  }
+  .tag.must{background:rgba(240,138,138,0.15); color:var(--red);}
+  .tag.imp{background:rgba(240,198,116,0.15); color:var(--amber);}
+  .tag.good{background:rgba(126,200,238,0.15); color:var(--blue);}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:10px 0;}
+  th,td{padding:9px 10px; border-bottom:1px solid var(--border); text-align:left; vertical-align:top;}
+  th{color:var(--green); font-size:12px; text-transform:uppercase; letter-spacing:.5px; font-weight:700;}
+  tr:hover td{background:rgba(255,255,255,0.02);}
+  .tbl-wrap{overflow-x:auto;}
+
+  .accordion{border:1px solid var(--border); border-radius:12px; margin-bottom:12px; overflow:hidden; background:var(--bg-card-2);}
+  .acc-head{
+    padding:14px 18px; cursor:pointer; display:flex; align-items:center;
+    justify-content:space-between; font-weight:700; font-size:15px;
+  }
+  .acc-head:hover{background:rgba(255,255,255,0.03);}
+  .acc-head .arrow{transition:transform .2s; color:var(--text-faint);}
+  .accordion.open .acc-head .arrow{transform:rotate(90deg); color:var(--green);}
+  .acc-body{display:none; padding:0 18px 18px; font-size:13.8px; color:var(--text-dim);}
+  .accordion.open .acc-body{display:block;}
+  .acc-body ul{padding-left:20px; margin:8px 0;}
+  .acc-body li{margin-bottom:5px;}
+  .acc-body b{color:var(--text);}
+  .ex-box{
+    background:var(--bg); border:1px dashed var(--border); border-radius:10px;
+    padding:8px 12px; margin-top:8px; font-size:13px; color:var(--text-dim);
+  }
+
+  .hook{
+    background:linear-gradient(135deg, rgba(126,224,168,0.06), rgba(126,200,238,0.04));
+    border:1px solid var(--green-dim); border-radius:12px; padding:16px 18px; margin-bottom:14px;
+  }
+  .hook .htitle{color:var(--green); font-weight:700; margin-bottom:4px; font-size:14.5px;}
+
+  .trap{
+    border-left:3px solid var(--red); background:rgba(240,138,138,0.06);
+    border-radius:0 10px 10px 0; padding:12px 16px; margin-bottom:12px; font-size:13.8px;
+  }
+  .trap b{color:var(--red);}
+
+  .qa{
+    background:var(--bg-card-2); border:1px solid var(--border); border-radius:10px;
+    padding:12px 16px; margin-bottom:10px; cursor:pointer;
+  }
+  .qa .q{font-weight:600; font-size:14px;}
+  .qa .a{display:none; margin-top:8px; color:var(--text-dim); font-size:13.5px; border-top:1px dashed var(--border); padding-top:8px;}
+  .qa.open .a{display:block;}
+  .qa .tap-hint{font-size:11px; color:var(--text-faint); margin-top:4px;}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr;}}
+
+  .pill-row{display:flex; flex-wrap:wrap; gap:8px; margin:10px 0;}
+  .pill{
+    background:var(--bg); border:1px solid var(--border); border-radius:20px;
+    padding:6px 12px; font-size:12.5px; color:var(--text-dim);
+  }
+
+  .palace-step{
+    display:flex; gap:14px; margin-bottom:16px; align-items:flex-start;
+  }
+  .palace-num{
+    width:34px; height:34px; border-radius:50%; background:var(--bg-card-2);
+    border:1px solid var(--green-dim); color:var(--green); font-weight:700;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:13px;
+  }
+  .palace-text b{color:var(--blue);}
+
+  .ultrafast-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px;}
+  @media(max-width:700px){.ultrafast-grid{grid-template-columns:1fr;}}
+  .uf-card{
+    background:var(--bg-card-2); border:1px solid var(--border); border-radius:10px; padding:12px 14px; font-size:13px;
+  }
+  .uf-card .pname{color:var(--green); font-weight:700; margin-bottom:4px;}
+
+  .lastnight-block{
+    background:var(--bg-card-2); border:1px solid var(--blue-dim); border-radius:12px;
+    padding:16px 18px; margin-bottom:14px;
+  }
+  .lastnight-block h4{color:var(--blue); margin-bottom:8px;}
+
+  .footnav{display:flex; justify-content:space-between; margin-top:36px; padding-top:18px; border-top:1px solid var(--border);}
+  .footbtn{
+    background:var(--bg-card); border:1px solid var(--border); color:var(--text);
+    padding:10px 16px; border-radius:10px; cursor:pointer; font-size:13px;
+  }
+  .footbtn:hover{border-color:var(--green-dim); color:var(--green);}
+
+  .mark-btn{
+    margin-top:24px; background:transparent; border:1px solid var(--green-dim); color:var(--green);
+    padding:9px 16px; border-radius:10px; cursor:pointer; font-size:13px; font-weight:600;
+  }
+  .mark-btn:hover{background:rgba(126,224,168,0.08);}
+  .mark-btn.done{background:rgba(126,224,168,0.15);}
+
+  @media(max-width:880px){
+    .sidebar{transform:translateX(-100%);}
+    .sidebar.open{transform:translateX(0);}
+    .main{margin-left:0; padding:70px 18px 60px;}
+    .menu-toggle{display:flex; align-items:center; justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle">☰</button>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="logo">🐾</div>
+      <div>
+        <div class="name">Animalia Vault</div>
+        <div class="sub">SSC CGL · Biology Revision</div>
+      </div>
+    </div>
+
+    <div class="navgroup">
+      <div class="navgroup-title">Overview</div>
+      <div class="navitem" data-page="home"><span class="ico">🏠</span>Big Picture<span class="check"></span></div>
+      <div class="navitem" data-page="palace"><span class="ico">🧠</span>Memory Palace<span class="check"></span></div>
+    </div>
+
+    <div class="navgroup">
+      <div class="navgroup-title">Deep Notes</div>
+      <div class="navitem" data-page="params"><span class="ico">📐</span>Classification Parameters<span class="check"></span></div>
+      <div class="navitem" data-page="inverts"><span class="ico">🦑</span>Invertebrate Phyla (A–H)<span class="check"></span></div>
+      <div class="navitem" data-page="chordata"><span class="ico">🦴</span>Phylum Chordata<span class="check"></span></div>
+    </div>
+
+    <div class="navgroup">
+      <div class="navgroup-title">Memory System</div>
+      <div class="navitem" data-page="hooks"><span class="ico">🪝</span>Smart Memory Hooks<span class="check"></span></div>
+      <div class="navitem" data-page="connections"><span class="ico">🔗</span>Concept Connections<span class="check"></span></div>
+    </div>
+
+    <div class="navgroup">
+      <div class="navgroup-title">Exam Prep</div>
+      <div class="navitem" data-page="traps"><span class="ico">⚠️</span>Exam Traps<span class="check"></span></div>
+      <div class="navitem" data-page="examiner"><span class="ico">🎯</span>Examiner's Questions<span class="check"></span></div>
+      <div class="navitem" data-page="recall"><span class="ico">❓</span>Active Recall<span class="check"></span></div>
+    </div>
+
+    <div class="navgroup">
+      <div class="navgroup-title">Quick Revision</div>
+      <div class="navitem" data-page="highyield"><span class="ico">⭐</span>High-Yield Notes<span class="check"></span></div>
+      <div class="navitem" data-page="ultrafast"><span class="ico">⚡</span>Ultra-Fast Sheet<span class="check"></span></div>
+      <div class="navitem" data-page="thirtysec"><span class="ico">⏱️</span>30-Second Sheet<span class="check"></span></div>
+      <div class="navitem" data-page="lastnight"><span class="ico">🌙</span>Last Night Sheet<span class="check"></span></div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Revision Progress</span><span id="progressPct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- HOME -->
+    <section class="page active" data-page="home">
+      <div class="page-header">
+        <div class="eyebrow">Chapter · Diversity in Living Organisms</div>
+        <h1 class="page-title">Animalia — The Animal Kingdom</h1>
+        <p class="page-desc">Whittaker's five-kingdom classification (1969) gave you Monera, Protista, Fungi, Plantae and Animalia. You've done Plantae. This is Animalia — 10 invertebrate phyla + the vertebrate world inside Chordata.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎬 The Big Picture</h3>
+        <p>Don't memorise 10 phyla as 10 isolated lists. <b style="color:var(--text)">Classify them on 6 parameters first</b> — body organisation level, symmetry, germ layers, coelom, segmentation, circulatory system. Once you know which phyla share which value on each parameter, you only memorise the <i>pattern</i>, not 60 separate facts.</p>
+        <div class="pill-row">
+          <span class="pill">10 invertebrate phyla</span>
+          <span class="pill">1 phylum with backbone-bearers (Chordata)</span>
+          <span class="pill">6 classification parameters</span>
+          <span class="pill">5 classes inside Vertebrata</span>
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <h4>🔥 Why this chapter is high-yield</h4>
+          <p style="font-size:13.5px; color:var(--text-dim);">SSC loves this topic because it's pure pattern-matching once you see the structure — perfect for statement-based and match-the-following questions. 3–4 questions almost every year touch this chapter.</p>
+        </div>
+        <div class="card">
+          <h4>🧭 How to use this vault</h4>
+          <p style="font-size:13.5px; color:var(--text-dim);">First pass: Memory Palace → Deep Notes. Week-before-exam: High-Yield + Ultra-Fast. Night-before: Last Night Sheet only. Tap any navitem's circle after revising to track progress.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>The PCC-PA-AAM-EH order</h3>
+        <p style="color:var(--text-dim); font-size:13.8px;">Phyla must be remembered <b style="color:var(--text)">in this exact sequence</b> — every parameter table below is built phylum-by-phylum in this order, so the order itself becomes your retrieval cue.</p>
+        <div class="pill-row">
+          <span class="pill">1. Porifera</span><span class="pill">2. Coelenterata</span><span class="pill">3. Ctenophora</span>
+          <span class="pill">4. Platyhelminthes</span><span class="pill">5. Aschelminthes</span>
+          <span class="pill">6. Arthropoda</span><span class="pill">7. Annelida</span><span class="pill">8. Mollusca</span>
+          <span class="pill">9. Echinodermata</span><span class="pill">10. Hemichordata</span>
+          <span class="pill" style="border-color:var(--blue-dim); color:var(--blue);">11. Chordata (the big one)</span>
+        </div>
+      </div>
+
+      <button class="mark-btn" data-mark="home">Mark this page as revised</button>
+    </section>
+
+    <!-- MEMORY PALACE -->
+    <section class="page" data-page="palace">
+      <div class="page-header">
+        <div class="eyebrow">Memory System</div>
+        <h1 class="page-title">🧠 The Animalia Museum</h1>
+        <p class="page-desc">Walk through one imaginary museum building, floor by floor. Each floor = one phylum. Walk the same path every time you revise.</p>
+      </div>
+
+      <div class="card">
+        <h3>Setting: "The Museum of Living Things"</h3>
+        <p style="color:var(--text-dim); font-size:13.8px;">You enter a museum. Ground floor is the simplest exhibit; as you climb, the exhibits get more complex — exactly like the phyla get more advanced as you move along PCC-PA-AAM-EH order.</p>
+
+        <div class="palace-step">
+          <div class="palace-num">1</div>
+          <div class="palace-text"><b>Lobby — Porifera Fountain.</b> A still stone fountain full of <b>holes</b> (pores) leading into one big pool (spongocoel). It never moves — sessile. A sign says "Glass Sponge Display — Sycon, Euplectella, Spongilla."</div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">2</div>
+          <div class="palace-text"><b>Floor 1 — Jelly Lounge (Coelenterata + Ctenophora).</b> Glowing jellyfish drift in a tank with stinging tentacles (cnidoblasts). Next room glows in the dark — comb jellies blinking with bioluminescence.</div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">3</div>
+          <div class="palace-text"><b>Floor 2 — Flat & Round Worm Lab.</b> A flat tape-like ribbon pinned on the wall (Platyhelminthes — flat, one opening). Beside it, a glass cylinder tank with a round worm swimming (Aschelminthes/Nematoda — cylindrical, two openings).</div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">4</div>
+          <div class="palace-text"><b>Floor 3 — The Armour Hall (Arthropoda, Annelida, Mollusca).</b> Knights in jointed chitin armour (Arthropoda) march beside a segmented rope-like earthworm model (Annelida) and a glass case of soft-bodied snails with blue blood (Mollusca, haemocyanin).</div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">5</div>
+          <div class="palace-text"><b>Floor 4 — The Spiny Star Room (Echinodermata, Hemichordata).</b> Star-shaped spiny creatures rotate slowly on a pedestal — radial as adults, but the baby models beside them face one direction only (bilateral larva).</div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">6</div>
+          <div class="palace-text"><b>Top Floor — The Spine Tower (Chordata).</b> A giant glowing rod runs through the centre of the tower from bottom to top — the notochord. Climb past jawless fish, then real fish, frogs hopping between water tanks, lizards basking under lamps, birds in the rafters, and finally — a human guide (you) standing at the very top with a real backbone.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🚪 The walk in one sentence</h3>
+        <p style="color:var(--text-dim);">"I entered through the holey fountain, passed the glowing jelly lounge, examined the flat ribbon and round tank, marched through the armour hall, spun the spiny star, and climbed the spine tower to find myself at the top."</p>
+      </div>
+
+      <button class="mark-btn" data-mark="palace">Mark this page as revised</button>
+    </section>
+
+    <!-- PARAMETERS -->
+    <section class="page" data-page="params">
+      <div class="page-header">
+        <div class="eyebrow">Deep Notes</div>
+        <h1 class="page-title">📐 Classification Parameters</h1>
+        <p class="page-desc">Master these 6 tables and you've silently learned 60+ individual facts. This is the real exam engine of the chapter.</p>
+      </div>
+
+      <div class="card">
+        <h3>1️⃣ Body Level of Organisation <span class="tag must">MUST KNOW</span></h3>
+        <p style="color:var(--text-dim); font-size:13.5px;">Cells → Tissues → Organs → Organ Systems — exactly the order of increasing complexity.</p>
+        <div class="tbl-wrap"><table>
+          <tr><th>Level</th><th>Phyla</th></tr>
+          <tr><td>Cellular level</td><td>Porifera</td></tr>
+          <tr><td>Tissue level</td><td>Coelenterata, Ctenophora</td></tr>
+          <tr><td>Organ level</td><td>Platyhelminthes, Aschelminthes</td></tr>
+          <tr><td>Organ-system level</td><td>Arthropoda, Annelida, Mollusca, Echinodermata, Hemichordata, Chordata</td></tr>
+        </table></div>
+      </div>
+
+      <div class="card">
+        <h3>2️⃣ Symmetry <span class="tag must">MUST KNOW</span></h3>
+        <div class="tbl-wrap"><table>
+          <tr><th>Type</th><th>Meaning</th><th>Phyla</th></tr>
+          <tr><td>Asymmetry</td><td>No plane divides it into equal halves</td><td>Porifera</td></tr>
+          <tr><td>Radial</td><td>Any plane through centre gives equal halves</td><td>Coelenterata, Ctenophora, Echinodermata (adult only)</td></tr>
+          <tr><td>Bilateral</td><td>Only one plane gives equal halves (left=right)</td><td>Platyhelminthes, Aschelminthes, Arthropoda, Annelida, Mollusca, Hemichordata, Chordata</td></tr>
+        </table></div>
+        <div class="ex-box">⭐ Echinodermata special case: <b>larva is bilateral, adult is radial.</b> This single line is a favourite SSC trap.</div>
+      </div>
+
+      <div class="card">
+        <h3>3️⃣ Germinal (Germ) Layers <span class="tag must">MUST KNOW</span></h3>
+        <div class="tbl-wrap"><table>
+          <tr><th>Type</th><th>Layers</th><th>Phyla</th></tr>
+          <tr><td>Diploblastic</td><td>Ectoderm + Endoderm only</td><td>Porifera, Coelenterata, Ctenophora</td></tr>
+          <tr><td>Triploblastic</td><td>Ectoderm + Mesoderm + Endoderm</td><td>Platyhelminthes onward (all remaining phyla)</td></tr>
+        </table></div>
+        <div class="ex-box">⚠️ Coelenterata has <b>mesoglia</b> (jelly-like layer) between ecto/endoderm — mesoglia is NOT a germ layer and must NOT be confused with mesoderm.</div>
+      </div>
+
+      <div class="card">
+        <h3>4️⃣ Coelom (Body Cavity) <span class="tag must">MUST KNOW</span></h3>
+        <div class="tbl-wrap"><table>
+          <tr><th>Type</th><th>Meaning</th><th>Phyla</th></tr>
+          <tr><td>Acoelomate</td><td>No body cavity at all</td><td>Porifera, Coelenterata, Ctenophora, Platyhelminthes (the first four)</td></tr>
+          <tr><td>Pseudocoelomate</td><td>False coelom — looks present but not a true lined cavity</td><td>Aschelminthes (Nematoda) — alone</td></tr>
+          <tr><td>Eucoelomate (true coelom)</td><td>Properly lined body cavity</td><td>Arthropoda, Annelida, Mollusca, Echinodermata, Chordata</td></tr>
+        </table></div>
+        <div class="ex-box">Pattern: Acoelomate(×4) → Pseudocoelomate(×1, transition) → Eucoelomate(rest). Aschelminthes is the hinge phylum.</div>
+      </div>
+
+      <div class="card">
+        <h3>5️⃣ Segmentation</h3>
+        <div class="tbl-wrap"><table>
+          <tr><th>Phylum</th><th>Detail</th></tr>
+          <tr><td>Annelida</td><td>True, complete metameric segmentation — the "textbook" example (earthworm)</td></tr>
+          <tr><td>Arthropoda</td><td>Segmented body (head-thorax-abdomen)</td></tr>
+          <tr><td>Chordata</td><td>Segmentation present (e.g. vertebral column, muscle blocks)</td></tr>
+        </table></div>
+      </div>
+
+      <div class="card">
+        <h3>6️⃣ Circulatory System</h3>
+        <div class="tbl-wrap"><table>
+          <tr><th>Type</th><th>Phyla</th></tr>
+          <tr><td>Closed (blood stays in vessels)</td><td>Annelida, Chordata — ONLY these two</td></tr>
+          <tr><td>Open (blood bathes tissues directly)</td><td>All other phyla, including Arthropoda and Mollusca</td></tr>
+        </table></div>
+      </div>
+
+      <button class="mark-btn" data-mark="params">Mark this page as revised</button>
+    </section>
+
+    <!-- INVERTEBRATES -->
+    <section class="page" data-page="inverts">
+      <div class="page-header">
+        <div class="eyebrow">Deep Notes</div>
+        <h1 class="page-title">🦑 Invertebrate Phyla, One by One</h1>
+        <p class="page-desc">Tap each phylum to expand. Read in order — each builds on the previous one's pattern.</p>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>1. Porifera (Sponges) <span class="tag must">MUST</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>Aquatic, <b>sessile</b> (cannot move)</li>
+            <li>Body has <b>pores</b> leading to a large central cavity called the <b>spongocoel</b></li>
+            <li>Special cells: <b>collar cells (choanocytes)</b></li>
+            <li>Develop a complete <b>water canal system</b></li>
+            <li><b>Endoskeleton present</b>; body has spicules</li>
+            <li><b>Hermaphrodite</b> (both male & female parts in one organism)</li>
+            <li>Cellular level · Asymmetrical · Diploblastic · Acoelomate</li>
+          </ul>
+          <div class="ex-box">Examples: <b>Sycon, Euplectella</b> (glass sponge), <b>Spongilla</b> (freshwater sponge)</div>
+        </div>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>2. Coelenterata / Cnidaria <span class="tag must">MUST</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>Aquatic, <b>soft body</b></li>
+            <li>Special cells: <b>cnidoblasts</b> containing stinging structures called <b>nematocysts</b></li>
+            <li>Exoskeleton (where present) made of <b>calcium carbonate</b> — this is coral</li>
+            <li><b>Anus absent</b> → incomplete digestive system (one opening for both entry and exit)</li>
+            <li><b>Metagenesis</b> — alternation of generations (sexual + asexual phases)</li>
+            <li>Tissue level · Radial symmetry · Diploblastic · Acoelomate</li>
+          </ul>
+          <div class="ex-box">Examples: jellyfish, sea anemone, coral, hydra, Portuguese man-of-war. Coral reefs need clean, brackish/salt (not fresh) water and warm temperatures.</div>
+        </div>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>3. Ctenophora <span class="tag imp">IMPORTANT</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>Aquatic, <b>hermaphrodite</b></li>
+            <li>Signature feature: <b>bioluminescence</b> (they glow) — hence the name "sea walnut" / "comb jelly"</li>
+            <li>Tissue level · Radial symmetry · Diploblastic · Acoelomate</li>
+          </ul>
+          <div class="ex-box">Examples: <b>Pleurobrachia, Ctenoplana</b></div>
+        </div>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>4. Platyhelminthes (Flatworms) <span class="tag must">MUST</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>Body <b>dorsoventrally flattened</b> (flat, like a tape — hence "flatworm")</li>
+            <li><b>One common opening</b> for mouth and anus → incomplete digestive system</li>
+            <li>Special cells: <b>flame cells</b> for excretion and osmoregulation</li>
+            <li>Suckers and hooks present (in parasitic forms) to attach and feed</li>
+            <li>Can be <b>free-living OR parasitic</b>; hermaphrodite</li>
+            <li>Organ level · Bilateral symmetry · Triploblastic · Acoelomate</li>
+          </ul>
+          <div class="ex-box">Free-living: <b>Planaria</b>. Parasitic: <b>liver fluke, tapeworm</b>.</div>
+        </div>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>5. Aschelminthes / Nematoda (Roundworms) <span class="tag must">MUST</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>Body <b>cylindrical</b> (round, not flat)</li>
+            <li>Rudimentary digestive, nervous and excretory systems, but unlike Platyhelminthes they have a <b>complete alimentary canal</b> — separate mouth AND intestine/anus</li>
+            <li><b>Sexes are separate</b> (NOT hermaphrodite — different from every worm before it)</li>
+            <li>Many parasitic forms are pathogenic</li>
+            <li>Organ level · Bilateral symmetry · Triploblastic · <b>Pseudocoelomate</b> (the hinge phylum)</li>
+          </ul>
+          <div class="ex-box">
+            Roundworm: <b>Ascaris</b> &nbsp;|&nbsp; Hookworm: <b>Ancylostoma (Encyclostoma)</b> &nbsp;|&nbsp;
+            Filarial worm causing elephantiasis (filariasis): <b>Wuchereria</b> &nbsp;|&nbsp;
+            Pinworms and many intestinal roundworms live in the <b>small intestine</b>.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>6. Arthropoda <span class="tag must">MUST — Largest Phylum</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li><b>Largest phylum in the entire animal kingdom</b> by number of species</li>
+            <li><b>Jointed legs</b> (the name literally means "jointed feet")</li>
+            <li>Segmented body: divided into <b>head, thorax, abdomen</b></li>
+            <li>Exoskeleton is hard, complex, made of <b>chitin</b> (same material as fungal cell walls)</li>
+            <li><b>Open circulatory system</b></li>
+            <li><b>Insecta is the largest class</b> inside this phylum</li>
+            <li>Organ-system level · Bilateral symmetry · Triploblastic · Eucoelomate</li>
+          </ul>
+          <div class="ex-box">Examples: spider, crab, silverfish, mosquito (class Insecta). Note: "silverfish," "starfish," "jellyfish," "devil fish," "cuttlefish" are NOT true fish — classic naming traps (see Exam Traps page).</div>
+        </div>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>7. Annelida <span class="tag must">MUST</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li><b>True segmented body</b> — the cleanest example of segmentation in the animal kingdom</li>
+            <li>Excretion through <b>nephridia</b></li>
+            <li>Can be hermaphrodite OR unisexual depending on species</li>
+            <li>Locomotory organs: paired <b>parapodia</b> (e.g. in <i>Nereis</i>)</li>
+            <li><b>Closed circulatory system</b> (one of only two phyla with this)</li>
+            <li>Organ-system level · Bilateral symmetry · Triploblastic · Eucoelomate</li>
+          </ul>
+          <div class="ex-box">Examples: earthworm, leech, Nereis</div>
+        </div>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>8. Mollusca <span class="tag must">MUST — 2nd Largest Phylum</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li><b>Second largest phylum</b> in the animal kingdom</li>
+            <li>Body soft; outer <b>shell (exoskeleton) is hard</b></li>
+            <li><b>Blue blood</b> due to the pigment <b>haemocyanin</b> (e.g. in snails)</li>
+            <li>Mostly aquatic; <b>unisexual</b></li>
+            <li><b>Open circulatory system</b></li>
+            <li>Organ-system level · Bilateral symmetry · Triploblastic · Eucoelomate</li>
+          </ul>
+          <div class="ex-box">Examples: octopus ("devil fish"), Pila/snail, Unio, cuttlefish — none of these are true fish despite the names.</div>
+        </div>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>9. Echinodermata <span class="tag imp">IMPORTANT</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>Name means <b>"spiny skin"</b> — body surface has spine-like projections</li>
+            <li>Body shapes: star-shaped, spherical, or elongated</li>
+            <li>Locomotion via a unique <b>water-driven tube system (water vascular system)</b></li>
+            <li><b>Larva is bilaterally symmetric; adult is radially symmetric</b> — the single biggest exam trap of this phylum</li>
+            <li>Organ-system level · Triploblastic · Eucoelomate</li>
+          </ul>
+          <div class="ex-box">Examples: starfish, brittle star, sea urchin, sea cucumber. (NOT sea anemone — that's Coelenterata!)</div>
+        </div>
+      </div>
+
+      <div class="accordion" data-acc>
+        <div class="acc-head"><span>10. Hemichordata <span class="tag good">GOOD TO KNOW</span></span><span class="arrow">▶</span></div>
+        <div class="acc-body">
+          <ul>
+            <li>The transition phylum that sits between true invertebrates and Chordata in the classification order</li>
+            <li>Classic example: <b>Balanoglossus</b> — historically grouped with "Protochordata," but in modern classification it sits in its own phylum, <b>Hemichordata</b>, separate from Chordata</li>
+          </ul>
+          <div class="ex-box">⚠️ Exam trap: older books/lectures may list Balanoglossus under Chordata's Protochordata group. Current standard classification keeps it in a separate phylum, Hemichordata.</div>
+        </div>
+      </div>
+
+      <button class="mark-btn" data-mark="inverts">Mark this page as revised</button>
+    </section>
+
+    <!-- CHORDATA -->
+    <section class="page" data-page="chordata">
+      <div class="page-header">
+        <div class="eyebrow">Deep Notes</div>
+        <h1 class="page-title">🦴 Phylum Chordata — The Big One</h1>
+        <p class="page-desc">Chordata = the only phylum with a notochord. Inside it: Protochordata (no real backbone) and Vertebrata (true backbone, 5 classes you must master cold).</p>
+      </div>
+
+      <div class="card">
+        <h3>What makes something a Chordate? <span class="tag must">MUST KNOW</span></h3>
+        <ul style="font-size:13.8px; color:var(--text-dim);">
+          <li><b style="color:var(--text)">Notochord</b> — a rod-like supportive structure running along the back (dorsal side)</li>
+          <li><b style="color:var(--text)">Ventral heart</b> (on the front side of the body)</li>
+          <li>Paired gill slits present at some stage</li>
+          <li><b style="color:var(--text)">Closed circulatory system</b> (shared with Annelida only)</li>
+          <li>Triploblastic, Eucoelomate, Bilateral symmetry, segmented body</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Sub-group 1: Protochordata <span class="tag imp">IMPORTANT</span></h3>
+        <ul style="font-size:13.8px; color:var(--text-dim);">
+          <li>Do <b style="color:var(--text)">NOT have a proper notochord present during all stages of life</b> — only at some stage</li>
+          <li>Nerve cord IS present (just not lifelong notochord)</li>
+          <li><b style="color:var(--text)">No vertebral column</b> (no backbone)</li>
+        </ul>
+        <div class="ex-box">Examples: <b>Amphioxus, Balanoglossus, Herdmania</b></div>
+      </div>
+
+      <div class="card">
+        <h3>Sub-group 2: Vertebrata <span class="tag must">MUST KNOW — 5 classes</span></h3>
+        <p style="font-size:13.5px; color:var(--text-dim);">All other invertebrate phyla are, by definition, invertebrates. Only Chordata's Vertebrata sub-group has a true backbone.</p>
+        <div class="tbl-wrap"><table>
+          <tr><th>Class</th><th>Heart</th><th>Blood Temp</th><th>Birth Mode</th><th>Examples</th></tr>
+          <tr><td><b>Cyclostomata</b></td><td>—</td><td>Cold-blooded</td><td>Jawless vertebrates</td><td>Lamprey, Petromyzon, Myxine</td></tr>
+          <tr><td><b>Pisces</b> (fish)</td><td>2-chambered</td><td>Cold-blooded</td><td>Oviparous (mostly)</td><td>Dogfish, shark, tuna</td></tr>
+          <tr><td><b>Amphibia</b></td><td>3-chambered</td><td>Cold-blooded</td><td>Oviparous; gills as larva, lungs+skin as adult</td><td>Frog, toad, salamander</td></tr>
+          <tr><td><b>Reptilia</b></td><td>3-chambered <i>(crocodile = 4!)</i></td><td>Cold-blooded</td><td>Oviparous</td><td>Snake, turtle, lizard, crocodile</td></tr>
+          <tr><td><b>Aves</b> (birds)</td><td>4-chambered</td><td>Warm-blooded</td><td>Oviparous</td><td>All birds</td></tr>
+          <tr><td><b>Mammalia</b></td><td>4-chambered</td><td>Warm-blooded</td><td>Viviparous <i>(platypus, echidna = oviparous!)</i></td><td>Humans, whale, dolphin</td></tr>
+        </table></div>
+      </div>
+
+      <div class="card">
+        <h3>Birth-mode vocabulary <span class="tag must">MUST KNOW</span></h3>
+        <div class="tbl-wrap"><table>
+          <tr><th>Term</th><th>Meaning</th></tr>
+          <tr><td>Oviparous</td><td>Lay eggs; development happens outside the body</td></tr>
+          <tr><td>Viviparous</td><td>Give birth directly to live young; no egg stage outside</td></tr>
+          <tr><td>Ovoviviparous</td><td>Eggs are retained and hatch INSIDE the body, then born live</td></tr>
+        </table></div>
+      </div>
+
+      <div class="card">
+        <h3>Amphibian respiration timeline</h3>
+        <p style="font-size:13.8px; color:var(--text-dim);">As a <b>larva/tadpole</b> → breathes through <b>gills</b> (aquatic stage). As an <b>adult on land</b> → breathes through <b>lungs and skin</b> (mucus glands in skin assist respiration). This dual respiration is exactly why Amphibia means "double life" — water + land.</p>
+      </div>
+
+      <button class="mark-btn" data-mark="chordata">Mark this page as revised</button>
+    </section>
+
+    <!-- HOOKS -->
+    <section class="page" data-page="hooks">
+      <div class="page-header">
+        <div class="eyebrow">Memory System</div>
+        <h1 class="page-title">🪝 Smart Memory Hooks</h1>
+        <p class="page-desc">One vivid image per tricky cluster. These are designed to survive 3 months without revision.</p>
+      </div>
+
+      <div class="hook">
+        <div class="htitle">Phylum order — "Police Constables Catch Pickpockets And Arrest Angry Mobsters Eating Hotdogs"</div>
+        <p style="font-size:13.5px; color:var(--text-dim);">P(orifera) C(oelenterata) C(tenophora) P(latyhelminthes) A(schelminthes) A(rthropoda) A(nnelida) M(ollusca) E(chinodermata) H(emichordata). Say the sentence, the initials fall out, the phylum order falls out.</p>
+      </div>
+
+      <div class="hook">
+        <div class="htitle">Acoelomate cluster — "The First Four Have Nothing to Hide... Literally"</div>
+        <p style="font-size:13.5px; color:var(--text-dim);">Picture Porifera, Ctenophora, Coelenterata, and Platyhelminthes as four hollow paper cut-outs — completely flat inside, no cavity at all. The 5th phylum (Aschelminthes) is a paper cut-out with a balloon taped on the inside — looks like a cavity but it's fake (pseudo).</p>
+      </div>
+
+      <div class="hook">
+        <div class="htitle">Closed circulatory duo — "Earthworm and Human Share a Sealed Pipe"</div>
+        <p style="font-size:13.5px; color:var(--text-dim);">Imagine an earthworm and a human holding hands, both connected by ONE sealed garden hose (closed circulation) while every other animal around them just has water sloshing loose around their bodies (open circulation). Annelida + Chordata = the only sealed-pipe club.</p>
+      </div>
+
+      <div class="hook">
+        <div class="htitle">Crocodile's "extra chamber for tears" — Four-Chambered Reptile</div>
+        <p style="font-size:13.5px; color:var(--text-dim);">Crocodiles famously "cry" (crocodile tears). Imagine the croc's heart growing a literal extra room just to store those tears — that's your memory peg for "crocodile = 4-chambered heart, exception among reptiles."</p>
+      </div>
+
+      <div class="hook">
+        <div class="htitle">Egg-laying mammals — "The Platypus Forgot the Mammal Rulebook"</div>
+        <p style="font-size:13.5px; color:var(--text-dim);">Picture a platypus and an echidna sitting in a "Mammal Club" meeting, but both are secretly holding eggs behind their backs while everyone else is holding babies. Platypus + Echidna = oviparous mammals, the rule-breakers.</p>
+      </div>
+
+      <div class="hook">
+        <div class="htitle">Fake-fish lineup — "The Fish That Are Not Fish"</div>
+        <p style="font-size:13.5px; color:var(--text-dim);">Imagine a comedy police lineup: Jellyfish (Coelenterata), Starfish (Echinodermata), Silverfish & Crayfish (Arthropoda), Devil fish/Octopus & Cuttlefish (Mollusca). The officer shouts "None of you are Pisces! Off to your real phylum!"</p>
+      </div>
+
+      <div class="hook">
+        <div class="htitle">Echinodermata's identity switch — "Baby Faces One Way, Grown-up Spins"</div>
+        <p style="font-size:13.5px; color:var(--text-dim);">Picture a starfish baby crawling in a straight line (bilateral), then morphing into a spinning star toy as an adult (radial). Larva = bilateral, Adult = radial — locked in by one motion.</p>
+      </div>
+
+      <button class="mark-btn" data-mark="hooks">Mark this page as revised</button>
+    </section>
+
+    <!-- CONNECTIONS -->
+    <section class="page" data-page="connections">
+      <div class="page-header">
+        <div class="eyebrow">Memory System</div>
+        <h1 class="page-title">🔗 Concept Connections</h1>
+        <p class="page-desc">Never let a fact sit alone — every fact below is wired to a cause, consequence, or related fact.</p>
+      </div>
+
+      <div class="card">
+        <h4>CAUSE → EFFECT</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">No anus in Coelenterata → digestive system is incomplete → same opening used for both intake and waste removal.</p>
+      </div>
+      <div class="card">
+        <h4>FEATURE → EXCEPTION</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">Reptiles generally have a 3-chambered heart → crocodile is the exception with a 4-chambered heart, a step closer to birds/mammals.</p>
+      </div>
+      <div class="card">
+        <h4>FEATURE → EXCEPTION (again)</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">Mammals are generally viviparous → platypus and echidna are exceptions, laying eggs (oviparous mammals).</p>
+      </div>
+      <div class="card">
+        <h4>DISCOVERY → IMPACT</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">Whittaker's 1969 five-kingdom system placed Animalia as one of five kingdoms → this entire chapter is the detailed breakdown of just that one kingdom.</p>
+      </div>
+      <div class="card">
+        <h4>CONCEPT → APPLICATION</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">Pseudocoelomate status of Aschelminthes acts as the structural "bridge" between acoelomate worms and true coelomate higher phyla — it's the transition step in coelom evolution.</p>
+      </div>
+      <div class="card">
+        <h4>EVENT → CONSEQUENCE</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">Coral needs clean, brackish/marine, warm water → this is why coral reefs form only in specific tropical, clear-water coastlines (geography connection).</p>
+      </div>
+      <div class="card">
+        <h4>FACT → RELATED FACT</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">Chitin forms the Arthropoda exoskeleton → the same chemical, chitin, also forms the fungal cell wall (cross-kingdom link, easy to confuse with cellulose in plants).</p>
+      </div>
+      <div class="card">
+        <h4>PROBLEM → SOLUTION</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">Amphibians need to survive on both land and water → solution: gills for the aquatic larval stage, lungs + moist skin for the terrestrial adult stage.</p>
+      </div>
+
+      <button class="mark-btn" data-mark="connections">Mark this page as revised</button>
+    </section>
+
+    <!-- TRAPS -->
+    <section class="page" data-page="traps">
+      <div class="page-header">
+        <div class="eyebrow">Exam Prep</div>
+        <h1 class="page-title">⚠️ Exam Traps</h1>
+        <p class="page-desc">These are the exact spots where SSC aspirants lose easy marks.</p>
+      </div>
+
+      <div class="trap"><b>Trap 1 — Fake fish names.</b> Jellyfish (Coelenterata), Starfish (Echinodermata), Silverfish & Crayfish (Arthropoda), Devil fish/Octopus & Cuttlefish (Mollusca) — NONE belong to Pisces, despite "fish" in the name.</div>
+
+      <div class="trap"><b>Trap 2 — Mesoglia vs Mesoderm.</b> Coelenterata has mesoglia (a jelly layer) between ectoderm and endoderm. Mesoglia is NOT a true germ layer — Coelenterata remains diploblastic, not triploblastic.</div>
+
+      <div class="trap"><b>Trap 3 — Sea anemone vs Sea urchin/cucumber.</b> Sea anemone = Coelenterata (Cnidaria). Sea urchin and sea cucumber = Echinodermata. Easy to mix up because both sound "ocean-spiny."</div>
+
+      <div class="trap"><b>Trap 4 — Echinodermata symmetry flip.</b> Larva = bilateral symmetry; Adult = radial symmetry. Questions often ask only about "adult" or only about "larva" — read the question word-for-word.</div>
+
+      <div class="trap"><b>Trap 5 — Crocodile's heart.</b> Reptiles = 3-chambered heart EXCEPT crocodile = 4-chambered. A very frequently tested exception.</div>
+
+      <div class="trap"><b>Trap 6 — Platypus & Echidna.</b> Mammals are viviparous EXCEPT platypus and echidna, which lay eggs (oviparous mammals). Often confused with "monotremes" terminology in some books — same animals.</div>
+
+      <div class="trap"><b>Trap 7 — Closed circulation duo.</b> Only Annelida and Chordata have a closed circulatory system. Arthropoda and Mollusca are commonly (and wrongly) assumed to have closed systems because they look "complex" — they're actually open.</div>
+
+      <div class="trap"><b>Trap 8 — Pseudocoelomate is only ONE phylum.</b> Students often think several phyla are pseudocoelomate. Only Aschelminthes (Nematoda) is. Everything before it is acoelomate; everything after it is eucoelomate.</div>
+
+      <div class="trap"><b>Trap 9 — Balanoglossus's home phylum.</b> Often listed loosely under "Protochordata," but in current classification it belongs to its own phylum: Hemichordata, distinct from Chordata.</div>
+
+      <div class="trap"><b>Trap 10 — Hermaphrodite vs Unisexual confusion.</b> Porifera, Coelenterata, Ctenophora, Platyhelminthes = hermaphrodite. Aschelminthes and Mollusca = sexes separate (unisexual). Annelida = can be either. Don't generalise "all worms are hermaphrodite."</div>
+
+      <button class="mark-btn" data-mark="traps">Mark this page as revised</button>
+    </section>
+
+    <!-- EXAMINER -->
+    <section class="page" data-page="examiner">
+      <div class="page-header">
+        <div class="eyebrow">Exam Prep</div>
+        <h1 class="page-title">🎯 Examiner's Favourite Questions</h1>
+        <p class="page-desc">How SSC actually frames this content. Read these before solving any MCQ set.</p>
+      </div>
+
+      <div class="card">
+        <h4>🎯 High-Probability Direct Questions</h4>
+        <ul style="font-size:13.6px; color:var(--text-dim);">
+          <li>"Which phylum has the largest number of species?" → Arthropoda</li>
+          <li>"Which is the second largest phylum?" → Mollusca</li>
+          <li>"Which pigment gives snails their blue blood?" → Haemocyanin</li>
+          <li>"Name the phylum showing bioluminescence." → Ctenophora</li>
+          <li>"Which worm causes elephantiasis?" → Wuchereria (filarial worm)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🎯 Statement-Based Questions (True/False style)</h4>
+        <ul style="font-size:13.6px; color:var(--text-dim);">
+          <li>"All reptiles have a three-chambered heart." → FALSE (crocodile exception)</li>
+          <li>"All mammals are viviparous." → FALSE (platypus, echidna)</li>
+          <li>"Echinodermata adults show bilateral symmetry." → FALSE (radial in adult, bilateral in larva)</li>
+          <li>"Annelida and Chordata both have closed circulatory systems." → TRUE</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🎯 Match-the-Following Possibilities</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">Phylum ↔ Example (Wuchereria–Aschelminthes, Octopus–Mollusca, Starfish–Echinodermata); Phylum ↔ Special cell (Cnidoblast–Coelenterata, Flame cell–Platyhelminthes, Nephridia–Annelida, Collar cell–Porifera).</p>
+      </div>
+
+      <div class="card">
+        <h4>🎯 Chronology / Sequence Questions</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">"Arrange phyla in order of increasing body complexity" tests the PCC-PA-AAM-EH sequence directly, and "arrange amphibian life stages by respiratory organ" tests gills → lungs+skin.</p>
+      </div>
+
+      <div class="card">
+        <h4>🎯 Assertion–Reason Possibilities</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">Assertion: "Aschelminthes is called pseudocoelomate." Reason: "It has a false body cavity not lined properly by mesoderm." → Both true, Reason correctly explains Assertion.</p>
+      </div>
+
+      <div class="card">
+        <h4>🎯 Confusing / Frequently Misread Facts</h4>
+        <ul style="font-size:13.6px; color:var(--text-dim);">
+          <li>Open vs closed circulatory system phyla list</li>
+          <li>Acoelomate vs pseudocoelomate vs eucoelomate phyla list</li>
+          <li>Which class within Vertebrata is cold-blooded vs warm-blooded</li>
+        </ul>
+      </div>
+
+      <button class="mark-btn" data-mark="examiner">Mark this page as revised</button>
+    </section>
+
+    <!-- RECALL -->
+    <section class="page" data-page="recall">
+      <div class="page-header">
+        <div class="eyebrow">Exam Prep</div>
+        <h1 class="page-title">❓ Active Recall</h1>
+        <p class="page-desc">Tap a question to reveal the answer. Don't peek before you try to answer in your head first.</p>
+      </div>
+
+      <div class="card">
+        <h3>Self-Test Questions</h3>
+        <div class="qa" data-qa><div class="q">Q. Which two phyla alone have a closed circulatory system?</div><div class="a">Annelida and Chordata.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Why is Aschelminthes called pseudocoelomate?</div><div class="a">It appears to have a body cavity, but it isn't a true, properly lined coelom — hence "false" coelom.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Name the special excretory cells of Platyhelminthes.</div><div class="a">Flame cells.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Which class of Vertebrata has an exception with a four-chambered heart, and what is it?</div><div class="a">Reptilia; the crocodile is the exception with a 4-chambered heart.</div></div>
+      </div>
+
+      <div class="card">
+        <h3>Fill in the Blanks</h3>
+        <div class="qa" data-qa><div class="q">Q. The body cavity in Porifera is called the ______.</div><div class="a">Spongocoel.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Cnidoblasts contain stinging structures called ______.</div><div class="a">Nematocysts.</div></div>
+        <div class="qa" data-qa><div class="q">Q. The largest class inside phylum Arthropoda is ______.</div><div class="a">Insecta.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Mammals that lay eggs instead of giving birth: platypus and ______.</div><div class="a">Echidna.</div></div>
+      </div>
+
+      <div class="card">
+        <h3>One-Liner Recall</h3>
+        <div class="qa" data-qa><div class="q">Q. One line about Ctenophora's special feature?</div><div class="a">Shows bioluminescence — they glow.</div></div>
+        <div class="qa" data-qa><div class="q">Q. One line about Mollusca's blood?</div><div class="a">Blue-coloured, due to haemocyanin.</div></div>
+        <div class="qa" data-qa><div class="q">Q. One line about Echinodermata's locomotion?</div><div class="a">Uses a water-driven tube/water-vascular system.</div></div>
+      </div>
+
+      <div class="card">
+        <h3>Reverse Questions (Example → Phylum)</h3>
+        <div class="qa" data-qa><div class="q">Q. Wuchereria belongs to which phylum?</div><div class="a">Aschelminthes (Nematoda) — it's a filarial worm.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Devil fish (octopus) belongs to which phylum?</div><div class="a">Mollusca — not Pisces, despite the name "fish."</div></div>
+        <div class="qa" data-qa><div class="q">Q. Herdmania belongs to which group?</div><div class="a">Protochordata (within Chordata).</div></div>
+      </div>
+
+      <div class="card">
+        <h3>Rapid-Fire (answer in under 5 seconds each)</h3>
+        <div class="qa" data-qa><div class="q">Q. Father of taxonomy?</div><div class="a">Carl Linnaeus.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Who gave the five-kingdom classification, and in which year?</div><div class="a">Robert Whittaker, 1969.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Largest phylum?</div><div class="a">Arthropoda.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Second largest phylum?</div><div class="a">Mollusca.</div></div>
+        <div class="qa" data-qa><div class="q">Q. Only two phyla with closed circulation?</div><div class="a">Annelida, Chordata.</div></div>
+      </div>
+
+      <button class="mark-btn" data-mark="recall">Mark this page as revised</button>
+    </section>
+
+    <!-- HIGH YIELD -->
+    <section class="page" data-page="highyield">
+      <div class="page-header">
+        <div class="eyebrow">Quick Revision · Layer 2</div>
+        <h1 class="page-title">⭐ High-Yield Revision Notes</h1>
+        <p class="page-desc">For the week before the exam — shorter than Deep Notes, still complete.</p>
+      </div>
+
+      <div class="card">
+        <h4>Parameter snapshot</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">
+        Acoelomate: Porifera, Coelenterata, Ctenophora, Platyhelminthes.<br>
+        Pseudocoelomate: Aschelminthes (alone).<br>
+        Eucoelomate: Arthropoda, Annelida, Mollusca, Echinodermata, Chordata.<br>
+        Diploblastic: first 3 (Porifera, Coelenterata, Ctenophora). Triploblastic: rest.<br>
+        Closed circulation: Annelida + Chordata only. Rest = open.<br>
+        Radial symmetry: Coelenterata, Ctenophora, Echinodermata-adult. Asymmetry: Porifera. Bilateral: everyone else.</p>
+      </div>
+
+      <div class="card">
+        <h4>Phylum one-liners</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">
+        Porifera — pores, spongocoel, collar cells, sessile.<br>
+        Coelenterata — cnidoblasts/nematocysts, no anus, metagenesis, CaCO₃ exoskeleton.<br>
+        Ctenophora — bioluminescence.<br>
+        Platyhelminthes — flat, one opening, flame cells, hermaphrodite.<br>
+        Aschelminthes — cylindrical, complete gut, sexes separate, pseudocoelomate.<br>
+        Arthropoda — largest phylum, jointed legs, chitin exoskeleton, open circulation, Insecta biggest class.<br>
+        Annelida — true segmentation, nephridia, parapodia, closed circulation.<br>
+        Mollusca — 2nd largest, soft body + hard shell, haemocyanin (blue blood).<br>
+        Echinodermata — spiny skin, water vascular system, larva bilateral/adult radial.<br>
+        Hemichordata — Balanoglossus, separate from Chordata.<br>
+        Chordata — notochord, ventral heart, closed circulation, paired gill slits.</p>
+      </div>
+
+      <div class="card">
+        <h4>Vertebrata classes — heart & blood</h4>
+        <p style="font-size:13.6px; color:var(--text-dim);">
+        Cyclostomata — jawless.<br>
+        Pisces — 2-chambered, cold-blooded.<br>
+        Amphibia — 3-chambered, cold-blooded, gills→lungs+skin.<br>
+        Reptilia — 3-chambered (crocodile = 4), cold-blooded.<br>
+        Aves — 4-chambered, warm-blooded, oviparous.<br>
+        Mammalia — 4-chambered, warm-blooded, viviparous (platypus & echidna = oviparous).</p>
+      </div>
+
+      <button class="mark-btn" data-mark="highyield">Mark this page as revised</button>
+    </section>
+
+    <!-- ULTRA FAST -->
+    <section class="page" data-page="ultrafast">
+      <div class="page-header">
+        <div class="eyebrow">Quick Revision · Layer 3</div>
+        <h1 class="page-title">⚡ Ultra-Fast Revision Sheet</h1>
+        <p class="page-desc">Scan this in under 4 minutes, two days before the exam.</p>
+      </div>
+
+      <div class="ultrafast-grid">
+        <div class="uf-card"><div class="pname">Porifera</div>pores · spongocoel · collar cells · sessile · hermaphrodite</div>
+        <div class="uf-card"><div class="pname">Coelenterata</div>cnidoblast/nematocyst · no anus · metagenesis · CaCO₃</div>
+        <div class="uf-card"><div class="pname">Ctenophora</div>bioluminescence · hermaphrodite</div>
+        <div class="uf-card"><div class="pname">Platyhelminthes</div>flat · 1 opening · flame cells · hermaphrodite</div>
+        <div class="uf-card"><div class="pname">Aschelminthes</div>cylindrical · sexes separate · pseudocoelomate</div>
+        <div class="uf-card"><div class="pname">Arthropoda</div>LARGEST phylum · jointed legs · chitin · open circ. · Insecta biggest class</div>
+        <div class="uf-card"><div class="pname">Annelida</div>true segmentation · nephridia · parapodia · CLOSED circ.</div>
+        <div class="uf-card"><div class="pname">Mollusca</div>2nd LARGEST · soft+shell · haemocyanin (blue blood)</div>
+        <div class="uf-card"><div class="pname">Echinodermata</div>spiny skin · water vascular system · larva bilateral/adult radial</div>
+        <div class="uf-card"><div class="pname">Hemichordata</div>Balanoglossus · separate from Chordata</div>
+        <div class="uf-card"><div class="pname">Chordata</div>notochord · ventral heart · CLOSED circ. · gill slits</div>
+        <div class="uf-card"><div class="pname">Vertebrata classes</div>Cyclostomata(jawless) → Pisces(2ch) → Amphibia(3ch) → Reptilia(3ch, croc=4ch) → Aves(4ch,warm) → Mammalia(4ch,warm,vivip; platypus/echidna=oviparous)</div>
+      </div>
+
+      <button class="mark-btn" data-mark="ultrafast">Mark this page as revised</button>
+    </section>
+
+    <!-- 30 SECOND -->
+    <section class="page" data-page="thirtysec">
+      <div class="page-header">
+        <div class="eyebrow">Quick Revision · Layer 4</div>
+        <h1 class="page-title">⏱️ 30-Second Revision Sheet</h1>
+        <p class="page-desc">The absolute minimum that must never leave your head.</p>
+      </div>
+
+      <div class="card">
+        <p style="font-size:14.5px;">
+        🔸 Order: Porifera–Coelenterata–Ctenophora–Platyhelminthes–Aschelminthes–Arthropoda–Annelida–Mollusca–Echinodermata–Hemichordata–Chordata.<br><br>
+        🔸 Largest phylum = Arthropoda. 2nd largest = Mollusca.<br><br>
+        🔸 Closed circulation only in: Annelida + Chordata.<br><br>
+        🔸 Pseudocoelomate only: Aschelminthes.<br><br>
+        🔸 Acoelomate (first 4): Porifera, Coelenterata, Ctenophora, Platyhelminthes.<br><br>
+        🔸 Echinodermata: larva bilateral, adult radial.<br><br>
+        🔸 Crocodile = 4-chambered heart (only reptile exception).<br><br>
+        🔸 Platypus & Echidna = egg-laying mammals (only mammal exception).<br><br>
+        🔸 Chordata's defining feature = notochord.
+        </p>
+      </div>
+
+      <button class="mark-btn" data-mark="thirtysec">Mark this page as revised</button>
+    </section>
+
+    <!-- LAST NIGHT -->
+    <section class="page" data-page="lastnight">
+      <div class="page-header">
+        <div class="eyebrow">Quick Revision · Layer 5</div>
+        <h1 class="page-title">🌙 Last-Night-Before-Exam Sheet</h1>
+        <p class="page-desc">Read once. Close the laptop. Sleep.</p>
+      </div>
+
+      <div class="lastnight-block">
+        <h4>The 5 exceptions that win you marks</h4>
+        <p style="font-size:13.8px; color:var(--text-dim);">
+        1. Crocodile → 4-chambered heart (other reptiles: 3).<br>
+        2. Platypus & Echidna → lay eggs (other mammals: viviparous).<br>
+        3. Echinodermata adult → radial; larva → bilateral.<br>
+        4. Aschelminthes → only pseudocoelomate phylum.<br>
+        5. Annelida + Chordata → only closed circulatory phyla.</p>
+      </div>
+
+      <div class="lastnight-block">
+        <h4>The naming traps</h4>
+        <p style="font-size:13.8px; color:var(--text-dim);">Jellyfish, starfish, silverfish, devil fish, cuttlefish → NONE are true fish (Pisces).</p>
+      </div>
+
+      <div class="lastnight-block">
+        <h4>One sentence per phylum (whisper this to yourself)</h4>
+        <p style="font-size:13.8px; color:var(--text-dim);">
+        Porifera has pores. Coelenterata stings and has no anus. Ctenophora glows. Platyhelminthes is flat with one opening. Aschelminthes is a tube with separate sexes. Arthropoda is the biggest, jointed and armoured. Annelida is truly segmented with a sealed pipe. Mollusca is soft but blue-blooded. Echinodermata is spiny and flips symmetry. Hemichordata is the quiet transition. Chordata has the rod down its back.</p>
+      </div>
+
+      <div class="lastnight-block">
+        <h4>Final reminder</h4>
+        <p style="font-size:13.8px; color:var(--text-dim);">Whittaker, 1969, five kingdoms. Linnaeus = father of taxonomy. You already know this. Go sleep.</p>
+      </div>
+
+      <button class="mark-btn" data-mark="lastnight">Mark this page as revised</button>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  const navItems = document.querySelectorAll('.navitem');
+  const pages = document.querySelectorAll('.page');
+  const sidebar = document.getElementById('sidebar');
+  const menuToggle = document.getElementById('menuToggle');
+  const progressFill = document.getElementById('progressFill');
+  const progressPct = document.getElementById('progressPct');
+  const totalPages = navItems.length;
+  let doneSet = new Set();
+
+  function showPage(name){
+    pages.forEach(p => p.classList.toggle('active', p.dataset.page === name));
+    navItems.forEach(n => n.classList.toggle('active', n.dataset.page === name));
+    window.scrollTo({top:0, behavior:'instant'});
+    if(window.innerWidth <= 880){ sidebar.classList.remove('open'); }
+  }
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => showPage(item.dataset.page));
+  });
+
+  menuToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+  function updateProgress(){
+    const pct = Math.round((doneSet.size / totalPages) * 100);
+    progressFill.style.width = pct + '%';
+    progressPct.textContent = pct + '%';
+  }
+
+  document.querySelectorAll('.mark-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.mark;
+      const navEl = document.querySelector('.navitem[data-page="'+key+'"]');
+      if(doneSet.has(key)){
+        doneSet.delete(key);
+        btn.classList.remove('done');
+        btn.textContent = 'Mark this page as revised';
+        navEl && navEl.classList.remove('done');
+      } else {
+        doneSet.add(key);
+        btn.classList.add('done');
+        btn.textContent = '✓ Revised';
+        navEl && navEl.classList.add('done');
+      }
+      updateProgress();
+    });
+  });
+
+  // accordions
+  document.querySelectorAll('[data-acc]').forEach(acc => {
+    acc.querySelector('.acc-head').addEventListener('click', () => {
+      acc.classList.toggle('open');
+    });
+  });
+
+  // QA toggles
+  document.querySelectorAll('[data-qa]').forEach(qa => {
+    qa.addEventListener('click', () => qa.classList.toggle('open'));
+  });
+
+  updateProgress();
+</script>
+
+</body>
+</html>

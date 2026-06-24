@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutrients — Biology Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0c0e14;
+    --bg2: #13151e;
+    --bg3: #1a1d28;
+    --card: #1e2130;
+    --card2: #252840;
+    --green: #4ade80;
+    --green-dim: #22c55e44;
+    --blue: #60a5fa;
+    --blue-dim: #3b82f644;
+    --amber: #fbbf24;
+    --amber-dim: #f59e0b33;
+    --red: #f87171;
+    --red-dim: #ef444433;
+    --purple: #a78bfa;
+    --purple-dim: #8b5cf633;
+    --cyan: #22d3ee;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-faint: #475569;
+    --border: #2d3348;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── NAV BAR ── */
+  #topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+
+  #topbar .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 500;
+    white-space: nowrap;
+    margin-right: 8px;
+  }
+
+  .nav-pill {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-pill:hover { border-color: var(--blue); color: var(--blue); }
+  .nav-pill.active { background: var(--blue-dim); border-color: var(--blue); color: var(--blue); }
+
+  /* ── SIDEBAR ── */
+  #layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  #sidebar {
+    width: 230px;
+    flex-shrink: 0;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 12px 0;
+  }
+
+  .sidebar-section {
+    padding: 6px 16px 4px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-top: 8px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-dim);
+    border-left: 2px solid transparent;
+    transition: all 0.18s;
+  }
+  .sidebar-item:hover { background: var(--bg3); color: var(--text); }
+  .sidebar-item.active { background: var(--blue-dim); border-left-color: var(--blue); color: var(--blue); }
+  .sidebar-item .icon { font-size: 15px; width: 20px; text-align: center; }
+  .sidebar-item .badge {
+    margin-left: auto;
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .badge-fire { background: var(--red-dim); color: var(--red); }
+  .badge-star { background: var(--amber-dim); color: var(--amber); }
+
+  /* ── MAIN CONTENT ── */
+  #main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px;
+  }
+
+  .page { display: none; }
+  .page.visible { display: block; animation: fadeUp 0.3s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h1.page-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-weight: 400;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title.green { color: var(--green); }
+  .card-title.blue { color: var(--blue); }
+  .card-title.amber { color: var(--amber); }
+  .card-title.red { color: var(--red); }
+  .card-title.purple { color: var(--purple); }
+  .card-title.cyan { color: var(--cyan); }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 5px;
+    letter-spacing: 0.05em;
+  }
+  .tag-fire { background: var(--red-dim); color: var(--red); }
+  .tag-star { background: var(--amber-dim); color: var(--amber); }
+  .tag-plus { background: var(--green-dim); color: var(--green); }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  th {
+    background: var(--bg3);
+    color: var(--text-dim);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  td {
+    padding: 9px 12px;
+    border-top: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:hover td { background: var(--bg3); }
+  td strong { color: var(--green); font-weight: 600; }
+  td em { color: var(--blue); font-style: normal; font-weight: 500; }
+
+  /* ── GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .hl {
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .hl-green { background: var(--green-dim); border-left: 3px solid var(--green); }
+  .hl-blue { background: var(--blue-dim); border-left: 3px solid var(--blue); }
+  .hl-amber { background: var(--amber-dim); border-left: 3px solid var(--amber); }
+  .hl-red { background: var(--red-dim); border-left: 3px solid var(--red); }
+  .hl-purple { background: var(--purple-dim); border-left: 3px solid var(--purple); }
+  .hl-cyan { background: #06b6d433; border-left: 3px solid var(--cyan); }
+
+  /* ── MEMORY HOOK ── */
+  .hook {
+    background: linear-gradient(135deg, #1e1f35, #1a1d2e);
+    border: 1px solid #3730a3;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .hook-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 6px;
+  }
+
+  /* ── TRAP ── */
+  .trap {
+    background: var(--red-dim);
+    border: 1px solid #f8717133;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .trap-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: var(--card2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border 0.2s;
+    border: 1px solid var(--border);
+  }
+  .quiz-q:hover { border-color: var(--blue); }
+  .quiz-q .q-text { font-size: 14px; font-weight: 500; margin-bottom: 0; }
+  .quiz-q .q-ans {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    color: var(--green);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .quiz-q.revealed .q-ans { display: block; }
+  .quiz-hint {
+    font-size: 11px;
+    color: var(--text-faint);
+    text-align: right;
+    margin-bottom: 8px;
+  }
+
+  /* ── PALACE ── */
+  .palace-room {
+    background: var(--card2);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    border-left: 3px solid var(--purple);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .palace-loc {
+    font-weight: 700;
+    color: var(--purple);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  /* ── MINI SHEET ── */
+  .mini-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .mini-item:last-child { border-bottom: none; }
+  .mini-key {
+    min-width: 120px;
+    color: var(--blue);
+    font-weight: 600;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  /* ── RAPID FIRE ── */
+  #rf-container .rf-card {
+    background: var(--card2);
+    border-radius: 14px;
+    padding: 30px;
+    text-align: center;
+    border: 1px solid var(--border);
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .rf-q { font-size: 18px; font-weight: 600; }
+  .rf-a { font-size: 15px; color: var(--green); display: none; }
+  .rf-a.show { display: block; }
+  .rf-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn:hover { background: var(--card2); border-color: var(--blue); color: var(--blue); }
+  .btn-green { border-color: var(--green); color: var(--green); }
+  .btn-green:hover { background: var(--green-dim); }
+  .rf-counter { font-size: 12px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace; }
+
+  /* ── PROGRESS BAR ── */
+  .pbar-track { background: var(--bg3); border-radius: 4px; height: 6px; margin-top: 20px; }
+  .pbar-fill { height: 6px; border-radius: 4px; background: linear-gradient(90deg, var(--blue), var(--green)); transition: width 0.4s; }
+
+  /* ── MISC ── */
+  ul, ol { padding-left: 20px; }
+  li { padding: 3px 0; font-size: 13px; line-height: 1.6; }
+  p { font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg3);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--cyan);
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--cyan); }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 20px 0;
+  }
+
+  .calorie-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .calorie-row:last-child { border: none; }
+  .calorie-bar {
+    height: 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .calorie-label { min-width: 120px; font-weight: 500; }
+  .calorie-val { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; }
+
+  @media (max-width: 768px) {
+    #sidebar { display: none; }
+    #main { padding: 18px 16px; }
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo">🧬 NUTRIENTS · SSC CGL</div>
+  <button class="nav-pill active" onclick="showLayer('full')">Full Notes</button>
+  <button class="nav-pill" onclick="showLayer('highyield')">High-Yield</button>
+  <button class="nav-pill" onclick="showLayer('ultrafast')">Ultra-Fast</button>
+  <button class="nav-pill" onclick="showLayer('30sec')">30-Second</button>
+  <button class="nav-pill" onclick="showLayer('lastnight')">Last Night</button>
+</div>
+
+<div id="layout">
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sidebar-section">Overview</div>
+  <div class="sidebar-item active" onclick="go('overview')"><span class="icon">🗺</span> Big Picture</div>
+  <div class="sidebar-item" onclick="go('palace')"><span class="icon">🏛</span> Memory Palace</div>
+
+  <div class="sidebar-section">Macronutrients</div>
+  <div class="sidebar-item" onclick="go('carbs')"><span class="icon">🍞</span> Carbohydrates <span class="badge badge-fire">🔥</span></div>
+  <div class="sidebar-item" onclick="go('fats')"><span class="icon">🥑</span> Fats <span class="badge badge-fire">🔥</span></div>
+  <div class="sidebar-item" onclick="go('proteins')"><span class="icon">💪</span> Proteins <span class="badge badge-fire">🔥</span></div>
+
+  <div class="sidebar-section">Micronutrients</div>
+  <div class="sidebar-item" onclick="go('vitamins')"><span class="icon">💊</span> Vitamins <span class="badge badge-fire">🔥</span></div>
+  <div class="sidebar-item" onclick="go('minerals')"><span class="icon">⚗️</span> Minerals <span class="badge badge-star">⭐</span></div>
+
+  <div class="sidebar-section">Plant Nutrition</div>
+  <div class="sidebar-item" onclick="go('photosynthesis')"><span class="icon">🌿</span> Photosynthesis <span class="badge badge-fire">🔥</span></div>
+  <div class="sidebar-item" onclick="go('nutrition-types')"><span class="icon">🔄</span> Nutrition Modes <span class="badge badge-star">⭐</span></div>
+
+  <div class="sidebar-section">Exam Prep</div>
+  <div class="sidebar-item" onclick="go('traps')"><span class="icon">⚠️</span> Exam Traps</div>
+  <div class="sidebar-item" onclick="go('questions')"><span class="icon">🎯</span> Exam Questions</div>
+  <div class="sidebar-item" onclick="go('quiz')"><span class="icon">❓</span> Self-Test Quiz</div>
+  <div class="sidebar-item" onclick="go('rapidfire')"><span class="icon">⚡</span> Rapid Fire</div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: OVERVIEW -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page visible" id="page-overview">
+  <h1 class="page-title">🗺 Big Picture</h1>
+  <p class="page-subtitle">What this chapter is really about — before you dive in</p>
+
+  <div class="card">
+    <div class="card-title green">🧠 Core Mental Model</div>
+    <p>Every living organism needs <strong>nutrients</strong> to survive. Nutrients are classified by <em>how much</em> you need them.</p>
+    <div class="grid2" style="margin-top:14px; gap:10px;">
+      <div class="hl hl-green">
+        <strong>🔬 MACRO</strong> = needed in <em>grams</em><br>
+        Carbohydrates → Fats → Proteins<br>
+        <span style="color:var(--text-dim); font-size:12px;">Think: bodybuilder's plate</span>
+      </div>
+      <div class="hl hl-blue">
+        <strong>🔬 MICRO</strong> = needed in <em>micrograms</em><br>
+        Vitamins → Minerals<br>
+        <span style="color:var(--text-dim); font-size:12px;">Think: tiny but mighty pills</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title blue">📊 Chapter Map at a Glance</div>
+    <div class="grid3">
+      <div style="text-align:center; padding:12px; background:var(--bg3); border-radius:8px;">
+        <div style="font-size:28px;">🍞</div>
+        <div style="color:var(--amber); font-weight:700; font-size:14px;">CARBS</div>
+        <div style="font-size:11px; color:var(--text-dim);">4 cal/g · Energy</div>
+      </div>
+      <div style="text-align:center; padding:12px; background:var(--bg3); border-radius:8px;">
+        <div style="font-size:28px;">🥑</div>
+        <div style="color:var(--amber); font-weight:700; font-size:14px;">FATS</div>
+        <div style="font-size:11px; color:var(--text-dim);">9 cal/g · Storage</div>
+      </div>
+      <div style="text-align:center; padding:12px; background:var(--bg3); border-radius:8px;">
+        <div style="font-size:28px;">💪</div>
+        <div style="color:var(--amber); font-weight:700; font-size:14px;">PROTEINS</div>
+        <div style="font-size:11px; color:var(--text-dim);">4 cal/g · Build</div>
+      </div>
+      <div style="text-align:center; padding:12px; background:var(--bg3); border-radius:8px;">
+        <div style="font-size:28px;">💊</div>
+        <div style="color:var(--green); font-weight:700; font-size:14px;">VITAMINS</div>
+        <div style="font-size:11px; color:var(--text-dim);">A B C D E K</div>
+      </div>
+      <div style="text-align:center; padding:12px; background:var(--bg3); border-radius:8px;">
+        <div style="font-size:28px;">⚗️</div>
+        <div style="color:var(--green); font-weight:700; font-size:14px;">MINERALS</div>
+        <div style="font-size:11px; color:var(--text-dim);">Ca, I, Fe, Mg, Zn</div>
+      </div>
+      <div style="text-align:center; padding:12px; background:var(--bg3); border-radius:8px;">
+        <div style="font-size:28px;">🌿</div>
+        <div style="color:var(--green); font-weight:700; font-size:14px;">PHOTOSYNTHESIS</div>
+        <div style="font-size:11px; color:var(--text-dim);">Plant nutrition</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title amber">⚡ Key Numbers to Never Forget</div>
+    <div class="calorie-row">
+      <div class="calorie-label">Carbohydrates</div>
+      <div class="calorie-bar" style="width:44%; background: var(--blue);"></div>
+      <div class="calorie-val" style="color:var(--blue);">4 cal/g</div>
+    </div>
+    <div class="calorie-row">
+      <div class="calorie-label">Fats</div>
+      <div class="calorie-bar" style="width:100%; background: var(--amber);"></div>
+      <div class="calorie-val" style="color:var(--amber);">9 cal/g</div>
+    </div>
+    <div class="calorie-row">
+      <div class="calorie-label">Proteins</div>
+      <div class="calorie-bar" style="width:44%; background: var(--green);"></div>
+      <div class="calorie-val" style="color:var(--green);">4 cal/g</div>
+    </div>
+    <p style="color:var(--text-faint); font-size:12px; margin-top:10px;">Memory hook: Fat has 9 — it's double the others almost. Carbs = Proteins = 4.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: MEMORY PALACE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-palace">
+  <h1 class="page-title">🏛 Chapter Memory Palace</h1>
+  <p class="page-subtitle">Walk through a hospital gym to remember everything</p>
+
+  <div class="card">
+    <div class="card-title purple">The Story: "A Day at the BioGym Hospital"</div>
+    <p style="margin-bottom:16px;">You walk into a giant gym that is also a hospital. Every room holds a nutrient. Walk through it mentally each time you revise.</p>
+
+    <div class="palace-room">
+      <div class="palace-loc">🚪 ENTRANCE GATE — "The Energy Counter"</div>
+      A bodybuilder at the gate shouts: <strong>"Carbs 4, Fat 9, Protein 4!"</strong> — he repeats it like a mantra. On the wall behind him: a menu. Mono, Di, Poly. Simple sugars (glucose, fructose, galactose), then complex (sucrose, maltose, lactose, starch).
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-loc">🏋️ GYM FLOOR — "The Fat Locker Room"</div>
+      Adipose tissue cushions cover the floor (under the skin of the gym). A sign reads: <em>"Saturated = hard blocks (animal fat), Unsaturated = liquid oil (plants), TRANS = red skull 💀"</em>. A chef is cooking chips in reused oil — that's the trans fat villain.
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-loc">🥩 PROTEIN SMOOTHIE BAR</div>
+      A bar serving collagen shakes. The bartender has triple-twisted hair (triple helix). He says: <em>"Ramachandran discovered my hair. Watson & Crick did the simpler double helix DNA in 1953."</em> Gluten, casein, keratin, albumin jars are on the shelf.
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-loc">💊 VITAMIN PHARMACY — Rooms A through K</div>
+      Walk past doors: A (retinol, dark room = night blindness), B-corridor (8 rooms, B1 beriberi, B3 pellagra 3D, B12 pernicious), C (citrus wall, scurvy gums), D (sunlight through the window = sunshine vitamin, rickets skeleton), E (sprouts growing = fertility), K (blood dripping stops = coagulation).
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-loc">⚗️ MINERAL DISPENSARY</div>
+      Five shelves: Ca (bones crumbling), I (thick neck = goiter), Fe (pale blood = anemia), Mg (engine running = metabolism), Zn (cells dividing = protein synthesis).
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-loc">🌿 GARDEN OUTSIDE — "The Plant Kitchen"</div>
+      A plant in the garden is cooking its own food. Chloroplast = kitchen. Thylakoids/Grana = stove (light reaction here). Stroma = countertop (dark reaction / Calvin cycle). Chlorophyll = green chef hat with magnesium logo.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: CARBS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-carbs">
+  <h1 class="page-title">🍞 Carbohydrates</h1>
+  <p class="page-subtitle">Primary energy source · 4 cal/gram · Simple & Complex</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title green">🔥 Core Facts <span class="tag tag-fire">Must Know</span></div>
+      <ul>
+        <li><strong>Function:</strong> Energy supply</li>
+        <li><strong>Energy yield:</strong> <code>4 cal per gram</code></li>
+        <li><strong>Simplest form:</strong> Glucose / Sugar</li>
+        <li><strong>Test for sugar:</strong> Benedict's solution</li>
+        <li>Plants store carbs as <strong>starch</strong></li>
+        <li>Salivary amylase breaks starch → simple sugars</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title amber">📐 Classification</div>
+      <div class="hl hl-green" style="margin-bottom:8px;">
+        <strong>SIMPLE CARBS</strong><br>
+        🔹 <em>Monosaccharides</em> — 1 sugar molecule<br>
+        🔹 <em>Disaccharides</em> — 2 sugar molecules
+      </div>
+      <div class="hl hl-amber">
+        <strong>COMPLEX CARBS</strong><br>
+        🔹 <em>Polysaccharides</em> — many sugar molecules<br>
+        (dissolves into many monomers)
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title blue">🍬 Saccharides Deep Dive <span class="tag tag-fire">🔥 Most Tested</span></div>
+    <table>
+      <tr><th>Type</th><th>Examples</th><th>Source / Memory Hook</th></tr>
+      <tr><td><strong>Glucose</strong></td><td>Monosaccharide</td><td>Blood sugar — <em>"Glu"cose = glue of life</em></td></tr>
+      <tr><td><strong>Fructose</strong></td><td>Monosaccharide</td><td>Fruit sugar — <em>"Fruc" = Fruit</em></td></tr>
+      <tr><td><strong>Galactose</strong></td><td>Monosaccharide</td><td>Milk component</td></tr>
+      <tr><td><strong>Sucrose</strong></td><td>Disaccharide</td><td>Table sugar (Glucose + Fructose)</td></tr>
+      <tr><td><strong>Maltose</strong></td><td>Disaccharide</td><td><em>Malt</em>ose = <em>grain/malt</em> sugar 🌾</td></tr>
+      <tr><td><strong>Lactose</strong></td><td>Disaccharide</td><td><em>Lac</em>tose = <em>Lac</em>tic = Milk 🥛 (intolerance = can't digest)</td></tr>
+      <tr><td><strong>Starch</strong></td><td>Polysaccharide</td><td>Complex carb stored by plants</td></tr>
+    </table>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🧠 Memory Hook — The Mono/Di/Poly Building Block Story</div>
+    Imagine sugar as LEGO bricks. <strong>One brick = Monosaccharide.</strong> Snap two together = <strong>Disaccharide.</strong> Build a massive castle = <strong>Polysaccharide.</strong><br><br>
+    For disaccharides remember: <strong>SM-L rule</strong> → Sucrose, Maltose, Lactose.<br>
+    Lactose = Milk (Lac = Latin for milk). Maltose = Grains (think malted barley). Sucrose = Sweet table sugar.
+  </div>
+
+  <div class="hl hl-amber">
+    <strong>⚠ Lactose Intolerance:</strong> Lactose passes through the small intestine <em>undigested</em> — the body lacks the enzyme lactase.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: FATS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-fats">
+  <h1 class="page-title">🥑 Fats (Lipids)</h1>
+  <p class="page-subtitle">High-energy storage · 9 cal/gram · Adipose tissue</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title green">🔥 Core Facts</div>
+      <ul>
+        <li><strong>Energy yield:</strong> <code>9 cal per gram</code> (highest!)</li>
+        <li><strong>Storage location:</strong> Adipose tissue (below skin)</li>
+        <li><strong>Bile juice</strong> → emulsifies fat (from liver, stored in gall bladder)</li>
+        <li><strong>Lipase</strong> → breaks fat into fatty acids (from pancreatic juice)</li>
+        <li>Nuts (almonds, walnuts) → contain <strong>Omega-3</strong> (good fat)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title amber">🔢 Fat Types Ranking (Best → Worst)</div>
+      <div class="hl hl-green" style="margin-bottom:6px;">✅ <strong>Unsaturated</strong> — Easy to digest · Vegetable oils, plant fats, nuts, omega-3</div>
+      <div class="hl hl-amber" style="margin-bottom:6px;">⚠ <strong>Saturated</strong> — Hard to digest · Animal fat, meat, pork · increases triglycerides</div>
+      <div class="hl hl-red">💀 <strong>Trans Fat</strong> — WORST · Reused cooking oil, chips · Blocks arteries · causes triglycerides</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🧠 Memory Hook — The Oil Pan Story</div>
+    Imagine a <strong>chef re-frying chips for the 5th time</strong> in the same oil. That oil is turning <strong>black and toxic = TRANS FAT</strong>. A doctor walks in and says <em>"Your arteries look like clogged drains!"</em> → Trans fat is the villain of the fat world.<br><br>
+    <strong>BLAG</strong> = Bile (emulsify) | Lipase (break) | Adipose (store) | Gall bladder (bile stored here)
+  </div>
+
+  <div class="card">
+    <div class="card-title cyan">🔗 Concept Connection</div>
+    <div class="mini-item"><div class="mini-key">Bile juice</div><div>Produced by LIVER, STORED in Gall Bladder → emulsifies fats</div></div>
+    <div class="mini-item"><div class="mini-key">Lipase</div><div>From pancreatic juice → breaks fat into fatty acids</div></div>
+    <div class="mini-item"><div class="mini-key">Adipose tissue</div><div>Fat-storing tissue located below the skin</div></div>
+    <div class="mini-item"><div class="mini-key">Omega-3</div><div>Unsaturated fat found in walnuts, almonds → good for heart</div></div>
+    <div class="mini-item"><div class="mini-key">Cholesterol in egg yolk</div><div>Good cholesterol + Vitamin D + fat + vitamins (not harmful if moderate)</div></div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Exam Trap</div>
+    Students confuse: <strong>Where is bile produced vs. stored?</strong><br>
+    ✅ Bile is <em>produced by LIVER</em> but <em>stored in GALL BLADDER</em>. Don't swap them!
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: PROTEINS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-proteins">
+  <h1 class="page-title">💪 Proteins</h1>
+  <p class="page-subtitle">Body building nutrients · Growth & Repair · 20 amino acids</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title green">🔥 Core Facts</div>
+      <ul>
+        <li>Called <strong>"body building nutrients"</strong></li>
+        <li>Made of <strong>amino acids</strong></li>
+        <li>Total amino acids: <code>20</code></li>
+        <li>Essential: <code>9</code> (body can't make → must eat)</li>
+        <li>Non-essential: <code>11</code> (body makes on its own)</li>
+        <li>Egg white = protein | Egg yolk = fat + vitamins</li>
+        <li>Best vegetarian source = <strong>Soybean</strong></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title amber">🧪 Proteins in Various Foods</div>
+      <div class="mini-item"><div class="mini-key">Rice</div><div>Glutelin + Albumin</div></div>
+      <div class="mini-item"><div class="mini-key">Milk</div><div>Casein</div></div>
+      <div class="mini-item"><div class="mini-key">Hair & Nails</div><div>Keratin</div></div>
+      <div class="mini-item"><div class="mini-key">Grains/Cereals</div><div>Gluten (some people intolerant)</div></div>
+      <div class="mini-item"><div class="mini-key">Human body</div><div>Collagen (most abundant)</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title purple">🔬 Collagen — Special Star Protein <span class="tag tag-fire">🔥 High Yield</span></div>
+    <div class="grid2">
+      <div>
+        <ul>
+          <li><strong>Most abundant protein</strong> in human body</li>
+          <li>Found in skin, bones, joints</li>
+          <li>Structure: <strong>Triple Helical</strong></li>
+          <li>Discoverer: <strong>G.N. Ramachandran</strong> (Indian scientist)</li>
+          <li>For absorption of collagen → Vitamin C is essential</li>
+        </ul>
+      </div>
+      <div class="hl hl-purple">
+        <strong>Compare Structures:</strong><br>
+        DNA → <em>Double Helix</em> → Watson & Crick (1953)<br>
+        Collagen → <em>Triple Helix</em> → G.N. Ramachandran<br><br>
+        <span style="color:var(--text-dim); font-size:12px;">Hook: DNA is a couple (double), Collagen is a trio (triple)!</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🧠 Memory Hook — 9 vs 11 Rule</div>
+    <strong>ESSENTIAL = 9</strong> → Think: "I need 9 of these or I'll DINE OUT" (you go outside = must consume from food)<br>
+    <strong>NON-ESSENTIAL = 11</strong> → Body makes 11 at home. Total = 20.<br><br>
+    Hook for collagen: <em>"Ramachandran has THREE strands of hair — just like his triple helix collagen!"</em>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Exam Trap</div>
+    DNA double helix → <strong>Watson & Crick (1953)</strong><br>
+    Collagen triple helix → <strong>G.N. Ramachandran</strong><br>
+    These are DIFFERENT structures discovered by DIFFERENT scientists. Very common confusion!
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: VITAMINS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-vitamins">
+  <h1 class="page-title">💊 Vitamins</h1>
+  <p class="page-subtitle">Micronutrients · Term coined by Casimir Funk, 1912</p>
+
+  <div class="card">
+    <div class="card-title green">🔑 Master Classification <span class="tag tag-fire">🔥</span></div>
+    <div class="grid2">
+      <div class="hl hl-blue">
+        <strong>💧 Water Soluble</strong><br>
+        Vitamins <strong>B</strong> and <strong>C</strong><br>
+        <span style="font-size:12px; color:var(--text-dim);">Dissolve in water · not stored long in body</span>
+      </div>
+      <div class="hl hl-amber">
+        <strong>🧈 Fat Soluble</strong><br>
+        Vitamins <strong>A D E K</strong><br>
+        <span style="font-size:12px; color:var(--text-dim);">Need fat for absorption · stored in liver/fat</span>
+      </div>
+    </div>
+    <div class="hook" style="margin-top:12px;">
+      <div class="hook-label">🧠 Hook: "A DEK of cards"</div>
+      Fat soluble = ADEK → imagine a <strong>deck of oily cards</strong> (fat). Water soluble = BC → imagine <strong>B and C swimming</strong> in water.
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title amber">📊 Vitamin Complete Table <span class="tag tag-fire">🔥 Exam Favourite</span></div>
+    <table>
+      <tr><th>Vitamin</th><th>Scientific Name</th><th>Deficiency Disease</th><th>Key Source</th><th>Priority</th></tr>
+      <tr><td><strong>A</strong></td><td><em>Retinol</em></td><td>Night blindness, Xerophthalmia (dry eyes)</td><td>Carrot, Mango, Papaya</td><td><span class="tag tag-fire">🔥</span></td></tr>
+      <tr><td><strong>B1</strong></td><td><em>Thiamine</em></td><td>Beriberi</td><td>Whole grains</td><td><span class="tag tag-fire">🔥</span></td></tr>
+      <tr><td><strong>B2</strong></td><td><em>Riboflavin</em></td><td>—</td><td>Milk, eggs</td><td><span class="tag tag-star">⭐</span></td></tr>
+      <tr><td><strong>B3</strong></td><td><em>Niacin / Niacinamide</em></td><td>Pellagra (3D disease: Dementia + Dermatitis + Diarrhea)</td><td>Meat, nuts</td><td><span class="tag tag-fire">🔥</span></td></tr>
+      <tr><td><strong>B5</strong></td><td><em>Pantothenic Acid</em></td><td>—</td><td>Wide variety</td><td><span class="tag tag-star">⭐</span></td></tr>
+      <tr><td><strong>B6</strong></td><td><em>Pyridoxine</em></td><td>—</td><td>Meat, fish, bananas</td><td><span class="tag tag-star">⭐</span></td></tr>
+      <tr><td><strong>B7</strong></td><td><em>Biotin (= Vitamin H)</em></td><td>—</td><td>Egg yolk, nuts</td><td><span class="tag tag-star">⭐</span></td></tr>
+      <tr><td><strong>B9</strong></td><td><em>Folic Acid</em></td><td>Neural tube defects in pregnancy</td><td>Leafy greens</td><td><span class="tag tag-star">⭐</span></td></tr>
+      <tr><td><strong>B12</strong></td><td><em>Cyanocobalamin</em></td><td>Pernicious Anemia</td><td>Animal products</td><td><span class="tag tag-fire">🔥</span></td></tr>
+      <tr><td><strong>C</strong></td><td><em>Ascorbic Acid</em></td><td>Scurvy, Bleeding Gums</td><td>Lemon, Amla, citrus</td><td><span class="tag tag-fire">🔥</span></td></tr>
+      <tr><td><strong>D</strong></td><td><em>Calciferol</em><br>D2=Ergocalciferol<br>D3=Cholecalciferol</td><td>Rickets (children), Osteomalacia (soft bones), Osteoporosis (porous bones)</td><td>Sunlight (Sunshine Vitamin) + also a hormone</td><td><span class="tag tag-fire">🔥</span></td></tr>
+      <tr><td><strong>E</strong></td><td><em>Tocopherol</em></td><td>Antisterility / Infertility</td><td>Sprouts, vegetable oils</td><td><span class="tag tag-star">⭐</span></td></tr>
+      <tr><td><strong>K</strong></td><td><em>Phylloquinone</em></td><td>No blood clotting / excessive bleeding</td><td>Leafy greens</td><td><span class="tag tag-fire">🔥</span></td></tr>
+    </table>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🧠 Hook — Vitamin B3 Pellagra: The 3D Monster</div>
+    B3 deficiency makes you a <strong>3D monster</strong>: your mind goes dark (Dementia), your skin explodes (Dermatitis), and your gut revolts (Diarrhea). All three start with <strong>D</strong> = 3D disease.
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🧠 Hook — Vitamin K for K(oagulation)</div>
+    K = Koagulation (German spelling). If K is missing → blood won't clot → you bleed forever. Think K = Klot stopper.
+  </div>
+
+  <div class="card">
+    <div class="card-title red">🔥 Vitamin D — Special Notes <span class="tag tag-fire">🔥</span></div>
+    <ul>
+      <li>Also called <strong>Sunshine Vitamin</strong></li>
+      <li>Also considered a <strong>hormone</strong></li>
+      <li>D2 = <em>Ergocalciferol</em> (plant source)</li>
+      <li>D3 = <em>Cholecalciferol</em> (most common deficiency form)</li>
+      <li>Deficiency → <strong>Rickets</strong> (kids) → <strong>Osteomalacia</strong> (soft bones) → <strong>Osteoporosis</strong> (porous bones)</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Exam Traps — Vitamin Edition</div>
+    <ul>
+      <li>B7 = Biotin = also called <strong>Vitamin H</strong> (not Vitamin B7 in older naming)</li>
+      <li>Vitamin C = Ascorbic Acid → Scurvy. <strong>NOT</strong> beriberi (B1), NOT pellagra (B3)</li>
+      <li>B12 deficiency → <strong>Pernicious Anemia</strong> (not iron-deficiency anemia)</li>
+      <li>Vitamin D = sunshine vitamin = ALSO a hormone. Students forget the hormone part!</li>
+      <li>Vitamin E → infertility. Vitamin K → bleeding. Easy to swap!</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: MINERALS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-minerals">
+  <h1 class="page-title">⚗️ Minerals</h1>
+  <p class="page-subtitle">Micronutrients · Inorganic · Essential for body functions</p>
+
+  <div class="card">
+    <div class="card-title green">📊 Key Minerals Table <span class="tag tag-fire">🔥</span></div>
+    <table>
+      <tr><th>Mineral</th><th>Function</th><th>Deficiency</th><th>Memory Hook</th></tr>
+      <tr><td><strong>Calcium (Ca)</strong></td><td>Bone & tooth health</td><td>Bone deterioration, tooth issues</td><td>Ca = Calcium = Calcified bones</td></tr>
+      <tr><td><strong>Iodine (I)</strong></td><td>Thyroid hormone production</td><td>Goitre (swollen neck)</td><td>I = I can't swallow (neck swells)</td></tr>
+      <tr><td><strong>Iron (Fe)</strong></td><td>Haemoglobin formation</td><td>Anaemia</td><td>Fe = Ferrous = blood red iron</td></tr>
+      <tr><td><strong>Magnesium (Mg)</strong></td><td>Metabolism, bone health</td><td>Metabolic issues</td><td>Mg = Motor of metabolism</td></tr>
+      <tr><td><strong>Zinc (Zn)</strong></td><td>Protein synthesis, cell growth</td><td>Growth issues</td><td>Zn = Zero growth without zinc</td></tr>
+      <tr><td><strong>Sodium/Potassium</strong></td><td>Heart rhythm, nerve signals</td><td>Irregular heartbeat</td><td>Na-K pump = heart's rhythm keeper</td></tr>
+    </table>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🧠 Memory Hook — Goitre & Iodine</div>
+    <strong>Iodine deficiency → Thyroid can't work → Thyroid swells trying to compensate → Neck looks huge = GOITRE.</strong><br>
+    Remember: <em>iodised salt</em> was introduced to prevent goitre. The neck = a thyroid alarm bell.
+  </div>
+
+  <div class="card">
+    <div class="card-title cyan">🔗 Plant Macronutrients vs Human Macronutrients</div>
+    <div class="grid2">
+      <div class="hl hl-green">
+        <strong>Human Macros:</strong><br>
+        Carbohydrates + Fats + Proteins
+      </div>
+      <div class="hl hl-blue">
+        <strong>Plant Macros (NPK + more):</strong><br>
+        N (Nitrogen), P (Phosphorus), K (Potassium)<br>
+        + C, H, O + Ca, Mg, S<br>
+        Everything else = Plant Micronutrients
+      </div>
+    </div>
+    <p style="margin-top:10px; font-size:12px; color:var(--text-dim);">Hook: Plants run on NPK like cars run on petrol. NPK = Nitrogen, Phosphorus, Potassium = fertiliser trio.</p>
+  </div>
+
+  <div class="hl hl-amber">
+    <strong>⭐ Vitamin C + Collagen link:</strong> Without Vitamin C, no matter how much collagen you consume, it won't be absorbed properly. Vitamin C is the key that unlocks collagen absorption.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: PHOTOSYNTHESIS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-photosynthesis">
+  <h1 class="page-title">🌿 Photosynthesis & Plastids</h1>
+  <p class="page-subtitle">Plant nutrition · Chloroplast · Light & Dark Reactions</p>
+
+  <div class="card">
+    <div class="card-title green">📐 Photosynthesis Equation <span class="tag tag-fire">🔥</span></div>
+    <div style="text-align:center; padding:16px; background:var(--bg3); border-radius:8px; font-size:16px; font-family:'JetBrains Mono', monospace; color:var(--green); margin-bottom:14px;">
+      CO₂ + H₂O → C₆H₁₂O₆ + O₂
+    </div>
+    <ul>
+      <li>Takes place in <strong>Chloroplast</strong></li>
+      <li>Plants store food as <strong>Starch</strong> (complex carbohydrate)</li>
+      <li>Salivary amylase digests starch → simple sugars</li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title amber">⚡ Light Reaction (Light Dependent)</div>
+      <ul>
+        <li>Occurs in: <strong>Grana</strong> (thylakoids)</li>
+        <li>What happens: Light splits <strong>water</strong> → H + O</li>
+        <li>Needs: <strong>Light</strong></li>
+        <li>Produces: Energy (ATP, NADPH)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title blue">🌑 Dark Reaction (Light Independent)</div>
+      <ul>
+        <li>Occurs in: <strong>Stroma</strong></li>
+        <li>What happens: CO₂ → <strong>Glucose</strong></li>
+        <li>Also called: <strong>Calvin Cycle</strong></li>
+        <li>Does NOT need direct light</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🧠 Hook — Grana vs Stroma</div>
+    <strong>GRANA = LIGHT</strong> → Grana sounds like "Grandma lit the stove" (stove = thylakoid disc = light reaction)<br>
+    <strong>STROMA = DARK</strong> → Stroma = Shadows. Dark reaction in the shadowy fluid.
+  </div>
+
+  <div class="card">
+    <div class="card-title purple">🌈 Plastids — The Plant Cell's Organelle Factory <span class="tag tag-fire">🔥</span></div>
+    <p style="margin-bottom:10px; font-size:12px; color:var(--text-dim);">Note: Plastids have their own DNA and ribosomes (like mitochondria)</p>
+    <table>
+      <tr><th>Plastid</th><th>Color</th><th>Function</th><th>Sub-types</th></tr>
+      <tr><td><strong>Chloroplast</strong></td><td>🟢 Green (chlorophyll)</td><td>Photosynthesis — makes food</td><td>—</td></tr>
+      <tr><td><strong>Chromoplast</strong></td><td>🟡🟠 Various</td><td>Provides color to flowers/fruits</td><td>—</td></tr>
+      <tr><td><strong>Leucoplast</strong></td><td>⚪ Colorless</td><td>Food storage</td><td>Amyloplast (carbs), Elaioplast (fat), Aleuroplast (protein)</td></tr>
+    </table>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🧠 Why is Chlorophyll Green?</div>
+    Chlorophyll contains <strong>Magnesium (Mg)</strong> metal.<br>
+    It ABSORBS blue and red light → REFLECTS green light → therefore looks green!<br>
+    Hook: <em>"Mag the magician reflects green and absorbs everything else."</em>
+  </div>
+
+  <div class="card">
+    <div class="card-title cyan">🔬 Chloroplast Structure</div>
+    <div class="mini-item"><div class="mini-key">Thylakoid</div><div>Disc-shaped sac-like structure inside chloroplast</div></div>
+    <div class="mini-item"><div class="mini-key">Grana</div><div>Bundle/stack of thylakoids → Light reaction here</div></div>
+    <div class="mini-item"><div class="mini-key">Stroma</div><div>Fluid filling chloroplast → Dark/Calvin cycle here</div></div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Exam Trap</div>
+    <ul>
+      <li>Light reaction = Grana (NOT stroma). Dark reaction = Stroma (NOT grana). Swap = Wrong!</li>
+      <li>Calvin cycle = Dark reaction = Light INDEPENDENT reaction (not the same as "happens at night")</li>
+      <li>Leucoplast has 3 sub-types: remember AEA = Amyloplast, Elaioplast, Aleuroplast</li>
+      <li>Chloroplast has its own DNA — similar to mitochondria (endosymbiotic theory)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: NUTRITION TYPES -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-nutrition-types">
+  <h1 class="page-title">🔄 Modes of Nutrition</h1>
+  <p class="page-subtitle">Autotrophic vs Heterotrophic · All organisms</p>
+
+  <div class="card">
+    <div class="card-title green">📊 Nutrition Mode Tree <span class="tag tag-star">⭐</span></div>
+    <table>
+      <tr><th>Mode</th><th>Who</th><th>What they do</th><th>Examples</th></tr>
+      <tr>
+        <td><strong>Autotrophic</strong></td>
+        <td>Plants, Phytoplankton</td>
+        <td>Make their own food (photosynthesis)</td>
+        <td>All green plants</td>
+      </tr>
+      <tr>
+        <td><strong>Holozoic</strong></td>
+        <td>Humans, Amoeba</td>
+        <td>Ingest food → digest → excrete waste</td>
+        <td>Humans, Amoeba (food vacuole)</td>
+      </tr>
+      <tr>
+        <td><strong>Saprophytic</strong></td>
+        <td>Decomposers</td>
+        <td>Feed on dead/decaying matter</td>
+        <td>Fungi, Yeast, some bacteria</td>
+      </tr>
+      <tr>
+        <td><strong>Parasitic</strong></td>
+        <td>Parasites</td>
+        <td>Derive nutrition from living host (harming host)</td>
+        <td>Cuscuta (plant), Plasmodium, Nematodes/Roundworms</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">🧠 Hook — Saprophyte vs Parasite</div>
+    <strong>Saprophyte</strong> = Scavenger. Eats what's already dead. (Like a vulture)<br>
+    <strong>Parasite</strong> = Pickpocket. Steals from the living. Harms the host. (Like a blood-sucking leech)<br><br>
+    Cuscuta = the vine that climbs up a healthy plant and drains it. Classic exam parasite!
+  </div>
+
+  <div class="card">
+    <div class="card-title blue">🔬 Amoeba — Holozoic in Action</div>
+    <ul>
+      <li>Extends <strong>pseudopods</strong> (false feet) around food particle</li>
+      <li>Engulfs food → forms <strong>food vacuole</strong> inside</li>
+      <li>Digests inside → excretes waste out</li>
+      <li>This entire process = <strong>Holozoic nutrition</strong></li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">⚠ Exam Trap</div>
+    <ul>
+      <li><strong>Cuscuta</strong> = plant parasite (NOT saprophyte). It's alive, climbs living plants → parasitic.</li>
+      <li><strong>Nematodes</strong> (roundworms, Ascaris) = parasites living in small intestine → pseudocoelomates with cylindrical body</li>
+      <li><strong>Plasmodium</strong> = parasite causing malaria (NOT saprophyte)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: EXAM TRAPS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-traps">
+  <h1 class="page-title">⚠️ Exam Traps</h1>
+  <p class="page-subtitle">What students get wrong · Study this before every exam</p>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 1 — Bile: Production vs Storage</div>
+    ❌ Students say: "Liver stores bile"<br>
+    ✅ Correct: <strong>Liver PRODUCES bile. Gall Bladder STORES bile.</strong>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 2 — DNA vs Collagen Helices</div>
+    ❌ Students confuse discoverers<br>
+    ✅ DNA Double Helix → <strong>Watson & Crick (1953)</strong><br>
+    ✅ Collagen Triple Helix → <strong>G.N. Ramachandran</strong> (Indian scientist)
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 3 — Types of Anemia</div>
+    ❌ Students write "iron deficiency" for B12 deficiency<br>
+    ✅ <strong>Iron deficiency → Anaemia</strong> (regular)<br>
+    ✅ <strong>B12 (Cyanocobalamin) deficiency → Pernicious Anaemia</strong>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 4 — Vitamin D is a Hormone!</div>
+    ❌ Students only call it a vitamin<br>
+    ✅ Vitamin D is also considered a <strong>HORMONE</strong>. This fact is frequently tested.
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 5 — Light vs Dark Reaction Locations</div>
+    ❌ Students swap Grana and Stroma<br>
+    ✅ <strong>Light reaction → GRANA</strong> (thylakoids)<br>
+    ✅ <strong>Dark reaction (Calvin cycle) → STROMA</strong>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 6 — Calorie Values</div>
+    ❌ Students say fat = 4 cal/g (confusing with carbs/protein)<br>
+    ✅ <strong>Fat = 9 cal/g</strong> (highest) | Carbs = Protein = <strong>4 cal/g</strong>
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 7 — Vitamin B7 = Vitamin H</div>
+    ❌ Students don't know Biotin has an alternate name<br>
+    ✅ <strong>Vitamin B7 = Biotin = Vitamin H</strong> — all three names for same vitamin
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 8 — Cuscuta is a Parasite NOT Saprophyte</div>
+    ❌ Students call Cuscuta a saprophyte<br>
+    ✅ Cuscuta climbs LIVING plants and drains them → <strong>Parasitic</strong> (not feeding on dead matter)
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 9 — Vitamin A and Night Blindness</div>
+    ❌ Students also add xerophthalmia but forget the name<br>
+    ✅ Vitamin A (Retinol) → Night Blindness + <strong>Xerophthalmia</strong> (dryness of eyes)
+  </div>
+
+  <div class="trap">
+    <div class="trap-label">🔴 TRAP 10 — Mono vs Di vs Poly Classification</div>
+    ❌ Students put Disaccharides in Complex<br>
+    ✅ <strong>Simple = Mono + Di</strong>. <strong>Complex = Poly only.</strong>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: EXAMINER'S QUESTIONS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-questions">
+  <h1 class="page-title">🎯 Examiner's Favourite Questions</h1>
+  <p class="page-subtitle">How SSC CGL attacks this chapter</p>
+
+  <div class="card">
+    <div class="card-title red">🔥 High Probability Direct Questions</div>
+    <ol style="padding-left:20px; line-height:2.2; font-size:14px;">
+      <li>What is the energy value of fat per gram? → <strong>9 cal/g</strong></li>
+      <li>Which vitamin is called the Sunshine Vitamin? → <strong>Vitamin D</strong></li>
+      <li>Deficiency of which vitamin causes Scurvy? → <strong>Vitamin C (Ascorbic Acid)</strong></li>
+      <li>Which mineral deficiency causes Goitre? → <strong>Iodine</strong></li>
+      <li>Who discovered the double helix structure of DNA? → <strong>Watson & Crick (1953)</strong></li>
+      <li>What is the most abundant protein in human body? → <strong>Collagen</strong></li>
+      <li>Where is bile stored? → <strong>Gall Bladder</strong></li>
+      <li>What enzyme breaks fat into fatty acids? → <strong>Lipase</strong></li>
+      <li>Which vitamin's deficiency causes Pernicious Anaemia? → <strong>B12 (Cyanocobalamin)</strong></li>
+      <li>What is Pellagra? → <strong>Deficiency of Vitamin B3 (Niacin)</strong></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title amber">🎯 Statement-Based / True-False Format</div>
+    <ol style="padding-left:20px; line-height:2; font-size:13px;">
+      <li>"Bile is produced by gall bladder" → <strong>FALSE</strong> (Liver produces it)</li>
+      <li>"Vitamin D is only a vitamin" → <strong>FALSE</strong> (also a hormone)</li>
+      <li>"Collagen has double helical structure" → <strong>FALSE</strong> (triple helical)</li>
+      <li>"Fructose is found in fruits" → <strong>TRUE</strong></li>
+      <li>"Dark reaction occurs in Grana" → <strong>FALSE</strong> (occurs in Stroma)</li>
+      <li>"Calvin cycle is light dependent" → <strong>FALSE</strong> (light independent)</li>
+      <li>"Lactose is found in milk" → <strong>TRUE</strong></li>
+      <li>"Starch is a monosaccharide" → <strong>FALSE</strong> (polysaccharide)</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title blue">🎯 Match the Following</div>
+    <div class="grid2">
+      <div>
+        <p style="font-weight:600; margin-bottom:8px; color:var(--blue);">Vitamin → Deficiency Disease</p>
+        <div class="mini-item"><div class="mini-key">Vitamin A</div><div>Night Blindness / Xerophthalmia</div></div>
+        <div class="mini-item"><div class="mini-key">Vitamin B1</div><div>Beriberi</div></div>
+        <div class="mini-item"><div class="mini-key">Vitamin B3</div><div>Pellagra (3D)</div></div>
+        <div class="mini-item"><div class="mini-key">Vitamin B12</div><div>Pernicious Anaemia</div></div>
+        <div class="mini-item"><div class="mini-key">Vitamin C</div><div>Scurvy</div></div>
+        <div class="mini-item"><div class="mini-key">Vitamin D</div><div>Rickets / Osteomalacia</div></div>
+        <div class="mini-item"><div class="mini-key">Vitamin K</div><div>No blood clotting</div></div>
+      </div>
+      <div>
+        <p style="font-weight:600; margin-bottom:8px; color:var(--green);">Protein → Source</p>
+        <div class="mini-item"><div class="mini-key">Casein</div><div>Milk</div></div>
+        <div class="mini-item"><div class="mini-key">Glutelin + Albumin</div><div>Rice</div></div>
+        <div class="mini-item"><div class="mini-key">Keratin</div><div>Hair & Nails</div></div>
+        <div class="mini-item"><div class="mini-key">Gluten</div><div>Grains/Cereals</div></div>
+        <div class="mini-item"><div class="mini-key">Collagen</div><div>Human body (most abundant)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title purple">🎯 Chronology / Discovery Questions</div>
+    <div class="mini-item"><div class="mini-key">1912</div><div>Term "Vitamin" coined by <strong>Casimir Funk</strong></div></div>
+    <div class="mini-item"><div class="mini-key">1953</div><div>DNA Double Helix discovered by <strong>Watson & Crick</strong></div></div>
+    <div class="mini-item"><div class="mini-key">—</div><div>Collagen Triple Helix discovered by <strong>G.N. Ramachandran</strong> (Indian)</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: QUIZ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-quiz">
+  <h1 class="page-title">❓ Self-Test Quiz</h1>
+  <p class="page-subtitle">Tap a question to reveal the answer · Build active recall</p>
+  <div class="quiz-hint">👆 Click any question to reveal the answer</div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">How many calories does 1 gram of fat provide?</div>
+    <div class="q-ans">🟢 <strong>9 calories</strong> per gram. (Carbs and proteins give only 4 cal/g each)</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Who coined the term "Vitamin" and in which year?</div>
+    <div class="q-ans">🟢 <strong>Casimir Funk in 1912</strong></div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">What is the scientific name of Vitamin C? What disease does its deficiency cause?</div>
+    <div class="q-ans">🟢 <strong>Ascorbic Acid</strong>. Deficiency → <strong>Scurvy</strong> (bleeding gums)</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Where does the Light Reaction of photosynthesis take place?</div>
+    <div class="q-ans">🟢 In <strong>Grana</strong> (thylakoids inside chloroplast). Dark reaction → Stroma</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">What are the 3 D's of Pellagra (Vitamin B3 deficiency)?</div>
+    <div class="q-ans">🟢 <strong>Dementia</strong> (memory loss) + <strong>Dermatitis</strong> (skin) + <strong>Diarrhea</strong> = 3D disease</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">G.N. Ramachandran is associated with which discovery?</div>
+    <div class="q-ans">🟢 <strong>Triple helical structure of Collagen</strong> (not DNA — that was Watson & Crick 1953)</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">What is the most abundant protein in the human body?</div>
+    <div class="q-ans">🟢 <strong>Collagen</strong> — found in skin, bones, and connective tissue. Triple helical structure.</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Bile juice is produced by _____ and stored in _____.</div>
+    <div class="q-ans">🟢 Produced by <strong>LIVER</strong>, stored in <strong>GALL BLADDER</strong>. Emulsifies fats.</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Which type of fat is the most dangerous and why?</div>
+    <div class="q-ans">🟢 <strong>Trans fat</strong> — formed when cooking oil is reused repeatedly. Blocks arteries, causes triglyceride buildup.</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Name the three types of Leucoplasts and what each stores.</div>
+    <div class="q-ans">🟢 <strong>Amyloplast</strong> (carbs/starch), <strong>Elaioplast</strong> (fat), <strong>Aleuroplast</strong> (protein)</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Vitamin D is also known as _____. It is also classified as a _____.</div>
+    <div class="q-ans">🟢 Sunshine Vitamin. Also classified as a <strong>HORMONE</strong>. Scientific name: Calciferol. D3 = Cholecalciferol (most common deficiency form)</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">What is the mode of nutrition of Fungi?</div>
+    <div class="q-ans">🟢 <strong>Saprophytic</strong> — feeds on dead and decaying organic matter</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Total amino acids = ___. Essential = ___. Non-essential = ___.</div>
+    <div class="q-ans">🟢 Total = <strong>20</strong>. Essential = <strong>9</strong>. Non-essential = <strong>11</strong>.</div>
+  </div>
+
+  <div class="quiz-q" onclick="this.classList.toggle('revealed')">
+    <div class="q-text">Magnesium is present in which plant molecule? Why is chlorophyll green?</div>
+    <div class="q-ans">🟢 Magnesium is in <strong>chlorophyll</strong>. It absorbs blue and red light and reflects green → plants appear green.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGE: RAPID FIRE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-rapidfire">
+  <h1 class="page-title">⚡ Rapid Fire</h1>
+  <p class="page-subtitle">Flashcard mode · Fast recall training · One at a time</p>
+  <div id="rf-container"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HIGH YIELD LAYER -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-highyield">
+  <h1 class="page-title">⭐ High-Yield Revision Notes</h1>
+  <p class="page-subtitle">50 most important points · Revise in 15 minutes</p>
+  <div class="card">
+    <div class="card-title amber">Macronutrients</div>
+    <div class="mini-item"><div class="mini-key">Macros</div><div>Carbs, Fats, Proteins (needed in grams)</div></div>
+    <div class="mini-item"><div class="mini-key">Carbs energy</div><div>4 cal/g · Benedict's solution tests for sugar</div></div>
+    <div class="mini-item"><div class="mini-key">Mono examples</div><div>Glucose, Fructose (fruit sugar), Galactose</div></div>
+    <div class="mini-item"><div class="mini-key">Di examples</div><div>Sucrose, Maltose (grain), Lactose (milk)</div></div>
+    <div class="mini-item"><div class="mini-key">Fat energy</div><div>9 cal/g — highest of all nutrients</div></div>
+    <div class="mini-item"><div class="mini-key">Fat storage</div><div>Adipose tissue (below skin)</div></div>
+    <div class="mini-item"><div class="mini-key">Worst fat</div><div>Trans fat (reused cooking oil) → artery blockage</div></div>
+    <div class="mini-item"><div class="mini-key">Bile</div><div>Liver produces → Gall Bladder stores → emulsifies fat</div></div>
+    <div class="mini-item"><div class="mini-key">Lipase</div><div>From pancreatic juice → breaks fat → fatty acids</div></div>
+    <div class="mini-item"><div class="mini-key">Collagen</div><div>Most abundant body protein · Triple helix · G.N. Ramachandran</div></div>
+    <div class="mini-item"><div class="mini-key">DNA</div><div>Double helix · Watson & Crick 1953</div></div>
+    <div class="mini-item"><div class="mini-key">Amino acids</div><div>20 total: 9 essential + 11 non-essential</div></div>
+    <div class="mini-item"><div class="mini-key">Key proteins</div><div>Casein (milk), Keratin (hair/nails), Gluten (grains), Albumin+Glutelin (rice)</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title green">Vitamins</div>
+    <div class="mini-item"><div class="mini-key">Term coined</div><div>Casimir Funk, 1912</div></div>
+    <div class="mini-item"><div class="mini-key">Fat soluble</div><div>A, D, E, K</div></div>
+    <div class="mini-item"><div class="mini-key">Water soluble</div><div>B, C</div></div>
+    <div class="mini-item"><div class="mini-key">Vit A</div><div>Retinol → Night blindness, Xerophthalmia · source: carrot, mango</div></div>
+    <div class="mini-item"><div class="mini-key">Vit B1</div><div>Thiamine → Beriberi</div></div>
+    <div class="mini-item"><div class="mini-key">Vit B3</div><div>Niacin → Pellagra (3D: Dementia + Dermatitis + Diarrhea)</div></div>
+    <div class="mini-item"><div class="mini-key">Vit B7</div><div>Biotin = Vitamin H</div></div>
+    <div class="mini-item"><div class="mini-key">Vit B12</div><div>Cyanocobalamin → Pernicious Anaemia</div></div>
+    <div class="mini-item"><div class="mini-key">Vit C</div><div>Ascorbic Acid → Scurvy, Bleeding gums · citrus fruits</div></div>
+    <div class="mini-item"><div class="mini-key">Vit D</div><div>Calciferol = Sunshine Vitamin = HORMONE · Rickets, Osteomalacia, Osteoporosis · D3=Cholecalciferol</div></div>
+    <div class="mini-item"><div class="mini-key">Vit E</div><div>Tocopherol → Infertility · source: sprouts</div></div>
+    <div class="mini-item"><div class="mini-key">Vit K</div><div>Phylloquinone → no blood clotting · K = Koagulation</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">Minerals & Plants</div>
+    <div class="mini-item"><div class="mini-key">Iodine</div><div>Deficiency → Goitre (thyroid swells)</div></div>
+    <div class="mini-item"><div class="mini-key">Iron</div><div>Deficiency → Anaemia</div></div>
+    <div class="mini-item"><div class="mini-key">Plant macros</div><div>NPK (N, P, K) + CHO + Ca, Mg, S</div></div>
+    <div class="mini-item"><div class="mini-key">Chlorophyll</div><div>Contains Mg → reflects green light</div></div>
+    <div class="mini-item"><div class="mini-key">Plastids</div><div>Chloroplast (photo), Chromoplast (color), Leucoplast (storage)</div></div>
+    <div class="mini-item"><div class="mini-key">Leucoplasts</div><div>Amyloplast (carbs), Elaioplast (fat), Aleuroplast (protein)</div></div>
+    <div class="mini-item"><div class="mini-key">Light rxn</div><div>Grana → splits water, needs light</div></div>
+    <div class="mini-item"><div class="mini-key">Dark rxn</div><div>Stroma → Calvin cycle → CO₂→Glucose · light independent</div></div>
+    <div class="mini-item"><div class="mini-key">Saprophytic</div><div>Fungi, yeast → dead/decaying matter</div></div>
+    <div class="mini-item"><div class="mini-key">Parasitic</div><div>Cuscuta, Plasmodium, Nematodes → living host</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ULTRA FAST LAYER -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-ultrafast">
+  <h1 class="page-title">⚡ Ultra-Fast Revision Sheet</h1>
+  <p class="page-subtitle">5-minute revision · Key facts only</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title amber">Energy Values</div>
+      <div class="hl hl-blue">Carbs = <strong>4</strong> cal/g</div>
+      <div class="hl hl-amber" style="margin-top:6px;">Fats = <strong>9</strong> cal/g 🏆</div>
+      <div class="hl hl-green" style="margin-top:6px;">Protein = <strong>4</strong> cal/g</div>
+    </div>
+    <div class="card">
+      <div class="card-title red">Critical Vitamins</div>
+      <p style="font-size:13px; line-height:2;">
+        <strong style="color:var(--green);">A</strong> = Retinol → Night blindness<br>
+        <strong style="color:var(--green);">B1</strong> = Beriberi | <strong style="color:var(--green);">B3</strong> = Pellagra 3D<br>
+        <strong style="color:var(--green);">B12</strong> = Pernicious Anaemia<br>
+        <strong style="color:var(--green);">C</strong> = Scurvy | <strong style="color:var(--green);">D</strong> = Rickets (also hormone)<br>
+        <strong style="color:var(--green);">K</strong> = No clotting (Phylloquinone)
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title blue">Photosynthesis</div>
+      <p style="font-size:13px; line-height:2;">
+        Light rxn → <strong>Grana</strong> (splits H₂O)<br>
+        Dark rxn → <strong>Stroma</strong> (Calvin, CO₂→Glucose)<br>
+        Chlorophyll = Mg metal = green
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title green">Key Proteins</div>
+      <p style="font-size:13px; line-height:2;">
+        Collagen = most abundant = <strong>triple helix</strong><br>
+        Casein = milk | Keratin = hair<br>
+        20 AA total: <strong>9 essential + 11 non-essential</strong>
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title purple">Minerals Quick</div>
+      <p style="font-size:13px; line-height:2;">
+        I → Goitre | Fe → Anaemia<br>
+        Ca → Bone health | Zn → Cell growth<br>
+        Na/K → Heart rhythm
+      </p>
+    </div>
+    <div class="card">
+      <div class="card-title cyan">Discoveries</div>
+      <p style="font-size:13px; line-height:2;">
+        Vitamin term → <strong>Funk 1912</strong><br>
+        DNA double helix → <strong>Watson & Crick 1953</strong><br>
+        Collagen triple helix → <strong>G.N. Ramachandran</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- 30 SECOND LAYER -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-30sec">
+  <h1 class="page-title">⏱ 30-Second Revision Sheet</h1>
+  <p class="page-subtitle">Absolute essentials only · Read aloud once</p>
+  <div class="card" style="border-color: var(--green);">
+    <div class="hl hl-amber" style="font-size:15px; line-height:2.5;">
+      <strong>MACRO:</strong> Carbs(4) · Fat(9) · Protein(4) cal/g<br>
+      <strong>FAT WORST:</strong> Trans > Saturated > Unsaturated<br>
+      <strong>BILE:</strong> Liver makes · Gall Bladder stores<br>
+      <strong>COLLAGEN:</strong> Most abundant · Triple helix · Ramachandran<br>
+      <strong>DNA:</strong> Double helix · Watson & Crick · 1953<br>
+      <strong>VITAMINS:</strong> A=Retinol/Night blind | B3=Pellagra 3D | B12=Pernicious | C=Scurvy | D=Rickets+Hormone | K=Clotting<br>
+      <strong>MINERALS:</strong> I→Goitre | Fe→Anaemia | Ca→Bones<br>
+      <strong>PHOTO:</strong> Grana=Light rxn | Stroma=Dark/Calvin<br>
+      <strong>PLASTIDS:</strong> Chloro(food) · Chromo(color) · Leuco(store)<br>
+      <strong>NUTRITION:</strong> Saprophyte=dead | Parasite=living host | Cuscuta=parasite<br>
+      <strong>FUNK 1912</strong> = Coined "Vitamin"
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- LAST NIGHT LAYER -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" id="page-lastnight">
+  <h1 class="page-title">🌙 Last Night Before Exam</h1>
+  <p class="page-subtitle">Only what can change your score tomorrow</p>
+  <div class="card" style="border-color: var(--red);">
+    <div class="card-title red">🔴 Do NOT forget these 10 things</div>
+    <ol style="font-size:15px; line-height:2.8; padding-left:22px;">
+      <li><strong>Fat = 9 cal/g</strong> (not 4, not 7)</li>
+      <li><strong>Bile: Liver PRODUCES, Gall Bladder STORES</strong></li>
+      <li><strong>Vitamin D = Sunshine Vitamin = also a HORMONE</strong></li>
+      <li><strong>B12 deficiency = Pernicious Anaemia</strong> (not regular anaemia)</li>
+      <li><strong>Collagen = TRIPLE helix</strong> (DNA = double helix)</li>
+      <li><strong>Light reaction in GRANA, Dark reaction in STROMA</strong></li>
+      <li><strong>B7 = Biotin = Vitamin H</strong></li>
+      <li><strong>Pellagra = B3 deficiency = 3D (Dementia + Dermatitis + Diarrhea)</strong></li>
+      <li><strong>Essential amino acids = 9, Non-essential = 11, Total = 20</strong></li>
+      <li><strong>Cuscuta = PARASITIC (not saprophytic)</strong></li>
+    </ol>
+  </div>
+  <div class="hl hl-green" style="font-size:14px; text-align:center; padding:16px;">
+    ✅ You've prepared well. Trust the process. Sleep now. You've got this! 💪
+  </div>
+</div>
+
+</div><!-- end #main -->
+</div><!-- end #layout -->
+
+<script>
+// ── LAYER SYSTEM ──
+let currentLayer = 'full';
+const layerPageMap = {
+  full: 'overview',
+  highyield: 'highyield',
+  ultrafast: 'ultrafast',
+  '30sec': '30sec',
+  lastnight: 'lastnight'
+};
+const layerSpecificPages = ['highyield','ultrafast','30sec','lastnight'];
+
+function showLayer(layer) {
+  currentLayer = layer;
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+
+  // show/hide sidebar
+  document.getElementById('sidebar').style.display = layer === 'full' ? 'block' : 'none';
+
+  go(layerPageMap[layer]);
+}
+
+// ── NAVIGATION ──
+let currentPage = 'overview';
+
+function go(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('visible'));
+  const el = document.getElementById('page-' + pageId);
+  if (el) { el.classList.add('visible'); currentPage = pageId; }
+
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+  const active = document.querySelector(`.sidebar-item[onclick="go('${pageId}')"]`);
+  if (active) active.classList.add('active');
+
+  if (pageId === 'rapidfire') initRapidFire();
+}
+
+// ── RAPID FIRE ──
+const rfData = [
+  { q: "Energy per gram of Fat?", a: "9 calories" },
+  { q: "Energy per gram of Carbs?", a: "4 calories" },
+  { q: "Energy per gram of Protein?", a: "4 calories" },
+  { q: "Who coined the term 'Vitamin'?", a: "Casimir Funk — 1912" },
+  { q: "Vitamin A scientific name?", a: "Retinol" },
+  { q: "Vitamin A deficiency causes?", a: "Night blindness + Xerophthalmia" },
+  { q: "Vitamin B1 deficiency causes?", a: "Beriberi" },
+  { q: "Vitamin B3 deficiency causes?", a: "Pellagra — 3D disease (Dementia, Dermatitis, Diarrhea)" },
+  { q: "Vitamin B7 is also known as?", a: "Biotin = Vitamin H" },
+  { q: "Vitamin B12 scientific name?", a: "Cyanocobalamin — Pernicious Anaemia on deficiency" },
+  { q: "Vitamin C deficiency causes?", a: "Scurvy + Bleeding Gums. Source: Citrus, Amla" },
+  { q: "Vitamin D is also called?", a: "Sunshine Vitamin + it's also a HORMONE" },
+  { q: "Vitamin D deficiency diseases?", a: "Rickets → Osteomalacia → Osteoporosis" },
+  { q: "Vitamin K function?", a: "Blood clotting (Koagulation). Deficiency → no clotting" },
+  { q: "Vitamin K scientific name?", a: "Phylloquinone" },
+  { q: "Most abundant protein in human body?", a: "Collagen — triple helical structure" },
+  { q: "Who discovered Collagen's triple helix?", a: "G.N. Ramachandran (Indian scientist)" },
+  { q: "Who discovered DNA double helix? When?", a: "Watson & Crick — 1953" },
+  { q: "Bile is produced by? Stored where?", a: "Produced by LIVER. Stored in GALL BLADDER" },
+  { q: "What does Lipase do?", a: "Breaks fat into fatty acids. Source: Pancreatic juice" },
+  { q: "Fructose is found where?", a: "Fruits — it's the fruit sugar (monosaccharide)" },
+  { q: "Lactose is found where?", a: "Milk — milk sugar (disaccharide)" },
+  { q: "Maltose is called?", a: "Grain sugar (disaccharide)" },
+  { q: "Total amino acids?", a: "20 total: 9 Essential + 11 Non-essential" },
+  { q: "Light reaction location in chloroplast?", a: "Grana (thylakoids)" },
+  { q: "Dark reaction (Calvin cycle) location?", a: "Stroma" },
+  { q: "Why is chlorophyll green?", a: "Contains Magnesium (Mg). Absorbs blue+red, reflects green" },
+  { q: "3 types of plastids?", a: "Chloroplast (photo), Chromoplast (color), Leucoplast (storage)" },
+  { q: "Iodine deficiency causes?", a: "Goitre — swollen thyroid / neck" },
+  { q: "Iron deficiency causes?", a: "Anaemia" },
+  { q: "Nutrition mode of Fungi?", a: "Saprophytic (feeds on dead/decaying matter)" },
+  { q: "Is Cuscuta a saprophyte or parasite?", a: "PARASITE — it attaches to living plants and drains them" },
+  { q: "Trans fat is formed how?", a: "When cooking oil is reused repeatedly (re-frying)" },
+  { q: "Where is fat stored in the body?", a: "Adipose tissue (located below the skin)" },
+  { q: "What is Pellagra?", a: "Deficiency of Vitamin B3 (Niacin). 3D: Dementia + Dermatitis + Diarrhea" },
+];
+
+let rfIndex = 0;
+let rfAnswerShown = false;
+
+function initRapidFire() {
+  rfIndex = 0;
+  rfAnswerShown = false;
+  renderRF();
+}
+
+function renderRF() {
+  const container = document.getElementById('rf-container');
+  const item = rfData[rfIndex];
+  const progress = Math.round(((rfIndex + 1) / rfData.length) * 100);
+  container.innerHTML = `
+    <div class="rf-card" id="rf-main">
+      <div class="rf-counter">${rfIndex + 1} / ${rfData.length}</div>
+      <div class="rf-q">${item.q}</div>
+      <div class="rf-a" id="rf-ans">✅ ${item.a}</div>
+      <div class="rf-btns">
+        <button class="btn" onclick="showRFAns()">Reveal Answer</button>
+        <button class="btn btn-green" onclick="nextRF()">Next →</button>
+        ${rfIndex > 0 ? `<button class="btn" onclick="prevRF()">← Prev</button>` : ''}
+      </div>
+    </div>
+    <div class="pbar-track" style="margin-top:16px;">
+      <div class="pbar-fill" style="width:${progress}%"></div>
+    </div>
+    <p style="text-align:center; font-size:12px; color:var(--text-faint); margin-top:6px;">${progress}% complete</p>
+  `;
+}
+
+function showRFAns() {
+  const ans = document.getElementById('rf-ans');
+  if (ans) ans.classList.add('show');
+}
+
+function nextRF() {
+  if (rfIndex < rfData.length - 1) { rfIndex++; renderRF(); }
+  else {
+    document.getElementById('rf-container').innerHTML = `
+      <div class="rf-card">
+        <div style="font-size:40px;">🎉</div>
+        <div class="rf-q">All ${rfData.length} cards complete!</div>
+        <div class="rf-btns">
+          <button class="btn btn-green" onclick="initRapidFire()">Restart</button>
+        </div>
+      </div>`;
+  }
+}
+
+function prevRF() {
+  if (rfIndex > 0) { rfIndex--; renderRF(); }
+}
+
+// init
+document.addEventListener('DOMContentLoaded', () => go('overview'));
+</script>
+</body>
+</html>

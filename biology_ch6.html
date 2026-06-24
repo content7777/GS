@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Processes — Digestion &amp; Respiration | SSC CGL Revision System</title>
+<style>
+  :root{
+    --bg: #0b0d12;
+    --bg-raised: #11141b;
+    --bg-card: #151922;
+    --bg-card-hover: #1a1f2b;
+    --border: #232936;
+    --border-soft: #1c212c;
+    --text: #e9ebf0;
+    --text-dim: #aab1bf;
+    --text-faint: #6b7280;
+    --jade: #34d399;
+    --jade-dim: #1f6f56;
+    --jade-glow: rgba(52,211,153,0.14);
+    --sky: #60a5fa;
+    --sky-dim: #2f5fa3;
+    --sky-glow: rgba(96,165,250,0.14);
+    --amber: #f0b450;
+    --amber-glow: rgba(240,180,80,0.14);
+    --rose: #f0708a;
+    --rose-glow: rgba(240,112,138,0.14);
+    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --mono: 'SF Mono', 'Cascadia Mono', Consolas, monospace;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+    height:100vh;
+  }
+
+  /* subtle ambient texture */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse 900px 600px at 12% -10%, var(--jade-glow), transparent 60%),
+      radial-gradient(ellipse 900px 700px at 100% 10%, var(--sky-glow), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .app{
+    display:flex;
+    height:100vh;
+    position:relative;
+    z-index:1;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:300px;
+    flex-shrink:0;
+    background:var(--bg-raised);
+    border-right:1px solid var(--border-soft);
+    display:flex;
+    flex-direction:column;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .sidebar::-webkit-scrollbar{width:6px;}
+  .sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+  .brand{
+    padding:22px 20px 16px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .brand-mark{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:10px;
+  }
+  .brand-dot{
+    width:11px;height:11px;border-radius:50%;
+    background:linear-gradient(135deg,var(--jade),var(--sky));
+    flex-shrink:0;
+    box-shadow:0 0 14px var(--jade-glow);
+  }
+  .brand-title{
+    font-family:var(--serif);
+    font-size:16.5px;
+    font-weight:600;
+    letter-spacing:0.2px;
+    color:var(--text);
+    line-height:1.25;
+  }
+  .brand-sub{
+    font-size:11px;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    letter-spacing:1.4px;
+    margin-top:6px;
+    font-weight:600;
+  }
+
+  .progress-block{
+    padding:14px 20px 18px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .progress-label{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;
+  }
+  .progress-label span:last-child{ color:var(--jade); font-family:var(--mono); font-size:11px; letter-spacing:0; text-transform:none;}
+  .progress-track{
+    height:6px; border-radius:4px; background:var(--bg-card); overflow:hidden; border:1px solid var(--border-soft);
+  }
+  .progress-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--jade),var(--sky));
+    border-radius:4px;
+    width:0%;
+    transition:width .4s ease;
+  }
+
+  .nav-scroll{ flex:1; overflow-y:auto; padding:10px 12px 24px; }
+  .nav-group{ margin-bottom:4px; }
+  .nav-group-title{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:1.3px;
+    color:var(--text-faint);
+    padding:16px 10px 6px;
+    font-weight:700;
+  }
+  .nav-item{
+    display:flex; align-items:center; gap:10px;
+    padding:9px 10px;
+    border-radius:8px;
+    cursor:pointer;
+    color:var(--text-dim);
+    font-size:13.5px;
+    line-height:1.3;
+    margin-bottom:1px;
+    transition:background .15s ease, color .15s ease;
+    user-select:none;
+    border:1px solid transparent;
+  }
+  .nav-item:hover{ background:var(--bg-card); color:var(--text); }
+  .nav-item.active{
+    background:linear-gradient(90deg, var(--jade-glow), transparent);
+    color:var(--text);
+    border-color:var(--border-soft);
+    font-weight:600;
+  }
+  .nav-item.active .nav-ico{ opacity:1; }
+  .nav-ico{ font-size:14px; width:18px; text-align:center; flex-shrink:0; opacity:0.75; }
+  .nav-check{
+    width:7px; height:7px; border-radius:50%; flex-shrink:0;
+    border:1.5px solid var(--text-faint);
+    margin-left:auto;
+  }
+  .nav-check.done{ background:var(--jade); border-color:var(--jade); box-shadow:0 0 6px var(--jade-glow); }
+
+  .sidebar-foot{
+    padding:14px 18px 18px;
+    border-top:1px solid var(--border-soft);
+    font-size:11px;
+    color:var(--text-faint);
+    line-height:1.5;
+  }
+
+  /* ---------- MAIN ---------- */
+  .main{
+    flex:1;
+    height:100vh;
+    overflow-y:auto;
+    position:relative;
+  }
+  .main::-webkit-scrollbar{width:8px;}
+  .main::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+  .topbar{
+    position:sticky; top:0; z-index:5;
+    background:rgba(11,13,18,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border-soft);
+    padding:16px 36px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:16px;
+  }
+  .topbar-crumb{ font-size:12px; color:var(--text-faint); letter-spacing:0.3px; }
+  .topbar-crumb b{ color:var(--text-dim); font-weight:600; }
+  .topbar-actions{ display:flex; gap:8px; }
+  .pill-btn{
+    font-size:11.5px;
+    padding:6px 13px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:var(--bg-card);
+    color:var(--text-dim);
+    cursor:pointer;
+    font-weight:600;
+    letter-spacing:0.2px;
+    transition:all .15s ease;
+  }
+  .pill-btn:hover{ border-color:var(--jade-dim); color:var(--jade); }
+  .pill-btn.active-tag{ border-color:var(--jade-dim); color:var(--jade); background:var(--jade-glow); }
+
+  .page{
+    display:none;
+    padding:38px 44px 90px;
+    max-width:980px;
+    margin:0 auto;
+    animation:fadein .35s ease;
+  }
+  .page.active{ display:block; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .page-eyebrow{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    color:var(--jade);
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .page-eyebrow.sky{ color:var(--sky); }
+  .page-title{
+    font-family:var(--serif);
+    font-size:32px;
+    font-weight:600;
+    margin:0 0 8px;
+    line-height:1.2;
+    letter-spacing:0.2px;
+  }
+  .page-deck{
+    color:var(--text-dim);
+    font-size:15px;
+    line-height:1.6;
+    max-width:680px;
+    margin-bottom:32px;
+  }
+
+  /* ---------- shared content components ---------- */
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius-lg);
+    padding:22px 24px;
+    margin-bottom:18px;
+  }
+  .card h3{
+    font-family:var(--serif);
+    font-size:18px;
+    margin:0 0 12px;
+    color:var(--text);
+    display:flex;align-items:center;gap:9px;
+  }
+  .card h4{
+    font-size:13.5px;
+    margin:18px 0 8px;
+    color:var(--sky);
+    text-transform:uppercase;
+    letter-spacing:0.6px;
+    font-weight:700;
+  }
+  .card p{ color:var(--text-dim); font-size:14.5px; line-height:1.7; margin:0 0 10px;}
+  .card ul, .card ol{ margin:0 0 10px; padding-left:20px; color:var(--text-dim); font-size:14.5px; line-height:1.75;}
+  .card li{ margin-bottom:5px; }
+  .card li::marker{ color:var(--jade); }
+  .card strong{ color:var(--text); font-weight:600; }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:11px; font-weight:700; letter-spacing:0.3px;
+    padding:3px 9px; border-radius:6px;
+    margin:0 5px 5px 0;
+  }
+  .tag.must{ background:var(--rose-glow); color:var(--rose); }
+  .tag.imp{ background:var(--amber-glow); color:var(--amber); }
+  .tag.good{ background:var(--jade-glow); color:var(--jade); }
+
+  .divider{ border:none; border-top:1px solid var(--border-soft); margin:22px 0; }
+
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:760px){ .grid-2{ grid-template-columns:1fr; } }
+
+  .callout{
+    border-left:3px solid var(--sky);
+    background:var(--sky-glow);
+    border-radius:0 10px 10px 0;
+    padding:14px 18px;
+    margin:14px 0;
+    font-size:14px;
+    color:var(--text);
+    line-height:1.65;
+  }
+  .callout.trap{ border-left-color:var(--rose); background:var(--rose-glow); }
+  .callout.trap b{ color:var(--rose); }
+  .callout strong{ color:var(--sky); }
+
+  .hook-box{
+    background:linear-gradient(135deg, var(--jade-glow), var(--sky-glow));
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    margin:12px 0;
+  }
+  .hook-box .hook-label{
+    font-size:10.5px; text-transform:uppercase; letter-spacing:1.2px; color:var(--jade); font-weight:800; margin-bottom:6px;
+  }
+  .hook-box p{ color:var(--text); font-size:14.5px; }
+
+  table.data-table{ width:100%; border-collapse:collapse; margin:12px 0 16px; font-size:13.8px; }
+  table.data-table th{
+    text-align:left; padding:9px 12px; background:var(--bg-raised);
+    color:var(--sky); font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px;
+    border-bottom:1px solid var(--border);
+  }
+  table.data-table td{ padding:9px 12px; border-bottom:1px solid var(--border-soft); color:var(--text-dim); }
+  table.data-table tr:last-child td{ border-bottom:none; }
+  table.data-table td strong{ color:var(--text); }
+
+  .flow{
+    display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:14px 0 18px;
+  }
+  .flow-step{
+    background:var(--bg-raised); border:1px solid var(--border); border-radius:8px;
+    padding:8px 13px; font-size:13px; font-weight:600; color:var(--text);
+    white-space:nowrap;
+  }
+  .flow-arrow{ color:var(--text-faint); font-size:14px; }
+
+  /* ---------- Memory Palace ---------- */
+  .palace-path{
+    position:relative;
+    margin:24px 0;
+    padding-left:34px;
+    border-left:2px dashed var(--border);
+  }
+  .palace-stop{
+    position:relative;
+    padding-bottom:30px;
+  }
+  .palace-stop:last-child{ padding-bottom:0; }
+  .palace-stop::before{
+    content:attr(data-n);
+    position:absolute;
+    left:-46px; top:0;
+    width:30px; height:30px;
+    border-radius:50%;
+    background:var(--bg-card);
+    border:2px solid var(--jade);
+    color:var(--jade);
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:13px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .palace-stop.sky::before{ border-color:var(--sky); color:var(--sky); }
+  .palace-stop h4{
+    font-family:var(--serif);
+    font-size:16.5px;
+    color:var(--text);
+    margin:0 0 6px;
+    text-transform:none;
+    letter-spacing:0;
+    font-weight:600;
+  }
+  .palace-stop p{ color:var(--text-dim); font-size:14px; line-height:1.7; margin:0 0 6px; }
+  .palace-stop .station-tag{
+    font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; display:block;
+  }
+
+  /* ---------- Active Recall ---------- */
+  .qa-card{
+    background:var(--bg-card); border:1px solid var(--border-soft); border-radius:10px;
+    padding:14px 18px; margin-bottom:10px; cursor:pointer; transition:border-color .15s ease;
+  }
+  .qa-card:hover{ border-color:var(--sky-dim); }
+  .qa-q{ font-size:14.5px; color:var(--text); font-weight:600; display:flex; justify-content:space-between; gap:10px;}
+  .qa-q .chev{ color:var(--text-faint); transition:transform .2s ease; flex-shrink:0; }
+  .qa-card.open .qa-q .chev{ transform:rotate(90deg); color:var(--jade); }
+  .qa-a{
+    max-height:0; overflow:hidden;
+    color:var(--text-dim); font-size:14px; line-height:1.7;
+    transition:max-height .25s ease, margin-top .25s ease;
+  }
+  .qa-card.open .qa-a{ max-height:400px; margin-top:10px; }
+
+  .blank-card{
+    background:var(--bg-card); border:1px solid var(--border-soft); border-radius:10px;
+    padding:13px 18px; margin-bottom:8px; font-size:14.5px; color:var(--text-dim); line-height:1.7;
+  }
+  .blank-card .fill{
+    border-bottom:2px solid var(--sky); color:transparent; padding:0 2px; cursor:pointer; border-radius:2px;
+    transition:color .15s ease;
+  }
+  .blank-card .fill.revealed{ color:var(--jade); font-weight:700; border-bottom-color:var(--jade); }
+
+  /* ---------- Speed sheets ---------- */
+  .speed-grid{ display:grid; grid-template-columns:1fr; gap:10px; }
+  .speed-row{
+    display:flex; gap:14px; align-items:flex-start;
+    background:var(--bg-card); border:1px solid var(--border-soft); border-radius:9px;
+    padding:11px 16px;
+  }
+  .speed-row .k{ color:var(--sky); font-weight:700; font-size:13.5px; white-space:nowrap; min-width:140px; }
+  .speed-row .v{ color:var(--text-dim); font-size:13.5px; line-height:1.6; }
+  .speed-row .v strong{ color:var(--text); }
+
+  .last-night{
+    background:linear-gradient(160deg, rgba(240,112,138,0.07), rgba(11,13,18,0));
+    border:1px solid var(--border-soft);
+    border-radius:14px;
+    padding:6px 0 0;
+  }
+  .ln-block{ padding:18px 24px; border-bottom:1px solid var(--border-soft); }
+  .ln-block:last-child{ border-bottom:none; }
+  .ln-block h4{ color:var(--rose); margin-top:0; }
+
+  /* nav toggle for mobile */
+  .menu-toggle{
+    display:none;
+    background:var(--bg-card); border:1px solid var(--border);
+    color:var(--text); border-radius:8px; padding:7px 11px; cursor:pointer; font-size:15px;
+  }
+
+  @media (max-width:880px){
+    .sidebar{
+      position:fixed; left:0; top:0; height:100vh; z-index:50;
+      transform:translateX(-100%);
+      transition:transform .25s ease;
+      box-shadow:20px 0 40px rgba(0,0,0,0.4);
+    }
+    .sidebar.open{ transform:translateX(0); }
+    .menu-toggle{ display:inline-block; }
+    .page{ padding:28px 20px 80px; }
+    .topbar{ padding:14px 18px; }
+    .page-title{ font-size:25px; }
+  }
+
+  .scrim{
+    display:none;
+    position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:40;
+  }
+  .scrim.show{ display:block; }
+
+  a{ color:var(--sky); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+
+  ::selection{ background:var(--jade-glow); }
+
+  .footer-note{
+    text-align:center; color:var(--text-faint); font-size:12px; padding:30px 0 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <div class="brand-dot"></div>
+        <div class="brand-title">Life Processes<br>Revision System</div>
+      </div>
+      <div class="brand-sub">SSC CGL · Biology · FRB 2.0</div>
+    </div>
+
+    <div class="progress-block">
+      <div class="progress-label"><span>Chapter Progress</span><span id="progressText">0%</span></div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="nav-scroll" id="navScroll">
+      <div class="nav-group">
+        <div class="nav-group-title">Orientation</div>
+        <div class="nav-item" data-page="big-picture"><span class="nav-ico">◆</span>Big Picture<span class="nav-check"></span></div>
+        <div class="nav-item" data-page="memory-palace"><span class="nav-ico">🏛</span>Memory Palace<span class="nav-check"></span></div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Digestive System</div>
+        <div class="nav-item" data-page="dig-notes"><span class="nav-ico">📖</span>Complete Notes<span class="nav-check"></span></div>
+        <div class="nav-item" data-page="dig-hooks"><span class="nav-ico">🧠</span>Memory Hooks<span class="nav-check"></span></div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Respiratory System</div>
+        <div class="nav-item" data-page="resp-notes"><span class="nav-ico">📖</span>Complete Notes<span class="nav-check"></span></div>
+        <div class="nav-item" data-page="resp-hooks"><span class="nav-ico">🧠</span>Memory Hooks<span class="nav-check"></span></div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Exam Strategy</div>
+        <div class="nav-item" data-page="connections"><span class="nav-ico">🔗</span>Concept Connections<span class="nav-check"></span></div>
+        <div class="nav-item" data-page="traps"><span class="nav-ico">⚠</span>Exam Traps<span class="nav-check"></span></div>
+        <div class="nav-item" data-page="examiner"><span class="nav-ico">🎯</span>Examiner's Questions<span class="nav-check"></span></div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Active Recall</div>
+        <div class="nav-item" data-page="recall"><span class="nav-ico">❓</span>Self-Test Zone<span class="nav-check"></span></div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Revision Layers</div>
+        <div class="nav-item" data-page="high-yield"><span class="nav-ico">⭐</span>High-Yield Sheet<span class="nav-check"></span></div>
+        <div class="nav-item" data-page="ultra-fast"><span class="nav-ico">⚡</span>Ultra-Fast Sheet<span class="nav-check"></span></div>
+        <div class="nav-item" data-page="thirty-sec"><span class="nav-ico">⏱</span>30-Second Sheet<span class="nav-check"></span></div>
+        <div class="nav-item" data-page="last-night"><span class="nav-ico">🌙</span>Last Night Before Exam<span class="nav-check"></span></div>
+      </div>
+    </div>
+
+    <div class="sidebar-foot">
+      Covers: <strong style="color:var(--jade)">Digestive System</strong> &amp; <strong style="color:var(--sky)">Respiratory System</strong><br>
+      Next lecture: Excretory &amp; Circulatory System
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main" id="main">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <div class="topbar-crumb">Life Processes / <b id="crumbCurrent">Big Picture</b></div>
+      </div>
+      <div class="topbar-actions">
+        <button class="pill-btn" id="prevBtn">← Prev</button>
+        <button class="pill-btn" id="nextBtn">Next →</button>
+      </div>
+    </div>
+
+    <div id="pagesHost">
+
+<!-- ================= BIG PICTURE ================= -->
+<section class="page active" id="page-big-picture">
+  <div class="page-eyebrow">Orientation</div>
+  <h1 class="page-title">The Big Picture</h1>
+  <p class="page-deck">Life Processes has four pillars: Digestion, Respiration, Circulation, Excretion. Today's lecture builds the first two. Here's the one-paragraph version before you drown in detail.</p>
+
+  <div class="card">
+    <h3>🌍 What this chapter is really about</h3>
+    <p>Your body is a machine that needs <strong>fuel (food)</strong> and <strong>oxygen</strong> to make <strong>energy (ATP)</strong>. The digestive system's only real job is to break big, complex food molecules into small, simple, absorbable ones. The respiratory system's only real job is to get oxygen from outside air into your blood, and push waste CO₂ back out. Both systems exist to feed the same final event: <strong>cellular respiration inside the mitochondria</strong>, where glucose + oxygen → energy + CO₂ + water.</p>
+    <div class="hook-box">
+      <div class="hook-label">One-line anchor</div>
+      <p>Digestion = breaking food down into small pieces. Respiration = breaking glucose down into energy. Same verb — "breaking down" — two different chapters. If you remember that, you'll never confuse the two systems' purpose again.</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3 style="color:var(--jade)">🍽 Digestive System</h3>
+      <p><span class="tag must">🔥 Must Know</span></p>
+      <p>Mouth → Esophagus → Stomach → Small Intestine → Large Intestine → Rectum → Anus. Liver and Pancreas are accessory glands — food never enters them, but their juices do enter the canal.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--sky)">🫁 Respiratory System</h3>
+      <p><span class="tag must">🔥 Must Know</span></p>
+      <p>Nose → Pharynx → Larynx → Trachea → Bronchi → Bronchioles → Alveoli. Gaseous exchange happens only at the alveoli, by diffusion, with blood capillaries.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🧭 The 5-step universal life cycle of food</h3>
+    <div class="flow">
+      <div class="flow-step">Ingestion</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Digestion</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Absorption</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Assimilation</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Excretion</div>
+    </div>
+    <p><span class="tag must">🔥 Must Know</span> This exact sequence — <strong>I‑D‑A‑A‑E</strong> — is a favourite SSC ordering/chronology question. Memorize the acronym "<strong>I Dance At Awful Events</strong>" if a hook helps it stick.</p>
+  </div>
+
+  <div class="card">
+    <h3>📏 Numbers that examiners love</h3>
+    <table class="data-table">
+      <tr><th>Structure</th><th>Length / Value</th></tr>
+      <tr><td>Esophagus (food pipe)</td><td><strong>~25 cm</strong></td></tr>
+      <tr><td>Small intestine</td><td><strong>7–8 metres</strong> (long &amp; narrow)</td></tr>
+      <tr><td>Large intestine</td><td><strong>~1.5 metres</strong> (short &amp; wide)</td></tr>
+      <tr><td>Total alimentary canal (adult)</td><td><strong>8–9 metres</strong> (~30 feet)</td></tr>
+      <tr><td>ATP from full aerobic respiration</td><td><strong>38 ATP</strong> total (2 cytoplasm + 36 mitochondria)</td></tr>
+      <tr><td>Ribs</td><td><strong>12 pairs = 24</strong> + 1 sternum = 25 bones in rib cage</td></tr>
+      <tr><td>Atmospheric air (inhaled)</td><td>N₂ 78% · O₂ 21% · CO₂ 0.036%</td></tr>
+      <tr><td>Exhaled air</td><td>N₂ 78% · O₂ 16% · CO₂ 4.4%</td></tr>
+    </table>
+    <p style="font-size:13px;color:var(--text-faint)">Tip: this table alone is worth re-reading 10 times. SSC loves swapping these numbers in "which is incorrect" questions.</p>
+  </div>
+</section>
+
+<!-- ================= MEMORY PALACE ================= -->
+<section class="page" id="page-memory-palace">
+  <div class="page-eyebrow">Orientation</div>
+  <h1 class="page-title">Chapter Memory Palace</h1>
+  <p class="page-deck">Walk this exact journey in your head during the exam: <strong>The Body Factory Tour</strong> — a single road trip through your own body, from mouth to alveoli. Read it once like a story, not like notes.</p>
+
+  <div class="card">
+    <h3>🏛 The Body Factory Tour</h3>
+    <p>Picture yourself shrunk to the size of a grain of rice, dropped into your own mouth, about to go on a tour of two factories: the <strong style="color:var(--jade)">Food Processing Plant</strong> (digestive) and, after a side door, the <strong style="color:var(--sky)">Air Refinery</strong> (respiratory). You travel only one direction — downhill, like a water slide — and every station does exactly one job before passing you to the next.</p>
+
+    <div class="palace-path">
+      <div class="palace-stop" data-n="1">
+        <span class="station-tag">Station · Oral Cavity</span>
+        <h4>The Reception Desk (Mouth)</h4>
+        <p>Two security guards (teeth) chop visitors into smaller pieces. Three sprinkler stations on the ceiling — <strong>parotid (near the ear), submandibular, sublingual</strong> — spray salivary amylase, which only converts complex carbs (starch) → simple sugars. Nothing else gets processed here. This is the ONLY place starch breakdown begins.</p>
+      </div>
+      <div class="palace-stop" data-n="2">
+        <span class="station-tag">Station · Pharynx &amp; Esophagus</span>
+        <h4>The Sorting Chute &amp; The Slide</h4>
+        <p>The pharynx is a traffic cop with no factory work of its own — it just decides "food goes left, air goes right." Then you fall down a 25 cm slide (esophagus) that squeezes behind you like a python — that squeeze is <strong>peristalsis</strong>, which works even upside-down.</p>
+      </div>
+      <div class="palace-stop" data-n="3">
+        <span class="station-tag">Station · Stomach</span>
+        <h4>The Acid Bath Room</h4>
+        <p>You land in a churning acid pool. A vending machine on the wall dispenses <strong>HCl</strong> (kills germs, makes the pool acidic) and <strong>pepsin</strong> (only works because the pool is acidic — protein → amino acids). Lifeguards called "<strong>swinger cells</strong>" decide when the exit gate opens to the small intestine.</p>
+      </div>
+      <div class="palace-stop" data-n="4">
+        <span class="station-tag">Station · Liver + Gallbladder + Pancreas</span>
+        <h4>The Two Side-Rooms That Never Touch Food Directly</h4>
+        <p>Before the long corridor, two side-rooms pipe chemicals INTO the corridor: the dark-red <strong>Liver</strong> (largest gland in the body, self-healing thanks to Kupffer cells) brews bile and ships it to a storage tank, the <strong>gallbladder</strong>. Bile is sprayed into the corridor to make it <strong>basic</strong> and to <strong>emulsify fat</strong> (smash big fat globules into small ones). The leaf-shaped <strong>Pancreas</strong> next door sprays in <strong>trypsin</strong> (protein → amino acids, works ONLY because bile made things basic) and <strong>lipase</strong> (fat → fatty acids).</p>
+      </div>
+      <div class="palace-stop" data-n="5">
+        <span class="station-tag">Station · Small Intestine</span>
+        <h4>The Long Velvet Corridor (7–8 m)</h4>
+        <p>Walls are covered in thousands of tiny finger-puppets (<strong>villi</strong>) — same trick as root hairs absorbing water — maximizing surface area so nutrients soak into blood capillaries hugging each villus. This is the absorption capital of the body. Final food storage form for humans: <strong>glycogen</strong> (not starch — that's the plant version).</p>
+      </div>
+      <div class="palace-stop" data-n="6">
+        <span class="station-tag">Station · Large Intestine</span>
+        <h4>The Drying Room</h4>
+        <p>Short, wide tunnel (~1.5 m): cecum first, then the colon mops up leftover water. Whatever's left is dry waste, shipped to the rectum, then out the anus.</p>
+      </div>
+      <div class="palace-stop sky" data-n="7">
+        <span class="station-tag">Station · Nose → Pharynx → Larynx</span>
+        <h4>Side Door to the Air Refinery</h4>
+        <p>Through a side door, the air refinery begins. Air enters through nostrils lined with hair and mucus filters (a doormat that wipes dirt before it enters — that's why you breathe through the nose, not mouth). It rejoins the same traffic-cop pharynx, then drops into the <strong>larynx</strong> ("voice box," with vocal cords — your Adam's apple is its label on the box).</p>
+      </div>
+      <div class="palace-stop sky" data-n="8">
+        <span class="station-tag">Station · Trachea → Bronchi → Bronchioles</span>
+        <h4>The Reinforced Pipeline</h4>
+        <p>A windpipe (trachea) reinforced with cartilage rings — like a vacuum-cleaner hose — so it never collapses when you inhale. It forks into two bronchi (left/right), which keep forking into ever-smaller bronchioles, like branches of a tree shrinking toward its leaves.</p>
+      </div>
+      <div class="palace-stop sky" data-n="9">
+        <span class="station-tag">Station · Alveoli</span>
+        <h4>The Balloon Warehouse</h4>
+        <p>At each branch-tip hangs a tiny balloon (<strong>alveolus</strong>), wrapped in capillary netting. Oxygen is crowded inside the balloon (high concentration) and sparse in the blood (low concentration), so it diffuses — high to low — into the blood. CO₂ does the reverse trip, out into the balloon, ready to be exhaled.</p>
+      </div>
+      <div class="palace-stop sky" data-n="10">
+        <span class="station-tag">Station · Lungs, Pleura, Rib Cage, Diaphragm</span>
+        <h4>The Bellows Room</h4>
+        <p>The whole balloon warehouse sits inside two lungs, wrapped in a protective bag (<strong>pleura</strong>), caged by 12+12 ribs and 1 sternum (=25 bones). Below sits a trampoline-like sheet, the <strong>diaphragm</strong>. On inhale: ribs lift, diaphragm drops down to make room for swelling lungs. On exhale: ribs drop, diaphragm rises back up. They always move opposite to each other.</p>
+      </div>
+      <div class="palace-stop" data-n="11">
+        <span class="station-tag">Station · Mitochondria (the final destination of BOTH tours)</span>
+        <h4>The Power Plant in the Basement of Every Cell</h4>
+        <p>Oxygen delivered by the Air Refinery and glucose delivered by the Food Plant finally meet here. Glucose first cracks into pyruvate in the outer hallway (cytoplasm — glycolysis, 2 ATP). If oxygen is present, pyruvate proceeds into the power plant itself (mitochondria — Krebs cycle + electron transport, 36 ATP) for a grand total of <strong>38 ATP</strong>. This is why the mitochondrion is nicknamed the <strong>"powerhouse of the cell."</strong></p>
+      </div>
+    </div>
+
+    <div class="hook-box">
+      <div class="hook-label">Why this works</div>
+      <p>Every station has exactly one job, one chemical, and one physical trick (chopping, sliding, soaking, diffusing). When you forget a fact in the exam, don't try to recall the fact — recall the ROOM. The room will hand the fact back to you.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DIGESTIVE NOTES ================= -->
+<section class="page" id="page-dig-notes">
+  <div class="page-eyebrow">Digestive System</div>
+  <h1 class="page-title">Complete Revision Notes</h1>
+  <p class="page-deck">Every structure, juice, enzyme, and function in the order food actually travels.</p>
+
+  <div class="card">
+    <h3>1️⃣ Mouth / Buccal (Oral) Cavity <span class="tag must">🔥 Must Know</span></h3>
+    <p>Contains tongue and teeth. <strong>Teeth</strong> mechanically chew/bite food — purely mechanical digestion.</p>
+    <h4>Salivary Glands (3 pairs)</h4>
+    <ul>
+      <li><strong>Parotid</strong> — just in front of the ear. Releases the most watery (fluid-type) saliva.</li>
+      <li><strong>Submandibular</strong> — below the jaw/throat region.</li>
+      <li><strong>Sublingual</strong> — under the tongue.</li>
+    </ul>
+    <p>All three release <strong>salivary amylase</strong>, whose job is to break <strong>complex carbohydrates → simple carbohydrates</strong> (e.g. starch, the form in which plants store food, gets broken down here).</p>
+    <div class="callout"><strong>Key exam point:</strong> Complex-carb breakdown into simple sugar begins ONLY in the mouth — nowhere else does this specific conversion start. This is why chewing food well actually matters for digestion, not just etiquette.</div>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ Pharynx <span class="tag good">➕ Good to Know</span></h3>
+    <p>No digestion happens here. It is purely a shared passage for food and air — it routes food toward the esophagus and air toward the larynx/trachea. If you talk or get distracted while eating, food can mistakenly enter the windpipe — this is the actual physiological cause of choking/hiccup-like reactions during eating.</p>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ Esophagus (Food Pipe) <span class="tag imp">⭐ Important</span></h3>
+    <p>Also called the food pipe; part of the alimentary canal. Length ≈ <strong>25 cm</strong>. Food moves down via <strong>peristalsis</strong> — rhythmic muscular contractions that push food downward even against gravity (e.g., even if you were upside down, food would still travel toward the stomach, not fall back up).</p>
+  </div>
+
+  <div class="card">
+    <h3>4️⃣ Stomach <span class="tag must">🔥 Must Know</span></h3>
+    <p>Main secretion: <strong>gastric juice</strong>, containing:</p>
+    <ul>
+      <li><strong>HCl (Hydrochloric acid):</strong> (a) kills bacteria present in food, (b) makes the stomach medium <strong>acidic</strong>.</li>
+      <li><strong>Pepsin:</strong> breaks down <strong>proteins → amino acids</strong>. Pepsin can function ONLY in an acidic medium — this is exactly why HCl must first acidify the stomach.</li>
+    </ul>
+    <p><strong>Swinger cells</strong> (sphincter-type cells) control the gate that allows food to pass from the stomach into the small intestine.</p>
+    <div class="callout"><strong>Cause → Effect chain:</strong> HCl makes medium acidic → acidic medium activates pepsin → pepsin breaks protein into amino acids. Three facts, one chain — never store them separately.</div>
+  </div>
+
+  <div class="card">
+    <h3>5️⃣ Liver, Gallbladder &amp; Bile Juice <span class="tag must">🔥 Must Know</span></h3>
+    <ul>
+      <li><strong>Liver:</strong> dark red / brownish, located on the right side of the body. Produces <strong>bile juice</strong>. It is the <strong>largest gland</strong> in the human body (note: largest organ overall is the <strong>skin</strong>, not the liver).</li>
+      <li>Study of the liver = <strong>Hepatology</strong> (study of blood = Hematology — easy to confuse the two "hema-/hepa-" words).</li>
+      <li>The liver has <strong>regenerative capability</strong> — it can regrow itself — thanks to special cells called <strong>Kupffer cells</strong>.</li>
+      <li><strong>Gallbladder:</strong> stores the bile juice produced by the liver, then releases it into the small intestine.</li>
+    </ul>
+    <h4>Functions of Bile Juice (2 functions — mirrors gastric juice's 2 functions)</h4>
+    <ul>
+      <li>Makes the medium <strong>basic</strong> (memory: <strong>B</strong>ile → <strong>B</strong>asic).</li>
+      <li><strong>Emulsifies fat</strong> — breaks large fat globules into smaller globules, preparing fat for further breakdown into fatty acids.</li>
+    </ul>
+    <div class="callout trap"><b>Common confusion:</b> Bile juice contains NO digestive enzyme of its own. Its basic-medium effect is what allows the pancreatic enzyme trypsin to work — don't credit bile itself with breaking down protein.</div>
+  </div>
+
+  <div class="card">
+    <h3>6️⃣ Pancreas &amp; Pancreatic Juice <span class="tag must">🔥 Must Know</span></h3>
+    <p>Leaf-shaped gland, connects via the pancreatic duct into the small intestine. Releases <strong>pancreatic juice</strong> containing:</p>
+    <ul>
+      <li><strong>Trypsin:</strong> breaks <strong>proteins → amino acids</strong>. Functions ONLY in a basic medium (this is exactly why bile's basic environment is essential — without bile, trypsin cannot work and protein digestion stalls).</li>
+      <li><strong>Lipase:</strong> breaks <strong>fats → fatty acids</strong>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>7️⃣ Small Intestine <span class="tag must">🔥 Must Know</span></h3>
+    <p>Length: <strong>7–8 metres</strong> — called "small" because of smaller diameter/width, NOT because of length (it is actually much longer than the large intestine). Three parts: <strong>Duodenum, Jejunum, Ileum.</strong></p>
+    <p>Site of <strong>most digestion</strong> and the major absorption site. Inner walls have finger-like projections called <strong>villi</strong>, which increase surface area for absorption (same principle as root hair cells in plant epidermis increasing surface area for water absorption). Capillaries attached to villi carry absorbed nutrients onward to body cells.</p>
+    <p>Digested food is finally stored in humans as <strong>glycogen</strong> (contrast: plants store food as <strong>starch</strong>).</p>
+    <p>Maltose (sugar from cereals) gets broken down in the <strong>salivary glands and small intestine</strong> by the enzyme <strong>maltase</strong>.</p>
+  </div>
+
+  <div class="card">
+    <h3>8️⃣ Large Intestine <span class="tag imp">⭐ Important</span></h3>
+    <p>Length ≈ <strong>1.5 metres</strong> — short but wide. Parts: <strong>Cecum</strong> (first part) → <strong>Colon</strong> (absorbs water from waste; minimal digestion occurs here).</p>
+  </div>
+
+  <div class="card">
+    <h3>9️⃣ Rectum &amp; Anus <span class="tag good">➕ Good to Know</span></h3>
+    <p>After water absorption in the colon, solid waste passes to the <strong>rectum</strong>, then is expelled through the <strong>anus</strong>.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔑 What counts as the Alimentary Canal? <span class="tag must">🔥 Must Know</span></h3>
+    <div class="flow">
+      <div class="flow-step">Mouth</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Pharynx</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Esophagus</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Stomach</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Small Intestine</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Large Intestine</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Rectum</div><div class="flow-arrow">→</div>
+      <div class="flow-step">Anus</div>
+    </div>
+    <div class="callout trap"><b>Classic trap:</b> The <strong>Liver and Pancreas are NOT part of the alimentary canal.</strong> Food never physically enters them — they only inject their juices/enzymes into the canal from the side. They ARE part of the digestive SYSTEM, just not the canal itself.</div>
+  </div>
+
+  <div class="card">
+    <h3>🍬 Sugar Sources — don't mix these up <span class="tag imp">⭐ Important</span></h3>
+    <table class="data-table">
+      <tr><th>Sugar</th><th>Found In</th></tr>
+      <tr><td><strong>Maltose</strong></td><td>Cereals</td></tr>
+      <tr><td><strong>Fructose</strong></td><td>Fruits</td></tr>
+      <tr><td><strong>Lactose</strong></td><td>Milk</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ================= DIGESTIVE HOOKS ================= -->
+<section class="page" id="page-dig-hooks">
+  <div class="page-eyebrow">Digestive System</div>
+  <h1 class="page-title">Smart Memory Hooks</h1>
+  <p class="page-deck">Compressed visual triggers — read these right before you read the full notes, and again right after.</p>
+
+  <div class="card">
+    <h3>🧠 Hook: "Two Juices, Two Jobs, Mirror Pattern"</h3>
+    <p>Gastric juice and bile juice are mirror images of each other. Gastric juice = <strong>acidic</strong> + activates pepsin (protein). Bile juice = <strong>basic</strong> + activates trypsin (protein) + emulsifies fat. Picture a seesaw: one side acidic enabling one protein enzyme, other side basic enabling another protein enzyme PLUS a fat trick. Same shape, opposite charge.</p>
+  </div>
+  <div class="card">
+    <h3>🧠 Hook: "B for Bile, B for Basic"</h3>
+    <p>The letter B link is deliberate and simple — every time you see "bile," your brain should auto-complete "basic." This single letter-association removes the single most commonly reversed fact in this chapter (students often swap acidic/basic between gastric and bile juice).</p>
+  </div>
+  <div class="card">
+    <h3>🧠 Hook: "The Ear Tap"</h3>
+    <p>Parotid gland sits right in front of the ear and gives the most watery saliva — imagine turning a tap right next to your ear; water (watery saliva) flows out. "Tap near ear = watery" sticks the location AND the texture together in one image.</p>
+  </div>
+  <div class="card">
+    <h3>🧠 Hook: "Small ≠ Short"</h3>
+    <p>Small intestine is the tall, skinny kid (7–8 m long, narrow) and the large intestine is the short, wide kid (1.5 m, fat). "Small" refers to width, not height. If a friend who is 7 feet tall but skinny is nicknamed "Small" because of his narrow build, you'd understand the joke — same logic here.</p>
+  </div>
+  <div class="card">
+    <h3>🧠 Hook: "Liver's Two Superpowers"</h3>
+    <p>Liver = biggest gland + self-healing. Imagine Wolverine's healing factor but he's also the office's biggest desk (largest gland). Two superpowers, one organ, one Kupffer-cell origin story for the healing power.</p>
+  </div>
+  <div class="card">
+    <h3>🧠 Hook: "Villi = Root Hairs of the Gut"</h3>
+    <p>You already know root hairs increase surface area for water absorption in plants. Villi are the gut's version of root hairs — same finger-like shape, same surface-area trick, just absorbing digested nutrients instead of soil water. One mental image now serves two NCERT chapters.</p>
+  </div>
+</section>
+
+<!-- ================= RESPIRATORY NOTES ================= -->
+<section class="page" id="page-resp-notes">
+  <div class="page-eyebrow sky">Respiratory System</div>
+  <h1 class="page-title">Complete Revision Notes</h1>
+  <p class="page-deck">From the nostril to the mitochondrion — the full journey of one breath.</p>
+
+  <div class="card">
+    <h3>1️⃣ Nose &amp; Nostrils <span class="tag must">🔥 Must Know</span></h3>
+    <p>Breathing begins at the nostrils. Hair and mucus inside the nostrils filter/purify incoming air. This is exactly why you should breathe through the nose, not the mouth — the mouth has no hair/mucus filter to trap dirt and pathogens.</p>
+  </div>
+
+  <div class="card">
+    <h3>2️⃣ Pharynx <span class="tag good">➕ Good to Know</span></h3>
+    <p>Same shared passage as in digestion — splits food one way, air another way.</p>
+  </div>
+
+  <div class="card">
+    <h3>3️⃣ Larynx <span class="tag imp">⭐ Important</span></h3>
+    <p>Also called the <strong>voice box</strong> or <strong>sound box</strong>. Contains the <strong>vocal cords</strong>. The Adam's apple is the external bump associated with this structure.</p>
+  </div>
+
+  <div class="card">
+    <h3>4️⃣ Trachea (Windpipe) <span class="tag must">🔥 Must Know</span></h3>
+    <p>Also called the <strong>windpipe</strong> (contrast with esophagus = food pipe). Reinforced with rings of <strong>cartilage</strong> — a connective tissue with a jelly-like matrix (neither fully hard nor fully soft) — which prevents the trachea from collapsing while breathing.</p>
+  </div>
+
+  <div class="card">
+    <h3>5️⃣ Bronchi &amp; Bronchioles <span class="tag imp">⭐ Important</span></h3>
+    <p>Trachea splits into two <strong>bronchi</strong> (left and right). Each bronchus further divides into smaller branches called <strong>bronchioles</strong>.</p>
+  </div>
+
+  <div class="card">
+    <h3>6️⃣ Alveoli — the actual gas-exchange site <span class="tag must">🔥 Must Know</span></h3>
+    <p>Balloon-like / sac-like structures at the end of bronchioles. Blood capillaries wrap around each alveolus. Gas exchange happens here by <strong>diffusion</strong> — movement of a substance from a region of <strong>high concentration to low concentration</strong>.</p>
+    <ul>
+      <li>Oxygen concentration is high inside the alveolus, low in the capillary blood → O₂ diffuses INTO blood.</li>
+      <li>CO₂ concentration is high in capillary blood, low inside the alveolus → CO₂ diffuses OUT into the alveolus, ready to be exhaled.</li>
+      <li><strong>Arteries</strong> carry oxygen away from this site; <strong>veins</strong> deliver CO₂ to this site for removal.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>7️⃣ Lungs, Pleura &amp; Rib Cage <span class="tag must">🔥 Must Know</span></h3>
+    <p>Two lungs, each covered by a protective double-layered membrane called the <strong>pleura</strong>. The lungs sit inside a protective <strong>rib cage</strong>: <strong>12 ribs on each side (24 total) + 1 sternum</strong> in the middle = <strong>25 bones</strong> forming the rib cage.</p>
+  </div>
+
+  <div class="card">
+    <h3>8️⃣ Diaphragm &amp; Breathing Mechanics <span class="tag must">🔥 Must Know</span></h3>
+    <table class="data-table">
+      <tr><th>Action</th><th>Rib Cage</th><th>Diaphragm</th><th>Lungs</th></tr>
+      <tr><td><strong>Inhale</strong></td><td>Moves UP</td><td>Moves DOWN (flattens)</td><td>Expand / swell with air</td></tr>
+      <tr><td><strong>Exhale</strong></td><td>Moves DOWN</td><td>Moves UP (domes up)</td><td>Shrink to original size</td></tr>
+    </table>
+    <div class="callout"><strong>Key relationship:</strong> rib cage and diaphragm always move in <strong>opposite</strong> directions to each other during the same phase of breathing. The diaphragm drops on inhale to create extra room for the lungs to expand into.</div>
+    <p>Deep breathing = diaphragmatic breathing (stomach moves out) is healthier than shallow breathing, which barely uses the diaphragm.</p>
+  </div>
+
+  <div class="card">
+    <h3>9️⃣ Composition of Inhaled vs Exhaled Air <span class="tag must">🔥 Must Know</span></h3>
+    <table class="data-table">
+      <tr><th>Gas</th><th>Inhaled Air</th><th>Exhaled Air</th></tr>
+      <tr><td>Nitrogen (N₂)</td><td>78%</td><td>78% (inert — passes through unchanged)</td></tr>
+      <tr><td>Oxygen (O₂)</td><td>21%</td><td>16%</td></tr>
+      <tr><td>Carbon dioxide (CO₂)</td><td>0.036%</td><td>4.4%</td></tr>
+    </table>
+    <p>Net effect: we exhale far more O₂ than CO₂ in absolute percentage terms — but the CO₂ percentage rises dramatically relative to its tiny starting value, which is the actual "waste gas" being expelled.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔬 Cellular Respiration — what oxygen is actually for</h3>
+    <p>Inside every cell, glucose (6-carbon molecule) breaks down in the <strong>cytoplasm</strong> into <strong>pyruvate</strong> (3-carbon molecule) — this first stage is called <strong>glycolysis</strong>. What happens next depends on oxygen availability:</p>
+    <table class="data-table">
+      <tr><th>Pathway</th><th>Where</th><th>Oxygen?</th><th>Products</th><th>Occurs in</th></tr>
+      <tr><td><strong>Aerobic respiration</strong></td><td>Mitochondria</td><td>Present (complete)</td><td>Energy + CO₂ + H₂O</td><td>Human cells generally; <strong>38 ATP total</strong> (2 cytoplasm + 36 mitochondria)</td></tr>
+      <tr><td><strong>Anaerobic respiration (Fermentation)</strong></td><td>Cytoplasm</td><td>Absent</td><td>Energy + Ethanol + CO₂</td><td>Yeast (a fungus)</td></tr>
+      <tr><td><strong>Incomplete/lack-of-oxygen respiration</strong></td><td>Cytoplasm</td><td>Insufficient (lag, not absent)</td><td>Energy + Lactic acid</td><td>Human muscle cells during intense exercise (e.g. running)</td></tr>
+    </table>
+    <div class="callout trap"><b>Critical distinction:</b> "Absence" of oxygen (yeast/fermentation) ≠ "lack" of oxygen (muscle cells during exercise). Absence = none at all. Lack = present but insufficient for demand. This wording distinction is a favourite SSC trap.</div>
+    <p>Lactic acid build-up in muscle cells during heavy exercise (e.g., running, when breathing can't keep pace with oxygen demand) causes <strong>muscle cramps</strong>.</p>
+  </div>
+
+  <div class="card">
+    <h3>🔬 Three Stages of Cellular/Aerobic Respiration</h3>
+    <ol>
+      <li><strong>Glycolysis</strong> — glucose → pyruvic acid (occurs in cytoplasm).</li>
+      <li><strong>Krebs Cycle</strong> (also called the <strong>Citric Acid Cycle</strong>) — produces CO₂ + NADH + FADH₂ (occurs in mitochondria).</li>
+      <li><strong>Electron Transport Chain</strong> — NADH transports electrons here to generate the bulk of ATP (occurs in mitochondria).</li>
+    </ol>
+    <p><strong>NADH</strong> = Nicotinamide Adenine Dinucleotide — a coenzyme that transports electrons to the electron transport chain.</p>
+  </div>
+
+  <div class="card">
+    <h3>🐾 Respiration Across Different Organisms <span class="tag imp">⭐ Important</span></h3>
+    <table class="data-table">
+      <tr><th>Organism</th><th>Respires through</th></tr>
+      <tr><td>Insects</td><td><strong>Trachea</strong> (their own tracheal tube system)</td></tr>
+      <tr><td>Fishes</td><td><strong>Gills</strong></td></tr>
+      <tr><td>Frog — tadpole stage (in water)</td><td><strong>Gills</strong></td></tr>
+      <tr><td>Frog — adult stage (on land)</td><td><strong>Lungs</strong> (and skin) — frogs are amphibians, living on both land and water</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>🌿 Respiration in Plants <span class="tag imp">⭐ Important</span></h3>
+    <ul>
+      <li><strong>Roots:</strong> air present in soil interspaces diffuses in through root hairs / epiblema cells of young roots.</li>
+      <li><strong>Leaves:</strong> gas exchange occurs through <strong>stomata</strong> — pores in the epidermis, bordered by <strong>guard cells</strong>. Stomata close when the environment is dry, to reduce water loss alongside gas exchange (linked to <strong>transpiration</strong> — daytime water loss, and <strong>guttation</strong> — nighttime water loss through hydathodes at leaf edges).</li>
+      <li><strong>Young stems:</strong> covered by an impermeable epidermis (to prevent water loss) but still suited for quick gas exchange directly through this epidermis.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= RESPIRATORY HOOKS ================= -->
+<section class="page" id="page-resp-hooks">
+  <div class="page-eyebrow sky">Respiratory System</div>
+  <h1 class="page-title">Smart Memory Hooks</h1>
+  <p class="page-deck">Visual triggers built specifically for the facts students mix up most.</p>
+
+  <div class="card">
+    <h3>🧠 Hook: "Wind vs Food — the Pipe Names"</h3>
+    <p>Trachea = <strong>windpipe</strong> (air), Esophagus = <strong>food pipe</strong> (food). "Wind" and "food" rhyme with their own pipe in your head — say "wind through the windpipe, food through the food pipe" three times fast and the names will never swap again.</p>
+  </div>
+  <div class="card">
+    <h3>🧠 Hook: "Seesaw Breathing"</h3>
+    <p>Picture a seesaw: one end is the rib cage, the other is the diaphragm. When one side goes UP, the other side goes DOWN — always opposite, always at the same time. Inhale = ribs up, diaphragm down. You never need to memorize this as two separate facts again — it's one seesaw.</p>
+  </div>
+  <div class="card">
+    <h3>🧠 Hook: "Absence vs Lack — Empty Glass vs Half Glass"</h3>
+    <p>Absence of oxygen = an empty glass (yeast, true zero oxygen → fermentation, ethanol). Lack of oxygen = a half-full glass that's not enough to satisfy thirst (muscle cells running out of pace with O₂ demand → lactic acid). Different glass, different product, different organism.</p>
+  </div>
+  <div class="card">
+    <h3>🧠 Hook: "38 = 2 + 36, like a Small Deposit + Big Jackpot"</h3>
+    <p>Glycolysis in the cytoplasm is a small deposit of 2 ATP — pocket change. The mitochondria then pay out the jackpot of 36 ATP. Total: 38. If you remember "small deposit, big jackpot," the 2/36 split is automatic.</p>
+  </div>
+  <div class="card">
+    <h3>🧠 Hook: "Tadpole Swims, Frog Hops"</h3>
+    <p>A tadpole SWIMS (in water → needs gills, like a fish). An adult frog HOPS onto land (→ needs lungs). The action (swim/hop) tells you the habitat, and the habitat tells you the respiratory organ.</p>
+  </div>
+</section>
+

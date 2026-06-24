@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reproduction | Bio Revision Vault</title>
+<style>
+:root{
+  --bg:#0f1117;
+  --panel:#161922;
+  --panel-2:#1c2030;
+  --line:#262b3a;
+  --text:#e7e9f0;
+  --text-dim:#9aa1b4;
+  --green:#7ee2a8;
+  --green-dim:#3f6e57;
+  --blue:#7ec8e3;
+  --blue-dim:#3a5e6e;
+  --amber:#e8b86d;
+  --red:#e88c8c;
+  --purple:#c3a6e8;
+  --radius:14px;
+  --serif: "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+  height:100vh;
+}
+
+/* ---------- Layout shell ---------- */
+.app{
+  display:flex;
+  height:100vh;
+  width:100vw;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar{
+  width:300px;
+  min-width:300px;
+  background:linear-gradient(180deg,#12141c,#0f1117);
+  border-right:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  transition:transform .3s ease;
+  z-index:50;
+}
+.brand{
+  padding:22px 22px 16px;
+  border-bottom:1px solid var(--line);
+}
+.brand .tag{
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  color:var(--green);
+  text-transform:uppercase;
+}
+.brand h1{
+  font-family:var(--serif);
+  font-size:22px;
+  margin:6px 0 2px;
+  font-weight:600;
+  color:var(--text);
+  letter-spacing:.01em;
+}
+.brand p{
+  font-size:12.5px;
+  color:var(--text-dim);
+  margin:0;
+}
+
+.nav-scroll{
+  flex:1;
+  overflow-y:auto;
+  padding:14px 12px 18px;
+}
+.nav-scroll::-webkit-scrollbar{width:6px;}
+.nav-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+
+.nav-group{margin-bottom:6px;}
+.nav-group-label{
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  padding:14px 12px 6px;
+}
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 12px;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:13.5px;
+  color:var(--text-dim);
+  transition:background .15s, color .15s;
+  user-select:none;
+}
+.nav-item:hover{background:var(--panel-2);color:var(--text);}
+.nav-item.active{
+  background:rgba(126,226,168,.1);
+  color:var(--green);
+  font-weight:600;
+}
+.nav-item .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--line);
+  flex-shrink:0;
+}
+.nav-item.active .dot{background:var(--green);}
+.nav-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
+
+.sidebar-foot{
+  padding:14px 18px;
+  border-top:1px solid var(--line);
+  font-size:11px;
+  color:var(--text-dim);
+  font-family:var(--mono);
+}
+.progress-wrap{margin-bottom:10px;}
+.progress-bar-track{
+  height:6px;background:var(--panel-2);border-radius:4px;overflow:hidden;margin-top:6px;
+}
+.progress-bar-fill{
+  height:100%;background:linear-gradient(90deg,var(--green),var(--blue));
+  width:0%;transition:width .4s ease;
+}
+
+/* ---------- Main content ---------- */
+.main{
+  flex:1;
+  height:100vh;
+  overflow-y:auto;
+  position:relative;
+}
+.main::-webkit-scrollbar{width:9px;}
+.main::-webkit-scrollbar-thumb{background:var(--line);border-radius:5px;}
+
+.topbar{
+  position:sticky;top:0;z-index:30;
+  background:rgba(15,17,23,.88);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  padding:14px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+}
+.menu-btn{
+  display:none;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  color:var(--text);
+  width:38px;height:38px;
+  border-radius:9px;
+  font-size:16px;
+  cursor:pointer;
+  align-items:center;justify-content:center;
+}
+.topbar-title{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--text-dim);
+  letter-spacing:.06em;
+}
+.topbar-title b{color:var(--green);font-weight:600;}
+.topbar-actions{display:flex;gap:10px;align-items:center;}
+.mark-done-btn{
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  color:var(--text-dim);
+  padding:8px 14px;
+  border-radius:8px;
+  font-size:12.5px;
+  cursor:pointer;
+  font-family:var(--sans);
+  transition:.15s;
+  white-space:nowrap;
+}
+.mark-done-btn.done{
+  background:rgba(126,226,168,.12);
+  border-color:var(--green-dim);
+  color:var(--green);
+}
+
+.page{
+  padding:34px 40px 100px;
+  max-width:980px;
+  margin:0 auto;
+  display:none;
+  animation:fadeIn .35s ease;
+}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ---------- Typography blocks ---------- */
+.eyebrow{
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--blue);
+  margin-bottom:10px;
+  display:flex;align-items:center;gap:8px;
+}
+.page h1.page-title{
+  font-family:var(--serif);
+  font-size:34px;
+  font-weight:600;
+  margin:0 0 8px;
+  color:var(--text);
+}
+.page-sub{
+  color:var(--text-dim);
+  font-size:15px;
+  margin:0 0 30px;
+  max-width:680px;
+}
+
+h2.section-h{
+  font-family:var(--serif);
+  font-size:21px;
+  color:var(--green);
+  margin:38px 0 14px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;
+}
+h3.sub-h{
+  font-family:var(--sans);
+  font-size:15.5px;
+  font-weight:700;
+  color:var(--blue);
+  margin:22px 0 10px;
+}
+p{color:var(--text);font-size:14.8px;}
+.dim{color:var(--text-dim);}
+
+/* ---------- Cards & components ---------- */
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:20px 22px;
+  margin:14px 0;
+}
+.card.green{border-color:var(--green-dim);background:rgba(126,226,168,.05);}
+.card.blue{border-color:var(--blue-dim);background:rgba(126,200,227,.05);}
+.card.amber{border-color:#6e5a37;background:rgba(232,184,109,.06);}
+.card.red{border-color:#6e3a3a;background:rgba(232,140,140,.06);}
+.card.purple{border-color:#5a4a70;background:rgba(195,166,232,.06);}
+
+.tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.tag{
+  font-family:var(--mono);
+  font-size:10.5px;
+  padding:3px 9px;
+  border-radius:20px;
+  font-weight:600;
+  letter-spacing:.03em;
+}
+.tag.must{background:rgba(232,140,140,.16);color:var(--red);}
+.tag.imp{background:rgba(232,184,109,.16);color:var(--amber);}
+.tag.good{background:rgba(126,200,227,.16);color:var(--blue);}
+
+.hook-box{
+  display:flex;gap:14px;
+  background:var(--panel-2);
+  border-left:3px solid var(--purple);
+  border-radius:0 10px 10px 0;
+  padding:14px 18px;
+  margin:12px 0;
+}
+.hook-box .emoji{font-size:22px;line-height:1;flex-shrink:0;}
+.hook-box b{color:var(--purple);}
+
+.trap-box{
+  background:rgba(232,140,140,.07);
+  border:1px solid #5a3838;
+  border-radius:10px;
+  padding:14px 18px;
+  margin:12px 0;
+}
+.trap-box .trap-title{color:var(--red);font-weight:700;font-size:13.5px;margin-bottom:6px;display:flex;gap:6px;align-items:center;}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:14px 0;
+  font-size:13.8px;
+}
+th{
+  background:var(--panel-2);
+  color:var(--blue);
+  text-align:left;
+  padding:10px 14px;
+  font-family:var(--mono);
+  font-size:11.5px;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  border-bottom:1px solid var(--line);
+}
+td{
+  padding:10px 14px;
+  border-bottom:1px solid var(--line);
+  color:var(--text);
+}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(255,255,255,.02);}
+
+ul,ol{padding-left:22px;margin:10px 0;}
+li{margin-bottom:7px;font-size:14.6px;}
+li::marker{color:var(--green);}
+
+.flow{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  margin:16px 0;
+}
+.flow-step{
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  border-radius:9px;
+  padding:9px 15px;
+  font-size:13.5px;
+  font-weight:600;
+}
+.flow-arrow{color:var(--green);font-size:16px;}
+
+/* Memory palace */
+.palace-map{
+  background:radial-gradient(circle at 30% 20%, rgba(126,226,168,.07), transparent 60%),
+              radial-gradient(circle at 80% 70%, rgba(126,200,227,.07), transparent 55%),
+              var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:26px;
+  margin:18px 0 26px;
+}
+.palace-station{
+  display:flex;gap:16px;
+  padding:14px 0;
+  border-bottom:1px dashed var(--line);
+}
+.palace-station:last-child{border-bottom:none;}
+.station-num{
+  font-family:var(--serif);
+  font-size:26px;
+  color:var(--green);
+  opacity:.5;
+  width:38px;
+  flex-shrink:0;
+}
+.station-body b{color:var(--blue);}
+
+/* Flashcards / Active recall */
+.flashcard{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:16px 18px;
+  margin:10px 0;
+  cursor:pointer;
+  position:relative;
+  transition:border-color .2s;
+}
+.flashcard:hover{border-color:var(--blue-dim);}
+.flashcard .q{font-weight:600;color:var(--text);font-size:14.3px;}
+.flashcard .a{
+  color:var(--green);
+  font-size:13.8px;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid var(--line);
+  display:none;
+}
+.flashcard.open .a{display:block;}
+.flashcard .hint{
+  font-family:var(--mono);
+  font-size:10px;
+  color:var(--text-dim);
+  margin-top:8px;
+  letter-spacing:.05em;
+}
+
+.blank{
+  display:inline-block;
+  min-width:70px;
+  border-bottom:2px dotted var(--blue);
+  text-align:center;
+  color:transparent;
+  user-select:none;
+}
+.blank.revealed{color:var(--green);font-weight:700;border-bottom-style:solid;}
+
+/* ultra fast / 30 sec sheets */
+.rapid-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+  margin:16px 0;
+}
+.rapid-card{
+  background:var(--panel-2);
+  border-radius:10px;
+  padding:14px 16px;
+  border:1px solid var(--line);
+}
+.rapid-card h4{
+  margin:0 0 6px;
+  font-size:12.5px;
+  color:var(--amber);
+  font-family:var(--mono);
+  letter-spacing:.04em;
+}
+.rapid-card p{margin:0;font-size:13.5px;color:var(--text);}
+
+.last-night{
+  background:linear-gradient(160deg, rgba(126,226,168,.08), rgba(126,200,227,.05));
+  border:1px solid var(--green-dim);
+  border-radius:16px;
+  padding:24px 26px;
+}
+.last-night h3{color:var(--green);margin-top:0;}
+.last-night ul{margin:8px 0;}
+
+.divider-note{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--text-dim);
+  text-align:center;
+  margin:30px 0 14px;
+  letter-spacing:.1em;
+}
+.divider-note::before,.divider-note::after{content:"— — —";opacity:.3;margin:0 12px;}
+
+.page-nav-footer{
+  display:flex;justify-content:space-between;
+  margin-top:50px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+}
+.nav-footer-btn{
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  color:var(--text);
+  padding:10px 18px;
+  border-radius:9px;
+  cursor:pointer;
+  font-size:13px;
+  font-family:var(--sans);
+}
+.nav-footer-btn:hover{border-color:var(--green-dim);color:var(--green);}
+
+/* overlay for mobile */
+.overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.5);
+  z-index:40;
+}
+.overlay.show{display:block;}
+
+@media(max-width:880px){
+  .sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);}
+  .sidebar.open{transform:translateX(0);}
+  .menu-btn{display:flex;}
+  .page{padding:24px 18px 80px;}
+  .page h1.page-title{font-size:26px;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ================= SIDEBAR ================= -->
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="tag">SSC CGL · Biology</div>
+      <h1>Reproduction</h1>
+      <p>High-Retention Revision Vault</p>
+    </div>
+    <div class="nav-scroll" id="navScroll">
+      <!-- populated by JS -->
+    </div>
+    <div class="sidebar-foot">
+      <div class="progress-wrap">
+        <div style="display:flex;justify-content:space-between;">
+          <span>REVISION PROGRESS</span>
+          <span id="progressPct">0%</span>
+        </div>
+        <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill"></div></div>
+      </div>
+      <div>Reset count this session: <span id="resetCount" style="color:var(--green)">0</span></div>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main" id="main">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn">☰</button>
+      <div class="topbar-title">Chapter: <b>Reproduction</b> <span id="topbarPage" class="dim"></span></div>
+      <div class="topbar-actions">
+        <button class="mark-done-btn" id="markDoneBtn">✓ Mark page revised</button>
+      </div>
+    </div>
+
+    <div id="pages"><!-- pages injected by JS --></div>
+  </main>
+</div>
+
+<script>
+/* ===========================================================
+   PAGE DEFINITIONS
+   Each page: id, navIcon, navLabel, group, html content
+=========================================================== */
+const pages = [
+  { id:"big-picture", icon:"🧬", label:"Big Picture", group:"OVERVIEW" },
+  { id:"memory-palace", icon:"🏰", label:"Memory Palace", group:"OVERVIEW" },
+
+  { id:"asexual-intro", icon:"①", label:"Asexual: Intro & Types", group:"ASEXUAL REPRODUCTION" },
+  { id:"binary-multiple", icon:"②", label:"Binary & Multiple Fission", group:"ASEXUAL REPRODUCTION" },
+  { id:"fragment-budding-regen", icon:"③", label:"Fragmentation, Budding, Regeneration", group:"ASEXUAL REPRODUCTION" },
+  { id:"spore-veg-prop", icon:"④", label:"Spore Formation & Vegetative Propagation", group:"ASEXUAL REPRODUCTION" },
+  { id:"tissue-parthenogenesis", icon:"⑤", label:"Tissue Culture & Parthenogenesis", group:"ASEXUAL REPRODUCTION" },
+
+  { id:"human-male", icon:"♂", label:"Human Male Reproductive System", group:"SEXUAL REPRODUCTION — HUMANS" },
+  { id:"human-female", icon:"♀", label:"Human Female Reproductive System", group:"SEXUAL REPRODUCTION — HUMANS" },
+  { id:"fertilization-dev", icon:"🌱", label:"Fertilization, Gestation & Placenta", group:"SEXUAL REPRODUCTION — HUMANS" },
+  { id:"ivf", icon:"🧪", label:"IVF (Test Tube Baby)", group:"SEXUAL REPRODUCTION — HUMANS" },
+
+  { id:"plant-flower-parts", icon:"🌸", label:"Flower Parts: Stamen & Pistil", group:"SEXUAL REPRODUCTION — PLANTS" },
+  { id:"pollination", icon:"🐝", label:"Pollination Types", group:"SEXUAL REPRODUCTION — PLANTS" },
+  { id:"fertilization-plant", icon:"🍎", label:"Fertilization → Fruit & Seed", group:"SEXUAL REPRODUCTION — PLANTS" },
+  { id:"flower-classification", icon:"🌼", label:"Bisexual/Unisexual, Monoecious/Dioecious", group:"SEXUAL REPRODUCTION — PLANTS" },
+
+  { id:"exam-traps", icon:"⚠", label:"Exam Traps (All)", group:"REVISION LAYERS" },
+  { id:"examiner-questions", icon:"🎯", label:"Examiner's Favourite Questions", group:"REVISION LAYERS" },
+  { id:"active-recall", icon:"❓", label:"Active Recall Zone", group:"REVISION LAYERS" },
+  { id:"high-yield", icon:"⭐", label:"High-Yield Revision Notes", group:"REVISION LAYERS" },
+  { id:"ultra-fast", icon:"⚡", label:"Ultra-Fast Revision Sheet", group:"REVISION LAYERS" },
+  { id:"thirty-sec", icon:"⏱", label:"30-Second Sheet", group:"REVISION LAYERS" },
+  { id:"last-night", icon:"🌙", label:"Last Night Before Exam", group:"REVISION LAYERS" },
+];
+
+/* ===========================================================
+   PAGE CONTENT (HTML strings)
+=========================================================== */
+const content = {};
+
+content["big-picture"] = `
+  <div class="eyebrow">🧬 Orientation</div>
+  <h1 class="page-title">The Big Picture</h1>
+  <p class="page-sub">What this entire chapter is really about, in one breath — before you drown in details.</p>
+
+  <div class="card green">
+    <p><b>Reproduction = the production of new offspring.</b> Biology splits this into exactly two strategies, and every fact in this chapter is a child of one of these two parents:</p>
+    <div class="flow">
+      <div class="flow-step" style="border-color:var(--amber);color:var(--amber);">ASEXUAL<br><span style="font-size:11px;color:var(--text-dim);">1 parent, no gametes, no zygote</span></div>
+      <div class="flow-arrow">vs</div>
+      <div class="flow-step" style="border-color:var(--blue);color:var(--blue);">SEXUAL<br><span style="font-size:11px;color:var(--text-dim);">2 parents, gametes fuse → zygote</span></div>
+    </div>
+  </div>
+
+  <h2 class="section-h">🔑 The One Idea That Unlocks Everything</h2>
+  <div class="hook-box">
+    <div class="emoji">👤</div>
+    <div><b>One parent = one source of traits = high genetic similarity (clone-like).</b><br>
+    <b>Two parents = two sources of traits = high genetic diversity.</b><br>
+    This single idea answers almost every "which has more diversity/similarity" question in this chapter.</div>
+  </div>
+
+  <h2 class="section-h">🗺️ The Territory Map</h2>
+  <table>
+    <tr><th>Branch</th><th>Where it shows up</th><th>Key mechanism</th></tr>
+    <tr><td>Asexual</td><td>Amoeba, Plasmodium, algae, Hydra, Planaria, Rhizopus, plants</td><td>Fission, budding, regeneration, fragmentation, spores, vegetative propagation, parthenogenesis</td></tr>
+    <tr><td>Sexual — Humans</td><td>Male & female reproductive systems</td><td>Sperm + ovum → zygote → fetus, via fertilization in fallopian tube</td></tr>
+    <tr><td>Sexual — Plants</td><td>Flower anatomy</td><td>Stamen (male) + Pistil (female), via pollination → fertilization → fruit/seed</td></tr>
+  </table>
+
+  <h2 class="section-h">🔥 Why This Chapter Is High-Yield for SSC CGL</h2>
+  <ul>
+    <li><b>Direct one-liners:</b> "Disease X caused by which organism reproducing by Y fission" type questions are extremely common.</li>
+    <li><b>Match-the-following gold mine:</b> Organism ↔ type of asexual reproduction is asked almost every year in some form.</li>
+    <li><b>Cross-topic links:</b> This chapter quietly tests Diseases (Malaria, Kala-azar, Cervical cancer) and Botany (algae types) at the same time.</li>
+  </ul>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ The #1 Mindset Trap</div>
+    <p>Students treat "asexual" as one simple idea and rush through it, then lose marks on the 7 different TYPES of asexual reproduction because they all blur together. This chapter rewards people who can instantly tell binary fission apart from multiple fission apart from budding apart from fragmentation. That distinction is drilled hard in the next pages.</p>
+  </div>
+`;
+
+content["memory-palace"] = `
+  <div class="eyebrow">🏰 Retention Framework</div>
+  <h1 class="page-title">The Reproduction Memory Palace</h1>
+  <p class="page-sub">Walk through this mentally during the exam. One building, one journey — every concept has an address.</p>
+
+  <div class="palace-map">
+    <h3 class="sub-h" style="margin-top:0;">🏛️ THE PALACE: "The Twin-Wing Biology Museum"</h3>
+    <p class="dim">Picture a museum with two wings joined by a central hall. The <b>Left Wing</b> is dim, quiet, and full of single mysterious creatures cloning themselves in glass tanks (Asexual Wing). The <b>Right Wing</b> is bright, has a wedding hall energy — couples, flowers, nurseries (Sexual Wing). You always enter through the Central Hall first.</p>
+
+    <div class="palace-station">
+      <div class="station-num">0</div>
+      <div class="station-body"><b>Central Hall — The Fork in the Floor</b><br>
+      A glowing floor sign splits into two paths: 👤 "ONE PARENT →" (left) and 👫 "TWO PARENTS →" (right). This is the gametes/zygote checkpoint — if you see gametes fusing, you're going right.</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">1</div>
+      <div class="station-body"><b>Left Wing, Tank 1 — The Amoeba Splitting Blob</b><br>
+      A shapeless blob in a tank slowly stretches and SNAPS into two identical blobs along any random line. Label: <b>Binary Fission</b> (Amoeba, bacteria, Paramecium, Leishmania). Notice Leishmania's tank has only ONE groove marked on the glass — it can only snap along that one line (kala-azar's signature).</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">2</div>
+      <div class="station-body"><b>Left Wing, Tank 2 — The Plasmodium Explosion Chamber</b><br>
+      A walled chamber (schizont wall) where ONE nucleus inside multiplies into many tiny dots, then the wall BURSTS, releasing a swarm. Label: <b>Multiple Fission</b> (Plasmodium → malaria, via female Anopheles mosquito).</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">3</div>
+      <div class="station-body"><b>Left Wing, Greenhouse Corner — The Algae Shelf</b><br>
+      Mature green strands (Spirogyra) sit on a shelf; when fully grown they SNAP into fragments, and each fragment regrows into a full strand. Label: <b>Fragmentation</b> (only after maturity — unlike fission which breaks immature). Side shelves show Chlorophyceae (green: Spirogyra, Volvox, Ulothrix), Phaeophyceae (brown: Laminaria, Sargassum), Rhodophyceae (red: source of agar/jelly).</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">4</div>
+      <div class="station-body"><b>Left Wing, Pond Tank — The Hydra Balloon</b><br>
+      A small balloon-like bud grows out of Hydra's side, inflates fully, then detaches as a complete new Hydra. Label: <b>Budding</b>. Right next to it, a cut Planaria (flatworm) regrows its missing half — Label: <b>Regeneration</b> (Planaria, Hydra, Rhizopus repair, NOT a primary reproduction mode — "no one waits for an accident").</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">5</div>
+      <div class="station-body"><b>Left Wing, Bread Shelf — The Rhizopus Lollipop Forest</b><br>
+      Tiny lollipop-shaped stalks (bob-and-stick) stand on old bread, each bob bursting with spores that drift down onto fresh bread. Label: <b>Spore Formation</b> (Rhizopus = bread mold).</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">6</div>
+      <div class="station-body"><b>Left Wing Exit, The Garden Path — Vegetative Propagation</b><br>
+      A path showing: a cut rose stem regrowing (<b>Cutting</b>), a buried bent stem sprouting upward (<b>Layering</b> — lemon, strawberry), two tied stems merging into one pink rose (<b>Grafting</b>), and a Bryophyllum leaf with baby buds dropping off its edges into soil. A lab door at the end says <b>Tissue Culture</b> — "scientific vegetative propagation," used for pricey ornamental plants.</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">7</div>
+      <div class="station-body"><b>Right Wing, Wedding Hall — Human Reproduction</b><br>
+      A groom's changing room (testis → epididymis → vas deferens → prostate fluid → urethra) on one side; a bride's chamber (ovary → fallopian tube → uterus) on the other. They meet at the <b>altar = fallopian tube</b> (fertilization), then move into the <b>honeymoon suite = uterus</b> (implantation, 9-month gestation).</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">8</div>
+      <div class="station-body"><b>Right Wing, Nursery — Placenta Desk</b><br>
+      A delivery desk with two conveyor belts: one labeled <b>Umbilical Vein</b> bringing in oxygen+nutrients TO the baby, one labeled <b>Umbilical Artery</b> taking deoxygenated waste AWAY from the baby. (Reverse of normal body labeling — that's the trap.)</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">9</div>
+      <div class="station-body"><b>Right Wing, Greenhouse — The Flower Stage</b><br>
+      A flower stands like a tiny stage: <b>Stamen</b> (filament + anther + pollen) is the groom holding pollen "gifts." <b>Pistil</b> (stigma + style + ovary) is the bride — sticky stigma = "playing hard to get but secretly ready." A bee flies in (entomophily), wind blows pollen (anemophily), water carries it (hydrophily) — three delivery routes to the altar.</div>
+    </div>
+
+    <div class="palace-station">
+      <div class="station-num">10</div>
+      <div class="station-body"><b>Right Wing Exit, The Orchard</b><br>
+      After the pollen tube delivers the gamete and fertilization happens: the ovary swells into <b>fruit</b>, the ovule becomes the <b>seed</b>, and every other flower part (petals, stamens, even the style) withers and falls — except the green <b>sepal</b>, which stands guard till the end (like the green cap on a mango).</div>
+    </div>
+  </div>
+
+  <div class="hook-box">
+    <div class="emoji">🚶</div>
+    <div>To recall the whole chapter: <b>walk the museum left to right.</b> Tanks 1→6 are asexual, the wedding hall and greenhouse (7→10) are sexual. If you forget a fact, ask "which room was I standing in?"</div>
+  </div>
+`;
+
+content["asexual-intro"] = `
+  <div class="eyebrow">① Asexual Reproduction</div>
+  <h1 class="page-title">Introduction & The Family Tree of Types</h1>
+  <p class="page-sub">Foundation before the details. Get this page perfect and every later page becomes easy.</p>
+
+  <div class="tag-row"><span class="tag must">MUST KNOW</span></div>
+  <div class="card green">
+    <h3 class="sub-h" style="margin-top:0;">Definition</h3>
+    <p>Asexual reproduction: <b>no gametes are produced, no zygote is formed</b>. A single parent (you can mentally call it "male or female, whichever you like" — sex is irrelevant here) directly produces offspring.</p>
+  </div>
+
+  <h2 class="section-h">🧬 Genetic Similarity vs Diversity</h2>
+  <table>
+    <tr><th>Mode</th><th># Parents</th><th>Result</th></tr>
+    <tr><td>Asexual</td><td>1</td><td><b style="color:var(--green)">High genetic similarity</b> (clone of the single parent)</td></tr>
+    <tr><td>Sexual</td><td>2</td><td><b style="color:var(--blue)">High genetic diversity</b> (traits mixed from two parents)</td></tr>
+  </table>
+  <div class="hook-box">
+    <div class="emoji">🧠</div>
+    <div><b>Hook:</b> Similarity and Diversity are direct opposites. One parent → one trait-source → clone-like similarity. Two parents → two trait-sources → diverse mix (you got some of mom, some of dad).</div>
+  </div>
+
+  <h2 class="section-h">🌳 The Complete Family Tree of Asexual Reproduction</h2>
+  <div class="rapid-grid">
+    <div class="rapid-card"><h4>BINARY FISSION</h4><p>Amoeba, bacteria, Paramecium, Leishmania</p></div>
+    <div class="rapid-card"><h4>MULTIPLE FISSION</h4><p>Plasmodium (malaria)</p></div>
+    <div class="rapid-card"><h4>FRAGMENTATION</h4><p>Algae (Spirogyra, etc.)</p></div>
+    <div class="rapid-card"><h4>BUDDING</h4><p>Hydra</p></div>
+    <div class="rapid-card"><h4>REGENERATION</h4><p>Planaria, Hydra, Rhizopus (repair, not primary mode)</p></div>
+    <div class="rapid-card"><h4>SPORE FORMATION</h4><p>Rhizopus (bread mold)</p></div>
+    <div class="rapid-card"><h4>VEGETATIVE PROPAGATION</h4><p>Plants — cutting, layering, grafting, Bryophyllum buds, potato</p></div>
+    <div class="rapid-card"><h4>TISSUE CULTURE</h4><p>Scientific/artificial vegetative propagation</p></div>
+    <div class="rapid-card"><h4>PARTHENOGENESIS</h4><p>Honey bees — embryo from egg, no fertilization</p></div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap</div>
+    <p>Don't confuse "asexual reproduction" with "asexual = no reproductive organs at all." Plants show BOTH sexual reproduction (flowers) AND asexual reproduction (vegetative propagation) — same organism, two pathways.</p>
+  </div>
+
+  <h2 class="section-h">❓ Quick Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Which has higher genetic diversity — sexual or asexual reproduction? Why?</div>
+    <div class="a">Sexual — because two parents contribute different traits, creating a mixed/diverse genetic combination.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["binary-multiple"] = `
+  <div class="eyebrow">② Asexual Reproduction</div>
+  <h1 class="page-title">Binary Fission & Multiple Fission</h1>
+  <p class="page-sub">The two "fission" types — both mean "breaking," but the number of pieces and the plane of division differ.</p>
+
+  <h2 class="section-h">🔹 Binary Fission</h2>
+  <div class="card green">
+    <p><b>"Bi" = two, "fission" = break.</b> One parent breaks into exactly <b>two offspring</b>.</p>
+    <p><b>Examples:</b> Amoeba, bacteria, Paramecium, Leishmania.</p>
+  </div>
+  <ul>
+    <li><b>Amoeba:</b> has no fixed shape (amoeboid), so it can divide <b>along any plane</b>.</li>
+    <li><b>Leishmania:</b> causative organism of <b>Kala-azar</b> disease. It has an elongated shape, so it divides <b>only along one fixed plane</b>.</li>
+  </ul>
+
+  <div class="hook-box">
+    <div class="emoji">🦠</div>
+    <div><b>Hook:</b> Amoeba is shapeless → it's "flexible," divides ANY way. Leishmania is a fixed elongated shape → it's "rigid," only ONE way. Shape determines flexibility of the division plane.</div>
+  </div>
+
+  <h2 class="section-h">🔹 Multiple Fission</h2>
+  <div class="card blue">
+    <p>Same idea as fission (breaking), but instead of splitting into 2, the parent breaks into <b>many (multiple) offspring at once</b>.</p>
+    <p><b>Example:</b> <b>Plasmodium</b> — forms a structure called the <b>schizont wall</b>. Inside, the nucleus divides repeatedly to form many small Plasmodium units; the schizont wall then bursts, releasing all of them simultaneously.</p>
+  </div>
+
+  <div class="card amber">
+    <h3 class="sub-h" style="margin-top:0;">🔗 Disease Connection</h3>
+    <p>Plasmodium is a <b>protozoan parasite</b> responsible for <b>Malaria</b>. Carrier: <b>female Anopheles mosquito</b>.</p>
+    <p class="dim">Compare (don't confuse): <i>Aedes aegypti</i> mosquito carries Chikungunya and Dengue — NOT malaria.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — Mosquito Mix-Up</div>
+    <table style="margin:8px 0 0;">
+      <tr><th>Mosquito</th><th>Disease(s)</th></tr>
+      <tr><td>Female Anopheles</td><td>Malaria</td></tr>
+      <tr><td>Aedes aegypti</td><td>Dengue, Chikungunya</td></tr>
+    </table>
+    <p style="margin-top:8px;">SSC loves to swap these in MCQs. Anopheles = Malaria is the one fixed pairing to memorize cold.</p>
+  </div>
+
+  <h2 class="section-h">🎯 Statement-Based Question Practice</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Statement: "Binary fission and multiple fission both produce exactly two daughter cells." True or False?</div>
+    <div class="a">False. Binary fission → 2 offspring. Multiple fission → many offspring at once (e.g., Plasmodium).</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Which organism among Amoeba, Leishmania, and Plasmodium divides along only ONE plane?</div>
+    <div class="a">Leishmania (elongated shape restricts it to one plane). Amoeba divides along any plane; Plasmodium undergoes multiple fission, not single-plane binary fission.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["fragment-budding-regen"] = `
+  <div class="eyebrow">③ Asexual Reproduction</div>
+  <h1 class="page-title">Fragmentation, Budding & Regeneration</h1>
+  <p class="page-sub">Three concepts students blur together. By the end of this page you'll never confuse them again.</p>
+
+  <h2 class="section-h">🔹 Fragmentation</h2>
+  <div class="card green">
+    <p>Seen mainly in <b>algae</b> (especially green algae). A <b>fully mature</b> organism breaks into fragments, and each fragment grows into a complete new organism.</p>
+  </div>
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — Fragmentation vs Binary Fission</div>
+    <p>Binary fission = breaks while <b>immature</b>, then each half grows up. Fragmentation = breaks <b>only after becoming fully mature</b>. Same "breaking into pieces" idea, opposite timing.</p>
+  </div>
+
+  <h3 class="sub-h">🌿 Algae Colour Groups (frequently tested alongside this topic)</h3>
+  <table>
+    <tr><th>Group</th><th>Colour</th><th>Examples</th><th>Notable product</th></tr>
+    <tr><td>Chlorophyceae</td><td>Green</td><td>Spirogyra, Volvox, Ulothrix</td><td>—</td></tr>
+    <tr><td>Phaeophyceae</td><td>Brown</td><td>Laminaria, Sargassum</td><td>—</td></tr>
+    <tr><td>Rhodophyceae</td><td>Red</td><td>—</td><td>Source of agar/"jelly"</td></tr>
+  </table>
+  <div class="hook-box">
+    <div class="emoji">🎨</div>
+    <div><b>Hook:</b> Green = Chloro(phyll-green), Brown = Phaeo(sounds like "fade-o", faded brown), Red = Rhodo(like "rhododendron," a red flower) → gives your jelly/agar.</div>
+  </div>
+
+  <h2 class="section-h">🔹 Budding</h2>
+  <div class="card blue">
+    <p>A small outgrowth (<b>bud</b>) forms on the parent, grows progressively larger, and when <b>fully developed</b>, detaches as a complete new individual.</p>
+    <p><b>Classic example: Hydra.</b> Seen only in simple multicellular organisms.</p>
+  </div>
+
+  <h2 class="section-h">🔹 Regeneration</h2>
+  <div class="card amber">
+    <p>The ability to <b>repair/regrow a missing body part</b>, or regenerate the whole organism from a fragment. Seen in <b>Planaria, Hydra, Rhizopus</b> (and partially in lizard tails, and human liver cells — but NOT whole-body regrowth in humans).</p>
+    <p><b style="color:var(--red);">Key exam point:</b> Regeneration is <b>NOT considered a primary mode of reproduction</b> — because "no organism waits for an accident" to reproduce. It only happens when damage occurs.</p>
+  </div>
+
+  <div class="hook-box">
+    <div class="emoji">🦎</div>
+    <div><b>Hook:</b> Lizard tail grows back — that's regeneration, a repair tool, not a baby-making tool. Hydra's MAIN reproduction method is budding; regeneration is just its emergency repair kit (it can use it, but doesn't rely on it to reproduce).</div>
+  </div>
+
+  <div class="card purple">
+    <h3 class="sub-h" style="margin-top:0;">🔗 Cross-Topic Link: Planaria's Classification</h3>
+    <p>Planaria belongs to <b>Phylum Platyhelminthes</b> (flatworms) — "Plan-aria" sounds like "plan-ar/flat." It is <b>free-living</b> (has eyes, can see) — unlike its phylum-mate the <b>liver fluke</b>, which is <b>parasitic</b>.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — Platyhelminthes Members</div>
+    <table style="margin-top:8px;">
+      <tr><th>Organism</th><th>Lifestyle</th></tr>
+      <tr><td>Planaria</td><td>Free-living (has eyes)</td></tr>
+      <tr><td>Liver fluke</td><td>Parasitic</td></tr>
+      <tr><td>Tapeworm</td><td>Parasitic</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-h">❓ Rapid Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Why is regeneration NOT classified as a primary mode of reproduction?</div>
+    <div class="a">Because it only occurs in response to injury/damage — no organism can rely on "waiting for an accident" as a reproductive strategy.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Fragmentation breaks the organism when it is ___(mature/immature)___, while binary fission breaks when ___(mature/immature)___.</div>
+    <div class="a">Fragmentation → mature. Binary fission → immature (then each piece grows up).</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["spore-veg-prop"] = `
+  <div class="eyebrow">④ Asexual Reproduction</div>
+  <h1 class="page-title">Spore Formation & Vegetative Propagation</h1>
+  <p class="page-sub">From bread mold to roses — asexual reproduction's most "everyday life" examples.</p>
+
+  <h2 class="section-h">🔹 Spore Formation</h2>
+  <div class="card green">
+    <p><b>Example: Rhizopus</b> (bread mold) — a thread-like fungal structure. It develops a <b>"bob and stick" structure</b>: the stick is a stalk, the bob at the top is the <b>sporangium</b>, which holds and releases <b>spores</b>. These spores fall on a fresh surface (like bread) and regrow into new fungal threads.</p>
+  </div>
+
+  <h2 class="section-h">🔹 Vegetative Propagation</h2>
+  <div class="card blue">
+    <p>New plants grow from a <b>fragment or cutting of a parent plant's stem or leaf</b> — not from a seed. This is asexual reproduction occurring in plants <i>alongside</i> their sexual (flower-based) reproduction.</p>
+  </div>
+
+  <h3 class="sub-h">Three Techniques</h3>
+  <table>
+    <tr><th>Technique</th><th>How it works</th><th>Examples</th></tr>
+    <tr><td><b>Cutting</b></td><td>Cut a stem and plant it directly; it regrows roots</td><td>Rose, money plant, sugarcane</td></tr>
+    <tr><td><b>Layering</b></td><td>Bend a stem, bury part of it in soil while still attached to parent; buried part grows roots</td><td>Lemon, strawberry</td></tr>
+    <tr><td><b>Grafting</b></td><td>Join stems of two different plants together — rooted part stays below, rootless part placed above</td><td>Roses (e.g., combining red + white rose → pink rose)</td></tr>
+  </table>
+
+  <div class="hook-box">
+    <div class="emoji">🌹</div>
+    <div><b>Hook:</b> "Cutting" = simplest, just chop and plant. "Layering" = the stem never fully leaves the parent while rooting (like a kid still holding mom's hand while testing the water). "Grafting" = a forced marriage of two different plants — rooted one always goes on the bottom (it's the "foundation").</div>
+  </div>
+
+  <h3 class="sub-h">🌿 The Bryophyllum / Potato Trap</h3>
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — "Is this budding?" NO.</div>
+    <p>Bryophyllum leaves have tiny <b>buds along their edges</b>. When they fall onto soil, they regrow into new plants. <b>This is NOT budding</b> — true budding (like in Hydra) means the bud grows to FULL completion while still attached to the parent before detaching. In Bryophyllum, the small bud falls off and grows only AFTER reaching the soil. This is <b>vegetative propagation</b>, not budding.</p>
+    <p style="margin-top:8px;">Same logic for <b>potato</b>: the "eyes"/buds on a potato, when planted, grow into a new potato plant. This is vegetative propagation — not budding, and not "potato forming on potato."</p>
+  </div>
+
+  <h2 class="section-h">🎯 Examiner's Angle</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Is the growth of new plants from Bryophyllum's leaf-edge buds classified as budding?</div>
+    <div class="a">No — it is vegetative propagation. True budding requires the bud to fully mature while attached (like Hydra); Bryophyllum's buds detach early and grow only after reaching soil.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Match: Grafting → ? | Layering → ? | Cutting → ?</div>
+    <div class="a">Grafting → Rose colour mixing (joining two plants); Layering → Lemon, strawberry (bury a bent stem); Cutting → Money plant, sugarcane (chop and replant stem)</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["tissue-parthenogenesis"] = `
+  <div class="eyebrow">⑤ Asexual Reproduction</div>
+  <h1 class="page-title">Tissue Culture & Parthenogenesis</h1>
+  <p class="page-sub">One is "vegetative propagation done in a lab," the other is "sexual-looking but actually asexual."</p>
+
+  <h2 class="section-h">🔹 Tissue Culture</h2>
+  <div class="card green">
+    <p>A <b>scientific / artificial form of vegetative propagation</b>. Small tissue samples (e.g., from a leaf) are placed in a nutrient solution capable of growing them, sometimes transferred between different chemical solutions to continue development.</p>
+    <p><b>Used for:</b> Expensive ornamental/decorative plants (e.g., snake plant) — because the chemical process is costly, it's only economically worthwhile for plants that sell at a premium.</p>
+  </div>
+
+  <h2 class="section-h">🔹 Parthenogenesis</h2>
+  <div class="card amber">
+    <p>A special, almost contradictory case: it is <b>asexual reproduction</b>, but the embryo develops <b>directly from an egg cell, without fertilization</b>. No male gamete is required at all.</p>
+    <p><b>Example:</b> <b>Honey bees</b> (also seen in some lizards).</p>
+  </div>
+
+  <div class="hook-box">
+    <div class="emoji">🐝</div>
+    <div><b>Hook:</b> Parthenogenesis sounds sexual (it involves an "egg," like sexual reproduction) but it's a trick question setup — it's filed under ASEXUAL because there's no fertilization, no male gamete, no fusion. The egg just develops solo.</div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — The Sneaky Classification</div>
+    <p>If a question describes "an embryo developing from an egg" your gut may scream "sexual!" Check for ONE keyword: <b>fertilization</b>. No fertilization + no male gamete = Parthenogenesis = Asexual.</p>
+  </div>
+
+  <h2 class="section-h">🗂️ Quick Recap — Full Asexual Family (for memory check)</h2>
+  <div class="rapid-grid">
+    <div class="rapid-card"><h4>BINARY FISSION</h4><p>Amoeba, bacteria, Paramecium, Leishmania</p></div>
+    <div class="rapid-card"><h4>MULTIPLE FISSION</h4><p>Plasmodium</p></div>
+    <div class="rapid-card"><h4>FRAGMENTATION</h4><p>Algae (mature breaking)</p></div>
+    <div class="rapid-card"><h4>BUDDING</h4><p>Hydra</p></div>
+    <div class="rapid-card"><h4>REGENERATION</h4><p>Planaria, Hydra, Rhizopus (repair only)</p></div>
+    <div class="rapid-card"><h4>SPORE FORMATION</h4><p>Rhizopus</p></div>
+    <div class="rapid-card"><h4>VEGETATIVE PROPAGATION</h4><p>Cutting, layering, grafting, Bryophyllum, potato</p></div>
+    <div class="rapid-card"><h4>TISSUE CULTURE</h4><p>Scientific veg. propagation (ornamental plants)</p></div>
+    <div class="rapid-card"><h4>PARTHENOGENESIS</h4><p>Honey bees — egg without fertilization</p></div>
+  </div>
+  <p class="dim" style="font-size:13px;">Note: <b>Apomixis</b> was mentioned by name in the lecture as part of the full diagram but explicitly marked as "not needed to study now" — low priority, just recognize the term if seen.</p>
+
+  <h2 class="section-h">❓ Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Why is tissue culture typically reserved for ornamental plants rather than common crops?</div>
+    <div class="a">Because the chemical/scientific process is expensive — it's only economically feasible for plants that are sold at a premium (e.g., decorative/ornamental plants like snake plant).</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["human-male"] = `
+  <div class="eyebrow">♂ Sexual Reproduction — Humans</div>
+  <h1 class="page-title">Male Reproductive System</h1>
+  <p class="page-sub">Follow the sperm's journey, station by station — this exact path order is a favourite for sequencing questions.</p>
+
+  <h2 class="section-h">🛣️ The Sperm's Journey (memorize this order)</h2>
+  <div class="flow">
+    <div class="flow-step">Testis</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Epididymis</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Vas deferens</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Seminal vesicle + Prostate gland (add fluid)</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Urethra</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Out</div>
+  </div>
+
+  <div class="card green">
+    <table style="margin:0;">
+      <tr><th>Structure</th><th>Function</th></tr>
+      <tr><td><b>Testis (testicles)</b></td><td>Produces sperm (male gamete) AND testosterone (male sex hormone). Sperm production begins around <b>10–12 years</b>.</td></tr>
+      <tr><td><b>Epididymis</b></td><td>Picks up/stores sperm right after it leaves the testis</td></tr>
+      <tr><td><b>Vas deferens</b></td><td>Tube that carries sperm onward from the epididymis</td></tr>
+      <tr><td><b>Prostate gland</b></td><td>Located between bladder and penis; releases seminal fluid containing sugar — provides sperm with <b>motility</b> (ability to move)</td></tr>
+      <tr><td><b>Urethra</b></td><td>Common passage for both urine and semen, out of the body</td></tr>
+    </table>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — Don't mix up "Seminal vesicle" with "Epididymis"</div>
+    <p>The lecture itself flags this confusion directly: the structure right after the testis is the <b>epididymis</b>, NOT the "seminal vesicle." Keep the order straight: Testis → Epididymis → Vas deferens → (Seminal vesicle / Prostate add fluid) → Urethra.</p>
+  </div>
+
+  <h2 class="section-h">🧬 Sperm Structure — The Gender Decider</h2>
+  <div class="card blue">
+    <p>Sperm = head + tail (no tail-only sperm; head always present). The <b>head contains the DNA</b> and <b>decides the baby's gender</b>. The fluid surrounding the sperm (from prostate, etc.) contains sugar for energy/motility — it does NOT carry genetic/gender information.</p>
+  </div>
+  <div class="hook-box">
+    <div class="emoji">🏎️</div>
+    <div><b>Hook:</b> Head = the "driver" carrying the genetic cargo (decides gender). Tail + surrounding fluid = the "engine and fuel" (sugar) that gives motility. Engine doesn't decide destination; driver does.</div>
+  </div>
+
+  <p class="dim">Note: unlike sperm, the female egg/ovum does <b>not</b> have motility — it cannot move on its own.</p>
+
+  <h2 class="section-h">❓ Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">List the exact order of structures sperm passes through, from production to exit.</div>
+    <div class="a">Testis → Epididymis → Vas deferens → (joined by Seminal vesicle/Prostate gland fluid) → Urethra → Out</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Which part of the sperm determines the baby's gender, and why?</div>
+    <div class="a">The head — because it contains the DNA. The surrounding fluid only provides sugar for motility, not genetic information.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["human-female"] = `
+  <div class="eyebrow">♀ Sexual Reproduction — Humans</div>
+  <h1 class="page-title">Female Reproductive System</h1>
+  <p class="page-sub">Ovulation, the uterine cycle, menarche and menopause — the most date/age-heavy part of this chapter.</p>
+
+  <h2 class="section-h">🥚 Ovaries & Ovulation</h2>
+  <div class="card green">
+    <p><b>Ovum (egg)</b> = female gamete, produced from the <b>ovaries</b>. Egg release (<b>ovulation</b>) begins around <b>12 years</b> and occurs <b>once a month, alternating between the two ovaries</b>.</p>
+    <p style="margin-top:8px;"><b>Important fact:</b> A female is born with <b>all her eggs already present</b> in the ovaries — they are not newly "formed" as she ages; the existing eggs simply mature and release over time.</p>
+  </div>
+
+  <h2 class="section-h">🩸 The Uterine Lining Cycle</h2>
+  <div class="card blue">
+    <p>Each month, the <b>uterus lining thickens</b> to prepare for a possible pregnancy (in case a released egg gets fertilized and implants there). If fertilization does NOT happen, the thickened lining has no purpose, so it <b>sheds as blood</b> — this is what carries the unfertilized egg out of the body too.</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step">Egg released (ovulation)</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Uterus lining thickens</div><div class="flow-arrow">→</div>
+    <div class="flow-step">No fertilization</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Lining sheds as blood</div>
+  </div>
+
+  <h2 class="section-h">📅 Two Key Age Milestones</h2>
+  <table>
+    <tr><th>Term</th><th>Meaning</th><th>Typical Age</th></tr>
+    <tr><td><b>Menarche</b></td><td>The FIRST occurrence of menstrual bleeding — marks the reproductive system becoming active</td><td>12–15 years</td></tr>
+    <tr><td><b>Menopause</b></td><td>Ovulation (egg release) permanently STOPS</td><td>~50 years</td></tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — Menarche vs Menopause</div>
+    <p>These sound similar and are commonly swapped in MCQs. <b>Menarche = START</b> (puberty, ~12–15 yrs). <b>Menopause = STOP</b> (~50 yrs). "-arche" ≈ "archaic/early/start"; "-pause" ≈ literally pausing/stopping.</p>
+  </div>
+
+  <h2 class="section-h">❓ Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">True or False: A woman's eggs are gradually formed throughout her life as she ages.</div>
+    <div class="a">False — all her eggs are already present in the ovaries from birth; they mature and are released over time, not newly created.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Fill in: Menarche occurs around age ___, Menopause occurs around age ___.</div>
+    <div class="a">Menarche: 12–15 years. Menopause: ~50 years.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["fertilization-dev"] = `
+  <div class="eyebrow">🌱 Sexual Reproduction — Humans</div>
+  <h1 class="page-title">Fertilization, Implantation, Gestation & Placenta</h1>
+  <p class="page-sub">The most commonly tested location-based fact in this entire chapter lives here: WHERE does fertilization happen?</p>
+
+  <h2 class="section-h">📍 The Single Most Important Location Fact</h2>
+  <div class="card red" style="border-color:#6e3a3a;background:rgba(232,140,140,.08);">
+    <p style="font-size:16px;"><b>Fertilization (union of sperm + egg) happens in the FALLOPIAN TUBE.</b><br>
+    <b>Implantation (zygote settling in) happens in the UTERUS.</b></p>
+  </div>
+  <div class="hook-box">
+    <div class="emoji">💒</div>
+    <div><b>Hook:</b> Fallopian tube = the "wedding altar" (where union/fertilization happens). Uterus = the "honeymoon home" (where the couple settles down/implants and grows for 9 months).</div>
+  </div>
+
+  <h2 class="section-h">🛣️ Full Sequence</h2>
+  <div class="flow">
+    <div class="flow-step">Gametogenesis</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Insemination</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Fertilization (Fallopian tube)</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Implantation (Uterus)</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Gestation (9 months)</div><div class="flow-arrow">→</div>
+    <div class="flow-step">Baby</div>
+  </div>
+  <ul>
+    <li><b>Gametogenesis:</b> formation of male and female gametes</li>
+    <li><b>Insemination:</b> introduction/injection of sperm</li>
+    <li><b>Fertilization:</b> sperm + egg unite → zygote (in fallopian tube)</li>
+    <li><b>Implantation:</b> zygote attaches in the uterus, develops into embryo → fetus → baby</li>
+    <li><b>Gestation period:</b> the full ~9-month development period</li>
+  </ul>
+
+  <h2 class="section-h">🔗 Cervix — Cross-Topic Disease Link</h2>
+  <div class="card amber">
+    <p>The <b>cervix</b> is the part connecting the vagina to the uterus. <b>Cervical cancer</b> is caused by the <b>Human Papilloma Virus (HPV)</b> — this exact fact frequently reappears in the separate "Diseases" chapter.</p>
+  </div>
+
+  <h2 class="section-h">🍰 Placenta — The Nutrient Highway</h2>
+  <div class="card blue">
+    <p>The <b>placenta transfers nutrients from mother to fetus</b> — this is exactly why a pregnant mother's nutrition directly affects the baby's development.</p>
+    <table style="margin-top:10px;">
+      <tr><th>Vessel</th><th>Direction</th><th>Carries</th></tr>
+      <tr><td><b>Umbilical Veins</b></td><td>Placenta → Fetus</td><td>Oxygenated blood + nutrition</td></tr>
+      <tr><td><b>Umbilical Arteries</b></td><td>Fetus → Placenta</td><td>Deoxygenated blood / waste</td></tr>
+    </table>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — REVERSED from normal body logic!</div>
+    <p>Normally in the body: <b>arteries carry oxygenated blood AWAY from the heart</b>, veins carry deoxygenated blood TOWARD the heart. In the umbilical cord, it's <b>reversed relative to direction</b>: umbilical <b>VEINS bring oxygen IN</b> to the fetus, umbilical <b>ARTERIES take deoxygenated waste OUT</b>. This single swap is a classic SSC trap.</p>
+  </div>
+
+  <h2 class="section-h">❓ Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Where does fertilization occur in humans, and where does implantation occur?</div>
+    <div class="a">Fertilization: Fallopian tube. Implantation: Uterus.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Which umbilical vessel carries oxygenated blood, and in which direction?</div>
+    <div class="a">Umbilical VEIN — carries oxygenated blood + nutrients FROM placenta TO fetus.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Cervical cancer is caused by which virus?</div>
+    <div class="a">Human Papilloma Virus (HPV)</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["ivf"] = `
+  <div class="eyebrow">🧪 Sexual Reproduction — Humans</div>
+  <h1 class="page-title">IVF — In Vitro Fertilization (Test Tube Baby)</h1>
+  <p class="page-sub">Short topic, but a guaranteed one-line definitional question.</p>
+
+  <div class="card green">
+    <h3 class="sub-h" style="margin-top:0;">Process</h3>
+    <ol>
+      <li>Egg is taken from the female's ovary</li>
+      <li>Sperm is collected from the male</li>
+      <li>Both are placed together in a <b>test tube / lab dish</b> for a few hours → fertilization occurs <b>outside the body</b></li>
+      <li>The resulting embryo is then <b>implanted into the fallopian tube/uterus</b></li>
+      <li>It develops normally inside the uterus from there</li>
+    </ol>
+    <p>Because the union (fertilization) of egg and sperm happens in a <b>test tube</b> rather than inside the body, this procedure is popularly called a <b>"test tube baby."</b></p>
+  </div>
+
+  <div class="hook-box">
+    <div class="emoji">🧫</div>
+    <div><b>Hook:</b> The ONLY thing that moves outside the body in IVF is the <b>fertilization step</b>. Implantation and full development still happen the normal way, inside the uterus. IVF doesn't replace pregnancy — it just relocates the very first meeting.</div>
+  </div>
+
+  <h2 class="section-h">❓ One-Liner Recall</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Why is IVF popularly called "test tube baby"?</div>
+    <div class="a">Because fertilization (the union of egg and sperm) takes place in a test tube/lab dish outside the body, before the embryo is implanted into the uterus.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["plant-flower-parts"] = `
+  <div class="eyebrow">🌸 Sexual Reproduction — Plants</div>
+  <h1 class="page-title">Flower Anatomy: Stamen (Male) & Pistil (Female)</h1>
+  <p class="page-sub">The flower is just a tiny version of the human reproductive system — map it the same way.</p>
+
+  <h2 class="section-h">🌼 Quick Anatomy Tour</h2>
+  <ul>
+    <li><b>Petals:</b> the colourful outer leaves of the flower</li>
+    <li><b>Sepal:</b> the green protective part beneath the petals</li>
+  </ul>
+
+  <h2 class="section-h">♂ Stamen — The Male Part</h2>
+  <div class="card blue">
+    <p><b>Stamen = Filament + Anther + Pollen grains</b></p>
+    <table style="margin-top:8px;">
+      <tr><th>Part</th><th>Role</th></tr>
+      <tr><td>Filament</td><td>The stalk supporting the anther</td></tr>
+      <tr><td>Anther</td><td>The (typically yellow) sac at the top, holds the pollen grains</td></tr>
+      <tr><td>Pollen grains</td><td>Contain the male gamete</td></tr>
+    </table>
+  </div>
+
+  <h2 class="section-h">♀ Pistil — The Female Part</h2>
+  <div class="card green">
+    <p><b>Pistil = Stigma + Style + Ovary</b></p>
+    <table style="margin-top:8px;">
+      <tr><th>Part</th><th>Role</th></tr>
+      <tr><td>Stigma</td><td><b>Sticky</b> top surface — catches pollen grains</td></tr>
+      <tr><td>Style</td><td>The tube/stalk connecting stigma to ovary</td></tr>
+      <tr><td>Ovary</td><td>Contains the ovules (female gametes)</td></tr>
+    </table>
+  </div>
+
+  <div class="hook-box">
+    <div class="emoji">😏</div>
+    <div><b>Hook (as taught):</b> The stigma is sticky so that <i>whichever pollen arrives, sticks immediately</i> — "women don't approach men, men approach women, but women are ready too — they just don't show it (hence: sticky, waiting)." Use this exact playful framing to never forget WHY the stigma is sticky: it exists to trap and hold incoming pollen for fertilization.</div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — Stamen vs Pistil Component Mix-up</div>
+    <table style="margin-top:8px;">
+      <tr><th>Easily confused pair</th><th>Belongs to</th></tr>
+      <tr><td>Filament</td><td>STAMEN (male)</td></tr>
+      <tr><td>Style</td><td>PISTIL (female)</td></tr>
+    </table>
+    <p style="margin-top:8px;">Filament and Style are both "stalk-like" connector parts — but one is male (filament, holds anther) and one is female (style, connects stigma to ovary). This pairing is a favourite MCQ swap.</p>
+  </div>
+
+  <h2 class="section-h">❓ Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Name the three parts of the Stamen, and the three parts of the Pistil.</div>
+    <div class="a">Stamen: Filament + Anther + Pollen grains. Pistil: Stigma + Style + Ovary.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Why is the stigma sticky?</div>
+    <div class="a">So that pollen grains landing on it stick immediately, enabling fertilization.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["pollination"] = `
+  <div class="eyebrow">🐝 Sexual Reproduction — Plants</div>
+  <h1 class="page-title">Pollination: Routes & Types</h1>
+  <p class="page-sub">Pollination = the transfer of pollen from the male part to the female part. Four delivery methods, two destination types.</p>
+
+  <h2 class="section-h">🚚 The Four Delivery Agents</h2>
+  <table>
+    <tr><th>Agent</th><th>Term</th></tr>
+    <tr><td>Wind</td><td><b>Anemophily</b></td></tr>
+    <tr><td>Insect</td><td><b>Entomophily</b></td></tr>
+    <tr><td>Water</td><td><b>Hydrophily</b></td></tr>
+    <tr><td>Animal</td><td><b>Zoophily</b></td></tr>
+  </table>
+  <div class="hook-box">
+    <div class="emoji">🐝</div>
+    <div><b>Hook:</b> "Anemo" → like "anemometer" (measures wind) → wind. "Entomo" → like "entomology" (study of insects) → insect. "Hydro" → obviously water. "Zoo" → animal (zoo = animals).</div>
+  </div>
+
+  <h2 class="section-h">🎯 Destination: Self vs Cross</h2>
+  <table>
+    <tr><th>Type</th><th>Meaning</th></tr>
+    <tr><td><b>Self-pollination</b></td><td>Pollen goes to the female part of the <b>same plant</b></td></tr>
+    <tr><td><b>Cross-pollination</b></td><td>Pollen goes to the female part of a <b>different/another plant</b></td></tr>
+  </table>
+
+  <h2 class="section-h">⚗️ What Happens After Pollen Sticks: Chemotropism</h2>
+  <div class="card amber">
+    <p>Once pollen sticks to the stigma, a <b>pollen tube</b> forms and grows toward the ovule, guided by a chemical signal from the ovule. This directional growth response to a chemical stimulus is called <b>chemotropism</b>.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — The Tropism Family</div>
+    <p>Tropism = directional growth response to a stimulus. Don't confuse the type:</p>
+    <table style="margin-top:8px;">
+      <tr><th>Tropism</th><th>Responds to</th></tr>
+      <tr><td>Chemotropism</td><td>Chemical signal (pollen tube growth)</td></tr>
+      <tr><td>Phototropism</td><td>Light</td></tr>
+      <tr><td>Geotropism</td><td>Gravity</td></tr>
+      <tr><td>Hydrotropism</td><td>Water</td></tr>
+    </table>
+    <p style="margin-top:8px;">The lecture flags Phototropism, Geotropism, Hydrotropism as "covered in the next lecture" — but knowing Chemotropism's definition cold (response to a chemical) is essential for THIS chapter.</p>
+  </div>
+
+  <h2 class="section-h">❓ Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Match: Wind → ?, Insect → ?, Water → ?, Animal → ?</div>
+    <div class="a">Wind → Anemophily, Insect → Entomophily, Water → Hydrophily, Animal → Zoophily</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">What is chemotropism, and where does it apply in flower reproduction?</div>
+    <div class="a">Directional growth in response to a chemical stimulus — the pollen tube grows toward the ovule guided by a chemical signal released by it.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["fertilization-plant"] = `
+  <div class="eyebrow">🍎 Sexual Reproduction — Plants</div>
+  <h1 class="page-title">Plant Fertilization → Fruit & Seed Formation</h1>
+  <p class="page-sub">What happens to every single flower part after fertilization — and the one part that survives.</p>
+
+  <h2 class="section-h">🌸→🍎 The Transformation Map</h2>
+  <table>
+    <tr><th>Before fertilization</th><th>After fertilization</th></tr>
+    <tr><td>Pollen grain (male gamete) + Ovule (female gamete)</td><td>Unite → Zygote</td></tr>
+    <tr><td>Ovule</td><td>→ becomes <b>Seed</b></td></tr>
+    <tr><td>Ovary</td><td>→ becomes <b>Fruit</b></td></tr>
+    <tr><td>Petals, stamens, style, stigma</td><td><b>Fall off / wither away</b></td></tr>
+    <tr><td><b>Sepal</b></td><td><b>Remains</b> (the only surviving flower part)</td></tr>
+  </table>
+
+  <div class="hook-box">
+    <div class="emoji">🥭</div>
+    <div><b>Hook:</b> Cut open a mango — the small green cap-like part still attached is the <b>sepal</b>, the last survivor of the original flower. Everything else (petals, stamen remnants) is long gone.</div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — Ovary vs Ovule</div>
+    <table style="margin-top:8px;">
+      <tr><th>Structure</th><th>Becomes</th></tr>
+      <tr><td>Ovary (the larger containing structure)</td><td>Fruit</td></tr>
+      <tr><td>Ovule (the smaller structures inside the ovary)</td><td>Seed</td></tr>
+    </table>
+    <p style="margin-top:8px;">"Ovary" and "Ovule" sound nearly identical and are easily swapped — Ovary is the bigger container → Fruit; Ovule is what's inside it → Seed.</p>
+  </div>
+
+  <h2 class="section-h">❓ Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">After fertilization, which flower part becomes the fruit, and which becomes the seed?</div>
+    <div class="a">Ovary → Fruit. Ovule → Seed.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Which single flower part typically remains attached even after the fruit forms?</div>
+    <div class="a">The sepal (e.g., the green cap on a mango).</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["flower-classification"] = `
+  <div class="eyebrow">🌼 Sexual Reproduction — Plants</div>
+  <h1 class="page-title">Bisexual/Unisexual vs Monoecious/Dioecious</h1>
+  <p class="page-sub">The most confusing four terms in this chapter. This page exists purely to permanently end that confusion.</p>
+
+  <div class="card red" style="border-color:#6e3a3a;background:rgba(232,140,140,.08);">
+    <p style="font-size:15.5px;"><b>The confusion is real — even the lecture explicitly warns about it.</b> There are TWO separate axes of classification here. Keep them on separate mental shelves.</p>
+  </div>
+
+  <h2 class="section-h">📐 Axis 1: At the FLOWER Level</h2>
+  <table>
+    <tr><th>Term</th><th>Meaning</th><th>Examples</th></tr>
+    <tr><td><b>Bisexual flower</b></td><td>Male AND female parts in the <b>SAME flower</b></td><td>Hibiscus, sunflower, rose, chilli, tulip, tomato</td></tr>
+    <tr><td><b>Unisexual flower</b></td><td>Only ONE reproductive part (male OR female) in that flower</td><td>—</td></tr>
+  </table>
+
+  <h2 class="section-h">📐 Axis 2: At the PLANT Level</h2>
+  <table>
+    <tr><th>Term</th><th>Meaning</th></tr>
+    <tr><td><b>Monoecious</b></td><td>Both male and female reproductive parts exist somewhere on the <b>SAME plant</b> (could be in the same flower or different flowers on that one plant)</td></tr>
+    <tr><td><b>Dioecious</b></td><td>Male and female parts are on <b>completely different/separate plants</b></td></tr>
+  </table>
+
+  <div class="hook-box">
+    <div class="emoji">🏠</div>
+    <div><b>Hook:</b> Think of it as zoom level. <b>Bisexual/Unisexual = zoomed into ONE FLOWER</b> ("does this single flower have both parts?"). <b>Monoecious/Dioecious = zoomed out to the WHOLE PLANT</b> ("does this entire plant — across all its flowers — have both parts somewhere, or are male/female split across separate plants entirely?").</div>
+  </div>
+
+  <h2 class="section-h">🔗 The Logical Link Between the Two Axes</h2>
+  <div class="card green">
+    <p><b>If a flower is bisexual → that plant is automatically monoecious.</b> (Same flower has both parts → so naturally the same plant has both parts too.)</p>
+    <p style="margin-top:8px;">But monoecious doesn't require bisexual flowers — a plant can be monoecious even with separate male flowers and female flowers, as long as both types grow on the same plant.</p>
+  </div>
+
+  <table>
+    <tr><th>Example</th><th>Flower type</th><th>Plant type</th></tr>
+    <tr><td>Hibiscus</td><td>Bisexual</td><td>Monoecious</td></tr>
+    <tr><td>Rose</td><td>Bisexual</td><td>Monoecious</td></tr>
+  </table>
+
+  <div class="trap-box">
+    <div class="trap-title">⚠ Exam Trap — "Mono" doesn't mean "one flower"</div>
+    <p>Students often think "mono = one" implies "one flower has both parts" — WRONG. <b>Mono refers to "one PLANT,"</b> not one flower. A plant is monoecious if both reproductive types appear anywhere on that single plant (across one or many flowers).</p>
+  </div>
+
+  <h2 class="section-h">❓ Self-Test</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">If a flower is bisexual, what can you automatically conclude about its plant's classification?</div>
+    <div class="a">The plant must be monoecious — since a bisexual flower already has both male and female parts on that one plant.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+  <div class="flashcard" onclick="this.classList.toggle('open')">
+    <div class="q">Distinguish: Unisexual (flower-level) vs Dioecious (plant-level).</div>
+    <div class="a">Unisexual = a single flower has only one reproductive part. Dioecious = male and female parts exist on entirely separate plants. One describes a flower; the other describes the whole plant/species arrangement.</div>
+    <div class="hint">TAP TO REVEAL</div>
+  </div>
+`;
+
+content["exam-traps"] = `
+  <div class="eyebrow">⚠ Consolidated Revision Layer</div>
+  <h1 class="page-title">Every Exam Trap In One Place</h1>
+  <p class="page-sub">Read this page the night before every mock test. These are the exact confusions that cost marks.</p>
+
+  <div class="trap-box"><div class="trap-title">⚠ 1. Anopheles vs Aedes aegypti</div><p>Female Anopheles → Malaria. Aedes aegypti → Dengue, Chikungunya. Never swap these.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 2. Binary Fission vs Fragmentation</div><p>Binary fission: breaks while IMMATURE, then grows. Fragmentation: breaks only after becoming MATURE (seen in algae).</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 3. Budding vs Vegetative Propagation (Bryophyllum/Potato)</div><p>Budding = bud grows to FULL size while still attached, then detaches (Hydra). Bryophyllum/potato buds detach early and grow only after reaching soil → that's vegetative propagation, NOT budding.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 4. Regeneration ≠ Primary Reproduction</div><p>Regeneration (Planaria, Hydra, Rhizopus) only happens after damage/injury — it is a repair mechanism, not a planned reproductive strategy.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 5. Planaria vs Liver Fluke vs Tapeworm (Platyhelminthes)</div><p>Planaria = free-living (has eyes). Liver fluke & tapeworm = parasitic. All three share the same phylum but very different lifestyles.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 6. Epididymis vs Seminal Vesicle</div><p>The structure directly after the testis is the EPIDIDYMIS, not "seminal vesicle." Order: Testis → Epididymis → Vas deferens → Prostate/seminal fluid added → Urethra.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 7. Menarche vs Menopause</div><p>Menarche = FIRST period (puberty start, ~12–15 yrs). Menopause = ovulation permanently STOPS (~50 yrs). Opposite life-stage events; don't swap.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 8. Fertilization site vs Implantation site</div><p>Fertilization happens in the FALLOPIAN TUBE. Implantation happens in the UTERUS. These are two different, sequential locations.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 9. Umbilical Vein vs Umbilical Artery (reversed from normal anatomy logic)</div><p>Umbilical VEIN carries oxygenated blood + nutrients INTO the fetus. Umbilical ARTERY carries deoxygenated waste OUT of the fetus. This is the opposite of how arteries/veins are usually described relative to the heart.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 10. Parthenogenesis — asexual despite involving an "egg"</div><p>No fertilization + no male gamete = still classified as asexual, even though an egg is involved (honey bees).</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 11. Filament (Stamen) vs Style (Pistil)</div><p>Both are stalk-like connector parts, but Filament belongs to the MALE stamen (holds the anther); Style belongs to the FEMALE pistil (connects stigma to ovary).</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 12. Ovary vs Ovule</div><p>Ovary (bigger structure) → becomes Fruit. Ovule (smaller structures inside the ovary) → becomes Seed.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 13. Bisexual/Unisexual (flower-level) vs Monoecious/Dioecious (plant-level)</div><p>Bisexual/Unisexual describes a SINGLE FLOWER. Monoecious/Dioecious describes the WHOLE PLANT. A bisexual flower automatically implies a monoecious plant — but not vice versa.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 14. Chemotropism vs Phototropism/Geotropism/Hydrotropism</div><p>Chemotropism = response to a CHEMICAL stimulus (pollen tube growth toward ovule). The other three tropisms (light, gravity, water) belong to a different lecture but are easily confused on sight.</p></div>
+
+  <div class="trap-box"><div class="trap-title">⚠ 15. Algae Colour Groups</div><p>Chlorophyceae = green (Spirogyra, Volvox, Ulothrix). Phaeophyceae = brown (Laminaria, Sargassum). Rhodophyceae = red (source of agar/jelly). Easily jumbled under exam pressure.</p></div>
+`;
+
+content["examiner-questions"] = `
+  <div class="eyebrow">🎯 Consolidated Revision Layer</div>
+  <h1 class="page-title">Examiner's Favourite Question Formats</h1>
+  <p class="page-sub">How SSC CGL is likely to attack this exact chapter — practiced in the formats they actually use.</p>
+
+  <h2 class="section-h">🧩 Match-the-Following (highest probability format)</h2>
+  <div class="card blue">
+    <p><b>Organism ↔ Type of Asexual Reproduction</b></p>
+    <table style="margin-top:8px;">
+      <tr><th>Column A</th><th>Column B</th></tr>
+      <tr><td>1. Amoeba</td><td>A. Budding</td></tr>
+      <tr><td>2. Plasmodium</td><td>B. Binary fission</td></tr>
+      <tr><td>3. Hydra</td><td>C. Multiple fission</td></tr>
+      <tr><td>4. Spirogyra</td><td>D. Fragmentation</td></tr>
+      <tr><td>5. Rhizopus</td><td>E. Spore formation</td></tr>
+    </table>
+    <p class="dim" style="margin-top:8px;">Answer key: 1-B, 2-C, 3-A, 4-D, 5-E</p>
+  </div>
+
+  <h2 class="section-h">✅❌ Statement-Based (True/False or "Which statement is correct")</h2>
+  <ul>
+    <li>"Fertilization in humans occurs in the uterus." → FALSE (it's the fallopian tube)</li>
+    <li>"Regeneration is the primary mode of reproduction in Hydra." → FALSE (budding is primary; regeneration is a repair mechanism)</li>
+    <li>"The umbilical artery carries oxygenated blood to the fetus." → FALSE (umbilical vein does)</li>
+    <li>"A bisexual flower implies the plant is monoecious." → TRUE</li>
+  </ul>
+
+  <h2 class="section-h">📅 Chronology / Sequencing Questions</h2>
+  <div class="card green">
+    <p><b>Arrange in correct order:</b> Gametogenesis → Insemination → Fertilization → Implantation → Gestation</p>
+    <p style="margin-top:8px;"><b>Sperm pathway order:</b> Testis → Epididymis → Vas deferens → (Seminal vesicle/Prostate) → Urethra</p>
+  </div>
+
+  <h2 class="section-h">🤔 Assertion–Reason Style</h2>
+  <div class="card amber">
+    <p><b>Assertion:</b> Asexual reproduction produces offspring with high genetic similarity.<br>
+    <b>Reason:</b> Only a single parent contributes genetic material.<br>
+    <span class="dim">Both true, and Reason correctly explains Assertion.</span></p>
+  </div>
+  <div class="card amber">
+    <p><b>Assertion:</b> Parthenogenesis is classified as asexual reproduction.<br>
+    <b>Reason:</b> It involves the development of an embryo from an egg without fertilization.<br>
+    <span class="dim">Both true, and Reason correctly explains Assertion.</span></p>
+  </div>
+
+  <h2 class="section-h">🔀 Confusing-Pair MCQs</h2>
+  <p>Expect direct single-line MCQs built from the trap pairs: Menarche/Menopause, Ovary/Ovule, Filament/Style, Anopheles/Aedes, Mono-/Di-oecious. Revisit the Exam Traps page until each pair is automatic.</p>
+`;
+
+content["active-recall"] = `
+  <div class="eyebrow">❓ Active Recall Zone</div>
+  <h1 class="page-title">Force Yourself To Retrieve — Don't Just Reread</h1>
+  <p class="page-sub">Tap each card to reveal the answer only AFTER you've tried to recall it yourself. This is where real retention is built.</p>
+
+  <h2 class="section-h">🔲 Fill in the Blanks</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">1. Asexual reproduction involving a "schizont wall" bursting to release many offspring at once is called ______.</div><div class="a">Multiple fission</div><div class="hint">TAP TO REVEAL</div></div>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">2. The disease caused by Leishmania is called ______.</div><div class="a">Kala-azar</div><div class="hint">TAP TO REVEAL</div></div>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">3. Fertilization in humans occurs in the ______, while implantation occurs in the ______.</div><div class="a">Fallopian tube; Uterus</div><div class="hint">TAP TO REVEAL</div></div>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">4. The structure that decides the gender of a baby is the ______ of the sperm.</div><div class="a">Head (contains DNA)</div><div class="hint">TAP TO REVEAL</div></div>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">5. The ovary develops into the ______, and the ovule develops into the ______.</div><div class="a">Fruit; Seed</div><div class="hint">TAP TO REVEAL</div></div>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">6. Growth response of the pollen tube toward a chemical stimulus is called ______.</div><div class="a">Chemotropism</div><div class="hint">TAP TO REVEAL</div></div>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">7. Pollination by insects is called ______; by wind is called ______.</div><div class="a">Entomophily; Anemophily</div><div class="hint">TAP TO REVEAL</div></div>
+
+  <h2 class="section-h">🔁 Reverse Questions (effect → cause, instead of cause → effect)</h2>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">An organism shows the lowest genetic diversity among its offspring. What type of reproduction did it most likely use?</div><div class="a">Asexual reproduction (single parent → clone-like similarity, low diversity)</div><div class="hint">TAP TO REVEAL</div></div>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">A flower has only male reproductive parts. What is this flower called, and what could the whole plant still be classified as?</div><div class="a">The flower is unisexual. The plant could still be monoecious IF a separate female flower exists somewhere else on the same plant.</div><div class="hint">TAP TO REVEAL</div></div>
+  <div class="flashcard" onclick="this.classList.toggle('open')"><div class="q">A patient is diagnosed with cervical cancer. Which virus is the likely cause?</div><div class="a">Human Papilloma Virus (HPV)</div><div class="hint">TAP TO REVEAL</div></div>
+
+  <h2 class="section-h">⚡ Rapid-Fire (answer in under 5 seconds each)</h2>
+  <div class="rapid-grid">
+    <div class="rapid-card"><h4>Q: Hydra's main reproduction mode?</h4><p>Budding</p></div>
+    <div class="rapid-card"><h4>Q: Bread mold's scientific name?</h4><p>Rhizopus</p></div>
+    <div class="rapid-card"><h4>Q: Carrier of malaria?</h4><p>Female Anopheles mosquito</p></div>
+    <div class="rapid-card"><h4>Q: Egg release frequency?</h4><p>Once a month, alternating ovaries</p></div>
+    <div class="rapid-card"><h4>Q: Male sex hormone?</h4><p>Testosterone</p></div>
+    <div class="rapid-card"><h4>Q: Stamen's 3 parts?</h4><p>Filament, Anther, Pollen grain</p></div>
+    <div class="rapid-card"><h4>Q: Pistil's 3 parts?</h4><p>Stigma, Style, Ovary</p></div>
+    <div class="rapid-card"><h4>Q: Gestation period?</h4><p>9 months</p></div>
+    <div class="rapid-card"><h4>Q: Honey bee reproduction type?</h4><p>Parthenogenesis</p></div>
+    <div class="rapid-card"><h4>Q: Planaria's phylum?</h4><p>Platyhelminthes</p></div>
+  </div>
+`;
+
+content["high-yield"] = `
+  <div class="eyebrow">⭐ Layer 2 — High-Yield Revision</div>
+  <h1 class="page-title">High-Yield Revision Notes</h1>
+  <p class="page-sub">Shorter than Layer 1 (Complete Notes). Use this for your 2nd–10th revision pass.</p>
+
+  <h2 class="section-h">🔑 Core Concept</h2>
+  <p>Asexual = 1 parent, no gametes/zygote, high similarity. Sexual = 2 parents, gametes fuse → zygote, high diversity.</p>
+
+  <h2 class="section-h">🧬 Asexual Types — One Line Each</h2>
+  <div class="rapid-grid">
+    <div class="rapid-card"><h4>Binary fission</h4><p>→ 2 offspring (Amoeba: any plane; Leishmania: 1 plane)</p></div>
+    <div class="rapid-card"><h4>Multiple fission</h4><p>→ many at once (Plasmodium, malaria, schizont wall)</p></div>
+    <div class="rapid-card"><h4>Fragmentation</h4><p>→ breaks AFTER maturity (algae)</p></div>
+    <div class="rapid-card"><h4>Budding</h4><p>→ bud matures fully, then detaches (Hydra)</p></div>
+    <div class="rapid-card"><h4>Regeneration</h4><p>→ repair only, not primary (Planaria, Hydra, Rhizopus)</p></div>
+    <div class="rapid-card"><h4>Spore formation</h4><p>→ sporangium releases spores (Rhizopus/bread mold)</p></div>
+    <div class="rapid-card"><h4>Vegetative propagation</h4><p>→ cutting, layering, grafting; Bryophyllum/potato buds (NOT budding)</p></div>
+    <div class="rapid-card"><h4>Tissue culture</h4><p>→ scientific veg. propagation, ornamental plants</p></div>
+    <div class="rapid-card"><h4>Parthenogenesis</h4><p>→ egg → embryo, NO fertilization (honey bees)</p></div>
+  </div>
+
+  <h2 class="section-h">♂♀ Human Reproduction Essentials</h2>
+  <ul>
+    <li>Sperm pathway: Testis → Epididymis → Vas deferens → Prostate fluid added → Urethra</li>
+    <li>Sperm head = DNA = decides gender; fluid = sugar = motility only</li>
+    <li>Ovulation: ~12 yrs onward, monthly, alternating ovaries; eggs present since birth</li>
+    <li>Menarche (first period, ~12–15 yrs) vs Menopause (ovulation stops, ~50 yrs)</li>
+    <li>Fertilization → Fallopian tube. Implantation → Uterus. Gestation → 9 months</li>
+    <li>Placenta transfers nutrients mother→fetus; Umbilical VEIN = oxygen in; Umbilical ARTERY = waste out</li>
+    <li>Cervical cancer ← HPV</li>
+    <li>IVF: fertilization in test tube, then implanted in uterus</li>
+  </ul>
+
+  <h2 class="section-h">🌸 Plant Reproduction Essentials</h2>
+  <ul>
+    <li>Stamen (male) = Filament + Anther + Pollen. Pistil (female) = Stigma + Style + Ovary</li>
+    <li>Pollination agents: Wind=Anemophily, Insect=Entomophily, Water=Hydrophily, Animal=Zoophily</li>
+    <li>Self-pollination (same plant) vs Cross-pollination (different plant)</li>
+    <li>Pollen tube grows via Chemotropism (chemical stimulus response)</li>
+    <li>After fertilization: Ovary→Fruit, Ovule→Seed; sepal alone survives</li>
+    <li>Bisexual/Unisexual = flower-level; Monoecious/Dioecious = plant-level; bisexual flower ⇒ monoecious plant</li>
+  </ul>
+`;
+
+content["ultra-fast"] = `
+  <div class="eyebrow">⚡ Layer 3 — Ultra-Fast</div>
+  <h1 class="page-title">Ultra-Fast Revision Sheet</h1>
+  <p class="page-sub">For your 10th–20th revision pass. Pure trigger words.</p>
+
+  <h2 class="section-h">Asexual (1 parent, no zygote)</h2>
+  <p>Binary fission(2,Amoeba/Leishmania) · Multiple fission(many,Plasmodium) · Fragmentation(mature,algae) · Budding(Hydra) · Regeneration(repair,Planaria) · Spore(Rhizopus) · Veg. propagation(cutting/layering/grafting) · Tissue culture(lab,ornamental) · Parthenogenesis(egg,no fertilization,bees)</p>
+
+  <h2 class="section-h">Human Male</h2>
+  <p>Testis(sperm+testosterone)→Epididymis→Vas deferens→Prostate(fluid,motility)→Urethra. Sperm head=DNA=gender.</p>
+
+  <h2 class="section-h">Human Female</h2>
+  <p>Ovary→ovulation(12yrs,monthly,alternating). Uterus lining thickens→sheds if no fertilization. Menarche(start,12-15) vs Menopause(stop,~50).</p>
+
+  <h2 class="section-h">Human Fertilization</h2>
+  <p>Fertilization=Fallopian tube. Implantation=Uterus. Gestation=9mo. Placenta=nutrients. Umbilical VEIN=O2 in, ARTERY=waste out. Cervix cancer=HPV.</p>
+
+  <h2 class="section-h">Plants</h2>
+  <p>Stamen=Filament+Anther+Pollen(male). Pistil=Stigma(sticky)+Style+Ovary(female). Pollination: wind=anemo, insect=entomo, water=hydro, animal=zoo. Chemotropism=pollen tube. Ovary→Fruit, Ovule→Seed, Sepal survives. Bisexual/Unisexual=flower; Mono/Dioecious=plant.</p>
+`;
+
+content["thirty-sec"] = `
+  <div class="eyebrow">⏱ Layer 4 — 30-Second Sheet</div>
+  <h1 class="page-title">30-Second Revision Sheet</h1>
+  <p class="page-sub">If you can recite this in 30 seconds from memory, you know the chapter.</p>
+
+  <div class="last-night">
+    <h3>🧬 Reproduction = Asexual (1 parent) or Sexual (2 parents, gametes→zygote)</h3>
+    <ul>
+      <li><b>Asexual types:</b> Fission (binary=2, multiple=many) · Fragmentation (mature) · Budding (Hydra) · Regeneration (repair) · Spores (Rhizopus) · Vegetative propagation (cut/layer/graft) · Tissue culture (lab) · Parthenogenesis (no fertilization)</li>
+      <li><b>Human male:</b> Testis→Epididymis→Vas deferens→Prostate→Urethra. Head of sperm = gender.</li>
+      <li><b>Human female:</b> Ovary, monthly ovulation, Menarche(start)/Menopause(stop, ~50)</li>
+      <li><b>Fertilization</b> = fallopian tube. <b>Implantation</b> = uterus. <b>9 months</b> gestation.</li>
+      <li><b>Placenta:</b> vein=oxygen in, artery=waste out. Cervix cancer = HPV.</li>
+      <li><b>Plant:</b> Stamen(male: filament+anther+pollen) / Pistil(female: stigma+style+ovary). Pollination: wind/insect/water/animal. Ovary→fruit, Ovule→seed, sepal stays.</li>
+    </ul>
+  </div>
+`;
+
+content["last-night"] = `
+  <div class="eyebrow">🌙 Layer 5 — Final Pass</div>
+  <h1 class="page-title">Last Night Before Exam</h1>
+  <p class="page-sub">Read this once, calmly, and close the book. You already know this.</p>
+
+  <div class="last-night">
+    <h3>The ONLY things you must not get wrong tomorrow:</h3>
+    <ul>
+      <li>🎯 Fertilization → Fallopian tube. Implantation → Uterus. (NOT the same place!)</li>
+      <li>🎯 Umbilical VEIN brings oxygen IN. Umbilical ARTERY takes waste OUT. (Reversed from normal body logic.)</li>
+      <li>🎯 Menarche = FIRST period (start). Menopause = ovulation STOPS (~50 yrs).</li>
+      <li>🎯 Malaria → female Anopheles. Dengue/Chikungunya → Aedes aegypti.</li>
+      <li>🎯 Budding (Hydra) ≠ Bryophyllum/potato buds (that's vegetative propagation).</li>
+      <li>🎯 Regeneration is NOT a primary reproduction mode — it's repair after damage.</li>
+      <li>🎯 Ovary → Fruit. Ovule → Seed.</li>
+      <li>🎯 Filament = male (stamen). Style = female (pistil).</li>
+      <li>🎯 Bisexual/Unisexual = about ONE FLOWER. Monoecious/Dioecious = about the WHOLE PLANT.</li>
+      <li>🎯 Parthenogenesis = asexual, even though it involves an egg (no fertilization happens).</li>
+      <li>🎯 Cervical cancer ← HPV.</li>
+    </ul>
+    <p style="margin-top:18px;color:var(--blue);"><b>Walk through your Memory Palace one last time if you have 2 minutes spare. Left wing = asexual tanks. Right wing = wedding hall + greenhouse. Then close your eyes and trust your prep. Go score well. 🔥</b></p>
+  </div>
+`;
+
+/* ===========================================================
+   BUILD SIDEBAR + PAGES
+=========================================================== */
+const navScroll = document.getElementById("navScroll");
+const pagesContainer = document.getElementById("pages");
+let groupsSeen = {};
+
+pages.forEach((p, idx) => {
+  if(!groupsSeen[p.group]){
+    groupsSeen[p.group] = true;
+    const label = document.createElement("div");
+    label.className = "nav-group-label";
+    label.textContent = p.group;
+    navScroll.appendChild(label);
+  }
+  const item = document.createElement("div");
+  item.className = "nav-item";
+  item.dataset.page = p.id;
+  item.innerHTML = `<span class="dot"></span><span class="nav-icon">${p.icon}</span><span>${p.label}</span>`;
+  item.addEventListener("click", () => goToPage(p.id));
+  navScroll.appendChild(item);
+
+  const pageDiv = document.createElement("div");
+  pageDiv.className = "page";
+  pageDiv.id = "page-" + p.id;
+  pageDiv.innerHTML = content[p.id] + buildFooterNav(idx);
+  pagesContainer.appendChild(pageDiv);
+});
+
+function buildFooterNav(idx){
+  const prev = pages[idx-1];
+  const next = pages[idx+1];
+  let html = `<div class="page-nav-footer">`;
+  html += prev ? `<button class="nav-footer-btn" onclick="goToPage('${prev.id}')">← ${prev.label}</button>` : `<span></span>`;
+  html += next ? `<button class="nav-footer-btn" onclick="goToPage('${next.id}')">${next.label} →</button>` : `<span></span>`;
+  html += `</div>`;
+  return html;
+}
+
+/* ===========================================================
+   NAVIGATION LOGIC
+=========================================================== */
+const STORAGE_KEY = "bio-repro-revision-progress";
+let revisedPages = new Set();
+try{
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  revisedPages = new Set(saved);
+}catch(e){revisedPages = new Set();}
+
+function goToPage(id){
+  document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
+  const pageEl = document.getElementById("page-" + id);
+  const navEl = document.querySelector('.nav-item[data-page="'+id+'"]');
+  if(pageEl) pageEl.classList.add("active");
+  if(navEl){
+    navEl.classList.add("active");
+    navEl.scrollIntoView({block:"nearest"});
+  }
+  document.getElementById("main").scrollTop = 0;
+  const pInfo = pages.find(p => p.id === id);
+  document.getElementById("topbarPage").textContent = pInfo ? "· " + pInfo.label : "";
+  updateMarkDoneBtn(id);
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+  window.location.hash = id;
+}
+
+function updateMarkDoneBtn(id){
+  const btn = document.getElementById("markDoneBtn");
+  if(revisedPages.has(id)){
+    btn.classList.add("done");
+    btn.textContent = "✓ Revised";
+  } else {
+    btn.classList.remove("done");
+    btn.textContent = "✓ Mark page revised";
+  }
+}
+
+document.getElementById("markDoneBtn").addEventListener("click", () => {
+  const activePage = document.querySelector(".page.active");
+  if(!activePage) return;
+  const id = activePage.id.replace("page-", "");
+  if(revisedPages.has(id)){
+    revisedPages.delete(id);
+  } else {
+    revisedPages.add(id);
+  }
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify([...revisedPages])); }catch(e){}
+  updateMarkDoneBtn(id);
+  updateProgress();
+});
+
+function updateProgress(){
+  const pct = Math.round((revisedPages.size / pages.length) * 100);
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressPct").textContent = pct + "%";
+}
+
+/* Mobile menu */
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+document.getElementById("menuBtn").addEventListener("click", () => {
+  sidebar.classList.add("open");
+  overlay.classList.add("show");
+});
+overlay.addEventListener("click", () => {
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+});
+
+/* Init */
+updateProgress();
+const initial = (window.location.hash || "").replace("#","") || pages[0].id;
+goToPage(pages.find(p=>p.id===initial) ? initial : pages[0].id);
+</script>
+</body>
+</html>

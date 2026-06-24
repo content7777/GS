@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology Revision | SSC CGL | FRB 2.0</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1e2530;
+    --border: #2d3748;
+    --green: #4ade80;
+    --green-dim: #16a34a33;
+    --blue: #60a5fa;
+    --blue-dim: #1d4ed833;
+    --amber: #fbbf24;
+    --amber-dim: #92400e33;
+    --red: #f87171;
+    --red-dim: #7f1d1d33;
+    --purple: #c084fc;
+    --purple-dim: #581c8733;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #4b5563;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  #app { display: flex; height: 100vh; }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: width .25s;
+  }
+
+  .sidebar-header {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-header .subject-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-header h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .sidebar-header p {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  .nav-section {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-section-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 6px 18px 4px;
+    font-weight: 600;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 18px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-dim);
+    transition: all .15s;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+
+  .nav-item.active {
+    background: var(--bg3);
+    color: var(--green);
+    border-left-color: var(--green);
+    font-weight: 500;
+  }
+
+  .nav-item .icon { font-size: 15px; min-width: 18px; }
+
+  .nav-badge {
+    margin-left: auto;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .badge-fire { background: #7f1d1d44; color: var(--red); }
+  .badge-star { background: #78350f44; color: var(--amber); }
+
+  /* CONTENT */
+  #content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 40px;
+    scroll-behavior: smooth;
+  }
+
+  .page { display: none; animation: fadeIn .2s ease; }
+  .page.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* PAGE HEADER */
+  .page-header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .page-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+  }
+
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    line-height: 1.6;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .card-icon { font-size: 20px; }
+
+  .card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* STAT GRID */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stat-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  /* FACT LIST */
+  .fact-list { list-style: none; }
+
+  .fact-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    line-height: 1.5;
+    align-items: flex-start;
+  }
+
+  .fact-item:last-child { border-bottom: none; }
+
+  .fact-dot {
+    min-width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 6px;
+    background: var(--green);
+  }
+
+  .fact-dot.blue { background: var(--blue); }
+  .fact-dot.amber { background: var(--amber); }
+  .fact-dot.red { background: var(--red); }
+  .fact-dot.purple { background: var(--purple); }
+
+  /* HIGHLIGHT BOXES */
+  .hl {
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    font-size: 13.5px;
+    line-height: 1.7;
+  }
+
+  .hl-green { background: var(--green-dim); border-left: 3px solid var(--green); }
+  .hl-blue  { background: var(--blue-dim);  border-left: 3px solid var(--blue); }
+  .hl-amber { background: var(--amber-dim); border-left: 3px solid var(--amber); }
+  .hl-red   { background: var(--red-dim);   border-left: 3px solid var(--red); }
+  .hl-purple{ background: var(--purple-dim);border-left: 3px solid var(--purple); }
+
+  .hl-title {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .hl-green .hl-title  { color: var(--green); }
+  .hl-blue  .hl-title  { color: var(--blue); }
+  .hl-amber .hl-title  { color: var(--amber); }
+  .hl-red   .hl-title  { color: var(--red); }
+  .hl-purple .hl-title { color: var(--purple); }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  th {
+    background: var(--bg3);
+    color: var(--blue);
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tr:hover td { background: var(--bg3); }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .tag-fire   { background: var(--red-dim);    color: var(--red); }
+  .tag-star   { background: var(--amber-dim);  color: var(--amber); }
+  .tag-plus   { background: var(--blue-dim);   color: var(--blue); }
+
+  /* QUIZ */
+  .quiz-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .quiz-q {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+
+  .quiz-reveal {
+    background: var(--bg3);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-dim);
+    cursor: pointer;
+    user-select: none;
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .quiz-reveal:hover { border-color: var(--green); color: var(--text); }
+  .quiz-reveal.shown { color: var(--green); border-color: var(--green); background: var(--green-dim); }
+
+  /* MEMORY PALACE */
+  .palace-step {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+
+  .palace-num {
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--blue-dim);
+    border: 2px solid var(--blue);
+    color: var(--blue);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .palace-body { flex: 1; }
+  .palace-place { font-weight: 600; font-size: 14px; color: var(--blue); margin-bottom: 4px; }
+  .palace-fact  { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+  /* REVISION LAYERS */
+  .layer-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .layer-tab {
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    background: var(--bg2);
+    transition: all .15s;
+  }
+
+  .layer-tab:hover { border-color: var(--blue); color: var(--blue); }
+  .layer-tab.active { background: var(--blue-dim); border-color: var(--blue); color: var(--blue); }
+
+  .layer-content { display: none; }
+  .layer-content.active { display: block; }
+
+  /* FLOW CHART */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 12px 0;
+  }
+
+  .flow-node {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--text);
+    position: relative;
+  }
+
+  .flow-arrow {
+    text-align: center;
+    color: var(--green);
+    font-size: 18px;
+    padding: 2px 0;
+  }
+
+  /* TRAP BOX */
+  .trap-box {
+    background: #1a0a0a;
+    border: 1px solid #5b1a1a;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+
+  .trap-box-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--red);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .trap-vs {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .trap-a { color: var(--text); background: var(--bg3); padding: 8px 12px; border-radius: 6px; }
+  .trap-b { color: var(--red);  background: #7f1d1d22; padding: 8px 12px; border-radius: 6px; text-align: right; }
+  .trap-vs-mid { color: var(--text-muted); font-size: 11px; text-align: center; font-weight: 700; }
+
+  /* GRID 2-COL */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  @media (max-width: 700px) { .grid2 { grid-template-columns: 1fr; } }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #4b5563; }
+
+  /* STRONG / EM */
+  strong { color: var(--amber); font-weight: 600; }
+  em { color: var(--green); font-style: normal; font-weight: 500; }
+  code {
+    background: var(--bg3);
+    padding: 1px 7px;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--purple);
+  }
+
+  /* PROGRESS BAR */
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    transition: width .3s;
+  }
+
+  /* HOME PAGE GRID */
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+
+  .home-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+
+  .home-card:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px #00000040;
+  }
+
+  .home-card-icon { font-size: 28px; margin-bottom: 12px; }
+  .home-card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .home-card-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .home-card-count { margin-top: 10px; font-size: 11px; color: var(--text-muted); }
+
+  /* TOOTH DIAGRAM */
+  .tooth-row {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+
+  .tooth-box {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 70px;
+  }
+
+  .tooth-incisor { background: #064e3b44; border: 1px solid var(--green); color: var(--green); }
+  .tooth-canine  { background: #1e3a5f44; border: 1px solid var(--blue);  color: var(--blue); }
+  .tooth-premolar{ background: #4a1d9644; border: 1px solid var(--purple);color: var(--purple); }
+  .tooth-molar   { background: #78350f44; border: 1px solid var(--amber); color: var(--amber); }
+
+  .jaw-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    margin: 4px 0 6px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  hr.jaw-divider {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 10px 0;
+  }
+
+  /* MOBILE TOGGLE */
+  #sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 14px;
+    left: 14px;
+    z-index: 100;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--text);
+  }
+
+  @media (max-width: 768px) {
+    #sidebar { position: fixed; left: -280px; top: 0; height: 100vh; z-index: 99; transition: left .25s; }
+    #sidebar.open { left: 0; }
+    #sidebar-toggle { display: block; }
+    #content { padding: 20px; padding-top: 60px; }
+    .page-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<button id="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+<div id="app">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <div class="subject-tag">SSC CGL · FRB 2.0</div>
+      <h2>Biology Revision Notes</h2>
+      <p>3 Topics · High-Retention System</p>
+      <div class="progress-bar" style="margin-top:10px">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Overview</div>
+      <div class="nav-item active" onclick="showPage('home')">
+        <span class="icon">🏠</span> Dashboard
+      </div>
+      <div class="nav-item" onclick="showPage('palace')">
+        <span class="icon">🧠</span> Memory Palace
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Topic 1 · Skeletal System</div>
+      <div class="nav-item" onclick="showPage('axial')">
+        <span class="icon">💀</span> Axial Skeleton
+        <span class="nav-badge badge-fire">🔥</span>
+      </div>
+      <div class="nav-item" onclick="showPage('appendicular')">
+        <span class="icon">🦴</span> Appendicular Skeleton
+        <span class="nav-badge badge-fire">🔥</span>
+      </div>
+      <div class="nav-item" onclick="showPage('joints')">
+        <span class="icon">🔩</span> Joints
+        <span class="nav-badge badge-star">⭐</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Topic 2 · Tooth Structure</div>
+      <div class="nav-item" onclick="showPage('teeth')">
+        <span class="icon">🦷</span> Teeth & Dental Formula
+        <span class="nav-badge badge-fire">🔥</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Topic 3 · Genetics</div>
+      <div class="nav-item" onclick="showPage('genetics-basics')">
+        <span class="icon">🧬</span> Basics & Mendel
+        <span class="nav-badge badge-fire">🔥</span>
+      </div>
+      <div class="nav-item" onclick="showPage('genetics-laws')">
+        <span class="icon">⚖️</span> Laws of Inheritance
+        <span class="nav-badge badge-fire">🔥</span>
+      </div>
+      <div class="nav-item" onclick="showPage('genetics-cross')">
+        <span class="icon">🔀</span> Crosses & Ratios
+        <span class="nav-badge badge-star">⭐</span>
+      </div>
+      <div class="nav-item" onclick="showPage('homologous')">
+        <span class="icon">🦅</span> Homologous & Analogous
+        <span class="nav-badge badge-star">⭐</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Exam Toolkit</div>
+      <div class="nav-item" onclick="showPage('traps')">
+        <span class="icon">⚠️</span> Exam Traps
+      </div>
+      <div class="nav-item" onclick="showPage('quiz')">
+        <span class="icon">❓</span> Self-Test Quiz
+      </div>
+      <div class="nav-item" onclick="showPage('fastrevision')">
+        <span class="icon">⚡</span> Fast Revision Sheets
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENT -->
+  <main id="content">
+
+    <!-- HOME -->
+    <div id="page-home" class="page active">
+      <div class="page-header">
+        <div class="page-eyebrow">FRB 2.0 · Biology</div>
+        <div class="page-title">Your Complete Revision System</div>
+        <div class="page-subtitle">Skeletal System · Tooth Structure · Genetics & Heredity — built for 20–100 revision cycles before your SSC CGL exam.</div>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Major Topics</div></div>
+        <div class="stat-box"><div class="stat-num">206</div><div class="stat-label">Bones in Adult Body</div></div>
+        <div class="stat-box"><div class="stat-num">32</div><div class="stat-label">Adult Teeth</div></div>
+        <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Mendel's Laws</div></div>
+        <div class="stat-box"><div class="stat-num">80</div><div class="stat-label">Axial Skeleton Bones</div></div>
+        <div class="stat-box"><div class="stat-num">126</div><div class="stat-label">Appendicular Bones</div></div>
+      </div>
+
+      <div class="home-grid">
+        <div class="home-card" onclick="showPage('axial')">
+          <div class="home-card-icon">💀</div>
+          <div class="home-card-title">Axial Skeleton</div>
+          <div class="home-card-desc">Skull, spine, rib cage — the central axis of the body</div>
+          <div class="home-card-count">80 bones · Ear ossicles · Atlas bone</div>
+        </div>
+        <div class="home-card" onclick="showPage('appendicular')">
+          <div class="home-card-icon">🦴</div>
+          <div class="home-card-title">Appendicular Skeleton</div>
+          <div class="home-card-desc">Arms, legs, girdles — everything that moves</div>
+          <div class="home-card-count">126 bones · Femur · Patella · Clavicle</div>
+        </div>
+        <div class="home-card" onclick="showPage('joints')">
+          <div class="home-card-icon">🔩</div>
+          <div class="home-card-title">Joints</div>
+          <div class="home-card-desc">5 types of synovial joints and their ranges</div>
+          <div class="home-card-count">Ball & socket · Hinge · Pivot · Saddle · Gliding</div>
+        </div>
+        <div class="home-card" onclick="showPage('teeth')">
+          <div class="home-card-icon">🦷</div>
+          <div class="home-card-title">Teeth & Dental Formula</div>
+          <div class="home-card-desc">Types, structure, dental formulas, wisdom teeth</div>
+          <div class="home-card-count">Adults: 2123 · Children: 2102</div>
+        </div>
+        <div class="home-card" onclick="showPage('genetics-basics')">
+          <div class="home-card-icon">🧬</div>
+          <div class="home-card-title">Genetics & Heredity</div>
+          <div class="home-card-desc">Mendel, traits, alleles, dominant vs recessive</div>
+          <div class="home-card-count">Father of Genetics · Pea plant · 3 Laws</div>
+        </div>
+        <div class="home-card" onclick="showPage('traps')">
+          <div class="home-card-icon">⚠️</div>
+          <div class="home-card-title">Exam Traps</div>
+          <div class="home-card-desc">All the confusing pairs that trick students</div>
+          <div class="home-card-count">Stapes vs Femur · Elephant tusk · Homologous vs Analogous</div>
+        </div>
+        <div class="home-card" onclick="showPage('quiz')">
+          <div class="home-card-icon">❓</div>
+          <div class="home-card-title">Self-Test Quiz</div>
+          <div class="home-card-desc">Active recall — reveal answers one by one</div>
+          <div class="home-card-count">20+ questions across all topics</div>
+        </div>
+        <div class="home-card" onclick="showPage('fastrevision')">
+          <div class="home-card-icon">⚡</div>
+          <div class="home-card-title">Fast Revision Sheets</div>
+          <div class="home-card-desc">Layer 2–5: from high-yield down to last-night sheet</div>
+          <div class="home-card-count">4 revision layers</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEMORY PALACE -->
+    <div id="page-palace" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Memory Technique</div>
+        <div class="page-title">🧠 The Human Body Museum</div>
+        <div class="page-subtitle">Walk through a museum where each gallery holds one topic. Every exhibit = one unforgettable fact.</div>
+      </div>
+
+      <div class="hl hl-green">
+        <div class="hl-title">How to Use</div>
+        Close your eyes. Walk through this museum before each revision. Each room has unique objects. The stranger the image, the better you remember.
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🏛️</span><span class="card-title">The Entrance — Bone Count Hall</span></div>
+        <div class="palace-step">
+          <div class="palace-num">1</div>
+          <div class="palace-body">
+            <div class="palace-place">Giant '206' carved in stone at the entrance</div>
+            <div class="palace-fact">Adult = 206 bones. But the door has a poster of a baby with "300" written under it — babies have more because bones haven't fused yet.</div>
+          </div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">2</div>
+          <div class="palace-body">
+            <div class="palace-place">A welcome sign split in two: "AXIS" (left) and "APPENDIX" (right)</div>
+            <div class="palace-fact">Axial = 80 bones (centre of body). Appendicular = 126 bones (limbs). 80 + 126 = 206.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🎭</span><span class="card-title">Gallery 1 — The Skull Theatre</span></div>
+        <div class="palace-step">
+          <div class="palace-num">3</div>
+          <div class="palace-body">
+            <div class="palace-place">A skull with 22 face-paint lines: 8 on the dome, 14 on the face</div>
+            <div class="palace-fact">22 skull bones: 8 cranial (brain-box), 14 facial. The dome = frontal, occipital, 2 temporal, 2 parietal, ethmoid, sphenoid.</div>
+          </div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">4</div>
+          <div class="palace-body">
+            <div class="palace-place">Tiny 3D cinema inside the ear, playing "Hammer-Anvil-Stapes" in a loop</div>
+            <div class="palace-fact">3 ear ossicles = malleus (hammer), incus (anvil), stapes (stirrup). Stapes = smallest bone in the ENTIRE body.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🐍</span><span class="card-title">Gallery 2 — The Spine Staircase</span></div>
+        <div class="palace-step">
+          <div class="palace-num">5</div>
+          <div class="palace-body">
+            <div class="palace-place">A staircase with exactly 26 steps, labelled in groups</div>
+            <div class="palace-fact">Spine = 26 bones: Cervical (7) → Thoracic (12) → Lumbar (5) → Sacrum (1) → Coccyx (1). Memory: <strong>7 days, 12 months, 5 working days</strong>.</div>
+          </div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">6</div>
+          <div class="palace-body">
+            <div class="palace-place">At the top step is a globe on a pedestal labelled "ATLAS"</div>
+            <div class="palace-fact">Atlas bone (1st cervical vertebra) connects skull to spine — just like Atlas the god holds the world.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🎪</span><span class="card-title">Gallery 3 — Rib Cage Circus</span></div>
+        <div class="palace-step">
+          <div class="palace-num">7</div>
+          <div class="palace-body">
+            <div class="palace-place">12 circus performers in a ring. 7 are tied to the centre pole (sternum), 3 hang off each other, 2 float freely</div>
+            <div class="palace-fact">12 pairs of ribs (24 total). Ribs 1–7: true ribs (attached to sternum). Ribs 8–10: false ribs (join 7th). Ribs 11–12: floating ribs (attached nowhere in front).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🦵</span><span class="card-title">Gallery 4 — The Limb Comparison Room</span></div>
+        <div class="palace-step">
+          <div class="palace-num">8</div>
+          <div class="palace-body">
+            <div class="palace-place">A mirror: left side = arm bones, right side = leg bones (almost twins)</div>
+            <div class="palace-fact">Arm: Humerus–Radius/Ulna–8 Carpals–5 Metacarpals–14 Phalanges. Leg: Femur–Tibia/Fibula–7 Tarsals–5 Metatarsals–14 Phalanges. Extra patella in leg compensates for 1 missing tarsal.</div>
+          </div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">9</div>
+          <div class="palace-body">
+            <div class="palace-place">A trophy labelled "LONGEST & STRONGEST" on the femur shelf</div>
+            <div class="palace-fact">Femur = longest + strongest bone. Stapes = shortest bone. Jaw bone (mandible) = strongest if femur not in options.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🦷</span><span class="card-title">Gallery 5 — The Tooth Café</span></div>
+        <div class="palace-step">
+          <div class="palace-num">10</div>
+          <div class="palace-body">
+            <div class="palace-place">A café menu: 4 biting knives, 4 tearing forks, 8 crushing spoons, 12 chewing bowls</div>
+            <div class="palace-fact">4 incisors (bite), 4 canines (tear), 8 premolars (crush/grind), 12 molars (chew) = 28. + 4 wisdom = 32 total.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🌱</span><span class="card-title">Gallery 6 — Mendel's Pea Garden</span></div>
+        <div class="palace-step">
+          <div class="palace-num">11</div>
+          <div class="palace-body">
+            <div class="palace-place">A monk in a garden with "R.I.P." on his apron (Rest In Peas)</div>
+            <div class="palace-fact">Gregor Mendel = Father of Genetics. Worked on pea plant (Pisum sativum). "Rest In Peace Mendel" → "RIP" → Pea plant.</div>
+          </div>
+        </div>
+        <div class="palace-step">
+          <div class="palace-num">12</div>
+          <div class="palace-body">
+            <div class="palace-place">3 framed laws on the garden wall, labelled D, S, IA</div>
+            <div class="palace-fact">Law of Dominance → Segregation → Independent Assortment. F2 ratio 3:1 (monohybrid) and 9:3:3:1 (dihybrid).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AXIAL SKELETON -->
+    <div id="page-axial" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Skeletal System · Topic 1A</div>
+        <div class="page-title">💀 Axial Skeleton</div>
+        <div class="page-subtitle">The central axis — skull + spine + rib cage = <strong>80 bones</strong></div>
+      </div>
+
+      <div class="hl hl-green">
+        <div class="hl-title">🔥 Must Know First</div>
+        Adult body = <strong>206 bones</strong> | Children = <strong>300 bones</strong> (fuse later) | Axial = <strong>80</strong> | Appendicular = <strong>126</strong>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🦴</span><span class="card-title">Axial Skeleton: Number Summary</span></div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="stat-num" style="color:var(--blue)">22</div><div class="stat-label">Skull bones</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--blue)">26</div><div class="stat-label">Spine (vertebrae)</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--blue)">25</div><div class="stat-label">Sternum/chest area</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--blue)">6</div><div class="stat-label">Ear ossicles</div></div>
+          <div class="stat-box"><div class="stat-num" style="color:var(--green)">80</div><div class="stat-label">Total Axial</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🧠</span><span class="card-title">Skull: 22 Bones</span></div>
+        <div class="hl hl-blue">
+          <div class="hl-title">8 Cranial Bones</div>
+          <strong>1</strong> Frontal (forehead) · <strong>1</strong> Occipital (back) · <strong>2</strong> Temporal (sides) · <strong>2</strong> Parietal (top) · <strong>1</strong> Ethmoid · <strong>1</strong> Sphenoid
+        </div>
+        <div class="hl hl-purple">
+          <div class="hl-title">14 Facial Bones</div>
+          Mandible (lower jaw) · Maxilla (upper jaw) · Nasal bones (×3) · Lacrimal (around eye) · Zygomatic (cheekbone) · <strong>1 Hyoid</strong> (below chin — only bone not connected to another bone) · + Ear ossicles (6 total)
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">👂</span><span class="card-title">Ear Ossicles — The Famous 3</span></div>
+        <table>
+          <tr><th>Bone</th><th>Common Name</th><th>Special Note</th></tr>
+          <tr><td><em>Malleus</em></td><td>Hammer</td><td>—</td></tr>
+          <tr><td><em>Incus</em></td><td>Anvil</td><td>—</td></tr>
+          <tr><td><em>Stapes</em></td><td>Stirrup / Sternum</td><td><span class="tag tag-fire">🔥 Smallest bone in entire body</span></td></tr>
+        </table>
+        <div class="hl hl-amber">
+          <div class="hl-title">⭐ Memory Hook</div>
+          "MIS" — Malleus Incus Stapes. They are a mis-matched team: hammer + anvil + stirrup all crammed in your tiny ear.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🐍</span><span class="card-title">Spine: 26 Vertebrae</span></div>
+        <table>
+          <tr><th>Region</th><th>Count</th><th>Memory Hook</th></tr>
+          <tr><td>Cervical (neck)</td><td><strong>7</strong></td><td>7 days in a week — your neck works daily</td></tr>
+          <tr><td>Thoracic (chest)</td><td><strong>12</strong></td><td>12 months — ribs attach here all year</td></tr>
+          <tr><td>Lumbar (lower back)</td><td><strong>5</strong></td><td>5 fingers — lift with your lumbar</td></tr>
+          <tr><td>Sacrum</td><td><strong>1</strong></td><td>Sacred single bone</td></tr>
+          <tr><td>Coccyx (tailbone)</td><td><strong>1</strong></td><td>Vestigial — removing it has NO effect</td></tr>
+        </table>
+        <div class="hl hl-green">
+          <div class="hl-title">🔥 Atlas Bone</div>
+          1st cervical vertebra = <strong>Atlas bone</strong>. Connects skull to spine. Like the god Atlas holding up the world (skull).
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🫁</span><span class="card-title">Rib Cage: 24 Ribs (12 pairs)</span></div>
+        <div class="hl hl-green">
+          <div class="hl-title">True Ribs (1–7)</div>
+          Connected to <strong>sternum in front AND spine at back</strong>. Direct connection.
+        </div>
+        <div class="hl hl-blue">
+          <div class="hl-title">False Ribs (8–10)</div>
+          Connected to spine at back, but connect to 7th rib (not sternum directly).
+        </div>
+        <div class="hl hl-amber">
+          <div class="hl-title">🔥 Floating Ribs (11–12)</div>
+          <strong>Only connected to spine at back. Not connected to sternum at all.</strong> They "float" freely. Frequently asked!
+        </div>
+        <div class="hl hl-purple">
+          <div class="hl-title">Sternum</div>
+          Flat bone in the centre of chest. Connects to ribs in front.
+        </div>
+      </div>
+    </div>
+
+    <!-- APPENDICULAR -->
+    <div id="page-appendicular" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Skeletal System · Topic 1B</div>
+        <div class="page-title">🦴 Appendicular Skeleton</div>
+        <div class="page-subtitle">Arms + Legs + Girdles = <strong>126 bones</strong> — almost a mirror image!</div>
+      </div>
+
+      <div class="hl hl-green">
+        <div class="hl-title">🔥 The Mirror Trick</div>
+        Arms and legs have almost identical bone counts. The <strong>1 extra patella in leg</strong> compensates for the difference in carpals/tarsals (8 vs 7).
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">💪</span><span class="card-title">Arms (60 bones total — both arms)</span></div>
+        <table>
+          <tr><th>Bone</th><th>Count (per arm)</th><th>Location</th></tr>
+          <tr><td><em>Humerus</em></td><td>1</td><td>Upper arm (shoulder to elbow)</td></tr>
+          <tr><td><em>Radius</em></td><td>1</td><td>Forearm — thumb side</td></tr>
+          <tr><td><em>Ulna</em></td><td>1</td><td>Forearm — little finger side</td></tr>
+          <tr><td><em>Carpals</em></td><td>8</td><td>Wrist (watch-wearing area)</td></tr>
+          <tr><td><em>Metacarpals</em></td><td>5</td><td>Palm</td></tr>
+          <tr><td><em>Phalanges</em></td><td>14</td><td>Fingers (3 per finger, 2 for thumb)</td></tr>
+        </table>
+        <div class="hl hl-amber">
+          <div class="hl-title">Memory: 8-5-14</div>
+          "I wear 8 watches, my 5 palms, and 14 golden rings"
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🦵</span><span class="card-title">Legs (60 bones total — both legs)</span></div>
+        <table>
+          <tr><th>Arm Bone</th><th>Leg Equivalent</th><th>Note</th></tr>
+          <tr><td>Humerus</td><td><em>Femur</em></td><td><span class="tag tag-fire">🔥 Longest & Strongest</span></td></tr>
+          <tr><td>Radius/Ulna</td><td><em>Tibia/Fibula</em></td><td>—</td></tr>
+          <tr><td>8 Carpals</td><td><em>7 Tarsals</em></td><td>One less! Compensated by…</td></tr>
+          <tr><td>5 Metacarpals</td><td><em>5 Metatarsals</em></td><td>Same</td></tr>
+          <tr><td>14 Phalanges</td><td><em>14 Phalanges</em></td><td>Same</td></tr>
+          <tr><td>—</td><td><em>Patella</em> ✚</td><td><span class="tag tag-fire">🔥 Knee cap — the EXTRA bone</span></td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">👗</span><span class="card-title">The 6 Extra Bones (making 126)</span></div>
+        <div class="hl hl-blue">
+          60 (arms) + 60 (legs) = 120. The extra 6 = <strong>2 Clavicles + 2 Scapulae + 2 Pelvic bones</strong>
+        </div>
+        <table>
+          <tr><th>Bone</th><th>Common Name</th><th>Fun Fact</th></tr>
+          <tr><td><em>Clavicle</em></td><td>Collar bone / <strong>Beauty bone</strong></td><td>Very visible in fit people; 2 total</td></tr>
+          <tr><td><em>Scapula</em></td><td>Shoulder blade</td><td>Part of shoulder girdle; 2 total</td></tr>
+          <tr><td><em>Pelvic bones</em></td><td>Hip bones</td><td>Part of pelvic girdle; 2 total</td></tr>
+        </table>
+        <div class="hl hl-amber">
+          <div class="hl-title">⭐ Girdles</div>
+          Limbs can't attach directly to axial skeleton — they connect through <strong>Girdles</strong>. Shoulder girdle (clavicle + scapula) connects arms. Pelvic girdle connects legs.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🏆</span><span class="card-title">The Bone Superlatives — Exam Favourites</span></div>
+        <table>
+          <tr><th>Category</th><th>Bone</th><th>Note</th></tr>
+          <tr><td>🔥 Longest bone</td><td><em>Femur</em> (thigh)</td><td>Also considered strongest</td></tr>
+          <tr><td>🔥 Smallest bone</td><td><em>Stapes</em> (ear)</td><td>Also in axial skeleton</td></tr>
+          <tr><td>⭐ Strongest (if femur absent)</td><td><em>Jaw / Mandible</em></td><td>Second answer to "strongest"</td></tr>
+          <tr><td>➕ Knee cap</td><td><em>Patella</em></td><td>The only sesamoid in the knee</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- JOINTS -->
+    <div id="page-joints" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Skeletal System · Topic 1C</div>
+        <div class="page-title">🔩 Joints</div>
+        <div class="page-subtitle">Three types of joints. SSC focuses on <strong>Synovial joints</strong>.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">📋</span><span class="card-title">Three Joint Types</span></div>
+        <table>
+          <tr><th>Type</th><th>Movement</th><th>Example</th></tr>
+          <tr><td><em>Synovial</em></td><td>Freely movable</td><td>Shoulder, knee, thumb</td></tr>
+          <tr><td>Fibrous</td><td>Fixed / immovable</td><td>Skull bones</td></tr>
+          <tr><td>Cartilaginous</td><td>Slightly movable</td><td>Vertebrae between discs</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🔄</span><span class="card-title">5 Synovial Joint Types</span></div>
+        <table>
+          <tr><th>Joint</th><th>Range</th><th>Location</th><th>Memory</th></tr>
+          <tr><td><em>Ball & Socket</em></td><td>360° full rotation</td><td>Shoulder, hip</td><td>Ball in a bowl — spins freely</td></tr>
+          <tr><td><em>Hinge</em></td><td>180° one plane</td><td>Knee, elbow</td><td>Door hinge — only forward/back</td></tr>
+          <tr><td><em>Pivot</em></td><td>Rotation (less than ball & socket)</td><td>Atlas bone (neck)</td><td>Neck rotation — "yes/no" movements</td></tr>
+          <tr><td><em>Saddle</em></td><td>Multi-directional (less than pivot)</td><td>Thumb base</td><td>Saddle on a horse — 2 axes</td></tr>
+          <tr><td><em>Gliding</em></td><td>Sliding motion</td><td>Wrist/ankle small bones</td><td>Tiles sliding on each other</td></tr>
+        </table>
+        <div class="hl hl-amber">
+          <div class="hl-title">⭐ Range of Motion Order</div>
+          Ball & Socket > Pivot > Saddle > Hinge > Gliding
+        </div>
+      </div>
+    </div>
+
+    <!-- TEETH -->
+    <div id="page-teeth" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Topic 2 — Tooth Structure</div>
+        <div class="page-title">🦷 Teeth & Dental Formula</div>
+        <div class="page-subtitle">32 adult teeth · 20 milk teeth in children · Dental formula 2123</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">😁</span><span class="card-title">Types of Teeth</span></div>
+        <table>
+          <tr><th>Type</th><th>Count (adult)</th><th>Function</th><th>Shape</th></tr>
+          <tr><td><em>Incisors</em></td><td>8 (4 top + 4 bottom)</td><td><strong>Biting</strong></td><td>Flat, chisel-shaped</td></tr>
+          <tr><td><em>Canines</em></td><td>4 (2 top + 2 bottom)</td><td><strong>Tearing</strong></td><td>Sharp, pointed</td></tr>
+          <tr><td><em>Premolars</em></td><td>8 (4 top + 4 bottom)</td><td><strong>Crushing & Grinding</strong></td><td>Two cusps</td></tr>
+          <tr><td><em>Molars</em></td><td>12 (6 top + 6 bottom)</td><td><strong>Chewing</strong></td><td>Flat, broad</td></tr>
+        </table>
+        <div class="hl hl-amber">
+          <div class="hl-title">⭐ Total = 32</div>
+          8 + 4 + 8 + 12 = 32. The last 4 (3rd molars) = <strong>Wisdom teeth</strong> — erupt at age 16–20.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">😬</span><span class="card-title">Tooth Diagram (Visual)</span></div>
+        <div class="jaw-label">UPPER JAW</div>
+        <div class="tooth-row">
+          <div class="tooth-box tooth-molar">Molar ×3</div>
+          <div class="tooth-box tooth-premolar">Pre ×2</div>
+          <div class="tooth-box tooth-canine">Canine ×1</div>
+          <div class="tooth-box tooth-incisor">Incisor ×2</div>
+          <div class="tooth-box tooth-incisor">Incisor ×2</div>
+          <div class="tooth-box tooth-canine">Canine ×1</div>
+          <div class="tooth-box tooth-premolar">Pre ×2</div>
+          <div class="tooth-box tooth-molar">Molar ×3</div>
+        </div>
+        <hr class="jaw-divider">
+        <div class="tooth-row">
+          <div class="tooth-box tooth-molar">Molar ×3</div>
+          <div class="tooth-box tooth-premolar">Pre ×2</div>
+          <div class="tooth-box tooth-canine">Canine ×1</div>
+          <div class="tooth-box tooth-incisor">Incisor ×2</div>
+          <div class="tooth-box tooth-incisor">Incisor ×2</div>
+          <div class="tooth-box tooth-canine">Canine ×1</div>
+          <div class="tooth-box tooth-premolar">Pre ×2</div>
+          <div class="tooth-box tooth-molar">Molar ×3</div>
+        </div>
+        <div class="jaw-label">LOWER JAW</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">📐</span><span class="card-title">Dental Formula</span></div>
+        <div class="grid2">
+          <div class="hl hl-green">
+            <div class="hl-title">🔥 Adults: 2123 / 2123</div>
+            2 incisors · 1 canine · 2 premolars · 3 molars<br>
+            <em>= 8×2 formula = 16 per jaw × 2 = 32 total</em>
+          </div>
+          <div class="hl hl-blue">
+            <div class="hl-title">🔥 Children: 2102 / 2102</div>
+            2 incisors · 1 canine · 0 premolars · 2 molars<br>
+            <em>Premolars absent! = 20 milk teeth total</em>
+          </div>
+        </div>
+        <div class="hl hl-amber">
+          <div class="hl-title">Memory Hook: Children have no PRE</div>
+          Children have no "Pre"molars because they haven't grown up (pre) yet. Adults get premolars as a rite of passage.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🏗️</span><span class="card-title">Tooth Structure</span></div>
+        <table>
+          <tr><th>Part</th><th>Location</th><th>Key Material</th></tr>
+          <tr><td><em>Crown</em></td><td>Upper visible part</td><td>Covered by <strong>Enamel</strong> (hardest substance in body, calcium phosphate)</td></tr>
+          <tr><td><em>Neck</em></td><td>Middle (gum line)</td><td>Contains <strong>Dentine + Pulp cavity</strong></td></tr>
+          <tr><td><em>Root</em></td><td>Embedded in jaw</td><td>Contains <strong>Root canal + Cement</strong></td></tr>
+        </table>
+        <div class="hl hl-red">
+          <div class="hl-title">⚠️ Trap: Enamel</div>
+          Enamel = hardest substance in the HUMAN BODY (not just the tooth). Diamond is harder, but that's external. In body = enamel wins.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🐘</span><span class="card-title">Special Tooth Facts — Exam Traps!</span></div>
+        <div class="hl hl-red">
+          <div class="hl-title">🔥 Elephant's Tusk = INCISOR (not canine!)</div>
+          They stick out from the front, look sharp like canines, but are actually <strong>modified incisors</strong>. Examiners LOVE this.
+        </div>
+        <div class="hl hl-amber">
+          <div class="hl-title">⭐ Bird's Beak = Modified Teeth</div>
+          A bird's beak is a modified form of teeth. Birds don't have actual teeth — the beak evolved from tooth tissue.
+        </div>
+        <div class="hl hl-blue">
+          <div class="hl-title">➕ Wisdom Teeth</div>
+          3rd molars (last molars). Erupt between age <strong>16–20</strong>. Not everyone gets all 4. Sometimes require removal.
+        </div>
+      </div>
+    </div>
+
+    <!-- GENETICS BASICS -->
+    <div id="page-genetics-basics" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Topic 3 — Genetics & Heredity</div>
+        <div class="page-title">🧬 Basics & Mendel</div>
+        <div class="page-subtitle">The foundation of how traits pass from parents to children</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">👨‍🔬</span><span class="card-title">Gregor Mendel — Father of Genetics</span></div>
+        <div class="hl hl-green">
+          <div class="hl-title">🔥 Core Fact</div>
+          <strong>Gregor Mendel</strong> = Father of Genetics / Father of Heredity. Conducted experiments on <strong>Pea plant</strong> (<em>Pisum sativum</em>). Austrian monk.
+        </div>
+        <div class="hl hl-amber">
+          <div class="hl-title">Memory Hook — "R.I.P. Mendel"</div>
+          Mendel = "Rest In <strong>P</strong>eas" — he worked on Pea plants his whole life. Whenever you see Mendel, think Pea plant.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🧩</span><span class="card-title">Key Vocabulary</span></div>
+        <table>
+          <tr><th>Term</th><th>Definition</th><th>Example</th></tr>
+          <tr><td><em>Heredity</em></td><td>Passing traits from parents to offspring via DNA</td><td>Your eye colour from parents</td></tr>
+          <tr><td><em>Acquired Trait</em></td><td>Gained from environment, NOT passed to children</td><td>Learning to speak, abusing, accent</td></tr>
+          <tr><td><em>Inherited Trait</em></td><td>Passed via DNA from parents</td><td>Height, nose shape, natural hair colour</td></tr>
+          <tr><td><em>Gene</em></td><td>Unit of heredity on a chromosome</td><td>Eye colour gene</td></tr>
+          <tr><td><em>Allele</em></td><td>Alternate forms of the same gene</td><td>Brown eyes / Blue eyes = two alleles of eye colour gene</td></tr>
+          <tr><td><em>Dominant</em></td><td>Expressed when present — masks recessive</td><td>Tall (T) dominates Short (t)</td></tr>
+          <tr><td><em>Recessive</em></td><td>Only expressed when both copies are recessive</td><td>Short height (tt)</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">🎲</span><span class="card-title">Gametes & Reproduction</span></div>
+        <div class="hl hl-blue">
+          <div class="hl-title">Gametes</div>
+          Sex cells that carry genetic information. In humans: <strong>Sperm</strong> (male) and <strong>Ovum/Egg</strong> (female). Each carries one allele per gene.
+        </div>
+        <div class="hl hl-purple">
+          <div class="hl-title">F1 and F2 Generations</div>
+          F = Filial (from Latin, meaning "of son/daughter"). F1 = First generation offspring. F2 = Second generation (offspring of F1 × F1).
+        </div>
+      </div>
+    </div>
+
+    <!-- GENETICS LAWS -->
+    <div id="page-genetics-laws" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Genetics · Laws</div>
+        <div class="page-title">⚖️ Mendel's 3 Laws of Inheritance</div>
+        <div class="page-subtitle">The pillars of classical genetics — all three are exam-ready.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">1️⃣</span><span class="card-title">Law of Dominance</span></div>
+        <div class="hl hl-green">
+          <div class="hl-title">🔥 The Law</div>
+          When parents with <strong>contrasting (opposite) traits</strong> are crossed, only the <strong>dominant trait</strong> appears in F1 offspring. The recessive trait is hidden.
+        </div>
+        <div class="flow">
+          <div class="flow-node">Pure Tall (TT) × Pure Short (tt)</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">F1: All Tall (Tt) — 100% tall, short is hidden</div>
+        </div>
+        <div class="hl hl-amber">
+          <div class="hl-title">Real Life Example</div>
+          If your father is "pure tall" (all ancestors tall) and mother is "pure short" — you will be tall. All your siblings will also be tall. Short is dominated.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">2️⃣</span><span class="card-title">Law of Segregation</span></div>
+        <div class="hl hl-blue">
+          <div class="hl-title">🔥 The Law</div>
+          During formation of gametes (sex cells), the <strong>pair of alleles separate</strong> from each other. Each gamete gets only one allele.
+        </div>
+        <div class="flow">
+          <div class="flow-node">Tall parent has alleles: T and t</div>
+          <div class="flow-arrow">↓ during gamete formation</div>
+          <div class="flow-node">Some gametes carry T | Other gametes carry t</div>
+          <div class="flow-arrow">↓ these combine randomly</div>
+          <div class="flow-node">F2 offspring: TT, Tt, Tt, tt → Ratio 3:1</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">3️⃣</span><span class="card-title">Law of Independent Assortment</span></div>
+        <div class="hl hl-purple">
+          <div class="hl-title">🔥 The Law</div>
+          Alleles of <strong>two different genes</strong> separate and combine independently during gamete formation. One gene does NOT influence another.
+        </div>
+        <div class="hl hl-amber">
+          <div class="hl-title">Example</div>
+          Gene 1 = Height (Tall/Short). Gene 2 = Colour (Yellow/Green). These mix freely: a plant can be Tall-Yellow or Short-Green or Tall-Green or Short-Yellow. They are independent units.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">📊</span><span class="card-title">Summary Table of All 3 Laws</span></div>
+        <table>
+          <tr><th>#</th><th>Law Name</th><th>Core Idea</th><th>Generation</th></tr>
+          <tr><td>1</td><td>Dominance</td><td>Only dominant appears in F1</td><td>F1</td></tr>
+          <tr><td>2</td><td>Segregation</td><td>Allele pairs separate during gamete formation</td><td>F1 → F2</td></tr>
+          <tr><td>3</td><td>Independent Assortment</td><td>Different genes segregate independently</td><td>Dihybrid cross</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- GENETICS CROSS -->
+    <div id="page-genetics-cross" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Genetics · Crosses</div>
+        <div class="page-title">🔀 Crosses & Ratios</div>
+        <div class="page-subtitle">The numbers examiners love to test</div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">1️⃣</span><span class="card-title">Monohybrid Cross (1 trait)</span></div>
+        <div class="hl hl-green">
+          <div class="hl-title">Setup</div>
+          Cross two parents differing in <strong>one</strong> trait. e.g. Pure Tall × Pure Short.
+        </div>
+        <table>
+          <tr><th>Generation</th><th>Phenotype Ratio</th><th>Genotype Ratio</th><th>What you see</th></tr>
+          <tr><td>F1</td><td>All Tall</td><td>All Tt</td><td>100% dominant trait</td></tr>
+          <tr><td>F2</td><td><strong>3 : 1</strong> (Tall : Short)</td><td><strong>1 : 2 : 1</strong> (TT : Tt : tt)</td><td>3 tall, 1 short</td></tr>
+        </table>
+        <div class="hl hl-amber">
+          <div class="hl-title">🔥 Key Numbers: 3:1 and 1:2:1</div>
+          F2 phenotype = <strong>3:1</strong> | F2 genotype = <strong>1:2:1</strong>. The 3:1 is the more commonly asked one.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">2️⃣</span><span class="card-title">Dihybrid Cross (2 traits)</span></div>
+        <div class="hl hl-blue">
+          <div class="hl-title">Setup</div>
+          Cross parents differing in <strong>two</strong> traits. e.g. Round Yellow × Wrinkled Green.
+        </div>
+        <table>
+          <tr><th>Generation</th><th>Key Ratio</th><th>What it means</th></tr>
+          <tr><td>F1</td><td>All Round Yellow</td><td>Both dominant traits expressed</td></tr>
+          <tr><td>F2</td><td><strong>9 : 3 : 3 : 1</strong></td><td>See below</td></tr>
+        </table>
+        <div class="hl hl-purple">
+          <div class="hl-title">Breaking down 9:3:3:1</div>
+          <strong>9</strong> = Round + Yellow (both dominant) &nbsp;|&nbsp; <strong>3</strong> = Round + Green (1 dom + 1 rec) &nbsp;|&nbsp; <strong>3</strong> = Wrinkled + Yellow (1 rec + 1 dom) &nbsp;|&nbsp; <strong>1</strong> = Wrinkled + Green (both recessive)
+        </div>
+        <div class="hl hl-amber">
+          <div class="hl-title">Memory: 9=Both dom, 1=Both rec, 3+3=mixed</div>
+          Think of it as a 4×4 box: 9 in the biggest corner (dominant×dominant), 1 in the opposite corner (recessive×recessive), and 3+3 on the sides (mixed).
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">📋</span><span class="card-title">All Ratios at a Glance</span></div>
+        <table>
+          <tr><th>Cross Type</th><th>Gen</th><th>Phenotype Ratio</th><th>Genotype Ratio</th></tr>
+          <tr><td>Monohybrid</td><td>F1</td><td>1:0 (all dominant)</td><td>All Tt</td></tr>
+          <tr><td>Monohybrid</td><td>F2</td><td><strong>3:1</strong></td><td><strong>1:2:1</strong></td></tr>
+          <tr><td>Dihybrid</td><td>F1</td><td>1:0:0:0 (all RY)</td><td>All RrYy</td></tr>
+          <tr><td>Dihybrid</td><td>F2</td><td><strong>9:3:3:1</strong></td><td>complex</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- HOMOLOGOUS -->
+    <div id="page-homologous" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Genetics · Evolution</div>
+        <div class="page-title">🦅 Homologous & Analogous Organs</div>
+        <div class="page-subtitle">Structure vs Function — a classic exam confusion pair</div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="card-header"><span class="card-icon">🔬</span><span class="card-title">Homologous Organs</span></div>
+          <div class="hl hl-green">
+            <div class="hl-title">Same Structure, Different Function</div>
+            Organs that have <strong>similar anatomy</strong> (origin/structure) but perform <strong>different functions</strong>.
+          </div>
+          <ul class="fact-list">
+            <li class="fact-item"><span class="fact-dot"></span><div><strong>Human arm</strong> (for holding/manipulation) vs <strong>Bird wing</strong> (for flying) — same bone structure, different use</div></li>
+            <li class="fact-item"><span class="fact-dot"></span><div>Shows <strong>divergent evolution</strong> — one ancestor, different paths</div></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-icon">🦇</span><span class="card-title">Analogous Organs</span></div>
+          <div class="hl hl-blue">
+            <div class="hl-title">Same Function, Different Structure</div>
+            Organs that perform the <strong>same function</strong> but have <strong>different anatomy/origin</strong>.
+          </div>
+          <ul class="fact-list">
+            <li class="fact-item"><span class="fact-dot blue"></span><div><strong>Bat wing</strong> vs <strong>Bird wing</strong> — both used for flying, but structurally different internally</div></li>
+            <li class="fact-item"><span class="fact-dot blue"></span><div>Shows <strong>convergent evolution</strong> — different ancestors, same solution</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-icon">⚡</span><span class="card-title">Quick Memory Trick</span></div>
+        <div class="hl hl-amber">
+          <div class="hl-title">HoMologous = saME structure (M in both!)</div>
+          HoMologous → saMe structure. Analogous → sAme function. The capital letter M in "same" links to hoMologous.
+        </div>
+        <table>
+          <tr><th></th><th>Homologous</th><th>Analogous</th></tr>
+          <tr><td>Structure</td><td>✅ Same</td><td>❌ Different</td></tr>
+          <tr><td>Function</td><td>❌ Different</td><td>✅ Same</td></tr>
+          <tr><td>Evolution type</td><td>Divergent</td><td>Convergent</td></tr>
+          <tr><td>Example</td><td>Human arm + Bird wing</td><td>Bat wing + Bird wing</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- EXAM TRAPS -->
+    <div id="page-traps" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Exam Preparation</div>
+        <div class="page-title">⚠️ Exam Traps & Common Confusions</div>
+        <div class="page-subtitle">Everything SSC students get wrong — study these more than the actual content.</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ Stapes vs Femur — Smallest vs Longest</div>
+        <div class="trap-vs">
+          <div class="trap-a"><strong>Stapes (ear)</strong><br>Smallest bone in body<br>Also called Stirrup</div>
+          <div class="trap-vs-mid">vs</div>
+          <div class="trap-b"><strong>Femur (thigh)</strong><br>Longest + Strongest bone<br>Also called thigh bone</div>
+        </div>
+        <div style="margin-top:10px;font-size:13px;color:var(--text-dim)">If "strongest" and Femur is NOT in options → answer is Jaw/Mandible</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ Elephant's Tusk — Looks like canine, IS an incisor</div>
+        <div style="font-size:13px;color:var(--text-dim);line-height:1.7">Tusks are front teeth, stick out like sharp canines → students say "canine". But tusks = <strong style="color:var(--red)">modified incisors</strong>. The examiner is counting on your confusion here.</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ Homologous vs Analogous</div>
+        <div class="trap-vs">
+          <div class="trap-a"><strong>Homologous</strong><br>Same structure<br>Different function</div>
+          <div class="trap-vs-mid">vs</div>
+          <div class="trap-b"><strong>Analogous</strong><br>Different structure<br>Same function</div>
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ Bat wing vs Bird wing — Same or Different?</div>
+        <div style="font-size:13px;color:var(--text-dim);line-height:1.7">Both fly → Same function → <strong style="color:var(--red)">ANALOGOUS</strong>. Students confuse this with homologous because both are wings. Bat and bird are very different animals — different structure internally.</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ Dental Formula — Adult vs Child</div>
+        <div class="trap-vs">
+          <div class="trap-a"><strong>Adult</strong><br>2-1-2-3 / 2-1-2-3<br>32 teeth total</div>
+          <div class="trap-vs-mid">vs</div>
+          <div class="trap-b"><strong>Child</strong><br>2-1-0-2 / 2-1-0-2<br>20 milk teeth total</div>
+        </div>
+        <div style="margin-top:10px;font-size:13px;color:var(--text-dim)">Key difference: Children have <strong style="color:var(--red)">NO premolars</strong>. The "0" in the child formula is frequently asked.</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ 300 vs 206 Bones</div>
+        <div style="font-size:13px;color:var(--text-dim);line-height:1.7">Children have <strong style="color:var(--red)">300</strong> bones. Adults have <strong style="color:var(--red)">206</strong>. The reduction happens because many bones <strong>fuse together</strong> as we grow. If asked "how many bones in adult" → 206. Never say 300 for adults.</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ Coccyx (Tailbone) = Vestigial</div>
+        <div style="font-size:13px;color:var(--text-dim);line-height:1.7">Coccyx is a <strong style="color:var(--red)">vestigial organ</strong> — removing it has NO effect on body function. Do not confuse with sacrum (also one bone, but not vestigial).</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ Floating Ribs — Which ones?</div>
+        <div style="font-size:13px;color:var(--text-dim);line-height:1.7">Only ribs <strong style="color:var(--red)">11 and 12</strong> are floating (not connected to sternum at all). Ribs 8-10 are "false ribs" but they are still connected to the 7th rib. Floating = completely free in front.</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ Monohybrid F2 Ratios</div>
+        <div class="trap-vs">
+          <div class="trap-a"><strong>Phenotype ratio</strong><br>3 : 1<br>(visible appearance)</div>
+          <div class="trap-vs-mid">vs</div>
+          <div class="trap-b"><strong>Genotype ratio</strong><br>1 : 2 : 1<br>(actual genes)</div>
+        </div>
+        <div style="margin-top:10px;font-size:13px;color:var(--text-dim)">In 1:2:1 → 1 pure dominant, 2 hybrid dominant, 1 pure recessive.</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-box-title">⚠️ Hyoid Bone — Unique bone</div>
+        <div style="font-size:13px;color:var(--text-dim);line-height:1.7">Hyoid is the <strong style="color:var(--red)">only bone in the human body not connected to any other bone</strong>. It's located below the chin. Frequently asked as a tricky identification question.</div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="page-quiz" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Active Recall</div>
+        <div class="page-title">❓ Self-Test Quiz</div>
+        <div class="page-subtitle">Click each answer box to reveal. Try to answer mentally BEFORE you reveal.</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q1. How many bones does an adult human body have? What about a child?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px">Adult = <strong>206</strong> | Child = <strong>300</strong> (bones fuse as we grow)</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q2. What is the smallest bone in the entire human body? What are its other names?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>Stapes</strong> (ear ossicle) = smallest bone. Also called <strong>Stirrup</strong>. Part of the 3 ear ossicles: Malleus (Hammer) → Incus (Anvil) → Stapes (Stirrup).</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q3. Which ribs are called floating ribs and why?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px">Ribs <strong>11 and 12</strong> = floating ribs. They are NOT connected to the sternum in front — they are only attached to the spine at the back. They literally "float."</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q4. What connects the skull to the spine?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>Atlas bone</strong> (1st cervical vertebra). Like the god Atlas holding the world.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q5. Give the spinal vertebrae count in order from top to bottom.</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px">Cervical <strong>7</strong> → Thoracic <strong>12</strong> → Lumbar <strong>5</strong> → Sacrum <strong>1</strong> → Coccyx <strong>1</strong> = <strong>26 total</strong>. Memory: 7 days, 12 months, 5 fingers.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q6. Elephant's tusk — is it an incisor or a canine?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>Incisor!</strong> Despite looking sharp like a canine, elephant tusks are modified incisors. Classic exam trap.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q7. What is the dental formula of an adult? Of a child?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px">Adult: <strong>2-1-2-3 / 2-1-2-3</strong> (total 32) | Child: <strong>2-1-0-2 / 2-1-0-2</strong> (total 20). Difference: Children have NO premolars (0 in formula).</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q8. Who is the Father of Genetics? What plant did he work on?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>Gregor Mendel</strong> = Father of Genetics. Worked on <strong>Pea plant</strong> (Pisum sativum). "Rest In Peas."</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q9. What is the F2 phenotype ratio in a monohybrid cross? The genotype ratio?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px">Phenotype: <strong>3:1</strong> (3 dominant : 1 recessive) | Genotype: <strong>1:2:1</strong> (pure dominant : hybrid : pure recessive)</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q10. What is the F2 phenotype ratio in a dihybrid cross? Break down each category.</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>9:3:3:1</strong> — 9 (both dominant) : 3 (dom+rec) : 3 (rec+dom) : 1 (both recessive). e.g. 9 Round+Yellow, 3 Round+Green, 3 Wrinkled+Yellow, 1 Wrinkled+Green.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">⭐ Q11. What is the difference between Homologous and Analogous organs? Give one example each.</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>Homologous</strong> = Same structure, different function. e.g. Human arm + Bird wing. | <strong>Analogous</strong> = Different structure, same function. e.g. Bat wing + Bird wing (both fly).</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">⭐ Q12. What is the longest bone? The strongest? What if the longest is not in the options?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px">Longest + Strongest = <strong>Femur</strong> (thigh bone). If Femur not in options for "strongest" → answer is <strong>Jaw (Mandible)</strong>.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">⭐ Q13. Name the 3 types of synovial joints. Which has 360° rotation?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px">Ball & Socket (360°), Hinge (180°), Pivot (rotation but limited), Saddle (multi-directional), Gliding (sliding). <strong>Ball & Socket = 360°</strong> — shoulder and hip.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q14. What is the outer covering of a tooth crown? What is it made of?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>Enamel</strong> = outer covering of crown. Made of <strong>Calcium Phosphate</strong>. It is the <strong>hardest substance in the human body</strong>.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">➕ Q15. What is the coccyx? What makes it vestigial?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>Coccyx = tailbone</strong>. Last bone of the spine. It's vestigial because removing it has NO effect on body function — it's a remnant of an evolutionary tail.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q16. Name the axial skeleton total bones and its three components.</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px">Axial = <strong>80 bones</strong>. Components: <strong>Skull (22)</strong> + <strong>Spine (26)</strong> + <strong>Rib cage + Sternum (~25)</strong> + <strong>Ear ossicles (6)</strong> = 80.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">⭐ Q17. What is the 'beauty bone'? Where is it?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>Clavicle = collar bone = beauty bone</strong>. The visible bone across the upper chest/shoulder. Part of the shoulder girdle.</div></div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">🔥 Q18. What is the extra bone in the leg that doesn't exist in the arm?</div>
+        <div class="quiz-reveal" onclick="toggleReveal(this)">👆 Click to reveal answer</div>
+        <div style="display:none" class="quiz-answer"><div class="hl hl-green" style="margin-top:8px"><strong>Patella</strong> = knee cap. It compensates for the 1 fewer tarsal (7 vs 8 carpals in arms), keeping the total at 60 bones per pair of limbs.</div></div>
+      </div>
+    </div>
+
+    <!-- FAST REVISION -->
+    <div id="page-fastrevision" class="page">
+      <div class="page-header">
+        <div class="page-eyebrow">Multi-Layer Revision</div>
+        <div class="page-title">⚡ Fast Revision Sheets</div>
+        <div class="page-subtitle">4 layers — use them as your exam approaches closer.</div>
+      </div>
+
+      <div class="layer-tabs">
+        <div class="layer-tab active" onclick="showLayer('l2', this)">Layer 2: High-Yield</div>
+        <div class="layer-tab" onclick="showLayer('l3', this)">Layer 3: Ultra-Fast</div>
+        <div class="layer-tab" onclick="showLayer('l4', this)">Layer 4: 30-Second</div>
+        <div class="layer-tab" onclick="showLayer('l5', this)">Layer 5: Last Night</div>
+      </div>
+
+      <!-- LAYER 2 -->
+      <div id="layer-l2" class="layer-content active">
+        <div class="hl hl-green" style="margin-bottom:16px">
+          <div class="hl-title">📌 Use this: Week before the exam</div>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="margin-bottom:12px">🦴 Skeletal System</div>
+          <ul class="fact-list">
+            <li class="fact-item"><span class="fact-dot"></span><div>Adult = <strong>206</strong> bones | Child = <strong>300</strong> bones</div></li>
+            <li class="fact-item"><span class="fact-dot"></span><div>Axial = <strong>80</strong> (Skull 22 + Spine 26 + Ribs/Sternum 25 + Ear 6 + 1)</div></li>
+            <li class="fact-item"><span class="fact-dot"></span><div>Appendicular = <strong>126</strong> (Arms 60 + Legs 60 + 6 girdle bones)</div></li>
+            <li class="fact-item"><span class="fact-dot amber"></span><div><strong>Smallest bone = Stapes</strong> (ear) | <strong>Longest = Femur</strong></div></li>
+            <li class="fact-item"><span class="fact-dot"></span><div>3 Ear ossicles: Malleus → Incus → Stapes (Hammer, Anvil, Stirrup)</div></li>
+            <li class="fact-item"><span class="fact-dot"></span><div>Spine: Cervical 7, Thoracic 12, Lumbar 5, Sacrum 1, Coccyx 1</div></li>
+            <li class="fact-item"><span class="fact-dot amber"></span><div><strong>Floating ribs = 11th and 12th</strong> (not attached to sternum)</div></li>
+            <li class="fact-item"><span class="fact-dot"></span><div>Atlas bone = 1st cervical vertebra = connects skull to spine</div></li>
+            <li class="fact-item"><span class="fact-dot"></span><div>Patella = knee cap = extra bone in leg vs arm</div></li>
+            <li class="fact-item"><span class="fact-dot"></span><div>Clavicle = collar bone = beauty bone</div></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="margin-bottom:12px">🦷 Teeth</div>
+          <ul class="fact-list">
+            <li class="fact-item"><span class="fact-dot blue"></span><div>Total adult teeth = <strong>32</strong> (4 incisors + 4 canines + 8 premolars + 12 molars + 4 wisdom)</div></li>
+            <li class="fact-item"><span class="fact-dot blue"></span><div>Adult dental formula: <strong>2-1-2-3</strong> | Child: <strong>2-1-0-2</strong> (no premolars)</div></li>
+            <li class="fact-item"><span class="fact-dot amber"></span><div><strong>Elephant tusk = Incisor</strong> (not canine!)</div></li>
+            <li class="fact-item"><span class="fact-dot blue"></span><div>Enamel = hardest substance in human body = calcium phosphate</div></li>
+            <li class="fact-item"><span class="fact-dot blue"></span><div>Wisdom teeth = 3rd molars, erupt at age 16–20</div></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-title" style="margin-bottom:12px">🧬 Genetics</div>
+          <ul class="fact-list">
+            <li class="fact-item"><span class="fact-dot purple"></span><div>Mendel = Father of Genetics | Worked on <strong>Pea plant</strong> (Pisum sativum)</div></li>
+            <li class="fact-item"><span class="fact-dot purple"></span><div>3 Laws: Dominance → Segregation → Independent Assortment</div></li>
+            <li class="fact-item"><span class="fact-dot amber"></span><div>Monohybrid F2: Phenotype <strong>3:1</strong> | Genotype <strong>1:2:1</strong></div></li>
+            <li class="fact-item"><span class="fact-dot amber"></span><div>Dihybrid F2: <strong>9:3:3:1</strong></div></li>
+            <li class="fact-item"><span class="fact-dot purple"></span><div>Homologous = Same structure, different function (Human arm vs Bird wing)</div></li>
+            <li class="fact-item"><span class="fact-dot purple"></span><div>Analogous = Same function, different structure (Bat wing vs Bird wing)</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- LAYER 3 -->
+      <div id="layer-l3" class="layer-content">
+        <div class="hl hl-amber" style="margin-bottom:16px">
+          <div class="hl-title">📌 Use this: 2–3 days before exam</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-icon">⚡</span><span class="card-title">All Critical Numbers</span></div>
+          <div class="stat-grid">
+            <div class="stat-box"><div class="stat-num">206/300</div><div class="stat-label">Adult/Child bones</div></div>
+            <div class="stat-box"><div class="stat-num">80/126</div><div class="stat-label">Axial/Appendicular</div></div>
+            <div class="stat-box"><div class="stat-num">22</div><div class="stat-label">Skull bones (8+14)</div></div>
+            <div class="stat-box"><div class="stat-num">26</div><div class="stat-label">Spine vertebrae</div></div>
+            <div class="stat-box"><div class="stat-num">11+12</div><div class="stat-label">Floating ribs</div></div>
+            <div class="stat-box"><div class="stat-num">32/20</div><div class="stat-label">Adult/Child teeth</div></div>
+            <div class="stat-box"><div class="stat-num">3:1</div><div class="stat-label">Monohybrid F2</div></div>
+            <div class="stat-box"><div class="stat-num">9:3:3:1</div><div class="stat-label">Dihybrid F2</div></div>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="hl hl-red">
+            <div class="hl-title">🔥 Must-Remember Traps</div>
+            • Stapes = smallest (NOT femur)<br>
+            • Elephant tusk = Incisor (NOT canine)<br>
+            • Floating ribs = 11,12 (NOT 8,9,10)<br>
+            • Child formula has 0 premolars<br>
+            • Bat+Bird wings = Analogous (same fn)
+          </div>
+          <div class="hl hl-green">
+            <div class="hl-title">🔥 Mendel Shortcuts</div>
+            • RIP = Rest In Peas → Pea plant<br>
+            • F1 always shows dominant only<br>
+            • 3:1 (monohybrid phenotype F2)<br>
+            • 9:3:3:1 (dihybrid phenotype F2)<br>
+            • Homologous = saMe structure
+          </div>
+        </div>
+      </div>
+
+      <!-- LAYER 4 -->
+      <div id="layer-l4" class="layer-content">
+        <div class="hl hl-red" style="margin-bottom:16px">
+          <div class="hl-title">📌 Use this: Morning of exam / in queue</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-icon">🚀</span><span class="card-title">30-Second Scan</span></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:13px;line-height:2.2;color:var(--text)">
+            <span style="color:var(--green)">BONES:</span> Adult=206, Child=300 | Axial=80, Append=126<br>
+            <span style="color:var(--green)">SKULL:</span> 22 (8 cranial+14 facial)<br>
+            <span style="color:var(--green)">SPINE:</span> 26 = C7 T12 L5 S1 Co1<br>
+            <span style="color:var(--green)">EAR:</span> Malleus→Incus→<strong style="color:var(--amber)">Stapes</strong>(smallest)<br>
+            <span style="color:var(--green)">RIBS:</span> 24 total | Float=11,12 | True=1-7<br>
+            <span style="color:var(--green)">LEG EXTRA:</span> Patella=kneecap<br>
+            <span style="color:var(--green)">LONGEST:</span> Femur | CLAVICLE=beauty bone<br>
+            <span style="color:var(--blue)">TEETH:</span> Adult=32 (2123) | Child=20 (2102, no premolar)<br>
+            <span style="color:var(--blue)">ENAMEL:</span> Hardest in body = CaPhosphate<br>
+            <span style="color:var(--blue)">TUSK:</span> Incisor (NOT canine!)<br>
+            <span style="color:var(--purple)">MENDEL:</span> Father of Genetics | Pea plant | 3 laws<br>
+            <span style="color:var(--purple)">F2:</span> Mono=3:1 | Dihy=9:3:3:1<br>
+            <span style="color:var(--purple)">HOM:</span> Same structure ≠ function | ANA: Same function ≠ structure
+          </div>
+        </div>
+      </div>
+
+      <!-- LAYER 5 -->
+      <div id="layer-l5" class="layer-content">
+        <div class="hl hl-purple" style="margin-bottom:16px">
+          <div class="hl-title">📌 Use this: Last night before exam — only read, don't study new things</div>
+        </div>
+
+        <div class="card" style="border-color:var(--amber)">
+          <div class="card-header"><span class="card-icon">🌙</span><span class="card-title">Last Night Sheet — Only The Traps</span></div>
+          <div style="font-size:14px;line-height:2.4;color:var(--text)">
+            1. Adult = <strong>206</strong> | Child = <strong>300</strong><br>
+            2. Smallest bone = <strong>Stapes</strong> (ear, not femur)<br>
+            3. Longest bone = <strong>Femur</strong> (thigh)<br>
+            4. Floating ribs = <strong>11 & 12</strong><br>
+            5. Atlas bone = <strong>skull–spine joint</strong><br>
+            6. Spine = <strong>C7 T12 L5 S1 Co1 = 26</strong><br>
+            7. Coccyx = <strong>vestigial tailbone</strong><br>
+            8. Elephant tusk = <strong>INCISOR</strong> not canine<br>
+            9. Child has <strong>NO premolars</strong> (formula 2-1-0-2)<br>
+            10. Enamel = <strong>hardest substance</strong> in body<br>
+            11. Mendel = <strong>Pea plant</strong> (Pisum sativum)<br>
+            12. F2 mono = <strong>3:1</strong> | F2 dihy = <strong>9:3:3:1</strong><br>
+            13. Homologous = <strong>same structure</strong> | Analogous = <strong>same function</strong><br>
+            14. Bat+Bird = <strong>Analogous</strong> (both fly, different structure)<br>
+            15. Human arm + Bird wing = <strong>Homologous</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  let visitedPages = new Set(['home']);
+  const totalPages = 12;
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+    const page = document.getElementById('page-' + id);
+    if (page) {
+      page.classList.add('active');
+      document.getElementById('content').scrollTo(0, 0);
+    }
+
+    // activate nav item
+    document.querySelectorAll('.nav-item').forEach(n => {
+      if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
+        n.classList.add('active');
+      }
+    });
+
+    visitedPages.add(id);
+    updateProgress();
+
+    // close sidebar on mobile
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+  }
+
+  function updateProgress() {
+    const pct = Math.round((visitedPages.size / totalPages) * 100);
+    document.getElementById('progress-fill').style.width = Math.min(pct, 100) + '%';
+  }
+
+  function toggleReveal(el) {
+    const answer = el.nextElementSibling;
+    if (answer.style.display === 'none') {
+      answer.style.display = 'block';
+      el.textContent = '✅ Answer revealed';
+      el.classList.add('shown');
+    } else {
+      answer.style.display = 'none';
+      el.textContent = '👆 Click to reveal answer';
+      el.classList.remove('shown');
+    }
+  }
+
+  function showLayer(id, tabEl) {
+    document.querySelectorAll('.layer-content').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.layer-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('layer-' + id).classList.add('active');
+    tabEl.classList.add('active');
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.getElementById('sidebar').classList.remove('open');
+  });
+</script>
+</body>
+</html>

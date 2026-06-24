@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nervous System — SSC CGL Study Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg-base: #0b0d14;
+    --bg-surface: #111420;
+    --bg-card: #161926;
+    --bg-hover: #1c2033;
+    --border: #242840;
+    --border-bright: #2e3460;
+    --text-primary: #e8eaf6;
+    --text-secondary: #8b91b8;
+    --text-muted: #4a5080;
+    --accent-green: #39e8a3;
+    --accent-green-dim: #1a6649;
+    --accent-blue: #5b9cf6;
+    --accent-blue-dim: #1a3166;
+    --accent-amber: #f5c842;
+    --accent-amber-dim: #5a440f;
+    --accent-red: #f56565;
+    --accent-red-dim: #5a1f1f;
+    --accent-purple: #a78bfa;
+    --accent-purple-dim: #3b2d6e;
+    --sidebar-w: 260px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg-base);
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  #app { display: flex; height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: var(--sidebar-w);
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow-y: auto;
+  }
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 4px; }
+
+  .sidebar-header {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+    background: var(--bg-surface);
+    z-index: 10;
+  }
+  .sidebar-logo {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    margin-bottom: 6px;
+  }
+  .sidebar-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .sidebar-section-label {
+    padding: 16px 18px 6px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 18px;
+    cursor: pointer;
+    border-radius: 0;
+    transition: background 0.15s, color 0.15s;
+    font-size: 13px;
+    color: var(--text-secondary);
+    border-left: 3px solid transparent;
+    user-select: none;
+  }
+  .nav-item:hover { background: var(--bg-hover); color: var(--text-primary); }
+  .nav-item.active {
+    background: rgba(57,232,163,0.07);
+    color: var(--accent-green);
+    border-left-color: var(--accent-green);
+  }
+  .nav-icon { font-size: 14px; flex-shrink: 0; width: 18px; text-align: center; }
+
+  /* ── MAIN ── */
+  #main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 36px 44px;
+    scroll-behavior: smooth;
+  }
+  #main::-webkit-scrollbar { width: 6px; }
+  #main::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 4px; }
+
+  /* ── PAGES ── */
+  .page { display: none; animation: fadeIn 0.25s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform: translateY(6px); } to { opacity:1; transform:none; } }
+
+  /* ── TYPOGRAPHY ── */
+  .page-eyebrow {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    margin-bottom: 10px;
+  }
+  .page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  h2 { font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 28px 0 14px; }
+  h3 { font-size: 14px; font-weight: 600; color: var(--accent-blue); margin: 20px 0 10px; letter-spacing: 0.3px; }
+  p { font-size: 14px; line-height: 1.75; color: var(--text-secondary); margin-bottom: 12px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  .card-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+
+  .card-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .card-label.green { color: var(--accent-green); }
+  .card-label.blue { color: var(--accent-blue); }
+  .card-label.amber { color: var(--accent-amber); }
+  .card-label.red { color: var(--accent-red); }
+  .card-label.purple { color: var(--accent-purple); }
+
+  /* ── TAGS ── */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.3px;
+  }
+  .tag.fire { background: rgba(245,99,99,0.12); color: var(--accent-red); border: 1px solid rgba(245,99,99,0.25); }
+  .tag.star { background: rgba(91,156,246,0.12); color: var(--accent-blue); border: 1px solid rgba(91,156,246,0.25); }
+  .tag.plus { background: rgba(167,139,250,0.12); color: var(--accent-purple); border: 1px solid rgba(167,139,250,0.25); }
+
+  /* ── FACT ROWS ── */
+  .fact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+  .fact-row:last-child { border-bottom: none; }
+  .fact-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .fact-dot.green { background: var(--accent-green); }
+  .fact-dot.blue { background: var(--accent-blue); }
+  .fact-dot.amber { background: var(--accent-amber); }
+  .fact-dot.red { background: var(--accent-red); }
+  .fact-key { color: var(--text-primary); font-weight: 600; }
+  em { color: var(--accent-amber); font-style: normal; font-weight: 600; }
+  strong { color: var(--text-primary); font-weight: 600; }
+
+  /* ── HOOKS ── */
+  .hook-box {
+    background: linear-gradient(135deg, rgba(57,232,163,0.05), rgba(91,156,246,0.04));
+    border: 1px solid rgba(57,232,163,0.2);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
+  .hook-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent-green);
+    margin-bottom: 8px;
+  }
+  .hook-text {
+    font-family: 'Crimson Pro', serif;
+    font-size: 15.5px;
+    line-height: 1.7;
+    color: var(--text-primary);
+  }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: rgba(245,99,99,0.05);
+    border: 1px solid rgba(245,99,99,0.25);
+    border-left: 3px solid var(--accent-red);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .trap-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-red); margin-bottom: 8px; }
+
+  /* ── PALACE ── */
+  .palace-step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .palace-step::before {
+    content: '';
+    position: absolute;
+    left: 19px; top: 40px;
+    width: 1px; height: calc(100% - 6px);
+    background: var(--border-bright);
+  }
+  .palace-step:last-child::before { display: none; }
+  .palace-num {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--bg-hover);
+    border: 1px solid var(--accent-green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    color: var(--accent-green);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .palace-content { flex: 1; padding-top: 8px; }
+  .palace-place { font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .palace-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* ── CONNECTIONS ── */
+  .conn-row {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; margin-bottom: 10px;
+    color: var(--text-secondary);
+  }
+  .conn-from { color: var(--text-primary); font-weight: 600; }
+  .conn-arrow { color: var(--accent-green); font-size: 16px; }
+  .conn-to { color: var(--accent-blue); }
+
+  /* ── QUIZ ── */
+  .quiz-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+  .quiz-q { font-size: 14px; color: var(--text-primary); font-weight: 500; margin-bottom: 12px; }
+  .quiz-reveal-btn {
+    background: transparent;
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 6px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .quiz-reveal-btn:hover { background: var(--accent-green); color: var(--bg-base); }
+  .quiz-answer {
+    display: none;
+    margin-top: 12px;
+    padding: 12px 14px;
+    background: rgba(57,232,163,0.07);
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: var(--accent-green);
+    line-height: 1.6;
+  }
+  .quiz-answer.visible { display: block; animation: fadeIn 0.2s ease; }
+
+  /* ── RAPID FIRE ── */
+  .rapid-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .rapid-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12.5px;
+  }
+  .rapid-q { color: var(--text-secondary); margin-bottom: 5px; }
+  .rapid-a { color: var(--accent-green); font-weight: 700; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* ── REVISION LAYERS ── */
+  .layer-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border-bright);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+  }
+  .layer-badge span { color: var(--accent-amber); }
+
+  .mini-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .mini-row:last-child { border-bottom: none; }
+  .mini-key { color: var(--text-secondary); flex: 1; }
+  .mini-val { color: var(--text-primary); font-weight: 600; text-align: right; flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  /* ── LAST NIGHT ── */
+  .last-night { background: linear-gradient(135deg, #0b0f1c, #0d1220); border: 1px solid rgba(245,200,66,0.3); border-radius: 12px; padding: 24px; }
+  .ln-title { font-size: 13px; font-weight: 700; letter-spacing: 2px; color: var(--accent-amber); margin-bottom: 16px; text-transform: uppercase; }
+  .ln-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: 13px; }
+  .ln-num { background: var(--accent-amber); color: #000; font-weight: 800; font-size: 11px; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ln-text { color: var(--text-primary); line-height: 1.55; }
+
+  /* ── HOME ── */
+  .stat-strip { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 30px; }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    text-align: center;
+  }
+  .stat-num { font-size: 26px; font-weight: 800; color: var(--accent-green); font-family: 'JetBrains Mono', monospace; }
+  .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 3px; letter-spacing: 0.5px; }
+
+  .big-picture {
+    background: linear-gradient(135deg, rgba(57,232,163,0.06), rgba(91,156,246,0.04));
+    border: 1px solid var(--border-bright);
+    border-radius: 12px;
+    padding: 24px 26px;
+    margin-bottom: 24px;
+  }
+  .bp-heading { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-blue); margin-bottom: 12px; }
+
+  /* ── FLOW DIAGRAM (CSS only) ── */
+  .flow { display: flex; align-items: flex-start; gap: 0; margin-bottom: 18px; flex-wrap: wrap; }
+  .flow-node {
+    background: var(--bg-card);
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+  }
+  .flow-arrow { color: var(--accent-green); font-size: 18px; padding: 0 6px; align-self: center; }
+  .flow-node.green { border-color: var(--accent-green); color: var(--accent-green); }
+  .flow-node.blue { border-color: var(--accent-blue); color: var(--accent-blue); }
+  .flow-node.amber { border-color: var(--accent-amber); color: var(--accent-amber); }
+
+  /* ── TREE ── */
+  .tree { font-size: 13px; font-family: 'JetBrains Mono', monospace; color: var(--text-secondary); line-height: 2; }
+  .tree .root { color: var(--accent-green); font-weight: 700; }
+  .tree .l1 { color: var(--accent-blue); margin-left: 20px; }
+  .tree .l1::before { content: '├─ '; color: var(--text-muted); }
+  .tree .l2 { color: var(--text-primary); margin-left: 46px; }
+  .tree .l2::before { content: '└─ '; color: var(--text-muted); }
+  .tree .l2b { color: var(--accent-amber); margin-left: 46px; }
+  .tree .l2b::before { content: '├─ '; color: var(--text-muted); }
+
+  /* ── BRAIN LOBE TABLE ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0 18px; }
+  th { background: var(--bg-hover); color: var(--accent-green); font-weight: 700; padding: 10px 14px; text-align: left; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); line-height: 1.5; }
+  td:first-child { color: var(--text-primary); font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-hover); }
+
+  /* ── DISEASE BOX ── */
+  .disease-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent-purple);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .disease-name { font-size: 15px; font-weight: 700; color: var(--accent-purple); margin-bottom: 6px; }
+  .disease-def { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* ── FILL BLANK ── */
+  .blank-item {
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13.5px;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .blank { display: inline-block; min-width: 80px; border-bottom: 2px solid var(--accent-blue); color: transparent; background: rgba(91,156,246,0.1); border-radius: 3px; padding: 0 4px; cursor: pointer; transition: color 0.2s; }
+  .blank.shown { color: var(--accent-blue); font-weight: 700; }
+
+  /* SCROLLBAR inside main */
+  #main::-webkit-scrollbar-track { background: var(--bg-base); }
+
+  /* mobile toggle */
+  #menu-toggle { display: none; }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">SSC CGL · Biology</div>
+      <div class="sidebar-title">Nervous System</div>
+    </div>
+
+    <div class="sidebar-section-label">Overview</div>
+    <div class="nav-item active" data-page="home"><span class="nav-icon">🏠</span>Home & Big Picture</div>
+    <div class="nav-item" data-page="palace"><span class="nav-icon">🧠</span>Memory Palace</div>
+
+    <div class="sidebar-section-label">Core Notes</div>
+    <div class="nav-item" data-page="cns"><span class="nav-icon">🔬</span>Central Nervous System</div>
+    <div class="nav-item" data-page="brain-parts"><span class="nav-icon">🧩</span>Brain Parts & Lobes</div>
+    <div class="nav-item" data-page="pns"><span class="nav-icon">⚡</span>Peripheral Nervous System</div>
+    <div class="nav-item" data-page="autonomic"><span class="nav-icon">⚙️</span>Autonomic Nervous System</div>
+    <div class="nav-item" data-page="diseases"><span class="nav-icon">🏥</span>Diseases & Disorders</div>
+
+    <div class="sidebar-section-label">Memory & Retention</div>
+    <div class="nav-item" data-page="hooks"><span class="nav-icon">🪝</span>Smart Memory Hooks</div>
+    <div class="nav-item" data-page="connections"><span class="nav-icon">🔗</span>Concept Connections</div>
+    <div class="nav-item" data-page="traps"><span class="nav-icon">⚠️</span>Exam Traps</div>
+    <div class="nav-item" data-page="examiner"><span class="nav-icon">🎯</span>Examiner's Favourites</div>
+
+    <div class="sidebar-section-label">Active Recall</div>
+    <div class="nav-item" data-page="recall"><span class="nav-icon">❓</span>Self-Test Questions</div>
+    <div class="nav-item" data-page="rapid"><span class="nav-icon">⚡</span>Rapid-Fire Quiz</div>
+
+    <div class="sidebar-section-label">Revision Layers</div>
+    <div class="nav-item" data-page="high-yield"><span class="nav-icon">⭐</span>High-Yield Sheet</div>
+    <div class="nav-item" data-page="ultra"><span class="nav-icon">🚀</span>Ultra-Fast Sheet</div>
+    <div class="nav-item" data-page="last-night"><span class="nav-icon">🌙</span>Last Night Sheet</div>
+  </nav>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- ═══ HOME ═══ -->
+    <section class="page active" id="page-home">
+      <div class="page-eyebrow">Chapter · Nervous System</div>
+      <div class="page-title">The Body's Command &amp; Control System</div>
+      <div class="page-subtitle">A complete high-retention revision system for SSC CGL. Every fact preserved, every trap flagged, every concept connected.</div>
+
+      <div class="stat-strip">
+        <div class="stat-card"><div class="stat-num">2%</div><div class="stat-label">Brain of body weight</div></div>
+        <div class="stat-card"><div class="stat-num">22</div><div class="stat-label">Skull bones</div></div>
+        <div class="stat-card"><div class="stat-num">31</div><div class="stat-label">Spinal nerve pairs</div></div>
+        <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Cranial nerve pairs</div></div>
+      </div>
+
+      <div class="big-picture">
+        <div class="bp-heading">🔭 Big Picture</div>
+        <p>The nervous system is the body's electrical internet — sensing, processing, and responding to the world. It has two tiers: the <strong>Central Nervous System (brain + spinal cord)</strong> which is the server, and the <strong>Peripheral Nervous System (nerves)</strong> which are the cables connecting every organ to the server. Within peripherals, some cables you consciously control (somatic) and some run automatically 24/7 (autonomic). The autonomic system itself switches between <em>fight-or-flight</em> (sympathetic) and <em>rest-and-digest</em> (parasympathetic) modes.</p>
+      </div>
+
+      <h2>System Map</h2>
+      <div class="card">
+        <div class="tree">
+          <div class="root">Nervous System</div>
+          <div class="l1">Central Nervous System (CNS)</div>
+          <div class="l2b">Brain (Forebrain · Midbrain · Hindbrain)</div>
+          <div class="l2">Spinal Cord</div>
+          <div class="l1">Peripheral Nervous System (PNS)</div>
+          <div class="l2b">Somatic NS (voluntary) → Sensory + Motor</div>
+          <div class="l2b">Autonomic NS (involuntary)</div>
+          <div class="l2">Sympathetic (fight-flight)</div>
+          <div class="l2">Parasympathetic (rest-digest)</div>
+        </div>
+      </div>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label fire">🔥 Must Know Numbers</div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Brain weight:</span> ~1.5 kg (slightly less in females)</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Body weight share:</span> 2%</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Energy consumed:</span> ~20% of body's energy</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Oxygen consumed:</span> ~25% of oxygen intake</div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Skull bones:</span> 22 (8 cranial + 14 facial)</div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Spinal nerves:</span> 31 pairs</div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Cranial nerves:</span> 12 pairs</div></div>
+        </div>
+        <div class="card">
+          <div class="card-label blue">⭐ Key Protective Layers</div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">Skull / Cranium:</span> Natural helmet (22 bones)</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">Meninges (DAP):</span> 3-layer shock absorber</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">D:</span> Dura mater (outermost)</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">A:</span> Arachnoid matter (middle)</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">P:</span> Pia mater (innermost, touches brain)</div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">CSF:</span> Cerebrospinal Fluid — ultimate shock absorber</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ PALACE ═══ -->
+    <section class="page" id="page-palace">
+      <div class="page-eyebrow">Memory Palace</div>
+      <div class="page-title">Walk Through a Hospital Building</div>
+      <div class="page-subtitle">Each floor / room = a concept. Walk through it mentally to recall everything in the right order.</div>
+
+      <div class="palace-step">
+        <div class="palace-num">G</div>
+        <div class="palace-content">
+          <div class="palace-place">🏥 Hospital Gate — The Skull</div>
+          <div class="palace-desc">You enter through a massive iron gate with <em>22 locks</em>. 8 are on the top arch (cranial bones), 14 are on the fence (facial bones). The gate is so strong it's a natural helmet. → <strong>Skull = 22 bones, 8+14</strong></div>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">1</div>
+        <div class="palace-content">
+          <div class="palace-place">🛡️ Floor 1 — Security (Meninges DAP)</div>
+          <div class="palace-desc">Three security guards stand in order: <strong>D</strong>unno (Dura — outermost, toughest), <strong>A</strong>rachnid-man (Arachnoid — middle, web-like), <strong>P</strong>ia (Pia — innermost, gentle, touching the boss). Between them, a water moat (CSF) adds extra protection. → <strong>DAP order + CSF</strong></div>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">2</div>
+        <div class="palace-content">
+          <div class="palace-place">💻 Floor 2 — Server Room (Cerebrum)</div>
+          <div class="palace-desc">A giant CPU sits here. It's the <em>largest part of the brain</em>. Grey walls = Grey Matter = memory storage. Two wings (left/right hemisphere) connected by a glass corridor = <strong>Corpus Callosum</strong>. The boss here handles <strong>memory, reasoning, learning, intelligence</strong>.</div>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">3</div>
+        <div class="palace-content">
+          <div class="palace-place">🚉 Floor 3 — Railway Station (Thalamus)</div>
+          <div class="palace-desc">Every sensory signal (sight, touch, taste, sound) must pass through this busy railway junction. The thalamus distributes them to correct departments above. → <strong>Sensory relay station</strong></div>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">4</div>
+        <div class="palace-content">
+          <div class="palace-place">🌡️ Floor 4 — Thermostat Room (Hypothalamus)</div>
+          <div class="palace-desc">The temperature control room. Also manages hunger, thirst — all inner body maintenance. Has <em>neurosecretory cells</em> that release hypothalamic hormones. → <strong>Internal regulation: temperature, hunger, thirst</strong></div>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">5</div>
+        <div class="palace-content">
+          <div class="palace-place">👁️ Floor 5 — CCTV Room (Midbrain)</div>
+          <div class="palace-desc">Monitors all cameras (vision, hearing). Automatically adjusts iris aperture (pupil size) — you don't control this. It also runs the autonomic nervous system. → <strong>Involuntary: pupil size, vision, hearing</strong></div>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">6</div>
+        <div class="palace-content">
+          <div class="palace-place">🏋️ Floor 6 — Gym (Cerebellum)</div>
+          <div class="palace-desc">A fitness trainer doing perfect balance exercises. When someone is drunk, they skip the gym and can't balance. This is the <strong>Little Brain</strong> — same brain-like shape, smaller. → <strong>Balance, posture, coordination</strong></div>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">7</div>
+        <div class="palace-content">
+          <div class="palace-place">❤️ Floor 7 — ICU (Medulla Oblongata)</div>
+          <div class="palace-desc">The ICU controls all life-critical automatic functions: heartbeat, respiration, digestion. Connected directly to the spinal cord via the staircase. If this room shuts down, the body stops. → <strong>Heartbeat, respiration, digestion</strong></div>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">8</div>
+        <div class="palace-content">
+          <div class="palace-place">🪢 Corridor Bridge (Pons)</div>
+          <div class="palace-desc">A narrow corridor connecting the gym (cerebellum) and ICU (medulla). Controls face and eye movements, hearing, balance — coordination between the two. → <strong>Pons = connector / bridge</strong></div>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">B</div>
+        <div class="palace-content">
+          <div class="palace-place">📡 Basement — Spinal Cord + Nerves</div>
+          <div class="palace-desc">31 cables come out through the basement walls (31 spinal nerve pairs). 12 special cables go directly from the top floors to the outside (12 cranial nerve pairs). The cauda equina is the last thick bundle at the basement drain. Coccyx = broken vestigial pipe (no function).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CNS ═══ -->
+    <section class="page" id="page-cns">
+      <div class="page-eyebrow">Core Notes · CNS</div>
+      <div class="page-title">Central Nervous System</div>
+      <div class="page-subtitle">Brain + Spinal Cord. The server that processes everything.</div>
+
+      <h2>The Brain — Key Stats</h2>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Role:</span> Central induction-processing organ — the body's CPU</div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Weight:</span> ~1.5 kg (slightly less in females)</div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">% of body weight:</span> <em>2%</em></div></div>
+        <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Energy use:</span> ~<em>20%</em> of body energy</div></div>
+        <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Oxygen use:</span> ~<em>25%</em> of oxygen intake</div></div>
+        <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">First organ affected</span> if oxygen supply stops: the Brain</div></div>
+      </div>
+
+      <h2>Skull &amp; Meninges — Protection</h2>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label amber">Skull Structure</div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Total skull bones:</span> <em>22</em></div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Cranial bones:</span> <em>8</em> (protecting the brain)</div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Facial bones:</span> <em>14</em></div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Skull = Cranium</span> = natural helmet for brain</div></div>
+        </div>
+        <div class="card">
+          <div class="card-label blue">Meninges — DAP (outer → inner)</div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">D — Dura mater:</span> Outermost, toughest</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">A — Arachnoid:</span> Middle layer</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">P — Pia mater:</span> Innermost, touches brain tissue</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">CSF:</span> Cerebrospinal fluid — shock absorber, fills meninges</div></div>
+        </div>
+      </div>
+
+      <h2>Brain Divisions — Three Tiers</h2>
+      <div class="flow">
+        <div class="flow-node green">FOREBRAIN<br><small>Largest</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node blue">MIDBRAIN<br><small>Smallest</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node amber">HINDBRAIN<br><small>Rear</small></div>
+      </div>
+
+      <h3>Forebrain — The Big Boss</h3>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Cerebrum:</span> Largest part of the ENTIRE brain. Two hemispheres (left + right)</div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Corpus Callosum:</span> Connects left &amp; right hemispheres</div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Cerebral Cortex:</span> Grey matter layer covering hemispheres; stores memory</div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Cerebrum function:</span> Memory, learning, reasoning, intelligence</div></div>
+        <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">Thalamus:</span> Sensory relay station (sight, touch, taste, sound) → sends to cortex</div></div>
+        <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">Hypothalamus:</span> Internal body regulation — temperature, hunger, thirst; secretes hypothalamic hormones via neurosecretory cells</div></div>
+      </div>
+
+      <h3>Midbrain</h3>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Involuntary actions:</span> Pupil size regulation</div></div>
+        <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Vision and hearing</span> relay</div></div>
+        <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Controls:</span> Autonomic nervous system</div></div>
+      </div>
+
+      <h3>Hindbrain — Three Parts</h3>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">Cerebellum:</span> Body posture &amp; balance. Also called <em>"little brain"</em> (similar shape to full brain but smaller). Alcohol impairs this first → poor balance</div></div>
+        <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">Medulla Oblongata:</span> Connected to spinal cord. Controls heartbeat, respiration, digestion (all involuntary/automatic)</div></div>
+        <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">Pons:</span> Bridge between cerebellum &amp; medulla. Coordinates face/eye movements, facial sensations, hearing, balance</div></div>
+      </div>
+    </section>
+
+    <!-- ═══ BRAIN PARTS ═══ -->
+    <section class="page" id="page-brain-parts">
+      <div class="page-eyebrow">Core Notes · Brain Lobes</div>
+      <div class="page-title">Brain Lobes — Who Does What</div>
+      <div class="page-subtitle">The cerebrum is divided into four lobes. Each has a distinct function — examiners love this.</div>
+
+      <div class="tag-row">
+        <span class="tag fire">🔥 High Frequency</span>
+        <span class="tag star">Temporal vs Occipital is a classic trap</span>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>Lobe</th><th>Primary Function</th><th>Memory Trick</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Frontal Lobe</td><td>Reasoning, planning, memory, personality</td><td><em>Front = Future planning</em></td></tr>
+          <tr><td>Parietal Lobe</td><td>Touch, pain, pressure sensations</td><td><em>Parietal = Pressure/Pain/Patch</em></td></tr>
+          <tr><td>Temporal Lobe</td><td>Auditory processing — hearing</td><td><em>Temporal = Tune/Tone/Talk</em></td></tr>
+          <tr><td>Occipital Lobe</td><td>Visual processing — sight</td><td><em>Occipital = Optic/Observe</em></td></tr>
+          <tr><td>Cerebellum</td><td>Balance, posture, coordination</td><td><em>Little brain; alcohol wrecks it first</em></td></tr>
+        </tbody>
+      </table>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 The Four O'Clock Rule</div>
+        <div class="hook-text">Imagine a clock face on the brain: <strong>Front (12 o'clock)</strong> = Frontal = Future & planning. <strong>Top (3 o'clock)</strong> = Parietal = Pressure (touch/pain). <strong>Side (6 o'clock)</strong> = Temporal = Time & Tunes (hearing). <strong>Back (9 o'clock)</strong> = Occipital = Observatory (seeing).</div>
+      </div>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label green">Sensory Summary</div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Sight:</span> Occipital lobe (+ Thalamus relay)</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Hearing:</span> Temporal lobe (+ Thalamus relay)</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Touch/Pain:</span> Parietal lobe (+ Thalamus relay)</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Taste:</span> Thalamus → Parietal</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Balance:</span> Cerebellum (hindbrain)</div></div>
+        </div>
+        <div class="card">
+          <div class="card-label blue">Midbrain vs Medulla — Common Confusion</div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">Midbrain:</span> Pupil size, vision relay, hearing relay, autonomic NS control</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">Medulla oblongata:</span> Heartbeat, respiration, digestion — life support</div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Spinal cord = Medulla</span> in Hindi — don't confuse with Medulla Oblongata</div></div>
+        </div>
+      </div>
+
+      <h2>Corpus Callosum &amp; Notochord — Exam Confusers</h2>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">Corpus Callosum:</span> Connects left &amp; right cerebral hemispheres</div></div>
+        <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">Notochord:</span> Mentioned in plant-animal kingdom chapter as evolutionary precursor to spinal cord — NOT the spinal cord itself</div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Cerebral Cortex:</span> Grey matter → memory. If question says "where is memory stored" → Grey matter / Cerebral cortex</div></div>
+      </div>
+    </section>
+
+    <!-- ═══ PNS ═══ -->
+    <section class="page" id="page-pns">
+      <div class="page-eyebrow">Core Notes · PNS</div>
+      <div class="page-title">Peripheral Nervous System</div>
+      <div class="page-subtitle">All nerves outside the brain and spinal cord — cranial + spinal nerves, and their downstream divisions.</div>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label green">Cranial Nerves</div>
+          <div class="fact-row"><div class="fact-dot green"></div><div>Come out of the <span class="fact-key">brain</span></div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div>Total: <em>12 pairs</em></div></div>
+        </div>
+        <div class="card">
+          <div class="card-label blue">Spinal Nerves</div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div>Come out of the <span class="fact-key">spinal cord</span></div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div>Total: <em>31 pairs</em></div></div>
+        </div>
+      </div>
+
+      <h2>Spinal Nerve Breakdown — 31 Pairs</h2>
+      <table>
+        <thead>
+          <tr><th>Region</th><th>Vertebral Bones</th><th>Nerve Pairs</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cervical (neck)</td><td>7</td><td><em>8 pairs</em></td></tr>
+          <tr><td>Thoracic (chest)</td><td>12</td><td>12 pairs</td></tr>
+          <tr><td>Lumbar (lower back)</td><td>5</td><td>5 pairs</td></tr>
+          <tr><td>Sacral</td><td>1 (fused)</td><td>5 pairs</td></tr>
+          <tr><td>Coccyx / Cauda Equina</td><td>1 (vestigial)</td><td>1 pair</td></tr>
+          <tr><td><strong>TOTAL</strong></td><td></td><td><strong>31 pairs</strong></td></tr>
+        </tbody>
+      </table>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Trap: Cervical Bones vs Cervical Nerves</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;">Cervical vertebrae = <em>7 bones</em> BUT cervical nerves = <em>8 pairs</em>. This mismatch is a classic trick question. All other regions: bones = nerve pairs.</p>
+      </div>
+
+      <h2>Cauda Equina &amp; Coccyx</h2>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Cauda Equina:</span> Final thick bundle of nerves at the very base of the spine. Gives sensation to lower body</div></div>
+        <div class="fact-row"><div class="fact-dot amber"></div><div><span class="fact-key">Coccyx:</span> Vestigial tail bone — no function in humans. Like the appendix (vestigial organ)</div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Other vestigial organs:</span> Appendix (near large intestine), coccyx, wisdom teeth</div></div>
+      </div>
+
+      <h2>Somatic Nervous System — Voluntary Control</h2>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Soma = Body</span> → controls body movements consciously</div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Sensory (Afferent) Nerves:</span> Body → CNS. Carry sensory signals (e.g., "this is HOT!")</div></div>
+        <div class="fact-row"><div class="fact-dot blue"></div><div><span class="fact-key">Motor (Efferent) Nerves:</span> CNS → Body. Carry action signals (e.g., "MOVE the hand!")</div></div>
+      </div>
+
+      <div class="flow" style="margin-top:6px;">
+        <div class="flow-node">HOT GLASS<br><small>Stimulus</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node green">Afferent<br><small>Sensory nerve</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node blue">CNS<br><small>Brain/Spinal cord</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node amber">Efferent<br><small>Motor nerve</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">HAND MOVES<br><small>Response</small></div>
+      </div>
+
+      <div class="trap-box" style="margin-top:18px;">
+        <div class="trap-title">⚠️ Afferent vs Efferent — Most Confused Pair</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;"><strong>A</strong>fferent = <strong>A</strong>rriving at brain (sensory). <strong>E</strong>fferent = <strong>E</strong>xiting brain (motor/action). A = Arriving, E = Exiting.</p>
+      </div>
+    </section>
+
+    <!-- ═══ AUTONOMIC ═══ -->
+    <section class="page" id="page-autonomic">
+      <div class="page-eyebrow">Core Notes · ANS</div>
+      <div class="page-title">Autonomic Nervous System</div>
+      <div class="page-subtitle">The part of the PNS you cannot consciously control — it runs 24/7 automatically.</div>
+
+      <div class="card-grid">
+        <div class="card" style="border-top: 3px solid var(--accent-red);">
+          <div class="card-label red">Sympathetic NS</div>
+          <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">Mode:</span> Fight or Flight ⚔️</div></div>
+          <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">Triggers:</span> Danger, stress, exam results, crush appearing suddenly</div></div>
+          <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">Effect:</span> Heart rate ↑, adrenaline release, pupils dilate</div></div>
+          <div class="fact-row"><div class="fact-dot red"></div><div><span class="fact-key">Remember:</span> SSC notification coming → sympathetic activates!</div></div>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--accent-green);">
+          <div class="card-label green">Parasympathetic NS</div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Mode:</span> Rest and Digest 😴</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Triggers:</span> Relaxed, safe, comfortable</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Effect:</span> Heart rate ↓, digestion active, energy conservation</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div><span class="fact-key">Remember:</span> Sunday afternoon nap → parasympathetic is ON</div></div>
+        </div>
+      </div>
+
+      <h2>Quick Comparison Table</h2>
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Sympathetic</th><th>Parasympathetic</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Mode name</td><td>Fight or Flight</td><td>Rest and Digest</td></tr>
+          <tr><td>Activated when</td><td>Stress / danger</td><td>Calm / relaxed</td></tr>
+          <tr><td>Heart rate</td><td>Increases ↑</td><td>Decreases ↓</td></tr>
+          <tr><td>Digestion</td><td>Slows down</td><td>Active</td></tr>
+          <tr><td>Pupil size</td><td>Dilates</td><td>Constricts</td></tr>
+          <tr><td>Nature</td><td>Involuntary</td><td>Involuntary</td></tr>
+        </tbody>
+      </table>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 Memory Story: The Exam Notification</div>
+        <div class="hook-text">You're chilling on a Sunday (PARASYMPATHETIC — rest &amp; digest). Suddenly an SSC notification pops: "Exam rescheduled to next week." BOOM — heart races, palms sweat (SYMPATHETIC — fight or flight kicks in). Next time your heart suddenly races, remember: that's your sympathetic nervous system doing its job.</div>
+      </div>
+    </section>
+
+    <!-- ═══ DISEASES ═══ -->
+    <section class="page" id="page-diseases">
+      <div class="page-eyebrow">Core Notes · Disorders</div>
+      <div class="page-title">Nervous System Diseases</div>
+      <div class="page-subtitle">Three key diseases — all high-frequency exam topics. Know them precisely.</div>
+
+      <div class="disease-card">
+        <div class="disease-name">🧠 Alzheimer's Disease</div>
+        <div class="disease-def"><strong>Type:</strong> Degenerative brain disorder<br><strong>Progression:</strong> Gradually leads to <em>dementia</em> (memory loss)<br><strong>Cause:</strong> Age-related neurodegeneration — not injury<br><strong>Key word:</strong> <em>Degenerative</em> → gradual → age-related</div>
+      </div>
+
+      <div class="disease-card">
+        <div class="disease-name">💥 Amnesia</div>
+        <div class="disease-def"><strong>Type:</strong> Memory loss due to physical injury / accident<br><strong>Cause:</strong> Brain trauma — sudden, not gradual<br><strong>Key word:</strong> <em>Injury</em> → sudden loss of memory</div>
+      </div>
+
+      <div class="disease-card">
+        <div class="disease-name">🦠 Meningitis</div>
+        <div class="disease-def"><strong>What is affected:</strong> Meninges (the DAP layers around brain)<br><strong>Causes:</strong> Bacterial OR Viral OR Fungal infection (all three possible!)<br><strong>Symptoms:</strong> Brain fog, neurological disorders<br><strong>Key word:</strong> <em>Meninges infection</em> (not just bacterial)</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Alzheimer's vs Amnesia</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;">Both = memory loss BUT: <strong>Alzheimer's</strong> = gradual, age-related degeneration → dementia. <strong>Amnesia</strong> = sudden, injury-caused memory loss. Examiner may give a scenario — identify which one it is.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Meningitis Cause Trap</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;">Students think meningitis is only bacterial. <strong>Wrong.</strong> It can be bacterial, viral, OR fungal. If a question says "only bacteria cause meningitis" → FALSE.</p>
+      </div>
+    </section>
+
+    <!-- ═══ HOOKS ═══ -->
+    <section class="page" id="page-hooks">
+      <div class="page-eyebrow">Memory Retention</div>
+      <div class="page-title">Smart Memory Hooks</div>
+      <div class="page-subtitle">Mental images and stories that fight forgetting — designed to survive 6 months in your memory.</div>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 DAP — The Three Security Guards</div>
+        <div class="hook-text">Imagine three bouncers guarding your brain. The outer one is <strong>D</strong>an (Dura mater) — massive, tough, outermost. The middle one is <strong>A</strong>rachnid (Arachnoid) — wiry, web-like. The inner one is little <strong>P</strong>ia — gentle, closest to the boss. Between them, a water moat (CSF) adds protection. <em>DAP → Dan-Arachnid-Pia = outer to inner.</em></div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 22 Skull Bones = 8 + 14</div>
+        <div class="hook-text">A cricketer scores <strong>22 runs</strong>: 8 boundaries hit over the head (cranial) and 14 singles driven through the covers on the ground (facial). 8 cranial above, 14 facial below. Or: an octopus (8 arms) sits on your head, 14 fish swim around your face.</div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 Cerebellum = Drunk Man's Enemy</div>
+        <div class="hook-text">The cerebellum handles balance and posture. Alcohol specifically impairs the cerebellum first — that's why drunk people wobble and can't walk straight. "Little Brain, Big Job." Shape-wise, it looks like a mini version of the whole brain → hence "little brain."</div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 Thalamus = Railway Junction</div>
+        <div class="hook-text">Every sensory signal — sight, sound, touch, taste — boards a train at its station and must pass through the Thalamus Junction before reaching the final destination (cerebral cortex). The thalamus sorts, routes, and dispatches. Without it, signals get lost.</div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 Hypothalamus = Inner Thermostat</div>
+        <div class="hook-text">Hypo = below Thalamus. Imagine a thermostat on the INSIDE of your body: it controls internal temperature, hunger alarm, and thirst alarm. It also has its own pharmacy (neurosecretory cells) that makes hypothalamic hormones.</div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 Afferent vs Efferent: AE Formula</div>
+        <div class="hook-text"><strong>A</strong>fferent = <strong>A</strong>rriving at brain (sensory). <strong>E</strong>fferent = <strong>E</strong>xiting the brain (motor). Like Airport: <strong>A</strong>rrivals and <strong>D</strong>epartures — afferent arrives, efferent departs.</div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 31 Spinal Nerves — The "8-12-5-5-1" Song</div>
+        <div class="hook-text">Cervical: <em>8</em>, Thoracic: <em>12</em>, Lumbar: <em>5</em>, Sacral: <em>5</em>, Coccygeal: <em>1</em>. Total = 31. Remember: <strong>"Eight TwElve Five Five One"</strong> — the numbers decrease from the top then converge to 1. Note: Cervical has 8 nerves but only 7 bones — one extra nerve sneaks out!</div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🪝 Alzheimer's vs Amnesia: The A-Team</div>
+        <div class="hook-text"><strong>A</strong>lzheimer's = <strong>A</strong>ge attacks slowly → gradual degeneration → dementia. <strong>A</strong>mnesia = <strong>A</strong>ccident attacks suddenly → instant memory loss. Both start with A and end with memory loss — but one is a slow fade, one is a sudden blackout.</div>
+      </div>
+    </section>
+
+    <!-- ═══ CONNECTIONS ═══ -->
+    <section class="page" id="page-connections">
+      <div class="page-eyebrow">Concept Connections</div>
+      <div class="page-title">How Everything Links</div>
+      <div class="page-subtitle">Never let facts be isolated. See the web of cause, effect, and relationship.</div>
+
+      <h2>Cause → Effect Chains</h2>
+      <div class="card">
+        <div class="conn-row"><div class="conn-from">Oxygen supply stops</div><div class="conn-arrow">→</div><div class="conn-to">Brain affected first (before any other organ)</div></div>
+        <div class="conn-row"><div class="conn-from">Alcohol consumption</div><div class="conn-arrow">→</div><div class="conn-to">Cerebellum impaired → poor balance, slurred movement</div></div>
+        <div class="conn-row"><div class="conn-from">Bacterial/Viral/Fungal infection in meninges</div><div class="conn-arrow">→</div><div class="conn-to">Meningitis → brain fog, neurological issues</div></div>
+        <div class="conn-row"><div class="conn-from">Age-related brain degeneration</div><div class="conn-arrow">→</div><div class="conn-to">Alzheimer's → Dementia (memory loss)</div></div>
+        <div class="conn-row"><div class="conn-from">Brain/head injury</div><div class="conn-arrow">→</div><div class="conn-to">Amnesia (sudden memory loss)</div></div>
+        <div class="conn-row"><div class="conn-from">Danger / stress</div><div class="conn-arrow">→</div><div class="conn-to">Sympathetic NS activates → fight or flight response</div></div>
+        <div class="conn-row"><div class="conn-from">Hot object touch</div><div class="conn-arrow">→</div><div class="conn-to">Afferent nerves → CNS → Efferent nerves → withdrawal reflex</div></div>
+      </div>
+
+      <h2>Structure → Function</h2>
+      <div class="card">
+        <div class="conn-row"><div class="conn-from">Corpus Callosum</div><div class="conn-arrow">→</div><div class="conn-to">Connects left &amp; right cerebral hemispheres</div></div>
+        <div class="conn-row"><div class="conn-from">Cerebral Cortex (grey matter)</div><div class="conn-arrow">→</div><div class="conn-to">Memory storage centre</div></div>
+        <div class="conn-row"><div class="conn-from">Pons</div><div class="conn-arrow">→</div><div class="conn-to">Bridge between cerebellum and medulla</div></div>
+        <div class="conn-row"><div class="conn-from">Medulla Oblongata</div><div class="conn-arrow">→</div><div class="conn-to">Connected to spinal cord; controls life-support functions</div></div>
+        <div class="conn-row"><div class="conn-from">Meninges (DAP)</div><div class="conn-arrow">→</div><div class="conn-to">Three-layer protection + CSF cushion for brain</div></div>
+      </div>
+
+      <h2>Concept → Application</h2>
+      <div class="card">
+        <div class="conn-row"><div class="conn-from">Thalamus = railway station</div><div class="conn-arrow">→</div><div class="conn-to">All external senses pass through before reaching cortex</div></div>
+        <div class="conn-row"><div class="conn-from">Brain = 2% body weight</div><div class="conn-arrow">→</div><div class="conn-to">Yet uses 20% energy + 25% oxygen → most energy-hungry organ</div></div>
+        <div class="conn-row"><div class="conn-from">Autonomic NS = involuntary</div><div class="conn-arrow">→</div><div class="conn-to">You cannot consciously control heartbeat, digestion — the medulla handles it</div></div>
+      </div>
+
+      <h2>Related Chapter Connections</h2>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot purple"></div><div><span class="fact-key">Hypothalamus hormones:</span> Connects to Glands &amp; Hormones chapter (next lecture)</div></div>
+        <div class="fact-row"><div class="fact-dot purple"></div><div><span class="fact-key">Notochord:</span> Connects to Plant &amp; Animal Kingdom chapter (evolutionary spinal cord)</div></div>
+        <div class="fact-row"><div class="fact-dot purple"></div><div><span class="fact-key">Skull (22 bones):</span> Connects to Skeletal System chapter for full bone distribution</div></div>
+        <div class="fact-row"><div class="fact-dot purple"></div><div><span class="fact-key">Vestigial organs (coccyx, appendix):</span> Connects to Evolution chapter</div></div>
+      </div>
+    </section>
+
+    <!-- ═══ TRAPS ═══ -->
+    <section class="page" id="page-traps">
+      <div class="page-eyebrow">Exam Strategy</div>
+      <div class="page-title">⚠️ Exam Traps</div>
+      <div class="page-subtitle">These are where marks are lost. Read each one twice.</div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ TRAP 1: Cervical Bones vs Cervical Nerves</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;">Cervical <strong>vertebrae = 7 bones</strong> but Cervical <strong>nerves = 8 pairs</strong>. This is the one mismatch in the entire spine. All other regions: bone count = nerve pair count. Exam often asks specifically about cervical.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ TRAP 2: Temporal vs Occipital Lobe</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;"><strong>Temporal = Hearing (Auditory)</strong> — not vision. <strong>Occipital = Vision</strong> — not hearing. Students swap these constantly. Trick: Occipital → <strong>O</strong>cular → vision. Temporal → <strong>T</strong>one → sound.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ TRAP 3: Alzheimer's vs Amnesia</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;">Both cause memory loss, but: <strong>Alzheimer's = gradual, age-related, degenerative</strong> disease leading to dementia. <strong>Amnesia = sudden, injury-triggered</strong> memory loss. Exam may describe a scenario — identify which one.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ TRAP 4: Meningitis is NOT only bacterial</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;">Meningitis can be caused by <strong>bacterial, viral, OR fungal</strong> infection. If a statement says "meningitis is caused only by bacteria" → it is FALSE.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ TRAP 5: Afferent vs Efferent</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;"><strong>Afferent = Sensory nerve</strong> (body to brain). <strong>Efferent = Motor nerve</strong> (brain to body). These are also called sensory and motor nerves respectively. Confusing these gives wrong reflex arc answers.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ TRAP 6: Medulla = Spinal Cord (in Hindi) ≠ Medulla Oblongata</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;">In Hindi, the spinal cord is called "Medulla" — but in anatomy, Medulla Oblongata is a part of the hindbrain. These are TWO different things. Don't confuse them.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ TRAP 7: Corpus Callosum vs Notochord</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;"><strong>Corpus Callosum</strong> connects left and right cerebral hemispheres (inside the brain). <strong>Notochord</strong> is an evolutionary structure discussed in Animal Kingdom — it is the precursor to the spinal cord, not the brain connector.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ TRAP 8: Brain = 2% but 20-25% energy</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;">The brain is only <strong>2% of body weight</strong> but consumes <strong>~20% of energy</strong> and <strong>~25% of oxygen</strong>. An exam statement saying "brain uses 2% of energy because it is 2% of weight" is a trap — it's completely FALSE.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ TRAP 9: Little Brain = Cerebellum (NOT small cerebrum)</div>
+        <p style="margin:0;font-size:13px;color:#e8eaf6;">"Little Brain" is the nickname for <strong>Cerebellum</strong> (hindbrain) because its shape resembles a miniature version of the whole brain. It does NOT mean a small cerebrum.</p>
+      </div>
+    </section>
+
+    <!-- ═══ EXAMINER ═══ -->
+    <section class="page" id="page-examiner">
+      <div class="page-eyebrow">Exam Strategy</div>
+      <div class="page-title">🎯 Examiner's Favourite Questions</div>
+      <div class="page-subtitle">Predict the exam before you sit it. These patterns repeat.</div>
+
+      <h2>High-Probability Direct Questions</h2>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot red"></div><div>Which part of the brain controls balance and posture? → <em>Cerebellum</em></div></div>
+        <div class="fact-row"><div class="fact-dot red"></div><div>Which is the largest part of the brain? → <em>Cerebrum</em></div></div>
+        <div class="fact-row"><div class="fact-dot red"></div><div>How many pairs of cranial nerves are there? → <em>12 pairs</em></div></div>
+        <div class="fact-row"><div class="fact-dot red"></div><div>How many pairs of spinal nerves are there? → <em>31 pairs</em></div></div>
+        <div class="fact-row"><div class="fact-dot red"></div><div>What % of body weight is the brain? → <em>2%</em></div></div>
+        <div class="fact-row"><div class="fact-dot red"></div><div>What connects the two cerebral hemispheres? → <em>Corpus Callosum</em></div></div>
+        <div class="fact-row"><div class="fact-dot amber"></div><div>Which brain part controls heartbeat and respiration? → <em>Medulla Oblongata</em></div></div>
+        <div class="fact-row"><div class="fact-dot amber"></div><div>Which brain part is called "little brain"? → <em>Cerebellum</em></div></div>
+        <div class="fact-row"><div class="fact-dot amber"></div><div>Which lobe is responsible for hearing? → <em>Temporal lobe</em></div></div>
+        <div class="fact-row"><div class="fact-dot amber"></div><div>Which lobe is responsible for vision? → <em>Occipital lobe</em></div></div>
+      </div>
+
+      <h2>Statement-Based Questions (True/False Style)</h2>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot blue"></div><div>"Meningitis is caused only by bacteria" → <em>FALSE</em> (also viral, fungal)</div></div>
+        <div class="fact-row"><div class="fact-dot blue"></div><div>"Cerebellum is responsible for memory" → <em>FALSE</em> (cerebrum/cortex is)</div></div>
+        <div class="fact-row"><div class="fact-dot blue"></div><div>"Afferent nerves carry signals from brain to body" → <em>FALSE</em> (that's efferent)</div></div>
+        <div class="fact-row"><div class="fact-dot blue"></div><div>"The brain consumes 2% of body energy" → <em>FALSE</em> (20% energy, not 2%)</div></div>
+        <div class="fact-row"><div class="fact-dot blue"></div><div>"Cervical region has 7 pairs of spinal nerves" → <em>FALSE</em> (8 pairs, 7 bones)</div></div>
+      </div>
+
+      <h2>Match-the-Following Possibilities</h2>
+      <table>
+        <thead><tr><th>Structure</th><th>Function</th></tr></thead>
+        <tbody>
+          <tr><td>Cerebrum</td><td>Memory &amp; Learning</td></tr>
+          <tr><td>Cerebellum</td><td>Balance &amp; Posture</td></tr>
+          <tr><td>Medulla Oblongata</td><td>Heartbeat, Respiration</td></tr>
+          <tr><td>Thalamus</td><td>Sensory Relay</td></tr>
+          <tr><td>Hypothalamus</td><td>Temperature, Hunger, Thirst</td></tr>
+          <tr><td>Pons</td><td>Bridge — face/eye movements</td></tr>
+          <tr><td>Occipital Lobe</td><td>Vision</td></tr>
+          <tr><td>Temporal Lobe</td><td>Hearing</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Chronology / Hierarchy Questions</h2>
+      <div class="card">
+        <div class="fact-row"><div class="fact-dot green"></div><div>Largest brain division → Forebrain → Largest part → Cerebrum</div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div>Meninges order (outer → inner): <em>Dura → Arachnoid → Pia</em></div></div>
+        <div class="fact-row"><div class="fact-dot green"></div><div>Reflex arc order: Stimulus → Afferent → CNS → Efferent → Response</div></div>
+      </div>
+    </section>
+
+    <!-- ═══ RECALL ═══ -->
+    <section class="page" id="page-recall">
+      <div class="page-eyebrow">Active Recall</div>
+      <div class="page-title">Self-Test Questions</div>
+      <div class="page-subtitle">Click "Reveal Answer" only after thinking. Each retrieval strengthens the memory trace.</div>
+
+      <div id="quiz-container"></div>
+
+      <h2 style="margin-top:30px;">Fill in the Blanks</h2>
+      <p style="color:var(--text-secondary);font-size:13px;margin-bottom:12px;">Click the blank to reveal.</p>
+      <div id="blanks-container"></div>
+    </section>
+
+    <!-- ═══ RAPID FIRE ═══ -->
+    <section class="page" id="page-rapid">
+      <div class="page-eyebrow">Active Recall</div>
+      <div class="page-title">⚡ Rapid-Fire Quiz</div>
+      <div class="page-subtitle">Cover the answer column. Answer each question in under 3 seconds. Speed builds exam confidence.</div>
+      <div class="rapid-grid" id="rapid-container"></div>
+    </section>
+
+    <!-- ═══ HIGH YIELD ═══ -->
+    <section class="page" id="page-high-yield">
+      <div class="page-eyebrow">Revision Layer 2</div>
+      <div class="page-title">⭐ High-Yield Revision Sheet</div>
+      <div class="page-subtitle">Everything that actually appears in exams. Stripped of non-essentials. Revise this after the full notes.</div>
+
+      <div class="layer-badge">Layer <span>2 of 5</span> · Full key facts</div>
+
+      <h2>Brain Structure &amp; Numbers</h2>
+      <div class="card">
+        <div class="mini-row"><div class="mini-key">Brain = CPU of body. Weight</div><div class="mini-val">~1.5 kg, 2% body weight</div></div>
+        <div class="mini-row"><div class="mini-key">Energy / oxygen use</div><div class="mini-val">20% energy, 25% O₂</div></div>
+        <div class="mini-row"><div class="mini-key">Skull bones (cranial + facial)</div><div class="mini-val">22 = 8 + 14</div></div>
+        <div class="mini-row"><div class="mini-key">Meninges layers (outer→inner)</div><div class="mini-val">DAP: Dura, Arachnoid, Pia</div></div>
+        <div class="mini-row"><div class="mini-key">Shock absorber fluid in meninges</div><div class="mini-val">CSF (cerebrospinal fluid)</div></div>
+      </div>
+
+      <h2>Brain Regions &amp; Functions</h2>
+      <div class="card">
+        <div class="mini-row"><div class="mini-key">Largest brain division</div><div class="mini-val">Forebrain</div></div>
+        <div class="mini-row"><div class="mini-key">Largest single part of brain</div><div class="mini-val">Cerebrum</div></div>
+        <div class="mini-row"><div class="mini-key">Cerebrum function</div><div class="mini-val">Memory, learning, reasoning</div></div>
+        <div class="mini-row"><div class="mini-key">Corpus Callosum</div><div class="mini-val">Connects L &amp; R hemispheres</div></div>
+        <div class="mini-row"><div class="mini-key">Cerebral Cortex / Grey matter</div><div class="mini-val">Memory storage</div></div>
+        <div class="mini-row"><div class="mini-key">Thalamus</div><div class="mini-val">Sensory relay (sight, sound, touch, taste)</div></div>
+        <div class="mini-row"><div class="mini-key">Hypothalamus</div><div class="mini-val">Temperature, hunger, thirst; hypothalamic hormones</div></div>
+        <div class="mini-row"><div class="mini-key">Midbrain</div><div class="mini-val">Pupil size, vision, hearing (involuntary)</div></div>
+        <div class="mini-row"><div class="mini-key">Cerebellum (little brain)</div><div class="mini-val">Balance, posture, coordination</div></div>
+        <div class="mini-row"><div class="mini-key">Medulla Oblongata</div><div class="mini-val">Heartbeat, respiration, digestion</div></div>
+        <div class="mini-row"><div class="mini-key">Pons</div><div class="mini-val">Bridge: connects cerebellum &amp; medulla</div></div>
+      </div>
+
+      <h2>Brain Lobes</h2>
+      <div class="card">
+        <div class="mini-row"><div class="mini-key">Frontal lobe</div><div class="mini-val">Reasoning, planning, memory</div></div>
+        <div class="mini-row"><div class="mini-key">Parietal lobe</div><div class="mini-val">Touch, pain, pressure</div></div>
+        <div class="mini-row"><div class="mini-key">Temporal lobe</div><div class="mini-val">Hearing (auditory processing)</div></div>
+        <div class="mini-row"><div class="mini-key">Occipital lobe</div><div class="mini-val">Vision (visual processing)</div></div>
+      </div>
+
+      <h2>Peripheral Nervous System</h2>
+      <div class="card">
+        <div class="mini-row"><div class="mini-key">Cranial nerves (from brain)</div><div class="mini-val">12 pairs</div></div>
+        <div class="mini-row"><div class="mini-key">Spinal nerves (total)</div><div class="mini-val">31 pairs</div></div>
+        <div class="mini-row"><div class="mini-key">Cervical nerves</div><div class="mini-val">8 pairs (bones = 7!)</div></div>
+        <div class="mini-row"><div class="mini-key">Thoracic nerves</div><div class="mini-val">12 pairs</div></div>
+        <div class="mini-row"><div class="mini-key">Lumbar nerves</div><div class="mini-val">5 pairs</div></div>
+        <div class="mini-row"><div class="mini-key">Afferent nerves</div><div class="mini-val">Sensory, body → CNS</div></div>
+        <div class="mini-row"><div class="mini-key">Efferent nerves</div><div class="mini-val">Motor, CNS → body</div></div>
+        <div class="mini-row"><div class="mini-key">Sympathetic NS</div><div class="mini-val">Fight or flight (stress)</div></div>
+        <div class="mini-row"><div class="mini-key">Parasympathetic NS</div><div class="mini-val">Rest and digest (calm)</div></div>
+      </div>
+
+      <h2>Diseases</h2>
+      <div class="card">
+        <div class="mini-row"><div class="mini-key">Alzheimer's</div><div class="mini-val">Degenerative, age-related → dementia</div></div>
+        <div class="mini-row"><div class="mini-key">Amnesia</div><div class="mini-val">Injury-caused sudden memory loss</div></div>
+        <div class="mini-row"><div class="mini-key">Meningitis causes</div><div class="mini-val">Bacterial / Viral / Fungal (all 3)</div></div>
+      </div>
+    </section>
+
+    <!-- ═══ ULTRA FAST ═══ -->
+    <section class="page" id="page-ultra">
+      <div class="page-eyebrow">Revision Layer 3</div>
+      <div class="page-title">🚀 Ultra-Fast Revision Sheet</div>
+      <div class="page-subtitle">Scan this in 5 minutes before sleep or before the exam starts.</div>
+
+      <div class="layer-badge">Layer <span>3 of 5</span> · Condensed essentials</div>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-label green">Numbers You Must Know</div>
+          <div class="fact-row"><div class="fact-dot green"></div><div>Brain = <em>2%</em> weight, <em>20%</em> energy, <em>25%</em> O₂</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div>Skull = <em>22</em> bones (8+14)</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div>Cranial nerves = <em>12</em> pairs</div></div>
+          <div class="fact-row"><div class="fact-dot green"></div><div>Spinal nerves = <em>31</em> pairs</div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div>Cervical = 7 bones, <em>8 nerves</em></div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div>Meninges = DAP (D→A→P outer→inner)</div></div>
+        </div>
+        <div class="card">
+          <div class="card-label blue">Brain Part → Job</div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div>Cerebrum → Memory, learning</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div>Thalamus → Sensory relay</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div>Hypothalamus → Temp, hunger, thirst</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div>Cerebellum → Balance (<em>little brain</em>)</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div>Medulla Oblongata → Heartbeat, breathing</div></div>
+          <div class="fact-row"><div class="fact-dot blue"></div><div>Pons → Bridge (cerebellum ↔ medulla)</div></div>
+        </div>
+        <div class="card">
+          <div class="card-label amber">Lobes → Sense</div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div>Frontal → Reason &amp; Plan</div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div>Parietal → Touch &amp; Pain</div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div>Temporal → <em>Hearing</em></div></div>
+          <div class="fact-row"><div class="fact-dot amber"></div><div>Occipital → <em>Vision</em></div></div>
+        </div>
+        <div class="card">
+          <div class="card-label red">Diseases</div>
+          <div class="fact-row"><div class="fact-dot red"></div><div>Alzheimer's = Degenerative → Dementia</div></div>
+          <div class="fact-row"><div class="fact-dot red"></div><div>Amnesia = Injury → Memory loss</div></div>
+          <div class="fact-row"><div class="fact-dot red"></div><div>Meningitis = Bacterial/Viral/<em>Fungal</em></div></div>
+        </div>
+        <div class="card">
+          <div class="card-label purple">Nerve Types</div>
+          <div class="fact-row"><div class="fact-dot purple"></div><div>Afferent = Sensory (body→brain)</div></div>
+          <div class="fact-row"><div class="fact-dot purple"></div><div>Efferent = Motor (brain→body)</div></div>
+          <div class="fact-row"><div class="fact-dot purple"></div><div>Sympathetic = Fight/Flight</div></div>
+          <div class="fact-row"><div class="fact-dot purple"></div><div>Parasympathetic = Rest/Digest</div></div>
+        </div>
+        <div class="card">
+          <div class="card-label green">Top Traps to Avoid</div>
+          <div class="fact-row"><div class="fact-dot red"></div><div>Cervical: 7 bones ≠ 8 nerves</div></div>
+          <div class="fact-row"><div class="fact-dot red"></div><div>Temporal = hearing (NOT vision)</div></div>
+          <div class="fact-row"><div class="fact-dot red"></div><div>Meningitis: NOT only bacterial</div></div>
+          <div class="fact-row"><div class="fact-dot red"></div><div>Afferent = arriving, not departing</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ LAST NIGHT ═══ -->
+    <section class="page" id="page-last-night">
+      <div class="page-eyebrow">Revision Layer 5</div>
+      <div class="page-title">🌙 Last Night Before Exam</div>
+      <div class="page-subtitle">Read this once. Sleep well. Walk into the hall with confidence.</div>
+
+      <div class="layer-badge">Layer <span>5 of 5</span> · Final memory anchors only</div>
+
+      <div class="last-night">
+        <div class="ln-title">🌙 NERVOUS SYSTEM — 30 ANCHORS</div>
+
+        <div class="ln-item"><div class="ln-num">1</div><div class="ln-text">Brain = CPU, 2% weight, 20% energy, 25% oxygen</div></div>
+        <div class="ln-item"><div class="ln-num">2</div><div class="ln-text">Skull = 22 bones (8 cranial + 14 facial)</div></div>
+        <div class="ln-item"><div class="ln-num">3</div><div class="ln-text">Meninges = DAP (Dura → Arachnoid → Pia, outer→inner) + CSF</div></div>
+        <div class="ln-item"><div class="ln-num">4</div><div class="ln-text">Cerebrum = largest part, memory + learning, grey matter = memory</div></div>
+        <div class="ln-item"><div class="ln-num">5</div><div class="ln-text">Corpus Callosum = connects L &amp; R hemispheres</div></div>
+        <div class="ln-item"><div class="ln-num">6</div><div class="ln-text">Thalamus = sensory railway junction (sight, sound, touch, taste)</div></div>
+        <div class="ln-item"><div class="ln-num">7</div><div class="ln-text">Hypothalamus = thermostat (temperature, hunger, thirst) + hormones</div></div>
+        <div class="ln-item"><div class="ln-num">8</div><div class="ln-text">Midbrain = pupil size, vision/hearing relay (involuntary)</div></div>
+        <div class="ln-item"><div class="ln-num">9</div><div class="ln-text">Cerebellum = "little brain", balance &amp; posture (alcohol impairs this)</div></div>
+        <div class="ln-item"><div class="ln-num">10</div><div class="ln-text">Medulla Oblongata = heartbeat, respiration, digestion</div></div>
+        <div class="ln-item"><div class="ln-num">11</div><div class="ln-text">Pons = bridge between cerebellum and medulla</div></div>
+        <div class="ln-item"><div class="ln-num">12</div><div class="ln-text">Frontal = reason/plan | Parietal = touch/pain | Temporal = HEARING | Occipital = VISION</div></div>
+        <div class="ln-item"><div class="ln-num">13</div><div class="ln-text">Cranial nerves = 12 pairs | Spinal nerves = 31 pairs</div></div>
+        <div class="ln-item"><div class="ln-num">14</div><div class="ln-text">TRAP: Cervical = 7 bones but 8 nerve pairs</div></div>
+        <div class="ln-item"><div class="ln-num">15</div><div class="ln-text">Afferent = sensory (body→brain) | Efferent = motor (brain→body)</div></div>
+        <div class="ln-item"><div class="ln-num">16</div><div class="ln-text">Sympathetic = fight/flight (stress) | Parasympathetic = rest/digest (calm)</div></div>
+        <div class="ln-item"><div class="ln-num">17</div><div class="ln-text">Alzheimer's = degenerative, age → dementia. Amnesia = injury → sudden memory loss</div></div>
+        <div class="ln-item"><div class="ln-num">18</div><div class="ln-text">Meningitis = DAP layer infection by bacteria OR virus OR fungus (all 3)</div></div>
+        <div class="ln-item"><div class="ln-num">19</div><div class="ln-text">Cauda Equina = final nerve bundle at base of spine (lower body sensation)</div></div>
+        <div class="ln-item"><div class="ln-num">20</div><div class="ln-text">Coccyx + Appendix = vestigial organs (no function)</div></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // ── NAVIGATION ──
+  const navItems = document.querySelectorAll('.nav-item');
+  const pages = document.querySelectorAll('.page');
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const target = item.dataset.page;
+      navItems.forEach(n => n.classList.remove('active'));
+      pages.forEach(p => p.classList.remove('active'));
+      item.classList.add('active');
+      document.getElementById('page-' + target).classList.add('active');
+      document.getElementById('main').scrollTop = 0;
+    });
+  });
+
+  // ── QUIZ DATA ──
+  const quizData = [
+    { q: "What percentage of body weight does the brain constitute?", a: "2% of total body weight (~1.5 kg)" },
+    { q: "Name the three layers of meninges in order from outermost to innermost.", a: "Dura mater → Arachnoid matter → Pia mater (DAP)" },
+    { q: "What is the role of cerebrospinal fluid (CSF)?", a: "Acts as a shock absorber, protecting brain tissue from injury" },
+    { q: "Which part of the brain is responsible for memory and learning?", a: "Cerebrum (specifically the cerebral cortex / grey matter)" },
+    { q: "What is corpus callosum?", a: "The structure that connects the left and right cerebral hemispheres" },
+    { q: "What does the thalamus do?", a: "Acts as a sensory relay station — coordinates and routes sensory signals (sight, touch, taste, sound) to the cerebral cortex" },
+    { q: "What does the hypothalamus regulate?", a: "Internal body temperature, hunger, thirst, and secretes hypothalamic hormones via neurosecretory cells" },
+    { q: "Why is the cerebellum called 'little brain'?", a: "Its shape resembles a miniature version of the whole brain. It controls balance and posture." },
+    { q: "Which brain part controls heartbeat, respiration, and digestion?", a: "Medulla Oblongata (hindbrain)" },
+    { q: "What is the role of pons?", a: "Bridge connecting cerebellum and medulla; coordinates face/eye movements, hearing, and balance" },
+    { q: "How many pairs of cranial nerves are there?", a: "12 pairs" },
+    { q: "How many pairs of spinal nerves are there?", a: "31 pairs" },
+    { q: "How many cervical nerve pairs are there, and how many cervical vertebrae?", a: "8 nerve pairs but only 7 vertebrae (one mismatch!)" },
+    { q: "What is the difference between afferent and efferent nerves?", a: "Afferent = sensory nerves (body to brain). Efferent = motor nerves (brain to body)." },
+    { q: "What is the difference between sympathetic and parasympathetic nervous system?", a: "Sympathetic = fight or flight (activated in stress/danger). Parasympathetic = rest and digest (active when calm)." },
+    { q: "What is Alzheimer's disease?", a: "Degenerative brain disorder that gradually leads to dementia (memory loss); age-related, NOT caused by injury" },
+    { q: "What is amnesia?", a: "Memory loss caused by brain injury or accident — sudden onset, not gradual" },
+    { q: "What causes meningitis?", a: "Infection of the meninges by bacteria, viruses, OR fungi (all three types possible)" },
+    { q: "Which lobe of the brain is responsible for hearing?", a: "Temporal lobe" },
+    { q: "Which lobe is responsible for vision?", a: "Occipital lobe" },
+  ];
+
+  const quizContainer = document.getElementById('quiz-container');
+  quizData.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-item';
+    div.innerHTML = `
+      <div class="quiz-q">Q${i+1}. ${item.q}</div>
+      <button class="quiz-reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+      <div class="quiz-answer">${item.a}</div>
+    `;
+    quizContainer.appendChild(div);
+  });
+
+  function revealAnswer(btn) {
+    const ans = btn.nextElementSibling;
+    ans.classList.toggle('visible');
+    btn.textContent = ans.classList.contains('visible') ? 'Hide Answer' : 'Reveal Answer';
+  }
+
+  // ── FILL IN BLANKS ──
+  const blanksData = [
+    "The brain is <blank>2%</blank> of total body weight but consumes <blank>20%</blank> of body energy.",
+    "The skull has <blank>22</blank> bones: <blank>8</blank> cranial and <blank>14</blank> facial.",
+    "Meninges layers in order: <blank>Dura mater</blank>, <blank>Arachnoid</blank>, <blank>Pia mater</blank>.",
+    "<blank>Corpus Callosum</blank> connects the left and right cerebral hemispheres.",
+    "The <blank>Thalamus</blank> acts as a sensory relay station for sight, sound, touch, and taste.",
+    "The <blank>Hypothalamus</blank> regulates body temperature, hunger, and thirst.",
+    "The <blank>Cerebellum</blank> controls body balance and posture — also called <blank>little brain</blank>.",
+    "There are <blank>12</blank> pairs of cranial nerves and <blank>31</blank> pairs of spinal nerves.",
+    "Cervical region has <blank>7</blank> vertebrae but <blank>8</blank> nerve pairs.",
+    "<blank>Afferent</blank> nerves carry signals from body to brain; <blank>Efferent</blank> nerves carry signals from brain to body.",
+    "Sympathetic NS = <blank>fight or flight</blank>; Parasympathetic NS = <blank>rest and digest</blank>.",
+    "<blank>Alzheimer's</blank> is a degenerative disorder → <blank>dementia</blank>; <blank>Amnesia</blank> is caused by injury.",
+    "Temporal lobe = <blank>hearing</blank>; Occipital lobe = <blank>vision</blank>.",
+  ];
+
+  const blanksContainer = document.getElementById('blanks-container');
+  blanksData.forEach((sentence, i) => {
+    const div = document.createElement('div');
+    div.className = 'blank-item';
+    div.innerHTML = sentence.replace(/<blank>(.*?)<\/blank>/g, (_, ans) =>
+      `<span class="blank" onclick="this.classList.add('shown')" title="${ans}">${ans}</span>`
+    );
+    blanksContainer.appendChild(div);
+  });
+
+  // ── RAPID FIRE ──
+  const rapidData = [
+    { q: "Brain = ?% of body weight", a: "2%" },
+    { q: "Brain energy consumption?", a: "~20%" },
+    { q: "Brain oxygen consumption?", a: "~25%" },
+    { q: "Total skull bones?", a: "22" },
+    { q: "Cranial bones?", a: "8" },
+    { q: "Facial bones?", a: "14" },
+    { q: "Outermost meninges layer?", a: "Dura mater" },
+    { q: "Middle meninges layer?", a: "Arachnoid" },
+    { q: "Innermost meninges layer?", a: "Pia mater" },
+    { q: "Shock absorber fluid in meninges?", a: "CSF" },
+    { q: "Largest part of brain?", a: "Cerebrum" },
+    { q: "Memory storage = which matter?", a: "Grey matter (cortex)" },
+    { q: "Connects L & R hemispheres?", a: "Corpus Callosum" },
+    { q: "Sensory relay station?", a: "Thalamus" },
+    { q: "Temperature / hunger / thirst control?", a: "Hypothalamus" },
+    { q: "Pupil size control?", a: "Midbrain" },
+    { q: "Balance & posture?", a: "Cerebellum" },
+    { q: "Little brain = ?", a: "Cerebellum" },
+    { q: "Heartbeat & respiration?", a: "Medulla Oblongata" },
+    { q: "Bridge: cerebellum ↔ medulla?", a: "Pons" },
+    { q: "Hearing lobe?", a: "Temporal lobe" },
+    { q: "Vision lobe?", a: "Occipital lobe" },
+    { q: "Touch & pain lobe?", a: "Parietal lobe" },
+    { q: "Reasoning & planning lobe?", a: "Frontal lobe" },
+    { q: "Total cranial nerve pairs?", a: "12 pairs" },
+    { q: "Total spinal nerve pairs?", a: "31 pairs" },
+    { q: "Cervical nerve pairs?", a: "8 pairs" },
+    { q: "Cervical vertebrae?", a: "7 bones" },
+    { q: "Afferent nerves = ?", a: "Sensory (body→brain)" },
+    { q: "Efferent nerves = ?", a: "Motor (brain→body)" },
+    { q: "Fight or flight = ?", a: "Sympathetic NS" },
+    { q: "Rest and digest = ?", a: "Parasympathetic NS" },
+    { q: "Degenerative memory disorder?", a: "Alzheimer's → Dementia" },
+    { q: "Injury-caused memory loss?", a: "Amnesia" },
+    { q: "Meningitis causes?", a: "Bacterial / Viral / Fungal" },
+    { q: "Vestigial tail bone?", a: "Coccyx" },
+    { q: "Last nerve bundle at spine base?", a: "Cauda Equina" },
+    { q: "Alcohol affects which brain part?", a: "Cerebellum" },
+    { q: "First organ hit by O₂ loss?", a: "Brain" },
+    { q: "Medulla in Hindi = ?", a: "Spinal cord (≠ Medulla Oblongata)" },
+  ];
+
+  const rapidContainer = document.getElementById('rapid-container');
+  rapidData.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'rapid-item';
+    div.innerHTML = `<div class="rapid-q">${item.q}</div><div class="rapid-a">${item.a}</div>`;
+    rapidContainer.appendChild(div);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Processes | Circulatory & Excretory Systems – SSC CGL</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg-primary: #0a0c12;
+    --bg-secondary: #0f1117;
+    --bg-card: #141720;
+    --bg-card-hover: #1a1e2e;
+    --bg-sidebar: #0c0e16;
+    --accent-green: #22d3a5;
+    --accent-blue: #4fa3f7;
+    --accent-purple: #a78bfa;
+    --accent-orange: #f97316;
+    --accent-red: #f43f5e;
+    --accent-yellow: #fbbf24;
+    --text-primary: #e8eaf0;
+    --text-secondary: #8b90a0;
+    --text-muted: #555a6e;
+    --border: #1e2235;
+    --border-accent: #2a3050;
+    --fire: #ff6b35;
+    --star: #ffd700;
+    --plus: #22d3a5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-track { background: transparent; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 2px; }
+
+  .sidebar-header {
+    padding: 20px 16px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-header .subject-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent-green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-header h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+  }
+
+  .sidebar-header .exam-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 8px;
+    background: rgba(250,191,36,0.12);
+    border: 1px solid rgba(250,191,36,0.25);
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent-yellow);
+    letter-spacing: 1px;
+  }
+
+  .nav-section-label {
+    padding: 14px 16px 6px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.15s ease;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+
+  .nav-item:hover { background: rgba(255,255,255,0.03); color: var(--text-primary); }
+  .nav-item.active {
+    background: rgba(34,211,165,0.08);
+    border-left-color: var(--accent-green);
+    color: var(--accent-green);
+    font-weight: 500;
+  }
+
+  .nav-item .nav-icon { font-size: 14px; width: 18px; text-align: center; }
+
+  .nav-item.sub {
+    padding-left: 38px;
+    font-size: 12px;
+  }
+
+  /* MAIN CONTENT */
+  #main {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #main::-webkit-scrollbar { width: 6px; }
+  #main::-webkit-scrollbar-track { background: var(--bg-primary); }
+  #main::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 3px; }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: rgba(10,12,18,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .topbar-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .topbar-meta {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .layer-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .layer-1 { background: rgba(34,211,165,0.12); color: var(--accent-green); border: 1px solid rgba(34,211,165,0.2); }
+  .layer-2 { background: rgba(79,163,247,0.12); color: var(--accent-blue); border: 1px solid rgba(79,163,247,0.2); }
+  .layer-3 { background: rgba(167,139,250,0.12); color: var(--accent-purple); border: 1px solid rgba(167,139,250,0.2); }
+  .layer-4 { background: rgba(249,115,22,0.12); color: var(--accent-orange); border: 1px solid rgba(249,115,22,0.2); }
+  .layer-5 { background: rgba(244,63,94,0.12); color: var(--accent-red); border: 1px solid rgba(244,63,94,0.2); }
+
+  /* PAGE SECTIONS */
+  .page { display: none; padding: 28px 32px 60px; max-width: 900px; }
+  .page.active { display: block; }
+
+  .page-hero {
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent-green);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .page-hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+
+  .page-hero p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 18px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: var(--border-accent); }
+
+  .card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-green);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title .icon { font-size: 16px; }
+
+  /* FACT ROWS */
+  .fact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+
+  .fact-row:last-child { border-bottom: none; }
+
+  .fact-priority {
+    font-size: 14px;
+    min-width: 20px;
+    margin-top: 1px;
+  }
+
+  .fact-text { color: var(--text-primary); }
+  .fact-text strong { color: var(--accent-blue); font-weight: 600; }
+  .fact-text em { color: var(--accent-yellow); font-style: normal; }
+  .fact-text .highlight { background: rgba(34,211,165,0.12); padding: 1px 5px; border-radius: 3px; color: var(--accent-green); }
+  .fact-text .warn { background: rgba(244,63,94,0.1); padding: 1px 5px; border-radius: 3px; color: var(--accent-red); }
+  .fact-text .note { color: var(--text-secondary); font-size: 12px; }
+
+  /* GRID */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+  /* COMPARISON TABLE */
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cmp-table th {
+    background: rgba(34,211,165,0.1);
+    color: var(--accent-green);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cmp-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    vertical-align: top;
+  }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* MEMORY PALACE */
+  .palace-step {
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .palace-step:last-child { border-bottom: none; }
+  .palace-num {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 50%;
+    background: rgba(79,163,247,0.15);
+    border: 1px solid rgba(79,163,247,0.3);
+    color: var(--accent-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .palace-content h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .palace-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* TRAPS */
+  .trap-item {
+    background: rgba(244,63,94,0.07);
+    border: 1px solid rgba(244,63,94,0.2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .trap-item h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent-red);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .trap-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .trap-item strong { color: var(--accent-yellow); }
+
+  /* EXAM Q */
+  .exam-q {
+    background: rgba(79,163,247,0.06);
+    border: 1px solid rgba(79,163,247,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+  }
+  .exam-q .q-label {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-blue);
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .exam-q p { font-size: 13.5px; color: var(--text-primary); line-height: 1.6; }
+  .exam-q .answer { margin-top: 8px; font-size: 12.5px; color: var(--accent-green); font-weight: 500; }
+
+  /* RECALL */
+  .recall-item {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .recall-item:hover { border-color: var(--accent-purple); background: rgba(167,139,250,0.05); }
+  .recall-item .q-text { font-size: 13.5px; color: var(--text-primary); margin-bottom: 4px; }
+  .recall-item .ans { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 13px; color: var(--accent-green); line-height: 1.6; }
+  .recall-item.revealed .ans { display: block; }
+  .recall-item .tap-hint { font-size: 11px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+
+  /* SPEED CARD */
+  .speed-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 10px;
+    font-size: 13px;
+  }
+  .speed-row:last-child { border-bottom: none; }
+  .speed-key { color: var(--accent-yellow); font-weight: 600; min-width: 160px; }
+  .speed-val { color: var(--text-primary); }
+  .speed-arrow { color: var(--text-muted); }
+
+  /* HOOK BOX */
+  .hook-box {
+    background: rgba(167,139,250,0.08);
+    border: 1px solid rgba(167,139,250,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .hook-box h4 {
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-purple);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .hook-box p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.7; }
+  .hook-box .hook-highlight { color: var(--accent-purple); font-weight: 500; }
+
+  /* FLOW DIAGRAM */
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 12px 0;
+    font-size: 13px;
+  }
+  .flow-box {
+    padding: 6px 14px;
+    border-radius: 6px;
+    background: rgba(34,211,165,0.1);
+    border: 1px solid rgba(34,211,165,0.25);
+    color: var(--accent-green);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .flow-box.blue { background: rgba(79,163,247,0.1); border-color: rgba(79,163,247,0.25); color: var(--accent-blue); }
+  .flow-box.purple { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.25); color: var(--accent-purple); }
+  .flow-box.orange { background: rgba(249,115,22,0.1); border-color: rgba(249,115,22,0.25); color: var(--accent-orange); }
+  .flow-arrow { color: var(--text-muted); font-size: 16px; }
+
+  /* LAST NIGHT SHEET */
+  .ln-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .ln-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .ln-block h4 {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-green);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .ln-block ul { list-style: none; }
+  .ln-block ul li {
+    font-size: 12.5px;
+    color: var(--text-primary);
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  .ln-block ul li:last-child { border-bottom: none; }
+  .ln-block ul li strong { color: var(--accent-yellow); }
+
+  /* PROGRESS */
+  .progress-ring {
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* HEART CHAMBERS VIZ */
+  .heart-viz {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    max-width: 340px;
+    margin: 16px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .chamber {
+    padding: 16px;
+    text-align: center;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  .chamber h5 { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .chamber p { font-size: 11.5px; font-weight: 400; line-height: 1.5; }
+  .ra { background: rgba(79,163,247,0.12); color: var(--accent-blue); }
+  .la { background: rgba(34,211,165,0.12); color: var(--accent-green); }
+  .rv { background: rgba(79,163,247,0.08); color: var(--accent-blue); }
+  .lv { background: rgba(34,211,165,0.08); color: var(--accent-green); }
+
+  /* BLOOD GROUP TABLE */
+  .bg-cell { text-align: center; }
+  .bg-yes { color: var(--accent-green); font-weight: 600; }
+  .bg-no { color: var(--accent-red); font-weight: 600; }
+  .bg-special { background: rgba(250,191,36,0.08); }
+
+  /* NUMBER HIGHLIGHTS */
+  .num { 
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-yellow);
+    font-weight: 600;
+  }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, var(--accent-green), transparent);
+    margin: 28px 0;
+    opacity: 0.3;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    #sidebar { display: none; }
+    .two-col, .three-col, .ln-grid { grid-template-columns: 1fr; }
+    .page { padding: 16px; }
+  }
+
+  /* MOBILE TOGGLE */
+  #menu-toggle {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    color: #000;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(34,211,165,0.4);
+  }
+
+  @media (max-width: 768px) { #menu-toggle { display: flex; align-items: center; justify-content: center; } }
+
+  /* VALVE TABLE */
+  .valve-list { list-style: none; }
+  .valve-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    display: flex;
+    gap: 10px;
+  }
+  .valve-list li:last-child { border-bottom: none; }
+  .valve-name { color: var(--accent-blue); font-weight: 600; min-width: 130px; }
+  .valve-loc { color: var(--text-secondary); }
+
+  /* TAG */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10.5px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    margin-left: 6px;
+  }
+  .tag-ex { background: rgba(249,115,22,0.15); color: var(--accent-orange); border: 1px solid rgba(249,115,22,0.25); }
+  .tag-def { background: rgba(79,163,247,0.12); color: var(--accent-blue); border: 1px solid rgba(79,163,247,0.2); }
+  .tag-hot { background: rgba(255,107,53,0.15); color: var(--fire); border: 1px solid rgba(255,107,53,0.25); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="subject-tag">Biology · Life Processes</div>
+    <h2>Circulatory &amp; Excretory Systems</h2>
+    <span class="exam-badge">SSC CGL</span>
+  </div>
+
+  <div class="nav-section-label">Start Here</div>
+  <div class="nav-item active" onclick="showPage('overview')"><span class="nav-icon">🗺️</span> Big Picture</div>
+  <div class="nav-item" onclick="showPage('palace')"><span class="nav-icon">🧠</span> Memory Palace</div>
+
+  <div class="nav-section-label">Circulatory System</div>
+  <div class="nav-item" onclick="showPage('circ-basics')"><span class="nav-icon">❤️</span> Heart Basics</div>
+  <div class="nav-item" onclick="showPage('circ-flow')"><span class="nav-icon">🔄</span> Blood Circulation</div>
+  <div class="nav-item" onclick="showPage('circ-vessels')"><span class="nav-icon">🩺</span> Blood Vessels</div>
+  <div class="nav-item" onclick="showPage('blood')"><span class="nav-icon">🩸</span> Blood &amp; Blood Groups</div>
+  <div class="nav-item" onclick="showPage('stats')"><span class="nav-icon">📊</span> Key Numbers &amp; Stats</div>
+
+  <div class="nav-section-label">Excretory System</div>
+  <div class="nav-item" onclick="showPage('excretory')"><span class="nav-icon">🫘</span> Kidneys &amp; Organs</div>
+  <div class="nav-item" onclick="showPage('nephron')"><span class="nav-icon">🔬</span> Nephron &amp; Filtration</div>
+  <div class="nav-item" onclick="showPage('urine')"><span class="nav-icon">💧</span> Urine Composition</div>
+
+  <div class="nav-section-label">Exam Preparation</div>
+  <div class="nav-item" onclick="showPage('hooks')"><span class="nav-icon">🪝</span> Memory Hooks</div>
+  <div class="nav-item" onclick="showPage('traps')"><span class="nav-icon">⚠️</span> Exam Traps</div>
+  <div class="nav-item" onclick="showPage('examq')"><span class="nav-icon">🎯</span> Examiner's Questions</div>
+  <div class="nav-item" onclick="showPage('recall')"><span class="nav-icon">❓</span> Active Recall</div>
+
+  <div class="nav-section-label">Revision Sheets</div>
+  <div class="nav-item" onclick="showPage('highyield')"><span class="nav-icon">⚡</span> High-Yield Sheet</div>
+  <div class="nav-item" onclick="showPage('ultrafast')"><span class="nav-icon">🚀</span> Ultra-Fast Sheet</div>
+  <div class="nav-item" onclick="showPage('lastnight')"><span class="nav-icon">🌙</span> Last-Night Sheet</div>
+</nav>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbar-title">Big Picture Overview</div>
+    <div class="topbar-meta">
+      <span class="layer-badge layer-1">Layer 1 – Complete</span>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: OVERVIEW ========== -->
+  <div class="page active" id="page-overview">
+    <div class="page-hero">
+      <div class="eyebrow">Chapter Overview</div>
+      <h1>Life Processes<br><span style="color:var(--accent-green)">Circulatory &amp; Excretory</span></h1>
+      <p>Two of the four life processes. Together, they ensure <strong style="color:var(--accent-blue)">oxygen delivery</strong> to every cell and <strong style="color:var(--accent-blue)">waste removal</strong> from the body. Master these two chapters and you command high-yield marks in SSC CGL Biology.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title"><span class="icon">❤️</span> Circulatory System</div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Discovered by <strong>William Harvey</strong> in <em>1628</em></span></div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Heart = <span class="highlight">pumping organ</span>, NOT purifying</span></div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">4 chambers: RA, LA, RV, LV</span></div>
+        <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Double circulation in one complete cycle</span></div>
+        <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Arteries carry oxygenated; Veins carry deoxygenated <span class="warn">EXCEPTIONS exist!</span></span></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="icon">🫘</span> Excretory System</div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Main organ: <strong>Kidneys</strong> (2 in number)</span></div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Basic unit: <strong>Nephron</strong> (ultrafiltration)</span></div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Urine = <em>95% water</em> + 2–2.5% urea</span></div>
+        <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Right kidney slightly <strong>lower</strong> (liver pushes it)</span></div>
+        <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Urea cycle happens in <strong>Liver</strong>, not kidney</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🗺️</span> Chapter Map — 4 Life Processes</div>
+      <div class="flow">
+        <div class="flow-box" style="opacity:0.45">✅ Digestive</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box" style="opacity:0.45">✅ Respiratory</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">❤️ Circulatory</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box blue">🫘 Excretory</div>
+      </div>
+      <p style="font-size:12.5px;color:var(--text-secondary);margin-top:8px;">First two done in previous lecture. These two complete the life processes chapter.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">💡</span> Big Picture — The Core Idea</div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Arteries</strong> take blood from heart → body. <strong>Veins</strong> take blood from body → heart. Heart secretly sends blood to <strong>lungs</strong> to purify (oxygenate). Lungs don't remove solid waste. <strong>Kidneys</strong> remove solid waste (urea). Solid waste → kidney → ureter → bladder → urethra.</span></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: MEMORY PALACE ========== -->
+  <div class="page" id="page-palace">
+    <div class="page-hero">
+      <div class="eyebrow">Memory Architecture</div>
+      <h1>🧠 Chapter Memory Palace</h1>
+      <p>Walk through a <strong>hospital building</strong>. Each room is a concept. Enter the building and you remember everything in perfect order.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🏥</span> The Hospital Memory Walk</div>
+      
+      <div class="palace-step">
+        <div class="palace-num">1</div>
+        <div class="palace-content">
+          <h4>🚪 Hospital Gate — William Harvey (1628)</h4>
+          <p>The gate says <em>"Harvey's Hospital, Est. 1628."</em> The year is carved in stone. This is where blood circulation was born. <strong>W. Harvey = Blood Circulation = 1628.</strong></p>
+        </div>
+      </div>
+
+      <div class="palace-step">
+        <div class="palace-num">2</div>
+        <div class="palace-content">
+          <h4>🏛️ Reception — The 4-Chamber Hall</h4>
+          <p>The reception has 4 rooms: <em>Right Atrium, Left Atrium, Right Ventricle, Left Ventricle.</em> Upper rooms = Atria (Auricle). Lower rooms = Ventricles. <strong>Blue rooms (right) = deoxygenated. Green rooms (left) = oxygenated.</strong></p>
+        </div>
+      </div>
+
+      <div class="palace-step">
+        <div class="palace-num">3</div>
+        <div class="palace-content">
+          <h4>🚪 4 Security Doors — The 4 Valves</h4>
+          <p>Each room has a door (valve). <strong>Tricuspid</strong> = RA→RV. <strong>Pulmonary valve</strong> = RV→Pulmonary artery. <strong>Mitral (Bicuspid)</strong> = LA→LV. <strong>Aortic valve</strong> = LV→Aorta. <em>"Tri → Pulm → Bi → Aortic"</em></p>
+        </div>
+      </div>
+
+      <div class="palace-step">
+        <div class="palace-num">4</div>
+        <div class="palace-content">
+          <h4>🫁 Lung Room — The Purification Spa</h4>
+          <p>The lung room takes in tired (deoxygenated) blood, removes CO₂, adds O₂ and sends fresh blood back. <strong>Pulmonary Artery</strong> carries deoxygenated blood IN. <strong>Pulmonary Vein</strong> carries oxygenated blood OUT. <span style="color:var(--accent-red)">EXCEPTION to the normal rule!</span></p>
+        </div>
+      </div>
+
+      <div class="palace-step">
+        <div class="palace-num">5</div>
+        <div class="palace-content">
+          <h4>🩸 Blood Bank — Blood Groups</h4>
+          <p>Blood bank has 4 shelves: A, B, AB, O. <em>Landsteiner</em> runs the bank. Special corner: <strong>O⁻ = Universal Donor</strong> (no antigen, gives to all). <strong>AB⁺ = Universal Acceptor</strong> (all antigens, takes from all). <em>Bombay blood group</em> — rare VIP vault, discovered by Y.M. Bhende in 1952 (no H antigen).</p>
+        </div>
+      </div>
+
+      <div class="palace-step">
+        <div class="palace-num">6</div>
+        <div class="palace-content">
+          <h4>🫘 Kidney Wing — The Filter Factory</h4>
+          <p>Two kidney-shaped filters. Right one is slightly lower (pushed by liver, the VIP next door). Each filter has millions of tiny workers called <strong>Nephrons</strong>. Workers use <em>ultrafiltration</em>: they spin the blood in a tiny ball (Glomerulus) inside a cup (Bowman's capsule), keep the good stuff, flush the waste down the Loop of Henle → Collecting Duct → Ureter → Bladder → Exit.</p>
+        </div>
+      </div>
+
+      <div class="palace-step">
+        <div class="palace-num">7</div>
+        <div class="palace-content">
+          <h4>💧 Exit Gate — Urine Stats</h4>
+          <p>As you leave, a sign says: <strong>"95% water, 2–2.5% urea, 2.5% other (creatinine)."</strong> Yellow colour from <em>urochrome/urobilin</em>. pH: 4.5–5 (acidic). Urea cycle happened in the <strong>Liver</strong> kitchen upstairs.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: HEART BASICS ========== -->
+  <div class="page" id="page-circ-basics">
+    <div class="page-hero">
+      <div class="eyebrow">Circulatory System · Part 1</div>
+      <h1>❤️ Heart — Structure &amp; Components</h1>
+      <p>The heart is a <strong>pumping organ</strong>, not a purifying organ. It has 4 chambers, 4 valves, and beats 60–100 times per minute.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🏛️</span> 4 Chambers of the Heart</div>
+      <div class="heart-viz">
+        <div class="chamber ra">
+          <h5>RIGHT ATRIUM</h5>
+          <p>Receives deoxygenated blood from Superior &amp; Inferior Vena Cava</p>
+        </div>
+        <div class="chamber la">
+          <h5>LEFT ATRIUM</h5>
+          <p>Receives oxygenated blood from Pulmonary Veins</p>
+        </div>
+        <div class="chamber rv">
+          <h5>RIGHT VENTRICLE</h5>
+          <p>Pumps deoxygenated blood to Lungs via Pulmonary Artery</p>
+        </div>
+        <div class="chamber lv">
+          <h5>LEFT VENTRICLE</h5>
+          <p>Pumps oxygenated blood to Body via Aorta (thickest wall)</p>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">Upper = Atrium/Auricle. Lower = Ventricle. Left LV has the thickest wall — pumps to the whole body.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🚪</span> 4 Valves — The Gates</div>
+      <ul class="valve-list">
+        <li><span class="valve-name">Tricuspid Valve</span><span class="valve-loc">Between Right Atrium → Right Ventricle</span></li>
+        <li><span class="valve-name">Pulmonary Valve</span><span class="valve-loc">Between Right Ventricle → Pulmonary Artery</span></li>
+        <li><span class="valve-name">Bicuspid (Mitral)</span><span class="valve-loc">Between Left Atrium → Left Ventricle</span></li>
+        <li><span class="valve-name">Aortic Valve</span><span class="valve-loc">Between Left Ventricle → Aorta</span></li>
+      </ul>
+      <div style="margin-top:12px;padding:10px;background:rgba(250,191,36,0.08);border-radius:6px;font-size:12.5px;color:var(--accent-yellow);">
+        💡 Trick: <strong>T → P → B → A</strong> — "Tall People Buy Autos" (Tricuspid → Pulmonary → Bicuspid → Aortic)
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title"><span class="icon">⚡</span> Pacemaker</div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Natural pacemaker = <strong>Sino-Atrial (SA) Node</strong></span></div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Sends <strong>electrical impulses</strong> → rhythmic heartbeat</span></div>
+        <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Artificial pacemaker = battery-powered device implanted surgically</span></div>
+        <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Prevents heart from beating <em>too slowly</em></span></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="icon">🫀</span> Coronary Artery</div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Coronary artery</strong> = supplies blood TO the heart itself</span></div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Blockage → <strong>Heart Attack</strong></span></div>
+        <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Heart needs its own dedicated blood supply to function</span></div>
+        <div class="fact-row"><span class="fact-priority">➕</span><span class="fact-text">Outer covering of heart = <strong>Pericardium</strong> (lungs = Pleura)</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📊</span> Systole vs Diastole</div>
+      <table class="cmp-table">
+        <tr>
+          <th>Term</th><th>Meaning</th><th>Pressure</th><th>What contracts?</th>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--accent-red)">Systole</strong></td>
+          <td>Heart <strong>contracts</strong></td>
+          <td><span class="num">120 mm Hg</span></td>
+          <td>Ventricular contraction</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--accent-blue)">Diastole</strong></td>
+          <td>Heart <strong>relaxes</strong></td>
+          <td><span class="num">80 mm Hg</span></td>
+          <td>Ventricular relaxation</td>
+        </tr>
+      </table>
+      <div style="margin-top:10px;font-size:12.5px;color:var(--text-secondary);">Blood pressure measured with <strong style="color:var(--accent-green)">Sphygmomanometer</strong> (measures arterial BP). Normal reading: <span class="num">120/80</span> mm Hg.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🐾</span> Heart Chambers in Different Animals</div>
+      <table class="cmp-table">
+        <tr><th>Animal</th><th>Chambers</th><th>Exception</th></tr>
+        <tr><td>Fish</td><td><span class="num">2</span></td><td>—</td></tr>
+        <tr><td>Amphibians</td><td><span class="num">3</span></td><td>—</td></tr>
+        <tr><td>Reptiles</td><td><span class="num">3</span></td><td>Crocodile = 4 <span class="tag tag-ex">EXCEPTION</span></td></tr>
+        <tr><td>Birds</td><td><span class="num">4</span></td><td>—</td></tr>
+        <tr><td>Mammals</td><td><span class="num">4</span></td><td>—</td></tr>
+        <tr class="bg-special"><td>Cockroach</td><td><span class="num">13</span></td><td>— <span class="tag tag-hot">HOT FACT</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: BLOOD CIRCULATION ========== -->
+  <div class="page" id="page-circ-flow">
+    <div class="page-hero">
+      <div class="eyebrow">Circulatory System · Part 2</div>
+      <h1>🔄 Blood Circulation Flow</h1>
+      <p>One complete cycle = blood passes through the heart <strong>twice</strong> → this is called <strong>Double Circulation</strong>.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔄</span> The Complete Blood Journey</div>
+      <div class="flow" style="flex-direction:column; align-items:flex-start; gap:4px;">
+        <div style="display:flex;align-items:center;gap:8px;"><div class="flow-box blue">Body (deoxygenated)</div><span class="flow-arrow">→</span><div class="flow-box blue">Superior / Inferior Vena Cava</div><span class="flow-arrow">→</span><div class="flow-box blue">Right Atrium</div></div>
+        <div style="padding-left:20px;font-size:12px;color:var(--text-muted);">↓ Tricuspid Valve opens</div>
+        <div style="display:flex;align-items:center;gap:8px;"><div class="flow-box blue">Right Ventricle</div><span class="flow-arrow">→</span><div class="flow-box orange">Pulmonary Artery <span class="tag tag-ex">DEOXY↑</span></div><span class="flow-arrow">→</span><div class="flow-box orange">Lungs (oxygenation)</div></div>
+        <div style="padding-left:20px;font-size:12px;color:var(--text-muted);">↓ Lung adds O₂, removes CO₂</div>
+        <div style="display:flex;align-items:center;gap:8px;"><div class="flow-box">Pulmonary Vein <span class="tag tag-ex">OXY↑</span></div><span class="flow-arrow">→</span><div class="flow-box">Left Atrium</div></div>
+        <div style="padding-left:20px;font-size:12px;color:var(--text-muted);">↓ Bicuspid/Mitral Valve opens</div>
+        <div style="display:flex;align-items:center;gap:8px;"><div class="flow-box">Left Ventricle</div><span class="flow-arrow">→</span><div class="flow-box purple">Aorta (largest artery)</div><span class="flow-arrow">→</span><div class="flow-box purple">All Body Parts</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">⚠️</span> The Two Critical Exceptions</div>
+      <div class="trap-item">
+        <h4>⚡ Pulmonary Artery — Exception!</h4>
+        <p>Arteries normally carry <strong>oxygenated</strong> blood. But <strong>Pulmonary Artery</strong> carries <strong>deoxygenated</strong> blood (going to lungs to be purified).</p>
+      </div>
+      <div class="trap-item">
+        <h4>⚡ Pulmonary Vein — Exception!</h4>
+        <p>Veins normally carry <strong>deoxygenated</strong> blood. But <strong>Pulmonary Vein</strong> carries <strong>oxygenated</strong> blood (bringing purified blood from lungs back to heart).</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📝</span> Vena Cava — Know Both</div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Superior Vena Cava</strong>: brings deoxygenated blood from upper body (brain, arms, chest)</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Inferior Vena Cava</strong>: brings deoxygenated blood from lower body (legs, stomach, abdomen)</span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Both drain into <strong>Right Atrium</strong></span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text"><strong>Aorta</strong> = largest artery in body. Carries oxygenated blood from Left Ventricle to body.</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔁</span> Double Circulation — Definition</div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Double Circulation</strong>: The passage of the same blood through the heart <em>twice</em> to complete one cycle (once through right side, once through left side)</span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">This is seen in mammals and birds (who have 4-chambered hearts)</span></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: BLOOD VESSELS ========== -->
+  <div class="page" id="page-circ-vessels">
+    <div class="page-hero">
+      <div class="eyebrow">Circulatory System · Part 3</div>
+      <h1>🩺 Blood Vessels — Arteries, Veins, Capillaries</h1>
+      <p>The highways, roads, and lanes of blood transport.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📊</span> Artery vs Vein vs Capillary</div>
+      <table class="cmp-table">
+        <tr><th>Feature</th><th>Artery</th><th>Vein</th><th>Capillary</th></tr>
+        <tr><td>Blood type</td><td>Oxygenated</td><td>Deoxygenated</td><td>Both</td></tr>
+        <tr><td>Direction</td><td>Heart → Body</td><td>Body → Heart</td><td>Between artery &amp; vein</td></tr>
+        <tr><td>Wall thickness</td><td>Thick (high pressure)</td><td>Thin</td><td>Very thin (1 cell layer)</td></tr>
+        <tr><td>Valves</td><td>No</td><td>Yes</td><td>No</td></tr>
+        <tr><td>Pressure</td><td>High</td><td>Low</td><td>Very low</td></tr>
+        <tr><td>Exception</td><td colspan="3" style="color:var(--accent-orange)">Pulmonary artery = deoxy; Pulmonary vein = oxy</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📏</span> Size Hierarchy</div>
+      <div class="flow">
+        <div class="flow-box purple">Aorta (largest)</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Arteries</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box blue">Arterioles</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box orange">Capillaries (smallest)</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box blue">Venules</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box">Veins</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box purple">Vena Cava</div>
+      </div>
+      <p style="font-size:12.5px;color:var(--text-secondary);margin-top:10px;">Gas exchange happens at <strong style="color:var(--accent-green)">capillaries</strong> — they are one cell thick so gases can pass through easily.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">💡</span> Why Arteries Are Thick</div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Arteries carry blood under <strong>high pressure</strong> from heart → must be thick to withstand pressure without bursting</span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Narrower pipe = higher pressure (like squeezing a hose) — arteries are narrow AND thick-walled</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Blood pressure of arteries measured by <strong>Sphygmomanometer</strong></span></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: BLOOD ========== -->
+  <div class="page" id="page-blood">
+    <div class="page-hero">
+      <div class="eyebrow">Circulatory System · Part 4</div>
+      <h1>🩸 Blood — Components &amp; Blood Groups</h1>
+      <p>Blood = Liquid (plasma) + Solid (RBC, WBC, Platelets). Discovered by <strong>Karl Landsteiner</strong>.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔬</span> Blood Components</div>
+      <table class="cmp-table">
+        <tr><th>Component</th><th>Scientific Name</th><th>Colour</th><th>Life Span</th><th>Function</th></tr>
+        <tr>
+          <td><strong style="color:var(--accent-red)">RBC</strong></td>
+          <td>Erythrocytes</td>
+          <td>Red (haemoglobin)</td>
+          <td><span class="num">120 days</span></td>
+          <td>Carry oxygen. Biconcave disc. Die in spleen.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--accent-blue)">WBC</strong></td>
+          <td>Leukocytes</td>
+          <td>Colourless (no Hb)</td>
+          <td>Days–years</td>
+          <td>Defence mechanism (immunity). Amoeba-like shape.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--accent-yellow)">Platelets</strong></td>
+          <td>Thrombocytes</td>
+          <td>—</td>
+          <td><span class="num">5–9 days</span></td>
+          <td>Blood clotting (coagulation).</td>
+        </tr>
+      </table>
+      <p style="margin-top:10px;font-size:12.5px;color:var(--text-secondary);">RBCs are <strong>biconcave disc-shaped</strong>, destroyed in the <strong>spleen</strong>, and contain <strong>haemoglobin</strong> (iron-based, carries O₂).</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🏥</span> Blood Groups — ABO System</div>
+      <table class="cmp-table">
+        <tr><th>Blood Group</th><th>Antigen</th><th>Antibody</th><th>Can Donate To</th><th>Can Receive From</th></tr>
+        <tr><td><strong>A</strong></td><td>A</td><td>b</td><td>A, AB</td><td>A, O</td></tr>
+        <tr><td><strong>B</strong></td><td>B</td><td>a</td><td>B, AB</td><td>B, O</td></tr>
+        <tr><td><strong>AB</strong></td><td>A &amp; B</td><td>None</td><td>AB only</td><td class="bg-yes">ALL ✅ (Universal Acceptor)</td></tr>
+        <tr class="bg-special"><td><strong>O</strong></td><td>None</td><td>a &amp; b</td><td class="bg-yes">ALL ✅ (Universal Donor)</td><td>O only</td></tr>
+      </table>
+      <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap;">
+        <div style="padding:10px 16px;background:rgba(34,211,165,0.1);border:1px solid rgba(34,211,165,0.25);border-radius:8px;font-size:13px;"><strong style="color:var(--accent-green)">O Negative</strong><br><span style="color:var(--text-secondary);font-size:12px;">Universal Donor<br>No antigen</span></div>
+        <div style="padding:10px 16px;background:rgba(79,163,247,0.1);border:1px solid rgba(79,163,247,0.25);border-radius:8px;font-size:13px;"><strong style="color:var(--accent-blue)">AB Positive</strong><br><span style="color:var(--text-secondary);font-size:12px;">Universal Acceptor<br>Has all antigens</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🦠</span> Special Blood Groups</div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Bombay Blood Group</strong>: Discovered by <em>Y.M. Bhende</em> in <em>1952</em> in Bombay. Does NOT have <strong>H antigen</strong>. Extremely rare.</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Rh Factor</strong>: Protein on RBC surface. Present = Rh positive (+). Absent = Rh negative (−).</span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Rh factor named after <strong>Rhesus monkey</strong> — first discovered in that species.</span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Blood group discovered by <strong>Karl Landsteiner</strong> (won Nobel Prize).</span></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: KEY STATS ========== -->
+  <div class="page" id="page-stats">
+    <div class="page-hero">
+      <div class="eyebrow">Quick Reference</div>
+      <h1>📊 Key Numbers &amp; Stats</h1>
+      <p>All the numbers that appear in exam questions. Memorize these cold.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔢</span> The Number Bank</div>
+      <div class="speed-row"><span class="speed-key">Blood Circulation Discovered</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">1628</span> by William Harvey</span></div>
+      <div class="speed-row"><span class="speed-key">Heart Chambers (Human)</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">4</span></span></div>
+      <div class="speed-row"><span class="speed-key">Heart Chambers (Cockroach)</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">13</span></span></div>
+      <div class="speed-row"><span class="speed-key">Heart Chambers (Fish)</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">2</span></span></div>
+      <div class="speed-row"><span class="speed-key">Heart Chambers (Amphibian)</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">3</span></span></div>
+      <div class="speed-row"><span class="speed-key">Heart Chambers (Reptile)</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">3</span> (Crocodile = 4)</span></div>
+      <div class="speed-row"><span class="speed-key">Systolic Pressure</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">120 mm Hg</span></span></div>
+      <div class="speed-row"><span class="speed-key">Diastolic Pressure</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">80 mm Hg</span></span></div>
+      <div class="speed-row"><span class="speed-key">Pulse Rate (normal)</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">60–100</span> beats per minute</span></div>
+      <div class="speed-row"><span class="speed-key">RBC Life Span</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">120 days</span></span></div>
+      <div class="speed-row"><span class="speed-key">Urine – Water %</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">95%</span></span></div>
+      <div class="speed-row"><span class="speed-key">Urine – Urea %</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">2% (or 2.5%)</span> — use 2% if in options</span></div>
+      <div class="speed-row"><span class="speed-key">Urine pH</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">4.5 – 5</span> (acidic)</span></div>
+      <div class="speed-row"><span class="speed-key">Bombay Blood Group Year</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">1952</span> by Y.M. Bhende</span></div>
+      <div class="speed-row"><span class="speed-key">Nephrons per Kidney</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">Millions</span> (approx. 1 million)</span></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: EXCRETORY ========== -->
+  <div class="page" id="page-excretory">
+    <div class="page-hero">
+      <div class="eyebrow">Excretory System · Part 1</div>
+      <h1>🫘 Kidneys &amp; Excretory Organs</h1>
+      <p>Excretion = removal of metabolic waste. Multiple organs do this — but <strong>kidneys</strong> are the main organ.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🗂️</span> All Excretory Organs</div>
+      <table class="cmp-table">
+        <tr><th>Organ</th><th>What It Removes</th><th>State of Waste</th></tr>
+        <tr><td><strong style="color:var(--accent-green)">Kidneys</strong> (main)</td><td>Urea, creatinine, excess salts</td><td>Liquid (urine)</td></tr>
+        <tr><td>Skin</td><td>Excess salts, water</td><td>Liquid (sweat)</td></tr>
+        <tr><td>Lungs</td><td>CO₂, water vapour</td><td>Gas</td></tr>
+        <tr><td>Liver</td><td>Bile (from old RBCs)</td><td>—</td></tr>
+      </table>
+      <p style="margin-top:10px;font-size:12.5px;color:var(--accent-yellow);">💡 Easy recall: <strong>Kidney = Liquid waste | Skin = Liquid (sweat) | Lungs = Gaseous waste</strong></p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🫘</span> Kidney — Structure &amp; Facts</div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Two kidneys. <strong>Right kidney</strong> is slightly <em>lower</em> than left (because liver occupies space on the right side)</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Outer layer = <strong>Renal Cortex</strong> (also called Renal Fascia)</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Adrenal gland</strong> sits like a cap on top of each kidney</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Renal Vein</strong>: carries purified blood FROM kidney TO heart (deoxygenated, but solid waste removed)</span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Kidney stones = <strong>Calcium Oxalate</strong> deposits. Prevention = drink lots of water.</span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Stones also form in: <strong>Gallbladder</strong>, <strong>Parotid (Salivary) Gland</strong></span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔄</span> Excretory Pathway</div>
+      <div class="flow">
+        <div class="flow-box">Kidneys (filter)</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box blue">Ureters (2)</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box purple">Urinary Bladder</div>
+        <span class="flow-arrow">→</span>
+        <div class="flow-box orange">Urethra (exit)</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🏥</span> Dialysis (Hemodialysis)</div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">When kidneys <strong>fail</strong>, dialysis artificially removes waste from blood using an <strong>artificial kidney</strong> machine</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Also known as <strong>Hemodialysis</strong></span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Diabetic patients' kidneys get damaged quickly — major risk group</span></div>
+      <div class="fact-row"><span class="fact-priority">➕</span><span class="fact-text">Requires electricity (generator failure = life-threatening during dialysis)</span></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: NEPHRON ========== -->
+  <div class="page" id="page-nephron">
+    <div class="page-hero">
+      <div class="eyebrow">Excretory System · Part 2</div>
+      <h1>🔬 Nephron — The Kidney's Filter Unit</h1>
+      <p>Nephron is to Kidney what Neuron is to Brain. <strong>Basic structural and functional unit of the kidney.</strong> Millions present in each kidney.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">🔬</span> Nephron Structure — Step by Step</div>
+      
+      <div class="palace-step">
+        <div class="palace-num">1</div>
+        <div class="palace-content">
+          <h4>Afferent Arteriole</h4>
+          <p>Small artery bringing oxygenated blood (with waste) INTO the nephron for filtration.</p>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">2</div>
+        <div class="palace-content">
+          <h4>Glomerulus</h4>
+          <p>A tiny <strong>cluster/tuft of capillaries</strong>. Blood is under high pressure here. Filtration begins — small molecules forced out.</p>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">3</div>
+        <div class="palace-content">
+          <h4>Bowman's Capsule</h4>
+          <p>Cup-shaped structure surrounding the glomerulus. <strong>Ultrafiltration</strong> happens here — filters blood, separates waste from useful substances.</p>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">4</div>
+        <div class="palace-content">
+          <h4>Proximal Convoluted Tubule (PCT)</h4>
+          <p>First tubule. Reabsorbs useful substances (glucose, amino acids, water) back into blood.</p>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">5</div>
+        <div class="palace-content">
+          <h4>Loop of Henle</h4>
+          <p>U-shaped loop. Concentrates the urine by further reabsorbing water and salts.</p>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">6</div>
+        <div class="palace-content">
+          <h4>Distal Convoluted Tubule (DCT)</h4>
+          <p>Further regulation of ions and pH.</p>
+        </div>
+      </div>
+      <div class="palace-step">
+        <div class="palace-num">7</div>
+        <div class="palace-content">
+          <h4>Collecting Duct → Ureter</h4>
+          <p>Final waste (urine = urea + water) collected here, travels to ureter, then bladder, then urethra.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">💡</span> Key Terms</div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Ultrafiltration</strong>: The process of filtering blood under pressure in the glomerulus/Bowman's capsule</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>JGA</strong> = Juxta-Glomerular Apparatus — helps regulate filtration rate</span></div>
+      <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text"><strong>Nephrologist</strong> = Kidney doctor. <strong>Nephrology</strong> = Study of kidneys. (Because the unit is "nephron")</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Ammonia → converted to <strong>Urea</strong> in the <span class="warn">LIVER</span> (urea cycle) + partly in kidneys</span></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: URINE ========== -->
+  <div class="page" id="page-urine">
+    <div class="page-hero">
+      <div class="eyebrow">Excretory System · Part 3</div>
+      <h1>💧 Urine — Composition &amp; Facts</h1>
+      <p>What exactly is in urine? The exam loves testing these numbers.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="icon">📊</span> Urine Composition</div>
+      <div class="speed-row"><span class="speed-key">Water</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">95%</span></span></div>
+      <div class="speed-row"><span class="speed-key">Urea</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">2% (or 2.5%)</span> — pick 2% if in options</span></div>
+      <div class="speed-row"><span class="speed-key">Other (creatinine etc.)</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">2.5%</span></span></div>
+      <div class="speed-row"><span class="speed-key">pH value</span><span class="speed-arrow">→</span><span class="speed-val"><span class="num">4.5 – 5</span> (acidic)</span></div>
+      <div class="speed-row"><span class="speed-key">Colour</span><span class="speed-arrow">→</span><span class="speed-val">Yellow (due to <strong>Urochrome / Urobilin</strong>)</span></div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title"><span class="icon">🟡</span> Yellow Colour Sources</div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Urine</strong> is yellow due to <em>Urochrome / Urobilin</em></span></div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Solid waste (faeces)</strong> is brown due to <em>Bilirubin</em></span></div>
+        <p style="margin-top:8px;font-size:12px;color:var(--accent-orange);">⚠️ Don't confuse: Urobilin (urine) ≠ Bilirubin (faeces)</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="icon">♻️</span> Urea Cycle Location</div>
+        <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text">Urea cycle = <span class="highlight">LIVER</span> (not kidney!)</span></div>
+        <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Protein breaks down → <strong>Ammonia</strong> → Liver converts to <strong>Urea</strong></span></div>
+        <div class="fact-row"><span class="fact-priority">⭐</span><span class="fact-text">Excess protein/meat → excess creatinine → kidney stones</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: MEMORY HOOKS ========== -->
+  <div class="page" id="page-hooks">
+    <div class="page-hero">
+      <div class="eyebrow">Smart Retention</div>
+      <h1>🪝 Memory Hooks &amp; Mnemonics</h1>
+      <p>These are designed to survive 6 months of studying. Visual, sticky, unforgettable.</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🚨 HOOK 1 — PULMONARY EXCEPTIONS</h4>
+      <p>Imagine a <span class="hook-highlight">Postman who delivers the wrong parcel</span>. The Pulmonary Artery (who should carry oxygenated blood) delivers <span class="hook-highlight">deoxygenated blood</span> to the lungs. The Pulmonary Vein (who should carry deoxygenated) brings back <span class="hook-highlight">oxygenated blood</span>. The postman mixed up his bags! <em>"Pulmonary = Mix-up!"</em></p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🏥 HOOK 2 — 4 VALVES: TALL PEOPLE BUY AUTOS</h4>
+      <p>Picture a <span class="hook-highlight">tall person at a car dealership</span>: <strong>T</strong>all <strong>P</strong>eople <strong>B</strong>uy <strong>A</strong>utos = <strong>T</strong>ricuspid → <strong>P</strong>ulmonary → <strong>B</strong>icuspid → <strong>A</strong>ortic. Left to right, top to bottom of the heart.</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🐒 HOOK 3 — RH FACTOR = RHESUS MONKEY</h4>
+      <p>Rh Factor is named after the <span class="hook-highlight">Rhesus monkey</span>. Imagine a monkey with a big R on its chest holding a blood sample. The monkey was the <em>first</em> to show this protein. If you have the protein = Rh⁺. If you're like most humans and not a monkey = Rh⁻ (no protein). Simple.</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🏆 HOOK 4 — O NEGATIVE = UNIVERSAL DONOR</h4>
+      <p><strong>O</strong> negative has <span class="hook-highlight">NOTHING</span> on its surface (no antigens). Like a <em>blank business card</em> — anyone can accept it because there's nothing foreign to reject. <strong>AB⁺ has EVERYTHING</strong> — all antigens — so it accepts all types (nothing surprises it).</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🫘 HOOK 5 — RIGHT KIDNEY IS LOWER</h4>
+      <p>The <span class="hook-highlight">Liver is a VIP guest</span> on the right side — it needs extra room. So the right kidney was asked to <em>"move down a bit, sir"</em> to accommodate the liver. Right kidney = lower. Always remember: Liver forces right kidney down.</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>💧 HOOK 6 — URINE COLOUR MEMORY</h4>
+      <p>
+        <span class="hook-highlight">URine = URobilin</span> (same UR sound → same UR colour — yellow)<br>
+        <span class="hook-highlight">BILE-rubin = faeces</span> (bile is bitter brown stuff — brown faeces)<br>
+        Never mix them up again.
+      </p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🧠 HOOK 7 — NEPHRON vs NEURON</h4>
+      <p><strong>NEUron</strong> = basic unit of <strong>NEUral</strong> (nervous) system = longest cell.<br><strong>NEPHron</strong> = basic unit of <strong>NEPHrology</strong> (kidney) = millions per kidney.<br>Same "-on" ending, different first syllable. NEU=brain. NEPH=kidney.</p>
+    </div>
+
+    <div class="hook-box">
+      <h4>🐠 HOOK 8 — HEART CHAMBERS BY ANIMAL</h4>
+      <p>Fish have <span class="hook-highlight">2 chambers</span> — they're simple creatures living in water.<br>Frogs (amphibians) <span class="hook-highlight">3 chambers</span> — half land, half water, so 3.<br>Birds &amp; Mammals = <span class="hook-highlight">4 chambers</span> — warm-blooded, active, need pure separation.<br>Cockroach = <span class="hook-highlight">13 chambers</span> — because cockroaches survive everything!</p>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: EXAM TRAPS ========== -->
+  <div class="page" id="page-traps">
+    <div class="page-hero">
+      <div class="eyebrow">Danger Zone</div>
+      <h1>⚠️ Exam Traps &amp; Common Mistakes</h1>
+      <p>These are the exact points where students lose marks. Read every trap carefully.</p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 1: Heart is NOT a purifying organ</h4>
+      <p>Students think the heart purifies blood. <strong>Wrong!</strong> The <strong>Lungs</strong> oxygenate blood. The <strong>Kidneys</strong> remove solid waste. The heart is <em>only a pump</em>. It sends deoxygenated blood to lungs secretly and gets back oxygenated blood.</p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 2: Pulmonary Artery vs Pulmonary Vein</h4>
+      <p><strong>Pulmonary Artery</strong> carries <strong>deoxygenated</strong> blood (exception!). <strong>Pulmonary Vein</strong> carries <strong>oxygenated</strong> blood (exception!). Both are <em>exceptions to the standard rule</em>. Exams LOVE testing this.</p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 3: Urea Cycle Location</h4>
+      <p>Urea cycle takes place in the <strong>Liver</strong>, NOT the kidney. Kidneys also convert ammonia to urea, but when the exam says "urea cycle" — the answer is <strong>Liver</strong>.</p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 4: Urobilin vs Bilirubin</h4>
+      <p><strong>Urine is yellow</strong> due to <em>Urobilin/Urochrome</em>. <strong>Faeces is brown</strong> due to <em>Bilirubin</em>. They sound similar but are completely different. Exam trap: "yellow colour of urine is due to bilirubin" — <strong>False!</strong></p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 5: Right Kidney is LOWER (not higher)</h4>
+      <p>Students assume left is lower or both are equal. <strong>Right kidney is slightly lower</strong> because the liver (on the right) pushes it down. Very frequently tested.</p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 6: Outer Covering Names</h4>
+      <p>Heart outer layer = <strong>Pericardium</strong>. Lungs outer layer = <strong>Pleura</strong>. Don't swap these. Examiners love mixing up organ coverings.</p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 7: AB Positive = Universal Acceptor (NOT Donor)</h4>
+      <p>AB⁺ can receive blood from everyone (Universal <em>Acceptor</em>). O⁻ can give blood to everyone (Universal <em>Donor</em>). Students often swap donor and acceptor.</p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 8: Urea % in Urine</h4>
+      <p>If exam shows 2% → choose 2%. If exam shows 2.5% → choose 2.5%. Both have appeared in different papers. <strong>Prefer 2% in MCQ options.</strong> Teacher confirmed both values have been used in different exams.</p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 9: Nephron vs Neuron</h4>
+      <p><strong>Nephron</strong> = kidney unit (millions per kidney). <strong>Neuron</strong> = nervous system unit (longest cell). They sound similar — never confuse these two. Watch for trick options.</p>
+    </div>
+
+    <div class="trap-item">
+      <h4>⚠️ TRAP 10: Bombay Blood Group</h4>
+      <p>Discovered by <strong>Y.M. Bhende</strong> in <strong>1952</strong>. Lacks <strong>H antigen</strong>. NOT the same as O blood group. Rare blood group named after Mumbai/Bombay.</p>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: EXAM QUESTIONS ========== -->
+  <div class="page" id="page-examq">
+    <div class="page-hero">
+      <div class="eyebrow">Exam Strategy</div>
+      <h1>🎯 Examiner's Favourite Questions</h1>
+      <p>Based on SSC/Railways exam patterns. These topics come up repeatedly.</p>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">HIGH PROBABILITY · DIRECT</div>
+      <p>Who discovered blood circulation and in which year?</p>
+      <div class="answer">→ William Harvey, 1628</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">HIGH PROBABILITY · EXCEPTION</div>
+      <p>Which artery carries deoxygenated blood?</p>
+      <div class="answer">→ Pulmonary Artery (exception to normal rule)</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">HIGH PROBABILITY · EXCEPTION</div>
+      <p>Which vein carries oxygenated blood?</p>
+      <div class="answer">→ Pulmonary Vein (exception to normal rule)</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">STATEMENT BASED</div>
+      <p>Statement: Heart purifies blood. Is this correct?</p>
+      <div class="answer">→ FALSE. Heart only pumps. Lungs oxygenate; kidneys remove solid waste.</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">FILL IN BLANK</div>
+      <p>The universal donor blood group is ___</p>
+      <div class="answer">→ O Negative (O⁻)</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">FILL IN BLANK</div>
+      <p>The universal acceptor blood group is ___</p>
+      <div class="answer">→ AB Positive (AB⁺)</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">MATCH THE FOLLOWING</div>
+      <p>Match: Tricuspid valve / Bicuspid valve / Aortic valve with their locations</p>
+      <div class="answer">→ Tricuspid = RA→RV | Bicuspid = LA→LV | Aortic = LV→Aorta</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">HIGH PROBABILITY · ANIMAL</div>
+      <p>How many chambers does a cockroach heart have?</p>
+      <div class="answer">→ 13 chambers</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">RAILWAYS ASKED THIS</div>
+      <p>Where does the urea cycle take place?</p>
+      <div class="answer">→ Liver (NOT kidney)</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">DIRECT FACT</div>
+      <p>What is the basic unit of kidney? What process does it use?</p>
+      <div class="answer">→ Nephron; uses Ultrafiltration</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">TRAP QUESTION</div>
+      <p>Yellow colour of urine is due to ___</p>
+      <div class="answer">→ Urochrome / Urobilin (NOT Bilirubin — that's for faeces)</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">BLOOD GROUP</div>
+      <p>Bombay blood group — who discovered it, when, and what is missing?</p>
+      <div class="answer">→ Y.M. Bhende, 1952, lacks H antigen</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">MEASUREMENT</div>
+      <p>Which instrument measures arterial blood pressure?</p>
+      <div class="answer">→ Sphygmomanometer</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">CHRONOLOGY</div>
+      <p>What is the life span of RBCs? Where do they die?</p>
+      <div class="answer">→ 120 days; die in the Spleen</div>
+    </div>
+
+    <div class="exam-q">
+      <div class="q-label">ASSERTION REASON</div>
+      <p>A: Coronary artery supplies blood to the heart. R: Its blockage causes heart attack.</p>
+      <div class="answer">→ Both A and R are correct, and R is the correct explanation of A.</div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: ACTIVE RECALL ========== -->
+  <div class="page" id="page-recall">
+    <div class="page-hero">
+      <div class="eyebrow">Active Recall Training</div>
+      <h1>❓ Self-Test Section</h1>
+      <p>Tap each card to reveal the answer. Do this without looking at notes first. This is how toppers train memory.</p>
+    </div>
+
+    <div id="recall-cards">
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 William Harvey discovered blood circulation in which year?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">1628</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Name the 4 chambers of the heart.</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Right Atrium, Left Atrium, Right Ventricle, Left Ventricle</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Name the 4 valves of the heart in order (right to left, top to bottom).</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Tricuspid → Pulmonary → Bicuspid (Mitral) → Aortic</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">⭐ What is double circulation?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">The same blood passes through the heart twice to complete one cycle — once through the right side (to lungs), once through the left side (to body).</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Which artery carries deoxygenated blood? Which vein carries oxygenated blood?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Pulmonary Artery (deoxy) | Pulmonary Vein (oxy) — BOTH are exceptions to the normal rule!</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 What is systole? What is the pressure?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Ventricular contraction | 120 mm Hg</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 What is diastole? What is the pressure?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Ventricular relaxation | 80 mm Hg</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Universal Donor blood group?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">O Negative (O⁻) — has no antigens</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Universal Acceptor blood group?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">AB Positive (AB⁺) — has all antigens</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">⭐ Bombay blood group — discoverer, year, what antigen is missing?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Y.M. Bhende | 1952 | H antigen is absent</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Life span of RBCs? Shape? Where do they die?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">120 days | Biconcave disc | Die in the Spleen</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Rh factor — what is it named after? What does Rh⁺ mean?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Named after Rhesus monkey. Rh⁺ = Rh protein present on RBC surface. Rh⁻ = protein absent.</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Why is the right kidney lower than the left?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Because the liver is on the right side and pushes the right kidney slightly downward.</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Basic unit of kidney? What process does it use?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Nephron | Ultrafiltration</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Where does the urea cycle take place?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">LIVER (not kidney!) — ammonia → urea conversion</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 Composition of urine (3 main values)?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">95% water | 2% (or 2.5%) urea | 2.5% other (creatinine etc.) | pH = 4.5–5</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">⭐ Yellow colour of urine is due to? Yellow-brown colour of faeces is due to?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Urine = Urobilin/Urochrome | Faeces = Bilirubin</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">⭐ Outer covering of heart? Outer covering of lungs?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Heart = Pericardium | Lungs = Pleura</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">⭐ How many heart chambers in: Fish / Amphibian / Reptile / Bird / Mammal / Cockroach?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Fish=2 | Amphibian=3 | Reptile=3 (Crocodile=4) | Bird=4 | Mammal=4 | Cockroach=13</div>
+      </div>
+      <div class="recall-item" onclick="toggleRecall(this)">
+        <div class="q-text">🔥 What is hemodialysis? When is it needed?</div>
+        <div class="tap-hint">tap to reveal →</div>
+        <div class="ans">Artificial removal of waste from blood using an artificial kidney machine. Needed when kidneys fail.</div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:12px;background:rgba(34,211,165,0.08);border-radius:8px;font-size:12.5px;color:var(--accent-green);">
+      ✅ Done? Close all answers and repeat. Do 3 rounds. This is spaced repetition in action.
+    </div>
+  </div>
+
+  <!-- ========== PAGE: HIGH-YIELD ========== -->
+  <div class="page" id="page-highyield">
+    <div class="page-hero">
+      <div class="eyebrow">Layer 2 — Revision Sheet</div>
+      <h1>⚡ High-Yield Revision Notes</h1>
+      <p>Everything that has a high probability of appearing in SSC CGL. One scan = full chapter review.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">❤️ Circulatory — Core Facts</div>
+        <div class="speed-row"><span class="speed-key">Discovered by</span><span class="speed-val">William Harvey, 1628</span></div>
+        <div class="speed-row"><span class="speed-key">Heart = </span><span class="speed-val">Pumping organ ONLY</span></div>
+        <div class="speed-row"><span class="speed-key">Chambers</span><span class="speed-val">4 (RA, LA, RV, LV)</span></div>
+        <div class="speed-row"><span class="speed-key">Valves</span><span class="speed-val">4 (Tri→Pulm→Bi→Aortic)</span></div>
+        <div class="speed-row"><span class="speed-key">SA Node</span><span class="speed-val">Natural pacemaker</span></div>
+        <div class="speed-row"><span class="speed-key">Systole/Diastole</span><span class="speed-val">120 / 80 mm Hg</span></div>
+        <div class="speed-row"><span class="speed-key">Pulse rate</span><span class="speed-val">60–100 bpm</span></div>
+        <div class="speed-row"><span class="speed-key">BP measured by</span><span class="speed-val">Sphygmomanometer</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🫘 Excretory — Core Facts</div>
+        <div class="speed-row"><span class="speed-key">Main organ</span><span class="speed-val">Kidney</span></div>
+        <div class="speed-row"><span class="speed-key">Right kidney</span><span class="speed-val">Slightly LOWER</span></div>
+        <div class="speed-row"><span class="speed-key">Basic unit</span><span class="speed-val">Nephron</span></div>
+        <div class="speed-row"><span class="speed-key">Filtration type</span><span class="speed-val">Ultrafiltration</span></div>
+        <div class="speed-row"><span class="speed-key">Urea cycle</span><span class="speed-val">LIVER</span></div>
+        <div class="speed-row"><span class="speed-key">Kidney stones</span><span class="speed-val">Calcium Oxalate</span></div>
+        <div class="speed-row"><span class="speed-key">Outer layer</span><span class="speed-val">Renal Cortex</span></div>
+        <div class="speed-row"><span class="speed-key">Dialysis</span><span class="speed-val">Hemodialysis</span></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <div class="card-title">🩸 Blood Facts</div>
+        <div class="speed-row"><span class="speed-key">RBC name</span><span class="speed-val">Erythrocytes</span></div>
+        <div class="speed-row"><span class="speed-key">RBC life span</span><span class="speed-val">120 days</span></div>
+        <div class="speed-row"><span class="speed-key">RBC shape</span><span class="speed-val">Biconcave disc</span></div>
+        <div class="speed-row"><span class="speed-key">RBC death site</span><span class="speed-val">Spleen</span></div>
+        <div class="speed-row"><span class="speed-key">WBC name</span><span class="speed-val">Leukocytes</span></div>
+        <div class="speed-row"><span class="speed-key">WBC function</span><span class="speed-val">Defence/Immunity</span></div>
+        <div class="speed-row"><span class="speed-key">Platelets name</span><span class="speed-val">Thrombocytes</span></div>
+        <div class="speed-row"><span class="speed-key">Platelets job</span><span class="speed-val">Blood clotting</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🏥 Blood Groups</div>
+        <div class="speed-row"><span class="speed-key">Discoverer</span><span class="speed-val">Karl Landsteiner</span></div>
+        <div class="speed-row"><span class="speed-key">Universal Donor</span><span class="speed-val">O⁻ (no antigen)</span></div>
+        <div class="speed-row"><span class="speed-key">Universal Acceptor</span><span class="speed-val">AB⁺ (all antigens)</span></div>
+        <div class="speed-row"><span class="speed-key">Bombay group</span><span class="speed-val">Y.M. Bhende, 1952</span></div>
+        <div class="speed-row"><span class="speed-key">Bombay: missing</span><span class="speed-val">H antigen</span></div>
+        <div class="speed-row"><span class="speed-key">Rh factor</span><span class="speed-val">Named after Rhesus monkey</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚠️ The 5 Biggest Exceptions (Must Know)</div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Pulmonary Artery</strong> carries <em class="warn">deoxygenated</em> blood (normally arteries carry oxygenated)</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Pulmonary Vein</strong> carries <span class="highlight">oxygenated</span> blood (normally veins carry deoxygenated)</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Urea cycle</strong> is in <span class="highlight">Liver</span> not kidney</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Crocodile</strong> has 4 heart chambers (reptiles normally have 3)</span></div>
+      <div class="fact-row"><span class="fact-priority">🔥</span><span class="fact-text"><strong>Right kidney</strong> is lower (not the left)</span></div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: ULTRA-FAST ========== -->
+  <div class="page" id="page-ultrafast">
+    <div class="page-hero">
+      <div class="eyebrow">Layer 3 — Ultra-Fast Sheet</div>
+      <h1>🚀 Ultra-Fast Revision Sheet</h1>
+      <p>Max info, minimum words. Read this when you have 10 minutes.</p>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(34,211,165,0.05), rgba(79,163,247,0.05));">
+      <div class="card-title">⚡ CIRCULATORY</div>
+      <div style="font-size:13px;line-height:2;color:var(--text-primary);">
+        William Harvey → <span class="num">1628</span> | Heart = pump (not purifier) | 4 chambers | 4 valves: Tri→Pulm→Bi→Aortic<br>
+        <strong style="color:var(--accent-blue)">Double circulation</strong> = same blood through heart twice per cycle<br>
+        <strong style="color:var(--accent-orange)">EXCEPTIONS:</strong> Pulmonary Artery=deoxy | Pulmonary Vein=oxy<br>
+        Systole=<span class="num">120mmHg</span> | Diastole=<span class="num">80mmHg</span> | Pulse=<span class="num">60–100 bpm</span><br>
+        Coronary artery → supplies heart → block = heart attack<br>
+        Cockroach heart = <span class="num">13 chambers</span> | Fish=2 | Frog=3 | Crocodile=4★ | Bird/Mammal=4<br>
+        SA Node = natural pacemaker | Sphygmomanometer = BP meter
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(167,139,250,0.05), rgba(34,211,165,0.05));">
+      <div class="card-title">⚡ BLOOD</div>
+      <div style="font-size:13px;line-height:2;color:var(--text-primary);">
+        RBC=Erythrocytes | WBC=Leukocytes | Platelets=Thrombocytes<br>
+        RBC: 120 days | Biconcave disc | Die in Spleen | Carries O₂<br>
+        WBC: Defence | Amoeba-like (no fixed shape) | No haemoglobin<br>
+        Platelets: Clotting | Thrombocytes<br>
+        <strong style="color:var(--accent-yellow)">O⁻ = Universal DONOR</strong> (no antigen) | <strong style="color:var(--accent-blue)">AB⁺ = Universal ACCEPTOR</strong> (all antigens)<br>
+        Bombay Blood Group: Y.M. Bhende | 1952 | No H antigen<br>
+        Rh Factor: named after Rhesus monkey | +ve = protein present
+      </div>
+    </div>
+
+    <div class="card" style="background: linear-gradient(135deg, rgba(249,115,22,0.05), rgba(167,139,250,0.05));">
+      <div class="card-title">⚡ EXCRETORY</div>
+      <div style="font-size:13px;line-height:2;color:var(--text-primary);">
+        Main organ = Kidney | Right kidney = LOWER (liver pushes) | Adrenal gland = cap on top<br>
+        Outer layer = Renal Cortex | Nephron = basic unit (millions per kidney)<br>
+        Nephron process = Ultrafiltration | Glomerulus+Bowman's capsule → PCT → Loop of Henle → Collecting duct<br>
+        Urea cycle = <span class="warn">LIVER</span> (NOT kidney!) | Kidney stones = Calcium Oxalate<br>
+        Dialysis = Hemodialysis (artificial kidney for kidney failure)<br>
+        <strong style="color:var(--accent-green)">Urine: 95% water | 2% urea | pH 4.5–5 | Yellow = Urobilin/Urochrome</strong><br>
+        Faeces yellow-brown = Bilirubin | Pathway: Kidney → Ureter → Bladder → Urethra
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PAGE: LAST NIGHT ========== -->
+  <div class="page" id="page-lastnight">
+    <div class="page-hero">
+      <div class="eyebrow">Layer 5 — Last Night Before Exam</div>
+      <h1>🌙 Last-Night-Before-Exam Sheet</h1>
+      <p>Only read this on the night before the exam. These are the highest-probability, most trap-prone facts.</p>
+    </div>
+
+    <div class="ln-grid">
+      <div class="ln-block">
+        <h4>🔥 Non-Negotiables</h4>
+        <ul>
+          <li>Harvey → Blood Circulation → <strong>1628</strong></li>
+          <li>Pulmonary Artery = <strong>DEOXY</strong> (exception!)</li>
+          <li>Pulmonary Vein = <strong>OXY</strong> (exception!)</li>
+          <li>O⁻ = Universal <strong>Donor</strong></li>
+          <li>AB⁺ = Universal <strong>Acceptor</strong></li>
+          <li>Urea Cycle = <strong>Liver</strong> (not kidney!)</li>
+          <li>Cockroach heart = <strong>13</strong> chambers</li>
+        </ul>
+      </div>
+      <div class="ln-block">
+        <h4>📊 Key Numbers</h4>
+        <ul>
+          <li>Systole = <strong>120 mm Hg</strong></li>
+          <li>Diastole = <strong>80 mm Hg</strong></li>
+          <li>Pulse = <strong>60–100 bpm</strong></li>
+          <li>RBC life = <strong>120 days</strong></li>
+          <li>Urine water = <strong>95%</strong></li>
+          <li>Urine urea = <strong>2%</strong> (2.5% also valid)</li>
+          <li>Urine pH = <strong>4.5–5</strong></li>
+        </ul>
+      </div>
+      <div class="ln-block">
+        <h4>🎯 Exceptions to Remember</h4>
+        <ul>
+          <li>Right kidney = <strong>LOWER</strong></li>
+          <li>Crocodile (reptile) = <strong>4</strong> chambers</li>
+          <li>Heart outer = <strong>Pericardium</strong></li>
+          <li>Lungs outer = <strong>Pleura</strong></li>
+          <li>Bombay group = no <strong>H antigen</strong></li>
+          <li>Rh = <strong>Rhesus monkey</strong></li>
+          <li>Urine yellow = <strong>Urobilin</strong></li>
+        </ul>
+      </div>
+      <div class="ln-block">
+        <h4>🩸 Blood Names</h4>
+        <ul>
+          <li>RBC = <strong>Erythrocytes</strong></li>
+          <li>WBC = <strong>Leukocytes</strong></li>
+          <li>Platelets = <strong>Thrombocytes</strong></li>
+          <li>BP meter = <strong>Sphygmomanometer</strong></li>
+          <li>Nephron unit = <strong>Ultrafiltration</strong></li>
+          <li>Bombay discoverer = <strong>Y.M. Bhende, 1952</strong></li>
+          <li>SA Node = <strong>Natural pacemaker</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:18px;padding:18px;background:rgba(34,211,165,0.08);border:1px solid rgba(34,211,165,0.2);border-radius:10px;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;color:var(--accent-green);margin-bottom:8px;">🚀 30-Second Final Recall</div>
+      <div style="font-size:13px;color:var(--text-primary);line-height:1.9;">
+        <strong>Harvey 1628</strong> → Heart pumps, 4 chambers, 4 valves (Tall People Buy Autos) →
+        <strong>Pulmonary exceptions</strong> (artery=deoxy, vein=oxy) →
+        <strong>O⁻ Donor, AB⁺ Acceptor</strong> →
+        <strong>Bombay=Bhende 1952, no H antigen</strong> →
+        <strong>Rh=Rhesus monkey</strong> →
+        <strong>Right kidney lower</strong> →
+        <strong>Nephron=ultrafiltration</strong> →
+        <strong>Urea cycle=Liver</strong> →
+        <strong>Urine: 95% water, 2% urea, pH 4.5–5, Urobilin=yellow</strong>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:14px;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.2);border-radius:8px;font-size:12.5px;color:var(--accent-red);">
+      ⚠️ LAST-MINUTE TRAPS: Faeces=Bilirubin (NOT Urobilin) | Urea cycle=Liver (NOT Kidney) | Pulmonary Artery=DEOXY | Right Kidney=LOWER | O⁻=DONOR (not acceptor)
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<script>
+  const pages = {
+    'overview': { title: 'Big Picture Overview', layer: 1 },
+    'palace': { title: 'Memory Palace', layer: 1 },
+    'circ-basics': { title: 'Heart — Basics', layer: 1 },
+    'circ-flow': { title: 'Blood Circulation Flow', layer: 1 },
+    'circ-vessels': { title: 'Blood Vessels', layer: 1 },
+    'blood': { title: 'Blood & Blood Groups', layer: 1 },
+    'stats': { title: 'Key Numbers & Stats', layer: 2 },
+    'excretory': { title: 'Kidneys & Excretory Organs', layer: 1 },
+    'nephron': { title: 'Nephron & Filtration', layer: 1 },
+    'urine': { title: 'Urine Composition', layer: 1 },
+    'hooks': { title: 'Memory Hooks', layer: 1 },
+    'traps': { title: '⚠️ Exam Traps', layer: 2 },
+    'examq': { title: "Examiner's Questions", layer: 2 },
+    'recall': { title: 'Active Recall', layer: 2 },
+    'highyield': { title: 'High-Yield Revision Sheet', layer: 2 },
+    'ultrafast': { title: 'Ultra-Fast Revision Sheet', layer: 3 },
+    'lastnight': { title: 'Last-Night-Before-Exam Sheet', layer: 5 }
+  };
+
+  const layerLabels = {
+    1: ['layer-1', 'Layer 1 – Complete'],
+    2: ['layer-2', 'Layer 2 – High-Yield'],
+    3: ['layer-3', 'Layer 3 – Ultra-Fast'],
+    4: ['layer-4', 'Layer 4 – 30-Second'],
+    5: ['layer-5', 'Layer 5 – Last Night']
+  };
+
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    
+    const page = document.getElementById('page-' + id);
+    if (page) page.classList.add('active');
+    
+    document.querySelectorAll('.nav-item').forEach(n => {
+      if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
+        n.classList.add('active');
+      }
+    });
+
+    const meta = pages[id];
+    if (meta) {
+      document.getElementById('topbar-title').textContent = meta.title;
+      const badge = document.querySelector('.layer-badge');
+      const [cls, label] = layerLabels[meta.layer];
+      badge.className = 'layer-badge ' + cls;
+      badge.textContent = label;
+    }
+
+    document.getElementById('main').scrollTo(0, 0);
+
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar').style.display = 'none';
+    }
+  }
+
+  function toggleRecall(el) {
+    el.classList.toggle('revealed');
+    const hint = el.querySelector('.tap-hint');
+    if (el.classList.contains('revealed')) {
+      hint.textContent = 'tap to hide ↑';
+    } else {
+      hint.textContent = 'tap to reveal →';
+    }
+  }
+
+  function toggleSidebar() {
+    const sb = document.getElementById('sidebar');
+    sb.style.display = sb.style.display === 'flex' ? 'none' : 'flex';
+  }
+</script>
+</body>
+</html>

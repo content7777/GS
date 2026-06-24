@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology: Diversity of Living Organisms | Study Dashboard</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Syne:wght@700;800&display=swap');
+
+  :root {
+    --bg: #0b0e14;
+    --bg2: #111520;
+    --bg3: #161b26;
+    --card: #1a2030;
+    --card2: #1e2538;
+    --border: #242d3f;
+    --green: #4ade80;
+    --green-dim: #22c55e55;
+    --green-glow: #4ade8033;
+    --blue: #60a5fa;
+    --blue-dim: #3b82f655;
+    --teal: #2dd4bf;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --purple: #a78bfa;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-faint: #475569;
+    --sidebar-w: 280px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: var(--sidebar-w);
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: fixed;
+    left: 0; top: 0;
+    overflow-y: auto;
+    z-index: 100;
+    transition: transform 0.3s ease;
+  }
+
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-track { background: transparent; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .sidebar-header {
+    padding: 24px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+    background: var(--bg2);
+    z-index: 1;
+  }
+
+  .sidebar-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-title {
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.5px;
+  }
+
+  .nav-group { padding: 12px 12px 4px; }
+  .nav-group-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding: 0 8px;
+    margin-bottom: 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-dim);
+    transition: all 0.15s ease;
+    margin-bottom: 2px;
+    border: 1px solid transparent;
+  }
+
+  .nav-item:hover {
+    background: var(--card);
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .nav-item.active {
+    background: var(--green-glow);
+    color: var(--green);
+    border-color: #4ade8033;
+  }
+
+  .nav-icon { font-size: 14px; flex-shrink: 0; }
+  .nav-badge {
+    margin-left: auto;
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 20px;
+    background: var(--card2);
+    color: var(--text-faint);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .nav-item.active .nav-badge {
+    background: var(--green-dim);
+    color: var(--green);
+  }
+
+  /* ── MAIN CONTENT ── */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    height: 100vh;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  #main::-webkit-scrollbar { width: 6px; }
+  #main::-webkit-scrollbar-track { background: transparent; }
+  #main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .page { display: none; padding: 40px 48px 80px; max-width: 900px; }
+  .page.active { display: block; }
+
+  /* ── PAGE HEADER ── */
+  .page-header { margin-bottom: 40px; }
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .page-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+
+  .page-subtitle { font-size: 15px; color: var(--text-dim); line-height: 1.6; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  .tag-fire { background: #f87171222; color: var(--red); border: 1px solid #f8717144; }
+  .tag-star { background: #fbbf24222; color: var(--yellow); border: 1px solid #fbbf2444; }
+  .tag-plus { background: #60a5fa222; color: var(--blue); border: 1px solid #60a5fa44; }
+  .tag-green { background: var(--green-dim); color: var(--green); border: 1px solid var(--green-glow); }
+
+  /* ── FACT GRID ── */
+  .fact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .fact-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .fact-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .fact-card.green::before { background: var(--green); }
+  .fact-card.blue::before { background: var(--blue); }
+  .fact-card.yellow::before { background: var(--yellow); }
+  .fact-card.red::before { background: var(--red); }
+  .fact-card.purple::before { background: var(--purple); }
+  .fact-card.teal::before { background: var(--teal); }
+
+  .fact-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .fact-card.green .fact-label { color: var(--green); }
+  .fact-card.blue .fact-label { color: var(--blue); }
+  .fact-card.yellow .fact-label { color: var(--yellow); }
+  .fact-card.red .fact-label { color: var(--red); }
+  .fact-card.purple .fact-label { color: var(--purple); }
+  .fact-card.teal .fact-label { color: var(--teal); }
+
+  .fact-value { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+  /* ── TABLE ── */
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .styled-table th {
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--bg3);
+    color: var(--green);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .styled-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    line-height: 1.5;
+    vertical-align: top;
+  }
+
+  .styled-table tr:hover td { background: var(--bg3); }
+  .styled-table tr:last-child td { border-bottom: none; }
+
+  /* ── MEMORY PALACE ── */
+  .palace-scene {
+    background: linear-gradient(135deg, #0d1f0d, #0d1525);
+    border: 1px solid #2a3f2a;
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .palace-scene::before {
+    content: '🧠';
+    position: absolute;
+    top: -10px; right: -10px;
+    font-size: 80px;
+    opacity: 0.06;
+  }
+
+  .palace-stop {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  .palace-stop:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+
+  .stop-num {
+    width: 32px; height: 32px;
+    background: var(--green-glow);
+    border: 1px solid var(--green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .stop-content h4 { font-size: 14px; color: var(--text); margin-bottom: 4px; }
+  .stop-content p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+  /* ── HOOKS ── */
+  .hook-box {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border: 1px solid #2a3f6f;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+
+  .hook-box h4 { font-size: 13px; color: var(--blue); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .hook-box p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .hook-box .hook-recall { margin-top: 10px; font-size: 12px; color: var(--teal); background: #0d2626; padding: 8px 12px; border-radius: 6px; border-left: 2px solid var(--teal); }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: #1f0f0f;
+    border: 1px solid #5f2929;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 14px;
+  }
+
+  .trap-box h4 { color: var(--red); font-size: 13px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .trap-box ul { list-style: none; }
+  .trap-box li {
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 6px 0;
+    border-bottom: 1px solid #3f1515;
+    display: flex;
+    gap: 10px;
+    line-height: 1.5;
+  }
+  .trap-box li::before { content: '⚡'; flex-shrink: 0; }
+  .trap-box li:last-child { border-bottom: none; }
+
+  /* ── QUIZ ── */
+  .quiz-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+  }
+
+  .quiz-q {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.5;
+    display: flex;
+    gap: 10px;
+  }
+
+  .quiz-q::before {
+    content: 'Q';
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green);
+    background: var(--green-glow);
+    border: 1px solid var(--green);
+    border-radius: 4px;
+    padding: 2px 6px;
+    flex-shrink: 0;
+    height: fit-content;
+    margin-top: 1px;
+  }
+
+  .quiz-answer {
+    display: none;
+    background: var(--card2);
+    border-radius: 6px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--green);
+    margin-top: 8px;
+    border-left: 2px solid var(--green);
+    line-height: 1.6;
+  }
+
+  .quiz-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-faint);
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.15s;
+    letter-spacing: 0.5px;
+  }
+
+  .quiz-toggle:hover { border-color: var(--green); color: var(--green); }
+
+  /* ── HIERARCHY TREE ── */
+  .tree {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+  }
+
+  .tree-node { color: var(--text); }
+  .tree-node span { color: var(--green); font-weight: 600; }
+  .tree-node .dim { color: var(--text-dim); font-size: 11px; }
+
+  /* ── FLASH CARDS ── */
+  .flash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+
+  .flash-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 90px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .flash-card:hover { border-color: var(--green); transform: translateY(-2px); box-shadow: 0 8px 24px #4ade8011; }
+
+  .flash-front { font-size: 13px; color: var(--text-dim); }
+  .flash-back {
+    display: none;
+    font-size: 14px;
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .flash-card.flipped .flash-front { display: none; }
+  .flash-card.flipped .flash-back { display: block; }
+  .flash-card.flipped { background: var(--green-glow); border-color: var(--green); }
+  .flash-hint { font-size: 10px; color: var(--text-faint); position: absolute; bottom: 10px; right: 12px; }
+
+  /* ── ULTRA-FAST SHEET ── */
+  .rapid-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+  .rapid-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .rapid-icon { font-size: 16px; flex-shrink: 0; }
+  .rapid-text { color: var(--text-dim); line-height: 1.5; }
+  .rapid-text strong { color: var(--text); }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+
+  .t-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .t-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 10px; height: 10px;
+    background: var(--green);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--green);
+  }
+
+  .t-year { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--green); margin-bottom: 4px; }
+  .t-text { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+  /* ── KINGDOM GRID ── */
+  .kingdom-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px; }
+
+  .kingdom-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .kingdom-card:hover { border-color: var(--green); }
+  .kingdom-card.active-k { border-color: var(--green); background: var(--green-glow); }
+
+  .kingdom-emoji { font-size: 28px; margin-bottom: 8px; }
+  .kingdom-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .kingdom-type { font-size: 10px; color: var(--text-faint); font-family: 'JetBrains Mono', monospace; }
+
+  .kingdom-detail {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  .kingdom-detail.active-k { display: block; }
+
+  /* ── LAST NIGHT SHEET ── */
+  .last-night {
+    background: linear-gradient(135deg, #0d1f0d, #0b1220);
+    border: 1px solid #2a3f2a;
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .ln-section { margin-bottom: 20px; }
+  .ln-header {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed #2a3f2a;
+  }
+
+  .ln-list { list-style: none; }
+  .ln-list li {
+    font-size: 13px;
+    color: var(--text-dim);
+    padding: 4px 0;
+    display: flex;
+    gap: 8px;
+    line-height: 1.5;
+  }
+  .ln-list li::before { content: '→'; color: var(--green); flex-shrink: 0; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap { background: var(--bg3); border-radius: 20px; height: 6px; overflow: hidden; margin-top: 6px; }
+  .progress-bar-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--green), var(--teal)); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #sidebar { transform: translateX(-100%); }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; }
+    .page { padding: 24px 20px 60px; }
+    .kingdom-grid { grid-template-columns: repeat(3, 1fr); }
+    .rapid-list { grid-template-columns: 1fr; }
+    .fact-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── MOBILE MENU BTN ── */
+  #menu-btn {
+    display: none;
+    position: fixed;
+    bottom: 24px; right: 24px;
+    width: 52px; height: 52px;
+    background: var(--green);
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 200;
+    box-shadow: 0 4px 20px var(--green-glow);
+  }
+
+  @media (max-width: 900px) { #menu-btn { display: flex; align-items: center; justify-content: center; } }
+
+  /* ── MISC ── */
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  .highlight {
+    background: var(--green-glow);
+    border: 1px solid var(--green);
+    border-radius: 4px;
+    padding: 0 6px;
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9em;
+  }
+
+  .inline-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: var(--blue-dim);
+    border: 1px solid #3b82f644;
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 11px;
+    color: var(--blue);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  p { margin-bottom: 10px; line-height: 1.7; color: var(--text-dim); font-size: 14px; }
+  p:last-child { margin-bottom: 0; }
+
+  h3 { font-size: 16px; color: var(--text); margin-bottom: 12px; margin-top: 20px; font-weight: 600; }
+  h3:first-child { margin-top: 0; }
+
+  ul, ol { padding-left: 20px; }
+  li { font-size: 14px; color: var(--text-dim); line-height: 1.7; margin-bottom: 4px; }
+
+  strong { color: var(--text); font-weight: 600; }
+
+  .exam-q {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+  }
+
+  .exam-q::before {
+    content: '🎯';
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">BioRevise</div>
+    <div class="sidebar-title">Diversity of Living Organisms</div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Overview</div>
+    <div class="nav-item active" onclick="showPage('big-picture')">
+      <span class="nav-icon">🌐</span> Big Picture
+    </div>
+    <div class="nav-item" onclick="showPage('palace')">
+      <span class="nav-icon">🧠</span> Memory Palace
+    </div>
+    <div class="nav-item" onclick="showPage('timeline')">
+      <span class="nav-icon">📅</span> Historical Timeline
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Core Content</div>
+    <div class="nav-item" onclick="showPage('taxonomy')">
+      <span class="nav-icon">🔬</span> Taxonomy Basics
+    </div>
+    <div class="nav-item" onclick="showPage('five-kingdoms')">
+      <span class="nav-icon">👑</span> Five Kingdoms
+      <span class="nav-badge">🔥</span>
+    </div>
+    <div class="nav-item" onclick="showPage('plantae')">
+      <span class="nav-icon">🌿</span> Kingdom Plantae
+      <span class="nav-badge">🔥</span>
+    </div>
+    <div class="nav-item" onclick="showPage('hooks')">
+      <span class="nav-icon">🔗</span> Memory Hooks
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Exam Prep</div>
+    <div class="nav-item" onclick="showPage('traps')">
+      <span class="nav-icon">⚠️</span> Exam Traps
+      <span class="nav-badge">⭐</span>
+    </div>
+    <div class="nav-item" onclick="showPage('examiner')">
+      <span class="nav-icon">🎯</span> Examiner's Qs
+    </div>
+    <div class="nav-item" onclick="showPage('quiz')">
+      <span class="nav-icon">❓</span> Self-Test Quiz
+    </div>
+    <div class="nav-item" onclick="showPage('flashcards')">
+      <span class="nav-icon">🃏</span> Flashcards
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Rapid Revision</div>
+    <div class="nav-item" onclick="showPage('highyield')">
+      <span class="nav-icon">⚡</span> High-Yield Notes
+    </div>
+    <div class="nav-item" onclick="showPage('ultrafast')">
+      <span class="nav-icon">🚀</span> Ultra-Fast Sheet
+    </div>
+    <div class="nav-item" onclick="showPage('lastnight')">
+      <span class="nav-icon">🌙</span> Last-Night Sheet
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU BUTTON -->
+<button id="menu-btn" onclick="toggleSidebar()">☰</button>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+  <!-- ─────────────── PAGE: BIG PICTURE ─────────────── -->
+  <div id="page-big-picture" class="page active">
+    <div class="page-header">
+      <div class="page-eyebrow">Chapter Overview</div>
+      <div class="page-title">Diversity of<br>Living Organisms</div>
+      <div class="page-subtitle">How life on Earth was organized, classified, and understood — from Carl Linnaeus in 1735 to Robert Whittaker's definitive Five-Kingdom System in 1969.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌍 What This Chapter Is Really About</div>
+      <p>Biologists needed a universal language to talk about the 8.7 million species on Earth. This chapter traces that journey — from 2 kingdoms to 5 — and then deep-dives into each kingdom, especially <strong>Plantae</strong>.</p>
+      <p>For SSC CGL, the key is to know <strong>who said what, when</strong>, and to distinguish features, examples, and exceptions of all five kingdoms + plant sub-divisions.</p>
+    </div>
+
+    <div class="fact-grid">
+      <div class="fact-card green">
+        <div class="fact-label">Core Concept</div>
+        <div class="fact-value"><strong>Taxonomy</strong> = Science of classifying organisms. Father = <strong>Carl Linnaeus</strong></div>
+      </div>
+      <div class="fact-card blue">
+        <div class="fact-label">Final System</div>
+        <div class="fact-value"><strong>5-Kingdom classification</strong> by Robert Whittaker (1969) — what we study today</div>
+      </div>
+      <div class="fact-card yellow">
+        <div class="fact-label">Classification Levels</div>
+        <div class="fact-value">Kingdom → Phylum → Class → Order → Family → Genus → Species</div>
+      </div>
+      <div class="fact-card teal">
+        <div class="fact-label">Cell Types</div>
+        <div class="fact-value"><strong>Prokaryote</strong> = no true nucleus | <strong>Eukaryote</strong> = true nucleus + organelles</div>
+      </div>
+      <div class="fact-card purple">
+        <div class="fact-label">Five Kingdoms</div>
+        <div class="fact-value">Monera · Protista · Fungi · Plantae · Animalia</div>
+      </div>
+      <div class="fact-card red">
+        <div class="fact-label">Exam Priority</div>
+        <div class="fact-value">Plantae sub-divisions + examples = <strong>highest frequency</strong> in SSC exams</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <div class="card-title">🗺️ Chapter Roadmap</div>
+      <div class="tree">
+        <div class="tree-node">📦 <span>ALL LIFE</span></div>
+        <div class="tree-node" style="padding-left:20px">├─ 🦠 <span>PROKARYOTE</span> → Monera only</div>
+        <div class="tree-node" style="padding-left:20px">└─ 🧬 <span>EUKARYOTE</span> → Protista, Fungi, Plantae, Animalia</div>
+        <div class="tree-node" style="padding-left:40px">├─ Unicellular → Protista only</div>
+        <div class="tree-node" style="padding-left:40px">└─ Multicellular → Fungi, Plantae, Animalia</div>
+        <div class="tree-node" style="padding-left:60px">├─ Has Cell Wall → Plantae (<span>cellulose</span>) + Fungi (<span>chitin</span>)</div>
+        <div class="tree-node" style="padding-left:60px">└─ No Cell Wall → Animalia</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏆 Corrections From Lecture (Don't Lose Marks!)</div>
+      <div style="display:grid; gap:10px;">
+        <div style="background:var(--bg3); border:1px solid #5f2929; border-radius:8px; padding:12px 16px; font-size:13px; color:var(--text-dim);">
+          ❌ <strong style="color:var(--red)">Hepatology</strong> ≠ study of blood → <strong style="color:var(--green)">Hematology</strong> = study of blood
+        </div>
+        <div style="background:var(--bg3); border:1px solid #5f2929; border-radius:8px; padding:12px 16px; font-size:13px; color:var(--text-dim);">
+          ❌ <strong style="color:var(--red)">Fibrinogen</strong> is NOT an anticoagulant → <strong style="color:var(--green)">Fibrinogen is a COAGULANT</strong> (helps blood clot)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: MEMORY PALACE ─────────────── -->
+  <div id="page-palace" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Retention System</div>
+      <div class="page-title">The Classification<br>Museum</div>
+      <div class="page-subtitle">Walk through this museum mentally — each room cements a concept forever.</div>
+    </div>
+
+    <div class="palace-scene">
+      <div class="palace-stop">
+        <div class="stop-num">1</div>
+        <div class="stop-content">
+          <h4>🚪 Museum Entrance — Linnaeus at the Door (1735)</h4>
+          <p>A man in 18th-century clothes (Carl Linnaeus) stands at the entrance with a sign: "PLANTS vs ANIMALS — the only two kingdoms." He holds a book called <em>Systema Naturae</em>. He stamps your ticket and writes "Father of Taxonomy" on it. <strong>2 Kingdoms. Linnaeus. 1735.</strong></p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">2</div>
+        <div class="stop-content">
+          <h4>📜 Reception Desk — Haeckel adds a 3rd kingdom (1894)</h4>
+          <p>Ernst Haeckel sits at the reception desk. He scribbles a 3rd sticky note (Protista) on the board. Remember: Haeckel = Protista pioneer → 1894.</p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">3</div>
+        <div class="stop-content">
+          <h4>🏛️ Grand Hall — Whittaker's 5 Flags (1969)</h4>
+          <p>Robert Whittaker stands in the grand hall, raising <strong>5 flags</strong>: 🦠 Monera, 🔵 Protista, 🍄 Fungi, 🌿 Plantae, 🐘 Animalia. Year on the floor: <strong>1969</strong>. This is where the museum officially opens.</p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">4</div>
+        <div class="stop-content">
+          <h4>🦠 Room 1: Monera (The Primitive Cell Room)</h4>
+          <p>A dark room with ancient-looking cells. No nucleus anywhere. Bacteria crawl on the walls — two types: <strong>Archaebacteria</strong> (ancient, near lava lamp) and <strong>Eubacteria</strong> (modern-ish, near regular bulbs). Cyanobacteria glow blue-green in the corner.</p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">5</div>
+        <div class="stop-content">
+          <h4>💧 Room 2: Protista (The Aquarium Room)</h4>
+          <p>A huge aquarium. Three creatures swimming: <strong>Amoeba</strong> (shapeless blob, fake feet), <strong>Euglena</strong> (has a tail/flagellum), <strong>Paramecium</strong> (slipper-shaped, tiny hairs/cilia). All alone in water. Unicellular.</p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">6</div>
+        <div class="stop-content">
+          <h4>🍞 Room 3: Fungi (The Bakery Room)</h4>
+          <p>Smells of bread. Alexander Fleming's portrait hangs on the wall (found Penicillin from <em>Penicillium</em> fungus). Yeast rises in a bowl. Mushrooms and bread mold (Rhizopus) on shelves. <strong>Cell wall = CHITIN</strong> (not cellulose). Remember: Fungi eat dead things (saprophytes).</p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">7</div>
+        <div class="stop-content">
+          <h4>🌿 Room 4: Plantae (The Greenhouse — biggest room!)</h4>
+          <p>A massive greenhouse with 4 zones: Zone A (Thallophyta — algae swimming in water), Zone B (Bryophyta — mossy boulders near a pond), Zone C (Pteridophyta — ferns in rock crevices), Zone D (Gymnosperms — pine trees with naked seeds), Zone E (Angiosperms — flowering, fruiting plants in the sunlit center). <strong>Cell wall = CELLULOSE.</strong></p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="stop-num">8</div>
+        <div class="stop-content">
+          <h4>🐘 Room 5: Animalia (Left for tomorrow!)</h4>
+          <p>A giant hall with animals — but the door is locked. "Closed for the next lecture." No cell wall. Heterotrophic. We'll return here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: TIMELINE ─────────────── -->
+  <div id="page-timeline" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Chronological View</div>
+      <div class="page-title">History of<br>Classification</div>
+      <div class="page-subtitle">Examiner loves asking: "Who gave what classification, in which year?"</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚡ Quick Comparison with Chemistry Parallel</div>
+      <p>Just as the Periodic Table evolved (Dobereiner → Newlands → Lothar Meyer → Mendeleev → Moseley), biological classification evolved. The <strong>final accepted version</strong> in both cases is what we study.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-year">1735</div>
+        <div class="t-text"><strong>Carl Linnaeus</strong> — 2-Kingdom Classification (Plants & Animals). Wrote <em>Systema Naturae</em>. Called <strong>"Father of Taxonomy."</strong></div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1866</div>
+        <div class="t-text"><strong>Ernst Haeckel</strong> — Proposed 3-Kingdom Classification (added Protista). Precursor to modern systems.</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1894</div>
+        <div class="t-text"><strong>Ernst Haeckel</strong> — Also associated with early 5-Kingdom ideas (per lecture — note: some sources vary on exact years).</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1969</div>
+        <div class="t-text"><strong>Robert Whittaker</strong> — <span class="highlight">5-Kingdom Classification</span> (Monera, Protista, Fungi, Plantae, Animalia). This is the standard we study for SSC.</div>
+      </div>
+    </div>
+
+    <div class="trap-box" style="margin-top:20px">
+      <h4>⚠️ Confusion Zone</h4>
+      <ul>
+        <li>Some questions mix up Haeckel and Whittaker for 5-kingdom. <strong>Whittaker (1969) is the final answer.</strong></li>
+        <li>Carl Linnaeus = Father of Taxonomy ≠ Father of Botany (that's Theophrastus)</li>
+        <li>Systema Naturae = written by Linnaeus, not Haeckel</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: TAXONOMY ─────────────── -->
+  <div id="page-taxonomy" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Foundation</div>
+      <div class="page-title">Taxonomy &<br>Classification Levels</div>
+      <div class="page-subtitle">The language of biological classification — from broadest to most specific.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🏗️ Hierarchy (Broadest → Most Specific)</div>
+      <div class="tree">
+        <div class="tree-node">👑 <span>KINGDOM</span> <span class="dim">&nbsp;&nbsp;— Largest group</span></div>
+        <div class="tree-node" style="padding-left:20px">└── 🔵 <span>PHYLUM</span> <span class="dim">&nbsp;&nbsp;— Many classes inside</span></div>
+        <div class="tree-node" style="padding-left:40px">└── 📚 <span>CLASS</span></div>
+        <div class="tree-node" style="padding-left:60px">└── 📋 <span>ORDER</span></div>
+        <div class="tree-node" style="padding-left:80px">└── 👨‍👩‍👧 <span>FAMILY</span></div>
+        <div class="tree-node" style="padding-left:100px">└── 🧬 <span>GENUS</span></div>
+        <div class="tree-node" style="padding-left:120px">└── 🔬 <span>SPECIES</span> <span class="dim">&nbsp;— Smallest/most specific</span></div>
+      </div>
+    </div>
+
+    <div class="hook-box">
+      <h4>🧠 Memory Hook — "King Philip Came Over For Good Soup"</h4>
+      <p>Or from the lecture: <strong>"Some Girls of R Class Play Kabaddi"</strong></p>
+      <p style="margin-top:8px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--green);">
+        <strong>S</strong>pecies · <strong>G</strong>enus · <strong>F</strong>amily · <strong>O</strong>rder · <strong>C</strong>lass · <strong>P</strong>hylum · <strong>K</strong>ingdom
+      </p>
+      <div class="hook-recall">💡 Reading right-to-left = Kingdom → Species (broadest → narrowest). Reading left-to-right = specific → broad.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Parameters Used for Classification</div>
+      <table class="styled-table">
+        <thead>
+          <tr><th>Parameter</th><th>Options</th><th>Which Kingdoms?</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cell type</td><td>Prokaryote / Eukaryote</td><td>Monera=Pro; Rest=Eu</td></tr>
+          <tr><td>Cell number</td><td>Unicellular / Multicellular</td><td>Protista=Uni; Rest=Multi</td></tr>
+          <tr><td>Cell wall</td><td>Present / Absent</td><td>Plantae(cellulose), Fungi(chitin)=Yes; Animalia=No</td></tr>
+          <tr><td>Nutrition</td><td>Autotrophic / Heterotrophic</td><td>Plantae=Auto; Animalia=Hetero; Others=Both</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: FIVE KINGDOMS ─────────────── -->
+  <div id="page-five-kingdoms" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Robert Whittaker, 1969</div>
+      <div class="page-title">The Five<br>Kingdoms</div>
+      <div class="page-subtitle">Click each kingdom card to reveal its key features.</div>
+    </div>
+
+    <div class="kingdom-grid">
+      <div class="kingdom-card active-k" onclick="showKingdom('monera', this)">
+        <div class="kingdom-emoji">🦠</div>
+        <div class="kingdom-name">Monera</div>
+        <div class="kingdom-type">PROKARYOTE</div>
+      </div>
+      <div class="kingdom-card" onclick="showKingdom('protista', this)">
+        <div class="kingdom-emoji">💧</div>
+        <div class="kingdom-name">Protista</div>
+        <div class="kingdom-type">UNICELLULAR</div>
+      </div>
+      <div class="kingdom-card" onclick="showKingdom('fungi', this)">
+        <div class="kingdom-emoji">🍄</div>
+        <div class="kingdom-name">Fungi</div>
+        <div class="kingdom-type">CHITIN WALL</div>
+      </div>
+      <div class="kingdom-card" onclick="showKingdom('plantae-k', this)">
+        <div class="kingdom-emoji">🌿</div>
+        <div class="kingdom-name">Plantae</div>
+        <div class="kingdom-type">CELLULOSE</div>
+      </div>
+      <div class="kingdom-card" onclick="showKingdom('animalia', this)">
+        <div class="kingdom-emoji">🐘</div>
+        <div class="kingdom-name">Animalia</div>
+        <div class="kingdom-type">NO WALL</div>
+      </div>
+    </div>
+
+    <div id="k-monera" class="kingdom-detail active-k">
+      <span class="tag tag-fire">🔥 Must Know</span>
+      <h3>🦠 Monera</h3>
+      <div class="fact-grid">
+        <div class="fact-card blue"><div class="fact-label">Cell Type</div><div class="fact-value">Prokaryote — no true nucleus, no membrane-bound organelles</div></div>
+        <div class="fact-card green"><div class="fact-label">Nutrition</div><div class="fact-value">Autotrophic OR Heterotrophic (including saprophytic)</div></div>
+        <div class="fact-card yellow"><div class="fact-label">Cell Wall</div><div class="fact-value">May or may not be present</div></div>
+        <div class="fact-card purple"><div class="fact-label">Two Types</div><div class="fact-value"><strong>Archaebacteria</strong> (ancient, extreme conditions) + <strong>Eubacteria</strong> (true bacteria, has ribosomes)</div></div>
+      </div>
+      <div style="margin-top:14px">
+        <strong>Examples:</strong> Anabaena, Nostoc, Spirulina, Cyanobacteria (blue-green algae)
+      </div>
+    </div>
+
+    <div id="k-protista" class="kingdom-detail">
+      <span class="tag tag-fire">🔥 Must Know</span>
+      <h3>💧 Protista</h3>
+      <div class="fact-grid">
+        <div class="fact-card blue"><div class="fact-label">Cell Type</div><div class="fact-value">Eukaryote, <strong>Unicellular</strong> only</div></div>
+        <div class="fact-card teal"><div class="fact-label">Locomotion</div><div class="fact-value">Via appendages: <strong>Cilia</strong> (Paramecium), <strong>Flagellum</strong> (Euglena), <strong>Pseudopodia</strong> (Amoeba)</div></div>
+        <div class="fact-card green"><div class="fact-label">Cell Wall</div><div class="fact-value">Usually absent (exception: some algae like Euglena)</div></div>
+        <div class="fact-card yellow"><div class="fact-label">Habitat</div><div class="fact-value">Mostly aquatic. Can be free-living, colonial, parasitic, or symbiotic</div></div>
+      </div>
+      <div style="margin-top:14px">
+        <strong>Examples:</strong>
+        <ul style="margin-top:6px">
+          <li><strong>Paramecium</strong> — slipper-shaped, moves by CILIA</li>
+          <li><strong>Euglena</strong> — has FLAGELLUM (tail), can be autotrophic AND heterotrophic</li>
+          <li><strong>Amoeba</strong> — shapeless, moves by PSEUDOPODIA (false feet)</li>
+          <li>Unicellular algae, Diatoms, Protozoa</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="k-fungi" class="kingdom-detail">
+      <span class="tag tag-star">⭐ Important</span>
+      <h3>🍄 Fungi</h3>
+      <div class="fact-grid">
+        <div class="fact-card red"><div class="fact-label">Cell Wall</div><div class="fact-value"><strong>CHITIN</strong> (complex sugar) — NOT cellulose! KEY EXAM FACT</div></div>
+        <div class="fact-card blue"><div class="fact-label">Cell Number</div><div class="fact-value">Multicellular (except <strong>Yeast</strong> which is unicellular)</div></div>
+        <div class="fact-card green"><div class="fact-label">Nutrition</div><div class="fact-value">Saprophytic (dead matter), Heterotrophic, or Parasitic</div></div>
+        <div class="fact-card yellow"><div class="fact-label">Lichen</div><div class="fact-value">Symbiotic relationship between <strong>Fungus + Blue-Green Algae</strong></div></div>
+      </div>
+      <div style="margin-top:14px">
+        <strong>Examples:</strong>
+        <ul style="margin-top:6px">
+          <li><strong>Yeast</strong> — unicellular fungus, used in bakery industry</li>
+          <li><strong>Penicillium</strong> — gave first antibiotic (Penicillin) discovered by <strong>Alexander Fleming</strong></li>
+          <li><strong>Rhizopus</strong> — bread mold (grows on decaying bread)</li>
+          <li>Mushrooms</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="k-plantae-k" class="kingdom-detail">
+      <span class="tag tag-fire">🔥 Must Know</span>
+      <h3>🌿 Plantae</h3>
+      <p>Eukaryote, Multicellular, Cell wall = <strong>Cellulose</strong>, mainly Autotrophic, Sedentary</p>
+      <p>Full detail in the <strong>Kingdom Plantae</strong> page →</p>
+    </div>
+
+    <div id="k-animalia" class="kingdom-detail">
+      <span class="tag tag-star">⭐ Important</span>
+      <h3>🐘 Animalia</h3>
+      <p>Eukaryote, Multicellular, <strong>No Cell Wall</strong>, Heterotrophic. Covered in next lecture.</p>
+    </div>
+
+    <div class="card" style="margin-top:20px">
+      <div class="card-title">📊 Five Kingdoms Comparison Table</div>
+      <div style="overflow-x:auto">
+        <table class="styled-table">
+          <thead>
+            <tr><th>Kingdom</th><th>Cell Type</th><th>Cells</th><th>Cell Wall</th><th>Nutrition</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>🦠 Monera</td><td>Prokaryote</td><td>—</td><td>±</td><td>Auto/Hetero</td></tr>
+            <tr><td>💧 Protista</td><td>Eukaryote</td><td>Uni</td><td>Absent (mostly)</td><td>Auto/Hetero</td></tr>
+            <tr><td>🍄 Fungi</td><td>Eukaryote</td><td>Multi (exc. Yeast)</td><td>Chitin ✓</td><td>Hetero/Sapro</td></tr>
+            <tr><td>🌿 Plantae</td><td>Eukaryote</td><td>Multi</td><td>Cellulose ✓</td><td>Autotrophic</td></tr>
+            <tr><td>🐘 Animalia</td><td>Eukaryote</td><td>Multi</td><td>Absent ✗</td><td>Heterotrophic</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: PLANTAE ─────────────── -->
+  <div id="page-plantae" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Kingdom Plantae — Most Tested</div>
+      <div class="page-title">Plant Kingdom<br>Sub-Divisions</div>
+      <div class="page-subtitle">From primitive algae to advanced flowering plants — the complete classification.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌿 Plantae Decision Tree</div>
+      <div class="tree">
+        <div class="tree-node">🌿 <span>PLANTAE</span></div>
+        <div class="tree-node" style="padding-left:20px">├─ Body NOT differentiated → <span>THALLOPHYTA</span> (Algae)</div>
+        <div class="tree-node" style="padding-left:20px">└─ Body differentiated (roots + shoots)</div>
+        <div class="tree-node" style="padding-left:40px">├─ No vascular tissue → <span>BRYOPHYTA</span></div>
+        <div class="tree-node" style="padding-left:40px">└─ Has vascular tissue (xylem + phloem)</div>
+        <div class="tree-node" style="padding-left:60px">├─ No seed (hidden repro organ) → <span>PTERIDOPHYTA</span></div>
+        <div class="tree-node" style="padding-left:60px">└─ Has seed (<span>PHANEROGAMS</span>)</div>
+        <div class="tree-node" style="padding-left:80px">├─ No flower, naked seed → <span>GYMNOSPERMS</span></div>
+        <div class="tree-node" style="padding-left:80px">└─ Has flower, covered seed → <span>ANGIOSPERMS</span></div>
+        <div class="tree-node" style="padding-left:100px">├─ 1 cotyledon → <span>MONOCOT</span></div>
+        <div class="tree-node" style="padding-left:100px">└─ 2 cotyledons → <span>DICOT</span></div>
+      </div>
+    </div>
+
+    <h3>1️⃣ Thallophyta (Algae)</h3>
+    <div class="card">
+      <div class="card-title">Features</div>
+      <ul>
+        <li>No well-differentiated body parts (root, stem, leaf not distinct)</li>
+        <li>Mostly aquatic. Parts: Holdfast (root-like), Stipe (stem-like), Fronds/Blades (leaf-like)</li>
+        <li>Also called <strong>Cryptogams</strong> (hidden reproductive organs)</li>
+      </ul>
+      <div class="divider"></div>
+      <div class="card-title">Three Types of Algae</div>
+      <table class="styled-table">
+        <thead>
+          <tr><th>Type</th><th>Scientific Name</th><th>Examples</th><th>Special Fact</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>🟢 Green Algae</td>
+            <td>Chlorophyceae</td>
+            <td>Spirogyra, Volvox, Chlorella, Chara, Cladophora</td>
+            <td>Chlorella = very rich in protein</td>
+          </tr>
+          <tr>
+            <td>🟤 Brown Algae</td>
+            <td>Phaeophyceae</td>
+            <td>Sargassum, Ectocarpus, Fucus, Laminaria</td>
+            <td>Mannitol (sweet alcohol) from kelp; Sargasso Sea named after Sargassum</td>
+          </tr>
+          <tr>
+            <td>🔴 Red Algae</td>
+            <td>Rhodophyceae</td>
+            <td>Porphyra, Gelidium, Gracilaria, Polysiphonia</td>
+            <td>Agar (used in labs/food) made from red algae</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="hook-box" style="margin-top:14px">
+        <h4>🧠 Colour Memory Hook</h4>
+        <p><strong>Chloro</strong> = chlorophyll = Green | <strong>Rhodo</strong> = Rhodesia (red rose) = Red | <strong>Phaeo</strong> = leftover = Brown</p>
+      </div>
+    </div>
+
+    <h3>2️⃣ Bryophyta</h3>
+    <div class="card">
+      <div class="card-title">Features</div>
+      <ul>
+        <li>"Amphibians of plant kingdom" — can live in water AND land</li>
+        <li>Differentiated into stem-like and leaf-like structures, but no true roots (has <strong>Rhizoids</strong>)</li>
+        <li>Found in <strong>damp/moist areas</strong></li>
+        <li>No vascular tissue (no xylem/phloem)</li>
+        <li>Reproduce through water. Male = <strong>Antheridium</strong>, Female = <strong>Archegonium</strong></li>
+      </ul>
+      <div class="hook-box" style="margin-top:14px">
+        <h4>🧠 BMW Hook</h4>
+        <p>"Rinkiya's Papa drives a BMW" → <strong>B</strong>ryophyta, <strong>M</strong>oss (Funaria), <strong>W</strong>orts (Marchantia, Hornwort)</p>
+        <div class="hook-recall">Examples: Riccia, Funaria, Marchantia, Hornwort (Liverwort too)</div>
+      </div>
+    </div>
+
+    <h3>3️⃣ Pteridophyta</h3>
+    <div class="card">
+      <div class="card-title">Features</div>
+      <ul>
+        <li><strong>First terrestrial (land) plants</strong></li>
+        <li>Has well-differentiated roots, stems, leaves</li>
+        <li>Has vascular tissue (xylem + phloem)</li>
+        <li>Hidden reproductive organ → <strong>Cryptogams</strong> → <strong>No seeds</strong></li>
+        <li>Found in cracks of rocks, moist/shady places</li>
+        <li>Leaves bearing spores = <strong>Sporophylls</strong></li>
+      </ul>
+      <div style="margin-top:10px">
+        <strong>Examples:</strong> Fern, Marsilea, Hostel (Equisetum), Selaginella
+      </div>
+    </div>
+
+    <h3>4️⃣ Gymnosperms</h3>
+    <div class="card">
+      <div class="card-title">Features</div>
+      <ul>
+        <li><strong>Gymno = Naked, Sperm = Seed</strong> → Naked/exposed seeds (no fruit covering)</li>
+        <li>Phanerogams (visible reproductive organs, have seeds)</li>
+        <li>No flowers. No fruits (ovary doesn't become fruit)</li>
+        <li>Cone-shaped trees (Conifers) — found in snowy regions (Himalayas, Uttarakhand, Himachal)</li>
+        <li>Perennial, Evergreen, mostly large plants</li>
+        <li>Xylem vessels and Phloem companion cells are absent</li>
+      </ul>
+      <div style="margin-top:10px">
+        <strong>Examples:</strong> Pine, Deodar, Cycas, Cedrus
+      </div>
+      <div class="hook-box" style="margin-top:14px">
+        <h4>🧠 GYM Hook</h4>
+        <p>Gym people are NAKED (open t-shirts). GYMNO = naked. Seeds are naked/uncovered. No fruit = no protective clothing for the seed.</p>
+      </div>
+    </div>
+
+    <h3>5️⃣ Angiosperms</h3>
+    <div class="card">
+      <div class="card-title">Features</div>
+      <ul>
+        <li>Most evolved/advanced plants</li>
+        <li>Has flowers → flowers become fruit → fruit contains covered seeds</li>
+        <li>Seeds have <strong>cotyledons</strong> (embryonic leaf-like structures)</li>
+        <li>Radicle → grows into Root System | Plumule → grows into Shoot System</li>
+      </ul>
+      <div class="divider"></div>
+      <div class="card-title">Monocot vs Dicot</div>
+      <table class="styled-table">
+        <thead>
+          <tr><th>Feature</th><th>Monocot</th><th>Dicot</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cotyledons</td><td>1</td><td>2</td></tr>
+          <tr><td>Leaf venation</td><td>Parallel</td><td>Net-like (reticulate)</td></tr>
+          <tr><td>Root type</td><td>Fibrous root</td><td>Tap root (e.g. carrot, radish)</td></tr>
+          <tr><td>Examples</td><td>Wheat, Rice, Maize, Grass</td><td>Rose, Mango, Pea, Mustard</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg, #0d1f0d, #111520)">
+      <div class="card-title">🔁 The Development Ladder (Least → Most Developed)</div>
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:13px;">
+        <span style="background:var(--bg3); border:1px solid var(--border); border-radius:6px; padding:6px 12px;">Thallophyta</span>
+        <span style="color:var(--green)">→</span>
+        <span style="background:var(--bg3); border:1px solid var(--border); border-radius:6px; padding:6px 12px;">Bryophyta</span>
+        <span style="color:var(--green)">→</span>
+        <span style="background:var(--bg3); border:1px solid var(--border); border-radius:6px; padding:6px 12px;">Pteridophyta</span>
+        <span style="color:var(--green)">→</span>
+        <span style="background:var(--bg3); border:1px solid var(--border); border-radius:6px; padding:6px 12px;">Gymnosperm</span>
+        <span style="color:var(--green)">→</span>
+        <span style="background:var(--green-glow); border:1px solid var(--green); border-radius:6px; padding:6px 12px; color:var(--green)">Angiosperm ✓</span>
+      </div>
+      <p style="margin-top:14px; font-size:13px; color:var(--text-dim);">Key Rule: <strong>If a feature is absent in one, it's absent in all previous levels too.</strong> Angiosperms have everything. Thallophyta has the least.</p>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: HOOKS ─────────────── -->
+  <div id="page-hooks" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Retention System</div>
+      <div class="page-title">Smart<br>Memory Hooks</div>
+      <div class="page-subtitle">Every hook here is designed to survive 6 months in your memory.</div>
+    </div>
+
+    <div class="hook-box">
+      <h4>🏋️ GYMNOSPERMS — The Gym People</h4>
+      <p>People who go to the gym immediately show off their body — <strong>naked/open</strong>. Gymno = Naked. Their seeds are naked (no fruit covering). Gym guys named Deodar, Pine, and Cycas work out without shirts in their Himalayan gym.</p>
+      <div class="hook-recall">Recall: Gymno = naked → seeds exposed → no fruit → no flower → Conifers → snowy Himalayas</div>
+    </div>
+
+    <div class="hook-box">
+      <h4>🚗 BMW for BRYOPHYTES</h4>
+      <p>"Rinkiya's Papa drives a BMW and honks loudly." B = Bryophyta. M = Mosses (Funaria). W = Worts (Marchantia, Liverwort, Hornwort).</p>
+      <div class="hook-recall">BMW → Bryophyta examples sorted! Funaria (Moss), Marchantia (Liverwort), Hornwort, Riccia</div>
+    </div>
+
+    <div class="hook-box">
+      <h4>🎒 SOME GIRLS OF R CLASS PLAY KABADDI</h4>
+      <p>Taxonomy hierarchy mnemonic from the lecture: <strong>S</strong>pecies → <strong>G</strong>enus → <strong>F</strong>amily → <strong>O</strong>rder → <strong>C</strong>lass → <strong>P</strong>hylum → <strong>K</strong>ingdom (smallest to largest)</p>
+      <div class="hook-recall">Going right-to-left = getting broader. Kingdom is biggest, Species is smallest.</div>
+    </div>
+
+    <div class="hook-box">
+      <h4>🍞 BREAD = RHIZOPUS</h4>
+      <p>When your bread gets moldy in the fridge — that mold is <strong>Rhizopus</strong> = Bread mold. It's a Fungus. It eats dead/decaying organic matter (saprophytic).</p>
+      <div class="hook-recall">Bread mold = Rhizopus = Fungus = Saprophyte</div>
+    </div>
+
+    <div class="hook-box">
+      <h4>🩺 PENICILLIN FROM PENICILLIUM</h4>
+      <p>Alexander Fleming was sick, left his Petri dish, came back to find a fungus had killed bacteria. That fungus = <strong>Penicillium</strong>. The drug = <strong>Penicillin</strong>. The discovery = first antibiotic ever.</p>
+      <div class="hook-recall">Fleming → Penicillium → Penicillin → First Antibiotic → Kingdom Fungi</div>
+    </div>
+
+    <div class="hook-box">
+      <h4>🌊 SARGASSO SEA = SARGASSUM</h4>
+      <p>The Sargasso Sea in the North Atlantic Ocean is named after the brown alga <strong>Sargassum</strong> which floats there in large amounts (due to circular ocean currents creating a gyre). It's a "borderless sea."</p>
+      <div class="hook-recall">Brown alga = Phaeophyceae = Sargassum = Sargasso Sea name origin</div>
+    </div>
+
+    <div class="hook-box">
+      <h4>🥕 CARROT = TAP ROOT = DICOT</h4>
+      <p>Carrot and Radish are tap roots (single main root going down). Tap root → Dicot. Grass has fibrous roots (many thin roots) → Monocot.</p>
+      <div class="hook-recall">Tap root (carrot/radish) = Dicot | Fibrous root (grass/wheat) = Monocot</div>
+    </div>
+
+    <div class="hook-box">
+      <h4>🧫 CHITIN vs CELLULOSE</h4>
+      <p>FUNGI → <strong>CHITIN</strong> (think: "Chitin the FUNgi chitchat"). PLANTS → <strong>CELLULOSE</strong> (cell-ulose for green cells). These are the two types of cell walls examiners love to swap.</p>
+      <div class="hook-recall">Fungi = Chitin | Plants = Cellulose — never mix these!</div>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: TRAPS ─────────────── -->
+  <div id="page-traps" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Exam Danger Zone</div>
+      <div class="page-title">⚠️ Exam Traps &<br>Common Confusions</div>
+      <div class="page-subtitle">Every wrong answer below has cost students marks in SSC. Read, remember, never repeat.</div>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ TRAP 1: Scientists and Their Systems</h4>
+      <ul>
+        <li>Linnaeus gave 2-kingdom (NOT 5-kingdom). He is Father of Taxonomy.</li>
+        <li>Haeckel added Protista (3-kingdom era). NOT the final system.</li>
+        <li>Whittaker (1969) = 5-kingdom. This is the final answer for SSC.</li>
+        <li>Systema Naturae was written by Linnaeus, NOT Haeckel or Whittaker.</li>
+        <li>Father of Botany = Theophrastus (NOT Linnaeus) — different question!</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ TRAP 2: Cell Wall Material</h4>
+      <ul>
+        <li>Plants → CELLULOSE. Fungi → CHITIN. Never swap these.</li>
+        <li>Animals → NO cell wall at all.</li>
+        <li>Monera → cell wall may OR may not be present (not always).</li>
+        <li>Chitin is described as a "complex sugar" — remember this descriptor.</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ TRAP 3: Unicellular vs Multicellular</h4>
+      <ul>
+        <li>Fungi = Multicellular — EXCEPT Yeast (unicellular fungus).</li>
+        <li>Protista = Unicellular — only kingdom that is purely unicellular.</li>
+        <li>Monera = doesn't apply in same way (they're prokaryotes).</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ TRAP 4: Cryptogams vs Phanerogams</h4>
+      <ul>
+        <li>Cryptogam = hidden reproductive organs = NO seeds. Includes Thallophyta, Bryophyta, Pteridophyta.</li>
+        <li>Phanerogam = visible/well-developed reproductive organs = HAS seeds. Includes Gymnosperms and Angiosperms.</li>
+        <li>If Pteridophyta is a cryptogam → Bryophyta and Thallophyta are ALSO cryptogams (less developed = definitely no seeds).</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ TRAP 5: Gymnosperm Terminology</h4>
+      <ul>
+        <li>Gymno = NAKED (not hidden). Students often confuse with "Crypto" = hidden.</li>
+        <li>Gymnosperms have seeds but NO fruit (seed not enclosed in fruit).</li>
+        <li>Gymnosperms have NO flowers. Only Angiosperms have flowers.</li>
+        <li>Xylem vessels + Phloem companion cells are ABSENT in Gymnosperms (but xylem and phloem themselves are present in some form).</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ TRAP 6: Protista Locomotion</h4>
+      <ul>
+        <li>Paramecium → CILIA (not flagellum, not pseudopodia)</li>
+        <li>Euglena → FLAGELLUM (tail-like structure)</li>
+        <li>Amoeba → PSEUDOPODIA (false feet — no fixed shape)</li>
+        <li>Paramecium is slipper-shaped — not amoeba-shaped!</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ TRAP 7: Blood-related Corrections</h4>
+      <ul>
+        <li>Hematology = study of BLOOD (NOT Hepatology — that's liver)</li>
+        <li>Fibrinogen = COAGULANT (helps blood clot, NOT anti-coagulant)</li>
+        <li>Heparin = anticoagulant. Fibrinogen = coagulant.</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <h4>⚠️ TRAP 8: Agar vs Mannitol</h4>
+      <ul>
+        <li>AGAR (used in labs, food industry) = made from RED algae (Gelidium, Gracilaria)</li>
+        <li>MANNITOL (sweet alcohol) = made from brown algae (kelp/Laminaria)</li>
+        <li>Don't mix: Agar ≠ Mannitol; Red ≠ Brown</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: EXAMINER'S Qs ─────────────── -->
+  <div id="page-examiner" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">SSC CGL Exam Intelligence</div>
+      <div class="page-title">Examiner's<br>Favourite Questions</div>
+      <div class="page-subtitle">These question patterns have appeared repeatedly in SSC, UPSC, and state exams.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎯 High-Probability Direct Questions</div>
+      <div class="exam-q">Who gave the Five Kingdom Classification? → Robert Whittaker (1969)</div>
+      <div class="exam-q">Who is called the Father of Taxonomy? → Carl Linnaeus</div>
+      <div class="exam-q">Which kingdom has chitin in its cell wall? → Fungi</div>
+      <div class="exam-q">Which is the only unicellular eukaryotic kingdom? → Protista</div>
+      <div class="exam-q">What is the cell wall of plants made of? → Cellulose</div>
+      <div class="exam-q">First antibiotic discovered was? By whom? From what? → Penicillin, Alexander Fleming, Penicillium (Fungus)</div>
+      <div class="exam-q">Which algae gives its name to the Sargasso Sea? → Sargassum (Brown alga)</div>
+      <div class="exam-q">Chlorella is rich in? → Protein</div>
+      <div class="exam-q">Agar is obtained from which type of algae? → Red algae (Gelidium, Gracilaria)</div>
+      <div class="exam-q">Lichens represent symbiosis between? → Fungi and Blue-Green Algae</div>
+      <div class="exam-q">Which plant group is called "Amphibians of the Plant Kingdom"? → Bryophyta</div>
+      <div class="exam-q">First terrestrial (land) plants are? → Pteridophyta</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎯 Match-the-Following Traps</div>
+      <table class="styled-table">
+        <thead><tr><th>Item</th><th>Correct Match</th></tr></thead>
+        <tbody>
+          <tr><td>Paramecium locomotion</td><td>Cilia</td></tr>
+          <tr><td>Euglena locomotion</td><td>Flagellum</td></tr>
+          <tr><td>Amoeba locomotion</td><td>Pseudopodia</td></tr>
+          <tr><td>Mannitol source</td><td>Brown algae (Kelp)</td></tr>
+          <tr><td>Agar source</td><td>Red algae</td></tr>
+          <tr><td>Rhizopus</td><td>Bread mold (Fungi)</td></tr>
+          <tr><td>Yeast</td><td>Unicellular Fungi (bakery)</td></tr>
+          <tr><td>Deodar, Pine, Cycas</td><td>Gymnosperms</td></tr>
+          <tr><td>Cotyledon = 1</td><td>Monocot</td></tr>
+          <tr><td>Tap root (carrot)</td><td>Dicot</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎯 Statement-Based Questions</div>
+      <div class="exam-q">Statement: "All Bryophytes are Cryptogams." → TRUE (no seeds, hidden reproductive organs)</div>
+      <div class="exam-q">Statement: "Gymnosperms have fruits." → FALSE (no fruits — seeds are naked)</div>
+      <div class="exam-q">Statement: "All Fungi are multicellular." → FALSE (Yeast is unicellular)</div>
+      <div class="exam-q">Statement: "Xylem and Phloem are absent in Gymnosperms." → PARTIALLY FALSE — Xylem vessels and Phloem companion cells are absent, but xylem/phloem exist in some form</div>
+      <div class="exam-q">Statement: "Fibrinogen is an anticoagulant." → FALSE — Fibrinogen is a COAGULANT</div>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: QUIZ ─────────────── -->
+  <div id="page-quiz" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Active Recall Training</div>
+      <div class="page-title">Self-Test<br>Quiz</div>
+      <div class="page-subtitle">Answer each question mentally before revealing. Repeat until instant recall.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">❓ Rapid-Fire Questions</div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Who gave the 5-Kingdom classification and in which year?</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Robert Whittaker — 1969</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Name the five kingdoms in order.</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Monera → Protista → Fungi → Plantae → Animalia</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Which is the only prokaryotic kingdom?</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Monera</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">What is the cell wall of Fungi made of?</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Chitin (a complex sugar) — NOT cellulose</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Name the three locomotion types in Protista with one example each.</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Cilia → Paramecium | Flagellum → Euglena | Pseudopodia → Amoeba</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">What is a Lichen? Name the two organisms involved.</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Symbiotic relationship between Fungus and Blue-Green Algae (Cyanobacteria)</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Which book did Linnaeus write? What did it explain?</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Systema Naturae — explained 2-Kingdom classification (Plants & Animals)</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Why are Bryophytes called "Amphibians of the Plant Kingdom"?</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">They can live in both water and on land (damp/moist areas)</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">What is the difference between Gymnosperm and Angiosperm seeds?</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Gymnosperm = naked/uncovered seeds (no fruit) | Angiosperm = seeds covered inside fruit</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">What grows from Radicle and what grows from Plumule?</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Radicle → Root System | Plumule → Shoot System (stem + leaves)</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Name all the examples of Thallophyta green algae mentioned in the lecture.</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Spirogyra, Volvox, Chlorella, Chara, Cladophora (Chlorophyceae)</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">What is Mannitol and where is it obtained from?</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Mannitol = sweet alcohol, obtained from Kelp (brown algae / Laminaria)</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Fill in the blank: Taxonomy hierarchy from biggest to smallest = K → P → ___ → O → F → G → S</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Kingdom → Phylum → CLASS → Order → Family → Genus → Species</div>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Which algae is "highly rich in protein"?</div>
+        <button class="quiz-toggle" onclick="toggleAnswer(this)">Reveal Answer</button>
+        <div class="quiz-answer">Chlorella (Green algae / Chlorophyceae)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: FLASHCARDS ─────────────── -->
+  <div id="page-flashcards" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Active Memory Training</div>
+      <div class="page-title">Tap-to-Flip<br>Flashcards</div>
+      <div class="page-subtitle">Tap each card to reveal the answer. Repeat until you don't need to flip.</div>
+    </div>
+
+    <div class="flash-grid">
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Who is the Father of Taxonomy?</div>
+        <div class="flash-back">Carl Linnaeus</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">5-Kingdom system: year + scientist</div>
+        <div class="flash-back">Robert Whittaker, 1969</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Fungi cell wall material</div>
+        <div class="flash-back">CHITIN (complex sugar)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Plant cell wall material</div>
+        <div class="flash-back">CELLULOSE</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">First antibiotic + discoverer + source</div>
+        <div class="flash-back">Penicillin → Alexander Fleming → Penicillium (fungus)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Amoeba's locomotion type</div>
+        <div class="flash-back">Pseudopodia (false feet)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Paramecium's shape + locomotion</div>
+        <div class="flash-back">Slipper-shaped + Cilia</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Euglena locomotion</div>
+        <div class="flash-back">Flagellum (tail-like)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Lichen = symbiosis between?</div>
+        <div class="flash-back">Fungus + Blue-Green Algae (Cyanobacteria)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Amphibians of plant kingdom</div>
+        <div class="flash-back">Bryophyta</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">First terrestrial plants</div>
+        <div class="flash-back">Pteridophyta</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Gymno means?</div>
+        <div class="flash-back">NAKED (seeds uncovered, no fruit)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Sargasso Sea named after?</div>
+        <div class="flash-back">Sargassum (brown alga)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Agar is obtained from?</div>
+        <div class="flash-back">Red algae (Gelidium, Gracilaria)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Bread mold scientific name</div>
+        <div class="flash-back">Rhizopus</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Monocot vs Dicot cotyledon count</div>
+        <div class="flash-back">Mono = 1 cotyledon | Di = 2 cotyledons</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Tap root example (dicot)</div>
+        <div class="flash-back">Carrot, Radish</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Which algae is protein-rich?</div>
+        <div class="flash-back">Chlorella (green alga)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Fibrinogen is a ...?</div>
+        <div class="flash-back">COAGULANT (not anticoagulant!)</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+      <div class="flash-card" onclick="this.classList.toggle('flipped')">
+        <div class="flash-front">Hematology vs Hepatology</div>
+        <div class="flash-back">Hematology = Blood | Hepatology = Liver</div>
+        <div class="flash-hint">tap to flip</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: HIGH-YIELD ─────────────── -->
+  <div id="page-highyield" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">High Yield</div>
+      <div class="page-title">High-Yield<br>Revision Notes</div>
+      <div class="page-subtitle">Everything that matters most, stripped to the bone.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🔥 Scientists + Contributions</div>
+      <table class="styled-table">
+        <thead><tr><th>Scientist</th><th>Contribution</th><th>Year</th></tr></thead>
+        <tbody>
+          <tr><td>Carl Linnaeus</td><td>2-Kingdom; Father of Taxonomy; Systema Naturae</td><td>1735</td></tr>
+          <tr><td>Ernst Haeckel</td><td>3-Kingdom (added Protista)</td><td>1866</td></tr>
+          <tr><td>Robert Whittaker</td><td>5-Kingdom (our standard)</td><td>1969</td></tr>
+          <tr><td>Alexander Fleming</td><td>Discovered Penicillin from Penicillium</td><td>1928</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⭐ Kingdom Quick Reference</div>
+      <table class="styled-table">
+        <thead><tr><th>Kingdom</th><th>Key Feature</th><th>Exception</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Monera</td><td>Prokaryote</td><td>Some have cell wall, some don't</td><td>Anabaena, Nostoc, E.coli</td></tr>
+          <tr><td>Protista</td><td>Unicellular Eukaryote</td><td>Euglena: auto+hetero</td><td>Amoeba, Euglena, Paramecium</td></tr>
+          <tr><td>Fungi</td><td>Chitin cell wall</td><td>Yeast = unicellular</td><td>Penicillium, Rhizopus, Yeast</td></tr>
+          <tr><td>Plantae</td><td>Cellulose cell wall</td><td>—</td><td>All plants below</td></tr>
+          <tr><td>Animalia</td><td>No cell wall</td><td>—</td><td>Next lecture</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⭐ Plantae Sub-Divisions</div>
+      <table class="styled-table">
+        <thead><tr><th>Division</th><th>Root/Shoot</th><th>Vascular</th><th>Seed</th><th>Flower</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Thallophyta</td><td>No</td><td>No</td><td>No</td><td>No</td><td>Algae (green/brown/red)</td></tr>
+          <tr><td>Bryophyta</td><td>Partial</td><td>No</td><td>No</td><td>No</td><td>Funaria, Marchantia</td></tr>
+          <tr><td>Pteridophyta</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>Fern, Marsilea</td></tr>
+          <tr><td>Gymnosperm</td><td>Yes</td><td>Yes</td><td>Yes (naked)</td><td>No</td><td>Pine, Deodar, Cycas</td></tr>
+          <tr><td>Angiosperm</td><td>Yes</td><td>Yes</td><td>Yes (covered)</td><td>Yes</td><td>Wheat, Rose, Mango</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⭐ Algae Types</div>
+      <table class="styled-table">
+        <thead><tr><th>Color</th><th>Name</th><th>Key Examples</th><th>Special Product</th></tr></thead>
+        <tbody>
+          <tr><td>🟢 Green</td><td>Chlorophyceae</td><td>Spirogyra, Volvox, Chlorella</td><td>Chlorella = protein-rich</td></tr>
+          <tr><td>🟤 Brown</td><td>Phaeophyceae</td><td>Sargassum, Laminaria, Fucus</td><td>Mannitol from kelp; Sargasso Sea</td></tr>
+          <tr><td>🔴 Red</td><td>Rhodophyceae</td><td>Porphyra, Gelidium, Gracilaria</td><td>Agar obtained from red algae</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: ULTRA-FAST ─────────────── -->
+  <div id="page-ultrafast" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Speed Revision</div>
+      <div class="page-title">Ultra-Fast<br>Revision Sheet</div>
+      <div class="page-subtitle">5-minute complete chapter revision. Scan, don't read.</div>
+    </div>
+
+    <div class="rapid-list">
+      <div class="rapid-item"><div class="rapid-icon">🏆</div><div class="rapid-text"><strong>Taxonomy</strong> = classifying organisms. Father = <strong>Linnaeus (1735)</strong></div></div>
+      <div class="rapid-item"><div class="rapid-icon">👑</div><div class="rapid-text"><strong>5 Kingdoms</strong> = Whittaker (1969): Monera, Protista, Fungi, Plantae, Animalia</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🦠</div><div class="rapid-text"><strong>Monera</strong> = Prokaryote. Only kingdom without true nucleus</div></div>
+      <div class="rapid-item"><div class="rapid-icon">💧</div><div class="rapid-text"><strong>Protista</strong> = Unicellular Eukaryote. Cilia / Flagellum / Pseudopodia</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🍄</div><div class="rapid-text"><strong>Fungi</strong> = Chitin cell wall. Yeast = unicellular exception</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🌿</div><div class="rapid-text"><strong>Plantae</strong> = Cellulose wall. Autotrophic. Multicellular</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🔬</div><div class="rapid-text"><strong>Taxonomy hierarchy</strong>: K→P→C→O→F→G→S (Kingdom biggest, Species smallest)</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🍃</div><div class="rapid-text"><strong>Thallophyta</strong> = Algae. No differentiated body. Green/Brown/Red types</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🌱</div><div class="rapid-text"><strong>Bryophyta</strong> = Amphibians of plant kingdom. No vascular tissue. BMW mnemonic</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🌿</div><div class="rapid-text"><strong>Pteridophyta</strong> = First land plants. Has vascular tissue. No seeds (Cryptogam)</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🌲</div><div class="rapid-text"><strong>Gymnosperm</strong> = Naked seeds. No fruit. No flowers. Conifers (Pine, Deodar)</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🌸</div><div class="rapid-text"><strong>Angiosperm</strong> = Flowers→Fruits→Covered seeds. Most evolved. Mono/Dicot</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🟢</div><div class="rapid-text"><strong>Chlorella</strong> = Green alga = Rich in protein</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🌊</div><div class="rapid-text"><strong>Sargassum</strong> = Brown alga → Sargasso Sea (North Atlantic)</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🔴</div><div class="rapid-text"><strong>Agar</strong> from Red algae. <strong>Mannitol</strong> from Brown algae</div></div>
+      <div class="rapid-item"><div class="rapid-icon">💊</div><div class="rapid-text"><strong>Penicillin</strong> = 1st antibiotic. Fleming + Penicillium (fungus)</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🤝</div><div class="rapid-text"><strong>Lichen</strong> = Fungus + Cyanobacteria (symbiosis)</div></div>
+      <div class="rapid-item"><div class="rapid-icon">🩸</div><div class="rapid-text"><strong>Fibrinogen = Coagulant</strong>. Hematology = Blood (not Hepatology)</div></div>
+    </div>
+  </div>
+
+  <!-- ─────────────── PAGE: LAST NIGHT ─────────────── -->
+  <div id="page-lastnight" class="page">
+    <div class="page-header">
+      <div class="page-eyebrow">Final Revision</div>
+      <div class="page-title">Last-Night<br>Before Exam Sheet</div>
+      <div class="page-subtitle">Read this the night before your exam. 90 seconds. Everything critical.</div>
+    </div>
+
+    <div class="last-night">
+      <div class="ln-section">
+        <div class="ln-header">Scientists</div>
+        <ul class="ln-list">
+          <li>Linnaeus (1735) → 2 kingdoms → Father of Taxonomy → Systema Naturae</li>
+          <li>Haeckel → 3 kingdoms (Protista added)</li>
+          <li>Whittaker (1969) → 5 kingdoms ← STUDY THIS</li>
+          <li>Fleming → Penicillin from Penicillium (fungus) → 1st antibiotic</li>
+        </ul>
+      </div>
+
+      <div class="ln-section">
+        <div class="ln-header">Five Kingdoms Key Facts</div>
+        <ul class="ln-list">
+          <li>Monera = Prokaryote (only one)</li>
+          <li>Protista = Unicellular Eukaryote (only one)</li>
+          <li>Fungi = Chitin wall | Yeast = unicellular exception</li>
+          <li>Plantae = Cellulose wall | Autotrophic</li>
+          <li>Animalia = No cell wall | Heterotrophic</li>
+        </ul>
+      </div>
+
+      <div class="ln-section">
+        <div class="ln-header">Plantae Divisions (Primitive → Advanced)</div>
+        <ul class="ln-list">
+          <li>Thallophyta = algae, no differentiated body</li>
+          <li>Bryophyta = no vascular tissue, amphibians of plant kingdom, BMW mnemonic</li>
+          <li>Pteridophyta = first land plants, has vascular, no seed (cryptogam)</li>
+          <li>Gymnosperm = naked seed, no fruit, no flower (Pine, Deodar)</li>
+          <li>Angiosperm = flower→fruit→covered seed, most evolved, Mono(1)/Dicot(2)</li>
+        </ul>
+      </div>
+
+      <div class="ln-section">
+        <div class="ln-header">Algae Quick Facts</div>
+        <ul class="ln-list">
+          <li>Green = Chlorophyceae (Chlorella = protein rich)</li>
+          <li>Brown = Phaeophyceae (Sargassum → Sargasso Sea; Mannitol from kelp)</li>
+          <li>Red = Rhodophyceae (Agar from Gelidium/Gracilaria)</li>
+        </ul>
+      </div>
+
+      <div class="ln-section">
+        <div class="ln-header">Must-Not-Confuse</div>
+        <ul class="ln-list">
+          <li>Fibrinogen = COAGULANT (not anti)</li>
+          <li>Hematology = Blood | Hepatology = Liver</li>
+          <li>Gymno = NAKED (open seed) | Crypto = HIDDEN (no seed)</li>
+          <li>Fungi = CHITIN | Plants = CELLULOSE</li>
+          <li>Paramecium = Cilia | Euglena = Flagellum | Amoeba = Pseudopodia</li>
+          <li>Lichen = Fungus + Blue-Green Algae (symbiotic)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+    const page = document.getElementById('page-' + id);
+    if (page) page.classList.add('active');
+
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      if (item.getAttribute('onclick') && item.getAttribute('onclick').includes("'" + id + "'")) {
+        item.classList.add('active');
+      }
+    });
+
+    const main = document.getElementById('main');
+    if (main) main.scrollTop = 0;
+
+    if (window.innerWidth <= 900) {
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) sidebar.classList.remove('open');
+    }
+  }
+
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('open');
+  }
+
+  function toggleAnswer(btn) {
+    const answer = btn.nextElementSibling;
+    if (answer.style.display === 'block') {
+      answer.style.display = 'none';
+      btn.textContent = 'Reveal Answer';
+    } else {
+      answer.style.display = 'block';
+      btn.textContent = 'Hide Answer';
+    }
+  }
+
+  function showKingdom(id, el) {
+    document.querySelectorAll('.kingdom-card').forEach(k => k.classList.remove('active-k'));
+    document.querySelectorAll('.kingdom-detail').forEach(d => d.classList.remove('active-k'));
+    el.classList.add('active-k');
+    const detail = document.getElementById('k-' + id);
+    if (detail) detail.classList.add('active-k');
+  }
+</script>
+
+</body>
+</html>
