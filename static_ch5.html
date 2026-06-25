@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musical Instruments — SSC Static GK</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1117;--surface:#171b24;--card:#1e2433;--border:#2b3242;
+  --green:#4ade80;--green-dim:#22543d;--blue:#60a5fa;--blue-dim:#1e3a5f;
+  --amber:#fbbf24;--red:#f87171;--purple:#c084fc;
+  --text:#e2e8f0;--muted:#8892a4;--subtle:#4a5568;
+  --sidebar:260px;
+}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;font-size:15px;line-height:1.6}
+a{color:var(--blue);text-decoration:none}
+
+/* SIDEBAR */
+#sidebar{width:var(--sidebar);min-height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:100;overflow-y:auto}
+.sidebar-logo{padding:20px 20px 12px;border-bottom:1px solid var(--border)}
+.sidebar-logo h1{font-size:14px;font-weight:700;color:var(--green);letter-spacing:.5px;text-transform:uppercase}
+.sidebar-logo p{font-size:11px;color:var(--muted);margin-top:3px}
+.sidebar-nav{flex:1;padding:12px 0}
+.nav-section-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--subtle);padding:12px 20px 6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;transition:all .15s;border-left:3px solid transparent;font-size:13px;color:var(--muted)}
+.nav-item:hover{background:rgba(74,222,128,.06);color:var(--text)}
+.nav-item.active{background:rgba(74,222,128,.1);color:var(--green);border-left-color:var(--green)}
+.nav-icon{width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.sidebar-footer{padding:16px;border-top:1px solid var(--border);font-size:11px;color:var(--subtle)}
+
+/* MAIN */
+#main{margin-left:var(--sidebar);flex:1;min-height:100vh;display:flex;flex-direction:column}
+
+/* TOP BAR */
+#topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar-title{font-size:14px;font-weight:600;color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.progress-bar-wrap{width:140px;height:4px;background:var(--border);border-radius:4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--green);border-radius:4px;transition:width .3s}
+.progress-label{font-size:11px;color:var(--muted)}
+.kbd{background:var(--card);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:11px;color:var(--muted);font-family:monospace}
+
+/* PAGE CONTENT */
+#page-content{flex:1;padding:32px 40px;max-width:960px}
+
+/* PAGE HEADER */
+.page-header{margin-bottom:28px}
+.page-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--green);font-weight:600;margin-bottom:8px}
+.page-title{font-size:28px;font-weight:700;color:var(--text);line-height:1.2;margin-bottom:10px}
+.page-desc{font-size:14px;color:var(--muted);line-height:1.7;max-width:680px}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:20px}
+.card-title{font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-title::before{content:'';display:block;width:3px;height:14px;background:var(--green);border-radius:2px}
+
+/* TABLES */
+.table-wrap{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:20px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+thead th{background:#1a2030;color:var(--green);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:11px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr{border-bottom:1px solid rgba(43,50,66,.6)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:nth-child(even){background:rgba(30,36,51,.5)}
+tbody tr:hover{background:rgba(74,222,128,.04)}
+td{padding:10px 14px;vertical-align:top}
+td:first-child{font-weight:600;color:var(--blue)}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge-green{background:rgba(74,222,128,.15);color:var(--green)}
+.badge-blue{background:rgba(96,165,250,.15);color:var(--blue)}
+.badge-amber{background:rgba(251,191,36,.15);color:var(--amber)}
+.badge-red{background:rgba(248,113,113,.15);color:var(--red)}
+.badge-purple{background:rgba(192,132,252,.15);color:var(--purple)}
+.badge-subtle{background:rgba(74,85,104,.2);color:var(--muted)}
+
+/* TAG PILLS */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tag{padding:3px 10px;border-radius:20px;font-size:12px;background:rgba(43,50,66,.8);color:var(--muted);border:1px solid var(--border)}
+.tag.imp{background:rgba(74,222,128,.1);color:var(--green);border-color:rgba(74,222,128,.3)}
+.tag.key{background:rgba(251,191,36,.1);color:var(--amber);border-color:rgba(251,191,36,.3)}
+
+/* HIGHLIGHT BOXES */
+.highlight{border-radius:10px;padding:16px 20px;margin-bottom:16px;border-left:3px solid}
+.highlight-green{background:rgba(74,222,128,.07);border-color:var(--green)}
+.highlight-blue{background:rgba(96,165,250,.07);border-color:var(--blue)}
+.highlight-amber{background:rgba(251,191,36,.07);border-color:var(--amber)}
+.highlight-red{background:rgba(248,113,113,.07);border-color:var(--red)}
+.highlight-purple{background:rgba(192,132,252,.07);border-color:var(--purple)}
+.highlight h4{font-size:12px;text-transform:uppercase;letter-spacing:.5px;font-weight:700;margin-bottom:8px}
+.highlight-green h4{color:var(--green)}
+.highlight-blue h4{color:var(--blue)}
+.highlight-amber h4{color:var(--amber)}
+.highlight-red h4{color:var(--red)}
+.highlight-purple h4{color:var(--purple)}
+.highlight p,.highlight li{font-size:13.5px;color:var(--text);line-height:1.7}
+.highlight ul{padding-left:16px}
+.highlight li{margin-bottom:4px}
+
+/* PERSON GRID */
+.person-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px}
+.person-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:border-color .15s}
+.person-card:hover{border-color:var(--green)}
+.person-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.person-note{font-size:12px;color:var(--muted);line-height:1.5}
+.person-award{font-size:11px;color:var(--amber);margin-top:6px;font-weight:500}
+
+/* TYPE GRID */
+.type-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:24px}
+.type-card{border-radius:12px;padding:18px 20px;border:1px solid}
+.tc-chord{background:rgba(96,165,250,.08);border-color:rgba(96,165,250,.25)}
+.tc-aero{background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.25)}
+.tc-memb{background:rgba(251,191,36,.08);border-color:rgba(251,191,36,.25)}
+.tc-idio{background:rgba(192,132,252,.08);border-color:rgba(192,132,252,.25)}
+.tc-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.tc-chord .tc-title{color:var(--blue)}
+.tc-aero .tc-title{color:var(--green)}
+.tc-memb .tc-title{color:var(--amber)}
+.tc-idio .tc-title{color:var(--purple)}
+.tc-hindi{font-size:12px;color:var(--muted);margin-bottom:8px}
+.tc-desc{font-size:12.5px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.tc-examples{font-size:12px;font-weight:600}
+.tc-chord .tc-examples{color:var(--blue)}
+.tc-aero .tc-examples{color:var(--green)}
+.tc-memb .tc-examples{color:var(--amber)}
+.tc-idio .tc-examples{color:var(--purple)}
+
+/* TRICK BOX */
+.trick{background:linear-gradient(135deg,rgba(74,222,128,.06),rgba(96,165,250,.06));border:1px solid rgba(74,222,128,.2);border-radius:10px;padding:14px 18px;margin-bottom:16px}
+.trick-label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--green);font-weight:700;margin-bottom:6px}
+.trick-text{font-size:13.5px;color:var(--text);line-height:1.6;font-style:italic}
+.trick-text em{font-style:normal;color:var(--amber);font-weight:600}
+
+/* NAV BUTTONS */
+.nav-buttons{display:flex;align-items:center;gap:12px;margin-top:36px;padding-top:24px;border-top:1px solid var(--border)}
+.btn{padding:9px 18px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--green);color:var(--green)}
+.btn-primary{background:rgba(74,222,128,.15);border-color:rgba(74,222,128,.4);color:var(--green)}
+.btn-primary:hover{background:rgba(74,222,128,.25)}
+.btn-spacer{flex:1}
+
+/* INSTRUMENT HEADER */
+.instr-header{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:20px}
+.instr-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.instr-meta h2{font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px}
+.instr-meta .instr-type{font-size:12px;color:var(--muted);margin-bottom:6px}
+.instr-meta .instr-type strong{color:var(--blue)}
+
+/* HOME PAGE */
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:24px}
+.home-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;cursor:pointer;transition:all .15s;display:flex;flex-direction:column;gap:8px}
+.home-card:hover{border-color:var(--green);transform:translateY(-2px)}
+.home-card-icon{font-size:22px;margin-bottom:4px}
+.home-card-title{font-size:14px;font-weight:600;color:var(--text)}
+.home-card-sub{font-size:12px;color:var(--muted)}
+.home-card-count{font-size:11px;color:var(--green);font-weight:600;margin-top:auto}
+
+/* STATS ROW */
+.stats-row{display:flex;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+.stat-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px;flex:1;min-width:100px}
+.stat-num{font-size:22px;font-weight:700;color:var(--green)}
+.stat-label{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* RAPID REVISION TOGGLE */
+.rv-toggle{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--card);border:1px solid var(--border);border-radius:8px;cursor:pointer;margin-bottom:20px;width:fit-content;transition:all .15s;font-size:13px;font-weight:500}
+.rv-toggle:hover{border-color:var(--green)}
+.rv-toggle.active{background:rgba(74,222,128,.1);border-color:var(--green);color:var(--green)}
+.rv-dot{width:10px;height:10px;border-radius:50%;background:var(--subtle);transition:background .15s}
+.rv-toggle.active .rv-dot{background:var(--green)}
+body.rapid-mode .rv-hide{display:none!important}
+body.rapid-mode .rv-toggle{background:rgba(251,191,36,.1);border-color:var(--amber);color:var(--amber)}
+body.rapid-mode .rv-toggle .rv-dot{background:var(--amber)}
+
+/* BOTTOM NAV (mobile) */
+#bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--border);z-index:200;padding:8px 0}
+.bnav-items{display:flex;justify-content:space-around}
+.bnav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 12px;cursor:pointer;color:var(--muted);font-size:10px;transition:color .15s}
+.bnav-item.active{color:var(--green)}
+.bnav-icon{font-size:20px}
+
+/* SECTION DIVIDER */
+.section-divider{height:1px;background:var(--border);margin:24px 0}
+
+/* EXAM TIP */
+.exam-tip{background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--text);margin-bottom:12px}
+.exam-tip strong{color:var(--blue)}
+
+/* FREQUENTLY ASKED */
+.faq-item{border-left:2px solid var(--green);padding:10px 16px;margin-bottom:10px;background:rgba(74,222,128,.04);border-radius:0 8px 8px 0}
+.faq-q{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.faq-a{font-size:13px;color:var(--muted)}
+
+/* PAGE HIDDEN */
+.page{display:none}
+.page.active{display:block}
+
+/* AWARD TABLE */
+.award-row td:nth-child(2){color:var(--amber)}
+.award-row td:nth-child(3){color:var(--muted);font-size:12px}
+
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%);transition:transform .25s}
+  #sidebar.open{transform:translateX(0)}
+  #main{margin-left:0}
+  #bottom-nav{display:block}
+  #page-content{padding:20px 16px 90px}
+  .topbar-title{font-size:13px}
+  .page-title{font-size:22px}
+  .stats-row{gap:10px}
+  .home-grid{grid-template-columns:repeat(2,1fr)}
+  .person-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <h1>🎵 SSC Static GK</h1>
+    <p>Musical Instruments · FRB Vision Batch</p>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section-label">Overview</div>
+    <div class="nav-item active" onclick="nav('home')">
+      <div class="nav-icon">🏠</div> Home
+    </div>
+    <div class="nav-item" onclick="nav('types')">
+      <div class="nav-icon">📂</div> Types of Instruments
+    </div>
+    <div class="nav-section-label">String Instruments</div>
+    <div class="nav-item" onclick="nav('sitar')">
+      <div class="nav-icon">🎸</div> Sitar
+    </div>
+    <div class="nav-item" onclick="nav('sarod')">
+      <div class="nav-icon">🎵</div> Sarod
+    </div>
+    <div class="nav-item" onclick="nav('sarangi')">
+      <div class="nav-icon">🎻</div> Sarangi
+    </div>
+    <div class="nav-item" onclick="nav('santoor')">
+      <div class="nav-icon">🎼</div> Santoor
+    </div>
+    <div class="nav-item" onclick="nav('veena')">
+      <div class="nav-icon">🪕</div> Veena & Rudra Veena
+    </div>
+    <div class="nav-item" onclick="nav('surbahar')">
+      <div class="nav-icon">🎵</div> Sur Bahar
+    </div>
+    <div class="nav-item" onclick="nav('violin')">
+      <div class="nav-icon">🎻</div> Violin
+    </div>
+    <div class="nav-section-label">Wind Instruments</div>
+    <div class="nav-item" onclick="nav('flute')">
+      <div class="nav-icon">🪈</div> Flute (Bansuri)
+    </div>
+    <div class="nav-item" onclick="nav('shehnai')">
+      <div class="nav-icon">🎺</div> Shehnai
+    </div>
+    <div class="nav-item" onclick="nav('nadaswaram')">
+      <div class="nav-icon">🎺</div> Nadaswaram
+    </div>
+    <div class="nav-section-label">Percussion Instruments</div>
+    <div class="nav-item" onclick="nav('tabla')">
+      <div class="nav-icon">🥁</div> Tabla
+    </div>
+    <div class="nav-item" onclick="nav('pakhawaj')">
+      <div class="nav-icon">🥁</div> Pakhawaj
+    </div>
+    <div class="nav-item" onclick="nav('mridangam')">
+      <div class="nav-icon">🥁</div> Mridangam
+    </div>
+    <div class="nav-item" onclick="nav('ghatam')">
+      <div class="nav-icon">🏺</div> Ghatam
+    </div>
+    <div class="nav-item" onclick="nav('drums')">
+      <div class="nav-icon">🥁</div> Drums
+    </div>
+    <div class="nav-section-label">Quick Revision</div>
+    <div class="nav-item" onclick="nav('awards')">
+      <div class="nav-icon">🏆</div> Awards Summary
+    </div>
+    <div class="nav-item" onclick="nav('faq')">
+      <div class="nav-icon">❓</div> Frequently Asked
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    ← → Navigate · H = Home
+  </div>
+</nav>
+
+<!-- TOP BAR -->
+<div id="main">
+<div id="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <button onclick="toggleSidebar()" style="display:none;background:none;border:none;color:var(--muted);cursor:pointer;font-size:20px" id="menu-btn">☰</button>
+    <div class="topbar-title" id="topbar-title">Home</div>
+  </div>
+  <div class="topbar-right">
+    <div class="progress-label" id="progress-label">1 / 16</div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width:6%"></div></div>
+  </div>
+</div>
+
+<!-- PAGE CONTENT -->
+<div id="page-content">
+
+<!-- ===== HOME ===== -->
+<div id="p-home" class="page active">
+  <div class="page-header">
+    <div class="page-eyebrow">FRB Vision Batch · Static GK</div>
+    <div class="page-title">Musical Instruments</div>
+    <div class="page-desc rv-hide">A complete revision guide covering all major Indian classical musical instruments, their types, famous exponents, and important awards. Perfect for SSC CGL, CHSL, CPO, and MTS exams.</div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-num">4</div><div class="stat-label">Instrument Types</div></div>
+    <div class="stat-item"><div class="stat-num">14</div><div class="stat-label">Instruments Covered</div></div>
+    <div class="stat-item"><div class="stat-num">50+</div><div class="stat-label">Key Exponents</div></div>
+    <div class="stat-item"><div class="stat-num">★★★</div><div class="stat-label">SSC Importance</div></div>
+  </div>
+
+  <div onclick="toggleRapid()" class="rv-toggle" id="rv-btn">
+    <div class="rv-dot" id="rv-dot"></div>
+    <span id="rv-label">Rapid Revision Mode: OFF</span>
+  </div>
+
+  <div class="home-grid">
+    <div class="home-card" onclick="nav('types')"><div class="home-card-icon">📂</div><div class="home-card-title">Types</div><div class="home-card-sub">4 categories</div><div class="home-card-count">Start here →</div></div>
+    <div class="home-card" onclick="nav('sitar')"><div class="home-card-icon">🎸</div><div class="home-card-title">Sitar</div><div class="home-card-sub">Ravi Shankar & more</div><div class="home-card-count">★★★ Must know</div></div>
+    <div class="home-card" onclick="nav('tabla')"><div class="home-card-icon">🥁</div><div class="home-card-title">Tabla</div><div class="home-card-sub">Zakir Hussain</div><div class="home-card-count">★★★ Must know</div></div>
+    <div class="home-card" onclick="nav('flute')"><div class="home-card-icon">🪈</div><div class="home-card-title">Flute</div><div class="home-card-sub">Hariprasad Chaurasia</div><div class="home-card-count">★★★ Must know</div></div>
+    <div class="home-card" onclick="nav('shehnai')"><div class="home-card-icon">🎺</div><div class="home-card-title">Shehnai</div><div class="home-card-sub">Bismillah Khan</div><div class="home-card-count">★★★ Must know</div></div>
+    <div class="home-card" onclick="nav('santoor')"><div class="home-card-icon">🎼</div><div class="home-card-title">Santoor</div><div class="home-card-sub">Shivkumar Sharma</div><div class="home-card-count">★★ Important</div></div>
+    <div class="home-card" onclick="nav('sarod')"><div class="home-card-icon">🎵</div><div class="home-card-title">Sarod</div><div class="home-card-sub">Amjad Ali Khan</div><div class="home-card-count">★★ Important</div></div>
+    <div class="home-card" onclick="nav('awards')"><div class="home-card-icon">🏆</div><div class="home-card-title">Awards</div><div class="home-card-sub">Quick reference</div><div class="home-card-count">Exam critical</div></div>
+    <div class="home-card" onclick="nav('faq')"><div class="home-card-icon">❓</div><div class="home-card-title">Frequently Asked</div><div class="home-card-sub">Past exam questions</div><div class="home-card-count">Revise last →</div></div>
+  </div>
+
+  <div class="highlight highlight-amber rv-hide">
+    <h4>⚡ Most Exam-Relevant Instruments</h4>
+    <p>Focus maximum attention on: <strong>Sitar · Tabla · Flute · Santoor · Shehnai</strong> — these generate the most SSC exam questions on exponents, awards, and types.</p>
+  </div>
+
+  <div class="nav-buttons">
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('types')">Next: Types of Instruments →</button>
+  </div>
+</div>
+
+<!-- ===== TYPES ===== -->
+<div id="p-types" class="page">
+  <div class="page-header">
+    <div class="page-eyebrow">Foundation · Lesson 1</div>
+    <div class="page-title">Types of Musical Instruments</div>
+    <div class="page-desc rv-hide">The 4 fundamental categories of instruments you must know. Every instrument in this guide falls into one of these types.</div>
+  </div>
+
+  <div class="type-grid">
+    <div class="type-card tc-chord">
+      <div class="tc-title">Chordophones</div>
+      <div class="tc-hindi">तंतु वाद्य यंत्र (Tantu Vadya)</div>
+      <div class="tc-desc rv-hide">String instruments where sound is produced by vibrating strings. The strings can be plucked, bowed, or struck.</div>
+      <div class="tc-examples">Sitar · Sarod · Sarangi · Veena · Santoor · Violin · Sur Bahar</div>
+    </div>
+    <div class="type-card tc-aero">
+      <div class="tc-title">Aerophones</div>
+      <div class="tc-hindi">सुषिर वाद्य यंत्र (Sushir Vadya)</div>
+      <div class="tc-desc rv-hide">Wind instruments where sound is produced by vibrating air columns. Air is blown through or across an opening.</div>
+      <div class="tc-examples">Flute · Shehnai · Nadaswaram</div>
+    </div>
+    <div class="type-card tc-memb">
+      <div class="tc-title">Membranophones</div>
+      <div class="tc-hindi">अवनद्ध वाद्य यंत्र (Avnadh Vadya)</div>
+      <div class="tc-desc rv-hide">Instruments with a stretched animal skin membrane that vibrates when struck. These are percussion instruments.</div>
+      <div class="tc-examples">Tabla · Dholak · Pakhawaj · Mridangam</div>
+    </div>
+    <div class="type-card tc-idio">
+      <div class="tc-title">Idiophones</div>
+      <div class="tc-hindi">घन वाद्य यंत्र (Ghan Vadya)</div>
+      <div class="tc-desc rv-hide">The instrument itself vibrates to produce sound. No strings, membranes, or air columns — the body IS the sound-maker.</div>
+      <div class="tc-examples">Ghatam · Manjira · Kartal</div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text">Think: <em>Chord</em>ophones → <em>Chord</em>s/Strings | <em>Aero</em>phones → <em>Air</em> | <em>Membrane</em>phones → <em>Skin Membrane</em> | <em>Idio</em>phones → Instrument itself (<em>Idiom</em> = the thing itself)</div>
+  </div>
+
+  <div class="highlight highlight-green">
+    <h4>📌 Key Distinction: Membranophones vs Idiophones</h4>
+    <ul>
+      <li><strong>Tabla/Dholak</strong> = You strike a stretched membrane → Membranophone</li>
+      <li><strong>Ghatam</strong> = You strike the pot itself → Idiophone</li>
+      <li>Percuss instruments = one instrument struck with another (Tabla, Pakhawaj, Mridangam)</li>
+    </ul>
+  </div>
+
+  <div class="table-wrap rv-hide">
+    <table>
+      <thead><tr><th>Hindi Name</th><th>English Type</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>तंतु वाद्य</td><td>Chordophone (Stringed)</td><td>Sitar, Sarod, Veena</td></tr>
+        <tr><td>सुषिर वाद्य</td><td>Aerophone (Wind)</td><td>Flute, Shehnai</td></tr>
+        <tr><td>अवनद्ध वाद्य</td><td>Membranophone</td><td>Tabla, Dholak, Mridangam</td></tr>
+        <tr><td>घन वाद्य</td><td>Idiophone</td><td>Ghatam, Manjira</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('home')">← Home</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('sitar')">Next: Sitar →</button>
+  </div>
+</div>
+
+<!-- ===== SITAR ===== -->
+<div id="p-sitar" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(96,165,250,.15)">🎸</div>
+    <div class="instr-meta">
+      <h2>Sitar</h2>
+      <div class="instr-type">Type: <strong>Chordophone</strong> (Tantu Vadya — तंतु वाद्य) · String Instrument</div>
+      <div class="tags">
+        <span class="tag imp">★★★ Must Know</span>
+        <span class="tag key">Most Exam Questions</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Most Important Exponents</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(74,222,128,.4)">
+        <div class="person-name">Pandit Ravi Shankar</div>
+        <div class="person-note">Most famous sitar player worldwide. Autobiography: <em>My Life, My Music</em></div>
+        <div class="person-award">🏆 Bharat Ratna (1999) · Grammy – West Meets East (1968) · Most Grammys by Indian</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Vilayat Khan</div>
+        <div class="person-note">Brother of Imran Khan</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Imran Khan</div>
+        <div class="person-note">Brother of Vilayat Khan · Also plays Sur Bahar</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Nikhil Banerjee</div>
+        <div class="person-note">Eminent sitarist</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Shahid Parvez</div>
+        <div class="person-note">Belongs to Imdad Khani Gharana</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Buddhaditya Mukherjee</div>
+        <div class="person-note">Also plays Sur Bahar</div>
+        <div class="person-award">🏆 Padma Bhushan (2019)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Anushka Shankar</div>
+        <div class="person-note">Daughter of Ravi Shankar</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Pandit Hara Shankar Bhattacharya</div>
+        <div class="person-note">Classical sitarist</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Arvind Pareek</div>
+        <div class="person-note">Classical sitarist</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight highlight-blue rv-hide">
+    <h4>ℹ️ Key Facts about Ravi Shankar</h4>
+    <ul>
+      <li>2nd Indian musician to receive Bharat Ratna (1999)</li>
+      <li>1st Indian to receive Grammy — "West Meets East" album (1968)</li>
+      <li>Most Grammy Awards by an Indian musician</li>
+      <li>Brother: <strong>Uday Shankar</strong> — famous for Fusion Dance (blending Eastern + Western dance)</li>
+      <li>Daughter: <strong>Anushka Shankar</strong> (sitarist)</li>
+    </ul>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text">Sitar family — Shankar · Shankar · Shankar chain: <em>Ravi Shankar → Anushka Shankar → Uday Shankar</em> (brother). Then Khans: <em>Vilayat Khan + Imran Khan</em> (brothers). Then: <em>Nikhil Banerjee + Buddhaditya Mukherjee</em> (pair).</div>
+  </div>
+
+  <div class="highlight highlight-amber">
+    <h4>⚠️ Common Exam Question</h4>
+    <p>Q: Who was the 2nd Indian musician to get Bharat Ratna? → <strong>Pandit Ravi Shankar (1999)</strong></p>
+    <p style="margin-top:8px">Q: Who won first Grammy for India? → <strong>Pandit Ravi Shankar</strong> (West Meets East, 1968)</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('types')">← Types</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('sarod')">Next: Sarod →</button>
+  </div>
+</div>
+
+<!-- ===== SAROD ===== -->
+<div id="p-sarod" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(96,165,250,.15)">🎵</div>
+    <div class="instr-meta">
+      <h2>Sarod</h2>
+      <div class="instr-type">Type: <strong>Chordophone</strong> (Tantu Vadya) · String Instrument</div>
+      <div class="tags"><span class="tag imp">★★ Important</span><span class="tag">All exponents: KHANS</span></div>
+    </div>
+  </div>
+
+  <div class="highlight highlight-purple">
+    <h4>🔑 Key Pattern — All Sarod Exponents</h4>
+    <p>Almost all sarod players are <strong>Khans</strong> with <strong>"Ali"</strong> in their name. They belong to the <strong>Maihar / Senia Gharana</strong>.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(192,132,252,.4)">
+        <div class="person-name">Alauddin Khan</div>
+        <div class="person-note">Founder of Maihar (Senia) Gharana · From Maihar, Madhya Pradesh</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Amjad Ali Khan</div>
+        <div class="person-note">Most famous contemporary sarod player</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Ali Akbar Khan</div>
+        <div class="person-note">Son of Alauddin Khan</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Hafiz Ali Khan</div>
+        <div class="person-note">Classical sarod maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Rajiv Taranath</div>
+        <div class="person-note">Disciple of Ali Akbar Khan</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Buddhadev Das Gupta</div>
+        <div class="person-note">Sarod maestro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text">Sarod = <em>Ali Ali Ali Ali</em> — Alauddin, Ali Akbar, Amjad Ali, Hafiz Ali. All Khans, all "Ali". Gharana = <em>Maihar/Senia</em> from Madhya Pradesh. Rajiv Taranath = disciple of <em>Ali Akbar</em> Khan.</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('sitar')">← Sitar</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('sarangi')">Next: Sarangi →</button>
+  </div>
+</div>
+
+<!-- ===== SARANGI ===== -->
+<div id="p-sarangi" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(96,165,250,.15)">🎻</div>
+    <div class="instr-meta">
+      <h2>Sarangi</h2>
+      <div class="instr-type">Type: <strong>Chordophone</strong> (Tantu Vadya) · String Instrument (Bowed)</div>
+      <div class="tags"><span class="tag imp">★★ Important</span><span class="tag">Note: Different Khans from Sarod!</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(96,165,250,.4)">
+        <div class="person-name">Pandit Ram Narayan</div>
+        <div class="person-note">Most famous sarangi player. Remember: Ram → Sabri (pair)</div>
+      </div>
+      <div class="person-card" style="border-color:rgba(96,165,250,.4)">
+        <div class="person-name">Sabri Khan</div>
+        <div class="person-note">Pair with Ram Narayan</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Bundu Khan</div>
+        <div class="person-note">Classical sarangi maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Shakur Khan</div>
+        <div class="person-note">Classical sarangi maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Latif Khan</div>
+        <div class="person-note">Classical sarangi maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Sultan Khan</div>
+        <div class="person-note">Also plays Sarangi</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text"><em>"Ram ji ate Sabri ji's berries (bher)"</em> — Remember Ram Narayan + Sabri Khan as a pair. Then: <em>Abdul Latif, Sultan, Shakur, and Bundu Khan</em> — Note: no "Ali" unlike Sarod Khans!</div>
+  </div>
+
+  <div class="highlight highlight-blue rv-hide">
+    <h4>How to tell Sarod Khans vs Sarangi Khans apart</h4>
+    <p>Sarod Khans all have <strong>"Ali"</strong> in their name. Sarangi Khans do <strong>NOT</strong> have Ali — Bundu, Shakur, Latif, Sultan Khan.</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('sarod')">← Sarod</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('santoor')">Next: Santoor →</button>
+  </div>
+</div>
+
+<!-- ===== SANTOOR ===== -->
+<div id="p-santoor" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(74,222,128,.15)">🎼</div>
+    <div class="instr-meta">
+      <h2>Santoor</h2>
+      <div class="instr-type">Type: <strong>Chordophone</strong> (Tantu Vadya) · String Instrument · Kashmiri origin</div>
+      <div class="tags"><span class="tag imp">★★ Important</span><span class="tag key">Kashmiri Instrument</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(74,222,128,.4)">
+        <div class="person-name">Shivkumar Sharma</div>
+        <div class="person-note">Most famous. Belongs to Kashmiri Pandit family. Father of Rahul Sharma.</div>
+        <div class="person-award">🏆 Padma Vibhushan</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Rahul Sharma</div>
+        <div class="person-note">Son of Shivkumar Sharma</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Bhajan Sapori</div>
+        <div class="person-note">Santoor maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Ulhas Bapdev</div>
+        <div class="person-note">Santoor player</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text"><em>"Rahul is singing bhajans (hymns) of Shiv Ji and everyone (Ulhas) is celebrating."</em> → Rahul Sharma (son) + Shivkumar Sharma (father) + Bhajan Sapori + Ulhas Bapdev. Santoor = Kashmir instrument.</div>
+  </div>
+
+  <div class="highlight highlight-green">
+    <h4>Shakti Band Connection</h4>
+    <p>Shivkumar Sharma + Zakir Hussain + Shankar Mahadevan were part of <strong>Shakti Band</strong> which released "This Moment" album — won Grammy.</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('sarangi')">← Sarangi</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('veena')">Next: Veena →</button>
+  </div>
+</div>
+
+<!-- ===== VEENA ===== -->
+<div id="p-veena" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(192,132,252,.15)">🪕</div>
+    <div class="instr-meta">
+      <h2>Veena & Rudra Veena</h2>
+      <div class="instr-type">Type: <strong>Chordophone</strong> (Tantu Vadya) · String Instrument · Ancient</div>
+      <div class="tags"><span class="tag imp">★★ Important</span><span class="tag key">Historical connection</span></div>
+    </div>
+  </div>
+
+  <div class="highlight highlight-purple">
+    <h4>🏛️ Historical Note</h4>
+    <p><strong>Samudragupta</strong> (Gupta Dynasty) was depicted playing Veena on coins. He is also called "Napoleon of India." His court poet was <strong>Harisena</strong>.</p>
+    <p style="margin-top:8px"><strong>Aurangzeb</strong> also secretly played Veena (surprising fact for MCQs!).</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Veena Exponents</div>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">Samudragupta</div>
+        <div class="person-note">Gupta dynasty king — depicted on coins</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Aurangzeb</div>
+        <div class="person-note">Mughal emperor who played Veena</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">S. Balachander</div>
+        <div class="person-note">Modern Veena maestro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Rudra Veena Exponents</div>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">Sadiq Ali Khan</div>
+        <div class="person-note">Note "Ali" — Rudra Veena player</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Asad Ali Khan</div>
+        <div class="person-note">Rudra Veena maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Zia Mohidin Dagar</div>
+        <div class="person-note">Rudra Veena player</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick rv-hide">
+    <div class="trick-label">🧠 Memory Trick — Rudra Veena</div>
+    <div class="trick-text">Rudra Veena = Sadiq <em>Ali</em> Khan, Asad <em>Ali</em> Khan → "Ali" appears again. But these are different from Sarod (Alauddin) or Sarangi (no Ali). Keep context clear!</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('santoor')">← Santoor</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('surbahar')">Next: Sur Bahar →</button>
+  </div>
+</div>
+
+<!-- ===== SUR BAHAR ===== -->
+<div id="p-surbahar" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(96,165,250,.15)">🎵</div>
+    <div class="instr-meta">
+      <h2>Sur Bahar</h2>
+      <div class="instr-type">Type: <strong>Chordophone</strong> · Bass version of Sitar</div>
+      <div class="tags"><span class="tag imp">★★ Important</span><span class="tag key">Annapurna Devi — female exception!</span></div>
+    </div>
+  </div>
+
+  <div class="highlight highlight-amber">
+    <h4>⭐ Most Important — Annapurna Devi</h4>
+    <p>Being a <strong>female exponent</strong> makes her extra exam-worthy. Annapurna Devi is the most asked Sur Bahar personality in SSC exams.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(251,191,36,.4)">
+        <div class="person-name">Annapurna Devi</div>
+        <div class="person-note">Most exam-important. Only major female in Sur Bahar.</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Imran Khan</div>
+        <div class="person-note">Also plays Sitar (brother of Vilayat Khan)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Waheed Khan</div>
+        <div class="person-note">Sur Bahar maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Imdad Khan</div>
+        <div class="person-note">Sur Bahar player</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Buddhaditya Mukherjee</div>
+        <div class="person-note">Also plays Sitar · Padma Bhushan 2019</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text">Sur Bahar Khans: <em>Imran, Waheed, Imdad</em> — no "Ali" unlike Sarod. Remember: Buddhaditya is in both Sitar AND Sur Bahar. <em>Annapurna Devi</em> = the one female name to absolutely remember.</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('veena')">← Veena</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('violin')">Next: Violin →</button>
+  </div>
+</div>
+
+<!-- ===== VIOLIN ===== -->
+<div id="p-violin" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(96,165,250,.15)">🎻</div>
+    <div class="instr-meta">
+      <h2>Violin</h2>
+      <div class="instr-type">Type: <strong>Chordophone</strong> · Carnatic Music Instrument</div>
+      <div class="tags"><span class="tag">★ Less Frequent</span><span class="tag">Carnatic Music</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">T.N. Krishna</div>
+        <div class="person-award">🏆 Padmashree (1973)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Nagai Muralidharan</div>
+        <div class="person-note">Carnatic violin</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Lalgudi Gopal Iyer</div>
+        <div class="person-note">Carnatic violin maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Mohan Chandrasekhar</div>
+        <div class="person-note">Violin player</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">UK Sivaraman</div>
+        <div class="person-note">Also Mridangam</div>
+        <div class="person-award">🏆 Padma Vibhushan (2010)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Dwaraka Venkataswami Naidu</div>
+        <div class="person-note">Carnatic violinist</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('surbahar')">← Sur Bahar</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('flute')">Next: Flute →</button>
+  </div>
+</div>
+
+<!-- ===== FLUTE ===== -->
+<div id="p-flute" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(74,222,128,.15)">🪈</div>
+    <div class="instr-meta">
+      <h2>Flute (Bansuri)</h2>
+      <div class="instr-type">Type: <strong>Aerophone</strong> (Sushir Vadya — सुषिर वाद्य) · Wind Instrument</div>
+      <div class="tags"><span class="tag imp">★★★ Must Know</span><span class="tag key">Hariprasad Chaurasia</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Most Important — Hariprasad Chaurasia</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(74,222,128,.4);grid-column:span 2">
+        <div class="person-name">Pandit Hariprasad Chaurasia</div>
+        <div class="person-note">The most famous flute player of India. Born in <strong>Allahabad (Prayagraj)</strong> — asked in SSC JE exam!</div>
+        <div class="person-award">🏆 Padma Bhushan (1992) · Padma Vibhushan (2000)</div>
+      </div>
+    </div>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">Pannalal Ghosh</div>
+        <div class="person-note">Real name: <strong>Amal Jyoti Ghosh</strong> — important MCQ!</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Rajendra Prasanna</div>
+        <div class="person-note">Also plays Shehnai · Banaras Gharana</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Rajendra Kulkarni</div>
+        <div class="person-note">Flute maestro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text"><em>"Hari Prasad Chaurasia ji has a paan shop and plays flute — everyone is happy (Chaurasia = paan shop)"</em>. Born in <em>Allahabad</em>. Pannalal Ghosh real name = <em>Amal Jyoti Ghosh</em>. Rajendra Prasanna plays both flute AND Shehnai (rare!)</div>
+  </div>
+
+  <div class="highlight highlight-amber">
+    <h4>⚠️ Exam-Critical Facts</h4>
+    <ul>
+      <li>Hariprasad Chaurasia birthplace = <strong>Allahabad / Prayagraj</strong> (appeared in SSC JE!)</li>
+      <li>Pannalal Ghosh's real name = <strong>Amal Jyoti Ghosh</strong></li>
+      <li>Rajendra Prasanna belongs to <strong>Banaras Gharana</strong></li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('violin')">← Violin</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('shehnai')">Next: Shehnai →</button>
+  </div>
+</div>
+
+<!-- ===== SHEHNAI ===== -->
+<div id="p-shehnai" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(74,222,128,.15)">🎺</div>
+    <div class="instr-meta">
+      <h2>Shehnai (Sahnai)</h2>
+      <div class="instr-type">Type: <strong>Aerophone</strong> (Sushir Vadya) · Wind Instrument · Also called Mangal Vadya</div>
+      <div class="tags"><span class="tag imp">★★★ Must Know</span><span class="tag key">Bismillah Khan</span></div>
+    </div>
+  </div>
+
+  <div class="highlight highlight-green">
+    <h4>📌 Also called "Mangal Vadya" (Auspicious Instrument)</h4>
+    <p>Shehnai is played at all auspicious occasions like marriages. This is a commonly asked exam fact.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Most Important — Bismillah Khan</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(74,222,128,.4);grid-column:span 2">
+        <div class="person-name">Ustad Bismillah Khan</div>
+        <div class="person-note">The greatest Shehnai maestro. Born in <strong>Dumraon, Bihar</strong>. Played Shehnai at Red Fort on <strong>Independence Day 1947</strong>.</div>
+        <div class="person-award">🏆 Bharat Ratna (2001) · Padma Vibhushan · Padma Bhushan · Padmashree — ALL FOUR civilian awards!</div>
+      </div>
+    </div>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">Rajendra Prasanna</div>
+        <div class="person-note">Also plays Flute (rare double)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Raghunath Prasanna</div>
+        <div class="person-note">Note: Different from Rajendra Prasanna!</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Ballesh Ali Ahmed Bageshwari</div>
+        <div class="person-note">Shehnai maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Krishna Choudhary</div>
+        <div class="person-note">Shehnai player</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight highlight-amber">
+    <h4>⚠️ High-Frequency Exam Facts</h4>
+    <ul>
+      <li>Bismillah Khan = <strong>3rd Indian musician</strong> to receive Bharat Ratna (2001)</li>
+      <li>Born in <strong>Dumraon, Bihar</strong></li>
+      <li>Played at <strong>Red Fort on Independence Day 1947</strong></li>
+      <li>Auditorium named after him in <strong>Tehran, Iran</strong></li>
+      <li>Received all 4 major Indian civilian awards (Padmashree to Bharat Ratna)</li>
+    </ul>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text"><em>"When Bismillah ji played Shehnai, everyone was happy and started clapping."</em> Shehnai Bharata Ratna order: 1st = ?, 2nd = Ravi Shankar (1999), 3rd = <em>Bismillah Khan (2001)</em>.</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('flute')">← Flute</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('nadaswaram')">Next: Nadaswaram →</button>
+  </div>
+</div>
+
+<!-- ===== NADASWARAM ===== -->
+<div id="p-nadaswaram" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(74,222,128,.15)">🎺</div>
+    <div class="instr-meta">
+      <h2>Nadaswaram (Nad Swaram)</h2>
+      <div class="instr-type">Type: <strong>Aerophone</strong> (Sushir Vadya) · Carnatic Music · South Indian</div>
+      <div class="tags"><span class="tag">★ Less Frequent</span><span class="tag">Carnatic / South India</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">Sheikh Chinna Moulana</div>
+        <div class="person-note">Most famous Nadaswaram player</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">T.N. Rajaratnam Pillai</div>
+        <div class="person-note">Nadaswaram maestro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text"><em>"Shake (drink) has been given — Shaikh Chinna Moulana."</em> Nadaswaram is a <em>South Indian wind instrument</em> similar to Shehnai.</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('shehnai')">← Shehnai</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('tabla')">Next: Tabla →</button>
+  </div>
+</div>
+
+<!-- ===== TABLA ===== -->
+<div id="p-tabla" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(251,191,36,.15)">🥁</div>
+    <div class="instr-meta">
+      <h2>Tabla</h2>
+      <div class="instr-type">Type: <strong>Membranophone</strong> (Avnadh Vadya — अवनद्ध वाद्य) · Percussion</div>
+      <div class="tags"><span class="tag imp">★★★ Must Know</span><span class="tag key">Zakir Hussain</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⭐ Most Important Exponents</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(251,191,36,.4)">
+        <div class="person-name">Ustad Allah Rakha</div>
+        <div class="person-note">Father of Zakir Hussain. Also plays Pakhawaj.</div>
+        <div class="person-award">🏆 Padmashree (1977)</div>
+      </div>
+      <div class="person-card" style="border-color:rgba(251,191,36,.4)">
+        <div class="person-name">Zakir Hussain</div>
+        <div class="person-note">Son of Allah Rakha. Most famous tabla player globally. Part of <strong>Shakti Band</strong>.</div>
+        <div class="person-award">🏆 Padma Bhushan (2002) · Padma Vibhushan (2023) · Grammy (5 times) — "This Moment" album</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Vikram Ghosh</div>
+        <div class="person-note">Pair with Nikhil Ghosh (brothers)</div>
+        <div class="person-award">🏆 Padma Bhushan</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Nikhil Ghosh</div>
+        <div class="person-note">Pair with Vikram Ghosh (brothers)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Anand Gopal Bandopadhyay</div>
+        <div class="person-note">Banaras Gharana · Also plays Drums</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Anokhe Lal Mishra</div>
+        <div class="person-note">Banaras Gharana</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Pandit Sapan Choudhary</div>
+        <div class="person-note">Classical tabla player</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text">Two father-son duos: <em>Allah Rakha → Zakir Hussain</em>. Two brothers: <em>Vikram Ghosh + Nikhil Ghosh</em>. Then: <em>"Ghosh ji saw unique (Anokhe) dreams of Allah"</em> → Ghosh + Anokhe Lal Mishra + Allah Rakha.</div>
+  </div>
+
+  <div class="highlight highlight-amber">
+    <h4>⚠️ Critical Zakir Hussain Facts</h4>
+    <ul>
+      <li>Highest number of Grammys by an Indian = <strong>5 Grammys</strong></li>
+      <li>Latest Grammy for <strong>"This Moment"</strong> album with Shakti Band (Shankar Mahadevan also part)</li>
+      <li>Padma Vibhushan 2023 (India's 2nd highest civilian award)</li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('nadaswaram')">← Nadaswaram</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('pakhawaj')">Next: Pakhawaj →</button>
+  </div>
+</div>
+
+<!-- ===== PAKHAWAJ ===== -->
+<div id="p-pakhawaj" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(251,191,36,.15)">🥁</div>
+    <div class="instr-meta">
+      <h2>Pakhawaj</h2>
+      <div class="instr-type">Type: <strong>Membranophone</strong> (Avnadh Vadya) · Percussion · Similar to Dholak</div>
+      <div class="tags"><span class="tag imp">★★ Important</span><span class="tag">Totaram Sharma — frequently asked</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(251,191,36,.4)">
+        <div class="person-name">Totaram Sharma</div>
+        <div class="person-note">Most frequently asked Pakhawaj exponent in SSC</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Ustad Allah Rakha</div>
+        <div class="person-note">Also plays Pakhawaj (alongside Tabla)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Bhavani Shankar</div>
+        <div class="person-note">Pakhawaj player</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Ustad Rahman Khan</div>
+        <div class="person-note">Pakhawaj maestro</div>
+      </div>
+      <div class="person-card" style="border-color:rgba(96,165,250,.4)">
+        <div class="person-name">Kelucharan Mohapatra</div>
+        <div class="person-note">Multi-talented: Pakhawaj + Tabla + Odissi dance + Patachitra painting. <strong>Questions came in CGL 2023 every shift!</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text"><em>"Totaram = Totathe parrot has wings (Tota = parrot). The parrot makes loud noises."</em> Remember: Kelucharan Mohapatra = <em>Odissi dance + Pakhawaj + Tabla + Patachitra painting</em> — multiple exam angles!</div>
+  </div>
+
+  <div class="highlight highlight-blue">
+    <h4>🎯 Kelucharan Mohapatra — Exam Gold</h4>
+    <p>Associated with: <strong>Odissi classical dance</strong> (primary fame), Pakhawaj, Tabla, and <strong>Patachitra painting</strong> (Orissa + West Bengal). CGL 2023 had questions on him in almost every shift!</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('tabla')">← Tabla</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('mridangam')">Next: Mridangam →</button>
+  </div>
+</div>
+
+<!-- ===== MRIDANGAM ===== -->
+<div id="p-mridangam" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(251,191,36,.15)">🥁</div>
+    <div class="instr-meta">
+      <h2>Mridangam</h2>
+      <div class="instr-type">Type: <strong>Membranophone</strong> (Avnadh Vadya) · Carnatic Music Percussion</div>
+      <div class="tags"><span class="tag">★ Less Frequent</span><span class="tag">Carnatic Music</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">VK Sivaraman</div>
+        <div class="person-note">Mridangam maestro</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">UK Sivaraman</div>
+        <div class="person-note">Also plays Violin</div>
+        <div class="person-award">🏆 Padma Vibhushan (2010)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Rajan Swaminathan</div>
+        <div class="person-note">Mridangam player</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick rv-hide">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text">Mridangam = <em>Sivaraman Sir</em>. UK Sivaraman plays both Mridangam and Violin. Both VK and UK Sivaraman share the same surname — easy to confuse, so note the initials.</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('pakhawaj')">← Pakhawaj</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('ghatam')">Next: Ghatam →</button>
+  </div>
+</div>
+
+<!-- ===== GHATAM ===== -->
+<div id="p-ghatam" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(192,132,252,.15)">🏺</div>
+    <div class="instr-meta">
+      <h2>Ghatam</h2>
+      <div class="instr-type">Type: <strong>Idiophone</strong> (Ghan Vadya — घन वाद्य) · Pot-shaped instrument · Carnatic</div>
+      <div class="tags"><span class="tag">★ Less Frequent</span><span class="tag key">Unique: Idiophone!</span></div>
+    </div>
+  </div>
+
+  <div class="highlight highlight-purple">
+    <h4>🔑 Why Ghatam is an Idiophone</h4>
+    <p>The clay pot itself vibrates when struck. No strings, no membrane, no air — the instrument body IS the sound producer. This makes it an Idiophone unlike Tabla (Membranophone).</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card" style="border-color:rgba(192,132,252,.4)">
+        <div class="person-name">T.H. Vinayakram (Vikku Vinayakram)</div>
+        <div class="person-note">Also known as Vikku Vinayakram — same person, two names!</div>
+        <div class="person-award">🏆 Padma Bhushan (2014)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">E.M. Subramaniam</div>
+        <div class="person-note">Ghatam maestro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trick">
+    <div class="trick-label">🧠 Memory Trick</div>
+    <div class="trick-text">Ghatam (घड़ा) = earthen pot. <em>T.H. Vinayakram = Vikku Vinayakram</em> — same person (T.H. = family name). Padma Bhushan <em>2014</em>. Carnatic music → South India.</div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('mridangam')">← Mridangam</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('drums')">Next: Drums →</button>
+  </div>
+</div>
+
+<!-- ===== DRUMS ===== -->
+<div id="p-drums" class="page">
+  <div class="instr-header">
+    <div class="instr-icon" style="background:rgba(251,191,36,.15)">🥁</div>
+    <div class="instr-meta">
+      <h2>Drums</h2>
+      <div class="instr-type">Type: <strong>Membranophone</strong> · Western Percussion Instrument</div>
+      <div class="tags"><span class="tag">★ Less Frequent</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Famous Exponents</div>
+    <div class="person-grid">
+      <div class="person-card">
+        <div class="person-name">Sivamani</div>
+        <div class="person-note">Famous Indian drummer, fusion music</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Anand Gopal Bandopadhyay</div>
+        <div class="person-note">Also plays Tabla (Banaras Gharana)</div>
+      </div>
+      <div class="person-card">
+        <div class="person-name">Shubhankar Banerjee</div>
+        <div class="person-note">Drums player</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('ghatam')">← Ghatam</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('awards')">Next: Awards Summary →</button>
+  </div>
+</div>
+
+<!-- ===== AWARDS SUMMARY ===== -->
+<div id="p-awards" class="page">
+  <div class="page-header">
+    <div class="page-eyebrow">Quick Reference</div>
+    <div class="page-title">Awards Summary</div>
+    <div class="page-desc rv-hide">All major awards in one place for rapid revision.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏆 Bharat Ratna Recipients (Musicians)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Name</th><th>Year</th><th>Instrument</th></tr></thead>
+        <tbody>
+          <tr class="award-row"><td>1st</td><td style="color:var(--green)">M.S. Subbulakshmi</td><td>1998</td><td>Carnatic Vocal</td></tr>
+          <tr class="award-row"><td>2nd</td><td style="color:var(--green)">Pandit Ravi Shankar</td><td>1999</td><td>Sitar</td></tr>
+          <tr class="award-row"><td>3rd</td><td style="color:var(--green)">Ustad Bismillah Khan</td><td>2001</td><td>Shehnai</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎵 Zakir Hussain — Complete Awards</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Award</th><th>Year</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Padma Bhushan</td><td>2002</td><td>India's 3rd highest civilian award</td></tr>
+          <tr><td>Padma Vibhushan</td><td>2023</td><td>India's 2nd highest civilian award</td></tr>
+          <tr><td>Grammy (5 times)</td><td>Multiple</td><td>Highest Grammys by any Indian</td></tr>
+          <tr><td>Latest Grammy</td><td>Recent</td><td>"This Moment" — Shakti Band</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Other Key Awards</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Person</th><th>Award</th><th>Year</th><th>Instrument</th></tr></thead>
+        <tbody>
+          <tr><td>Hariprasad Chaurasia</td><td>Padma Bhushan</td><td>1992</td><td>Flute</td></tr>
+          <tr><td>Hariprasad Chaurasia</td><td>Padma Vibhushan</td><td>2000</td><td>Flute</td></tr>
+          <tr><td>Ravi Shankar</td><td>Grammy (1st India)</td><td>1968</td><td>Sitar — West Meets East</td></tr>
+          <tr><td>T.H. Vinayakram</td><td>Padma Bhushan</td><td>2014</td><td>Ghatam</td></tr>
+          <tr><td>Buddhaditya Mukherjee</td><td>Padma Bhushan</td><td>2019</td><td>Sitar / Sur Bahar</td></tr>
+          <tr><td>T.N. Krishna</td><td>Padmashree</td><td>1973</td><td>Violin</td></tr>
+          <tr><td>UK Sivaraman</td><td>Padma Vibhushan</td><td>2010</td><td>Mridangam/Violin</td></tr>
+          <tr><td>Ustad Allah Rakha</td><td>Padmashree</td><td>1977</td><td>Tabla / Pakhawaj</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="highlight highlight-blue rv-hide">
+    <h4>ℹ️ Indian Civilian Award Hierarchy</h4>
+    <p>1. Bharat Ratna (highest) → 2. Padma Vibhushan → 3. Padma Bhushan → 4. Padmashree (4th highest)</p>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('drums')">← Drums</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('faq')">Next: Frequently Asked →</button>
+  </div>
+</div>
+
+<!-- ===== FAQ ===== -->
+<div id="p-faq" class="page">
+  <div class="page-header">
+    <div class="page-eyebrow">Final Revision</div>
+    <div class="page-title">Frequently Asked in SSC</div>
+    <div class="page-desc rv-hide">The most exam-relevant questions based on past SSC CGL, CHSL, CPO, and MTS papers.</div>
+  </div>
+
+  <div class="faq-item">
+    <div class="faq-q">Who played Shehnai at Red Fort on Independence Day 1947?</div>
+    <div class="faq-a">Ustad Bismillah Khan</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Who was the 2nd Indian musician to receive Bharat Ratna?</div>
+    <div class="faq-a">Pandit Ravi Shankar (1999) — First Indian Grammy winner too (1968)</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Who was the 3rd Indian musician to receive Bharat Ratna?</div>
+    <div class="faq-a">Ustad Bismillah Khan (2001)</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What is another name of Pannalal Ghosh?</div>
+    <div class="faq-a">Amal Jyoti Ghosh</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Hariprasad Chaurasia was born in which city?</div>
+    <div class="faq-a">Allahabad (Prayagraj) — appeared in SSC JE</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Who received the Padma Bhushan for Sitar in 2019?</div>
+    <div class="faq-a">Buddhaditya Mukherjee</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What gharana does Shahid Parvez belong to?</div>
+    <div class="faq-a">Imdad Khani Gharana</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Which is the only instrument Bismillah Khan plays?</div>
+    <div class="faq-a">Shehnai — and he received all 4 major civilian awards</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Who founded the Maihar (Senia) Gharana of Sarod?</div>
+    <div class="faq-a">Alauddin Khan (from Maihar, Madhya Pradesh)</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Which king was shown playing Veena on coins?</div>
+    <div class="faq-a">Samudragupta (Gupta Dynasty) — also called Napoleon of India</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Kelucharan Mohapatra is associated with which dance?</div>
+    <div class="faq-a">Odissi (also plays Pakhawaj, Tabla, and Patachitra painting)</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What is the real/other name of T.H. Vinayakram?</div>
+    <div class="faq-a">Vikku Vinayakram — same person, different name</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Which instrument is called Mangal Vadya?</div>
+    <div class="faq-a">Shehnai — played at auspicious occasions like marriages</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Who has won the most Grammys among Indians?</div>
+    <div class="faq-a">Zakir Hussain (5 Grammys) — also received Padma Vibhushan 2023</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Uday Shankar is known for what?</div>
+    <div class="faq-a">Fusion Dance — blending Eastern Indian + Western dance forms</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Which instrument is a Ghatam classified as?</div>
+    <div class="faq-a">Idiophone (Ghan Vadya) — not Membranophone like Tabla</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">What was Ravi Shankar's Grammy-winning album?</div>
+    <div class="faq-a">West Meets East (1968)</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Who played Sahnai at Red Fort when Bismillah was born?</div>
+    <div class="faq-a">[Trick question — Bismillah Khan himself played at Independence Day Red Fort event in 1947]</div>
+  </div>
+
+  <div class="highlight highlight-green" style="margin-top:24px">
+    <h4>🎯 Top 5 Most Important Instruments for SSC</h4>
+    <ul>
+      <li><strong>Sitar</strong> — Ravi Shankar (Bharat Ratna, Grammy), Anushka Shankar, Shahid Parvez</li>
+      <li><strong>Tabla</strong> — Zakir Hussain (5 Grammys, Padma Vibhushan 2023), Allah Rakha</li>
+      <li><strong>Flute</strong> — Hariprasad Chaurasia (born Allahabad), Pannalal = Amal Jyoti Ghosh</li>
+      <li><strong>Shehnai</strong> — Bismillah Khan (Bharat Ratna 2001, Red Fort 1947, Dumraon Bihar)</li>
+      <li><strong>Santoor</strong> — Shivkumar Sharma (Kashmir), son Rahul Sharma</li>
+    </ul>
+  </div>
+
+  <div class="nav-buttons">
+    <button class="btn" onclick="nav('awards')">← Awards</button>
+    <div class="btn-spacer"></div>
+    <button class="btn btn-primary" onclick="nav('home')">🏠 Back to Home</button>
+  </div>
+</div>
+
+</div><!-- end page-content -->
+</div><!-- end main -->
+
+<!-- BOTTOM NAV (mobile) -->
+<div id="bottom-nav">
+  <div class="bnav-items">
+    <div class="bnav-item active" id="bn-home" onclick="nav('home')">
+      <div class="bnav-icon">🏠</div><span>Home</span>
+    </div>
+    <div class="bnav-item" onclick="navPrev()">
+      <div class="bnav-icon">◀</div><span>Prev</span>
+    </div>
+    <div class="bnav-item" onclick="navNext()">
+      <div class="bnav-icon">▶</div><span>Next</span>
+    </div>
+    <div class="bnav-item" onclick="toggleSidebar()">
+      <div class="bnav-icon">☰</div><span>Menu</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const pages=['home','types','sitar','sarod','sarangi','santoor','veena','surbahar','violin','flute','shehnai','nadaswaram','tabla','pakhawaj','mridangam','ghatam','drums','awards','faq'];
+const titles={'home':'Home','types':'Types of Instruments','sitar':'Sitar','sarod':'Sarod','sarangi':'Sarangi','santoor':'Santoor','veena':'Veena & Rudra Veena','surbahar':'Sur Bahar','violin':'Violin','flute':'Flute (Bansuri)','shehnai':'Shehnai','nadaswaram':'Nadaswaram','tabla':'Tabla','pakhawaj':'Pakhawaj','mridangam':'Mridangam','ghatam':'Ghatam','drums':'Drums','awards':'Awards Summary','faq':'Frequently Asked'};
+let cur='home';
+let rapidMode=false;
+
+function nav(id){
+  document.getElementById('p-'+cur).classList.remove('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  cur=id;
+  document.getElementById('p-'+id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')==="nav('"+id+"')") n.classList.add('active');
+  });
+  document.getElementById('topbar-title').textContent=titles[id]||id;
+  const idx=pages.indexOf(id)+1;
+  document.getElementById('progress-label').textContent=idx+' / '+pages.length;
+  document.getElementById('progress-fill').style.width=(idx/pages.length*100)+'%';
+  document.getElementById('bn-home').classList.toggle('active',id==='home');
+  document.getElementById('page-content').scrollTop=0;
+  window.scrollTo(0,0);
+  const sb=document.getElementById('sidebar');
+  if(window.innerWidth<=768) sb.classList.remove('open');
+}
+
+function navNext(){
+  const i=pages.indexOf(cur);
+  if(i<pages.length-1) nav(pages[i+1]);
+}
+
+function navPrev(){
+  const i=pages.indexOf(cur);
+  if(i>0) nav(pages[i-1]);
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+function toggleRapid(){
+  rapidMode=!rapidMode;
+  document.body.classList.toggle('rapid-mode',rapidMode);
+  document.getElementById('rv-btn').classList.toggle('active',rapidMode);
+  document.getElementById('rv-label').textContent=rapidMode?'Rapid Revision: ON — Only key facts shown':'Rapid Revision Mode: OFF';
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  if(e.key==='ArrowRight') navNext();
+  else if(e.key==='ArrowLeft') navPrev();
+  else if(e.key==='h'||e.key==='H') nav('home');
+});
+
+if(window.innerWidth<=768){
+  document.getElementById('menu-btn').style.display='block';
+}
+
+window.addEventListener('resize',()=>{
+  document.getElementById('menu-btn').style.display=window.innerWidth<=768?'block':'none';
+});
+</script>
+</body>
+</html>
