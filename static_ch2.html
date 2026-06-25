@@ -1,0 +1,2070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Classical Dances of India — The Temple Hall Memory System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg: #0f1117;
+  --bg-deep: #0a0b10;
+  --surface: #161922;
+  --surface-2: #1c2029;
+  --border: #262b36;
+  --text: #e6e8eb;
+  --muted: #8b939e;
+  --green: #7ee787;
+  --green-dim: #4f8f5a;
+  --blue: #79c0ff;
+  --blue-dim: #4a7aa8;
+  --amber: #ffa657;
+  --amber-dim: #cc8444;
+  --pink: #ff9bce;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --radius: 10px;
+  --sidebar-w: 280px;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html, body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body{
+  display:flex;
+  min-height:100vh;
+  background-image:
+    radial-gradient(circle at 10% 0%, rgba(126,231,135,0.05), transparent 40%),
+    radial-gradient(circle at 90% 100%, rgba(121,192,255,0.05), transparent 40%);
+}
+
+a{ color: inherit; text-decoration:none; }
+button{ font-family: inherit; cursor:pointer; }
+
+/* ============ SCROLLBAR ============ */
+::-webkit-scrollbar{ width:10px; height:10px; }
+::-webkit-scrollbar-track{ background: var(--bg-deep); }
+::-webkit-scrollbar-thumb{ background: var(--surface-2); border-radius:6px; }
+::-webkit-scrollbar-thumb:hover{ background: var(--border); }
+
+/* ============ SIDEBAR : THE TEMPLE HALLWAY ============ */
+.sidebar{
+  width: var(--sidebar-w);
+  flex-shrink:0;
+  background: linear-gradient(180deg, var(--bg-deep), #0c0e14);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top:0; left:0; bottom:0;
+  overflow-y:auto;
+  z-index: 50;
+  display:flex;
+  flex-direction:column;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header{
+  padding: 22px 20px 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-header .eyebrow{
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--green);
+  text-transform: uppercase;
+  display:block;
+  margin-bottom:6px;
+}
+
+.sidebar-header h1{
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  line-height:1.3;
+  color: var(--text);
+}
+
+.sidebar-header .sub{
+  font-size: 11px;
+  color: var(--muted);
+  margin-top:6px;
+  line-height:1.5;
+}
+
+.hall-progress{
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.hall-progress-bar{
+  height:4px;
+  background: var(--surface);
+  border-radius:4px;
+  overflow:hidden;
+}
+.hall-progress-fill{
+  height:100%;
+  background: linear-gradient(90deg, var(--green), var(--blue));
+  width:0%;
+  transition: width 0.4s ease;
+  border-radius:4px;
+}
+.hall-progress-label{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:6px;
+  font-family: var(--font-mono);
+}
+
+.nav-group{
+  padding: 14px 14px 6px 14px;
+}
+.nav-group-label{
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 8px 10px 8px 10px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding: 10px 12px;
+  margin-bottom: 3px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: var(--muted);
+  position:relative;
+  transition: background 0.15s, color 0.15s;
+  border: 1px solid transparent;
+}
+.nav-item:hover{
+  background: var(--surface);
+  color: var(--text);
+}
+.nav-item.active{
+  background: var(--surface-2);
+  color: var(--green);
+  border-color: var(--green-dim);
+}
+.nav-item.active .nav-icon{ opacity:1; }
+.nav-icon{
+  width:18px; height:18px;
+  flex-shrink:0;
+  opacity:0.7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.nav-icon svg{ width:100%; height:100%; }
+.nav-item .door-num{
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--muted);
+  background: var(--bg-deep);
+  border-radius:4px;
+  padding:1px 5px;
+  margin-left:auto;
+}
+.nav-item.active .door-num{ color: var(--green); }
+
+.sidebar-footer{
+  margin-top:auto;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 10.5px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  line-height:1.6;
+}
+
+/* mobile hamburger */
+.menu-toggle{
+  display:none;
+  position: fixed;
+  top: 14px; left: 14px;
+  z-index: 100;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 42px; height:42px;
+  align-items:center;
+  justify-content:center;
+  color: var(--green);
+}
+.menu-toggle svg{ width:20px; height:20px; }
+
+.overlay{
+  display:none;
+  position:fixed; inset:0;
+  background: rgba(0,0,0,0.5);
+  z-index:40;
+}
+
+/* ============ MAIN ============ */
+.main{
+  margin-left: var(--sidebar-w);
+  flex:1;
+  min-width:0;
+  padding: 36px 48px 90px 48px;
+  max-width: 1000px;
+}
+
+.page{ display:none; animation: fadeUp 0.35s ease; }
+.page.active{ display:block; }
+
+@keyframes fadeUp{
+  from{ opacity:0; transform: translateY(8px); }
+  to{ opacity:1; transform: translateY(0); }
+}
+
+/* page header */
+.page-eyebrow{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 10px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.page-eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--green); }
+
+.page-title{
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 600;
+  line-height:1.15;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, var(--text), var(--text));
+  background-clip:text;
+}
+.page-title .accent{ color: var(--green); }
+.page-subtitle{
+  color: var(--muted);
+  font-size: 14.5px;
+  margin-bottom: 28px;
+  max-width: 640px;
+  line-height:1.6;
+}
+
+/* section card */
+.card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin-bottom: 20px;
+}
+.card h3{
+  font-family: var(--font-display);
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 12px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.card p{ font-size: 14px; line-height:1.7; color: var(--text); margin-bottom:10px; }
+.card ul, .card ol{ margin-left: 20px; margin-bottom: 10px; }
+.card li{ font-size: 14px; line-height:1.75; margin-bottom:6px; }
+.card li::marker{ color: var(--green); }
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-weight:600;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+.tag-must{ background: rgba(126,231,135,0.12); color: var(--green); border:1px solid var(--green-dim); }
+.tag-imp{ background: rgba(121,192,255,0.12); color: var(--blue); border:1px solid var(--blue-dim); }
+.tag-good{ background: rgba(255,166,87,0.1); color: var(--amber); border:1px solid var(--amber-dim); }
+.tag-trap{ background: rgba(255,107,107,0.12); color: #ff8b8b; border:1px solid #a85050; }
+
+/* memory hook box */
+.hook-box{
+  background: linear-gradient(135deg, rgba(126,231,135,0.06), rgba(121,192,255,0.04));
+  border: 1px dashed var(--green-dim);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin: 14px 0;
+}
+.hook-box .hook-label{
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color: var(--green);
+  margin-bottom: 8px;
+  display:block;
+}
+.hook-box p{ font-size: 14.5px; line-height:1.8; color: var(--text); }
+.hook-box .hi{ color: var(--blue); font-weight:600; }
+.hook-box .hi2{ color: var(--green); font-weight:600; }
+
+/* trap box */
+.trap-box{
+  background: rgba(255,107,107,0.06);
+  border-left: 3px solid #ff6b6b;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 14px 18px;
+  margin: 12px 0;
+}
+.trap-box .trap-label{
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color: #ff8b8b;
+  margin-bottom: 6px;
+  display:block;
+}
+.trap-box p{ font-size: 13.5px; line-height:1.7; }
+
+/* table */
+.tbl{ width:100%; border-collapse: collapse; margin: 14px 0; font-size: 13.5px; }
+.tbl th{
+  text-align:left;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  color: var(--blue);
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--border);
+  background: var(--surface-2);
+}
+.tbl td{
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align:top;
+}
+.tbl tr:last-child td{ border-bottom:none; }
+.tbl tr:hover td{ background: rgba(255,255,255,0.015); }
+
+/* grid layouts */
+.grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; }
+.grid-3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px; }
+@media (max-width: 760px){ .grid-2, .grid-3{ grid-template-columns: 1fr; } }
+
+.stat-chip{
+  background: var(--surface-2);
+  border:1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  text-align:center;
+}
+.stat-chip .num{ font-family: var(--font-display); font-size: 26px; color: var(--green); font-weight:600; }
+.stat-chip .lbl{ font-size:11px; color:var(--muted); margin-top:4px; }
+
+/* flashcard / accordion for active recall */
+.flip-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 10px;
+  cursor:pointer;
+  transition: border-color 0.2s;
+}
+.flip-card:hover{ border-color: var(--green-dim); }
+.flip-card .q{ font-size: 14px; color: var(--blue); font-weight:600; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.flip-card .q .chevron{ transition: transform 0.2s; color:var(--muted); flex-shrink:0; }
+.flip-card.open .q .chevron{ transform: rotate(180deg); }
+.flip-card .a{
+  font-size: 13.5px;
+  color: var(--text);
+  margin-top:0;
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition: max-height 0.25s ease, opacity 0.2s ease, margin-top 0.25s ease;
+  line-height:1.7;
+}
+.flip-card.open .a{ max-height: 600px; opacity:1; margin-top:10px; padding-top:10px; border-top:1px dashed var(--border); }
+
+/* fill in blank */
+.blank{
+  border-bottom: 2px solid var(--blue);
+  color: transparent;
+  background: var(--surface-2);
+  border-radius:3px;
+  padding: 0 4px;
+  font-weight:600;
+  cursor:pointer;
+  transition: color 0.15s, background 0.15s;
+  user-select:none;
+}
+.blank.revealed{
+  color: var(--green);
+  background: transparent;
+}
+
+/* timeline */
+.timeline{ position:relative; padding-left: 28px; margin: 16px 0; }
+.timeline::before{
+  content:'';
+  position:absolute; left:6px; top:4px; bottom:4px;
+  width:2px;
+  background: linear-gradient(180deg, var(--green), var(--blue));
+}
+.t-item{ position:relative; margin-bottom:18px; }
+.t-item::before{
+  content:'';
+  position:absolute; left:-28px; top:3px;
+  width:12px; height:12px;
+  border-radius:50%;
+  background: var(--bg);
+  border: 2px solid var(--green);
+}
+.t-item .yr{ font-family: var(--font-mono); color: var(--green); font-size:13px; font-weight:700; }
+.t-item p{ font-size: 13.5px; color: var(--text); margin-top:2px; }
+
+/* palace map */
+.palace-wrap{
+  background: radial-gradient(circle at 50% 0%, rgba(121,192,255,0.07), transparent 60%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px;
+  margin: 16px 0;
+}
+.palace-room{
+  border-left: 2px solid var(--green-dim);
+  padding-left: 18px;
+  margin-bottom: 18px;
+  position:relative;
+}
+.palace-room::before{
+  content:'';
+  position:absolute; left:-6px; top:2px;
+  width:10px; height:10px;
+  background: var(--green);
+  border-radius:50%;
+  box-shadow: 0 0 8px var(--green);
+}
+.palace-room h4{ font-family: var(--font-display); color: var(--blue); font-size:15.5px; margin-bottom:4px; }
+.palace-room p{ font-size:13.5px; color:var(--text); line-height:1.7; }
+
+/* speed sheet */
+.speed-grid{
+  display:grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow:hidden;
+  margin: 14px 0;
+}
+.speed-grid > div{ padding:10px 14px; font-size:13px; border-bottom:1px solid var(--border); }
+.speed-grid > div:nth-child(odd){ background: var(--surface-2); color: var(--blue); font-family:var(--font-mono); font-size:11.5px; font-weight:600; display:flex; align-items:center;}
+.speed-grid > div:nth-child(even){ background: var(--surface); color: var(--text); }
+.speed-grid > div:last-child, .speed-grid > div:nth-last-child(2){ border-bottom:none; }
+
+/* last night sheet - big punchy */
+.punch{
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--green);
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.punch:last-child{ border-bottom:none; }
+.punch .num-label{ color: var(--blue); font-family: var(--font-mono); font-size:12px; margin-right:8px;}
+
+/* nav between pages bottom */
+.page-nav-footer{
+  display:flex;
+  justify-content:space-between;
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  gap:12px;
+}
+.pn-btn{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--text);
+  transition: border-color 0.2s, color 0.2s;
+}
+.pn-btn:hover{ border-color: var(--green-dim); color: var(--green); }
+.pn-btn .lbl{ color: var(--muted); font-size:10.5px; display:block; font-family:var(--font-mono); }
+.pn-btn.next{ margin-left:auto; text-align:right; }
+
+/* section divider label inside a hall page (sub-nav pills) */
+.subnav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom: 26px;
+  position: sticky;
+  top:0;
+  background: var(--bg);
+  padding: 10px 0;
+  z-index:5;
+}
+.subnav button{
+  background: var(--surface);
+  border:1px solid var(--border);
+  color: var(--muted);
+  border-radius:20px;
+  padding: 7px 14px;
+  font-size:12px;
+  font-family: var(--font-body);
+  transition: all 0.15s;
+}
+.subnav button:hover{ color:var(--text); border-color:var(--green-dim); }
+.subnav button.active-sub{ background: var(--green); color: #0a0f0a; border-color:var(--green); font-weight:600; }
+
+.layer-section{ display:none; }
+.layer-section.active-layer{ display:block; animation: fadeUp 0.3s ease; }
+
+.lotus-divider{
+  text-align:center;
+  color: var(--border);
+  font-size: 18px;
+  margin: 28px 0;
+  letter-spacing: 12px;
+}
+
+/* responsive */
+@media (max-width: 880px){
+  .sidebar{ transform: translateX(-100%); }
+  .sidebar.open{ transform: translateX(0); }
+  .main{ margin-left:0; padding: 80px 18px 70px 18px; }
+  .menu-toggle{ display:flex; }
+  .overlay.show{ display:block; }
+  .page-title{ font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Open navigation">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<div class="overlay" id="overlay"></div>
+
+<!-- ============ SIDEBAR (placeholder, filled below) ============ -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="eyebrow">Static GK · Fee Division Batch</span>
+    <h1>The Temple Hall<br>Memory System</h1>
+    <div class="sub">Classical Dances of India — walk through 8 halls, never forget what's inside.</div>
+  </div>
+  <div class="hall-progress">
+    <div class="hall-progress-bar"><div class="hall-progress-fill" id="progressFill"></div></div>
+    <div class="hall-progress-label" id="progressLabel">0 / 0 rooms visited</div>
+  </div>
+  <div id="navContainer" style="flex:1; overflow-y:auto;"></div>
+  <div class="sidebar-footer">
+    🪔 8 dances, 1 long hallway.<br>Revise until you can walk it with your eyes closed.
+  </div>
+</nav>
+
+<main class="main" id="mainArea"></main>
+
+<script>
+/* =========================================================
+   NAVIGATION DATA — The Temple Hallway
+   ========================================================= */
+const NAV_GROUPS = [
+  {
+    label: "Enter the Hallway",
+    items: [
+      { id: "intro", title: "The Big Picture", icon: "gate" },
+      { id: "palace", title: "Memory Palace Map", icon: "map" },
+    ]
+  },
+  {
+    label: "8 Dance Halls",
+    items: [
+      { id: "bharatanatyam", title: "Bharatanatyam", icon: "flame" },
+      { id: "kuchipudi", title: "Kuchipudi", icon: "leaf" },
+      { id: "mohiniyattam", title: "Mohiniyattam", icon: "wave" },
+      { id: "kathakali", title: "Kathakali", icon: "mask" },
+      { id: "kathak", title: "Kathak", icon: "spin" },
+      { id: "manipuri", title: "Manipuri", icon: "drum" },
+      { id: "odissi", title: "Odissi", icon: "temple" },
+      { id: "satriya", title: "Satriya", icon: "river" },
+    ]
+  },
+  {
+    label: "Cross-Cutting Halls",
+    items: [
+      { id: "music", title: "Carnatic vs Hindustani", icon: "note" },
+      { id: "traps", title: "Exam Traps", icon: "warn" },
+      { id: "examiner", title: "Examiner's Mind", icon: "eye" },
+      { id: "recall", title: "Active Recall Lab", icon: "brain" },
+    ]
+  },
+  {
+    label: "Exit Through Revision",
+    items: [
+      { id: "highyield", title: "High-Yield Sheet", icon: "star" },
+      { id: "ultrafast", title: "Ultra-Fast Sheet", icon: "bolt" },
+      { id: "thirtysec", title: "30-Second Sheet", icon: "clock" },
+      { id: "lastnight", title: "Last Night Before Exam", icon: "moon" },
+    ]
+  }
+];
+
+const ICONS = {
+  gate: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V9l8-5 8 5v12"/><path d="M9 21V13h6v8"/></svg>',
+  map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15M15 6v15"/></svg>',
+  flame: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2c2 4-2 5-2 9a4 4 0 008 0c0-2-1-3-1-3s2 1 2 5a7 7 0 11-14 0c0-5 4-7 4-7s-1-2 3-4z"/></svg>',
+  leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 20A7 7 0 019 6c3 0 7 2 9 7-2 5-6 7-9 7z"/><path d="M9 6c5 0 9 4 9 7"/></svg>',
+  wave: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12c2-3 4-3 6 0s4 3 6 0 4-3 6 0M2 18c2-3 4-3 6 0s4 3 6 0 4-3 6 0"/></svg>',
+  mask: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 10h.01M16 10h.01M8 15s2 2 4 2 4-2 4-2"/></svg>',
+  spin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg>',
+  drum: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v9a7 3 0 0014 0V6"/></svg>',
+  temple: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 4H9l3-4z"/><path d="M5 22V11h14v11M3 22h18"/></svg>',
+  river: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 16c3-4 6 4 9 0s6 4 9 0"/><path d="M3 10c3-4 6 4 9 0s6 4 9 0"/></svg>',
+  note: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>',
+  warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 21h20L12 2z"/><path d="M12 9v5M12 17h.01"/></svg>',
+  eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+  brain: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 2a4 4 0 00-4 4 3 3 0 00-1 5.8A4 4 0 008 18h1V2zM15 2a4 4 0 014 4 3 3 0 011 5.8 4 4 0 01-4 6.2h-1V2z"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3 7 7 .5-5.5 4.8L18 22l-6-4-6 4 1.5-7.7L2 9.5 9 9z"/></svg>',
+  bolt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1111.2 3 7 7 0 0021 12.8z"/></svg>'
+};
+
+let allPageIds = [];
+NAV_GROUPS.forEach(g => g.items.forEach(i => allPageIds.push(i.id)));
+let visitedPages = new Set();
+
+/* =========================================================
+   BUILD SIDEBAR
+   ========================================================= */
+const navContainer = document.getElementById('navContainer');
+NAV_GROUPS.forEach(group => {
+  const groupLabel = document.createElement('div');
+  groupLabel.className = 'nav-group-label';
+  groupLabel.textContent = group.label;
+  const groupWrap = document.createElement('div');
+  groupWrap.className = 'nav-group';
+  groupWrap.appendChild(groupLabel);
+  group.items.forEach((item, idx) => {
+    const a = document.createElement('a');
+    a.className = 'nav-item';
+    a.href = '#' + item.id;
+    a.dataset.page = item.id;
+    a.innerHTML = '<span class="nav-icon">' + ICONS[item.icon] + '</span><span>' + item.title + '</span>';
+    a.addEventListener('click', (e) => { e.preventDefault(); goToPage(item.id); closeSidebarMobile(); });
+    groupWrap.appendChild(a);
+  });
+  navContainer.appendChild(groupWrap);
+});
+
+function updateProgress(){
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+  const pct = Math.round((visitedPages.size / allPageIds.length) * 100);
+  fill.style.width = pct + '%';
+  label.textContent = visitedPages.size + ' / ' + allPageIds.length + ' rooms visited';
+}
+
+function setActiveNav(pageId){
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.classList.toggle('active', el.dataset.page === pageId);
+  });
+}
+
+/* mobile sidebar toggle */
+const sidebarEl = document.getElementById('sidebar');
+const overlayEl = document.getElementById('overlay');
+document.getElementById('menuToggle').addEventListener('click', () => {
+  sidebarEl.classList.add('open');
+  overlayEl.classList.add('show');
+});
+overlayEl.addEventListener('click', closeSidebarMobile);
+function closeSidebarMobile(){
+  sidebarEl.classList.remove('open');
+  overlayEl.classList.remove('show');
+}
+
+/* =========================================================
+   PAGE ROUTER
+   ========================================================= */
+const mainArea = document.getElementById('mainArea');
+
+function goToPage(pageId){
+  if(!PAGES[pageId]) return;
+  mainArea.innerHTML = PAGES[pageId]();
+  mainArea.scrollTop = 0;
+  window.scrollTo(0,0);
+  setActiveNav(pageId);
+  visitedPages.add(pageId);
+  updateProgress();
+  window.location.hash = pageId;
+  initPageWidgets();
+  attachFooterNav(pageId);
+}
+
+function attachFooterNav(pageId){
+  const idx = allPageIds.indexOf(pageId);
+  const prevId = idx > 0 ? allPageIds[idx-1] : null;
+  const nextId = idx < allPageIds.length - 1 ? allPageIds[idx+1] : null;
+  const prevBtn = document.getElementById('btnPrevPage');
+  const nextBtn = document.getElementById('btnNextPage');
+  if(prevBtn){
+    if(prevId){ prevBtn.style.visibility='visible'; prevBtn.querySelector('.lbl-text').textContent = labelFor(prevId); prevBtn.onclick = () => goToPage(prevId); }
+    else { prevBtn.style.visibility='hidden'; }
+  }
+  if(nextBtn){
+    if(nextId){ nextBtn.style.visibility='visible'; nextBtn.querySelector('.lbl-text').textContent = labelFor(nextId); nextBtn.onclick = () => goToPage(nextId); }
+    else { nextBtn.style.visibility='hidden'; }
+  }
+}
+function labelFor(id){
+  for(const g of NAV_GROUPS){ for(const i of g.items){ if(i.id===id) return i.title; } }
+  return id;
+}
+
+function footerNav(){
+  return '<div class="page-nav-footer">'
+    + '<button class="pn-btn" id="btnPrevPage"><span><span class="lbl">PREVIOUS HALL</span><span class="lbl-text"></span></span></button>'
+    + '<button class="pn-btn next" id="btnNextPage"><span><span class="lbl">NEXT HALL</span><span class="lbl-text"></span></span></button>'
+    + '</div>';
+}
+
+/* =========================================================
+   WIDGET LOGIC (tabs, flip cards, blanks)
+   ========================================================= */
+function initPageWidgets(){
+  document.querySelectorAll('.subnav').forEach(nav => {
+    const buttons = nav.querySelectorAll('button');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.dataset.target;
+        const scope = nav.closest('.page');
+        scope.querySelectorAll('.layer-section').forEach(s => s.classList.remove('active-layer'));
+        scope.querySelector('#' + target).classList.add('active-layer');
+        buttons.forEach(b => b.classList.remove('active-sub'));
+        btn.classList.add('active-sub');
+      });
+    });
+  });
+
+  document.querySelectorAll('.flip-card').forEach(card => {
+    card.addEventListener('click', () => card.classList.toggle('open'));
+  });
+
+  document.querySelectorAll('.blank').forEach(b => {
+    b.addEventListener('click', () => b.classList.toggle('revealed'));
+  });
+}
+
+/* =========================================================
+   PAGE CONTENT REGISTRY
+   ========================================================= */
+const PAGES = {};
+/* ===================== INTRO PAGE ===================== */
+PAGES.intro = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> ROOM 0 · ORIENTATION</div>
+    <div class="page-title">Welcome to the <span class="accent">Temple Hallway</span></div>
+    <div class="page-subtitle">Before you walk through the 8 halls, understand the floor plan. This is not a summary — it is a system built so this chapter survives 100 revisions and is still standing on exam day.</div>
+
+    <div class="card">
+      <h3>🎯 The Big Picture</h3>
+      <p>Imagine a long stone temple hallway with <strong style="color:var(--green)">8 carved doorways</strong>. Each doorway leads into one hall — one Classical Dance of India. Walk the hallway once, and you've met all 8. Walk it twenty times, and you'll never forget the order, the exponents, or the traps hiding in the dark corners.</p>
+      <p>The Sangeet Natak Akademi (SNA) — India's national academy for performing arts — officially recognises <span class="tag tag-must">8 Classical Dances</span>. The Ministry of Culture's list has a 9th: Chhau. But for your exam, the number to lock in is <strong style="color:var(--green)">8</strong>, per SNA.</p>
+    </div>
+
+    <div class="hook-box">
+      <span class="hook-label">🧠 Memory Hook — The Number Itself</span>
+      <p>Picture an <span class="hi2">octagonal temple hallway</span> — 8 sides, 8 doors. SNA built it with exactly 8 doors. The Ministry of Culture tried to sneak in a 9th door (Chhau) on the side — but that door is bricked up for your exam. <span class="hi">8 is the number SNA stamped on the entrance arch.</span></p>
+    </div>
+
+    <div class="grid-3">
+      <div class="stat-chip"><div class="num">8</div><div class="lbl">Classical Dances (SNA)</div></div>
+      <div class="stat-chip"><div class="num">9</div><div class="lbl">Classical Dances (Min. of Culture, incl. Chhau)</div></div>
+      <div class="stat-chip"><div class="num">2</div><div class="lbl">Core natures: Lasya & Tandava</div></div>
+    </div>
+
+    <div class="card">
+      <h3>📜 The Founding Text — Natya Shastra</h3>
+      <p>Every hallway needs a foundation stone. For classical dance, that stone is the <strong style="color:var(--blue)">Natya Shastra</strong>, composed by <strong style="color:var(--green)">Bharat Muni</strong>. It is treated as the source manual for dance, drama, and aesthetics.</p>
+      <p>It carries a nickname you must never forget: the <span class="tag tag-must">"Fifth Veda"</span>.</p>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Memory Hook — The Fifth Veda</span>
+        <p>You know the four Vedas standing in a row like four pillars: <span class="hi">Rig, Sama, Yajur, Atharva</span>. Now imagine <span class="hi2">Bharat Muni</span> walks in and quietly places a fifth pillar beside them — carved not with hymns, but with dance steps and drama. That fifth pillar is the <span class="hi2">Natya Shastra</span>. Four Vedas for the priests, a fifth for the dancers.</p>
+      </div>
+      <p>The second major literary source on classical dance is <strong style="color:var(--blue)">Abhinaya Darpana</strong> ("Mirror of Gesture"), attributed to <strong>Nandikeshvara</strong>.</p>
+    </div>
+
+    <div class="card">
+      <h3>⚖️ The Two Natures — Lasya & Tandava</h3>
+      <p>Every classical dance form expresses itself through one or both of two fundamental "natures" described in the Natya Shastra:</p>
+      <table class="tbl">
+        <tr><th>Nature</th><th>Quality</th><th>Associated Deity</th></tr>
+        <tr><td><strong style="color:var(--green)">Lasya</strong></td><td>Graceful, delicate, feminine</td><td>Parvati</td></tr>
+        <tr><td><strong style="color:var(--blue)">Tandava</strong></td><td>Vigorous, muscular, masculine</td><td>Shiva</td></tr>
+      </table>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Memory Hook — Lasya vs Tandava</span>
+        <p>Picture <span class="hi2">Parvati</span> swaying gently with bangles tinkling — soft, curved, flowing. That's <span class="hi2">Lasya</span> (sounds like "lace" — delicate lace fabric). Now picture <span class="hi">Shiva</span> stomping the cosmic dance of destruction, muscles tense, the universe shaking. That's <span class="hi">Tandava</span> (sounds like "thunder" — heavy and forceful).</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Exam Trap</span>
+        <p>Don't flip the genders. Lasya = feminine/Parvati. Tandava = masculine/Shiva. Examiners love swapping these in statement-based questions.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🗺️ How To Walk This Hallway</h3>
+      <p>Each of the 8 halls ahead follows the same room layout so your brain builds one repeatable pattern instead of 8 separate ones:</p>
+      <ol>
+        <li><strong>Origin Room</strong> — state of origin, etymology, founding story</li>
+        <li><strong>Exponents Gallery</strong> — the teacher's exact mnemonic sentence for remembering names</li>
+        <li><strong>Special Facts Vault</strong> — schools, foundations, titles, unique identifiers</li>
+        <li><strong>Trap Corner</strong> — confusions specific to that dance</li>
+        <li><strong>Quick Recall Strip</strong> — one-line summary for 30-second revision</li>
+      </ol>
+      <p>Walk it in order the first time. After that, jump to whichever hall is weak using the sidebar.</p>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== MEMORY PALACE PAGE ===================== */
+PAGES.palace = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> THE MASTER MAP</div>
+    <div class="page-title">Chapter Memory Palace</div>
+    <div class="page-subtitle">One continuous walk through a temple hallway. Each room below is a doorway you'll open in detail later. Read this page like a movie trailer for the whole chapter.</div>
+
+    <div class="palace-wrap">
+      <div class="palace-room">
+        <h4>🚪 Door 1 — The Fire Hall (Bharatanatyam, Tamil Nadu)</h4>
+        <p>You enter through fire and devotion — temple maidens (Devadasis) once danced here as "Sadir" or "Dasi Attam." The British boarded this door shut in 1910. Rukmini Devi Arundale broke it back open in 1936 by founding Kalakshetra. Tandava-dominant, Shaivite.</p>
+      </div>
+      <div class="palace-room">
+        <h4>🚪 Door 2 — The Earthy Village Hall (Kuchipudi, Andhra Pradesh)</h4>
+        <p>A literal village named Kuchipudi in Krishna district. Born from Yakshagana (Karnataka folk dance), shaped by Siddhendra Yogi. This hall smells of earth — Kuchipudi symbolizes the Earth element.</p>
+      </div>
+      <div class="palace-room">
+        <h4>🚪 Door 3 — The Breezy Hall (Mohiniyattam, Kerala)</h4>
+        <p>A gentle hall where the air moves — Mohiniyattam symbolizes Air. Named after Mohini, Vishnu's enchantress form. Vaishnavite in spirit.</p>
+      </div>
+      <div class="palace-room">
+        <h4>🚪 Door 4 — The Masked Hall (Kathakali, Kerala)</h4>
+        <p>Same state as Door 3, but here dancers wear giant painted masks and tell epic stories with their eyes. Vaishnavite themes again.</p>
+      </div>
+      <div class="palace-room">
+        <h4>🚪 Door 5 — The Spinning North Hall (Kathak, Uttar Pradesh)</h4>
+        <p>Cross from South India into North India — the only classical dance native to the North. Spins on Hindustani music and Thumri. "Katha" = story. Birju Maharaj's pirouettes echo here.</p>
+      </div>
+      <div class="palace-room">
+        <h4>🚪 Door 6 — The Drum Hall (Manipuri, Manipur)</h4>
+        <p>An introverted hall — dancers never make eye contact with you. Drummers (Pung Cholom) leap through the air. Devotional Raas Leela of Radha-Krishna plays quietly in the corner. Vaishnavite.</p>
+      </div>
+      <div class="palace-room">
+        <h4>🚪 Door 7 — The Temple-Sculpture Hall (Odissi, Odisha)</h4>
+        <p>Walls carved like temple sculptures — frozen poses come alive. Kelucharan Mahapatra is the master sculptor of this hall, trained under Pankaj Charan Das.</p>
+      </div>
+      <div class="palace-room">
+        <h4>🚪 Door 8 — The Newest, Riverside Hall (Satriya, Assam)</h4>
+        <p>The youngest door — only added in 2000. Built beside the Brahmaputra, founded by Guru Shankaradeva, performed inside monasteries (Sattras) with Bhaona and Ankiya Naat plays, set to Borgeet music.</p>
+      </div>
+    </div>
+
+    <div class="hook-box">
+      <span class="hook-label">🧠 The One-Sentence Walk</span>
+      <p>"I lit a <span class="hi">Fire</span> in Tamil Nadu, walked into an <span class="hi2">Earthy</span> Andhra village, felt a cool <span class="hi">Breeze</span> in Kerala, saw a <span class="hi2">Mask</span> next door, then crossed north to <span class="hi">Spin</span> in UP, heard a <span class="hi2">Drum</span> in Manipur, touched a <span class="hi">temple Sculpture</span> in Odisha, and finally crossed a <span class="hi2">River</span> into Assam — the newest room of all."</p>
+    </div>
+
+    <div class="card">
+      <h3>🔢 Why This Order?</h3>
+      <p>The order mirrors how the lecture itself moves: South India first (Bharatanatyam → Kuchipudi → Mohiniyattam → Kathakali, all Carnatic-music states), then jumps North (Kathak, Hindustani music), then East-ish (Manipuri), then Odisha (Odissi), ending with the most recent addition (Satriya, 2000). Walking it in this order also means you naturally group the 4 Carnatic-South dances together — useful for "which dances use Carnatic music" questions.</p>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== BHARATANATYAM ===================== */
+PAGES.bharatanatyam = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> HALL 1 OF 8 · TAMIL NADU</div>
+    <div class="page-title">🔥 Bharatanatyam</div>
+    <div class="page-subtitle">The fire hall. Temple origins, banned by the British, revived by a queen of dance.</div>
+
+    <div class="subnav">
+      <button class="active-sub" data-target="bn-complete">Complete Notes</button>
+      <button data-target="bn-hooks">Memory Hooks</button>
+      <button data-target="bn-traps">Traps</button>
+      <button data-target="bn-quick">Quick Recall</button>
+    </div>
+
+    <div class="layer-section active-layer" id="bn-complete">
+      <div class="card">
+        <h3>📍 Origin & Names <span class="tag tag-must">Must Know</span></h3>
+        <p>State: <strong style="color:var(--green)">Tamil Nadu</strong>.</p>
+        <p>Older names: <strong>Sadir</strong> / <strong>Sadir Attam</strong>, and <strong>Dasi Attam</strong> — called "Dasi Attam" because it was performed by <em>devadasis</em> (temple maidens/maids) inside temples.</p>
+        <p>When performed solo, it is called <strong style="color:var(--blue)">Ekaharya</strong> ("Ek Harya").</p>
+        <div class="trap-box">
+          <span class="trap-label">⚠ Historical Fact</span>
+          <p>The British <strong>banned</strong> this temple dance tradition in <strong style="color:var(--amber)">1910</strong> (the wider anti-Devadasi/anti-Nautch movement). It was revived in the 20th century.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🩰 Stages & Styles <span class="tag tag-imp">Important</span></h3>
+        <p>Performance stages (sequence of a recital), in order:</p>
+        <div class="timeline">
+          <div class="t-item"><span class="yr">1</span><p>Alarippu</p></div>
+          <div class="t-item"><span class="yr">2</span><p>Jatiswaram</p></div>
+          <div class="t-item"><span class="yr">3</span><p>Shabdam</p></div>
+          <div class="t-item"><span class="yr">4</span><p>Varnam</p></div>
+          <div class="t-item"><span class="yr">5</span><p>Padam</p></div>
+          <div class="t-item"><span class="yr">6</span><p>Mangalam / Tillana</p></div>
+        </div>
+        <p>Major performance styles/gharanas: <strong style="color:var(--green)">Pandanallur style</strong> and <strong style="color:var(--blue)">Vazhuvoor style</strong> (also Tanjore, Mellatur styles exist but are lower priority).</p>
+        <div class="trap-box">
+          <span class="trap-label">⚠ Direct Question Asked</span>
+          <p>"The Alarippu (opening item) is associated with which style?" → <strong>Pandanallur style</strong>. This exact question has appeared before.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🎭 Exponents <span class="tag tag-must">Must Know</span></h3>
+        <table class="tbl">
+          <tr><th>Exponent</th><th>Notable Identity</th></tr>
+          <tr><td><strong>Rukmini Devi Arundale</strong></td><td>Founded Kalakshetra Foundation (1936), revivalist</td></tr>
+          <tr><td><strong>Padma Subrahmanyam</strong></td><td>Scholar-dancer</td></tr>
+          <tr><td><strong>Meenakshi Sundaram Pillai</strong></td><td>Guru</td></tr>
+          <tr><td><strong>Balasaraswati</strong></td><td>Legendary exponent</td></tr>
+          <tr><td><strong>Yamini Krishnamurthy</strong></td><td>Also linked to Kuchipudi; Asthana dancer (resident dancer) of Tirupati Tirumala Devasthanam temple, Andhra Pradesh</td></tr>
+          <tr><td><strong>Leela Samson</strong></td><td>Exponent, former Kalakshetra director</td></tr>
+          <tr><td><strong>Sonal Mansingh</strong></td><td>Also linked to Odissi</td></tr>
+          <tr><td><strong>Ram Vaidyanathan, Satyanarayan</strong></td><td>Exponents</td></tr>
+          <tr><td><strong>Mallika Sarabhai</strong></td><td>Also linked to Kuchipudi; daughter of Vikram Sarabhai's wife Mrinalini Sarabhai</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>🏛️ Special Facts <span class="tag tag-must">Must Know</span></h3>
+        <ul>
+          <li><strong>Kalakshetra Foundation</strong> — school/institution for Bharatanatyam, established by <strong>Rukmini Devi Arundale</strong> in <strong style="color:var(--amber)">1936</strong>.</li>
+          <li>Bharatanatyam is predominantly <strong style="color:var(--blue)">Tandava</strong>-style and <strong>Shaivite</strong> (associated with Shiva — the Nataraja form of Shiva is closely tied to this dance).</li>
+          <li>Performed in <strong>Carnatic music</strong> (South Indian classical music system).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="layer-section" id="bn-hooks">
+      <div class="hook-box">
+        <span class="hook-label">🧠 Master Hook — The Exponent Sentence</span>
+        <p>"When <span class="hi">Bharat</span>'s alarm rang (<em>Alarippu</em>), he touched the lotus feet of his mother <span class="hi2">Rukmini</span> (Rukmini Devi Arundale), then went with his beautiful friend <span class="hi">Meenakshi</span> (Meenakshi Sundaram Pillai) and <span class="hi2">Padma</span> (Padma Subrahmanyam) to watch Bal Krishna's leela — performed by <span class="hi">Bala Saraswati</span> (Balasaraswati), <span class="hi2">Yamini</span> Krishnamurthy, <span class="hi">Leela</span> Samson, and <span class="hi2">Sonal</span> Mansingh — chanting the names of <span class="hi">Ram</span> Vaidyanathan and Satyanarayan."</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Fifth Veda link</span>
+        <p>Bharatanatyam's foundation text is the same Natya Shastra (the "Fifth Veda") you met at the entrance gate — every hall in this hallway shares that one foundation stone.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Dasi Attam / Ban</span>
+        <p>Picture a temple maid (<span class="hi">Dasi</span>) dancing at dawn — then a British officer in 1910 slams the temple gate shut. That slammed gate is the <span class="hi2">1910 British ban</span>. Decades later, <span class="hi">Rukmini Devi</span> walks up and reopens it in 1936, founding Kalakshetra.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="bn-traps">
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 1</span>
+        <p>Yamini Krishnamurthy and Mallika Sarabhai are linked to <strong>BOTH</strong> Bharatanatyam and Kuchipudi — examiners test whether you know this overlap.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 2</span>
+        <p>Don't confuse "Asthana dancer" with just "famous dancer" — it specifically means <strong>resident/court dancer</strong> of a specific temple (Yamini Krishnamurthy was Asthana dancer of Tirupati Tirumala Devasthanam, Andhra Pradesh).</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 3</span>
+        <p>Pandanallur vs Vazhuvoor — both are Bharatanatyam styles, easy to swap in MCQs. Remember: Alarippu specifically → Pandanallur (directly asked before).</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="bn-quick">
+      <div class="speed-grid">
+        <div>STATE</div><div>Tamil Nadu</div>
+        <div>OLD NAME</div><div>Sadir / Dasi Attam</div>
+        <div>SOLO NAME</div><div>Ekaharya</div>
+        <div>BANNED</div><div>1910 by British</div>
+        <div>FOUNDATION</div><div>Kalakshetra (1936) by Rukmini Devi Arundale</div>
+        <div>NATURE</div><div>Tandava, Shaivite</div>
+        <div>STYLES</div><div>Pandanallur, Vazhuvoor</div>
+        <div>MUSIC</div><div>Carnatic</div>
+      </div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== KUCHIPUDI ===================== */
+PAGES.kuchipudi = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> HALL 2 OF 8 · ANDHRA PRADESH</div>
+    <div class="page-title">🌿 Kuchipudi</div>
+    <div class="page-subtitle">A village becomes a dance. Earth element, Reddy surnames, and a story-within-a-story tradition.</div>
+
+    <div class="subnav">
+      <button class="active-sub" data-target="kp-complete">Complete Notes</button>
+      <button data-target="kp-hooks">Memory Hooks</button>
+      <button data-target="kp-traps">Traps</button>
+      <button data-target="kp-quick">Quick Recall</button>
+    </div>
+
+    <div class="layer-section active-layer" id="kp-complete">
+      <div class="card">
+        <h3>📍 Origin & Etymology <span class="tag tag-must">Must Know</span></h3>
+        <p>State: <strong style="color:var(--green)">Andhra Pradesh</strong>.</p>
+        <p>Named after the village <strong>Kuchipudi</strong>, located in <strong style="color:var(--blue)">Krishna district</strong>, Andhra Pradesh.</p>
+        <p>Roots trace back to <strong>Yakshagana</strong> — a folk dance/theatre form of <strong>Karnataka</strong>. It developed initially in the form of "Bhama Kalapam."</p>
+        <p>Founder: <strong style="color:var(--green)">Siddhendra Yogi</strong>.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎭 Exponents <span class="tag tag-must">Must Know</span></h3>
+        <p><strong>Reddy-surname cluster:</strong> Bhavana Reddy, Padmaja Reddy, Raja Reddy, Radha Reddy, Yamini Reddy.</p>
+        <p><strong>Other exponents:</strong> Satyam (Vempati Chinna Satyam — major guru), Shobha Naidu, Lakshmi Narayan Shastri.</p>
+        <p><strong>Shared exponents</strong> (also linked to other dances):</p>
+        <ul>
+          <li><strong>Yamini Krishnamurthy</strong> — also Bharatanatyam</li>
+          <li><strong>Mallika Sarabhai</strong> — also Bharatanatyam (daughter of Mrinalini Sarabhai, who was married to space scientist Vikram Sarabhai)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🌍 Special Facts <span class="tag tag-must">Must Know</span></h3>
+        <ul>
+          <li>Kuchipudi symbolizes the element <strong style="color:var(--amber)">Earth</strong>.</li>
+          <li>Performed in <strong>Carnatic music</strong>.</li>
+          <li>Traditionally performed in the "Bhama Kalapam" narrative form, centered on stories of Satyabhama (a consort of Krishna).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="layer-section" id="kp-hooks">
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — The Reddy Family</span>
+        <p>Imagine an entire extended <span class="hi2">Reddy family</span> — Bhavana Reddy, Padmaja Reddy, Raja Reddy, Radha Reddy, Yamini Reddy — all living in one house in Andhra Pradesh, and every single one of them dances Kuchipudi. <span class="hi">Any surname "Reddy" you see in a dance question → think Kuchipudi first.</span></p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Satyanarayan Puja Story</span>
+        <p>"<span class="hi">Satyam</span> and <span class="hi2">Satish</span> went to Lakshmi ji's <span class="hi">Satyanarayan Puja</span> with their beautiful friend <span class="hi2">Shobha</span> (Shobha Naidu) and Lakshmi Narayan Shastri — and ate Haleem there." This sentence anchors Satyam (Vempati Chinna Satyam), Satish, Shobha, and Lakshmi Narayan Shastri together.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Earth Element</span>
+        <p>Kuchipudi dancers often perform on the rim of a brass plate, feet grounded firmly — picture roots growing into the <span class="hi2">Earth</span> from their feet. Earth = Kuchipudi.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Yaksha to Kuchipudi</span>
+        <p>A <span class="hi">Yaksha</span> (folk spirit of Karnataka's Yakshagana) wanders south into a small Andhra village and starts performing "Bhama Kalapam" — guided by <span class="hi2">Siddhendra Yogi</span>. The village is renamed after the dance: Kuchipudi.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="kp-traps">
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 1</span>
+        <p>Yakshagana is a folk dance of <strong>Karnataka</strong>, NOT Andhra Pradesh — but Kuchipudi (Andhra Pradesh classical dance) developed FROM it. Don't mix up which state owns which.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 2</span>
+        <p>Yamini Krishnamurthy and Mallika Sarabhai appear in BOTH the Bharatanatyam and Kuchipudi exponent lists. Cross-question risk: "Who is associated with Kuchipudi as well as Bharatanatyam?"</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 3</span>
+        <p>Element confusion: Kuchipudi = Earth, but Mohiniyattam = Air. Easy to swap in element-matching questions.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="kp-quick">
+      <div class="speed-grid">
+        <div>STATE</div><div>Andhra Pradesh</div>
+        <div>NAMED AFTER</div><div>Kuchipudi village, Krishna district</div>
+        <div>ORIGIN</div><div>Yakshagana (Karnataka folk dance) → Bhama Kalapam</div>
+        <div>FOUNDER</div><div>Siddhendra Yogi</div>
+        <div>ELEMENT</div><div>Earth</div>
+        <div>SURNAME CLUE</div><div>"Reddy" → Kuchipudi</div>
+        <div>MUSIC</div><div>Carnatic</div>
+      </div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== MOHINIYATTAM ===================== */
+PAGES.mohiniyattam = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> HALL 3 OF 8 · KERALA</div>
+    <div class="page-title">🌊 Mohiniyattam</div>
+    <div class="page-subtitle">The dance of the enchantress. Air element, Vaishnavite roots.</div>
+
+    <div class="subnav">
+      <button class="active-sub" data-target="mo-complete">Complete Notes</button>
+      <button data-target="mo-hooks">Memory Hooks</button>
+      <button data-target="mo-traps">Traps</button>
+      <button data-target="mo-quick">Quick Recall</button>
+    </div>
+
+    <div class="layer-section active-layer" id="mo-complete">
+      <div class="card">
+        <h3>📍 Origin & Meaning <span class="tag tag-must">Must Know</span></h3>
+        <p>State: <strong style="color:var(--green)">Kerala</strong>.</p>
+        <p>Named after <strong>Mohini</strong> — the enchantress form that <strong>Lord Vishnu</strong> took to deceive the demons (Asuras) during the Samudra Manthan episode. This makes Mohiniyattam a <strong style="color:var(--blue)">Vaishnavite</strong> dance form.</p>
+        <p>Mohiniyattam symbolizes the element <strong style="color:var(--amber)">Air</strong>.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎭 Exponents <span class="tag tag-must">Must Know</span></h3>
+        <table class="tbl">
+          <tr><th>Exponent</th></tr>
+          <tr><td>Kanak Rele</td></tr>
+          <tr><td>Sunanda Nair</td></tr>
+          <tr><td>Jayaprabha</td></tr>
+          <tr><td>Radha Dutta / Pallavi</td></tr>
+          <tr><td>Kalyani Kutty Amma</td></tr>
+          <tr><td>Gopika Varma</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="layer-section" id="mo-hooks">
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Gopi's Ear Sentence</span>
+        <p>"In Gopi's ear, someone whispered 'Jai Radha Krishna' — it was <span class="hi">Amma Gopi</span> (Kalyani Kutty Amma), <span class="hi2">Varma</span> (Gopika Varma), <span class="hi">Kanak Rele</span>, <span class="hi2">Sunanda Nair</span>, <span class="hi">Jayaprabha</span>, and <span class="hi2">Radha Dutta Pallavi</span>." This sentence chains all major Mohiniyattam exponents around "Gopi's ear."</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Mohini = Vishnu in disguise</span>
+        <p>Picture <span class="hi2">Vishnu</span> transforming into the breathtaking enchantress <span class="hi">Mohini</span> to trick the demons during the churning of the ocean. Her dance is light, swaying, like wind moving silk — that's why Mohiniyattam = <span class="hi2">Air</span> element, and why it's <span class="hi">Vaishnavite</span>, not Shaivite.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Kerala twins</span>
+        <p>Mohiniyattam and Kathakali are <span class="hi">Kerala twins</span> — born in the same state, both connected to Vaishnavite themes, but one is soft and swaying (Mohiniyattam/Air) while the other wears giant masks and tells big stories (Kathakali).</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="mo-traps">
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 1</span>
+        <p>Mohiniyattam is <strong>Vaishnavite</strong> (linked to Vishnu/Mohini), NOT Shaivite. Bharatanatyam is the Shaivite/Tandava-dominant one — don't swap.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 2</span>
+        <p>Element confusion: Kuchipudi = Earth, Mohiniyattam = Air. These get mixed up often in "match the dance with the element" questions.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 3</span>
+        <p>Both Mohiniyattam AND Kathakali are from Kerala — a classic "which two classical dances share a state?" trap.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="mo-quick">
+      <div class="speed-grid">
+        <div>STATE</div><div>Kerala</div>
+        <div>NAMED AFTER</div><div>Mohini (Vishnu's enchantress avatar)</div>
+        <div>NATURE</div><div>Vaishnavite</div>
+        <div>ELEMENT</div><div>Air</div>
+        <div>KEY EXPONENT</div><div>Kanak Rele</div>
+      </div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== KATHAKALI ===================== */
+PAGES.kathakali = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> HALL 4 OF 8 · KERALA</div>
+    <div class="page-title">🎭 Kathakali</div>
+    <div class="page-subtitle">Kerala's second hall — giant painted masks, epic stories told without speaking.</div>
+
+    <div class="subnav">
+      <button class="active-sub" data-target="kk-complete">Complete Notes</button>
+      <button data-target="kk-hooks">Memory Hooks</button>
+      <button data-target="kk-traps">Traps</button>
+      <button data-target="kk-quick">Quick Recall</button>
+    </div>
+
+    <div class="layer-section active-layer" id="kk-complete">
+      <div class="card">
+        <h3>📍 Origin <span class="tag tag-must">Must Know</span></h3>
+        <p>State: <strong style="color:var(--green)">Kerala</strong> (same state as Mohiniyattam).</p>
+        <p>"Katha" = story, "Kali" = play/performance — a story-play told through elaborate costume, painted faces, and codified gestures.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎭 Exponents <span class="tag tag-must">Must Know</span></h3>
+        <table class="tbl">
+          <tr><th>Exponent</th></tr>
+          <tr><td>Mallika Sarabhai (also linked to Bharatanatyam & Kuchipudi)</td></tr>
+          <tr><td>Gopinath</td></tr>
+          <tr><td>Kottakkal Nandakumar Nair</td></tr>
+          <tr><td>S. Nair (and related Nair-surname exponents)</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>🎶 Special Facts <span class="tag tag-imp">Important</span></h3>
+        <ul>
+          <li>Carries Vaishnavite thematic influence, similar to its Kerala sibling Mohiniyattam.</li>
+          <li>Performed within the Carnatic music tradition framework (South India).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="layer-section" id="kk-hooks">
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — "Gopi's bud" chain</span>
+        <p>"Do we get some bud (<span class="hi">Gopi-naath</span>) or not — we get some bud of <span class="hi2">Gopinath</span>." This nonsense-but-sticky phrase is built to anchor <span class="hi">Gopinath</span> as a Kathakali exponent, alongside <span class="hi2">Kottakkal Nandakumar Nair</span> and <span class="hi">S. Nair</span>.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — The Mask</span>
+        <p>Picture a Kathakali performer's face painted in bold green and red, eyes rolling dramatically, telling the story of a battle without a single spoken word. The mask-like face paint IS the memory hook for "Kathakali" itself — mask = story = Kathakali.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="kk-traps">
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 1</span>
+        <p>Kathakali and Mohiniyattam are BOTH from Kerala — and BOTH connect loosely to Vaishnavite themes. Don't assume "same state" means "same dance style."</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 2</span>
+        <p>Don't confuse "Kathakali" (Kerala, story-play with masks) with "Kathak" (Uttar Pradesh, North Indian, no masks) — similar-sounding names, completely different states and styles. This is one of the most common SSC traps.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="kk-quick">
+      <div class="speed-grid">
+        <div>STATE</div><div>Kerala</div>
+        <div>MEANING</div><div>Katha (story) + Kali (play)</div>
+        <div>KEY EXPONENT</div><div>Gopinath, Kottakkal Nandakumar Nair</div>
+        <div>WATCH OUT</div><div>Not the same as "Kathak" (UP)</div>
+      </div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== KATHAK ===================== */
+PAGES.kathak = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> HALL 5 OF 8 · UTTAR PRADESH</div>
+    <div class="page-title">🌀 Kathak</div>
+    <div class="page-subtitle">Crossing into North India — the only classical dance native to the North. Spins, stories, and Birju Maharaj.</div>
+
+    <div class="subnav">
+      <button class="active-sub" data-target="ka-complete">Complete Notes</button>
+      <button data-target="ka-hooks">Memory Hooks</button>
+      <button data-target="ka-traps">Traps</button>
+      <button data-target="ka-quick">Quick Recall</button>
+    </div>
+
+    <div class="layer-section active-layer" id="ka-complete">
+      <div class="card">
+        <h3>📍 Origin & Etymology <span class="tag tag-must">Must Know</span></h3>
+        <p>State: <strong style="color:var(--green)">Uttar Pradesh</strong>.</p>
+        <p>Derived from the Sanskrit word "<strong>Katha</strong>" meaning <strong>story</strong> — Kathak is fundamentally a storytelling dance form, traditionally performed by "Kathakars" (storytellers).</p>
+        <p><strong style="color:var(--blue)">Kathak is the only classical dance of North India</strong> in this list of 8 — all the others you've walked through so far (Bharatanatyam, Kuchipudi, Mohiniyattam, Kathakali) come from South India.</p>
+        <p>Performed in <strong style="color:var(--amber)">Hindustani music</strong>, specifically within the <strong>Thumri</strong> musical style.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎭 Exponents <span class="tag tag-must">Must Know</span></h3>
+        <table class="tbl">
+          <tr><th>Exponent</th><th>Detail</th></tr>
+          <tr><td><strong>Birju Maharaj</strong></td><td>Padma Vibhushan in 1986; belonged to the <strong>Kalka-Bindadin Gharana</strong>, Lucknow</td></tr>
+          <tr><td><strong>Lachhu Maharaj</strong></td><td>Exponent (Maharaj family)</td></tr>
+          <tr><td><strong>Narayan Prasad</strong></td><td>Exponent</td></tr>
+          <tr><td><strong>Devi Prasad</strong></td><td>Exponent</td></tr>
+          <tr><td><strong>Kamalini Devi / Thaank</strong></td><td>Sisters, exponents</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="layer-section" id="ka-hooks">
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — "Hey Maharaj" chain</span>
+        <p>"<span class="hi">Hey Maharaj</span>, have faith in <span class="hi2">Narayan</span> and the <span class="hi">Devi</span> — eat their <span class="hi2">Prasad</span> (Narayan Prasad, Devi Prasad) and you'll gain knowledge." This sentence chains <span class="hi">Birju Maharaj</span>, <span class="hi2">Lachhu Maharaj</span>, Narayan Prasad, and Devi Prasad together around "Maharaj" and "Prasad."</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Lucknow Gharana</span>
+        <p>Picture Birju Maharaj as a young boy in <span class="hi2">Lucknow</span>, learning spins from his family's gharana named after two ancestors: <span class="hi">Kalka</span> and <span class="hi2">Bindadin</span>. The gharana's name is literally two names stitched together — easy to recall as "Kalka-Bindadin Gharana."</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Only North Indian one</span>
+        <p>Picture the hallway again: 4 doors on the south wall (Bharatanatyam, Kuchipudi, Mohiniyattam, Kathakali), then you physically turn and cross to the opposite, north-facing wall — only ONE door is there: <span class="hi2">Kathak</span>. That's why it's the lone North Indian classical dance.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="ka-traps">
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 1</span>
+        <p>Kathak (Uttar Pradesh) vs Kathakali (Kerala) — similar names, opposite ends of India, completely different music systems (Hindustani vs Carnatic). One of the highest-frequency SSC traps in this topic.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 2</span>
+        <p>Kathak uses <strong>Hindustani</strong> music; the four South Indian dances (Bharatanatyam, Kuchipudi, Mohiniyattam, Kathakali) use <strong>Carnatic</strong> music. Mixing these up is a guaranteed wrong answer.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 3</span>
+        <p>Birju Maharaj's Padma Vibhushan year is <strong>1986</strong> — don't confuse with other award years floating around in this chapter (e.g., M.S. Subbulakshmi's Bharat Ratna in 1998, Bhupen Hazarika's Bharat Ratna in 2019).</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="ka-quick">
+      <div class="speed-grid">
+        <div>STATE</div><div>Uttar Pradesh</div>
+        <div>MEANING</div><div>"Katha" = story</div>
+        <div>MUSIC</div><div>Hindustani (Thumri style)</div>
+        <div>KEY EXPONENT</div><div>Birju Maharaj (Padma Vibhushan 1986)</div>
+        <div>GHARANA</div><div>Kalka-Bindadin Gharana, Lucknow</div>
+        <div>UNIQUE FACT</div><div>Only classical dance native to North India</div>
+      </div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== MANIPURI ===================== */
+PAGES.manipuri = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> HALL 6 OF 8 · MANIPUR</div>
+    <div class="page-title">🥁 Manipuri</div>
+    <div class="page-subtitle">The introverted hall — dancers never look at you. Drummers fly through the air.</div>
+
+    <div class="subnav">
+      <button class="active-sub" data-target="ma-complete">Complete Notes</button>
+      <button data-target="ma-hooks">Memory Hooks</button>
+      <button data-target="ma-traps">Traps</button>
+      <button data-target="ma-quick">Quick Recall</button>
+    </div>
+
+    <div class="layer-section active-layer" id="ma-complete">
+      <div class="card">
+        <h3>📍 Origin & Character <span class="tag tag-must">Must Know</span></h3>
+        <p>State: <strong style="color:var(--green)">Manipur</strong>.</p>
+        <p>Distinctive trait: it is an <strong style="color:var(--blue)">introverted</strong> dance form — performers deliberately avoid eye contact with the audience, unlike most other classical forms which "perform outward."</p>
+        <p>Religious character: <strong>Vaishnavite</strong> (like Mohiniyattam and Manipuri's own Raas Leela theme).</p>
+      </div>
+
+      <div class="card">
+        <h3>🩰 Three Forms <span class="tag tag-imp">Important</span></h3>
+        <table class="tbl">
+          <tr><th>Form</th><th>Description</th></tr>
+          <tr><td><strong>Raas Leela</strong></td><td>Depicts the divine love-play (Raas Leela) of Radha and Krishna</td></tr>
+          <tr><td><strong>Jagoi</strong></td><td>One of the named forms (graceful, devotional)</td></tr>
+          <tr><td><strong>Cholom / Pung Cholom</strong></td><td>The vigorous, muscular, masculine drum-dance — see below</td></tr>
+        </table>
+        <div class="trap-box">
+          <span class="trap-label">⚠ Direct Question</span>
+          <p>"Jagoi and Cholom are associated with which classical dance?" → <strong>Manipuri</strong>. This exact pairing has been directly asked.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>🥁 Pung Cholom Explained <span class="tag tag-must">Must Know</span></h3>
+        <p>"<strong>Pung</strong>" is a type of drum in the local Manipuri language. "Cholom" performed with this drum is called <strong>Pung Cholom</strong>. Male performers leap and spin very fast through the air while playing the drum — this represents the vigorous, masculine (Tandava-like) aspect of Manipuri dance.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎭 Exponents <span class="tag tag-must">Must Know</span></h3>
+        <table class="tbl">
+          <tr><th>Exponent</th><th>Title</th></tr>
+          <tr><td><strong>Guru Bipin Singh</strong></td><td>Considered the <strong>father of Manipuri dance</strong>; given the title "Hanjaba" by the Manipur community</td></tr>
+          <tr><td>Bimbavati Devi</td><td>Exponent</td></tr>
+          <tr><td>Nirmala Mehta</td><td>Exponent</td></tr>
+          <tr><td>Darshana Jhaveri (Jhaveri Sisters)</td><td>Exponents — sisters: Nayana, Suverna, Ranjana, Darshana Jhaveri</td></tr>
+          <tr><td>Charu Mathur</td><td>Exponent</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="layer-section" id="ma-hooks">
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Introverted dancer</span>
+        <p>Picture a dancer in a Manipur temple who keeps her eyes lowered the entire performance, never glancing at the audience — shy, inward, devotional. That shyness IS the defining trait: <span class="hi2">Manipuri = introverted dance</span>.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Flying drummer</span>
+        <p>Picture a male dancer with a drum called "<span class="hi">Pung</span>" strapped to his body, leaping high into the air mid-performance, drumming as he flies — that's <span class="hi2">Pung Cholom</span>. The drum's name and the dance's name share the same root: Pung.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Hanjaba title</span>
+        <p>Guru Bipin Singh earns the local title "<span class="hi2">Hanjaba</span>" (father figure) from Manipur — picture villagers bowing and calling him "Hanjaba" the way you'd call someone "Guruji."</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="ma-traps">
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 1</span>
+        <p>Don't confuse Jagoi/Cholom (Manipuri-specific terms) with Bhavna/Ankiya Naat (Satriya-specific terms) — both states have their own unique vocabulary, and exams test exact pairing.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 2</span>
+        <p>Manipuri being "introverted" (no eye contact) is the OPPOSITE convention from most classical dances which use direct eye-expression (especially Kathakali, Bharatanatyam) — don't assume all classical dance shares this trait.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="ma-quick">
+      <div class="speed-grid">
+        <div>STATE</div><div>Manipur</div>
+        <div>CHARACTER</div><div>Introverted — no eye contact with audience</div>
+        <div>3 FORMS</div><div>Raas Leela, Jagoi, Cholom (Pung Cholom)</div>
+        <div>FATHER OF DANCE</div><div>Guru Bipin Singh (title: Hanjaba)</div>
+        <div>NATURE</div><div>Vaishnavite</div>
+      </div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== ODISSI ===================== */
+PAGES.odissi = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> HALL 7 OF 8 · ODISHA</div>
+    <div class="page-title">🛕 Odissi</div>
+    <div class="page-subtitle">Temple sculpture come alive. The "Mahapatra" and "Mohanty" surname clue.</div>
+
+    <div class="subnav">
+      <button class="active-sub" data-target="od-complete">Complete Notes</button>
+      <button data-target="od-hooks">Memory Hooks</button>
+      <button data-target="od-traps">Traps</button>
+      <button data-target="od-quick">Quick Recall</button>
+    </div>
+
+    <div class="layer-section active-layer" id="od-complete">
+      <div class="card">
+        <h3>📍 Origin <span class="tag tag-must">Must Know</span></h3>
+        <p>State: <strong style="color:var(--green)">Odisha</strong>.</p>
+        <p>Surname clue: exponent surnames ending in <strong style="color:var(--blue)">"Mahapatra"</strong> or <strong style="color:var(--blue)">"Mohanty"</strong> are very frequently Odissi dancers.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎭 Exponents <span class="tag tag-must">Must Know</span></h3>
+        <table class="tbl">
+          <tr><th>Exponent</th><th>Detail</th></tr>
+          <tr><td><strong>Kelucharan Mahapatra</strong></td><td>The single most important name — legendary guru, trained under Guru Pankaj Charan Das</td></tr>
+          <tr><td>Sujata Mahapatra</td><td>Exponent (Mahapatra lineage)</td></tr>
+          <tr><td>Leela Mohanty</td><td>Exponent (Mohanty lineage)</td></tr>
+          <tr><td>Niharika Mohanty</td><td>Exponent (Mohanty lineage)</td></tr>
+          <tr><td><strong>Guru Pankaj Charan Das</strong></td><td>Considered a founding father figure of modern Odissi</td></tr>
+          <tr><td>Madhavi Mudgal</td><td>Exponent</td></tr>
+          <tr><td>Gangadhar Pradhan</td><td>Guru/exponent</td></tr>
+          <tr><td>Sanjukta Panigrahi</td><td>Exponent</td></tr>
+          <tr><td>Sudhakar Sahu</td><td>Exponent</td></tr>
+          <tr><td>Sonal Mansingh</td><td>Also linked to Bharatanatyam</td></tr>
+          <tr><td>Sutapa Talukdar</td><td>Exponent</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="layer-section" id="od-hooks">
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Mahapatra/Mohanty surname rule</span>
+        <p>If you ever see a dancer's surname end in <span class="hi2">Mahapatra</span> or <span class="hi">Mohanty</span> in an MCQ, your first guess should be <span class="hi2">Odissi</span> — this single rule alone solves many "identify the dance" questions.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — "Bhutan to Odisha" sentence</span>
+        <p>"The head of <span class="hi">Bhutan</span> (Gangadhar Pradhan) came to <span class="hi2">Odisha</span> to meet <span class="hi">Madhavi</span> (Madhavi Mudgal) — and this is what Vijay (Sanjukta Panigrahi) told <span class="hi2">Sanju and Sahu</span> (Sudhakar Sahu)." This odd sentence stitches together Gangadhar Pradhan, Madhavi Mudgal, Sanjukta Panigrahi, and Sudhakar Sahu.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Living sculpture</span>
+        <p>Odisha's temples (like Konark) are covered in stone sculptures of dancers frozen mid-pose. Picture <span class="hi2">Kelucharan Mahapatra</span> walking through the temple and bringing those exact stone poses to life — that visual IS Odissi.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="od-traps">
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 1</span>
+        <p>Kelucharan Mahapatra (the most important Odissi name) is sometimes confused with Mahapatra's students/lineage (Sujata Mahapatra) in "who is the guru vs who is the disciple" questions.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 2</span>
+        <p>Guru Pankaj Charan Das is the teacher/founding figure BEHIND Kelucharan Mahapatra — don't reverse the guru-disciple direction.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 3</span>
+        <p>Sonal Mansingh appears in both Bharatanatyam AND Odissi exponent lists — a cross-dance overlap trap, similar to Yamini Krishnamurthy (Bharatanatyam + Kuchipudi).</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="od-quick">
+      <div class="speed-grid">
+        <div>STATE</div><div>Odisha</div>
+        <div>SURNAME CLUE</div><div>Mahapatra / Mohanty → Odissi</div>
+        <div>TOP NAME</div><div>Kelucharan Mahapatra</div>
+        <div>GURU OF KELUCHARAN</div><div>Pankaj Charan Das</div>
+      </div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== SATRIYA ===================== */
+PAGES.satriya = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> HALL 8 OF 8 · ASSAM</div>
+    <div class="page-title">🏞️ Satriya</div>
+    <div class="page-subtitle">The newest door in the hallway — added in 2000. Born inside monasteries beside the Brahmaputra.</div>
+
+    <div class="subnav">
+      <button class="active-sub" data-target="sa-complete">Complete Notes</button>
+      <button data-target="sa-hooks">Memory Hooks</button>
+      <button data-target="sa-traps">Traps</button>
+      <button data-target="sa-quick">Quick Recall</button>
+    </div>
+
+    <div class="layer-section active-layer" id="sa-complete">
+      <div class="card">
+        <h3>📍 Origin <span class="tag tag-must">Must Know</span></h3>
+        <p>State: <strong style="color:var(--green)">Assam</strong>.</p>
+        <p><strong style="color:var(--amber)">Added to the classical dance list in the year 2000</strong> — making it the most recently recognized of the 8. This is why it's placed last in the hallway.</p>
+        <p>Founding figure / "Guru": <strong style="color:var(--green)">Guru Shankaradeva</strong>.</p>
+        <p>Associated theatrical forms: <strong>Bhaona</strong> and <strong>Ankiya Naat</strong>.</p>
+        <p>Performed to <strong style="color:var(--blue)">Borgeet</strong> music (devotional songs composed in the Shankaradeva tradition).</p>
+      </div>
+
+      <div class="card">
+        <h3>🎭 Exponents <span class="tag tag-must">Must Know</span></h3>
+        <table class="tbl">
+          <tr><th>Exponent</th><th>Detail</th></tr>
+          <tr><td><strong>Jatin Goswami</strong></td><td>Exponent</td></tr>
+          <tr><td>Maniram Dutta</td><td>Exponent</td></tr>
+          <tr><td>Guru Ghanakanta Bora</td><td>Exponent</td></tr>
+          <tr><td><strong>Bhupen Hazarika</strong></td><td>Received <strong>Bharat Ratna in 2019</strong> (India's highest civilian award)</td></tr>
+          <tr><td>Indira Bora</td><td>Exponent</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>📜 Other Associated Terms <span class="tag tag-good">Good to Know</span></h3>
+        <p>Besides the main emotional and narrative drama elements, Satriya includes lesser-asked but possible terms: <strong>Jhumura</strong>, <strong>Chali</strong>, <strong>Nadu Bhangi</strong>.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="sa-hooks">
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Newest door, year 2000</span>
+        <p>Picture the temple hallway again: this is the <span class="hi2">8th and final door</span>, and it still smells of fresh paint — because it was only added in the year <span class="hi">2000</span>. All the other 7 doors are centuries old.</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Shankaradeva as Guru</span>
+        <p><span class="hi2">Guru Shankaradeva</span> is to Satriya what a founding saint is to a monastery. He built actual monasteries (Sattras) along the Brahmaputra river in Assam — the dance form is literally named after these "Sattras."</p>
+      </div>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Bhupen Hazarika's Bharat Ratna</span>
+        <p>Picture the river Brahmaputra (which Bhupen Hazarika famously sang about) flowing all the way to Delhi to deliver his <span class="hi2">Bharat Ratna in 2019</span>. Pair this with M.S. Subbulakshmi (Bharat Ratna 1998, Carnatic music) and Birju Maharaj (Padma Vibhushan 1986, Kathak) as your "three award years" cluster for this chapter.</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="sa-traps">
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 1</span>
+        <p>Satriya's special terms are Bhaona / Ankiya Naat — don't confuse with Manipuri's Jagoi/Cholom. Each dance has its own unique vocabulary pair; exams test exact matching.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">⚠ Trap 2</span>
+        <p>The year "2000" (when Satriya got classical status) is a frequently tested standalone fact — don't confuse with other years in this chapter (1910 British ban on Bharatanatyam, 1936 Kalakshetra founding, 1986/1998/2019 award years).</p>
+      </div>
+    </div>
+
+    <div class="layer-section" id="sa-quick">
+      <div class="speed-grid">
+        <div>STATE</div><div>Assam</div>
+        <div>RECOGNIZED IN</div><div>2000 (most recent of the 8)</div>
+        <div>FOUNDER/GURU</div><div>Guru Shankaradeva</div>
+        <div>THEATRICAL FORMS</div><div>Bhaona, Ankiya Naat</div>
+        <div>MUSIC</div><div>Borgeet</div>
+        <div>KEY EXPONENT</div><div>Bhupen Hazarika (Bharat Ratna 2019)</div>
+        <div>OTHER TERMS</div><div>Jhumura, Chali, Nadu Bhangi</div>
+      </div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== MUSIC ===================== */
+PAGES.music = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> CROSS-CUTTING HALL · MUSIC SYSTEMS</div>
+    <div class="page-title">🎶 Carnatic vs Hindustani</div>
+    <div class="page-subtitle">The two musical rivers that flow under all 8 dance halls.</div>
+
+    <div class="card">
+      <h3>🗺️ The Two Systems <span class="tag tag-must">Must Know</span></h3>
+      <table class="tbl">
+        <tr><th>System</th><th>Region</th><th>States</th><th>Associated Dances</th></tr>
+        <tr><td><strong style="color:var(--green)">Carnatic Music</strong></td><td>South India</td><td>Kerala, Tamil Nadu, Karnataka, Andhra Pradesh, Telangana</td><td>Bharatanatyam, Kuchipudi, Mohiniyattam, Kathakali</td></tr>
+        <tr><td><strong style="color:var(--blue)">Hindustani Music</strong></td><td>North India</td><td>UP and northern belt</td><td>Kathak</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>👑 Title-Holders <span class="tag tag-must">Must Know</span></h3>
+      <table class="tbl">
+        <tr><th>Title</th><th>Person</th><th>Extra Fact</th></tr>
+        <tr><td><strong>Father of Carnatic Music</strong></td><td>Purandara Dasa</td><td>—</td></tr>
+        <tr><td><strong>Queen/Empress of Carnatic Music</strong></td><td>M.S. Subbulakshmi</td><td>Received Bharat Ratna in <strong style="color:var(--amber)">1998</strong></td></tr>
+      </table>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — Father & Queen</span>
+        <p>Picture a royal Carnatic music family: <span class="hi2">Purandara Dasa</span> is the father, and <span class="hi">M.S. Subbulakshmi</span> is crowned queen, receiving her crown (Bharat Ratna) in <span class="hi2">1998</span>.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎵 Music Style Per Dance <span class="tag tag-imp">Important</span></h3>
+      <table class="tbl">
+        <tr><th>Dance</th><th>Music Style</th></tr>
+        <tr><td>Kathak</td><td>Hindustani — specifically the <strong>Thumri</strong> style</td></tr>
+        <tr><td>Satriya</td><td><strong>Borgeet</strong></td></tr>
+        <tr><td>South Indian 4 (Bharatanatyam, Kuchipudi, Mohiniyattam, Kathakali)</td><td>Carnatic</td></tr>
+      </table>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== TRAPS ===================== */
+PAGES.traps = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> CROSS-CUTTING HALL · DANGER ZONE</div>
+    <div class="page-title">⚠ Exam Traps — All Halls Combined</div>
+    <div class="page-subtitle">Every confusion an examiner could weaponize, gathered in one room.</div>
+
+    <div class="card">
+      <h3>🔀 Name-Sound-Alike Traps</h3>
+      <div class="trap-box">
+        <span class="trap-label">Kathak vs Kathakali</span>
+        <p><strong>Kathak</strong> = Uttar Pradesh, North India, Hindustani music, no masks.<br><strong>Kathakali</strong> = Kerala, South India, Carnatic-linked, big painted masks. The single most commonly confused pair in this entire chapter.</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">Mohiniyattam vs Kathakali</span>
+        <p>Both from Kerala — but Mohiniyattam = Air element, soft/swaying, female-dominant; Kathakali = masked story-play.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🌍 State Traps</h3>
+      <div class="trap-box">
+        <span class="trap-label">Two Kerala dances</span>
+        <p>Mohiniyattam AND Kathakali both belong to Kerala — don't assume "one state = one classical dance."</p>
+      </div>
+      <div class="trap-box">
+        <span class="trap-label">Yakshagana ≠ Kuchipudi's state</span>
+        <p>Yakshagana (the folk dance Kuchipudi evolved from) is from Karnataka, but Kuchipudi itself is the classical dance of Andhra Pradesh.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>👥 Exponent Overlap Traps</h3>
+      <table class="tbl">
+        <tr><th>Exponent</th><th>Linked Dances</th></tr>
+        <tr><td>Yamini Krishnamurthy</td><td>Bharatanatyam + Kuchipudi</td></tr>
+        <tr><td>Mallika Sarabhai</td><td>Bharatanatyam + Kuchipudi (+ sometimes Kathakali references)</td></tr>
+        <tr><td>Sonal Mansingh</td><td>Bharatanatyam + Odissi</td></tr>
+      </table>
+      <p style="margin-top:10px; font-size:13.5px; color:var(--muted);">Any "who is associated with which dance" MCQ should make you check this overlap table first.</p>
+    </div>
+
+    <div class="card">
+      <h3>🔢 Number & Year Traps</h3>
+      <table class="tbl">
+        <tr><th>Year/Number</th><th>What it refers to</th></tr>
+        <tr><td>8</td><td>Classical dances per Sangeet Natak Akademi</td></tr>
+        <tr><td>9</td><td>Classical dances per Ministry of Culture (adds Chhau)</td></tr>
+        <tr><td>1910</td><td>British ban on Devadasi temple dancing (Bharatanatyam/Sadir)</td></tr>
+        <tr><td>1936</td><td>Kalakshetra Foundation established by Rukmini Devi Arundale</td></tr>
+        <tr><td>1986</td><td>Birju Maharaj — Padma Vibhushan (Kathak)</td></tr>
+        <tr><td>1998</td><td>M.S. Subbulakshmi — Bharat Ratna (Carnatic music)</td></tr>
+        <tr><td>2000</td><td>Satriya recognized as a classical dance</td></tr>
+        <tr><td>2019</td><td>Bhupen Hazarika — Bharat Ratna (Satriya)</td></tr>
+      </table>
+      <div class="hook-box">
+        <span class="hook-label">🧠 Hook — The Year Ladder</span>
+        <p>Climb a ladder of years in order: <span class="hi">1910</span> (ban) → <span class="hi2">1936</span> (Kalakshetra) → <span class="hi">1986</span> (Birju Maharaj) → <span class="hi2">1998</span> (Subbulakshmi) → <span class="hi">2000</span> (Satriya recognized) → <span class="hi2">2019</span> (Hazarika). Six rungs, six facts, one ladder.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🌬️🌍 Element Traps</h3>
+      <table class="tbl">
+        <tr><th>Dance</th><th>Element</th></tr>
+        <tr><td>Kuchipudi</td><td>Earth</td></tr>
+        <tr><td>Mohiniyattam</td><td>Air</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🔥⚖️ Lasya/Tandava & Shaivite/Vaishnavite Traps</h3>
+      <table class="tbl">
+        <tr><th>Dance</th><th>Nature</th><th>Deity Link</th></tr>
+        <tr><td>Bharatanatyam</td><td>Tandava-dominant</td><td>Shaivite (Shiva/Nataraja)</td></tr>
+        <tr><td>Mohiniyattam</td><td>Lasya-dominant</td><td>Vaishnavite (Vishnu/Mohini)</td></tr>
+        <tr><td>Manipuri</td><td>Both (Raas Leela = Lasya, Pung Cholom = Tandava)</td><td>Vaishnavite</td></tr>
+      </table>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== EXAMINER'S MIND ===================== */
+PAGES.examiner = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> CROSS-CUTTING HALL · THINK LIKE THE EXAMINER</div>
+    <div class="page-title">👁️ Examiner's Favourite Questions</div>
+    <div class="page-subtitle">How this chapter gets attacked in an actual paper.</div>
+
+    <div class="card">
+      <h3>🎯 High-Probability Direct Questions</h3>
+      <ul>
+        <li>How many classical dances are recognized by Sangeet Natak Akademi? (Answer: 8)</li>
+        <li>Which is the 9th dance added by the Ministry of Culture but NOT by SNA? (Answer: Chhau)</li>
+        <li>Who composed the Natya Shastra? (Answer: Bharat Muni)</li>
+        <li>The Natya Shastra is known by which nickname? (Answer: The Fifth Veda)</li>
+        <li>Who is the author of Abhinaya Darpana? (Answer: Nandikeshvara)</li>
+        <li>Which classical dance was banned by the British in 1910? (Answer: Bharatanatyam, then called Sadir/Dasi Attam)</li>
+        <li>Who founded Kalakshetra Foundation, and in which year? (Answer: Rukmini Devi Arundale, 1936)</li>
+        <li>Which classical dance is the only one native to North India? (Answer: Kathak)</li>
+        <li>Which classical dance was added most recently (in 2000)? (Answer: Satriya)</li>
+        <li>Who is considered the father of Manipuri dance? (Answer: Guru Bipin Singh)</li>
+        <li>Who is the founder/Guru figure of Satriya dance? (Answer: Guru Shankaradeva)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>✅❌ Statement-Based Question Pattern</h3>
+      <p>Typical format: "Consider the following statements about classical dances and find the correct/incorrect ones."</p>
+      <div class="trap-box">
+        <span class="trap-label">Sample pattern to expect</span>
+        <p>Statement 1: Bharatanatyam is a Vaishnavite dance form. (FALSE — it's Shaivite/Tandava)<br>
+        Statement 2: Mohiniyattam symbolizes the element Air. (TRUE)<br>
+        Statement 3: Kathak originated in Kerala. (FALSE — it's Uttar Pradesh; Kerala has Mohiniyattam and Kathakali)</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔗 Match-the-Following Patterns</h3>
+      <table class="tbl">
+        <tr><th>Column A (Dance)</th><th>Column B (could be matched with)</th></tr>
+        <tr><td>Bharatanatyam</td><td>Tamil Nadu / Kalakshetra / Pandanallur style</td></tr>
+        <tr><td>Kuchipudi</td><td>Andhra Pradesh / Siddhendra Yogi / Earth element</td></tr>
+        <tr><td>Mohiniyattam</td><td>Kerala / Air element / Vaishnavite</td></tr>
+        <tr><td>Kathakali</td><td>Kerala / masked story-play</td></tr>
+        <tr><td>Kathak</td><td>Uttar Pradesh / Birju Maharaj / Hindustani</td></tr>
+        <tr><td>Manipuri</td><td>Manipur / Guru Bipin Singh / Pung Cholom</td></tr>
+        <tr><td>Odissi</td><td>Odisha / Kelucharan Mahapatra</td></tr>
+        <tr><td>Satriya</td><td>Assam / Guru Shankaradeva / year 2000</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>📅 Chronology Questions</h3>
+      <p>Arrange in chronological order: British ban on Sadir (1910) → Kalakshetra founded (1936) → Birju Maharaj's Padma Vibhushan (1986) → M.S. Subbulakshmi's Bharat Ratna (1998) → Satriya recognized as classical dance (2000) → Bhupen Hazarika's Bharat Ratna (2019).</p>
+    </div>
+
+    <div class="card">
+      <h3>🧩 Assertion-Reason Style</h3>
+      <p><strong>Assertion:</strong> Kuchipudi is said to symbolize the Earth element.<br>
+      <strong>Reason:</strong> The dance involves grounded, rhythmic footwork often performed on the rim of a brass plate.<br>
+      <em>(Expected: Both true, Reason correctly explains Assertion — though always verify the textbook's exact phrasing.)</em></p>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== ACTIVE RECALL ===================== */
+PAGES.recall = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> CROSS-CUTTING HALL · RETRIEVAL PRACTICE</div>
+    <div class="page-title">🧠 Active Recall Lab</div>
+    <div class="page-subtitle">Tap a question to flip it. Tap a blank to reveal it. Don't read passively — retrieve actively.</div>
+
+    <div class="card">
+      <h3>❓ Self-Test — Tap to Reveal Answer</h3>
+      <div class="flip-card"><div class="q">How many classical dances does the Sangeet Natak Akademi recognize? <span class="chevron">▾</span></div><div class="a">8 (the Ministry of Culture's list of 9 additionally includes Chhau, but 8 is the SNA-recognized number).</div></div>
+      <div class="flip-card"><div class="q">Who composed the Natya Shastra, and what is its nickname? <span class="chevron">▾</span></div><div class="a">Bharat Muni composed it; it is called the "Fifth Veda."</div></div>
+      <div class="flip-card"><div class="q">Which dance was banned by the British in 1910, and under what older name? <span class="chevron">▾</span></div><div class="a">Bharatanatyam, then known as Sadir / Dasi Attam.</div></div>
+      <div class="flip-card"><div class="q">Who founded Kalakshetra Foundation and when? <span class="chevron">▾</span></div><div class="a">Rukmini Devi Arundale, in 1936.</div></div>
+      <div class="flip-card"><div class="q">What does "Asthana dancer" mean, and who held this title? <span class="chevron">▾</span></div><div class="a">A resident/court dancer of a specific temple. Yamini Krishnamurthy was the Asthana dancer of Tirupati Tirumala Devasthanam temple, Andhra Pradesh.</div></div>
+      <div class="flip-card"><div class="q">Which folk dance did Kuchipudi evolve from, and which state is that folk dance from? <span class="chevron">▾</span></div><div class="a">Yakshagana, from Karnataka.</div></div>
+      <div class="flip-card"><div class="q">Which element does Kuchipudi symbolize? Which element does Mohiniyattam symbolize? <span class="chevron">▾</span></div><div class="a">Kuchipudi = Earth. Mohiniyattam = Air.</div></div>
+      <div class="flip-card"><div class="q">Why is Mohiniyattam called Vaishnavite? <span class="chevron">▾</span></div><div class="a">It's named after Mohini, the form Lord Vishnu took to deceive the demons during the churning of the ocean.</div></div>
+      <div class="flip-card"><div class="q">Which classical dance is the only one native to North India, and what music style accompanies it? <span class="chevron">▾</span></div><div class="a">Kathak, accompanied by Hindustani music (Thumri style).</div></div>
+      <div class="flip-card"><div class="q">Which gharana did Birju Maharaj belong to, and in which city? <span class="chevron">▾</span></div><div class="a">Kalka-Bindadin Gharana, in Lucknow.</div></div>
+      <div class="flip-card"><div class="q">What does "Pung Cholom" mean in Manipuri dance? <span class="chevron">▾</span></div><div class="a">A vigorous drum-dance — "Pung" is the name of a type of drum in the local Manipuri language; Cholom performed with it is called Pung Cholom.</div></div>
+      <div class="flip-card"><div class="q">Who is considered the father of Manipuri dance, and what title was he given? <span class="chevron">▾</span></div><div class="a">Guru Bipin Singh; given the title "Hanjaba" by the Manipuri community.</div></div>
+      <div class="flip-card"><div class="q">Which surnames are a strong clue for identifying an Odissi dancer? <span class="chevron">▾</span></div><div class="a">Mahapatra and Mohanty.</div></div>
+      <div class="flip-card"><div class="q">Who trained Kelucharan Mahapatra? <span class="chevron">▾</span></div><div class="a">Guru Pankaj Charan Das.</div></div>
+      <div class="flip-card"><div class="q">In which year was Satriya recognized as a classical dance, and who is its founding Guru? <span class="chevron">▾</span></div><div class="a">Year 2000; founding Guru is Shankaradeva.</div></div>
+      <div class="flip-card"><div class="q">What are the two theatrical forms associated with Satriya? <span class="chevron">▾</span></div><div class="a">Bhaona and Ankiya Naat.</div></div>
+      <div class="flip-card"><div class="q">Who is the Father of Carnatic Music, and who is its Queen? <span class="chevron">▾</span></div><div class="a">Father: Purandara Dasa. Queen: M.S. Subbulakshmi (received Bharat Ratna in 1998).</div></div>
+      <div class="flip-card"><div class="q">Which classical dance form did Bhupen Hazarika contribute to, and when did he receive Bharat Ratna? <span class="chevron">▾</span></div><div class="a">Satriya (Assam); received Bharat Ratna in 2019.</div></div>
+    </div>
+
+    <div class="card">
+      <h3>✏️ Fill in the Blanks — Tap the Highlighted Word</h3>
+      <p style="font-size:14.5px; line-height:2.1;">
+        The Natya Shastra was composed by <span class="blank">Bharat Muni</span> and is called the <span class="blank">Fifth Veda</span>.
+        Bharatanatyam was banned by the British in <span class="blank">1910</span> and revived through the <span class="blank">Kalakshetra</span> Foundation, established in <span class="blank">1936</span> by <span class="blank">Rukmini Devi Arundale</span>.
+        Kuchipudi is named after a village in <span class="blank">Krishna district</span>, Andhra Pradesh, and developed from <span class="blank">Yakshagana</span>, a folk dance of <span class="blank">Karnataka</span>.
+        Kuchipudi symbolizes the element <span class="blank">Earth</span>, while Mohiniyattam symbolizes <span class="blank">Air</span>.
+        Mohiniyattam and Kathakali are both classical dances of the state of <span class="blank">Kerala</span>.
+        Kathak is the only classical dance native to <span class="blank">North India</span> and is performed in <span class="blank">Hindustani</span> music, specifically the <span class="blank">Thumri</span> style.
+        Birju Maharaj belonged to the <span class="blank">Kalka-Bindadin</span> Gharana of <span class="blank">Lucknow</span> and received the <span class="blank">Padma Vibhushan</span> in <span class="blank">1986</span>.
+        Manipuri dance has three forms: <span class="blank">Raas Leela</span>, <span class="blank">Jagoi</span>, and <span class="blank">Cholom</span>.
+        Guru <span class="blank">Bipin Singh</span> is considered the father of Manipuri dance and was given the title <span class="blank">Hanjaba</span>.
+        Odissi exponents often carry the surname <span class="blank">Mahapatra</span> or <span class="blank">Mohanty</span>; the most important name is <span class="blank">Kelucharan Mahapatra</span>, trained under <span class="blank">Pankaj Charan Das</span>.
+        Satriya was recognized as a classical dance in the year <span class="blank">2000</span> and is associated with <span class="blank">Guru Shankaradeva</span>, the theatrical forms <span class="blank">Bhaona</span> and <span class="blank">Ankiya Naat</span>, and <span class="blank">Borgeet</span> music.
+        The Father of Carnatic Music is <span class="blank">Purandara Dasa</span>, and its Queen is <span class="blank">M.S. Subbulakshmi</span>, who received the Bharat Ratna in <span class="blank">1998</span>.
+        <span class="blank">Bhupen Hazarika</span> received the Bharat Ratna in <span class="blank">2019</span> for his contribution linked to Satriya / Assam.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>⚡ Rapid-Fire One-Liners</h3>
+      <ol>
+        <li>Dance + Earth element → <strong>Kuchipudi</strong></li>
+        <li>Dance + Air element → <strong>Mohiniyattam</strong></li>
+        <li>Dance + only North India → <strong>Kathak</strong></li>
+        <li>Dance + newest (2000) → <strong>Satriya</strong></li>
+        <li>Dance + introverted, no eye contact → <strong>Manipuri</strong></li>
+        <li>Dance + masked story-play → <strong>Kathakali</strong></li>
+        <li>Dance + Mahapatra/Mohanty surnames → <strong>Odissi</strong></li>
+        <li>Dance + Reddy surnames → <strong>Kuchipudi</strong></li>
+        <li>Dance + banned 1910 → <strong>Bharatanatyam (Sadir)</strong></li>
+        <li>Dance + Shaivite/Tandava dominant → <strong>Bharatanatyam</strong></li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>↩️ Reverse Questions — Name the Dance From the Clue</h3>
+      <div class="flip-card"><div class="q">I am named after a village in Krishna district. Which dance am I? <span class="chevron">▾</span></div><div class="a">Kuchipudi</div></div>
+      <div class="flip-card"><div class="q">My dancers never make eye contact with the audience. Which dance am I? <span class="chevron">▾</span></div><div class="a">Manipuri</div></div>
+      <div class="flip-card"><div class="q">I was added to the classical dance list only in the year 2000. Which dance am I? <span class="chevron">▾</span></div><div class="a">Satriya</div></div>
+      <div class="flip-card"><div class="q">My most famous guru's surname is Mahapatra. Which dance am I? <span class="chevron">▾</span></div><div class="a">Odissi</div></div>
+      <div class="flip-card"><div class="q">I am the only classical dance native to North India. Which dance am I? <span class="chevron">▾</span></div><div class="a">Kathak</div></div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== HIGH-YIELD ===================== */
+PAGES.highyield = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> REVISION LAYER 2 OF 4</div>
+    <div class="page-title">⭐ High-Yield Revision Notes</div>
+    <div class="page-subtitle">Everything that actually shows up in papers — condensed but complete. Use this for revision rounds 2 through 10.</div>
+
+    <table class="tbl">
+      <tr><th>Dance</th><th>State</th><th>Key Identity Fact</th><th>Top Exponent(s)</th><th>Other Tags</th></tr>
+      <tr><td><strong>Bharatanatyam</strong></td><td>Tamil Nadu</td><td>Old name Sadir/Dasi Attam; British ban 1910</td><td>Rukmini Devi Arundale (Kalakshetra, 1936)</td><td>Tandava, Shaivite, Carnatic</td></tr>
+      <tr><td><strong>Kuchipudi</strong></td><td>Andhra Pradesh</td><td>From Yakshagana (Karnataka); founder Siddhendra Yogi</td><td>Reddy-surname cluster, Vempati Chinna Satyam</td><td>Earth element, Carnatic</td></tr>
+      <tr><td><strong>Mohiniyattam</strong></td><td>Kerala</td><td>Named after Vishnu's Mohini avatar</td><td>Kanak Rele</td><td>Air element, Vaishnavite</td></tr>
+      <tr><td><strong>Kathakali</strong></td><td>Kerala</td><td>"Katha"=story, "Kali"=play; masks</td><td>Gopinath, Kottakkal Nandakumar Nair</td><td>Vaishnavite themes</td></tr>
+      <tr><td><strong>Kathak</strong></td><td>Uttar Pradesh</td><td>Only classical dance native to North India</td><td>Birju Maharaj (Kalka-Bindadin Gharana, Lucknow; Padma Vibhushan 1986)</td><td>Hindustani music, Thumri</td></tr>
+      <tr><td><strong>Manipuri</strong></td><td>Manipur</td><td>Introverted; 3 forms: Raas Leela, Jagoi, Cholom</td><td>Guru Bipin Singh ("Hanjaba")</td><td>Pung Cholom = drum dance; Vaishnavite</td></tr>
+      <tr><td><strong>Odissi</strong></td><td>Odisha</td><td>Surnames Mahapatra/Mohanty are the giveaway</td><td>Kelucharan Mahapatra (trained by Pankaj Charan Das)</td><td>Temple-sculpture poses</td></tr>
+      <tr><td><strong>Satriya</strong></td><td>Assam</td><td>Recognized in 2000 — newest of the 8</td><td>Guru Shankaradeva (founder); Bhupen Hazarika (Bharat Ratna 2019)</td><td>Bhaona, Ankiya Naat, Borgeet music</td></tr>
+    </table>
+
+    <div class="card">
+      <h3>📌 Foundation Facts</h3>
+      <ul>
+        <li>8 classical dances per Sangeet Natak Akademi; 9 per Ministry of Culture (extra = Chhau).</li>
+        <li>Natya Shastra by Bharat Muni = "Fifth Veda."</li>
+        <li>Abhinaya Darpana by Nandikeshvara.</li>
+        <li>Lasya (graceful, feminine, Parvati) vs Tandava (vigorous, masculine, Shiva).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🎶 Music</h3>
+      <ul>
+        <li>Carnatic music: Kerala, Tamil Nadu, Karnataka, Andhra Pradesh, Telangana → Bharatanatyam, Kuchipudi, Mohiniyattam, Kathakali.</li>
+        <li>Hindustani music → Kathak (Thumri style).</li>
+        <li>Father of Carnatic Music: Purandara Dasa. Queen of Carnatic Music: M.S. Subbulakshmi (Bharat Ratna 1998).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>👥 Overlap Exponents (cross-question risk)</h3>
+      <ul>
+        <li>Yamini Krishnamurthy → Bharatanatyam + Kuchipudi (Asthana dancer, Tirupati Tirumala Devasthanam)</li>
+        <li>Mallika Sarabhai → Bharatanatyam + Kuchipudi</li>
+        <li>Sonal Mansingh → Bharatanatyam + Odissi</li>
+      </ul>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== ULTRA-FAST ===================== */
+PAGES.ultrafast = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> REVISION LAYER 3 OF 4</div>
+    <div class="page-title">⚡ Ultra-Fast Revision Sheet</div>
+    <div class="page-subtitle">For revision rounds 10–50. One glance per dance.</div>
+
+    <div class="speed-grid">
+      <div>BHARATANATYAM</div><div>Tamil Nadu · Sadir/Dasi Attam · banned 1910 · Rukmini Devi Arundale, Kalakshetra 1936 · Tandava/Shaivite</div>
+      <div>KUCHIPUDI</div><div>Andhra Pradesh · from Yakshagana (Karnataka) · Siddhendra Yogi · Earth element · "Reddy" surnames</div>
+      <div>MOHINIYATTAM</div><div>Kerala · Mohini = Vishnu's form · Air element · Vaishnavite · Kanak Rele</div>
+      <div>KATHAKALI</div><div>Kerala · masked story-play · Gopinath</div>
+      <div>KATHAK</div><div>Uttar Pradesh · only North Indian classical dance · Hindustani/Thumri · Birju Maharaj, Kalka-Bindadin Gharana, Padma Vibhushan 1986</div>
+      <div>MANIPURI</div><div>Manipur · introverted (no eye contact) · Raas Leela/Jagoi/Cholom · Guru Bipin Singh "Hanjaba"</div>
+      <div>ODISSI</div><div>Odisha · surnames Mahapatra/Mohanty · Kelucharan Mahapatra ← Pankaj Charan Das</div>
+      <div>SATRIYA</div><div>Assam · recognized 2000 (newest) · Guru Shankaradeva · Bhaona/Ankiya Naat · Borgeet · Bhupen Hazarika, Bharat Ratna 2019</div>
+    </div>
+
+    <div class="card">
+      <h3>🔑 5 Numbers to Never Forget</h3>
+      <div class="grid-3">
+        <div class="stat-chip"><div class="num">8</div><div class="lbl">SNA classical dances</div></div>
+        <div class="stat-chip"><div class="num">1910</div><div class="lbl">British ban</div></div>
+        <div class="stat-chip"><div class="num">1936</div><div class="lbl">Kalakshetra founded</div></div>
+        <div class="stat-chip"><div class="num">2000</div><div class="lbl">Satriya recognized</div></div>
+        <div class="stat-chip"><div class="num">2019</div><div class="lbl">Hazarika's Bharat Ratna</div></div>
+      </div>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== 30-SECOND ===================== */
+PAGES.thirtysec = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> REVISION LAYER 4 OF 4</div>
+    <div class="page-title">⏱️ 30-Second Revision Sheet</div>
+    <div class="page-subtitle">If you only have half a minute. Just the state + one anchor fact, in walking order.</div>
+
+    <div class="card">
+      <ol style="font-size:15px; line-height:2.3;">
+        <li><strong style="color:var(--green)">Bharatanatyam</strong> — Tamil Nadu — banned 1910, revived by Rukmini Devi</li>
+        <li><strong style="color:var(--green)">Kuchipudi</strong> — Andhra Pradesh — Earth, Reddy surnames</li>
+        <li><strong style="color:var(--green)">Mohiniyattam</strong> — Kerala — Air, Vaishnavite Mohini</li>
+        <li><strong style="color:var(--green)">Kathakali</strong> — Kerala — masked story-play</li>
+        <li><strong style="color:var(--green)">Kathak</strong> — Uttar Pradesh — only North Indian one, Birju Maharaj</li>
+        <li><strong style="color:var(--green)">Manipuri</strong> — Manipur — no eye contact, Pung Cholom</li>
+        <li><strong style="color:var(--green)">Odissi</strong> — Odisha — Mahapatra/Mohanty surnames</li>
+        <li><strong style="color:var(--green)">Satriya</strong> — Assam — newest (2000), Shankaradeva</li>
+      </ol>
+    </div>
+
+    <div class="hook-box">
+      <span class="hook-label">🧠 The Whole Chapter in One Breath</span>
+      <p>"Fire in <span class="hi">Tamil Nadu</span> (1910 ban), Earth in <span class="hi2">Andhra</span> (Reddy), Air in <span class="hi">Kerala</span> (Mohini), a mask next door in <span class="hi2">Kerala</span> again, a spin alone in <span class="hi">UP</span> (Birju Maharaj), a silent drummer in <span class="hi2">Manipur</span>, a stone statue in <span class="hi">Odisha</span> (Mahapatra), and a brand-new river temple in <span class="hi2">Assam</span> (2000, Shankaradeva)."</p>
+    </div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+/* ===================== LAST NIGHT ===================== */
+PAGES.lastnight = function(){
+  return `
+  <div class="page active">
+    <div class="page-eyebrow"><span class="dot"></span> FINAL ROOM · EXIT THE HALLWAY</div>
+    <div class="page-title">🌙 Last-Night-Before-Exam Sheet</div>
+    <div class="page-subtitle">No new information here — just the highest-leverage punches, fired fast.</div>
+
+    <div class="card">
+      <div class="punch"><span class="num-label">01</span>SNA recognizes <strong style="color:var(--green)">8</strong> classical dances. Ministry of Culture says 9 (adds Chhau).</div>
+      <div class="punch"><span class="num-label">02</span>Natya Shastra (Bharat Muni) = "Fifth Veda."</div>
+      <div class="punch"><span class="num-label">03</span>Lasya = feminine/Parvati. Tandava = masculine/Shiva. Don't flip.</div>
+      <div class="punch"><span class="num-label">04</span><strong>Bharatanatyam</strong> (Tamil Nadu) banned 1910 → revived by Rukmini Devi Arundale, Kalakshetra 1936.</div>
+      <div class="punch"><span class="num-label">05</span><strong>Kuchipudi</strong> (Andhra Pradesh) from Yakshagana (Karnataka) → Earth element → Reddy surnames.</div>
+      <div class="punch"><span class="num-label">06</span><strong>Mohiniyattam</strong> (Kerala) → Air element → Vaishnavite (Mohini = Vishnu).</div>
+      <div class="punch"><span class="num-label">07</span><strong>Kathakali</strong> (Kerala) → masked story-play. NOT the same as Kathak.</div>
+      <div class="punch"><span class="num-label">08</span><strong>Kathak</strong> (Uttar Pradesh) → ONLY North Indian classical dance → Hindustani/Thumri → Birju Maharaj, Kalka-Bindadin Gharana, Padma Vibhushan 1986.</div>
+      <div class="punch"><span class="num-label">09</span><strong>Manipuri</strong> (Manipur) → introverted, no eye contact → Raas Leela/Jagoi/Cholom → Guru Bipin Singh = father, title "Hanjaba."</div>
+      <div class="punch"><span class="num-label">10</span><strong>Odissi</strong> (Odisha) → surnames Mahapatra/Mohanty → Kelucharan Mahapatra trained by Pankaj Charan Das.</div>
+      <div class="punch"><span class="num-label">11</span><strong>Satriya</strong> (Assam) → newest, recognized in 2000 → Guru Shankaradeva → Bhaona/Ankiya Naat → Borgeet music → Bhupen Hazarika, Bharat Ratna 2019.</div>
+      <div class="punch"><span class="num-label">12</span>Carnatic music = South India (Kerala, TN, Karnataka, AP, Telangana). Father: Purandara Dasa. Queen: M.S. Subbulakshmi, Bharat Ratna 1998.</div>
+      <div class="punch"><span class="num-label">13</span>Overlap watch: Yamini Krishnamurthy & Mallika Sarabhai → Bharatanatyam + Kuchipudi. Sonal Mansingh → Bharatanatyam + Odissi.</div>
+      <div class="punch"><span class="num-label">14</span>Year ladder: 1910 → 1936 → 1986 → 1998 → 2000 → 2019.</div>
+    </div>
+
+    <div class="hook-box">
+      <span class="hook-label">🚪 Walk Out The Way You Came In</span>
+      <p>Close your eyes. Walk the hallway one last time: <span class="hi">Fire</span> (Tamil Nadu) → <span class="hi2">Earth</span> (Andhra) → <span class="hi">Air</span> (Kerala, twice) → <span class="hi2">Spin</span> (UP) → <span class="hi">Drum</span> (Manipur) → <span class="hi2">Stone</span> (Odisha) → <span class="hi">River</span> (Assam). Eight doors. You know every one of them now.</p>
+    </div>
+
+    <div class="lotus-divider">✿ ✿ ✿</div>
+
+    ${footerNav()}
+  </div>`;
+};
+
+
+window.addEventListener('DOMContentLoaded', () => {
+  const startPage = (window.location.hash || '#intro').replace('#','');
+  goToPage(PAGES[startPage] ? startPage : 'intro');
+});
+
+</script>
+</body>
+</html>

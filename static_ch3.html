@@ -1,0 +1,1920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Folk Dance — SSC CGL High-Retention Notes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1c2333;
+    --border: #30363d;
+    --green: #3fb950;
+    --green-dim: #1a4a28;
+    --blue: #58a6ff;
+    --blue-dim: #1a2f4a;
+    --amber: #d29922;
+    --amber-dim: #3a2a0a;
+    --red: #f85149;
+    --red-dim: #3a1212;
+    --purple: #bc8cff;
+    --purple-dim: #2a1a4a;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #484f58;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  #app { display: flex; height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: width .25s ease, min-width .25s ease;
+  }
+  #sidebar.collapsed { width: 0; min-width: 0; }
+
+  .sidebar-header {
+    padding: 20px 16px 14px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .sidebar-logo {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .sidebar-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .sidebar-search {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .sidebar-search input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-family: var(--sans);
+    font-size: 13px;
+    color: var(--text);
+    outline: none;
+  }
+  .sidebar-search input::placeholder { color: var(--text-dim); }
+  .sidebar-search input:focus { border-color: var(--blue); }
+
+  .sidebar-nav {
+    overflow-y: auto;
+    flex: 1;
+    padding: 8px 0;
+  }
+  .sidebar-nav::-webkit-scrollbar { width: 4px; }
+  .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+  .sidebar-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .nav-section-label {
+    padding: 8px 16px 4px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-dim);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-left: 2px solid transparent;
+    transition: all .15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    background: var(--blue-dim);
+    color: var(--blue);
+    border-left-color: var(--blue);
+    font-weight: 600;
+  }
+  .nav-item .nav-icon { font-size: 14px; flex-shrink: 0; }
+  .nav-item .nav-badge {
+    margin-left: auto;
+    font-size: 10px;
+    font-family: var(--mono);
+    padding: 1px 6px;
+    border-radius: 10px;
+    background: var(--bg3);
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+  .nav-item.active .nav-badge { background: var(--blue-dim); color: var(--blue); }
+
+  /* ── MAIN ── */
+  #main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  #topbar {
+    height: 52px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  #toggle-sidebar {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 5px 8px;
+    font-size: 16px;
+    transition: all .15s;
+  }
+  #toggle-sidebar:hover { background: var(--bg3); color: var(--text); }
+
+  #breadcrumb {
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    overflow: hidden;
+  }
+  #breadcrumb .crumb { color: var(--blue); font-weight: 500; }
+  #breadcrumb .sep { color: var(--text-dim); }
+
+  #layer-switcher {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+  }
+  .layer-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+  .layer-btn:hover { color: var(--text); border-color: var(--blue); }
+  .layer-btn.active { background: var(--blue-dim); color: var(--blue); border-color: var(--blue); }
+
+  #content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px;
+  }
+  #content::-webkit-scrollbar { width: 6px; }
+  #content::-webkit-scrollbar-track { background: transparent; }
+  #content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── PAGE SECTIONS ── */
+  .page { display: none; animation: fadeIn .2s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── TYPOGRAPHY ── */
+  .page-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 28px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin-left: 4px;
+  }
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--blue);
+    margin: 20px 0 8px;
+  }
+
+  p { font-size: 14px; line-height: 1.7; color: var(--text-muted); margin-bottom: 10px; }
+  strong { color: var(--text); font-weight: 600; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card.green { border-left: 3px solid var(--green); }
+  .card.blue { border-left: 3px solid var(--blue); }
+  .card.amber { border-left: 3px solid var(--amber); }
+  .card.red { border-left: 3px solid var(--red); }
+  .card.purple { border-left: 3px solid var(--purple); }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    font-family: var(--mono);
+  }
+  .tag.fire { background: #3a1a0a; color: #ff7b54; }
+  .tag.star { background: #2a2a0a; color: #d29922; }
+  .tag.plus { background: #1a2a1a; color: var(--green); }
+
+  /* ── STATE GRID ── */
+  .state-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .state-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .state-card:hover { border-color: var(--blue); background: var(--bg3); }
+  .state-card.expanded { border-color: var(--green); }
+  .state-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .state-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .state-flag { font-size: 20px; }
+  .state-dances {
+    font-size: 12px;
+    color: var(--green);
+    font-family: var(--mono);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .state-hook {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .state-card.expanded .state-hook { display: block; }
+  .state-hook .hook-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* ── TRAP BOXES ── */
+  .trap-box {
+    background: var(--red-dim);
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .trap-box .trap-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .trap-box p { font-size: 13px; margin-bottom: 0; }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .quiz-q .q-text {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+  .quiz-options { display: flex; flex-direction: column; gap: 6px; }
+  .quiz-opt {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .15s;
+    color: var(--text-muted);
+    text-align: left;
+  }
+  .quiz-opt:hover { border-color: var(--blue); color: var(--text); }
+  .quiz-opt.correct { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+  .quiz-opt.wrong { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+  .quiz-explain {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    background: var(--bg3);
+    padding: 10px 14px;
+    border-radius: 6px;
+    border-left: 2px solid var(--green);
+    display: none;
+  }
+  .quiz-explain.show { display: block; }
+
+  /* ── ULTRA FAST ── */
+  .uf-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .uf-table th {
+    background: var(--bg3);
+    color: var(--blue);
+    font-weight: 700;
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .uf-table td {
+    padding: 9px 14px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    vertical-align: top;
+  }
+  .uf-table tr:hover td { background: var(--bg3); }
+  .uf-table .state-col { color: var(--text); font-weight: 600; width: 160px; }
+  .uf-table .dance-col { color: var(--green); font-family: var(--mono); font-size: 12px; }
+  .uf-table .note-col { font-size: 12px; }
+
+  /* ── 30-SEC ── */
+  .flash-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .flash-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+  }
+  .flash-state { font-weight: 700; color: var(--text); font-size: 13px; margin-bottom: 4px; }
+  .flash-dances { color: var(--green); font-family: var(--mono); font-size: 11px; line-height: 1.6; }
+
+  /* ── LAST NIGHT ── */
+  .ln-section {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .ln-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--purple);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-bottom: 10px;
+  }
+  .ln-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text);
+    padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .ln-item:last-child { border-bottom: none; }
+  .ln-key { color: var(--blue); font-weight: 600; min-width: 150px; font-family: var(--mono); font-size: 12px; }
+  .ln-val { color: var(--text-muted); }
+
+  /* ── MEMORY PALACE ── */
+  .palace-room {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--purple);
+  }
+  .palace-room h4 { font-size: 14px; color: var(--purple); font-weight: 700; margin-bottom: 6px; }
+  .palace-room p { font-size: 13px; margin-bottom: 0; }
+
+  /* ── HOME DASHBOARD ── */
+  .home-hero {
+    background: linear-gradient(135deg, var(--bg2) 0%, #0d1f1a 100%);
+    border: 1px solid var(--green-dim);
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .home-hero::before {
+    content: '🎭';
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 80px;
+    opacity: .15;
+  }
+  .home-hero .hero-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .home-hero h1 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+  .home-hero p { font-size: 15px; max-width: 520px; }
+
+  .stats-row { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .stat-box {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    flex: 1;
+    min-width: 120px;
+  }
+  .stat-num { font-size: 28px; font-weight: 700; color: var(--green); font-family: var(--mono); }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  .quick-nav { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .quick-btn {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all .15s;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .quick-btn:hover { border-color: var(--blue); background: var(--bg3); }
+  .quick-icon { font-size: 22px; }
+  .quick-label { font-size: 14px; font-weight: 600; color: var(--text); }
+  .quick-sub { font-size: 12px; color: var(--text-muted); }
+
+  /* ── HIGHLIGHT PILL ── */
+  .pill {
+    display: inline-block;
+    background: var(--green-dim);
+    color: var(--green);
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--mono);
+  }
+  .pill.blue { background: var(--blue-dim); color: var(--blue); }
+  .pill.amber { background: var(--amber-dim); color: var(--amber); }
+  .pill.red { background: var(--red-dim); color: var(--red); }
+  .pill.purple { background: var(--purple-dim); color: var(--purple); }
+
+  ul.checklist { list-style: none; padding: 0; }
+  ul.checklist li {
+    padding: 5px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  ul.checklist li::before { content: '›'; color: var(--green); flex-shrink: 0; font-weight: 700; }
+
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  .fill-blank {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .fill-blank:hover { border-color: var(--green); }
+  .fill-blank .blank { color: var(--amber); font-weight: 700; display: none; }
+  .fill-blank .blank-hide { color: var(--amber); border-bottom: 2px dashed var(--amber); padding: 0 4px; }
+  .fill-blank.revealed .blank { display: inline; }
+  .fill-blank.revealed .blank-hide { display: none; }
+
+  /* ── PROGRESS BAR (decorative) ── */
+  .progress-label { font-size: 11px; color: var(--text-dim); margin-bottom: 4px; }
+  .progress-bar { height: 4px; background: var(--bg3); border-radius: 2px; margin-bottom: 12px; }
+  .progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--green), var(--blue)); }
+
+  .exam-q {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--text);
+  }
+  .exam-q::before { content: '🎯 '; }
+  .exam-ans {
+    font-size: 12px;
+    color: var(--green);
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid var(--border);
+    display: none;
+  }
+  .exam-q:hover .exam-ans { display: block; }
+  .exam-q .show-hint { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ── MARTIAL DANCE ── */
+  .martial-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .martial-row:last-child { border-bottom: none; }
+  .martial-state { min-width: 140px; font-weight: 700; color: var(--text); font-size: 14px; }
+  .martial-dance { color: var(--amber); font-family: var(--mono); font-size: 13px; }
+  .martial-note { font-size: 12px; color: var(--text-muted); }
+
+  @media (max-width: 768px) {
+    #sidebar { width: 220px; min-width: 220px; }
+    #content { padding: 16px; }
+    .state-grid { grid-template-columns: 1fr; }
+    .stats-row { flex-wrap: wrap; }
+    .quick-nav { grid-template-columns: 1fr; }
+    #layer-switcher { display: none; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">SSC CGL · Static GK</div>
+      <div class="sidebar-title">Folk Dance<br>Revision System</div>
+    </div>
+    <div class="sidebar-search">
+      <input type="text" id="search-input" placeholder="Search states, dances…" oninput="filterNav(this.value)">
+    </div>
+    <div class="sidebar-nav" id="nav-list">
+      <div class="nav-section-label">Overview</div>
+      <div class="nav-item active" onclick="showPage('home')" data-search="home overview big picture">
+        <span class="nav-icon">🏠</span> Home & Big Picture
+        <span class="nav-badge">START</span>
+      </div>
+      <div class="nav-item" onclick="showPage('palace')" data-search="memory palace story">
+        <span class="nav-icon">🧠</span> Memory Palace
+      </div>
+
+      <div class="nav-section-label">State-wise Dances</div>
+      <div class="nav-item" onclick="showPage('states-az')" data-search="all states folk dance list">
+        <span class="nav-icon">🗺️</span> All States A–Z
+        <span class="nav-badge">28</span>
+      </div>
+      <div class="nav-item" onclick="showPage('south')" data-search="south india andhra telangana kerala tamil karnataka">
+        <span class="nav-icon">🌴</span> South India
+      </div>
+      <div class="nav-item" onclick="showPage('north')" data-search="north india haryana punjab himachal uttarakhand uttar pradesh jammu kashmir">
+        <span class="nav-icon">🏔️</span> North India
+      </div>
+      <div class="nav-item" onclick="showPage('east')" data-search="east india west bengal orissa jharkhand bihar assam manipur meghalaya nagaland mizoram tripura arunachal sikkim">
+        <span class="nav-icon">🌿</span> East & NE India
+      </div>
+      <div class="nav-item" onclick="showPage('west')" data-search="west india gujarat goa maharashtra rajasthan madhya pradesh chhattisgarh">
+        <span class="nav-icon">☀️</span> West & Central India
+      </div>
+
+      <div class="nav-section-label">Special Sections</div>
+      <div class="nav-item" onclick="showPage('martial')" data-search="martial dance gatka thang ta">
+        <span class="nav-icon">⚔️</span> Martial Dances
+      </div>
+      <div class="nav-item" onclick="showPage('traps')" data-search="exam traps confusion mistakes">
+        <span class="nav-icon">⚠️</span> Exam Traps
+        <span class="nav-badge">🔥</span>
+      </div>
+      <div class="nav-item" onclick="showPage('examiner')" data-search="examiner questions frequently asked">
+        <span class="nav-icon">🎯</span> Examiner's Favourites
+      </div>
+
+      <div class="nav-section-label">Revision Layers</div>
+      <div class="nav-item" onclick="showPage('quiz')" data-search="quiz self test active recall">
+        <span class="nav-icon">❓</span> Active Recall Quiz
+      </div>
+      <div class="nav-item" onclick="showPage('ultrafast')" data-search="ultra fast revision table">
+        <span class="nav-icon">⚡</span> Ultra-Fast Table
+      </div>
+      <div class="nav-item" onclick="showPage('flash')" data-search="30 second flash cards">
+        <span class="nav-icon">⏱️</span> 30-Second Flash
+      </div>
+      <div class="nav-item" onclick="showPage('lastnight')" data-search="last night before exam">
+        <span class="nav-icon">🌙</span> Last Night Sheet
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="topbar">
+      <button id="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+      <div id="breadcrumb">
+        <span>Folk Dance</span>
+        <span class="sep">›</span>
+        <span class="crumb" id="bc-page">Home</span>
+      </div>
+      <div id="layer-switcher">
+        <button class="layer-btn active" onclick="setLayer(1)">L1 Full</button>
+        <button class="layer-btn" onclick="setLayer(2)">L2 Key</button>
+        <button class="layer-btn" onclick="setLayer(3)">L3 Flash</button>
+        <button class="layer-btn" onclick="setLayer(4)">L4 Last Night</button>
+      </div>
+    </div>
+
+    <div id="content">
+
+      <!-- ══════════════ HOME ══════════════ -->
+      <div class="page active" id="page-home">
+        <div class="home-hero">
+          <div class="hero-label">SSC CGL · Static GK · Free Revision Batch</div>
+          <h1>Folk Dances of India</h1>
+          <p class="page-subtitle">A complete memory-optimised revision system covering all states, martial dances, traps, and active recall — designed to make this chapter unforgettable six months from now.</p>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-num">28+</div>
+            <div class="stat-label">States Covered</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">100+</div>
+            <div class="stat-label">Folk Dances</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">8</div>
+            <div class="stat-label">Martial Dances</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Revision Layers</div>
+          </div>
+        </div>
+
+        <h2>🗺️ Big Picture</h2>
+        <div class="card blue">
+          <div class="card-title">What is Folk Dance?</div>
+          <p><strong>Folk dances</strong> are community celebrations — performed by ordinary people during <strong>harvest, sowing, rain, birth, weddings, festivals</strong>. No expert training needed. Anyone can perform. They belong to the land, not the stage.</p>
+          <p style="margin-top:8px"><strong>Classical dance</strong> (8 total) requires years of formal training → expert performers. <strong>Folk dance</strong> is for the people → infinite variety, no fixed count.</p>
+        </div>
+
+        <div class="card amber">
+          <div class="card-title">Key Distinction — Remember This Forever</div>
+          <ul class="checklist">
+            <li><strong>Classical = Requires expertise, formal gurukul/training, stage performance</strong></li>
+            <li><strong>Folk = Community celebration, anyone can participate, performed at life events</strong></li>
+            <li>Chhau is a folk-style martial dance — <span class="pill amber">Ministry of Culture considers it Classical</span></li>
+            <li>Bihu = <span class="pill">Dance + Festival</span> both (previously asked in SSC!)</li>
+          </ul>
+        </div>
+
+        <h2>🚀 Quick Navigation</h2>
+        <div class="quick-nav">
+          <div class="quick-btn" onclick="showPage('states-az')">
+            <span class="quick-icon">🗺️</span>
+            <div><div class="quick-label">All States A–Z</div><div class="quick-sub">Complete notes with memory hooks</div></div>
+          </div>
+          <div class="quick-btn" onclick="showPage('traps')">
+            <span class="quick-icon">⚠️</span>
+            <div><div class="quick-label">Exam Traps</div><div class="quick-sub">Don't lose marks here</div></div>
+          </div>
+          <div class="quick-btn" onclick="showPage('quiz')">
+            <span class="quick-icon">❓</span>
+            <div><div class="quick-label">Active Recall Quiz</div><div class="quick-sub">Test yourself now</div></div>
+          </div>
+          <div class="quick-btn" onclick="showPage('martial')">
+            <span class="quick-icon">⚔️</span>
+            <div><div class="quick-label">Martial Dances</div><div class="quick-sub">High-yield special category</div></div>
+          </div>
+          <div class="quick-btn" onclick="showPage('ultrafast')">
+            <span class="quick-icon">⚡</span>
+            <div><div class="quick-label">Ultra-Fast Table</div><div class="quick-sub">One-look revision</div></div>
+          </div>
+          <div class="quick-btn" onclick="showPage('lastnight')">
+            <span class="quick-icon">🌙</span>
+            <div><div class="quick-label">Last Night Sheet</div><div class="quick-sub">Exam-eve cheat sheet</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════ MEMORY PALACE ══════════════ -->
+      <div class="page" id="page-palace">
+        <div class="page-title">🧠 Chapter Memory Palace</div>
+        <div class="page-subtitle">A journey through an imaginary "Dance Museum of India" — walk through it mentally to recall every state.</div>
+
+        <div class="card purple">
+          <div class="card-title">The Story: India's Dance Museum</div>
+          <p>You enter a grand <strong>circular museum</strong>. The entrance arch says "FOLK DANCES OF INDIA." You walk clockwise through halls arranged <strong>alphabetically</strong>. Each hall has a unique scene that burns the dances into memory.</p>
+        </div>
+
+        <div class="palace-room">
+          <h4>🚪 Hall A1 — Andhra Pradesh</h4>
+          <p>A copper plate on the floor. Banjara tribals making "burr" from <strong>Bamlu</strong> (bamboo) branches. The Lambadi madam in tall dress walks by. <strong>HOOK: Bamlu + Burr = Butta Buma Lu; Banjara tribe.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall A2 — Arunachal Pradesh</h4>
+          <p>Two sisters — Aruna and Rekha — are arguing. Aruna tells Rekha's husband: "Go to your daughter-in-law wearing a MASK and watch Lion + Peacock dance!" You see "CHAM" written on the mask. <strong>HOOK: Aji-Vancho, Buiya, Paasi-Kanki, Chalo, Popin, Bardo Chham → wherever you see CHAM = Arunachal OR Sikkim.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall A3 — Assam</h4>
+          <p>A Bodo tribal woman dances Baguramba. A daughter-in-law beats her husband to death → BIHU (festival + dance). A Jhumur jhumjhum sound plays. <strong>HOOK: Bodo→Baguramba. Bihu=dance+festival. Jhumur(Assam) ≠ Jhumar(Haryana).</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall B — Bihar</h4>
+          <p>A DJ plays bohemia rap. Jat-Jatan people rap "Foreigners rap Dhajia-Dhiya in Bihar because they're fans of Bohemia." Paika and Jharni posters on the wall. <strong>HOOK: Jat-Jatan, Videshiya, Jhijhiya, Jharni, Paika, Kajri, Dibiya.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall C — Chhattisgarh</h4>
+          <p>A parrot (SUA) watches lazy cultists kill Gediya with Pandavas, dancing all the while. "Pandavani Teejan Bai" poster on wall — 2009 Padma Vibhushan. <strong>HOOK: Sua=parrot dance. Pandavani=Padma Vibhushan 2009. Karma, Saila also here.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall G1 — Goa</h4>
+          <p>Mandvi (a girl, like river Mandvi of Goa) went to Goa to see a Jaguar car and fly kites. "Don't cry, sleep" the elder says → FUGDI. Horse cart racing nearby → DHALO. <strong>HOOK: Mando, Fugdi, Dhalo, Dekhni, Corridor.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall G2 — Gujarat</h4>
+          <p>Durga fights Mahishasur with DANDIYA sticks during Navratri. Krishna plays GARBA with Gopis. Matki filled with water (water shortage area). <strong>HOOK: Garba+Dandiya=must know. Matukdi=Matki of water. Bhavai, Huḍo, Siddhi Dhamal, Tippani, Padhar.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall H — Haryana</h4>
+          <p>GUGGA (a don in goggles) walks in. Panchkula → CHARKULA. Holi fog → Phag. Manjira jingles everywhere. Loor dance by women. <strong>HOOK: Gugga, Charkula(Panchkula→Charkula), Loor, Manjeera, Dhamal, Khoriya, Dauf, Phag, Jhumar.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall H2 — Himachal Pradesh</h4>
+          <p>Short boy Aman (=peace, ironic — no peace here) wears a demon's robe, puts a garland on a bull, beats a Dang drum, leaves a Chhamm print. <strong>HOOK: Jhora, Jhali, Chham, Danda Naach, Chhapa, Dangi Naach.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall J&K — Jammu & Kashmir</h4>
+          <p>Pakistani bowler Harris Rauf is jumping and dancing — he won from Canada but will be left in the dust (Dhumal). Bhand Pathar puppets mock him. <strong>HOOK: Hikat, Kud, Rauf, Dhumal, Damal, Bhand Pathar.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall Jh — Jharkhand</h4>
+          <p>Birsa MUNDA walks in → MUNDARI dance. Eastern India corner — Santhali, Fagua, Karma, Paika, Jhumar, Damkach, Chhau. <strong>HOOK: Munda→Mundari. Chhau = Eastern India (Jharkhand+Orissa+Bihar). Jhumar≠Jhoomar.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall K — Karnataka</h4>
+          <p>Your friend speaks frankly: "Say less, yaar!" A ghost in doll costume (Dollu Kunitha) destroys his bravery (Veeragase). Yakshagana story plays out. <strong>HOOK: Karga, Veeragase, Dollu Kunitha, Yakshagana, Suggi Kunitha.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall Ke — Kerala</h4>
+          <p>Every dance here ends in "-KALI" or "-ATTAM." You see TT (double-T) everywhere — Ottam Thulla, Thitambu Nritham. Kolkali, Curvakali, Thiruvathirakali. <strong>HOOK: Kali=Kerala. Double-TT=Kerala or Tamil Nadu. Nee Attam→Kerala, Li Attam→Tamil Nadu.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall M — Manipur</h4>
+          <p>People get MONEY (Manipur). They buy KHAMBA and LAI (=chakna). They drink ethanol all night and perform RAAS LEELA. Thangtaviya (martial) poster. Pung drum (dholak-type). <strong>HOOK: Raas Leela, Khamba-Thoibi, Lai Haraoba, Dhol Cholom, Thang-ta (martial).</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall Me — Meghalaya</h4>
+          <p>Three hills: GARO (Bengali dance=Festival of 100 Drums), KHASI (naked child running in rain gets cough=Nongkrem), JAINTIA. <strong>HOOK: Garo→Wangala (100 Drums Festival). Khasi→Nongkrem. Jaintia→Laho.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall Mi — Mizoram</h4>
+          <p>"Khullam Khulla Chillam Chal Rahi" — Cheraw (bamboo dance) and Khuallam filling the stage. Chheihlam and Zangtalam. <strong>HOOK: Cheraw (bamboo dance)=most famous. Khuallam, Chheihlam, Zangtalam.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall N — Nagaland</h4>
+          <p>Multicoloured snakes crawl. People eat dogs cooked in bamboo with potatoes and tea → Chang Lo / Chang Cow eats Chang → Changs. <strong>HOOK: Chang Lo, Zeliang, Rengma, Naga tribal dances.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall O — Odisha (Orissa)</h4>
+          <p>Pua ate dal (Pua=one who ate dal). He roams with a stick (Rappa). Karma, Jhoomar, Mahari, Chhau all in the same room. Mayurbhanj district sign. <strong>HOOK: Mahari, Karma, Jhoomar, Chhau, Paika, Rappa, Pua. Teejan Bai connects Chhattisgarh+Odisha.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall R — Rajasthan</h4>
+          <p>GHOOMAR (Bhil tribe). GANGAUR (Shiv-Parvati worship). KALBELIYA (snake tribe, Gulabo Sapera). Raja + Susani (Hrithik's ex-style) clapping by Ganga. <strong>HOOK: Ghoomar=Bhil tribe. Kalbeliya=snake tribe=Gulabo Sapera. Gangaur dedicated to Parvati. Chari, Terahtali.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall Si — Sikkim</h4>
+          <p>CHAM again (remember: Arunachal or Sikkim). Chu Faat festival dedicated to Mt. Kanchenjunga (worshipped as God). Singhi Chham = Snow Lion dance. <strong>HOOK: Singi Chham, Yak Chham, Chhutkey Naach, Chu Faat (festival+dance).</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall T — Tamil Nadu</h4>
+          <p>Attam here is different — "Li Attam" (Kolattam) and "Di Attam" (Kummi). Kavadi festival → Kavadi dance. Double-TT rule still applies. <strong>HOOK: Kolattam, Kummi, Kavadi, Oyilattam, Karagam, Karakam.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall Te — Telangana</h4>
+          <p>Lambadi madam from Andhra is still here (Telangana split June 2, 2014 — same Banjara beans). Madhuri ji comes singing with oil in hair. <strong>HOOK: Perini, Lambadi, Dapppu, Gusadi. Perini=ancient warrior dance revived.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall Tr — Tripura</h4>
+          <p>Biju Patnaik lost in Orissa → becomes GARIYA (VK Pandya's mother type situation). Hojagiri=graceful headbalancing dance. <strong>HOOK: Gariya, Hojagiri, Lebang, Hai-Hak.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall UP — Uttar Pradesh</h4>
+          <p>UP afternoon: 90 people playing cards. FM 93.2 plays Kajri. Someone waiting for Ram Leela. Going home for Nautanki. Raas Leela in Mathura. CHARKULA dance (circular pot on head). <strong>HOOK: Ram Leela, Raas Leela, Nautanki, Kajri, Khayal, Charkula.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall UK — Uttarakhand</h4>
+          <p>Bordering Himachal Pradesh (short Aman's neighbour). Similar printed patterns. Choliya, Jhora, Tand, Naata, Langvir Nritya. <strong>HOOK: Same as Himachal border vibes. Choliya=war dance of Kumaon weddings.</strong></p>
+        </div>
+        <div class="palace-room">
+          <h4>🚪 Hall WB — West Bengal</h4>
+          <p>KKR wins. Gambhir is coach. "Bolo bolo" → if name ends in "-a" sound like "Purulia" → West Bengal. Gambhir's runs = Chhau of Purulia. <strong>HOOK: Chhau (Purulia), Gambhira, Brita, Jhumur (eastern type).</strong></p>
+        </div>
+
+        <div class="card green" style="margin-top:20px">
+          <div class="card-title">🏝️ Union Territories</div>
+          <ul class="checklist">
+            <li><strong>Ladakh:</strong> Bucket Dance, Shondol Dance, Khato Janmo (Khatak Chanmo)</li>
+            <li><strong>High Dance / Fusion Dance:</strong> Not state-specific — promoted by <strong>Uday Shankar</strong> (Ravi Shankar's brother, sitar maestro)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ══════════════ ALL STATES A-Z ══════════════ -->
+      <div class="page" id="page-states-az">
+        <div class="page-title">🗺️ All States — Folk Dances A to Z</div>
+        <div class="page-subtitle">Click any state card to reveal memory hooks. <span class="pill">🔥 = Must Know</span> <span class="pill amber">⭐ = Important</span></div>
+
+        <div class="state-grid" id="state-grid-all">
+          <!-- States populated by JS -->
+        </div>
+      </div>
+
+      <!-- ══════════════ SOUTH ══════════════ -->
+      <div class="page" id="page-south">
+        <div class="page-title">🌴 South India — Folk Dances</div>
+        <div class="page-subtitle">Andhra Pradesh · Telangana · Kerala · Tamil Nadu · Karnataka</div>
+
+        <h2>Andhra Pradesh <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Butta Buma Lu, Kolu Attam, Lambadi, Dappu, Veeranatyam, Bhoomi Kalas (earth element), Dhimsa</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>BAMLU → BURR → BUTTA BUMA LU</strong>: Brave Banjara tribals make "burr" using Bamlu bamboo branches. Tall Lambadi madam walks by.</p>
+          <ul class="checklist">
+            <li><strong>Bhoomi Kalas</strong> = Earth element, stand on copper plate, dance</li>
+            <li><strong>Lambadi</strong> → Banjara tribe (also in Telangana — same people, split state)</li>
+            <li><strong>Dhimsa</strong> → tribal folk dance</li>
+          </ul>
+        </div>
+
+        <h2>Telangana <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Perini Sivatandavam, Lambadi, Dappu, Gusadi, Ojha Nritya</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Telangana split from AP on <strong>June 2, 2014</strong>. Lambadi/Banjara people didn't move — they're still there! <strong>Madhuri ji</strong> comes out singing after applying oil in hair → <strong>Perini</strong> (ancient warrior dance revived for Kuchipudi-style masculine energy).</p>
+        </div>
+
+        <h2>Kerala <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Kolkali, Curvakali, Thiruvathirakali, Thitambu Nritham, Ottam Thulla, Nee Attam, Kaikottikali, Thappu Kali</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook — THE KALI RULE</div>
+          <p><strong>Wherever you see "KALI" or "ATTAM" → think Kerala first.</strong></p>
+          <p><strong>Double-T rule:</strong> Any dance with "TT" (Ottam, Thitambu) → Kerala OR Tamil Nadu (95% cases).</p>
+          <p><strong>NEE Attam</strong> → Kerala. <strong>Li Attam / Di Attam</strong> → Tamil Nadu. Easy separation!</p>
+        </div>
+
+        <h2>Tamil Nadu <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Kolattam, Kummi, Karagam, Kavadi, Oyilattam, Karakam, Puli Attam</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>Kavadi</strong> = festival + dance (like Kavad Yatra). <strong>Kolattam</strong> = stick dance (like Kolkata? No! TN). <strong>Kummi</strong> = clapping dance. Remember: "Li-Attam and Di-Attam are Tamil Nadu's Attams."</p>
+        </div>
+
+        <h2>Karnataka <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Yakshagana, Dollu Kunitha, Veeragase, Karga, Suggi Kunitha, Siddhi Dhamal</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>"Say less (KAR-na-taka = KAR = less)" — Karga, Veeragase (bravery). Ghost in doll costume = <strong>Dollu Kunitha</strong>. Yaksha + Gana = <strong>Yakshagana</strong> (dramatic folk theatre-dance).</p>
+        </div>
+      </div>
+
+      <!-- ══════════════ NORTH ══════════════ -->
+      <div class="page" id="page-north">
+        <div class="page-title">🏔️ North India — Folk Dances</div>
+        <div class="page-subtitle">Haryana · Himachal · Uttarakhand · Uttar Pradesh · J&K · Punjab</div>
+
+        <h2>Haryana <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Gugga, Charkula, Loor, Manjeera, Dhamal, Khoriya, Dauf, Phag, Jhoomar</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>GUGGA</strong> = Don in goggles. <strong>PANCHKULA</strong> (city in Haryana) → <strong>CHARKULA</strong> (similar sound). Holi fog → <strong>PHAG</strong>. Manjira jingling at fairs → <strong>MANJEERA</strong>. JHOOMAR = Haryana (≠ Jhumur of Assam ≠ Jhumar of Eastern India).</p>
+          <div class="trap-box" style="margin-top:12px">
+            <div class="trap-title">⚠️ TRAP</div>
+            <p>Jhoomar (Haryana) ≠ Jhumur (Assam) ≠ Jhumar (Eastern India = Jharkhand/Odisha/Chhattisgarh). Three different spellings, three different states!</p>
+          </div>
+        </div>
+
+        <h2>Himachal Pradesh <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Jhora, Jhali, Chham, Danda Naach, Chhapa, Dangi Naach, Nati</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>Short boy AMAN</strong> (short → Jhora) puts on <strong>demon's robe</strong> (Dangi/Danda), puts garland on bull, hits <strong>Dang drum</strong>, leaves <strong>Chham print</strong>. CHAM here → also in Arunachal & Sikkim. Remember HP+Arunachal+Sikkim all have Cham-type dances.</p>
+        </div>
+
+        <h2>Uttarakhand <span class="tag plus">➕</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Choliya, Jhora, Tand, Naata, Langvir Nritya, Chhopati</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Uttarakhand borders Himachal → <strong>same printed patterns, similar dances</strong>. Choliya = warrior dance performed at <strong>Kumaoni weddings</strong> (sword + shield). Langvir Nritya = acrobatic folk dance unique to UK.</p>
+        </div>
+
+        <h2>Uttar Pradesh <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Ram Leela, Raas Leela, Nautanki, Kajri, Khayal, Charkula, Dadadari</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>UP afternoon: <strong>Cards, FM Radio 93.2 (Kajri song), waiting for Ram Leela, doing Nautanki at home, Raas Leela in Mathura</strong>. Charkula = circular pot balanced on head (also in Haryana but mainly UP).</p>
+        </div>
+
+        <h2>Jammu & Kashmir <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Hikat, Kud, Rauf, Dhumal, Damal, Bhand Pathar, Dumhal</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>Harris Rauf</strong> (Pakistani bowler) jumping with colours after winning, left in <strong>Dhumal</strong> dust. <strong>Bhand Pathar</strong> = satirical folk theatre (jesters/bhand). Dumhal = famous serpentine dance of Wattal tribe.</p>
+        </div>
+      </div>
+
+      <!-- ══════════════ EAST ══════════════ -->
+      <div class="page" id="page-east">
+        <div class="page-title">🌿 East & Northeast India</div>
+        <div class="page-subtitle">Assam · West Bengal · Jharkhand · Odisha · Bihar · Manipur · Meghalaya · Nagaland · Mizoram · Tripura · Arunachal · Sikkim</div>
+
+        <h2>Assam <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Bihu, Baguramba, Jhumur, Bhor Tal, Devdani, Ali Ai Gang</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>BIHU = dance AND festival</strong> (asked in SSC!). <strong>Baguramba = Bodo tribe</strong> (B→B). Classical dance of Assam = <strong>SATRIYA</strong> (Guru Shankar Dev). Added to classical list in <strong>2000</strong> (same year as Jharkhand+Chhattisgarh+Uttarakhand formation).</p>
+          <div class="trap-box" style="margin-top:12px">
+            <div class="trap-title">⚠️ TRAP</div>
+            <p>JHUMUR (Assam) ≠ JHUMAR (Jharkhand/Odisha) ≠ JHOOMAR (Haryana). Assam's Jhumur goes East, Haryana's Jhoomar goes West!</p>
+          </div>
+        </div>
+
+        <h2>West Bengal <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Chhau (Purulia), Gambhira, Brita, Jhumur, Kathi</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>KKR wins → Gambhir becomes coach → <strong>GAMBHIRA dance</strong>. Purulia district → <strong>PURULIA CHHAU</strong>. "If name ends in -a, BOLO" → Gambhira, Brita, Jhumura = WB.</p>
+        </div>
+
+        <h2>Jharkhand <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Chhau, Mundari, Santhali, Fagua, Karma, Paika, Jhumar, Damkach</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Birsa <strong>MUNDA</strong> → <strong>MUNDARI</strong> dance (M→M). Chhau = Eastern India (Jharkhand + Odisha + WB Purulia). <strong>CHHAU: Ministry of Culture considers it Classical despite being folk!</strong></p>
+        </div>
+
+        <h2>Odisha <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Mahari, Karma, Jhoomar, Chhau, Paika, Rappa, Pua, Mayurbhanj Chhau</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>PUA ate DAL</strong>, roams with stick (Rappa), not doing Karma, dancing instead. Mayurbhanj = district in Odisha = unmask Chhau (Mayurbhanj Chhau is performed WITHOUT mask, unlike Seraikela Chhau!).</p>
+          <div class="trap-box" style="margin-top:12px">
+            <div class="trap-title">⚠️ CHHAU TRAP</div>
+            <p>Chhau has 3 styles: <strong>Purulia (WB) = with mask, Seraikela (Jharkhand) = with mask, Mayurbhanj (Odisha) = WITHOUT mask.</strong></p>
+          </div>
+        </div>
+
+        <h2>Bihar <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Jat-Jatan, Videshiya, Jhijhiya, Jharni, Paika, Kajri, Dibiya</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Jat-Jatan people <strong>rap Bohemia songs</strong> in Bihar. Foreigners (Videshiya) join. Jhijhiya-Jharni as beats. Dibiya = lamp dance. Paika seen in Jharkhand and Odisha too (border states share!)</p>
+        </div>
+
+        <h2>Manipur <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Raas Leela, Lai Haraoba, Khamba-Thoibi, Dhol Cholom, Pung Cholom</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Get <strong>MONEY</strong> (Manipur) → buy <strong>KHAMBA</strong> and <strong>LAI</strong> (ethanol + chakna) → drink all night → perform <strong>RAAS LEELA</strong>. <strong>PUNG</strong> = drum of Manipur (like dholak, played in martial manner). <strong>Thang-ta = martial dance</strong> of Manipur.</p>
+        </div>
+
+        <h2>Meghalaya <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Wangala (Garo), Nongkrem (Khasi), Laho (Jaintia)</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Three hills = three dances: <strong>GARO</strong> hills → <strong>WANGALA</strong> ("Festival of 100 Drums"). <strong>KHASI</strong> hills → <strong>NONGKREM</strong> (naked child running in rain gets COUGH = Nongkrem). <strong>JAINTIA</strong> → <strong>LAHO</strong>. Mawsynram (highest rainfall) is in Khasi Hills.</p>
+        </div>
+
+        <h2>Nagaland <span class="tag plus">➕</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Chang Lo, Zeliang, Rengma, Naga War Dance</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Nagaland = snakes crawling in colors. People cook <strong>dog meat in bamboo</strong> with potatoes, eat with tea. <strong>CHANG LO</strong> = harvest dance. CHANG eats cow = Chang eats = Chang dance!</p>
+        </div>
+
+        <h2>Mizoram <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Cheraw (Bamboo Dance), Khuallam, Chheihlam, Zangtalam, Sarlamkai</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>"<strong>Khullam Khulla Chillam Chal Rahi</strong>" → Khuallam + Chillam = Chheihlam! <strong>CHERAW</strong> = most famous = Bamboo Dance. Dancers step in/out of bamboo poles rhythmically.</p>
+        </div>
+
+        <h2>Tripura <span class="tag plus">➕</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Gariya, Hojagiri, Lebang, Hai-Hak</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Biju Patnaik lost in Odisha → became GARIYA. VK Pandya type mother situation → <strong>GARIYA</strong>. <strong>HOJAGIRI</strong> = graceful dance where women balance objects on head + light lamps in both hands.</p>
+        </div>
+
+        <h2>Arunachal Pradesh <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Aji-Vancho, Buiya, Chalo, Paassi Kanki, Popir, Bardo Chham</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Sisters ARUNA + REKHA. Aruna tells husband: "Wear MASK, go to daughter-in-law, watch Lion+Peacock dance." <strong>Aji=Aji, Vancho=Vancho, Bahu(daughter-in-law)=Buiya, Paas=Paassi, Kanki=Kanki, Chalo=Chalo, Laan(Lion)+Peacock dance.</strong> CHAM in name = Arunachal or Sikkim.</p>
+        </div>
+
+        <h2>Sikkim <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Singhi Chham, Yak Chham, Chhutkey Naach, Chu Faat, Ghantu, Tamang Selo</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>SIKKIM + CHAM → Singhi CHHAM (Snow Lion). <strong>CHU FAAT</strong> = festival dedicated to <strong>Mt. Kanchenjunga</strong> (worshipped as God in Sikkim). It's both festival AND dance. Yak Chham = Yak dance.</p>
+        </div>
+      </div>
+
+      <!-- ══════════════ WEST & CENTRAL ══════════════ -->
+      <div class="page" id="page-west">
+        <div class="page-title">☀️ West & Central India</div>
+        <div class="page-subtitle">Gujarat · Goa · Maharashtra · Rajasthan · Madhya Pradesh · Chhattisgarh</div>
+
+        <h2>Gujarat <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Garba, Dandiya Raas, Bhavai, Huḍo, Tippani, Matukdi, Padhhar, Siddhi Dhamal, Gop Raas</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>DANDIYA RAAS</strong> = fight between Durga + Mahishasur shown through sticks, performed at <strong>NAVRATRI</strong>. <strong>GARBA</strong> = Krishna's Raas Leela with Gopis = GOp RAAS. <strong>MATUKDI</strong> = Matki (pot) dance — water scarce in Gujarat, fill matki while dancing. Siddhi Dhamal = African-origin tribe in Gujarat!</p>
+        </div>
+
+        <h2>Goa <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Mando, Dhalo, Fugdi, Dekhni, Corridor, Jagar</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>MANDVI girl</strong> (like River Mandvi of Goa) goes to Goa: sees <strong>JAGUAR car</strong> (=Jagar), watches <strong>horse cart race</strong> (=Dhalo), flies kites (=Fugdi). Elder: "Don't cry, sleep" (=Mando, which means slow+romantic). River Mandvi → Mando dance!</p>
+        </div>
+
+        <h2>Maharashtra <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Lavni, Tamasha, Koli, Lezim, Gondhal, Nakata, Powada</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Money Moni Roy does drama (Tamasha). <strong>KOLI</strong> = Kohli (cricketer) → fishermen dance. <strong>VADA PAV</strong> → Pav Daw → <strong>Powada</strong>. LAVNI = famous Lavani folk dance. LEZIM = martial dance of Maharashtra.</p>
+        </div>
+
+        <h2>Rajasthan <span class="tag fire">🔥</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Ghoomar, Gangaur, Kalbeliya, Chari, Terahtali, Kathputli, Bhawai</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>GHOOMAR</strong> = <strong>Bhil tribe</strong> (NOT Kalbeliya!). <strong>KALBELIYA</strong> = <strong>snake tribe</strong> = <strong>Gulabo Sapera</strong> (famous exponent). <strong>GANGAUR</strong> = dedicated to Parvati ji (Shiv-Parvati worship). Raja + Susani (Hrithik's ex-style name) clap by <strong>Ganga banks</strong> = TERAHTALI (13 cymbal clapping dance).</p>
+          <div class="trap-box" style="margin-top:12px">
+            <div class="trap-title">⚠️ TRAP</div>
+            <p>Ghoomar ≠ Kalbeliya. Ghoomar = Bhil tribe. Kalbeliya = snake tribe. Gulabo Sapera = Kalbeliya, NOT Ghoomar!</p>
+          </div>
+        </div>
+
+        <h2>Madhya Pradesh <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Tertali, Maanch, Jawara, Grida, Lehangi, Karma, Bhagoria Haat</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p>Fair <strong>LAILA</strong> dances on stage: pot on head with <strong>JAWARA</strong> (wheat) + flowers + leaves, claps (TERAHTALI). <strong>BHAGORIA HAAT</strong> = tribal fair where Gond/Bhil youth choose life partners (different from Rajasthan's Gangaur). Malla Khamba (martial) = from M to M!</p>
+        </div>
+
+        <h2>Chhattisgarh <span class="tag star">⭐</span></h2>
+        <div class="card green">
+          <div class="card-title">Key Dances</div>
+          <p><strong>Sua (Parrot Dance), Karma, Saila, Pandavani, Raut Nacha, Soowa</strong></p>
+        </div>
+        <div class="card blue">
+          <div class="card-title">🧠 Memory Hook</div>
+          <p><strong>SUA</strong> = PARROT doesn't do its work. Instead, mad cultists with Pandavas kill Gediyas and dance. <strong>PANDAVANI</strong> = Teejan Bai = Padma Vibhushan 2009 (second highest civilian award). <strong>KARMA</strong> = shared with Jharkhand + Odisha (same belt).</p>
+        </div>
+      </div>
+
+      <!-- ══════════════ MARTIAL DANCES ══════════════ -->
+      <div class="page" id="page-martial">
+        <div class="page-title">⚔️ Martial Dances of India</div>
+        <div class="page-subtitle">High-yield category — frequently asked separately in SSC CGL</div>
+
+        <div class="card amber">
+          <div class="card-title">What is Martial Dance?</div>
+          <p>A form of folk dance that depicts <strong>fighting techniques, warfare, and combat skills</strong>. Often performed with actual weapons or weapon-shaped props.</p>
+        </div>
+
+        <div class="card green" style="margin-bottom:20px">
+          <div class="card-title">Complete List — State-wise</div>
+          <div class="martial-row">
+            <span class="martial-state">🟠 Punjab</span>
+            <span class="martial-dance">Gatka</span>
+            <span class="martial-note">Sikh martial art + stick/sword dance. Lassi + Gatka = Punjab.</span>
+          </div>
+          <div class="martial-row">
+            <span class="martial-state">🔵 West Bengal</span>
+            <span class="martial-dance">Lathi Khela</span>
+            <span class="martial-note">Lathi (stick) fighting dance. Election season vibes in WB!</span>
+          </div>
+          <div class="martial-row">
+            <span class="martial-state">🟤 Tamil Nadu</span>
+            <span class="martial-dance">Silambam</span>
+            <span class="martial-note">Bhuvan Bam + Sheela → Silambam Bam Sheela. Staff/stick fighting.</span>
+          </div>
+          <div class="martial-row">
+            <span class="martial-state">🟣 Manipur</span>
+            <span class="martial-dance">Thang-Ta</span>
+            <span class="martial-note">Thang = sword, Ta = spear. Thangtaviya sisters. Elite martial form.</span>
+          </div>
+          <div class="martial-row">
+            <span class="martial-state">🟢 Mizoram</span>
+            <span class="martial-dance">Cheraw (Bamboo)</span>
+            <span class="martial-note">Drive aunts away! Bamboo-based martial-folk dance form.</span>
+          </div>
+          <div class="martial-row">
+            <span class="martial-state">🔴 Maharashtra</span>
+            <span class="martial-dance">Lezim</span>
+            <span class="martial-note">Manly game. Percussion instrument + acrobatic martial dance.</span>
+          </div>
+          <div class="martial-row">
+            <span class="martial-state">🟡 Bihar</span>
+            <span class="martial-dance">Pari Khanda</span>
+            <span class="martial-note">Fairy (Pari) + Khanda (sword). Papa's fairy with sword = Bihar!</span>
+          </div>
+          <div class="martial-row">
+            <span class="martial-state">🟠 Madhya Pradesh</span>
+            <span class="martial-dance">Malla Khamba</span>
+            <span class="martial-note">M→M. Malla (wrestler) + Khamba (pole). Gymnastics + wrestling on pole.</span>
+          </div>
+          <div class="martial-row">
+            <span class="martial-state">🔵 Kerala</span>
+            <span class="martial-dance">Kalaripayattu</span>
+            <span class="martial-note">World's oldest martial art. Mother of all martial arts!</span>
+          </div>
+        </div>
+
+        <div class="card blue">
+          <div class="card-title">🧠 Master Memory Hook — Martial Dances</div>
+          <p><strong>G</strong>atka (Punjab) | <strong>L</strong>athi (WB) | <strong>S</strong>ilambam (TN) | <strong>T</strong>hang-ta (Manipur) | <strong>C</strong>heraw (Mizoram) | <strong>L</strong>ezim (Maharashtra) | <strong>P</strong>ari Khanda (Bihar) | <strong>M</strong>alla Khamba (MP)</p>
+          <p style="margin-top:8px"><strong>Story:</strong> <em>"Gatka-Lathi-Silambam boys met Thang-ta master. Cheraw bamboo bridge crossed. Lezim music played. Pari arrived with sword. Malla climbed pole."</em></p>
+        </div>
+
+        <div class="card purple">
+          <div class="card-title">🌟 Special: High Dance / Fusion Dance</div>
+          <p><strong>Uday Shankar</strong> promoted FUSION/HIGH DANCE in India. He is the brother of <strong>Ravi Shankar</strong> (sitar maestro). Remember: Ravi Shankar = Sitar → his BROTHER Uday Shankar = Fusion Dance. It is NOT associated with any single state.</p>
+        </div>
+      </div>
+
+      <!-- ══════════════ TRAPS ══════════════ -->
+      <div class="page" id="page-traps">
+        <div class="page-title">⚠️ Exam Traps — What Students Get Wrong</div>
+        <div class="page-subtitle">These are the exact confusions that appear in SSC CGL. Study each one carefully.</div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 1 — The Jh/Jhu/Jhoo Confusion 🔥 CRITICAL</div>
+          <p><strong>JHUMUR</strong> = Assam (also found in eastern India belt)<br>
+          <strong>JHUMAR</strong> = Jharkhand, Odisha, Chhattisgarh (Eastern India belt)<br>
+          <strong>JHOOMAR</strong> = Haryana (North India)<br>
+          <br>Remember: East = JHUMAR (like eastern = Jhumar). Haryana is north = JHOOMAR (H for Haryana, H sounds like "Jhoo"). Assam = JHUMUR (shortest word, smallest state size context).</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 2 — Ghoomar vs Kalbeliya</div>
+          <p><strong>GHOOMAR</strong> = <strong>Bhil tribe</strong> of Rajasthan. Circular spinning dance.<br>
+          <strong>KALBELIYA</strong> = <strong>Snake tribe (Kalbeliya tribe)</strong> of Rajasthan. Famous exponent = <strong>Gulabo Sapera</strong>.<br>
+          Students often mix these! Remember: Kal-BELIYA → BELIA means snake people → snake tribe.</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 3 — Chhau Styles (3 types, 3 states)</div>
+          <p><strong>Purulia Chhau</strong> (West Bengal) → WITH elaborate mask<br>
+          <strong>Seraikela Chhau</strong> (Jharkhand) → WITH mask<br>
+          <strong>Mayurbhanj Chhau</strong> (Odisha) → WITHOUT mask (the odd one out!)<br>
+          Ministry of Culture considers Chhau as Classical despite being folk origin.</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 4 — Bihu is BOTH Dance and Festival</div>
+          <p>Bihu = folk DANCE of Assam AND a FESTIVAL of Assam. This has been asked directly in SSC. Don't just remember it as a dance. Also: Bihu has three types — Bohag Bihu (spring), Kongali Bihu (autumn), Bhogali Bihu (harvest).</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 5 — Attam Confusion (Kerala vs Tamil Nadu)</div>
+          <p><strong>NEE Attam</strong> → Kerala<br>
+          <strong>LI Attam (Kolattam), DI Attam (Kummi)</strong> → Tamil Nadu<br>
+          <strong>OTTAM Thulla, THITAMBU Nritham</strong> → Kerala (Double-T rule → 95% Kerala/TN)<br>
+          Never say "Ottam = Tamil Nadu" — it's Kerala!</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 6 — CHAM Dance (3 states)</div>
+          <p><strong>CHAM</strong> (or CHHAM) appears in: <strong>Arunachal Pradesh, Sikkim, Himachal Pradesh</strong>.<br>
+          Don't confuse: Bardo CHHAM (Arunachal), Singhi CHHAM (Sikkim), CHHAM (HP).<br>
+          If you see "CHAM" in options — look for these three states first!</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 7 — Charkula is in BOTH Haryana and UP</div>
+          <p>Charkula = circular pot/earthen lamps balanced on head while dancing.<br>
+          Panchkula (city in Haryana) → Charkula (sounds similar). But Charkula is mainly associated with <strong>Uttar Pradesh (Braj region)</strong>. If asked primary state → UP.</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 8 — Paika appears in Multiple States</div>
+          <p>Paika = martial-style folk dance seen in <strong>Bihar, Jharkhand, Odisha</strong>. Don't say it belongs to only one! It's a shared martial folk tradition of the eastern belt.</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 9 — Uday Shankar vs Ravi Shankar</div>
+          <p><strong>Ravi Shankar</strong> = Sitar maestro (Bharat Ratna)<br>
+          <strong>Uday Shankar</strong> = Promoted FUSION DANCE / HIGH DANCE in India (his brother!)<br>
+          Exam often twists these. Uday = DANCE, Ravi = SITAR.</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 10 — Gangaur is NOT only Rajasthan</div>
+          <p>Gangaur is primarily associated with <strong>Rajasthan</strong> (dance dedicated to Parvati), but it's also celebrated as a festival in parts of <strong>Madhya Pradesh and Uttar Pradesh</strong>. The DANCE is Rajasthan's specialty.</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 11 — Lambaḍi/Banjara (Two States)</div>
+          <p>Lambadi dance is associated with <strong>both Andhra Pradesh AND Telangana</strong> because the <strong>Banjara tribe</strong> lives in both (Telangana was carved from AP in 2014). Don't say "Lambadi = only Andhra"!</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">TRAP 12 — Malla Khamba is MP's Martial Dance</div>
+          <p>Malla Khamba = pole gymnastics/wrestling. It's the <strong>state sport of Madhya Pradesh</strong> (not just a dance). MP also declared it their traditional sport. M→Malla, M→Madhya Pradesh.</p>
+        </div>
+      </div>
+
+      <!-- ══════════════ EXAMINER'S FAVOURITES ══════════════ -->
+      <div class="page" id="page-examiner">
+        <div class="page-title">🎯 Examiner's Favourite Questions</div>
+        <div class="page-subtitle">Hover over each question to reveal the answer.</div>
+
+        <h2>🔥 High Probability Questions</h2>
+
+        <div class="exam-q">Which dance is known as the "Parrot Dance"?
+          <div class="show-hint">Hover to reveal →</div>
+          <div class="exam-ans">✅ Sua Dance (Chhattisgarh). Sua = parrot in Chhattisgarhi.</div>
+        </div>
+        <div class="exam-q">Bihu is a dance as well as ___?
+          <div class="exam-ans">✅ Festival. Bihu is both a folk dance AND a festival of Assam. This has been directly asked in SSC!</div>
+        </div>
+        <div class="exam-q">Which tribe performs Baguramba dance?
+          <div class="exam-ans">✅ Bodo tribe of Assam. (B→Bodo→Baguramba)</div>
+        </div>
+        <div class="exam-q">Gulabo Sapera is associated with which dance?
+          <div class="exam-ans">✅ Kalbeliya dance of Rajasthan. She is from the Kalbeliya (snake) tribe.</div>
+        </div>
+        <div class="exam-q">Pandavani dance/music form — which state, which performer?
+          <div class="exam-ans">✅ Chhattisgarh. Teejan Bai is the famous exponent. She received Padma Vibhushan (2nd highest civilian award) in 2003. In 2009 she received Padma Vibhushan.</div>
+        </div>
+        <div class="exam-q">Which classical dance was last added to Sangeet Natak Akademi's list?
+          <div class="exam-ans">✅ Satriya (Assam), added in 2000. Same year as formation of Jharkhand, Chhattisgarh, Uttarakhand.</div>
+        </div>
+        <div class="exam-q">Dandiya Raas represents which mythological event?
+          <div class="exam-ans">✅ Battle between Goddess Durga and Mahishasura. Performed during Navratri. Also connected to Krishna's Raas Leela (Gop Raas).</div>
+        </div>
+        <div class="exam-q">Who promoted Fusion/High Dance in India?
+          <div class="exam-ans">✅ Uday Shankar (brother of Ravi Shankar, the sitar maestro). High dance is NOT state-specific.</div>
+        </div>
+        <div class="exam-q">Wangala festival is associated with which tribe/state?
+          <div class="exam-ans">✅ Garo tribe of Meghalaya. Called "Festival of 100 Drums."</div>
+        </div>
+        <div class="exam-q">Cheraw dance is associated with which state and what prop?
+          <div class="exam-ans">✅ Mizoram. Also called Bamboo Dance — performers step between rhythmically struck bamboo poles.</div>
+        </div>
+        <div class="exam-q">Which Chhau style is performed WITHOUT mask?
+          <div class="exam-ans">✅ Mayurbhanj Chhau (Odisha). Purulia (WB) and Seraikela (Jharkhand) Chhau use masks.</div>
+        </div>
+        <div class="exam-q">Thang-Ta is the martial dance of which state?
+          <div class="exam-ans">✅ Manipur. Thang = sword, Ta = spear. Associated with Meitei community.</div>
+        </div>
+        <div class="exam-q">Gatka is associated with which state and community?
+          <div class="exam-ans">✅ Punjab. Gatka is the martial art of the Sikhs.</div>
+        </div>
+        <div class="exam-q">Malla Khamba is the martial dance/sport of which state?
+          <div class="exam-ans">✅ Madhya Pradesh. M→Malla, M→MP. It's also the state sport of MP.</div>
+        </div>
+        <div class="exam-q">Chu Faat dance/festival is dedicated to which peak?
+          <div class="exam-ans">✅ Mt. Kanchenjunga (Sikkim). Worshipped as a God in Sikkim.</div>
+        </div>
+        <div class="exam-q">Hojagiri dance — which state, what is unique about it?
+          <div class="exam-ans">✅ Tripura. Women balance objects on head + hold earthen lamps in both hands while dancing gracefully.</div>
+        </div>
+        <div class="exam-q">Dumhal dance is performed by which tribe in J&K?
+          <div class="exam-ans">✅ Wattal tribe of Jammu & Kashmir. Famous serpentine/procession dance.</div>
+        </div>
+
+        <h2>⭐ Statement-Based (True/False type)</h2>
+        <div class="exam-q">A: Chhau is considered a classical dance by the Ministry of Culture. B: Mayurbhanj Chhau is performed with mask.
+          <div class="exam-ans">✅ A is TRUE. B is FALSE — Mayurbhanj is WITHOUT mask. The other two (Purulia, Seraikela) use masks.</div>
+        </div>
+        <div class="exam-q">A: Kalaripayattu originated in Tamil Nadu. B: Silambam is a martial dance of Tamil Nadu.
+          <div class="exam-ans">✅ A is FALSE — Kalaripayattu is from Kerala. B is TRUE — Silambam (staff fighting) is Tamil Nadu's martial dance.</div>
+        </div>
+        <div class="exam-q">Wherever "Double T" (TT) appears in dance name, it belongs to Kerala only.
+          <div class="exam-ans">✅ FALSE — Double-T dance names belong to EITHER Kerala OR Tamil Nadu (95% cases). Not exclusively Kerala.</div>
+        </div>
+      </div>
+
+      <!-- ══════════════ QUIZ ══════════════ -->
+      <div class="page" id="page-quiz">
+        <div class="page-title">❓ Active Recall Quiz</div>
+        <div class="page-subtitle">Test yourself. Click options to see if you're right.</div>
+
+        <div id="quiz-container"></div>
+        <button onclick="resetQuiz()" style="background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:10px 20px;border-radius:8px;cursor:pointer;font-size:14px;margin-top:10px;font-family:var(--sans)">🔄 Reset Quiz</button>
+      </div>
+
+      <!-- ══════════════ ULTRA FAST ══════════════ -->
+      <div class="page" id="page-ultrafast">
+        <div class="page-title">⚡ Ultra-Fast Revision Table</div>
+        <div class="page-subtitle">Complete state→dance mapping at a glance. One full pass = full chapter revised.</div>
+
+        <table class="uf-table">
+          <thead>
+            <tr><th>State</th><th>Key Folk Dances</th><th>Remember</th></tr>
+          </thead>
+          <tbody id="uf-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- ══════════════ 30 SECOND FLASH ══════════════ -->
+      <div class="page" id="page-flash">
+        <div class="page-title">⏱️ 30-Second Flash Cards</div>
+        <div class="page-subtitle">Cover the dances, recall mentally, uncover to check. 30 seconds per card = full chapter in 15 minutes.</div>
+
+        <div class="flash-grid" id="flash-grid"></div>
+      </div>
+
+      <!-- ══════════════ LAST NIGHT ══════════════ -->
+      <div class="page" id="page-lastnight">
+        <div class="page-title">🌙 Last Night Before Exam Sheet</div>
+        <div class="page-subtitle">Read this once slowly. You'll walk into the exam hall fully loaded.</div>
+
+        <div class="ln-section">
+          <div class="ln-title">🔥 Must-Know Combinations</div>
+          <div class="ln-item"><span class="ln-key">Bihu</span><span class="ln-val">Dance + Festival = Assam. Bodo tribe → Baguramba.</span></div>
+          <div class="ln-item"><span class="ln-key">Garba + Dandiya</span><span class="ln-val">Gujarat. Dandiya = Durga vs Mahishasur battle at Navratri.</span></div>
+          <div class="ln-item"><span class="ln-key">Ghoomar</span><span class="ln-val">Rajasthan, Bhil tribe (NOT Kalbeliya!).</span></div>
+          <div class="ln-item"><span class="ln-key">Kalbeliya</span><span class="ln-val">Rajasthan, snake tribe, Gulabo Sapera.</span></div>
+          <div class="ln-item"><span class="ln-key">Sua / Parrot Dance</span><span class="ln-val">Chhattisgarh.</span></div>
+          <div class="ln-item"><span class="ln-key">Cheraw</span><span class="ln-val">Mizoram = Bamboo Dance.</span></div>
+          <div class="ln-item"><span class="ln-key">Wangala</span><span class="ln-val">Meghalaya (Garo tribe) = Festival of 100 Drums.</span></div>
+          <div class="ln-item"><span class="ln-key">Satriya (Classical)</span><span class="ln-val">Assam. Added 2000. Guru = Shankar Dev.</span></div>
+        </div>
+
+        <div class="ln-section">
+          <div class="ln-title">⚠️ Top Traps to Avoid</div>
+          <div class="ln-item"><span class="ln-key">JHUMAR/JHUMUR/JHOOMAR</span><span class="ln-val">Jharkhand ≠ Assam ≠ Haryana. Three different spellings!</span></div>
+          <div class="ln-item"><span class="ln-key">Chhau Mask</span><span class="ln-val">Mayurbhanj (Odisha) = NO mask. Purulia+Seraikela = WITH mask.</span></div>
+          <div class="ln-item"><span class="ln-key">Attam</span><span class="ln-val">NEE Attam = Kerala. Kolattam/Kummi = Tamil Nadu.</span></div>
+          <div class="ln-item"><span class="ln-key">Charkula</span><span class="ln-val">Primary state = Uttar Pradesh (Braj). Also Haryana.</span></div>
+          <div class="ln-item"><span class="ln-key">Uday vs Ravi Shankar</span><span class="ln-val">Uday = Fusion/High Dance. Ravi = Sitar.</span></div>
+          <div class="ln-item"><span class="ln-key">CHAM appears in</span><span class="ln-val">Arunachal + Sikkim + Himachal. Three states!</span></div>
+        </div>
+
+        <div class="ln-section">
+          <div class="ln-title">⚔️ Martial Dances — State to Dance</div>
+          <div class="ln-item"><span class="ln-key">Punjab</span><span class="ln-val">Gatka</span></div>
+          <div class="ln-item"><span class="ln-key">West Bengal</span><span class="ln-val">Lathi Khela</span></div>
+          <div class="ln-item"><span class="ln-key">Tamil Nadu</span><span class="ln-val">Silambam</span></div>
+          <div class="ln-item"><span class="ln-key">Manipur</span><span class="ln-val">Thang-Ta</span></div>
+          <div class="ln-item"><span class="ln-key">Maharashtra</span><span class="ln-val">Lezim</span></div>
+          <div class="ln-item"><span class="ln-key">Bihar</span><span class="ln-val">Pari Khanda</span></div>
+          <div class="ln-item"><span class="ln-key">Madhya Pradesh</span><span class="ln-val">Malla Khamba (M→M)</span></div>
+          <div class="ln-item"><span class="ln-key">Kerala</span><span class="ln-val">Kalaripayattu</span></div>
+        </div>
+
+        <div class="ln-section">
+          <div class="ln-title">🌟 Special Facts to Never Forget</div>
+          <div class="ln-item"><span class="ln-key">Uday Shankar</span><span class="ln-val">Promoted Fusion/High Dance in India (Ravi Shankar's brother)</span></div>
+          <div class="ln-item"><span class="ln-key">Teejan Bai</span><span class="ln-val">Pandavani (Chhattisgarh) → Padma Vibhushan 2003/2009</span></div>
+          <div class="ln-item"><span class="ln-key">Gulabo Sapera</span><span class="ln-val">Kalbeliya (Rajasthan snake tribe) exponent</span></div>
+          <div class="ln-item"><span class="ln-key">Chu Faat</span><span class="ln-val">Sikkim — dedicated to Mt. Kanchenjunga (God)</span></div>
+          <div class="ln-item"><span class="ln-key">Mawsynram</span><span class="ln-val">Highest rainfall → Khasi Hills, Meghalaya → Nongkrem dance</span></div>
+          <div class="ln-item"><span class="ln-key">Ladakh dances</span><span class="ln-val">Bucket Dance, Shondol Dance, Khato Janmo (Chanm)</span></div>
+          <div class="ln-item"><span class="ln-key">Chhau = Classical</span><span class="ln-val">Ministry of Culture — despite folk origin!</span></div>
+        </div>
+
+        <div class="card purple">
+          <div class="card-title">🎯 Final Reminder</div>
+          <p>Folk dances are NOT state-exclusive — border states share them (Bihar, Jharkhand, Odisha, Chhattisgarh share Karma, Paika, Jhumar). Don't be shocked if the answer to "which state" is multiple. Focus on the PRIMARY association.</p>
+          <p style="margin-top:8px"><strong>You've got this. Walk in tomorrow knowing every state. 🏆</strong></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+const stateData = [
+  {
+    name: "Andhra Pradesh", emoji: "🌶️",
+    dances: "Butta Buma Lu, Lambadi, Dhimsa, Dappu, Veeranatyam, Bhoomi Kalas, Kolu Attam",
+    hook: "BAMLU → BURR → BUTTA BUMA LU. Banjara tribe performs Lambadi. Bhoomi Kalas = Earth element (copper plate dance).",
+    priority: "fire"
+  },
+  {
+    name: "Arunachal Pradesh", emoji: "🦁",
+    dances: "Aji-Vancho, Buiya, Chalo, Paassi Kanki, Popir, Bardo Chham",
+    hook: "Sisters Aruna & Rekha: Mask → daughter-in-law → Lion+Peacock dance. CHAM = Arunachal OR Sikkim.",
+    priority: "star"
+  },
+  {
+    name: "Assam", emoji: "🎋",
+    dances: "Bihu, Baguramba, Jhumur, Bhor Tal, Devdani, Ali Ai Gang",
+    hook: "BIHU = dance + festival! Bodo tribe → Baguramba (B→B). Classical Satriya added in 2000.",
+    priority: "fire"
+  },
+  {
+    name: "Bihar", emoji: "🥁",
+    dances: "Jat-Jatan, Videshiya, Jhijhiya, Jharni, Paika, Kajri, Dibiya",
+    hook: "Jat-Jatan fans rap Bohemia songs. Foreigners (Videshiya) join. Dibiya = lamp dance.",
+    priority: "star"
+  },
+  {
+    name: "Chhattisgarh", emoji: "🦜",
+    dances: "Sua (Parrot Dance), Karma, Saila, Pandavani, Raut Nacha",
+    hook: "SUA = parrot who doesn't work. Pandavani = Teejan Bai = Padma Vibhushan 2009.",
+    priority: "fire"
+  },
+  {
+    name: "Goa", emoji: "🏖️",
+    dances: "Mando, Dhalo, Fugdi, Dekhni, Corridor, Jagar",
+    hook: "Mandvi girl goes Goa → sees Jaguar (Jagar) → horse cart (Dhalo) → flies kite (Fugdi) → elder says sleep (Mando).",
+    priority: "star"
+  },
+  {
+    name: "Gujarat", emoji: "🪔",
+    dances: "Garba, Dandiya Raas, Bhavai, Huḍo, Tippani, Matukdi, Siddhi Dhamal",
+    hook: "Dandiya = Durga vs Mahishasur (Navratri). Garba = Krishna with Gopis. Matukdi = water pot shortage.",
+    priority: "fire"
+  },
+  {
+    name: "Haryana", emoji: "🌾",
+    dances: "Gugga, Charkula, Loor, Manjeera, Dhamal, Khoriya, Dauf, Phag, Jhoomar",
+    hook: "Gugga = Don with goggles. Panchkula → Charkula. Holi fog → Phag. JHOOMAR ≠ Jhumur ≠ Jhumar!",
+    priority: "fire"
+  },
+  {
+    name: "Himachal Pradesh", emoji: "⛰️",
+    dances: "Jhora, Jhali, Chham, Danda Naach, Chhapa, Dangi Naach, Nati",
+    hook: "Short boy AMAN: demon robe, garland on bull, Dang drum, Chham print. CHAM = HP+Arunachal+Sikkim.",
+    priority: "star"
+  },
+  {
+    name: "J&K / Ladakh", emoji: "❄️",
+    dances: "Hikat, Kud, Rauf, Dhumal, Damal, Bhand Pathar, Dumhal / Bucket, Shondol, Khato Janmo",
+    hook: "Harris Rauf jumps → Dhumal dust. Bhand Pathar = satirical puppet. Dumhal = Wattal tribe serpentine.",
+    priority: "star"
+  },
+  {
+    name: "Jharkhand", emoji: "🌿",
+    dances: "Chhau, Mundari, Santhali, Fagua, Karma, Paika, Jhumar, Damkach",
+    hook: "Birsa MUNDA → MUNDARI. Chhau = Eastern India. JHUMAR ≠ Jhoomar ≠ Jhumur.",
+    priority: "fire"
+  },
+  {
+    name: "Karnataka", emoji: "🎭",
+    dances: "Yakshagana, Dollu Kunitha, Veeragase, Karga, Suggi Kunitha",
+    hook: "Doll-ghost destroys bravery (Veeragase). Karga + Karnataka = similar sound. Yakshagana = folk theatre.",
+    priority: "star"
+  },
+  {
+    name: "Kerala", emoji: "🌺",
+    dances: "Kolkali, Curvakali, Thiruvathirakali, Nee Attam, Ottam Thulla, Thitambu Nritham, Kaikottikali",
+    hook: "KALI = Kerala rule. NEE Attam = Kerala. Double-TT = Kerala or Tamil Nadu. Kalaripayattu = martial.",
+    priority: "fire"
+  },
+  {
+    name: "Madhya Pradesh", emoji: "🏺",
+    dances: "Tertali, Maanch, Jawara, Karma, Lehangi, Phulpati, Bhagoria Haat",
+    hook: "Fair Laila dances on stage with JAWARA (wheat) pot + flowers + claps. Bhagoria Haat = tribal partner fair.",
+    priority: "star"
+  },
+  {
+    name: "Maharashtra", emoji: "🥁",
+    dances: "Lavni, Tamasha, Koli, Lezim, Gondhal, Powada, Nakata",
+    hook: "Moni Roy's drama = Tamasha. Koli = Kohli = fishermen. Vada Pav → Powada. Lavni = most famous.",
+    priority: "fire"
+  },
+  {
+    name: "Manipur", emoji: "🥁",
+    dances: "Raas Leela, Lai Haraoba, Khamba-Thoibi, Dhol Cholom, Pung Cholom",
+    hook: "Money → Khamba + Lai (chakna+ethanol) → all night → Raas Leela. Pung = drum. Thang-Ta = martial.",
+    priority: "fire"
+  },
+  {
+    name: "Meghalaya", emoji: "🌧️",
+    dances: "Wangala (Garo), Nongkrem (Khasi), Laho (Jaintia)",
+    hook: "3 hills = 3 dances. Garo=Wangala(100 Drums). Khasi=Nongkrem(child in rain→cough). Jaintia=Laho.",
+    priority: "star"
+  },
+  {
+    name: "Mizoram", emoji: "🎋",
+    dances: "Cheraw (Bamboo Dance), Khuallam, Chheihlam, Zangtalam, Sarlamkai",
+    hook: "Khullam Khulla Chillam = Khuallam + Chheihlam. Cheraw = BAMBOO DANCE = most famous!",
+    priority: "fire"
+  },
+  {
+    name: "Nagaland", emoji: "🐍",
+    dances: "Chang Lo, Zeliang, Rengma, Naga War Dance",
+    hook: "Snakes crawl. Dog meat in bamboo with potatoes + tea. Chang LO = harvest festival dance.",
+    priority: "plus"
+  },
+  {
+    name: "Odisha", emoji: "🏛️",
+    dances: "Mahari, Karma, Jhoomar, Chhau (Mayurbhanj), Paika, Rappa, Pua",
+    hook: "Pua ate dal, roams with stick (Rappa). Mayurbhanj Chhau = NO MASK (unique!). Mahari = temple dance.",
+    priority: "fire"
+  },
+  {
+    name: "Rajasthan", emoji: "🦚",
+    dances: "Ghoomar, Gangaur, Kalbeliya, Chari, Terahtali, Kathputli, Bhawai",
+    hook: "Ghoomar=Bhil tribe. Kalbeliya=snake tribe=Gulabo Sapera. Gangaur=Parvati. Raja+Susani clap=Terahtali.",
+    priority: "fire"
+  },
+  {
+    name: "Sikkim", emoji: "🏔️",
+    dances: "Singhi Chham, Yak Chham, Chhutkey Naach, Chu Faat, Ghantu, Tamang Selo",
+    hook: "CHAM = Sikkim or Arunachal. Singhi Chham = Snow Lion dance. Chu Faat = Mt. Kanchenjunga festival.",
+    priority: "star"
+  },
+  {
+    name: "Tamil Nadu", emoji: "🥁",
+    dances: "Kolattam, Kummi, Karagam, Kavadi, Oyilattam, Karakam, Puli Attam",
+    hook: "Li Attam/Di Attam = Tamil Nadu. Kavadi = festival+dance. Silambam = martial. Kummi = clapping dance.",
+    priority: "fire"
+  },
+  {
+    name: "Telangana", emoji: "🌶️",
+    dances: "Perini Sivatandavam, Lambadi, Dappu, Gusadi, Ojha Nritya",
+    hook: "Split from AP Jun 2014. Lambadi/Banjara still there. Madhuri with oiled hair = Perini (warrior dance).",
+    priority: "star"
+  },
+  {
+    name: "Tripura", emoji: "🌿",
+    dances: "Gariya, Hojagiri, Lebang, Hai-Hak",
+    hook: "Biju Patnaik lost → became Gariya. Hojagiri = women balance objects on head + lamps in both hands.",
+    priority: "plus"
+  },
+  {
+    name: "Uttar Pradesh", emoji: "🎪",
+    dances: "Ram Leela, Raas Leela, Nautanki, Kajri, Khayal, Charkula, Dadadari",
+    hook: "UP afternoon: cards + FM radio Kajri + wait for Ram Leela + Nautanki + Raas Leela in Mathura.",
+    priority: "fire"
+  },
+  {
+    name: "Uttarakhand", emoji: "🏔️",
+    dances: "Choliya, Jhora, Tand, Naata, Langvir Nritya",
+    hook: "Borders HP = similar vibes. Choliya = war dance at Kumaoni weddings (sword+shield). Langvir = acrobatic.",
+    priority: "star"
+  },
+  {
+    name: "West Bengal", emoji: "🎭",
+    dances: "Chhau (Purulia), Gambhira, Brita, Jhumur, Kathi",
+    hook: "KKR wins → Gambhira dance. Purulia Chhau = WITH mask. Brita, Gambhira = '-a' ending = WB.",
+    priority: "star"
+  }
+];
+
+const ultraFastData = stateData.map(s => ({
+  state: s.name,
+  dances: s.dances,
+  note: s.hook.split('.')[0]
+}));
+
+const flashData = stateData.map(s => ({
+  state: s.name + ' ' + s.emoji,
+  dances: s.dances
+}));
+
+const quizData = [
+  { q: "Sua Dance is the folk dance of which state?", opts: ["Rajasthan","Chhattisgarh","Jharkhand","Bihar"], ans: 1, exp: "Sua = Parrot in Chhattisgarhi. The dance is also called Parrot Dance." },
+  { q: "Which tribe performs Baguramba dance of Assam?", opts: ["Munda","Garo","Bodo","Santhali"], ans: 2, exp: "B → Bodo → Baguramba. The Bodo tribe of Assam performs Baguramba." },
+  { q: "Kalbeliya dance belongs to which tribe of Rajasthan?", opts: ["Bhil","Meena","Kalbeliya (Snake tribe)","Gond"], ans: 2, exp: "Kalbeliya = Snake tribe. Famous exponent = Gulabo Sapera. Don't confuse with Ghoomar (Bhil tribe)." },
+  { q: "Which Chhau style is performed WITHOUT a mask?", opts: ["Purulia Chhau (WB)","Seraikela Chhau (Jharkhand)","Mayurbhanj Chhau (Odisha)","All use masks"], ans: 2, exp: "Mayurbhanj Chhau (Odisha) is performed WITHOUT a mask. The other two use elaborate masks." },
+  { q: "Uday Shankar is famous for promoting which dance form?", opts: ["Classical Bharatanatyam","Fusion/High Dance","Kathak","Manipuri"], ans: 1, exp: "Uday Shankar promoted Fusion/High Dance. He is the BROTHER of Ravi Shankar (sitar). Uday=Dance, Ravi=Sitar." },
+  { q: "Wangala is called the 'Festival of 100 Drums' — which tribe?", opts: ["Khasi","Jaintia","Garo","Munda"], ans: 2, exp: "Garo tribe of Meghalaya performs Wangala. 3 hills of Meghalaya = Garo(Wangala), Khasi(Nongkrem), Jaintia(Laho)." },
+  { q: "Dandiya Raas represents the battle between?", opts: ["Ram vs Ravan","Durga vs Mahishasur","Krishna vs Kansa","Arjuna vs Karna"], ans: 1, exp: "Dandiya = sticks used in the symbolic battle between Goddess Durga and Mahishasur. Performed during Navratri." },
+  { q: "Malla Khamba (martial dance/sport) belongs to which state?", opts: ["Maharashtra","Bihar","Madhya Pradesh","Karnataka"], ans: 2, exp: "M → Malla, M → Madhya Pradesh. It's also the state sport of MP." },
+  { q: "Thang-Ta martial dance is from?", opts: ["Assam","Manipur","Meghalaya","Nagaland"], ans: 1, exp: "Thang = sword, Ta = spear. Manipur. Associated with Meitei community. Thangtaviya Sisters are famous." },
+  { q: "Which classical dance was last added (in 2000) to Sangeet Natak Akademi's list?", opts: ["Odissi","Sattriya","Mohiniyattam","Chhau"], ans: 1, exp: "Sattriya (Assam) was added in 2000 — last to be included. Guru = Shankar Dev. Same year as Jharkhand/Chhattisgarh/Uttarakhand." },
+  { q: "Cheraw is the famous bamboo dance of which state?", opts: ["Nagaland","Meghalaya","Mizoram","Arunachal Pradesh"], ans: 2, exp: "Cheraw = Bamboo Dance = Mizoram. Performers step in/out of rhythmically clapped bamboo poles." },
+  { q: "Gatka is the martial dance/art of which state?", opts: ["Haryana","Punjab","Himachal Pradesh","Uttarakhand"], ans: 1, exp: "Gatka = Punjab. It's the traditional Sikh martial art, also performed as a dance." },
+  { q: "JHOOMAR folk dance belongs to which state?", opts: ["Jharkhand","Assam","Haryana","Odisha"], ans: 2, exp: "JHOOMAR = Haryana. JHUMUR = Assam. JHUMAR = Jharkhand/Eastern India. Three different spellings!" },
+  { q: "Chu Faat dance/festival of Sikkim is dedicated to?", opts: ["Mt. Everest","Mt. Kanchenjunga","Mt. K2","Parvati Goddess"], ans: 1, exp: "Chu Faat is dedicated to Mt. Kanchenjunga, which is worshipped as a God in Sikkim. It's both dance and festival." },
+  { q: "Hojagiri dance is associated with which state?", opts: ["Assam","Meghalaya","Tripura","Mizoram"], ans: 2, exp: "Hojagiri = Tripura. Women balance objects on head + hold earthen lamps in both hands while dancing gracefully." }
+];
+
+// ── PAGE NAVIGATION ──
+let currentPage = 'home';
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  const nav = document.querySelector(`.nav-item[onclick="showPage('${id}')"]`);
+  if (nav) nav.classList.add('active');
+  const titles = {
+    home: 'Home', palace: 'Memory Palace', 'states-az': 'All States A–Z',
+    south: 'South India', north: 'North India', east: 'East & NE India',
+    west: 'West & Central India', martial: 'Martial Dances', traps: 'Exam Traps',
+    examiner: "Examiner's Favourites", quiz: 'Active Recall Quiz',
+    ultrafast: 'Ultra-Fast Table', flash: '30-Second Flash', lastnight: 'Last Night Sheet'
+  };
+  document.getElementById('bc-page').textContent = titles[id] || id;
+  document.getElementById('content').scrollTop = 0;
+  currentPage = id;
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('collapsed');
+}
+
+function filterNav(val) {
+  const v = val.toLowerCase();
+  document.querySelectorAll('.nav-item').forEach(item => {
+    const search = (item.dataset.search || '') + item.textContent.toLowerCase();
+    item.style.display = search.includes(v) ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-section-label').forEach(l => l.style.display = '');
+}
+
+function setLayer(n) {
+  document.querySelectorAll('.layer-btn').forEach((b, i) => b.classList.toggle('active', i === n - 1));
+  const maps = { 1: 'states-az', 2: 'ultrafast', 3: 'flash', 4: 'lastnight' };
+  if (maps[n]) showPage(maps[n]);
+}
+
+// ── BUILD STATE GRID ──
+function buildStateGrid() {
+  const grid = document.getElementById('state-grid-all');
+  stateData.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'state-card';
+    const tagClass = { fire: 'fire', star: 'star', plus: 'plus' }[s.priority];
+    const tagLabel = { fire: '🔥 Must Know', star: '⭐ Important', plus: '➕ Good to Know' }[s.priority];
+    card.innerHTML = `
+      <div class="state-header">
+        <span class="state-name">${s.emoji} ${s.name}</span>
+        <span class="tag ${tagClass}">${tagLabel}</span>
+      </div>
+      <div class="state-dances">${s.dances}</div>
+      <div class="state-hook">
+        <div class="hook-label">🧠 Memory Hook</div>
+        ${s.hook}
+      </div>
+    `;
+    card.onclick = () => card.classList.toggle('expanded');
+    grid.appendChild(card);
+  });
+}
+
+// ── BUILD ULTRA-FAST TABLE ──
+function buildUF() {
+  const tbody = document.getElementById('uf-tbody');
+  stateData.forEach(s => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td class="state-col">${s.emoji} ${s.name}</td><td class="dance-col">${s.dances}</td><td class="note-col">${s.hook.split('.')[0]}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// ── BUILD FLASH CARDS ──
+function buildFlash() {
+  const grid = document.getElementById('flash-grid');
+  flashData.forEach(f => {
+    const card = document.createElement('div');
+    card.className = 'flash-card';
+    card.innerHTML = `<div class="flash-state">${f.state}</div><div class="flash-dances">${f.dances}</div>`;
+    grid.appendChild(card);
+  });
+}
+
+// ── BUILD QUIZ ──
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  quizData.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-q';
+    div.innerHTML = `<div class="q-text">Q${qi+1}. ${q.q}</div>
+      <div class="quiz-options">${q.opts.map((o, oi) => `<button class="quiz-opt" onclick="answerQuiz(${qi},${oi})">${String.fromCharCode(65+oi)}. ${o}</button>`).join('')}</div>
+      <div class="quiz-explain" id="qexp-${qi}">✅ ${q.exp}</div>`;
+    container.appendChild(div);
+  });
+}
+
+function answerQuiz(qi, oi) {
+  const q = quizData[qi];
+  const opts = document.querySelectorAll(`#quiz-container .quiz-q`)[qi].querySelectorAll('.quiz-opt');
+  opts.forEach((o, i) => {
+    o.disabled = true;
+    if (i === q.ans) o.classList.add('correct');
+    else if (i === oi && oi !== q.ans) o.classList.add('wrong');
+  });
+  document.getElementById(`qexp-${qi}`).classList.add('show');
+}
+
+function resetQuiz() { buildQuiz(); }
+
+// ── INIT ──
+buildStateGrid();
+buildUF();
+buildFlash();
+buildQuiz();
+</script>
+</body>
+</html>

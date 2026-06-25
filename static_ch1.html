@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Census 2011 — SSC CGL Revision System</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1c2330;
+    --bg4: #21283a;
+    --green: #3fb950;
+    --green-dim: #238636;
+    --green-glow: rgba(63,185,80,0.12);
+    --blue: #58a6ff;
+    --blue-dim: #1f6feb;
+    --blue-glow: rgba(88,166,255,0.12);
+    --yellow: #e3b341;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --text-muted: #484f58;
+    --border: #30363d;
+    --fire: #ff7b54;
+    --star: #e3b341;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── LAYOUT ─── */
+  #app { display: flex; height: 100vh; }
+
+  /* ─── SIDEBAR ─── */
+  #sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: transform 0.3s;
+    z-index: 100;
+  }
+
+  .sidebar-header {
+    padding: 20px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg2);
+    z-index: 10;
+  }
+
+  .sidebar-logo {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .sidebar-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    padding: 16px 16px 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    cursor: pointer;
+    border-radius: 0;
+    transition: all 0.15s;
+    font-size: 13px;
+    color: var(--text-dim);
+    border-left: 3px solid transparent;
+    position: relative;
+  }
+
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+
+  .nav-item.active {
+    background: var(--green-glow);
+    color: var(--green);
+    border-left-color: var(--green);
+    font-weight: 600;
+  }
+
+  .nav-icon { font-size: 14px; min-width: 18px; text-align: center; }
+
+  .nav-badge {
+    margin-left: auto;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 10px;
+    background: var(--green-dim);
+    color: #fff;
+  }
+
+  .progress-bar-wrap {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .progress-track {
+    height: 4px;
+    background: var(--bg4);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    border-radius: 2px;
+    transition: width 0.4s;
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  #main {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── TOP BAR ─── */
+  #topbar {
+    position: sticky;
+    top: 0;
+    background: rgba(13,17,23,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 50;
+  }
+
+  .topbar-breadcrumb {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .topbar-breadcrumb span { color: var(--text); font-weight: 600; }
+
+  .topbar-actions { margin-left: auto; display: flex; gap: 8px; }
+
+  .btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--text-dim);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+
+  .btn:hover { border-color: var(--green); color: var(--green); }
+  .btn.primary { background: var(--green-dim); border-color: var(--green); color: #fff; }
+  .btn.primary:hover { background: var(--green); }
+
+  /* ─── PAGES ─── */
+  .page { display: none; padding: 32px 28px; max-width: 900px; animation: fadeIn 0.25s; }
+  .page.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ─── PAGE HEADERS ─── */
+  .page-eyebrow {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--green);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .page-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .page-desc {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 28px;
+    border-left: 3px solid var(--blue-dim);
+    padding-left: 12px;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── STAT GRID ─── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stat-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .stat-card:hover { border-color: var(--blue-dim); }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--blue);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ─── TABLE ─── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .data-table th {
+    background: var(--bg3);
+    color: var(--text-dim);
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: var(--bg3); }
+
+  .tag-high { color: var(--green); font-weight: 700; }
+  .tag-low { color: var(--red); font-weight: 700; }
+  .tag-num { color: var(--blue); font-weight: 700; }
+
+  /* ─── TAGS ─── */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-fire { background: rgba(255,123,84,0.15); color: var(--fire); border: 1px solid rgba(255,123,84,0.3); }
+  .tag-star { background: rgba(227,179,65,0.15); color: var(--star); border: 1px solid rgba(227,179,65,0.3); }
+  .tag-plus { background: rgba(88,166,255,0.12); color: var(--blue); border: 1px solid rgba(88,166,255,0.25); }
+
+  /* ─── MEMORY HOOKS ─── */
+  .hook-box {
+    background: linear-gradient(135deg, rgba(63,185,80,0.08), rgba(88,166,255,0.08));
+    border: 1px solid rgba(63,185,80,0.25);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  .hook-box::before {
+    content: '🧠';
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 18px;
+  }
+
+  .hook-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    margin-top: 4px;
+  }
+
+  .hook-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ─── TRAP BOX ─── */
+  .trap-box {
+    background: rgba(248,81,73,0.07);
+    border: 1px solid rgba(248,81,73,0.3);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+
+  .trap-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .trap-item {
+    font-size: 13px;
+    color: var(--text);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(248,81,73,0.1);
+    line-height: 1.5;
+    display: flex;
+    gap: 8px;
+  }
+
+  .trap-item:last-child { border-bottom: none; }
+  .trap-item::before { content: '⚠️'; flex-shrink: 0; }
+
+  /* ─── EXAM Q BOX ─── */
+  .exam-q {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+
+  .exam-q:hover { border-color: var(--yellow); }
+
+  .exam-q-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 0;
+  }
+
+  .exam-q-ans {
+    display: none;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 600;
+    padding: 8px 12px;
+    background: var(--green-glow);
+    border-radius: 6px;
+    border-left: 3px solid var(--green);
+  }
+
+  .exam-q.revealed .exam-q-ans { display: block; }
+
+  .reveal-hint {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* ─── PALACE ─── */
+  .palace-stop {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .palace-stop:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 42px;
+    bottom: -10px;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .palace-num {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 50%;
+    background: var(--green-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    z-index: 1;
+  }
+
+  .palace-content h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+
+  .palace-content p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* ─── QUICK SHEET ─── */
+  .sheet-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .sheet-row:last-child { border-bottom: none; }
+
+  .sheet-key {
+    min-width: 190px;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+
+  .sheet-val {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  /* ─── FILL BLANK ─── */
+  .fill-input {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 4px 10px;
+    font-size: 13px;
+    width: 140px;
+    text-align: center;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+
+  .fill-input:focus { outline: none; border-color: var(--blue); }
+  .fill-input.correct { border-color: var(--green); background: var(--green-glow); }
+  .fill-input.wrong { border-color: var(--red); background: rgba(248,81,73,0.08); }
+
+  .fill-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .fill-row:last-child { border-bottom: none; }
+
+  /* ─── NIGHT SHEET ─── */
+  .night-block {
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--green);
+  }
+
+  .night-block h4 {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--green);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .night-block ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .night-block ul li {
+    font-size: 13px;
+    color: var(--text);
+    padding: 3px 0;
+    display: flex;
+    gap: 8px;
+  }
+
+  .night-block ul li::before { content: '→'; color: var(--green); flex-shrink: 0; }
+
+  /* ─── FLASH CARDS ─── */
+  .flash-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .flash-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .flash-card:hover { border-color: var(--purple); transform: translateY(-2px); }
+
+  .flash-q {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+
+  .flash-a {
+    display: none;
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--purple);
+    font-weight: 800;
+  }
+
+  .flash-card.flipped .flash-a { display: block; }
+  .flash-card.flipped .flash-q { color: var(--text-dim); font-size: 11px; }
+
+  .flash-hint { font-size: 10px; color: var(--text-muted); margin-top: 8px; }
+
+  /* ─── COMPARISON ─── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .compare-col {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+  }
+
+  .compare-col h4 {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-col.green-col h4 { color: var(--green); }
+  .compare-col.red-col h4 { color: var(--red); }
+
+  .compare-item {
+    font-size: 12px;
+    color: var(--text);
+    padding: 5px 0;
+    display: flex;
+    gap: 8px;
+    line-height: 1.4;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* ─── MOBILE ─── */
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  @media (max-width: 768px) {
+    #sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      transform: translateX(-100%);
+    }
+
+    #sidebar.open { transform: translateX(0); }
+    .hamburger { display: block; }
+    .page { padding: 20px 16px; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── HIGHLIGHTS ─── */
+  .hl-green { color: var(--green); font-weight: 700; }
+  .hl-blue { color: var(--blue); font-weight: 700; }
+  .hl-yellow { color: var(--yellow); font-weight: 700; }
+  .hl-red { color: var(--red); font-weight: 700; }
+  .hl-purple { color: var(--purple); font-weight: 700; }
+
+  /* ─── SECTION DIVIDER ─── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  /* welcome page */
+  .welcome-hero {
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 36px 32px;
+    margin-bottom: 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .welcome-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green), var(--blue), var(--purple));
+  }
+
+  .welcome-emoji { font-size: 48px; margin-bottom: 12px; }
+
+  .welcome-hero h1 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .welcome-hero p {
+    color: var(--text-dim);
+    font-size: 14px;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .quick-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .quick-nav-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .quick-nav-card:hover { border-color: var(--green); background: var(--green-glow); }
+
+  .quick-nav-icon { font-size: 22px; }
+
+  .quick-nav-text h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+  .quick-nav-text p { font-size: 11px; color: var(--text-dim); }
+
+  /* overlay */
+  #overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 99;
+  }
+
+  #overlay.show { display: block; }
+</style>
+</head>
+<body>
+
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<div id="app">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">SSC CGL Prep</div>
+      <div class="sidebar-title">Census 2011</div>
+      <div class="sidebar-subtitle">High-Retention Revision System</div>
+    </div>
+
+    <div class="nav-section-label">Foundation</div>
+    <div class="nav-item active" onclick="showPage('home')"><span class="nav-icon">🏠</span> Home</div>
+    <div class="nav-item" onclick="showPage('bigpicture')"><span class="nav-icon">🌐</span> Big Picture</div>
+    <div class="nav-item" onclick="showPage('palace')"><span class="nav-icon">🏛️</span> Memory Palace</div>
+
+    <div class="nav-section-label">Core Data</div>
+    <div class="nav-item" onclick="showPage('population')"><span class="nav-icon">👥</span> Population <span class="nav-badge">🔥</span></div>
+    <div class="nav-item" onclick="showPage('growth')"><span class="nav-icon">📈</span> Growth Rate <span class="nav-badge">🔥</span></div>
+    <div class="nav-item" onclick="showPage('sexratio')"><span class="nav-icon">⚖️</span> Sex Ratio <span class="nav-badge">🔥</span></div>
+    <div class="nav-item" onclick="showPage('literacy')"><span class="nav-icon">📚</span> Literacy Rate <span class="nav-badge">🔥</span></div>
+    <div class="nav-item" onclick="showPage('density')"><span class="nav-icon">🗺️</span> Population Density</div>
+    <div class="nav-item" onclick="showPage('religion')"><span class="nav-icon">🕌</span> Religion-wise Data</div>
+
+    <div class="nav-section-label">Exam Weapon</div>
+    <div class="nav-item" onclick="showPage('traps')"><span class="nav-icon">⚠️</span> Exam Traps</div>
+    <div class="nav-item" onclick="showPage('questions')"><span class="nav-icon">🎯</span> Examiner's Favourites</div>
+    <div class="nav-item" onclick="showPage('flashcards')"><span class="nav-icon">🃏</span> Flash Cards</div>
+    <div class="nav-item" onclick="showPage('fillblanks')"><span class="nav-icon">✏️</span> Fill in the Blanks</div>
+
+    <div class="nav-section-label">Quick Revision</div>
+    <div class="nav-item" onclick="showPage('highyield')"><span class="nav-icon">⭐</span> High-Yield Sheet</div>
+    <div class="nav-item" onclick="showPage('ultrafast')"><span class="nav-icon">⚡</span> Ultra-Fast Sheet</div>
+    <div class="nav-item" onclick="showPage('lastnight')"><span class="nav-icon">🌙</span> Last-Night Sheet</div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-label"><span>Pages Visited</span><span id="prog-label">1 / 14</span></div>
+      <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:7%"></div></div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="topbar">
+      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <div class="topbar-breadcrumb">Static GK → Census → <span id="breadcrumb-label">Home</span></div>
+      <div class="topbar-actions">
+        <button class="btn" onclick="prevPage()">← Prev</button>
+        <button class="btn primary" onclick="nextPage()">Next →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════ HOME ═══════════════ -->
+    <div class="page active" id="page-home">
+      <div class="welcome-hero">
+        <div class="welcome-emoji">📊</div>
+        <h1>Census 2011 — Complete Revision System</h1>
+        <p>14 focused sections. Every fact preserved. Memory hooks, exam traps, flash cards & last-night sheets — all in one file. Built to make this chapter unforgettable.</p>
+      </div>
+
+      <div class="card-title">Jump to any section</div>
+      <div class="quick-nav">
+        <div class="quick-nav-card" onclick="showPage('bigpicture')"><span class="quick-nav-icon">🌐</span><div class="quick-nav-text"><h4>Big Picture</h4><p>What this chapter is really about</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('palace')"><span class="quick-nav-icon">🏛️</span><div class="quick-nav-text"><h4>Memory Palace</h4><p>Story-walk to recall everything</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('population')"><span class="quick-nav-icon">👥</span><div class="quick-nav-text"><h4>Population</h4><p>Highest, lowest, cities, districts</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('growth')"><span class="quick-nav-icon">📈</span><div class="quick-nav-text"><h4>Growth Rate</h4><p>Decadal, annual, state-wise</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('sexratio')"><span class="quick-nav-icon">⚖️</span><div class="quick-nav-text"><h4>Sex Ratio</h4><p>943 — everything around it</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('literacy')"><span class="quick-nav-icon">📚</span><div class="quick-nav-text"><h4>Literacy Rate</h4><p>74.4 — state, UT, district</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('density')"><span class="quick-nav-icon">🗺️</span><div class="quick-nav-text"><h4>Population Density</h4><p>382 — Bihar vs Arunachal</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('religion')"><span class="quick-nav-icon">🕌</span><div class="quick-nav-text"><h4>Religion Data</h4><p>Growth rates, literacy by religion</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('traps')"><span class="quick-nav-icon">⚠️</span><div class="quick-nav-text"><h4>Exam Traps</h4><p>Where students lose marks</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('questions')"><span class="quick-nav-icon">🎯</span><div class="quick-nav-text"><h4>Examiner's Favourites</h4><p>Most likely questions</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('flashcards')"><span class="quick-nav-icon">🃏</span><div class="quick-nav-text"><h4>Flash Cards</h4><p>Tap to reveal rapid-fire recall</p></div></div>
+        <div class="quick-nav-card" onclick="showPage('lastnight')"><span class="quick-nav-icon">🌙</span><div class="quick-nav-text"><h4>Last-Night Sheet</h4><p>Everything in 2 minutes</p></div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ BIG PICTURE ═══════════════ -->
+    <div class="page" id="page-bigpicture">
+      <div class="page-eyebrow">Layer 1 — Big Picture</div>
+      <div class="page-title">What Is Census Really About?</div>
+      <div class="page-desc">Census is a complete headcount of every person in India — done every 10 years. For SSC, it means memorising numbers attached to states, UTs, and districts across 6 dimensions: Population, Growth, Sex Ratio, Literacy, Density, Religion.</div>
+
+      <div class="card">
+        <div class="card-title">📅 Timeline of Censuses</div>
+        <table class="data-table">
+          <tr><th>Year</th><th>Event</th><th>Who/What</th></tr>
+          <tr><td class="tag-num">1820</td><td>Census of Dhaka city</td><td>By <span class="hl-green">Henry Walter</span> — called <span class="hl-yellow">Father of Indian Census</span></td></tr>
+          <tr><td class="tag-num">1872</td><td>First census attempt</td><td>Non-synchronized; during Lord Mayo's time</td></tr>
+          <tr><td class="tag-num">1881</td><td><span class="hl-green">First complete / synchronized census</span></td><td>During <span class="hl-blue">Lord Ripon</span>'s tenure</td></tr>
+          <tr><td class="tag-num">1921</td><td><span class="hl-yellow">Great Divide Year</span></td><td>Population growth reversed — started booming after this</td></tr>
+          <tr><td class="tag-num">1961–71</td><td>Highest population growth decade</td><td>Fastest growth ever recorded in India</td></tr>
+          <tr><td class="tag-num">2011</td><td>Latest completed census</td><td>Last census since independence — our main focus</td></tr>
+          <tr><td class="tag-num">2021</td><td>Due but not conducted</td><td>Delayed due to COVID + elections</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏛️ Who Conducts the Census?</div>
+        <div class="hook-box">
+          <div class="hook-title">Key Fact</div>
+          <div class="hook-text">The <span class="hl-green">Office of the Registrar General and Census Commissioner</span> conducts the census.<br><br>Current Census Commissioner: <span class="hl-blue">Mrityunjay Kumar Narayan (MK Narayan)</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔗 Connect: Lord Ripon's Legacy</div>
+        <div class="hook-box">
+          <div class="hook-title">Why Lord Ripon Matters</div>
+          <div class="hook-text">
+            Ripon (only Viceroy given "Lord" prefix as respect):<br>
+            ✦ First complete census (1881)<br>
+            ✦ Father of Local Self Government<br>
+            ✦ Albert Bill controversy<br>
+            ✦ Hunter Education Commission<br>
+            ✦ First Factory Act<br>
+            ✦ Repealed the Vernacular Press Act<br>
+            <br>
+            <span class="hl-yellow">Memory: Ripon = Reformer with 6R gifts to India</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ MEMORY PALACE ═══════════════ -->
+    <div class="page" id="page-palace">
+      <div class="page-eyebrow">Chapter Memory Palace</div>
+      <div class="page-title">Walk Through Census Station</div>
+      <div class="page-desc">Imagine you're a census officer walking through a giant government building. Each room holds a different census category. Walk through it every time you revise.</div>
+
+      <div class="card">
+        <div class="card-title">🚶 The Census Station Journey</div>
+
+        <div class="palace-stop">
+          <div class="palace-num">1</div>
+          <div class="palace-content">
+            <h4>🏛️ Entrance Hall — Basics</h4>
+            <p>A statue of Henry Walter stands at the door (Father of Indian Census). Behind him is a calendar showing 1881 — the year of the first complete census. Lord Ripon's portrait hangs on the wall.</p>
+          </div>
+        </div>
+
+        <div class="palace-stop">
+          <div class="palace-num">2</div>
+          <div class="palace-content">
+            <h4>📦 Room 1 — Population Vault</h4>
+            <p>A giant safe with "1.21 Billion" engraved. Two drawers: UP (heaviest) and Sikkim (fewest). Two UT boxes: Delhi (full), Lakshadweep (nearly empty). District files: Thane (most), Dibang Valley (least).</p>
+          </div>
+        </div>
+
+        <div class="palace-stop">
+          <div class="palace-num">3</div>
+          <div class="palace-content">
+            <h4>📈 Room 2 — Growth Meter</h4>
+            <p>A giant speedometer shows 17.64%. Bihar's dial is stuck on 1106 (density). A sign says "Meghalaya ran the fastest (27.8%), Nagaland went BACKWARDS (-0.47%)." Another sign: "1961–71 was peak speed."</p>
+          </div>
+        </div>
+
+        <div class="palace-stop">
+          <div class="palace-num">4</div>
+          <div class="palace-content">
+            <h4>⚖️ Room 3 — Sex Ratio Scales</h4>
+            <p>A weighing scale shows 943 females vs 1000 males. Kerala's side is heavy (1084). Haryana's side has only 879 — people are crying. For child ratio: Mizoram smiles (highest), Haryana frowns (lowest).</p>
+          </div>
+        </div>
+
+        <div class="palace-stop">
+          <div class="palace-num">5</div>
+          <div class="palace-content">
+            <h4>📚 Room 4 — Literacy Library</h4>
+            <p>Kerala has the most books (94%). Bihar's shelf is nearly bare (61.8%). Lakshadweep UT is surprisingly full (91.8%). A placard reads: "Literacy = Age 7+, can read AND write in any Schedule 8 language."</p>
+          </div>
+        </div>
+
+        <div class="palace-stop">
+          <div class="palace-num">6</div>
+          <div class="palace-content">
+            <h4>🗺️ Room 5 — Density Map</h4>
+            <p>A map of India. Delhi is bursting at the seams (11,320/km²). Bihar is very crowded (1106). Arunachal Pradesh is just empty wilderness (17). You can barely breathe in Delhi but in Arunachal you'll never find anyone.</p>
+          </div>
+        </div>
+
+        <div class="palace-stop">
+          <div class="palace-num">7</div>
+          <div class="palace-content">
+            <h4>🕌 Exit Room — Religion Board</h4>
+            <p>A scoreboard. Hindus: 79.8% but growing at 16.8%. Muslims: 14.2% and growing faster at 24.6%. Jains sit quietly in the corner — most literate. Muslims — least literate.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🎭 The Story in One Line</div>
+        <div class="hook-text">Henry Walter (1820) → Ripon (1881) → 1921 Great Divide → 1961–71 peak growth → 2011 last census: UP largest, Sikkim smallest, Kerala most literate + best sex ratio, Bihar densest, Meghalaya fastest growth, Nagaland shrunk, Delhi most dense UT, Jains most literate, Muslims least.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ POPULATION ═══════════════ -->
+    <div class="page" id="page-population">
+      <div class="page-eyebrow">Core Data — Population</div>
+      <div class="page-title">Population Facts 2011</div>
+      <div class="page-desc">India's total population in 2011 was 1.21 billion — 17.5% of world population. These are the highest/lowest rankings examiners love to ask.</div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">Total Population</div><div class="stat-value">1.21B</div><div class="stat-sub">121 crore / 1210.2 million</div></div>
+        <div class="stat-card"><div class="stat-label">% of World Pop.</div><div class="stat-value">17.5%</div><div class="stat-sub">Out of total world population</div></div>
+        <div class="stat-card"><div class="stat-label">Male Population</div><div class="stat-value">623.7M</div><div class="stat-sub">63.37 crore</div></div>
+        <div class="stat-card"><div class="stat-label">Female Population</div><div class="stat-value">586.5M</div><div class="stat-sub">58.65 crore</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏆 Highest & Lowest — Population Rankings</div>
+        <table class="data-table">
+          <tr><th>Category</th><th class="tag-high">Highest</th><th class="tag-low">Lowest</th></tr>
+          <tr><td>State</td><td class="tag-high">Uttar Pradesh</td><td class="tag-low">Sikkim</td></tr>
+          <tr><td>UT</td><td class="tag-high">Delhi</td><td class="tag-low">Lakshadweep</td></tr>
+          <tr><td>District</td><td class="tag-high">Thane (Maharashtra)</td><td class="tag-low">Dibang Valley (Arunachal Pradesh)</td></tr>
+          <tr><td>City (highest pop.)</td><td class="tag-high">Mumbai</td><td>—</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">👶 Children (0–6 Years) Population</div>
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-label">Total 0–6 age pop.</div><div class="stat-value">158.5M</div><div class="stat-sub">13.1% of total population</div></div>
+        </div>
+        <table class="data-table">
+          <tr><th>Category</th><th class="tag-high">Highest</th><th class="tag-low">Lowest</th></tr>
+          <tr><td>State (0–6 pop.)</td><td class="tag-high">Bihar</td><td class="tag-low">Sikkim</td></tr>
+          <tr><td>District (0–6 pop.)</td><td class="tag-high">Kupwara (J&K)</td><td class="tag-low">Kolkata</td></tr>
+        </table>
+        <div class="trap-box" style="margin-top:14px">
+          <div class="trap-title">⚠️ Important Trap</div>
+          <div class="trap-item">For TOTAL population: highest state = UP, lowest = Sikkim. For 0–6 age group: highest state changes to BIHAR. Lowest remains Sikkim.</div>
+        </div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">Memory Hook — L for Lowest</div>
+        <div class="hook-text"><span class="hl-green">L = Lakshadweep = Lowest UT</span> — both in population AND it's the <span class="hl-yellow">smallest</span> UT. So when you think "smallest UT" → population lowest too. And because it's small and few people, its literacy rate is paradoxically very HIGH (91.8%). Small country = better metrics (like Nordic countries).</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ GROWTH RATE ═══════════════ -->
+    <div class="page" id="page-growth">
+      <div class="page-eyebrow">Core Data — Growth Rate</div>
+      <div class="page-title">Population Growth Rate 2011</div>
+      <div class="page-desc">How fast did India's population grow between 2001–2011? These numbers — decadal, annual, state-wise — are high-yield exam material.</div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">Decadal Growth Rate</div><div class="stat-value">17.64%</div><div class="stat-sub">2001 to 2011</div></div>
+        <div class="stat-card"><div class="stat-label">Annual Growth Rate</div><div class="stat-value">1.64%</div><div class="stat-sub">Average per year</div></div>
+        <div class="stat-card"><div class="stat-label">Absolute Increase</div><div class="stat-value">181M</div><div class="stat-sub">18.1 crore new people</div></div>
+        <div class="stat-card"><div class="stat-label">Female Decadal Growth</div><div class="stat-value">18.12%</div><div class="stat-sub">Higher than male (17.19%)</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📅 Decade-wise Key Facts</div>
+        <table class="data-table">
+          <tr><th>Year / Decade</th><th>Significance</th></tr>
+          <tr><td class="tag-num">1921</td><td><span class="hl-yellow">Year of Great Divide</span> — Before 1921: slow growth. After 1921: population exploded. Point of no return.</td></tr>
+          <tr><td class="tag-num">1961–1971</td><td><span class="hl-red">Highest decadal population growth</span> ever recorded in India</td></tr>
+          <tr><td class="tag-num">0–6 age decadal</td><td>Decreased by <span class="hl-red">negative 3.08%</span> — fewer young children proportionally</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏆 Highest & Lowest Growth Rate — State/UT/District</div>
+        <table class="data-table">
+          <tr><th>Category</th><th class="tag-high">Highest</th><th class="tag-low">Lowest / Notable</th></tr>
+          <tr><td>State</td><td class="tag-high">Meghalaya — 27.8%</td><td class="tag-low">Nagaland — Negative (–0.47%)</td></tr>
+          <tr><td>UT</td><td class="tag-high">Dadra & Nagar Haveli</td><td>—</td></tr>
+          <tr><td>District (highest)</td><td class="tag-high">Kurung Kumey (Arunachal Pradesh)</td><td>—</td></tr>
+          <tr><td>District (lowest)</td><td>—</td><td class="tag-low">Longleng (Nagaland)</td></tr>
+        </table>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🏰 Memory Hook — Haveli People are Busy</div>
+        <div class="hook-text">Dadra & Nagar Haveli has the HIGHEST UT growth rate. Why? Because people in a <span class="hl-green">Haveli (mansion)</span> are always inviting more guests — the mansion grows! Meanwhile, Nagaland's population is shrinking because people are leaving (negative growth).</div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🗓️ Year of Great Divide — Why 1921?</div>
+        <div class="hook-text">Before 1921: famines, plague, low healthcare → population barely grew. After 1921: vaccines, improved food supply, healthcare → population skyrocketed. Like a dividing wall — before was slow, after was fast. <span class="hl-yellow">1921 = the starting gun of India's population explosion.</span></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ SEX RATIO ═══════════════ -->
+    <div class="page" id="page-sexratio">
+      <div class="page-eyebrow">Core Data — Sex Ratio</div>
+      <div class="page-title">Sex Ratio Facts 2011</div>
+      <div class="page-desc">Sex ratio = number of females per 1000 males. India's ratio improved from 933 (2001) to 943 (2011). Child sex ratio declined — a serious concern.</div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">India Sex Ratio 2011</div><div class="stat-value">943</div><div class="stat-sub">Females per 1000 males</div></div>
+        <div class="stat-card"><div class="stat-label">India Sex Ratio 2001</div><div class="stat-value">933</div><div class="stat-sub">Increased by 10 ✅</div></div>
+        <div class="stat-card"><div class="stat-label">Child Sex Ratio 2011</div><div class="stat-value">914–919</div><div class="stat-sub">0–6 years (decreased ❌)</div></div>
+        <div class="stat-card"><div class="stat-label">Child Sex Ratio 2001</div><div class="stat-value">927</div><div class="stat-sub">Higher than 2011</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏆 Sex Ratio — State, UT, District Rankings</div>
+        <table class="data-table">
+          <tr><th>Category</th><th class="tag-high">Highest (Most Females)</th><th class="tag-low">Lowest (Fewest Females)</th></tr>
+          <tr><td>State</td><td class="tag-high">Kerala — 1084</td><td class="tag-low">Haryana — 879</td></tr>
+          <tr><td>UT</td><td class="tag-high">Puducherry — 1037</td><td class="tag-low">Daman & Diu</td></tr>
+          <tr><td>District</td><td class="tag-high">Mahe (Puducherry)</td><td class="tag-low">Daman (same UT)</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">👶 Child Sex Ratio (0–6 years) Rankings</div>
+        <table class="data-table">
+          <tr><th>Category</th><th class="tag-high">Highest</th><th class="tag-low">Lowest</th></tr>
+          <tr><td>State</td><td class="tag-high">Mizoram</td><td class="tag-low">Haryana</td></tr>
+          <tr><td>District (low)</td><td>—</td><td class="tag-low">Jhajjar (Haryana)</td></tr>
+        </table>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🧠 Memory: Daman = Oppression</div>
+        <div class="hook-text"><span class="hl-red">Daman</span> means "oppression/suppression" in Hindi. Fitting — <span class="hl-red">Daman & Diu has the lowest sex ratio</span>. Girls are suppressed there. Easy to remember: Daman → Damansuppressed girls → lowest sex ratio.</div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🧠 Haryana: Single Men State</div>
+        <div class="hook-text">Haryana has <span class="hl-red">lowest sex ratio (879)</span> AND <span class="hl-red">lowest child sex ratio</span> among states. Remember: In Haryana, boys far outnumber girls — that's why there's a famous social problem of young men staying single. <span class="hl-yellow">Haryana = bottom of both sex ratio charts.</span></div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Critical Trap — Ratio vs Child Ratio</div>
+        <div class="trap-item">Overall sex ratio INCREASED: 933 → 943 (good news ✅)</div>
+        <div class="trap-item">Child sex ratio DECREASED: 927 → 914 (bad news ❌)</div>
+        <div class="trap-item">These move in OPPOSITE directions — examiner will swap them!</div>
+        <div class="trap-item">State highest sex ratio = Kerala. State highest CHILD sex ratio = Mizoram (different!)</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ LITERACY ═══════════════ -->
+    <div class="page" id="page-literacy">
+      <div class="page-eyebrow">Core Data — Literacy</div>
+      <div class="page-title">Literacy Rate 2011</div>
+      <div class="page-desc">Literacy = age 7+ who can read AND write in any of 22 Schedule 8 languages. India's literacy jumped from 64.8% (2001) to 74.4% (2011).</div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">India Literacy 2011</div><div class="stat-value">74.4%</div><div class="stat-sub">Significant jump from 2001</div></div>
+        <div class="stat-card"><div class="stat-label">India Literacy 2001</div><div class="stat-value">64.8%</div><div class="stat-sub">Previous census figure</div></div>
+        <div class="stat-card"><div class="stat-label">Male Literacy</div><div class="stat-value">82.2%</div><div class="stat-sub">Higher than female</div></div>
+        <div class="stat-card"><div class="stat-label">Female Literacy</div><div class="stat-value">65.4%</div><div class="stat-sub">Gap = 16.8 percentage points</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📊 Urban vs Rural Literacy</div>
+        <div class="sheet-row"><div class="sheet-key">Urban Literacy Rate</div><div class="sheet-val">83.1%</div></div>
+        <div class="sheet-row"><div class="sheet-key">Rural Literacy Rate</div><div class="sheet-val">~67.8%</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏆 Literacy Rate Rankings — State, UT, District</div>
+        <table class="data-table">
+          <tr><th>Category</th><th class="tag-high">Highest</th><th class="tag-low">Lowest</th></tr>
+          <tr><td>State (highest)</td><td class="tag-high">Kerala — 94%</td><td class="tag-low">Bihar — 61.8%</td></tr>
+          <tr><td>State (2nd highest)</td><td class="tag-high">Mizoram</td><td>—</td></tr>
+          <tr><td>State (2nd lowest)</td><td>—</td><td class="tag-low">Arunachal Pradesh</td></tr>
+          <tr><td>UT (highest)</td><td class="tag-high">Lakshadweep — 91.8%</td><td class="tag-low">Dadra & Nagar Haveli</td></tr>
+          <tr><td>District (highest)</td><td class="tag-high">Serchhip (Mizoram)</td><td class="tag-low">Alirajpur (Madhya Pradesh)</td></tr>
+        </table>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🧠 Literacy — The Kerala-Lakshadweep-Mizoram Triangle</div>
+        <div class="hook-text">
+          Think of it as a <span class="hl-green">TOP 3 Literacy Club</span>:<br>
+          🥇 State: <span class="hl-green">Kerala (94%)</span><br>
+          🥈 State: <span class="hl-yellow">Mizoram</span><br>
+          🥇 UT: <span class="hl-blue">Lakshadweep (91.8%)</span><br><br>
+          And Serchhip district is in Mizoram — so Mizoram dominates even at district level for top rank.
+        </div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🧠 Dadra & Nagar Haveli — Opposite Extremes</div>
+        <div class="hook-text"><span class="hl-yellow">Haveli people are busy growing their population</span> (highest UT growth rate) but <span class="hl-red">not going to school</span> (lowest UT literacy). Two opposite extremes in one UT!</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ Literacy Definition Trap</div>
+        <div class="trap-item">Literacy age threshold = 7 years and above (NOT 6, NOT 5, NOT 10)</div>
+        <div class="trap-item">Must be able to READ AND WRITE (not just one of the two)</div>
+        <div class="trap-item">Can be in ANY of the 22 languages in the 8th Schedule</div>
+        <div class="trap-item">Second-highest state literacy = Mizoram (SSC JE asked this!)</div>
+        <div class="trap-item">Second-lowest state literacy = Arunachal Pradesh (not Bihar)</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ DENSITY ═══════════════ -->
+    <div class="page" id="page-density">
+      <div class="page-eyebrow">Core Data — Population Density</div>
+      <div class="page-title">Population Density 2011</div>
+      <div class="page-desc">Population density = number of persons living per square kilometer. India's density rose from 325 (2001) to 382 (2011).</div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">India Density 2011</div><div class="stat-value">382</div><div class="stat-sub">People per sq. km</div></div>
+        <div class="stat-card"><div class="stat-label">India Density 2001</div><div class="stat-value">325</div><div class="stat-sub">Previous census</div></div>
+        <div class="stat-card"><div class="stat-label">Densest State</div><div class="stat-value">Bihar</div><div class="stat-sub">1,106 per sq. km</div></div>
+        <div class="stat-card"><div class="stat-label">Least Dense State</div><div class="stat-value">Arunachal</div><div class="stat-sub">Only 17 per sq. km</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏆 Density Rankings — Complete</div>
+        <table class="data-table">
+          <tr><th>Category</th><th class="tag-high">Highest Density</th><th class="tag-low">Lowest Density</th></tr>
+          <tr><td>State</td><td class="tag-high">Bihar — 1,106/km²</td><td class="tag-low">Arunachal Pradesh — 17/km²</td></tr>
+          <tr><td>State (2nd highest)</td><td class="tag-high">West Bengal</td><td>—</td></tr>
+          <tr><td>State (2nd lowest)</td><td>—</td><td class="tag-low">Mizoram (after Arunachal)</td></tr>
+          <tr><td>UT</td><td class="tag-high">Delhi — 11,320/km²</td><td class="tag-low">Andaman & Nicobar — 46/km²</td></tr>
+          <tr><td>District (highest)</td><td class="tag-high">North East Delhi</td><td>—</td></tr>
+          <tr><td>District (lowest)</td><td>—</td><td class="tag-low">Dibang Valley (Arunachal)</td></tr>
+        </table>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🧠 Delhi vs Bihar — The Density Drama</div>
+        <div class="hook-text">Delhi's density (11,320) is <span class="hl-red">10 times more than Bihar</span> (1,106). If you live in Delhi, you can feel this — it's terrifyingly crowded. Meanwhile, in Arunachal Pradesh (17/km²), you could walk for kilometres without seeing another person. <span class="hl-yellow">Delhi = 10× Bihar. Bihar = 65× Arunachal.</span></div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🧠 A for A — Density Lows</div>
+        <div class="hook-text">Two A's have the lowest density:<br><span class="hl-green">A</span>runachal Pradesh = lowest state<br><span class="hl-green">A</span>ndaman & Nicobar = lowest UT<br>Both start with A. Both are remote. Both are mountains/islands with vast empty spaces.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ RELIGION ═══════════════ -->
+    <div class="page" id="page-religion">
+      <div class="page-eyebrow">Core Data — Religion</div>
+      <div class="page-title">Religion-wise Census Data 2011</div>
+      <div class="page-desc">The key points here: percentage share, growth rate by religion, and literacy by religion. The absolute numbers change but percentage share movements are most exam-relevant.</div>
+
+      <div class="card">
+        <div class="card-title">📊 Population % by Religion</div>
+        <table class="data-table">
+          <tr><th>Religion</th><th>% of Population (2011)</th><th>Decadal Growth Rate</th><th>% Change from 2001</th></tr>
+          <tr><td><span class="hl-yellow">Hindu</span></td><td>79.8%</td><td class="tag-num">16.8%</td><td class="tag-low">Decreased (as % of total)</td></tr>
+          <tr><td><span class="hl-green">Muslim</span></td><td>14.2%</td><td class="tag-num">24.6%</td><td class="tag-high">Increased (as % of total)</td></tr>
+          <tr><td>Christian</td><td>~2.3%</td><td class="tag-num">15.5%</td><td>No change</td></tr>
+          <tr><td>Sikh</td><td>~1.7%</td><td class="tag-num">8.4%</td><td class="tag-low">Decreased</td></tr>
+          <tr><td>Buddhist</td><td>~0.7%</td><td class="tag-num">6.1%</td><td class="tag-low">Decreased</td></tr>
+          <tr><td>Jain</td><td>~0.4%</td><td class="tag-num">5.4%</td><td class="tag-low">Decreased</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📚 Literacy Rate by Religion</div>
+        <table class="data-table">
+          <tr><th>Rank</th><th>Religion</th><th>Literacy</th></tr>
+          <tr><td>🥇 Highest</td><td class="tag-high">Jains</td><td class="tag-high">Most literate</td></tr>
+          <tr><td>🥉 Lowest</td><td class="tag-low">Muslims</td><td class="tag-low">Lowest literacy rate</td></tr>
+        </table>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">⚠️ The % vs Absolute Number Confusion</div>
+        <div class="trap-item">Hindu population in ABSOLUTE NUMBERS increased (more Hindus exist in 2011 than 2001)</div>
+        <div class="trap-item">Hindu % of TOTAL population DECREASED (went from ~80.5% to 79.8%)</div>
+        <div class="trap-item">Both can be true at the same time — because total population grew faster than Hindu growth</div>
+        <div class="trap-item">Muslim absolute numbers AND percentage BOTH increased</div>
+        <div class="trap-item">Only ONE religion increased as a percentage share — Muslims</div>
+      </div>
+
+      <div class="hook-box">
+        <div class="hook-title">🧠 Remember the Two Growth Kings</div>
+        <div class="hook-text">In the growth rate race by religion:<br>
+        <span class="hl-red">Muslims lead with 24.6%</span> — almost 1.5× the Hindu rate<br>
+        <span class="hl-yellow">Hindus at 16.8%</span> — second highest but % share fell<br>
+        After these two, everyone else (Christian 15.5%, Sikh 8.4%, Buddhist 6.1%, Jain 5.4%) had lower growth AND their share decreased.<br>
+        <span class="hl-green">Must know: Hindu (16.8%) and Muslim (24.6%) growth rates</span></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ EXAM TRAPS ═══════════════ -->
+    <div class="page" id="page-traps">
+      <div class="page-eyebrow">⚠️ Exam Intelligence</div>
+      <div class="page-title">Exam Traps — Where Students Lose Marks</div>
+      <div class="page-desc">These are the most common confusions that cost marks in SSC CGL, CHSL, and Steno exams. Read them once before every revision.</div>
+
+      <div class="trap-box">
+        <div class="trap-title">Group 1: Population Traps</div>
+        <div class="trap-item">Highest population state = UP. But highest 0–6 year population state = BIHAR. Two different answers!</div>
+        <div class="trap-item">Lowest population state = Sikkim. This remains same for both overall and 0–6 category.</div>
+        <div class="trap-item">India's population is 1.21 billion = 121 crore = 1210.2 million. All three are the same. Don't get confused by units.</div>
+        <div class="trap-item">17.5% of world population (not 17.64% — that's decadal growth rate). Easy number swap trap!</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">Group 2: Sex Ratio Traps</div>
+        <div class="trap-item">Overall sex ratio INCREASED (933→943). Child sex ratio DECREASED (927→914). Opposite directions!</div>
+        <div class="trap-item">Highest state sex ratio = Kerala. Highest state CHILD sex ratio = Mizoram. Different states!</div>
+        <div class="trap-item">Lowest sex ratio state = Haryana. Lowest child sex ratio = ALSO Haryana. Same here.</div>
+        <div class="trap-item">Highest UT sex ratio = Puducherry. NOT Kerala (Kerala is a state, not UT).</div>
+        <div class="trap-item">Child sex ratio options: 914 is the final census figure; 919 was the provisional census. If both appear, choose 914.</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">Group 3: Literacy Traps</div>
+        <div class="trap-item">Lowest literacy state = Bihar (61.8%). Second lowest = Arunachal Pradesh (NOT Rajasthan or UP).</div>
+        <div class="trap-item">Highest literacy UT = Lakshadweep (91.8%). NOT Kerala (Kerala is state, not UT).</div>
+        <div class="trap-item">Lowest literacy UT = Dadra & Nagar Haveli. The same UT has HIGHEST growth rate — opposites!</div>
+        <div class="trap-item">Highest literacy district = Serchhip (Mizoram). Lowest = Alirajpur (MP). Both unusual states — not the obvious ones.</div>
+        <div class="trap-item">Literacy definition: age 7+ (not 6+, not 10+). READ and WRITE (both required).</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">Group 4: Density Traps</div>
+        <div class="trap-item">Delhi's density = 11,320/km² (written with comma, NOT decimal point: 11,320 not 11.320)</div>
+        <div class="trap-item">Second highest density state = West Bengal (not Delhi — Delhi is UT)</div>
+        <div class="trap-item">Second lowest density UT = Mizoram (after Arunachal)</div>
+        <div class="trap-item">Andaman & Nicobar lowest UT density (~46/km²). Arunachal lowest STATE density (17/km²).</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-title">Group 5: Historical Traps</div>
+        <div class="trap-item">First census attempt = 1872 (Mayo's time). First COMPLETE/SYNCHRONIZED = 1881 (Ripon's time).</div>
+        <div class="trap-item">Henry Walter = conducted census of Dhaka CITY only (1820). NOT of all India.</div>
+        <div class="trap-item">Father of INDIAN Census = Henry Walter. Father of LOCAL SELF GOVERNMENT = Lord Ripon. Two different titles!</div>
+        <div class="trap-item">Year of Great Divide = 1921. Highest population growth DECADE = 1961–71. Two different facts!</div>
+        <div class="trap-item">Religion: only MUSLIMS saw increase in percentage share. Hindus increased in absolute numbers but % fell.</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ EXAMINER'S FAVOURITES ═══════════════ -->
+    <div class="page" id="page-questions">
+      <div class="page-eyebrow">🎯 Exam Intelligence</div>
+      <div class="page-title">Examiner's Favourite Questions</div>
+      <div class="page-desc">Click each question to reveal the answer. Test yourself before looking!</div>
+
+      <div class="card-title">🔥 Must-Know Questions</div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q1. According to Census 2011, what is the population of India?</div>
+        <div class="exam-q-ans">1.21 billion (121 crore / 1210.2 million) — 17.5% of world population</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q2. Who is called the Father of Indian Census?</div>
+        <div class="exam-q-ans">Henry Walter — who conducted the first census of Dhaka city in 1820</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q3. When was the first complete/synchronized census of India held?</div>
+        <div class="exam-q-ans">1881 — during Lord Ripon's tenure as Viceroy</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q4. Which state has the lowest sex ratio as per Census 2011?</div>
+        <div class="exam-q-ans">Haryana — with 879 females per 1000 males</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q5. Which state has the highest literacy rate and what is it?</div>
+        <div class="exam-q-ans">Kerala — 94% (asked directly in SSC Steno 2022)</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q6. What is the decadal growth rate of population between 2001–2011?</div>
+        <div class="exam-q-ans">17.64% — with female growth (18.12%) higher than male (17.19%)</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q7. Which decade saw the highest population growth in India?</div>
+        <div class="exam-q-ans">1961–1971 — the peak decade for population growth in India</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q8. What is the population density of India as per 2011 Census?</div>
+        <div class="exam-q-ans">382 persons per sq. km (up from 325 in 2001)</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q9. Which religion has the highest literacy rate in India?</div>
+        <div class="exam-q-ans">Jains — the highest literacy rate among all religious communities</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q10. What happened to Hindu population percentage in Census 2011 vs 2001?</div>
+        <div class="exam-q-ans">Hindu ABSOLUTE numbers increased (growth rate 16.8%), but their PERCENTAGE SHARE of total population DECREASED (from ~80.5% to 79.8%). Muslim percentage share increased.</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q11. Which UT has the highest population density?</div>
+        <div class="exam-q-ans">Delhi — 11,320 persons per sq. km (approximately 10× more than Bihar)</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q12. What is the child sex ratio (0–6 years) as per 2011 Census?</div>
+        <div class="exam-q-ans">914 (final census) / 919 (provisional) — down from 927 in 2001. It DECREASED.</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q13. Which state has the highest population density?</div>
+        <div class="exam-q-ans">Bihar — 1,106 persons per sq. km. Second highest is West Bengal.</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q14. What is 1921 known as in Indian census history?</div>
+        <div class="exam-q-ans">Year of Great Divide — population growth reversed from slow to rapid after this year</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+
+      <div class="exam-q" onclick="this.classList.toggle('revealed')">
+        <div class="exam-q-text">Q15. Which district has the lowest literacy rate in India?</div>
+        <div class="exam-q-ans">Alirajpur in Madhya Pradesh has the lowest district literacy rate</div>
+        <div class="reveal-hint">Click to reveal answer</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ FLASH CARDS ═══════════════ -->
+    <div class="page" id="page-flashcards">
+      <div class="page-eyebrow">Active Recall</div>
+      <div class="page-title">Flash Cards — Rapid Fire</div>
+      <div class="page-desc">Read the question. Try to recall the answer mentally. Then tap to reveal. Do this until every answer comes instantly.</div>
+
+      <div class="flash-grid">
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">India's total population in 2011?</div>
+          <div class="flash-a">1.21 Billion<br><small style="color:var(--text-dim)">121 crore / 1210.2 million</small></div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">India's % of world population?</div>
+          <div class="flash-a">17.5%</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Year of Great Divide?</div>
+          <div class="flash-a">1921</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Highest population growth decade?</div>
+          <div class="flash-a">1961–1971</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">India sex ratio 2011?</div>
+          <div class="flash-a">943<br><small style="color:var(--text-dim)">(was 933 in 2001)</small></div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Child sex ratio 2011?</div>
+          <div class="flash-a">914 (final)<br><small style="color:var(--text-dim)">Down from 927 in 2001</small></div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">India literacy rate 2011?</div>
+          <div class="flash-a">74.4%<br><small style="color:var(--text-dim)">(was 64.8% in 2001)</small></div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">India population density 2011?</div>
+          <div class="flash-a">382/km²<br><small style="color:var(--text-dim)">(was 325 in 2001)</small></div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">State with HIGHEST sex ratio?</div>
+          <div class="flash-a">Kerala — 1084</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">State with LOWEST sex ratio?</div>
+          <div class="flash-a">Haryana — 879</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">State with highest CHILD sex ratio?</div>
+          <div class="flash-a">Mizoram</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">State with lowest CHILD sex ratio?</div>
+          <div class="flash-a">Haryana</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Highest literacy state?</div>
+          <div class="flash-a">Kerala — 94%</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Lowest literacy state?</div>
+          <div class="flash-a">Bihar — 61.8%</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Highest density STATE?</div>
+          <div class="flash-a">Bihar — 1,106/km²</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Lowest density STATE?</div>
+          <div class="flash-a">Arunachal Pradesh — 17/km²</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Highest density UT?</div>
+          <div class="flash-a">Delhi — 11,320/km²</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Religion with fastest growth rate?</div>
+          <div class="flash-a">Muslims — 24.6%<br><small style="color:var(--text-dim)">vs Hindus 16.8%</small></div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Most literate religion?</div>
+          <div class="flash-a">Jains</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Least literate religion?</div>
+          <div class="flash-a">Muslims</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Father of Indian Census?</div>
+          <div class="flash-a">Henry Walter<br><small style="color:var(--text-dim)">Census of Dhaka, 1820</small></div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">First COMPLETE census year?</div>
+          <div class="flash-a">1881<br><small style="color:var(--text-dim)">Lord Ripon's tenure</small></div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Highest growth rate STATE?</div>
+          <div class="flash-a">Meghalaya — 27.8%</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+        <div class="flash-card" onclick="this.classList.toggle('flipped')">
+          <div class="flash-q">Lowest (negative) growth rate STATE?</div>
+          <div class="flash-a">Nagaland — Negative</div>
+          <div class="flash-hint">Tap to flip</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ FILL IN THE BLANKS ═══════════════ -->
+    <div class="page" id="page-fillblanks">
+      <div class="page-eyebrow">Active Recall</div>
+      <div class="page-title">Fill in the Blanks</div>
+      <div class="page-desc">Type your answer and press Enter or Tab to check. Green = correct, Red = try again.</div>
+
+      <div class="card">
+        <div class="card-title">📝 Type Your Answers</div>
+        <div id="fill-container"></div>
+        <div style="margin-top:16px;display:flex;gap:10px">
+          <button class="btn primary" onclick="checkAllAnswers()">Check All Answers</button>
+          <button class="btn" onclick="resetAll()">Reset All</button>
+        </div>
+        <div id="fill-score" style="margin-top:12px;font-size:13px;color:var(--text-dim)"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ HIGH-YIELD SHEET ═══════════════ -->
+    <div class="page" id="page-highyield">
+      <div class="page-eyebrow">Layer 2 — High-Yield Revision</div>
+      <div class="page-title">High-Yield Revision Sheet</div>
+      <div class="page-desc">The most frequently asked facts. Revise this when you have 15 minutes. Every single item here has appeared in SSC exams.</div>
+
+      <div class="card">
+        <div class="card-title">🔥 Must-Know Numbers</div>
+        <div class="sheet-row"><div class="sheet-key">India Population (2011)</div><div class="sheet-val">1.21 Billion / 121 crore</div></div>
+        <div class="sheet-row"><div class="sheet-key">% of World Population</div><div class="sheet-val">17.5%</div></div>
+        <div class="sheet-row"><div class="sheet-key">Decadal Growth Rate</div><div class="sheet-val">17.64%</div></div>
+        <div class="sheet-row"><div class="sheet-key">Annual Growth Rate</div><div class="sheet-val">1.64%</div></div>
+        <div class="sheet-row"><div class="sheet-key">Absolute Increase (2001–11)</div><div class="sheet-val">181 million (18.1 crore)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Sex Ratio 2011</div><div class="sheet-val">943 (up from 933)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Child Sex Ratio 2011</div><div class="sheet-val">914 (down from 927) ❌</div></div>
+        <div class="sheet-row"><div class="sheet-key">Literacy Rate 2011</div><div class="sheet-val">74.4% (up from 64.8%)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Male Literacy</div><div class="sheet-val">82.2%</div></div>
+        <div class="sheet-row"><div class="sheet-key">Female Literacy</div><div class="sheet-val">65.4%</div></div>
+        <div class="sheet-row"><div class="sheet-key">Population Density 2011</div><div class="sheet-val">382/km² (up from 325)</div></div>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-col green-col">
+          <h4>Highest (States)</h4>
+          <div class="compare-item">👥 Population: <strong>UP</strong></div>
+          <div class="compare-item">📈 Growth: <strong>Meghalaya</strong></div>
+          <div class="compare-item">⚖️ Sex Ratio: <strong>Kerala (1084)</strong></div>
+          <div class="compare-item">👶 Child Sex Ratio: <strong>Mizoram</strong></div>
+          <div class="compare-item">📚 Literacy: <strong>Kerala (94%)</strong></div>
+          <div class="compare-item">🗺️ Density: <strong>Bihar (1106)</strong></div>
+        </div>
+        <div class="compare-col red-col">
+          <h4>Lowest (States)</h4>
+          <div class="compare-item">👥 Population: <strong>Sikkim</strong></div>
+          <div class="compare-item">📈 Growth: <strong>Nagaland (negative)</strong></div>
+          <div class="compare-item">⚖️ Sex Ratio: <strong>Haryana (879)</strong></div>
+          <div class="compare-item">👶 Child Sex Ratio: <strong>Haryana</strong></div>
+          <div class="compare-item">📚 Literacy: <strong>Bihar (61.8%)</strong></div>
+          <div class="compare-item">🗺️ Density: <strong>Arunachal (17)</strong></div>
+        </div>
+        <div class="compare-col green-col">
+          <h4>Highest (UTs)</h4>
+          <div class="compare-item">👥 Population: <strong>Delhi</strong></div>
+          <div class="compare-item">📈 Growth: <strong>Dadra & Nagar Haveli</strong></div>
+          <div class="compare-item">⚖️ Sex Ratio: <strong>Puducherry (1037)</strong></div>
+          <div class="compare-item">📚 Literacy: <strong>Lakshadweep (91.8%)</strong></div>
+          <div class="compare-item">🗺️ Density: <strong>Delhi (11,320)</strong></div>
+        </div>
+        <div class="compare-col red-col">
+          <h4>Lowest (UTs)</h4>
+          <div class="compare-item">👥 Population: <strong>Lakshadweep</strong></div>
+          <div class="compare-item">⚖️ Sex Ratio: <strong>Daman & Diu</strong></div>
+          <div class="compare-item">📚 Literacy: <strong>Dadra & Nagar Haveli</strong></div>
+          <div class="compare-item">🗺️ Density: <strong>Andaman & Nicobar (46)</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ ULTRA-FAST ═══════════════ -->
+    <div class="page" id="page-ultrafast">
+      <div class="page-eyebrow">Layer 3 — Ultra-Fast</div>
+      <div class="page-title">Ultra-Fast Revision Sheet</div>
+      <div class="page-desc">5 minutes. Pure numbers and names. No explanations. Just read and let it sink in.</div>
+
+      <div class="card">
+        <div class="card-title">⚡ THE ESSENTIALS</div>
+        <div class="sheet-row"><div class="sheet-key">Population</div><div class="sheet-val">1.21B | 17.5% world | Decadal 17.64%</div></div>
+        <div class="sheet-row"><div class="sheet-key">Sex Ratio</div><div class="sheet-val">943 (↑) | Child 914 (↓)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Literacy</div><div class="sheet-val">74.4% | M:82.2% F:65.4%</div></div>
+        <div class="sheet-row"><div class="sheet-key">Density</div><div class="sheet-val">382/km²</div></div>
+        <div class="sheet-row"><div class="sheet-key">Pop. State High/Low</div><div class="sheet-val">UP → Sikkim</div></div>
+        <div class="sheet-row"><div class="sheet-key">Growth State High/Low</div><div class="sheet-val">Meghalaya (27.8%) → Nagaland (–)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Sex Ratio High/Low</div><div class="sheet-val">Kerala (1084) → Haryana (879)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Child SR High/Low</div><div class="sheet-val">Mizoram → Haryana</div></div>
+        <div class="sheet-row"><div class="sheet-key">Literacy High/Low</div><div class="sheet-val">Kerala (94%) → Bihar (61.8%)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Density High/Low</div><div class="sheet-val">Bihar (1106) → Arunachal (17)</div></div>
+        <div class="sheet-row"><div class="sheet-key">UT Density High/Low</div><div class="sheet-val">Delhi (11,320) → A&N (46)</div></div>
+        <div class="sheet-row"><div class="sheet-key">UT Literacy High/Low</div><div class="sheet-val">Lakshadweep (91.8%) → Dadra NH</div></div>
+        <div class="sheet-row"><div class="sheet-key">UT Sex Ratio High/Low</div><div class="sheet-val">Puducherry (1037) → Daman & Diu</div></div>
+        <div class="sheet-row"><div class="sheet-key">District Pop High/Low</div><div class="sheet-val">Thane (MH) → Dibang Valley (AP)</div></div>
+        <div class="sheet-row"><div class="sheet-key">District Literacy</div><div class="sheet-val">Serchhip (Mizoram) → Alirajpur (MP)</div></div>
+        <div class="sheet-row"><div class="sheet-key">0–6 Pop High/Low</div><div class="sheet-val">Bihar → Sikkim (state)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Hindu/Muslim Growth</div><div class="sheet-val">Hindu 16.8% | Muslim 24.6%</div></div>
+        <div class="sheet-row"><div class="sheet-key">Literacy by Religion</div><div class="sheet-val">Highest: Jains | Lowest: Muslims</div></div>
+        <div class="sheet-row"><div class="sheet-key">First Census</div><div class="sheet-val">1872 (Mayo) | Complete: 1881 (Ripon)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Father of Census</div><div class="sheet-val">Henry Walter (Dhaka, 1820)</div></div>
+        <div class="sheet-row"><div class="sheet-key">Great Divide Year</div><div class="sheet-val">1921 | Peak decade: 1961–71</div></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ LAST NIGHT ═══════════════ -->
+    <div class="page" id="page-lastnight">
+      <div class="page-eyebrow">Layer 5 — Last Night Before Exam</div>
+      <div class="page-title">Last-Night Revision Sheet 🌙</div>
+      <div class="page-desc">Read only this page the night before the exam. 2 minutes. Everything that matters.</div>
+
+      <div class="night-block">
+        <h4>🏛️ History</h4>
+        <ul>
+          <li>Henry Walter = Father of Indian Census (Dhaka city, 1820)</li>
+          <li>1881 = First complete census (Lord Ripon)</li>
+          <li>1921 = Great Divide | 1961–71 = Highest growth decade</li>
+        </ul>
+      </div>
+
+      <div class="night-block">
+        <h4>📊 Key Numbers</h4>
+        <ul>
+          <li>Population: 1.21 billion = 17.5% of world</li>
+          <li>Decadal growth: 17.64% | Annual: 1.64%</li>
+          <li>Sex ratio: 943 (↑) | Child sex ratio: 914 (↓)</li>
+          <li>Literacy: 74.4% | Male: 82.2% | Female: 65.4%</li>
+          <li>Density: 382/km²</li>
+        </ul>
+      </div>
+
+      <div class="night-block">
+        <h4>🏆 State Rankings</h4>
+        <ul>
+          <li>Population: Highest UP | Lowest Sikkim</li>
+          <li>Growth: Highest Meghalaya | Lowest/Negative Nagaland</li>
+          <li>Sex Ratio: Highest Kerala (1084) | Lowest Haryana (879)</li>
+          <li>Child SR: Highest Mizoram | Lowest Haryana</li>
+          <li>Literacy: Highest Kerala 94% | Lowest Bihar 61.8%</li>
+          <li>Density: Highest Bihar 1106 | Lowest Arunachal 17</li>
+        </ul>
+      </div>
+
+      <div class="night-block">
+        <h4>🏙️ UT Rankings</h4>
+        <ul>
+          <li>Population: Highest Delhi | Lowest Lakshadweep</li>
+          <li>Growth: Highest Dadra & Nagar Haveli</li>
+          <li>Sex Ratio: Highest Puducherry (1037) | Lowest Daman & Diu</li>
+          <li>Literacy: Highest Lakshadweep 91.8% | Lowest Dadra & NH</li>
+          <li>Density: Highest Delhi 11,320 | Lowest A&N 46</li>
+        </ul>
+      </div>
+
+      <div class="night-block">
+        <h4>🕌 Religion</h4>
+        <ul>
+          <li>Hindu growth: 16.8% | Muslim growth: 24.6%</li>
+          <li>Only Muslim % share increased; Hindu % share decreased</li>
+          <li>Most literate religion: Jains | Least literate: Muslims</li>
+        </ul>
+      </div>
+
+      <div class="night-block" style="border-left-color: var(--red)">
+        <h4>⚠️ Last-Minute Traps</h4>
+        <ul>
+          <li>0–6 highest state = Bihar (NOT UP — that's overall pop.)</li>
+          <li>Sex ratio ↑ but child sex ratio ↓ (opposite!)</li>
+          <li>Kerala = highest state sex ratio. Puducherry = highest UT sex ratio.</li>
+          <li>Child SR highest state = Mizoram. NOT Kerala.</li>
+          <li>2nd highest literacy state = Mizoram. 2nd lowest = Arunachal.</li>
+          <li>UT highest literacy = Lakshadweep (NOT Kerala).</li>
+          <li>Density: 11,320 is Delhi UT. Comma, not decimal point!</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const pages = ['home','bigpicture','palace','population','growth','sexratio','literacy','density','religion','traps','questions','flashcards','fillblanks','highyield','ultrafast','lastnight'];
+  const labels = ['Home','Big Picture','Memory Palace','Population','Growth Rate','Sex Ratio','Literacy Rate','Population Density','Religion Data','Exam Traps',"Examiner's Favourites","Flash Cards","Fill in Blanks","High-Yield Sheet","Ultra-Fast Sheet","Last-Night Sheet"];
+  
+  let currentIndex = 0;
+  const visited = new Set([0]);
+
+  function showPage(id) {
+    const idx = pages.indexOf(id);
+    if (idx < 0) return;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-'+id).classList.add('active');
+    document.querySelectorAll('.nav-item')[idx].classList.add('active');
+    document.getElementById('breadcrumb-label').textContent = labels[idx];
+    currentIndex = idx;
+    visited.add(idx);
+    updateProgress();
+    document.getElementById('main').scrollTo(0, 0);
+    closeSidebar();
+  }
+
+  function nextPage() {
+    if (currentIndex < pages.length - 1) showPage(pages[currentIndex + 1]);
+  }
+
+  function prevPage() {
+    if (currentIndex > 0) showPage(pages[currentIndex - 1]);
+  }
+
+  function updateProgress() {
+    const pct = Math.round((visited.size / pages.length) * 100);
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-label').textContent = visited.size + ' / ' + pages.length;
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+
+  // ─── Fill in the Blanks ───
+  const fillData = [
+    { before: "India's population according to 2011 census was", after: "billion", answer: "1.21", alt: ["121 crore","1.21 billion","1210.2 million"] },
+    { before: "India constitutes", after: "% of world's population", answer: "17.5", alt: ["17.5"] },
+    { before: "The decadal growth rate of India's population (2001–2011) was", after: "%", answer: "17.64", alt: ["17.64"] },
+    { before: "Annual growth rate of India's population (2011) was", after: "%", answer: "1.64", alt: ["1.64"] },
+    { before: "India's sex ratio as per 2011 census is", after: "females per 1000 males", answer: "943", alt: ["943"] },
+    { before: "India's child sex ratio (0–6) as per 2011 census is", after: "", answer: "914", alt: ["914","919"] },
+    { before: "India's overall literacy rate as per 2011 census is", after: "%", answer: "74.4", alt: ["74.4"] },
+    { before: "Male literacy rate in India (2011) is", after: "%", answer: "82.2", alt: ["82.2"] },
+    { before: "Female literacy rate in India (2011) is", after: "%", answer: "65.4", alt: ["65.4"] },
+    { before: "India's population density as per 2011 census is", after: "persons per sq. km", answer: "382", alt: ["382"] },
+    { before: "State with HIGHEST sex ratio is", after: "(with 1084)", answer: "Kerala", alt: ["kerala"] },
+    { before: "State with LOWEST sex ratio is", after: "(with 879)", answer: "Haryana", alt: ["haryana"] },
+    { before: "State with HIGHEST literacy rate is", after: "(94%)", answer: "Kerala", alt: ["kerala"] },
+    { before: "State with LOWEST literacy rate is", after: "(61.8%)", answer: "Bihar", alt: ["bihar"] },
+    { before: "State with HIGHEST population density is", after: "(1106/km²)", answer: "Bihar", alt: ["bihar"] },
+    { before: "State with LOWEST population density is", after: "(17/km²)", answer: "Arunachal Pradesh", alt: ["arunachal"] },
+    { before: "UT with highest population density is", after: "(11,320/km²)", answer: "Delhi", alt: ["delhi","new delhi"] },
+    { before: "Father of Indian Census is", after: "", answer: "Henry Walter", alt: ["henry walter"] },
+    { before: "First COMPLETE Indian census was conducted in", after: "during Lord Ripon's time", answer: "1881", alt: ["1881"] },
+    { before: "Year of Great Divide in Indian population history is", after: "", answer: "1921", alt: ["1921"] },
+    { before: "Highest population growth decade in India was", after: "", answer: "1961–1971", alt: ["1961-1971","1961 to 1971","1961–71"] },
+    { before: "State with highest decadal growth rate is", after: "(27.8%)", answer: "Meghalaya", alt: ["meghalaya"] },
+    { before: "State with negative population growth is", after: "", answer: "Nagaland", alt: ["nagaland"] },
+    { before: "UT with highest literacy rate is", after: "(91.8%)", answer: "Lakshadweep", alt: ["lakshadweep"] },
+    { before: "Religion with highest literacy rate in India is", after: "", answer: "Jains", alt: ["jain","jains"] },
+    { before: "Religion with lowest literacy rate in India is", after: "", answer: "Muslims", alt: ["muslim","muslims"] },
+    { before: "Muslim decadal growth rate (2001–2011) was", after: "%", answer: "24.6", alt: ["24.6"] },
+    { before: "Hindu decadal growth rate (2001–2011) was", after: "%", answer: "16.8", alt: ["16.8"] },
+  ];
+
+  function buildFillBlanks() {
+    const container = document.getElementById('fill-container');
+    container.innerHTML = '';
+    fillData.forEach((item, i) => {
+      const row = document.createElement('div');
+      row.className = 'fill-row';
+      row.innerHTML = `<span>${i+1}. ${item.before}</span> <input class="fill-input" id="fi-${i}" placeholder="?" data-ans="${item.answer}" data-alt="${item.alt.join('|')}"> <span>${item.after}</span>`;
+      container.appendChild(row);
+    });
+  }
+
+  function checkAllAnswers() {
+    let correct = 0;
+    fillData.forEach((item, i) => {
+      const inp = document.getElementById('fi-'+i);
+      const val = inp.value.trim().toLowerCase();
+      const alts = item.alt.map(a => a.toLowerCase());
+      const isCorrect = val === item.answer.toLowerCase() || alts.includes(val);
+      inp.classList.toggle('correct', isCorrect);
+      inp.classList.toggle('wrong', !isCorrect && val !== '');
+      if (isCorrect) correct++;
+    });
+    document.getElementById('fill-score').textContent = `Score: ${correct} / ${fillData.length} correct`;
+  }
+
+  function resetAll() {
+    fillData.forEach((_, i) => {
+      const inp = document.getElementById('fi-'+i);
+      inp.value = '';
+      inp.classList.remove('correct','wrong');
+    });
+    document.getElementById('fill-score').textContent = '';
+  }
+
+  buildFillBlanks();
+</script>
+</body>
+</html>

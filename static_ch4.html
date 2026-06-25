@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Festivals — SSC CGL Revision System</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1c2330;
+    --border: #30363d;
+    --green: #3fb950;
+    --green-dim: #1a4d2a;
+    --blue: #58a6ff;
+    --blue-dim: #1a2d4d;
+    --yellow: #e3b341;
+    --red: #f85149;
+    --purple: #bc8cff;
+    --orange: #ffa657;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; height: 100vh; overflow: hidden; }
+
+  /* ── LAYOUT ── */
+  #app { display: flex; height: 100vh; }
+  #sidebar { width: 260px; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; overflow: hidden; }
+  #main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* ── SIDEBAR ── */
+  .sidebar-header { padding: 16px; border-bottom: 1px solid var(--border); }
+  .sidebar-header h2 { font-size: 13px; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; }
+  .sidebar-header p { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .sidebar-search { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  .sidebar-search input { width: 100%; background: var(--bg3); border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 12px; outline: none; }
+  .sidebar-search input:focus { border-color: var(--blue); }
+  .sidebar-search input::placeholder { color: var(--text-dim); }
+  .sidebar-nav { overflow-y: auto; flex: 1; padding: 8px 0; }
+  .nav-section { padding: 6px 12px 2px; font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+  .nav-item { display: flex; align-items: center; gap: 8px; padding: 7px 16px; cursor: pointer; font-size: 13px; color: var(--text-muted); border-left: 2px solid transparent; transition: all 0.15s; }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active { background: var(--blue-dim); color: var(--blue); border-left-color: var(--blue); }
+  .nav-item .flag { font-size: 16px; }
+  .nav-item .state-name { font-weight: 500; }
+  .nav-item .count { margin-left: auto; font-size: 10px; background: var(--bg3); padding: 2px 6px; border-radius: 10px; color: var(--text-dim); }
+
+  /* ── TOPBAR ── */
+  #topbar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 0 20px; display: flex; align-items: center; gap: 12px; height: 50px; flex-shrink: 0; }
+  .layer-tabs { display: flex; gap: 4px; }
+  .layer-tab { padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 500; border: 1px solid var(--border); background: var(--bg3); color: var(--text-muted); transition: all 0.15s; }
+  .layer-tab:hover { border-color: var(--blue); color: var(--blue); }
+  .layer-tab.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .topbar-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .topbar-sep { color: var(--text-dim); }
+
+  /* ── CONTENT ── */
+  #content { flex: 1; overflow-y: auto; padding: 24px 28px; }
+  .page { display: none; animation: fadeIn 0.2s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  h1.page-title { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  h1.page-title .emoji { margin-right: 8px; }
+  .page-subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; }
+
+  /* ── CARDS ── */
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; }
+  .card-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .card-title.green { color: var(--green); }
+  .card-title.blue { color: var(--blue); }
+  .card-title.yellow { color: var(--yellow); }
+  .card-title.red { color: var(--red); }
+  .card-title.purple { color: var(--purple); }
+  .card-title.orange { color: var(--orange); }
+
+  /* ── FESTIVAL GRID ── */
+  .fest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .fest-chip { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; }
+  .fest-chip .name { font-size: 13px; font-weight: 600; color: var(--text); }
+  .fest-chip .detail { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .fest-chip.highlight { border-color: var(--green); }
+  .fest-chip.warn { border-color: var(--yellow); }
+
+  /* ── MEMORY HOOK ── */
+  .memory-hook { background: linear-gradient(135deg, #0d2818 0%, #0a1f2e 100%); border: 1px solid var(--green-dim); border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; }
+  .memory-hook .hook-label { font-size: 10px; font-weight: 700; color: var(--green); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .memory-hook .hook-text { font-size: 13px; line-height: 1.7; color: #c3e8c3; }
+  .memory-hook .hook-decode { margin-top: 10px; font-size: 12px; color: var(--text-muted); }
+  .memory-hook .hook-decode span { color: var(--green); font-weight: 600; }
+
+  /* ── EXAM TRAP ── */
+  .trap-box { background: #1a0e0e; border: 1px solid #4d1f1f; border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
+  .trap-box .trap-label { font-size: 10px; font-weight: 700; color: var(--red); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .trap-box .trap-text { font-size: 13px; color: #ffb3b3; line-height: 1.6; }
+
+  /* ── RECALL QUESTIONS ── */
+  .recall-q { background: var(--bg3); border-left: 3px solid var(--blue); border-radius: 0 8px 8px 0; padding: 10px 16px; margin-bottom: 8px; cursor: pointer; }
+  .recall-q .q-text { font-size: 13px; color: var(--text); }
+  .recall-q .q-answer { font-size: 12px; color: var(--green); margin-top: 6px; display: none; }
+  .recall-q.revealed .q-answer { display: block; }
+  .recall-q .q-hint { font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ── TAG PILLS ── */
+  .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 4px; }
+  .tag.fire { background: #3d1a00; color: #ffa657; border: 1px solid #6b3000; }
+  .tag.star { background: #1a2d4d; color: #58a6ff; border: 1px solid #1f3d6b; }
+  .tag.plus { background: #1a1a2d; color: #bc8cff; border: 1px solid #2d2d5a; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--bg3); color: var(--blue); padding: 8px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg3); }
+
+  /* ── QUICK SHEET ── */
+  .qs-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .qs-row:last-child { border-bottom: none; }
+  .qs-state { min-width: 130px; color: var(--blue); font-weight: 600; }
+  .qs-fests { color: var(--text); flex: 1; }
+  .qs-ny { color: var(--yellow); font-size: 11px; font-weight: 600; min-width: 90px; }
+
+  /* ── HOME DASHBOARD ── */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
+  .stat-card .num { font-size: 28px; font-weight: 700; }
+  .stat-card .lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  .stat-card.g .num { color: var(--green); }
+  .stat-card.b .num { color: var(--blue); }
+  .stat-card.y .num { color: var(--yellow); }
+  .stat-card.r .num { color: var(--red); }
+
+  .progress-bar-wrap { background: var(--bg3); border-radius: 4px; height: 6px; margin-top: 6px; }
+  .progress-bar { background: var(--green); height: 6px; border-radius: 4px; transition: width 0.5s ease; }
+
+  /* ── LAST NIGHT SHEET ── */
+  .ln-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ln-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+  .ln-box .st { font-weight: 700; color: var(--blue); margin-bottom: 6px; font-size: 13px; }
+  .ln-box .fst { font-size: 12px; color: var(--text); line-height: 1.7; }
+
+  /* ── NAV ARROWS ── */
+  .nav-arrows { display: flex; gap: 8px; margin-left: auto; }
+  .nav-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text-muted); padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 18px; transition: all 0.15s; }
+  .nav-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    #sidebar { width: 200px; }
+    .ln-grid { grid-template-columns: 1fr; }
+    .fest-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  .info-row { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .info-row .key { min-width: 160px; color: var(--text-muted); font-size: 12px; }
+  .info-row .val { color: var(--text); flex: 1; }
+  .info-row:last-child { border-bottom: none; }
+
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+  .badge.new-year { background: #1a3d2a; color: var(--green); border: 1px solid var(--green-dim); }
+  .badge.tribal { background: #2a1a3d; color: var(--purple); border: 1px solid #3d1a6b; }
+  .badge.buddhist { background: #1a2d4d; color: var(--blue); border: 1px solid #1f3d6b; }
+  .badge.cattle { background: #3d2a00; color: var(--yellow); border: 1px solid #6b4a00; }
+
+  .palace-stop { display: flex; gap: 14px; margin-bottom: 14px; }
+  .palace-num { width: 32px; height: 32px; border-radius: 50%; background: var(--blue-dim); color: var(--blue); font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .palace-body .place { font-size: 13px; font-weight: 600; color: var(--text); }
+  .palace-body .event { font-size: 12px; color: var(--text-muted); margin-top: 3px; line-height: 1.5; }
+
+  .score-wrap { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+  .score-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; text-align: center; flex: 1; }
+  .score-box .score-num { font-size: 32px; font-weight: 700; color: var(--green); }
+  .score-box .score-lbl { font-size: 12px; color: var(--text-muted); }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h2>🎪 Festivals GK</h2>
+    <p>SSC CGL · Static GK · FRB Notes</p>
+  </div>
+  <div class="sidebar-search">
+    <input type="text" id="searchInput" placeholder="Search state or festival…" oninput="filterNav(this.value)">
+  </div>
+  <div class="sidebar-nav" id="sidebarNav">
+    <div class="nav-section">Overview</div>
+    <div class="nav-item active" data-page="home" onclick="goto('home',this)">
+      <span class="flag">🏠</span><span class="state-name">Dashboard</span>
+    </div>
+    <div class="nav-item" data-page="memory-palace" onclick="goto('memory-palace',this)">
+      <span class="flag">🧠</span><span class="state-name">Memory Palace</span>
+    </div>
+    <div class="nav-item" data-page="new-years" onclick="goto('new-years',this)">
+      <span class="flag">🎆</span><span class="state-name">New Year Festivals</span>
+    </div>
+
+    <div class="nav-section">States A–F</div>
+    <div class="nav-item" data-page="andhra" onclick="goto('andhra',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Andhra Pradesh</span><span class="count">3</span>
+    </div>
+    <div class="nav-item" data-page="arunachal" onclick="goto('arunachal',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Arunachal Pradesh</span><span class="count">7</span>
+    </div>
+    <div class="nav-item" data-page="assam" onclick="goto('assam',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Assam</span><span class="count">6</span>
+    </div>
+    <div class="nav-item" data-page="bihar" onclick="goto('bihar',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Bihar</span><span class="count">5</span>
+    </div>
+    <div class="nav-item" data-page="chhattisgarh" onclick="goto('chhattisgarh',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Chhattisgarh</span><span class="count">7</span>
+    </div>
+
+    <div class="nav-section">States G–M</div>
+    <div class="nav-item" data-page="goa" onclick="goto('goa',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Goa</span><span class="count">5</span>
+    </div>
+    <div class="nav-item" data-page="gujarat" onclick="goto('gujarat',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Gujarat</span><span class="count">3</span>
+    </div>
+    <div class="nav-item" data-page="haryana" onclick="goto('haryana',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Haryana</span><span class="count">4</span>
+    </div>
+    <div class="nav-item" data-page="hp" onclick="goto('hp',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Himachal Pradesh</span><span class="count">5</span>
+    </div>
+    <div class="nav-item" data-page="jk" onclick="goto('jk',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">J&K / Ladakh</span><span class="count">4</span>
+    </div>
+    <div class="nav-item" data-page="jharkhand" onclick="goto('jharkhand',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Jharkhand</span><span class="count">7</span>
+    </div>
+    <div class="nav-item" data-page="karnataka" onclick="goto('karnataka',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Karnataka</span><span class="count">6</span>
+    </div>
+    <div class="nav-item" data-page="kerala" onclick="goto('kerala',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Kerala</span><span class="count">5</span>
+    </div>
+    <div class="nav-item" data-page="mp" onclick="goto('mp',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Madhya Pradesh</span><span class="count">6</span>
+    </div>
+    <div class="nav-item" data-page="maharashtra" onclick="goto('maharashtra',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Maharashtra</span><span class="count">6</span>
+    </div>
+    <div class="nav-item" data-page="manipur" onclick="goto('manipur',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Manipur</span><span class="count">3</span>
+    </div>
+    <div class="nav-item" data-page="meghalaya" onclick="goto('meghalaya',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Meghalaya</span><span class="count">3</span>
+    </div>
+    <div class="nav-item" data-page="mizoram" onclick="goto('mizoram',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Mizoram</span><span class="count">3</span>
+    </div>
+
+    <div class="nav-section">States N–W</div>
+    <div class="nav-item" data-page="nagaland" onclick="goto('nagaland',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Nagaland</span><span class="count">3</span>
+    </div>
+    <div class="nav-item" data-page="odisha" onclick="goto('odisha',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Odisha</span><span class="count">6</span>
+    </div>
+    <div class="nav-item" data-page="punjab" onclick="goto('punjab',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Punjab</span><span class="count">5</span>
+    </div>
+    <div class="nav-item" data-page="rajasthan" onclick="goto('rajasthan',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Rajasthan</span><span class="count">7</span>
+    </div>
+    <div class="nav-item" data-page="sikkim" onclick="goto('sikkim',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Sikkim</span><span class="count">3</span>
+    </div>
+    <div class="nav-item" data-page="tamilnadu" onclick="goto('tamilnadu',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Tamil Nadu</span><span class="count">6</span>
+    </div>
+    <div class="nav-item" data-page="telangana" onclick="goto('telangana',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Telangana</span><span class="count">3</span>
+    </div>
+    <div class="nav-item" data-page="tripura" onclick="goto('tripura',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Tripura</span><span class="count">3</span>
+    </div>
+    <div class="nav-item" data-page="uttarakhand" onclick="goto('uttarakhand',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">Uttarakhand</span><span class="count">4</span>
+    </div>
+    <div class="nav-item" data-page="wb" onclick="goto('wb',this)">
+      <span class="flag">🇮🇳</span><span class="state-name">West Bengal</span><span class="count">3</span>
+    </div>
+
+    <div class="nav-section">Revision Sheets</div>
+    <div class="nav-item" data-page="hy-sheet" onclick="goto('hy-sheet',this)">
+      <span class="flag">⚡</span><span class="state-name">High-Yield Sheet</span>
+    </div>
+    <div class="nav-item" data-page="ultra-fast" onclick="goto('ultra-fast',this)">
+      <span class="flag">🚀</span><span class="state-name">Ultra-Fast Sheet</span>
+    </div>
+    <div class="nav-item" data-page="last-night" onclick="goto('last-night',this)">
+      <span class="flag">🌙</span><span class="state-name">Last Night Sheet</span>
+    </div>
+    <div class="nav-item" data-page="traps" onclick="goto('traps',this)">
+      <span class="flag">⚠️</span><span class="state-name">Exam Traps</span>
+    </div>
+    <div class="nav-item" data-page="recall" onclick="goto('recall',this)">
+      <span class="flag">❓</span><span class="state-name">Active Recall</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════ MAIN ═══════════════════════ -->
+<div id="main">
+  <div id="topbar">
+    <span class="topbar-title" id="topbarTitle">🏠 Dashboard</span>
+    <span class="topbar-sep">·</span>
+    <div class="layer-tabs">
+      <div class="layer-tab active" onclick="setLayer(1,this)">Full Notes</div>
+      <div class="layer-tab" onclick="setLayer(2,this)">Quick</div>
+      <div class="layer-tab" onclick="setLayer(3,this)">Flash</div>
+    </div>
+    <div class="nav-arrows">
+      <button class="nav-btn" onclick="navPrev()">&#8592;</button>
+      <button class="nav-btn" onclick="navNext()">&#8594;</button>
+    </div>
+  </div>
+
+  <div id="content">
+
+<!-- ════════════ HOME ════════════ -->
+<div class="page active" id="page-home">
+  <h1 class="page-title"><span class="emoji">🎪</span>Indian Festivals — Static GK</h1>
+  <p class="page-subtitle">SSC CGL · CHSL · CPO · MTS · Selection Posts | Free Revision Batch (FRB)</p>
+  <div class="stat-grid">
+    <div class="stat-card g"><div class="num">28</div><div class="lbl">States Covered</div></div>
+    <div class="stat-card b"><div class="num">80+</div><div class="lbl">Festivals Listed</div></div>
+    <div class="stat-card y"><div class="num">9</div><div class="lbl">New Year Fests</div></div>
+    <div class="stat-card r"><div class="num">15+</div><div class="lbl">Exam Traps</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title green">📌 Big Picture — What This Chapter Is Really About</div>
+    <p style="font-size:13px;line-height:1.8;color:var(--text-muted)">
+      Examiners test <strong style="color:var(--text)">State ↔ Festival matching</strong>, 
+      <strong style="color:var(--text)">New Year Festivals by state</strong>, 
+      <strong style="color:var(--text)">Tribal/Community festivals</strong>, and 
+      <strong style="color:var(--text)">Famous fair locations</strong>. 
+      The key pattern: <em>every state has 3–8 festivals; 1–2 are high-probability questions; New Year festivals form a separate cluster that examiners love</em>.
+      Master this chapter state-by-state with memory hooks, then use the Quick Revision Sheets.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="card-title blue">🎯 Top Examiner Patterns</div>
+    <table>
+      <tr><th>Pattern</th><th>Example Question</th><th>Priority</th></tr>
+      <tr><td>State → Festival</td><td>Hornbill Festival is celebrated in ___</td><td><span class="tag fire">🔥 Must</span></td></tr>
+      <tr><td>Festival → State</td><td>Onam is celebrated in ___</td><td><span class="tag fire">🔥 Must</span></td></tr>
+      <tr><td>New Year Festival</td><td>Puthandu is New Year of which state?</td><td><span class="tag fire">🔥 Must</span></td></tr>
+      <tr><td>Festival → Community</td><td>Losar is celebrated by which community?</td><td><span class="tag star">⭐ Imp</span></td></tr>
+      <tr><td>Festival → Venue/Temple</td><td>Ambubachi is held in which temple?</td><td><span class="tag star">⭐ Imp</span></td></tr>
+      <tr><td>Festival → Month/Date</td><td>Hornbill is held 1–10 ___</td><td><span class="tag plus">➕ Good</span></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="card-title yellow">⚡ Navigate This File</div>
+    <p style="font-size:13px;color:var(--text-muted);line-height:1.8">
+      Use the <strong style="color:var(--blue)">sidebar</strong> to jump to any state. 
+      Use <strong style="color:var(--blue)">Layer tabs</strong> above to switch between Full Notes / Quick / Flash view. 
+      Use <strong style="color:var(--blue)">← →</strong> arrows to go state by state. 
+      The <strong style="color:var(--yellow)">Last Night Sheet</strong> is your exam-eve single page. 
+      The <strong style="color:var(--red)">Exam Traps</strong> section covers the most common wrong answers.
+    </p>
+  </div>
+</div>
+
+<!-- ════════════ MEMORY PALACE ════════════ -->
+<div class="page" id="page-memory-palace">
+  <h1 class="page-title"><span class="emoji">🧠</span>Chapter Memory Palace</h1>
+  <p class="page-subtitle">Walk through India alphabetically — each stop = one state's story</p>
+  <div class="card">
+    <div class="card-title blue">🏛️ The Palace: A Train Journey from A to W</div>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px">Imagine you are on a train. Each station is a state. At each station something memorable happens that encodes the festivals.</p>
+    <div class="palace-stop">
+      <div class="palace-num">1</div>
+      <div class="palace-body">
+        <div class="place">Station: Andhra Pradesh 🏛️</div>
+        <div class="event">Vishakha (girl) sits in a car, worships Durga Ji, shouting "Yalla Yalla!" → <strong style="color:var(--green)">Ugadi (New Year) + Yallama Jatra + Visakha Utsav</strong></div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">2</div>
+      <div class="palace-body">
+        <div class="place">Station: Arunachal Pradesh 🏔️</div>
+        <div class="event">Aruna sleeps under a tree. Her head says "Hold my pin, come closer — I've become MoPin, Low-soul, dry-tree, Saken-company, Losar!" → <strong style="color:var(--green)">Mopin + Losar + Saken + Losser (Losar)</strong></div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">3</div>
+      <div class="palace-body">
+        <div class="place">Station: Assam 🍵</div>
+        <div class="event">Assam's bahu (daughter-in-law) beats her Bhai with color → Ali's father goes to Majuli → Ambu Bachi at Kamakhya → Bihu × 3 (Bahag/Rangali, Maag/Bhogali, Kati/Kangali)</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">4</div>
+      <div class="palace-body">
+        <div class="place">Station: Bihar 🌊</div>
+        <div class="event">Bring daughter-in-law to terrace (Chhath), she watches Sonpur Cattle Fair from there. Sama Chakewa, Bihula, Rajgir festival below.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">5</div>
+      <div class="palace-body">
+        <div class="place">Station: Goa 🏖️</div>
+        <div class="event">Got sunburned (Sunburn) → went to San Francis Church with grapes (Feast of St Francis) → couldn't find the car (Carnival/Shigmo) → Three Kings arrived</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">6</div>
+      <div class="palace-body">
+        <div class="place">Station: Karnataka 🐃</div>
+        <div class="event">Workman Abhishek comes by car (Ugadi New Year also here) → does Kambala (buffalo race) in Belgola where Bahubali statue stands → Gudi Padwa energy</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">7</div>
+      <div class="palace-body">
+        <div class="place">Station: Kerala 🌊</div>
+        <div class="event">Puran and Vasu lose boat race (Onam → Pookalam), Penned at Vadakkamnath Temple (Thrissur Puram), Attukal Pongala (women's festival), Vishu (New Year)</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">8</div>
+      <div class="palace-body">
+        <div class="place">Station: Nagaland 🐦</div>
+        <div class="event">Snakes move from hole to hole (Hornbill bird migration from Siberia) → Festival of Festivals, 1–10 December, Kohima. Naga tribe.</div>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">9</div>
+      <div class="palace-body">
+        <div class="place">Station: Tamil Nadu ☀️</div>
+        <div class="event">Rice boils over pot → offered to God = Pongal (4 days). Dinesh Karthik floats with Anjali (Float Festival). Puthandu = New Year. Jallikattu = bull taming.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ NEW YEARS ════════════ -->
+<div class="page" id="page-new-years">
+  <h1 class="page-title"><span class="emoji">🎆</span>New Year Festivals</h1>
+  <p class="page-subtitle"><span class="tag fire">🔥 Must Know</span> — High-frequency exam cluster. All celebrated in Chaitra (March–April) unless noted.</p>
+  <div class="card">
+    <div class="card-title green">Complete New Year Festival Map</div>
+    <table>
+      <tr><th>Festival Name</th><th>State</th><th>Community</th><th>Notes</th></tr>
+      <tr><td><strong>Ugadi / Yugadi</strong></td><td>Andhra Pradesh</td><td>Telugu</td><td>Telugu New Year | Chaitra</td></tr>
+      <tr><td><strong>Ugadi</strong></td><td>Karnataka</td><td>Kannada</td><td>Same name, different state</td></tr>
+      <tr><td><strong>Gudi Padwa</strong></td><td>Maharashtra</td><td>Marathi</td><td>Marathi New Year | Chaitra</td></tr>
+      <tr><td><strong>Vishu</strong></td><td>Kerala</td><td>Malayalam</td><td>Malayali New Year</td></tr>
+      <tr><td><strong>Puthandu</strong></td><td>Tamil Nadu</td><td>Tamil</td><td>Tamil New Year</td></tr>
+      <tr><td><strong>Pohela Boishakh</strong></td><td>West Bengal</td><td>Bengali</td><td>Bengali New Year</td></tr>
+      <tr><td><strong>Bohag Bihu (Rangali)</strong></td><td>Assam</td><td>Assamese</td><td>Assamese New Year | Chaitra/Vaisakh</td></tr>
+      <tr><td><strong>Losar</strong></td><td>Ladakh / Sikkim / Arunachal</td><td>Tibetan Buddhist</td><td>Tibetan New Year</td></tr>
+      <tr><td><strong>Baisakhi</strong></td><td>Punjab</td><td>Sikh/Punjabi</td><td>Punjabi New Year | April 13</td></tr>
+    </table>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook — New Year Chain</div>
+    <div class="hook-text">"<strong>Uncle Gudi Visits Puthandu, Pohela Brings Bohag Losar to Baisakhi</strong>"</div>
+    <div class="hook-decode">
+      <span>U</span>gadi (AP+KA) · <span>G</span>udi Padwa (MH) · <span>V</span>ishu (KL) · <span>P</span>uthandu (TN) · <span>P</span>ohela Boishakh (WB) · <span>B</span>ohag Bihu (AS) · <span>L</span>osar (LA/SK/AR) · <span>B</span>aisakhi (PB)
+    </div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap</div>
+    <div class="trap-text">Ugadi = AP + Karnataka. Examiners may put Karnataka and trick you into saying "only AP." Both states celebrate Ugadi. Puthandu (Tamil Nadu) and Vishu (Kerala) are separate — don't confuse Attukal Pongal (Kerala) with Pongal (Tamil Nadu).</div>
+  </div>
+</div>
+
+<!-- ════════════ ANDHRA PRADESH ════════════ -->
+<div class="page" id="page-andhra">
+  <h1 class="page-title"><span class="emoji">🏛️</span>Andhra Pradesh</h1>
+  <p class="page-subtitle">Created 1953 (language basis) → Full state 1 Nov 1956 (Fazal Ali Commission / States Reorganization Act 1956)</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Ugadi / Yugadi</div>
+      <div class="detail"><span class="badge new-year">🎆 New Year</span> Telugu New Year · Chaitra (Mar–Apr)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Yallama Jatra</div>
+      <div class="detail">Festival dedicated to Goddess Yellamma</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Visakha Utsav</div>
+      <div class="detail">Celebrated in Visakhapatnam</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">Vishakha (girl name) sits in her <strong>car</strong>, worships <strong>Durga Ji</strong>, shouting "<strong>Yalla Yalla</strong> Challa!"</div>
+    <div class="hook-decode">
+      <span>Vishakha</span> → Visakha Utsav · <span>Car</span> → ? (sounds like Durga worship) · <span>Yalla</span> → Yallama Jatra · <span>Uga</span> (Telugu for New Year) → Ugadi
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">📚 Context Connection</div>
+    <div class="info-row"><div class="key">AP Created</div><div class="val">1953 on linguistic basis (Telugu speakers)</div></div>
+    <div class="info-row"><div class="key">Full State</div><div class="val">1 November 1956 (States Reorganisation Act 1956)</div></div>
+    <div class="info-row"><div class="key">Commission</div><div class="val">Fazal Ali Commission approved linguistic basis for states</div></div>
+    <div class="info-row"><div class="key">Ugadi Meaning</div><div class="val">"Yuga" (era) + "Adi" (beginning) = Start of New Era</div></div>
+  </div>
+</div>
+
+<!-- ════════════ ARUNACHAL ════════════ -->
+<div class="page" id="page-arunachal">
+  <h1 class="page-title"><span class="emoji">🏔️</span>Arunachal Pradesh</h1>
+  <p class="page-subtitle">Border state with Tibet → Tibetan Buddhist festivals important here</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Losar</div>
+      <div class="detail"><span class="badge buddhist">🙏 Buddhist</span> Tibetan New Year · Also in Sikkim, Ladakh</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Mopin</div>
+      <div class="detail">Garo tribe festival for prosperity</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Solung</div>
+      <div class="detail">Adi tribe harvest festival</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Podi Barbi</div>
+      <div class="detail">Galo tribe festival</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Saken</div>
+      <div class="detail">Khampti tribe festival</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Lossar</div>
+      <div class="detail">Variant spelling — same as Losar</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook — Aruna's Story</div>
+    <div class="hook-text">Aruna sleeps under a tree. Her head says: "Hold my <strong>pin</strong>, come closer — I've become <strong>MoPin</strong>, Low (<strong>Sol</strong>ung), dry tree, <strong>Saken</strong>-company, and I'm a <strong>Losar</strong>!"</div>
+    <div class="hook-decode">
+      <span>Pin→MoPin</span> = Mopin · <span>Low-soul</span> = Solung · <span>Saken</span> = Saken · <span>Losar</span> = Losar (Tibetan New Year)
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title yellow">🗺️ Context: Who Celebrates Losar?</div>
+    <p style="font-size:13px;line-height:1.8;color:var(--text-muted)">
+      <strong style="color:var(--text)">Tibetan Buddhist community</strong> celebrates Losar. 
+      Tibet borders: Arunachal Pradesh, Sikkim, Ladakh, Uttarakhand, Himachal Pradesh. 
+      So Losar appears in: <strong style="color:var(--green)">Arunachal + Sikkim + Ladakh</strong> (all in exams).
+    </p>
+  </div>
+</div>
+
+<!-- ════════════ ASSAM ════════════ -->
+<div class="page" id="page-assam">
+  <h1 class="page-title"><span class="emoji">🍵</span>Assam</h1>
+  <p class="page-subtitle">Famous for Bihu (3 types) + Kamakhya Temple festivals</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Bohag Bihu (Rangali)</div>
+      <div class="detail"><span class="badge new-year">🎆 New Year</span> Assamese New Year · Chaitra/Vaisakh</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Maag Bihu (Bhogali)</div>
+      <div class="detail">Winter harvest feast · January</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Kati Bihu (Kangali)</div>
+      <div class="detail">Autumn crop festival · October/Kartik</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Ambubachi Mela</div>
+      <div class="detail">Kamakhya Devi Temple, Guwahati · June</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Ali Ai Ligang</div>
+      <div class="detail">Mishing tribe · spring/agriculture</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Majuli Festival</div>
+      <div class="detail">World's largest river island (Majuli)</div>
+    </div>
+  </div>
+
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook — Bihu 3 Types</div>
+    <div class="hook-text">Think of <strong>3 Marriages</strong> (Bahag, Maag, Kati) — the girls who get married in each season!</div>
+    <div class="hook-decode">
+      <span>Bahag/Bohag = Rangali</span> (colourful Spring New Year) · <span>Maag = Bhogali</span> (feast, winter) · <span>Kati = Kangali</span> (poor, scarce, autumn)
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title blue">📅 Bihu Calendar</div>
+    <table>
+      <tr><th>Bihu</th><th>Local Name</th><th>Season</th><th>Month</th><th>Significance</th></tr>
+      <tr><td>Bohag/Bahag</td><td>Rangali</td><td>Spring</td><td>Chaitra (Mar–Apr)</td><td>New Year 🎆</td></tr>
+      <tr><td>Maag</td><td>Bhogali</td><td>Winter</td><td>Magh (Jan)</td><td>Harvest Feast</td></tr>
+      <tr><td>Kati</td><td>Kangali</td><td>Autumn</td><td>Kartik (Oct)</td><td>Crop (Kharif)</td></tr>
+    </table>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap</div>
+    <div class="trap-text">Ambubachi Mela → Kamakhya Devi Temple (Guwahati, Assam). DO NOT confuse with Sonpur Cattle Fair (Bihar). The temple connection is frequently asked.</div>
+  </div>
+</div>
+
+<!-- ════════════ BIHAR ════════════ -->
+<div class="page" id="page-bihar">
+  <h1 class="page-title"><span class="emoji">🌊</span>Bihar</h1>
+  <p class="page-subtitle">Chhath is the most important festival from Bihar — frequently asked</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Chhath Puja</div>
+      <div class="detail">Sun worship · October/November (Kartik)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Sama Chakewa</div>
+      <div class="detail">Brother-sister bond · migratory birds theme</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Bihula</div>
+      <div class="detail">Folk legend of Bihula-Vishwakarma</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Rajgir Mahotsav</div>
+      <div class="detail">Dance/music festival at Rajgir</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Sonpur Cattle Fair</div>
+      <div class="detail"><span class="badge cattle">🐄 Fair</span> Asia's largest cattle fair · Near Patna</div>
+    </div>
+  </div>
+
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">Bring daughter-in-law to the <strong>terrace in the evening</strong> (Chhath — sun worship at dawn/dusk). O Rajgir! From the terrace she can see the <strong>Cattle Fair</strong> near the house.</div>
+    <div class="hook-decode">
+      <span>Terrace-evening</span> = Chhath · <span>Rajgir</span> = Rajgir Mahotsav · <span>Cattle Fair near house</span> = Sonpur Cattle Fair (Bihar)
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap — Cattle Fairs</div>
+    <div class="trap-text">Sonpur Cattle Fair = BIHAR (near Patna/Hajipur) · Pushkar Fair = RAJASTHAN · Nagaur Fair = RAJASTHAN. These are the top 3 confusions!</div>
+  </div>
+</div>
+
+<!-- ════════════ CHHATTISGARH ════════════ -->
+<div class="page" id="page-chhattisgarh">
+  <h1 class="page-title"><span class="emoji">🌿</span>Chhattisgarh</h1>
+  <p class="page-subtitle">Tribal-dominated state with rich folk festival traditions</p>
+  <div class="fest-grid">
+    <div class="fest-chip">
+      <div class="name">Pola</div>
+      <div class="detail">Bull worship · agriculture</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Hareli</div>
+      <div class="detail">First festival of Chhattisgarh · July · agriculture</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Karma Festival</div>
+      <div class="detail">Also in Jharkhand, Odisha · Karma tree worship</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Bastar Dussehra</div>
+      <div class="detail">World's longest Dussehra (75 days!) · Bastar</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Madai</div>
+      <div class="detail">Tribal fair/festival · weekly market style</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Goncha</div>
+      <div class="detail">Bastar's Rath Yatra equivalent</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Chetiya Giri Vihar</div>
+      <div class="detail"><span class="badge buddhist">🙏 Buddhist</span> Celebrated at Sanchi Stupa</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title yellow">💡 Important Notes</div>
+    <div class="info-row"><div class="key">Karma Festival</div><div class="val">Common to Chhattisgarh + Jharkhand + Odisha (Eastern India tribal belt)</div></div>
+    <div class="info-row"><div class="key">Bastar Dussehra</div><div class="val">Longest Dussehra celebration in the world (75 days)</div></div>
+    <div class="info-row"><div class="key">Chetiya Giri Vihar</div><div class="val">Buddhist festival at Sanchi (Sanchi district, MP actually — Sanchi Stupa is in MP)</div></div>
+  </div>
+</div>
+
+<!-- ════════════ GOA ════════════ -->
+<div class="page" id="page-goa">
+  <h1 class="page-title"><span class="emoji">🏖️</span>Goa</h1>
+  <p class="page-subtitle">Beach state with Portuguese-influenced and tribal festivals</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Shigmo (Sigmo)</div>
+      <div class="detail">Goa's version of Holi · Spring · March</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Sunburn Festival</div>
+      <div class="detail">Largest Electronic Dance Music festival in Asia</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Feast of St. Francis Xavier</div>
+      <div class="detail">December · Bom Jesus Basilica, Old Goa</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Carnival</div>
+      <div class="detail">Pre-Lent festival · Portuguese legacy · February</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Sao Joao</div>
+      <div class="detail">St. John the Baptist festival · June</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Three Kings Festival</div>
+      <div class="detail">Epiphany · January 6 · Reis Magos</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">Went to offer grapes at <strong>San Francis Church</strong> → got out → no car (too much <strong>Sunburn</strong>) → Got bored, did <strong>Carnival</strong> → Three Kings arrived on Shigmo day</div>
+    <div class="hook-decode">
+      <span>San Francis</span> = Feast of St Francis Xavier · <span>Sunburn</span> = Sunburn EDM Festival · <span>Carnival</span> = Carnival · <span>Shigmo</span> = Holi-like festival
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ GUJARAT ════════════ -->
+<div class="page" id="page-gujarat">
+  <h1 class="page-title"><span class="emoji">🪁</span>Gujarat</h1>
+  <p class="page-subtitle">Kite festival + Navratri are the signature festivals</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Uttarayan</div>
+      <div class="detail">Kite Festival · January 14 · Makar Sankranti</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Navratri</div>
+      <div class="detail">9-night Garba/Dandiya · October</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Rann Utsav</div>
+      <div class="detail">White Rann of Kutch · November–February</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">Sharma Ji scored a <strong>run</strong> for Madhav on <strong>Karva Chauth</strong> in the dark — he was flying a <strong>kite</strong> (Uttarayan) while doing Garba for Navratri!</div>
+  </div>
+</div>
+
+<!-- ════════════ HARYANA ════════════ -->
+<div class="page" id="page-haryana">
+  <h1 class="page-title"><span class="emoji">💛</span>Haryana</h1>
+  <p class="page-subtitle">Gugga, Loor dance, Gangaur, Surajkund — remember Pinjore and Faridabad</p>
+  <div class="fest-grid">
+    <div class="fest-chip">
+      <div class="name">Gugga Naumi</div>
+      <div class="detail">Snake God worship · August</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Loor Dance Festival</div>
+      <div class="detail">Girls' spring festival</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Surajkund Crafts Mela</div>
+      <div class="detail">Faridabad, Haryana · February · National crafts fair</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Gangaur</div>
+      <div class="detail">Also in Rajasthan · dedicated to Mata Parvati · like Teej</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Pinjore Heritage Festival</div>
+      <div class="detail">At Pinjore Gardens</div>
+    </div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap</div>
+    <div class="trap-text">Surajkund Mela = HARYANA (Faridabad). NOT Bihar, NOT Rajasthan. Sonpur = Bihar. Pushkar = Rajasthan. Surajkund = Haryana.</div>
+  </div>
+</div>
+
+<!-- ════════════ HIMACHAL ════════════ -->
+<div class="page" id="page-hp">
+  <h1 class="page-title"><span class="emoji">⛰️</span>Himachal Pradesh</h1>
+  <p class="page-subtitle">Kullu Dussehra is the most famous + Buddhist Losar here too</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Kullu Dussehra</div>
+      <div class="detail">International festival · Kullu Valley · October</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Minjar Fair (Chhetro Minjar)</div>
+      <div class="detail">Chamba · July · silk tassel festival</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Halda</div>
+      <div class="detail">Winter festival · tribal · Kinnaur</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Losar</div>
+      <div class="detail"><span class="badge buddhist">🙏 Buddhist</span> Tibetan New Year in HP too (Lahaul-Spiti)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Dungri</div>
+      <div class="detail">Kullu Valley festival</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">📌 Recently Asked</div>
+    <p style="font-size:13px;color:var(--text-muted)"><strong style="color:var(--text)">Dungri and Nam Khan</strong> are from Himachal Pradesh — appeared in a recent exam question.</p>
+  </div>
+</div>
+
+<!-- ════════════ J&K / LADAKH ════════════ -->
+<div class="page" id="page-jk">
+  <h1 class="page-title"><span class="emoji">❄️</span>J&K / Ladakh</h1>
+  <p class="page-subtitle">Tulip, Shikara, Hemis — Buddhist and flower festivals</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Tulip Festival</div>
+      <div class="detail">J&K · April · Asia's largest tulip garden (Indira Gandhi)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Shikara Festival</div>
+      <div class="detail">Dal Lake · Boat festival</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Hemis Festival</div>
+      <div class="detail"><span class="badge buddhist">🙏 Buddhist</span> Ladakh · June · Hemis Monastery · 2-day</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Losar</div>
+      <div class="detail">Tibetan New Year in Ladakh</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title yellow">💡 Hemis Festival Facts</div>
+    <div class="info-row"><div class="key">Location</div><div class="val">Hemis Monastery, Ladakh</div></div>
+    <div class="info-row"><div class="key">Duration</div><div class="val">2-day festival</div></div>
+    <div class="info-row"><div class="key">Month</div><div class="val">June (month of June only)</div></div>
+    <div class="info-row"><div class="key">Community</div><div class="val">Buddhist community</div></div>
+    <div class="info-row"><div class="key">Also at</div><div class="val">Also celebrated in Sikkim (Hemis-type)</div></div>
+  </div>
+</div>
+
+<!-- ════════════ JHARKHAND ════════════ -->
+<div class="page" id="page-jharkhand">
+  <h1 class="page-title"><span class="emoji">🌲</span>Jharkhand</h1>
+  <p class="page-subtitle">Tribal heartland — Sarhul, Karam, Sohrai are signature festivals</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Sarhul</div>
+      <div class="detail">Oraon/Munda tribes · spring · Sal tree worship</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Karam Festival</div>
+      <div class="detail">Youth worship Karma tree for blessings</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Sohrai</div>
+      <div class="detail">Cattle/animal festival · October</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Rohini</div>
+      <div class="detail">Star-based festival</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Java (Jaawa)</div>
+      <div class="detail">Girls' festival · sprouting seeds</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Bhagta Parab</div>
+      <div class="detail">Tribal Bhakta celebration</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Tus Parab</div>
+      <div class="detail">Tribal seasonal festival</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook — Rohini's Story</div>
+    <div class="hook-text">Rohini's husband ran away → <strong>Su-sued</strong> him (Sarhul) → ran to the <strong>border</strong> → did his karma there (<strong>Karma</strong>) → ran past border like a loser (<strong>Tus Parab</strong>) → saw Sohrai (cattle) on the way back</div>
+    <div class="hook-decode">
+      <span>Su-sued → Sarhul</span> · <span>Karma at border</span> = Karma Festival · <span>Tus Parab</span> = boundary/seasonal · <span>Sohrai</span> = cattle/animal
+    </div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap</div>
+    <div class="trap-text">Bhagta Parab = JHARKHAND, NOT Punjab. The teacher specifically corrected this. Don't confuse Karma festival (Jharkhand/CG/Odisha) with Karma the concept.</div>
+  </div>
+</div>
+
+<!-- ════════════ KARNATAKA ════════════ -->
+<div class="page" id="page-karnataka">
+  <h1 class="page-title"><span class="emoji">🐃</span>Karnataka</h1>
+  <p class="page-subtitle">Kambala (Buffalo Race) is the most unique festival here</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Ugadi</div>
+      <div class="detail"><span class="badge new-year">🎆 New Year</span> Kannada New Year · Chaitra</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Kambala</div>
+      <div class="detail">Buffalo Race · Coastal Karnataka · winter</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Mysuru Dasara</div>
+      <div class="detail">State festival of Karnataka · October</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Hampi Utsav</div>
+      <div class="detail">At Hampi (Vijayanagara capital)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Gombi Hubba</div>
+      <div class="detail">Doll festival (like Navratri Golu)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Gauri Habba</div>
+      <div class="detail">Goddess Gauri festival · Karnataka</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">Workman Abhishek comes by <strong>car</strong> (Ugadi New Year) → does buffalo race (<strong>Kambala</strong>) in <strong>Bel Gola</strong> where Bahubali's statue is → Jains call it <strong>Mahamastakabhisheka</strong></div>
+    <div class="hook-decode">
+      <span>Car = Ugadi</span> · <span>Kambala = Buffalo Race</span> · <span>Bel Gola = Shravanabelagola</span> (Jain site) · <span>Mahamastakabhisheka</span> = head-anointing ceremony of Gommateshwar statue
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">🏛️ Historical Connection</div>
+    <div class="info-row"><div class="key">Shravanabelagola</div><div class="val">Chandragupta Maurya gave up life here (Sallekhana/Santhara) · Jain tradition</div></div>
+    <div class="info-row"><div class="key">Gommateshwara</div><div class="val">Statue of Bahubali (son of Rishabhdev, 1st Jain Tirthankar) · Shravanabelagola</div></div>
+    <div class="info-row"><div class="key">Hampi</div><div class="val">Capital of Vijayanagara Empire · UNESCO World Heritage</div></div>
+    <div class="info-row"><div class="key">Kambala</div><div class="val">Also called Buffalo Race · coastal Karnataka (like boat race in Kerala)</div></div>
+  </div>
+</div>
+
+<!-- ════════════ KERALA ════════════ -->
+<div class="page" id="page-kerala">
+  <h1 class="page-title"><span class="emoji">🌴</span>Kerala</h1>
+  <p class="page-subtitle">Onam (most imp) + Thrissur Puram + Attukal Pongala</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Onam</div>
+      <div class="detail">Harvest + boat race · Mahabali returns · Aug–Sep</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Thrissur Puram</div>
+      <div class="detail">Vadakkumnath Temple · elephant procession · May</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Attukal Pongala</div>
+      <div class="detail">World's largest women's gathering · Attukal Temple</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Vishu</div>
+      <div class="detail"><span class="badge new-year">🎆 New Year</span> Malayali New Year · April</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Nehru Trophy Boat Race</div>
+      <div class="detail">Punnamada Lake, Alappuzha · August</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">Puran and Vasu lost the <strong>boat race</strong> (Onam snake boat) → penned at the <strong>Vadakkumnath Temple</strong> (Thrissur Puram) → Attu's tomorrow is Pongal (Attukal Pongala)!</div>
+    <div class="hook-decode">
+      <span>Boat race</span> = Onam (Vallamkali) · <span>Vadakkumnath</span> = Thrissur Puram · <span>Attu's Pongal</span> = Attukal Pongala
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title yellow">📖 Onam Mythology</div>
+    <p style="font-size:13px;line-height:1.8;color:var(--text-muted)">
+      Mahabali was a demon king who did good deeds → defeated Indra → Indra went to Vishnu → Vishnu (as Vamana) tricked Mahabali → sent to netherworld → allowed to visit Kerala once a year = <strong style="color:var(--green)">Onam</strong>. 
+      Pookalam (flower carpet) is made to welcome him.
+    </p>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap</div>
+    <div class="trap-text">Attukal Pongala (Kerala) ≠ Pongal (Tamil Nadu). Pongal is TN's harvest festival (also a sweet dish). Attukal Pongala is a women's festival at Attukal temple in Thiruvananthapuram, Kerala.</div>
+  </div>
+</div>
+
+<!-- ════════════ MADHYA PRADESH ════════════ -->
+<div class="page" id="page-mp">
+  <h1 class="page-title"><span class="emoji">🎭</span>Madhya Pradesh</h1>
+  <p class="page-subtitle">Khajuraho Dance Festival + Bhagoriya Haat are must-know</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Khajuraho Dance Festival</div>
+      <div class="detail">Feb–March · UNESCO World Heritage temples background</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Bhagoriya Haat</div>
+      <div class="detail">Bhil/Bhilala tribe · Holi season · runaway marriage custom</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Lokrang Festival</div>
+      <div class="detail">Folk arts · January · Bhopal</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Pachmarhi Festival</div>
+      <div class="detail">Hill station cultural fest · Pachmarhi</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Gangaur</div>
+      <div class="detail">Parvati worship · also in Rajasthan</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Chetiya Giri Vihar</div>
+      <div class="detail"><span class="badge buddhist">🙏 Buddhist</span> Sanchi (Sanchi Stupa district)</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">🏛️ Historical Connections</div>
+    <div class="info-row"><div class="key">Khajuraho temples</div><div class="val">Built by Chandela dynasty (9th–12th century)</div></div>
+    <div class="info-row"><div class="key">Most famous temple</div><div class="val">Kandariya Mahadeva Temple (largest in Khajuraho group)</div></div>
+    <div class="info-row"><div class="key">Sanchi Stupa</div><div class="val">Built by Ashoka · Buddhist site · Sanchi, Raisen district, MP</div></div>
+    <div class="info-row"><div class="key">Udayagiri Caves (MP)</div><div class="val">Vidisha district · built by Chandragupta II (Gupta period)</div></div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap — Udayagiri Caves</div>
+    <div class="trap-text">Udayagiri Caves exist in TWO states: (1) MP (Vidisha) — Chandragupta II (Gupta) · Hindu/Jain caves. (2) Odisha — Udayagiri-Khandagiri · Jain caves · built by Chedi dynasty ruler Kharavela.</div>
+  </div>
+</div>
+
+<!-- ════════════ MAHARASHTRA ════════════ -->
+<div class="page" id="page-maharashtra">
+  <h1 class="page-title"><span class="emoji">🐘</span>Maharashtra</h1>
+  <p class="page-subtitle">Ganesh Chaturthi (Elephant) is the icon + Gudi Padwa New Year</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Ganesh Chaturthi</div>
+      <div class="detail">🐘 Elephant God · August–September · 10 days</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Gudi Padwa</div>
+      <div class="detail"><span class="badge new-year">🎆 New Year</span> Marathi New Year · Chaitra</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Pola</div>
+      <div class="detail">🐂 Bull worship (MH + CG both!) · August</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Kala Ghoda Festival</div>
+      <div class="detail">Arts festival · Mumbai · February · "Black Horse"</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Kojagiri Purnima</div>
+      <div class="detail">Maharashtra (NOT Tripura's Hojagiri dance!)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Vithoba / Wari</div>
+      <div class="detail">Pilgrimage to Vitthal (Vishnu) temple at Pandharpur</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">🐘 Elephant said to 🐴 Horse: "Ganesh Ji is MINE!" (Ganesh Chaturthi = Maharashtra) <br>Horse replied: "Kala Ghoda festival is mine!" (Black Horse = Kala Ghoda = Maharashtra)</div>
+    <div class="hook-decode">
+      <span>Elephant = Ganesh</span> = MH · <span>Black Horse</span> = Kala Ghoda Festival = MH · <span>Pola</span> = Bull also in MH · <span>Gudi Padwa</span> = Marathi New Year
+    </div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap — Elephant vs Elephant</div>
+    <div class="trap-text">Elephant Festival = RAJASTHAN (Jaipur) · Ganesh Chaturthi = MAHARASHTRA. Also: Hojagiri (dance/festival) = TRIPURA · Kojagiri Purnima = MAHARASHTRA. Different spellings, different states!</div>
+  </div>
+</div>
+
+<!-- ════════════ MANIPUR ════════════ -->
+<div class="page" id="page-manipur">
+  <h1 class="page-title"><span class="emoji">🎋</span>Manipur</h1>
+  <p class="page-subtitle">"Kut" festivals mostly Mizoram — Manipur has Kang Jatra</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Kang Jatra</div>
+      <div class="detail">Manipur's Rath Yatra (Chariot Festival)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Yaoshang</div>
+      <div class="detail">Manipuri Holi · 5-day festival · March</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Lai Haraoba</div>
+      <div class="detail">Ancient Meitei festival · pre-Vaishnava rituals</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Key Rule for Kut Festivals</div>
+    <div class="hook-text">When you see <strong>Kut</strong> → think <strong>MIZORAM</strong> first (Chapchar Kut, Mim Kut, Pawl Kut). The only Kut in Manipur = <strong>Kang Jatra Kut</strong> (Rath Yatra style).</div>
+  </div>
+</div>
+
+<!-- ════════════ MEGHALAYA ════════════ -->
+<div class="page" id="page-meghalaya">
+  <h1 class="page-title"><span class="emoji">🥁</span>Meghalaya</h1>
+  <p class="page-subtitle">Three tribes — Garo, Khasi, Jaintia — each have distinct festivals</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Wangala (Bengala)</div>
+      <div class="detail"><span class="badge tribal">🥁 Garo Tribe</span> "Festival of 100 Drums" · post-harvest</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Nongkrem</div>
+      <div class="detail">Khasi tribe · 5-day · goddess Ka Blei Synshar worship</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Shad Suk Mynsiem</div>
+      <div class="detail">Khasi/Jaintia tribe · spring dance festival</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title yellow">💡 Festival of 100 Drums</div>
+    <div class="info-row"><div class="key">Name</div><div class="val">Wangala (also called Bengala)</div></div>
+    <div class="info-row"><div class="key">Tribe</div><div class="val">Garo tribe, Meghalaya</div></div>
+    <div class="info-row"><div class="key">Nickname</div><div class="val">Festival of 100 Drums</div></div>
+    <div class="info-row"><div class="key">Season</div><div class="val">Post-harvest (October–November)</div></div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap</div>
+    <div class="trap-text">"Festival of 100 Drums" = Wangala (MEGHALAYA, Garo tribe). "Festival of Festivals" = Hornbill (NAGALAND). These two are frequently confused. Remember: DRUMS = Meghalaya. HORNBILL = Nagaland.</div>
+  </div>
+</div>
+
+<!-- ════════════ MIZORAM ════════════ -->
+<div class="page" id="page-mizoram">
+  <h1 class="page-title"><span class="emoji">🎪</span>Mizoram</h1>
+  <p class="page-subtitle">Kut festivals dominate — Chapchar Kut is the most important</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Chapchar Kut</div>
+      <div class="detail">Spring festival · February–March · Mizo tribe</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Pawl Kut</div>
+      <div class="detail">Harvest festival · December</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Mim Kut</div>
+      <div class="detail">Maize harvest · August–September</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Rule</div>
+    <div class="hook-text">KUT = MIZORAM (mostly). If you see Chapchar Kut, Pawl Kut, Mim Kut → MIZORAM. Only exception = Kang Jatra Kut → Manipur.</div>
+  </div>
+</div>
+
+<!-- ════════════ NAGALAND ════════════ -->
+<div class="page" id="page-nagaland">
+  <h1 class="page-title"><span class="emoji">🐦</span>Nagaland</h1>
+  <p class="page-subtitle">Hornbill Festival — Festival of Festivals — most famous NE India festival</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Hornbill Festival</div>
+      <div class="detail">🐦 Festival of Festivals · 1–10 December · Kohima</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Sekrenyi</div>
+      <div class="detail">Angami tribe · February · purification</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Tsokum</div>
+      <div class="detail">Ao tribe festival</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">Naga people move on the road, live in holes. <strong>Hornbill bird</strong> migrates from Siberia to Nagaland — like snakes moving between holes. Festival runs <strong>1–10 December</strong> at <strong>Kohima</strong> (capital). It's called <strong>Festival of Festivals</strong>.</div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">📌 Key Facts — Hornbill</div>
+    <div class="info-row"><div class="key">Duration</div><div class="val">1st to 10th December (10 days)</div></div>
+    <div class="info-row"><div class="key">Location</div><div class="val">Kisama Heritage Village, near Kohima</div></div>
+    <div class="info-row"><div class="key">Nickname</div><div class="val">Festival of Festivals</div></div>
+    <div class="info-row"><div class="key">Named after</div><div class="val">Hornbill bird (revered by Naga tribes)</div></div>
+    <div class="info-row"><div class="key">Migratory link</div><div class="val">Hornbill bird migrates from Siberia to this region</div></div>
+  </div>
+</div>
+
+<!-- ════════════ ODISHA ════════════ -->
+<div class="page" id="page-odisha">
+  <h1 class="page-title"><span class="emoji">🎪</span>Odisha</h1>
+  <p class="page-subtitle">Rath Yatra (Lord Jagannath) is the most famous — worldwide known</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Rath Yatra</div>
+      <div class="detail">Puri · Chariot of Lord Jagannath · July (Ashadha)</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Konark Dance Festival</div>
+      <div class="detail">At Konark Sun Temple · Dec 1–5</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Bali Jatra</div>
+      <div class="detail">Cuttack · maritime trade history · November</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Kalinga Mahotsav</div>
+      <div class="detail">Kalinga history-themed festival</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Nuakhai</div>
+      <div class="detail">Western Odisha · harvest · "new rice" festival</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Chhau Festival</div>
+      <div class="detail">Martial dance festival (mask-based)</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">🏛️ History Links</div>
+    <div class="info-row"><div class="key">Lord Jagannath</div><div class="val">Considered an incarnation/form of Lord Krishna (Vishnu)</div></div>
+    <div class="info-row"><div class="key">Kalinga War</div><div class="val">261 BC · Ashoka won → converted to Buddhism</div></div>
+    <div class="info-row"><div class="key">Udayagiri-Khandagiri</div><div class="val">Jain caves in Odisha · built by Chedi dynasty (Kharavela)</div></div>
+    <div class="info-row"><div class="key">Konark Temple</div><div class="val">Sun Temple · Odisha · UNESCO Heritage</div></div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap — Nuakhai</div>
+    <div class="trap-text">"Nau Khai" = Nine Khai? No — Nuakhai = "new rice" in Odia. The spelling looks like a number but it means "new grain" harvest festival in Western Odisha.</div>
+  </div>
+</div>
+
+<!-- ════════════ PUNJAB ════════════ -->
+<div class="page" id="page-punjab">
+  <h1 class="page-title"><span class="emoji">🌾</span>Punjab</h1>
+  <p class="page-subtitle">Baisakhi is the biggest — also marks Khalsa Panth founding (1699)</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Baisakhi</div>
+      <div class="detail"><span class="badge new-year">🎆 New Year</span> April 13 · Punjabi New Year + Khalsa Panth birthday</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Lohri</div>
+      <div class="detail">January 13 · bonfire festival · winter solstice</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Hola Mohalla</div>
+      <div class="detail">Sikh martial arts festival · day after Holi · Anandpur</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Guru Parba</div>
+      <div class="detail">Guru Nanak Jayanti · November</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Teeyan</div>
+      <div class="detail">Women's festival · Monsoon · Sawan</div>
+    </div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap</div>
+    <div class="trap-text">Bhagta Parab = JHARKHAND (tribal), NOT Punjab. The teacher corrected this specifically. In Punjab, festivals are Baisakhi, Lohri, Hola Mohalla, Guru Parba.</div>
+  </div>
+</div>
+
+<!-- ════════════ RAJASTHAN ════════════ -->
+<div class="page" id="page-rajasthan">
+  <h1 class="page-title"><span class="emoji">🐪</span>Rajasthan</h1>
+  <p class="page-subtitle">Pushkar + Elephant Festival + Gangaur — desert state's rich festival culture</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Pushkar Fair</div>
+      <div class="detail"><span class="badge cattle">🐪 Fair</span> Camel fair · November · Pushkar Lake</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Elephant Festival</div>
+      <div class="detail">🐘 Jaipur · Holi time · March</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Gangaur</div>
+      <div class="detail">Mata Parvati worship · March–April (post-Holi)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Nagaur Fair</div>
+      <div class="detail">Cattle fair · January–February · Nagaur</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Chandrabhaga Fair</div>
+      <div class="detail">Jhalarapatan · November</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Bundi Festival</div>
+      <div class="detail">Bundi · art/culture</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Kolayat Fair</div>
+      <div class="detail">Bikaner · Kapil Muni Jayanti · November</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook — Elephant vs Maharashtra</div>
+    <div class="hook-text">🐘 Elephant = RAJASTHAN (Elephant Festival, Jaipur) · Ganesh (Elephant-headed) = MAHARASHTRA. The actual elephant race/festival is Rajasthan. The Ganesh puja is Maharashtra.</div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap — Cattle Fairs</div>
+    <div class="trap-text">Pushkar = Rajasthan (famous for camel + cattle) · Sonpur = Bihar (Asia's largest cattle fair) · Nagaur = Rajasthan (cattle) · Surajkund = Haryana (crafts mela, NOT cattle). Don't mix these!</div>
+  </div>
+</div>
+
+<!-- ════════════ SIKKIM ════════════ -->
+<div class="page" id="page-sikkim">
+  <h1 class="page-title"><span class="emoji">🏔️</span>Sikkim</h1>
+  <p class="page-subtitle">Buddhist festivals dominate — Losar + Saga Dawa</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Losar</div>
+      <div class="detail"><span class="badge buddhist">🙏 Buddhist</span> Tibetan New Year (also in Ladakh, Arunachal)</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Saga Dawa</div>
+      <div class="detail">Buddha's birth, enlightenment, death · May–June</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Pang Lhabsol</div>
+      <div class="detail">Guardian deity Kanchenjunga festival · August</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">"Lo Sar Lo Saang Lo Char" — take it, smell it, sit with it... Sikkim smells of mountains (Losar, Saang, Saga Dawa). Losar = already knew from Ladakh and Arunachal — all three are Tibetan Buddhist regions.</div>
+  </div>
+</div>
+
+<!-- ════════════ TAMIL NADU ════════════ -->
+<div class="page" id="page-tamilnadu">
+  <h1 class="page-title"><span class="emoji">☀️</span>Tamil Nadu</h1>
+  <p class="page-subtitle">Pongal (4-day harvest) is THE festival of TN + Puthandu New Year</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Pongal</div>
+      <div class="detail">4-day harvest · Jan 14–17 · rice dish offered to Sun</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Puthandu</div>
+      <div class="detail"><span class="badge new-year">🎆 New Year</span> Tamil New Year · April 14</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Thai Poosam</div>
+      <div class="detail">Lord Murugan festival · January · Tamil month Thai</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Jallikattu</div>
+      <div class="detail">Bull taming · Madurai · during Mattu Pongal day</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Float Festival (Teppam)</div>
+      <div class="detail">Madurai · Jan-Feb · idols float on Mariamman Teppakulam</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Natyanjali</div>
+      <div class="detail">Dance festival at Chidambaram temple</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">📅 Pongal 4-Day Package</div>
+    <table>
+      <tr><th>Day</th><th>Name</th><th>Focus</th></tr>
+      <tr><td>Day 1</td><td>Bhogi Pongal</td><td>Burn old items · Indra worship</td></tr>
+      <tr><td>Day 2</td><td>Surya Pongal</td><td>Sun God worship · main day · rice offering</td></tr>
+      <tr><td>Day 3</td><td>Mattu Pongal</td><td>Cattle worship · Jallikattu</td></tr>
+      <tr><td>Day 4</td><td>Kanum Pongal</td><td>Family visits · bird feeding</td></tr>
+    </table>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook — Float Festival</div>
+    <div class="hook-text">Dinesh Karthik (cricketer) floats with Anjali on a boat! = <strong>Float Festival</strong> (Teppam), Tamil Nadu. "Your Excellency Karthik Ji is floating."</div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap</div>
+    <div class="trap-text">Pongal = Tamil Nadu. Attukal Pongala = Kerala. Same-sounding, different states, different meanings! Also: Thai Poosam has "Thai" because "Thai" is a Tamil month name, not the country Thailand.</div>
+  </div>
+</div>
+
+<!-- ════════════ TELANGANA ════════════ -->
+<div class="page" id="page-telangana">
+  <h1 class="page-title"><span class="emoji">🌸</span>Telangana</h1>
+  <p class="page-subtitle">Bathukamma is THE festival of Telangana — flowers + women</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Bathukamma</div>
+      <div class="detail">Flower festival · women's festival · Sep–Oct</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Medaram Jatara (Sammakka-Sarakka)</div>
+      <div class="detail">Largest tribal fair in India · every 2 years · Feb</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Bonalu</div>
+      <div class="detail">Goddess Mahakali worship · July–August · Hyderabad</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">Telangana boy says: "I am a <strong>Bathua</strong> (a boy), I want to make Bathua with <strong>Medha</strong> in the <strong>evening</strong>, apply oil only then come when it's well cooked!" → <strong>Bathukamma + Medaram + Bonalu</strong></div>
+  </div>
+</div>
+
+<!-- ════════════ TRIPURA ════════════ -->
+<div class="page" id="page-tripura">
+  <h1 class="page-title"><span class="emoji">🌺</span>Tripura</h1>
+  <p class="page-subtitle">Garia Puja is most important + Hojagiri dance festival</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Garia Puja</div>
+      <div class="detail">Tripuri tribe · paddy sowing season · April</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Kharchi Puja</div>
+      <div class="detail">14 gods worshipped · July · Agartala</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Hojagiri Festival</div>
+      <div class="detail">Reang tribe · acrobatic dance · Kojagiri Purnima time</div>
+    </div>
+  </div>
+  <div class="trap-box">
+    <div class="trap-label">⚠️ Exam Trap</div>
+    <div class="trap-text">Hojagiri = TRIPURA (Reang tribe dance festival). Kojagiri Purnima = MAHARASHTRA. Very similar names, totally different states! Hojagiri is the Tripura one with acrobatic dance.</div>
+  </div>
+</div>
+
+<!-- ════════════ UTTARAKHAND ════════════ -->
+<div class="page" id="page-uttarakhand">
+  <h1 class="page-title"><span class="emoji">🌿</span>Uttarakhand</h1>
+  <p class="page-subtitle">Nature-based festivals — Valley of Flowers connection with Phool Dei</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Harela</div>
+      <div class="detail">Green/nature festival · July (sowing) + other times</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Phool Dei (Fool De)</div>
+      <div class="detail">Flower festival · March · girls scatter flowers on doorsteps</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Kandali</div>
+      <div class="detail">Occurs every 12 years · Chamoli · Garhwal</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Bhitauli</div>
+      <div class="detail">Brother gives gifts to married sister · Chaitra</div>
+    </div>
+  </div>
+  <div class="memory-hook">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <div class="hook-text">Valley of <strong>Flowers</strong> National Park is in Uttarakhand → give <strong>Phool Dei</strong> (flowers) → green <strong>Hare</strong>la (Harela) → this is inside UK (Uttarakhand)!</div>
+    <div class="hook-decode"><span>Flowers</span> = Phool Dei · <span>Green Hare</span> = Harela · <span>UK</span> = Uttarakhand</div>
+  </div>
+</div>
+
+<!-- ════════════ WEST BENGAL ════════════ -->
+<div class="page" id="page-wb">
+  <h1 class="page-title"><span class="emoji">🎭</span>West Bengal</h1>
+  <p class="page-subtitle">Durga Puja is the heartbeat + Pohela Boishakh New Year</p>
+  <div class="fest-grid">
+    <div class="fest-chip highlight">
+      <div class="name">Durga Puja</div>
+      <div class="detail">Biggest festival · Oct · massive pandals · 5 days</div>
+    </div>
+    <div class="fest-chip highlight">
+      <div class="name">Pohela Boishakh</div>
+      <div class="detail"><span class="badge new-year">🎆 New Year</span> Bengali New Year · April 14–15</div>
+    </div>
+    <div class="fest-chip">
+      <div class="name">Ganga Sagar Mela</div>
+      <div class="detail">Sagar Island (confluence of Ganga + sea) · Makar Sankranti</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title blue">💡 Notable Facts</div>
+    <div class="info-row"><div class="key">Durga Puja pandals</div><div class="val">Largest and most elaborate in WB (UNESCO recognized in 2021)</div></div>
+    <div class="info-row"><div class="key">Ganga Sagar</div><div class="val">Where Ganga meets Bay of Bengal · Sagar Island · second largest Hindu pilgrimage after Kumbh</div></div>
+    <div class="info-row"><div class="key">Pohela Boishakh</div><div class="val">Bengali New Year = "Pahela" (first) + "Boishakh" (month)</div></div>
+  </div>
+</div>
+
+<!-- ════════════ HIGH-YIELD SHEET ════════════ -->
+<div class="page" id="page-hy-sheet">
+  <h1 class="page-title"><span class="emoji">⚡</span>High-Yield Revision Sheet</h1>
+  <p class="page-subtitle">Layer 2 — All states, most important festivals only</p>
+  <div class="card">
+    <div class="card-title green">State → Top Festivals Quick Table</div>
+    <div id="qs-content">
+      <div class="qs-row"><div class="qs-state">Andhra Pradesh</div><div class="qs-fests">Ugadi, Yallama Jatra, Visakha Utsav</div><div class="qs-ny">Ugadi (New Year)</div></div>
+      <div class="qs-row"><div class="qs-state">Arunachal Pradesh</div><div class="qs-fests">Losar, Mopin, Solung, Saken</div><div class="qs-ny">Losar (Buddhist NY)</div></div>
+      <div class="qs-row"><div class="qs-state">Assam</div><div class="qs-fests">Bihu ×3, Ambubachi, Ali Ai Ligang, Majuli</div><div class="qs-ny">Bohag Bihu (NY)</div></div>
+      <div class="qs-row"><div class="qs-state">Bihar</div><div class="qs-fests">Chhath, Sama Chakewa, Sonpur Cattle Fair, Rajgir</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Chhattisgarh</div><div class="qs-fests">Bastar Dussehra, Pola, Hareli, Karma, Madai</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Goa</div><div class="qs-fests">Shigmo, Sunburn, Feast of St Francis, Carnival</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Gujarat</div><div class="qs-fests">Uttarayan (kite), Navratri, Rann Utsav</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Haryana</div><div class="qs-fests">Surajkund Mela, Gugga Naumi, Loor</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Himachal Pradesh</div><div class="qs-fests">Kullu Dussehra, Minjar, Losar, Dungri</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">J&K / Ladakh</div><div class="qs-fests">Tulip Festival, Shikara, Hemis (June, Buddhist, 2-day)</div><div class="qs-ny">Losar</div></div>
+      <div class="qs-row"><div class="qs-state">Jharkhand</div><div class="qs-fests">Sarhul, Karma, Sohrai, Java, Bhagta Parab</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Karnataka</div><div class="qs-fests">Ugadi, Kambala (Buffalo Race), Mysuru Dasara, Hampi</div><div class="qs-ny">Ugadi (NY)</div></div>
+      <div class="qs-row"><div class="qs-state">Kerala</div><div class="qs-fests">Onam, Thrissur Puram, Attukal Pongala, Vishu</div><div class="qs-ny">Vishu (NY)</div></div>
+      <div class="qs-row"><div class="qs-state">Madhya Pradesh</div><div class="qs-fests">Khajuraho Dance, Bhagoriya Haat, Lokrang, Sanchi Buddhist</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Maharashtra</div><div class="qs-fests">Ganesh Chaturthi, Gudi Padwa, Kala Ghoda, Pola</div><div class="qs-ny">Gudi Padwa (NY)</div></div>
+      <div class="qs-row"><div class="qs-state">Manipur</div><div class="qs-fests">Kang Jatra, Yaoshang, Lai Haraoba</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Meghalaya</div><div class="qs-fests">Wangala (100 Drums, Garo), Nongkrem (Khasi), Shad Suk</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Mizoram</div><div class="qs-fests">Chapchar Kut, Pawl Kut, Mim Kut</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Nagaland</div><div class="qs-fests">Hornbill (1–10 Dec, Kohima, "Festival of Festivals")</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Odisha</div><div class="qs-fests">Rath Yatra, Konark Dance, Bali Jatra, Nuakhai</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Punjab</div><div class="qs-fests">Baisakhi, Lohri, Hola Mohalla, Guru Parba</div><div class="qs-ny">Baisakhi (Apr 13)</div></div>
+      <div class="qs-row"><div class="qs-state">Rajasthan</div><div class="qs-fests">Pushkar Fair, Elephant Festival, Gangaur, Nagaur Fair</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Sikkim</div><div class="qs-fests">Losar, Saga Dawa, Pang Lhabsol</div><div class="qs-ny">Losar</div></div>
+      <div class="qs-row"><div class="qs-state">Tamil Nadu</div><div class="qs-fests">Pongal (4 days), Puthandu, Jallikattu, Float Festival</div><div class="qs-ny">Puthandu (Apr 14)</div></div>
+      <div class="qs-row"><div class="qs-state">Telangana</div><div class="qs-fests">Bathukamma, Bonalu, Medaram Jatara</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Tripura</div><div class="qs-fests">Garia Puja, Kharchi Puja, Hojagiri</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">Uttarakhand</div><div class="qs-fests">Harela, Phool Dei, Kandali, Bhitauli</div><div class="qs-ny">—</div></div>
+      <div class="qs-row"><div class="qs-state">West Bengal</div><div class="qs-fests">Durga Puja, Pohela Boishakh, Ganga Sagar Mela</div><div class="qs-ny">Pohela Boishakh</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ ULTRA FAST ════════════ -->
+<div class="page" id="page-ultra-fast">
+  <h1 class="page-title"><span class="emoji">🚀</span>Ultra-Fast Revision Sheet</h1>
+  <p class="page-subtitle">Layer 3 — Just the highest-yield facts. 5-minute revision.</p>
+  <div class="card">
+    <div class="card-title red">🔥 Must-Know Festival Facts — 30 Lines</div>
+    <table>
+      <tr><th>#</th><th>Fact</th></tr>
+      <tr><td>1</td><td>Hornbill = Nagaland · 1–10 Dec · Kohima · Festival of Festivals · Naga tribe</td></tr>
+      <tr><td>2</td><td>Onam = Kerala · Mahabali's return · Boat race · Aug–Sep</td></tr>
+      <tr><td>3</td><td>Wangala = Meghalaya · Garo tribe · Festival of 100 Drums</td></tr>
+      <tr><td>4</td><td>Losar = Tibetan NY · Arunachal + Sikkim + Ladakh + HP (Lahaul)</td></tr>
+      <tr><td>5</td><td>Hemis = Ladakh · Buddhist · Hemis Monastery · June · 2 days</td></tr>
+      <tr><td>6</td><td>Pongal = Tamil Nadu · 4 days (Bhogi+Surya+Mattu+Kanu) · Jan 14</td></tr>
+      <tr><td>7</td><td>Ugadi = AP + Karnataka (Telugu + Kannada New Year)</td></tr>
+      <tr><td>8</td><td>Gudi Padwa = Maharashtra (Marathi New Year)</td></tr>
+      <tr><td>9</td><td>Vishu = Kerala (Malayali New Year)</td></tr>
+      <tr><td>10</td><td>Puthandu = Tamil Nadu (Tamil New Year, April 14)</td></tr>
+      <tr><td>11</td><td>Pohela Boishakh = West Bengal (Bengali New Year)</td></tr>
+      <tr><td>12</td><td>Baisakhi = Punjab · April 13 · Punjabi NY + Khalsa</td></tr>
+      <tr><td>13</td><td>Sonpur Cattle Fair = Bihar · Asia's largest cattle fair</td></tr>
+      <tr><td>14</td><td>Pushkar Fair = Rajasthan · camel festival</td></tr>
+      <tr><td>15</td><td>Surajkund Mela = Haryana (Faridabad) · crafts mela</td></tr>
+      <tr><td>16</td><td>Kambala = Karnataka · Buffalo Race (coastal)</td></tr>
+      <tr><td>17</td><td>Ambubachi Mela = Assam · Kamakhya Devi Temple, Guwahati</td></tr>
+      <tr><td>18</td><td>Thrissur Puram = Kerala · Vadakkumnath Temple · elephants</td></tr>
+      <tr><td>19</td><td>Bihu = Assam · Bohag (Rangali/NY), Maag (Bhogali), Kati (Kangali)</td></tr>
+      <tr><td>20</td><td>Bastar Dussehra = Chhattisgarh · world's longest (75 days)</td></tr>
+      <tr><td>21</td><td>Chapchar Kut = Mizoram · spring · KUT → MIZORAM rule</td></tr>
+      <tr><td>22</td><td>Rath Yatra = Odisha (Puri) · Lord Jagannath = form of Krishna</td></tr>
+      <tr><td>23</td><td>Jallikattu = Tamil Nadu · bull taming · Mattu Pongal day</td></tr>
+      <tr><td>24</td><td>Bathukamma = Telangana · flower festival · women</td></tr>
+      <tr><td>25</td><td>Hojagiri = Tripura (Reang tribe). Kojagiri = Maharashtra. DON'T CONFUSE!</td></tr>
+      <tr><td>26</td><td>Elephant Festival = Rajasthan (Jaipur). Ganesh Chaturthi = Maharashtra.</td></tr>
+      <tr><td>27</td><td>Bhagta Parab = Jharkhand. NOT Punjab.</td></tr>
+      <tr><td>28</td><td>Sarhul = Jharkhand · Sal tree worship · Munda/Oraon tribe</td></tr>
+      <tr><td>29</td><td>Bhagoriya Haat = MP · Bhil tribe · runaway marriage custom · Holi</td></tr>
+      <tr><td>30</td><td>Sunburn Festival = Goa · Asia's largest Electronic Dance Music festival</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════ LAST NIGHT ════════════ -->
+<div class="page" id="page-last-night">
+  <h1 class="page-title"><span class="emoji">🌙</span>Last Night Before Exam Sheet</h1>
+  <p class="page-subtitle">Layer 5 — Read this once before sleeping. 10 minutes max.</p>
+  <div class="card" style="background:linear-gradient(135deg,#0d2818,#0a1f2e);border-color:#2a4a3a">
+    <div class="card-title green">⚡ The Golden 15 — Exam Hall Recall</div>
+    <div style="font-size:13px;line-height:2.2;color:#c3e8c3">
+      1. <strong style="color:#fff">Hornbill</strong> = Nagaland · Dec 1–10 · <em>Festival of Festivals</em><br>
+      2. <strong style="color:#fff">Wangala</strong> = Meghalaya Garo tribe · <em>Festival of 100 Drums</em><br>
+      3. <strong style="color:#fff">Losar</strong> = Tibetan Buddhist NY · Arunachal + Sikkim + Ladakh<br>
+      4. <strong style="color:#fff">Onam</strong> = Kerala · Mahabali · Boat Race · Thrissur Puram = Vadakkumnath<br>
+      5. <strong style="color:#fff">Pongal</strong> = Tamil Nadu · 4 days · Jallikattu on Day 3<br>
+      6. <strong style="color:#fff">New Years:</strong> Ugadi(AP+KA) · Gudi Padwa(MH) · Vishu(KL) · Puthandu(TN) · Pohela Boishakh(WB) · Baisakhi(PB)<br>
+      7. <strong style="color:#fff">Fairs:</strong> Sonpur=Bihar · Pushkar=Rajasthan · Surajkund=Haryana · Nagaur=Rajasthan<br>
+      8. <strong style="color:#fff">Bihu</strong> = Assam · Bohag(Rangali/NY) · Maag(Bhogali/feast) · Kati(Kangali/autumn)<br>
+      9. <strong style="color:#fff">Ambubachi</strong> = Kamakhya Devi Temple, Assam<br>
+      10. <strong style="color:#fff">Kambala</strong> = Karnataka (Buffalo Race)<br>
+      11. <strong style="color:#fff">KUT rule</strong> = Mizoram (Chapchar/Pawl/Mim). Exception: Kang Jatra = Manipur<br>
+      12. <strong style="color:#fff">Hojagiri</strong> = Tripura · Kojagiri = Maharashtra (NOT the same!)<br>
+      13. <strong style="color:#fff">Bhagta Parab</strong> = Jharkhand (NOT Punjab)<br>
+      14. <strong style="color:#fff">Elephant Festival</strong> = Rajasthan · Ganesh Chaturthi = Maharashtra<br>
+      15. <strong style="color:#fff">Bastar Dussehra</strong> = Chhattisgarh (75 days = world's longest)<br>
+    </div>
+  </div>
+  <div class="ln-grid">
+    <div class="ln-box">
+      <div class="st">NE India Quick</div>
+      <div class="fst">
+        AR → Losar, Mopin<br>
+        AS → Bihu ×3, Ambubachi<br>
+        MN → Kang Jatra<br>
+        ML → Wangala (100 Drums)<br>
+        MZ → KUT festivals<br>
+        NL → Hornbill<br>
+        SK → Losar, Saga Dawa<br>
+        TR → Garia Puja, Hojagiri
+      </div>
+    </div>
+    <div class="ln-box">
+      <div class="st">South India Quick</div>
+      <div class="fst">
+        AP → Ugadi (NY), Yallama<br>
+        KA → Ugadi (NY), Kambala<br>
+        KL → Onam, Vishu (NY)<br>
+        MH → Gudi Padwa (NY), Ganesh<br>
+        TG → Bathukamma, Bonalu<br>
+        TN → Pongal, Puthandu (NY)<br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ EXAM TRAPS ════════════ -->
+<div class="page" id="page-traps">
+  <h1 class="page-title"><span class="emoji">⚠️</span>Exam Traps</h1>
+  <p class="page-subtitle">Common confusions that cause wrong answers — read before every exam</p>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 1 — Festival of Festivals vs Festival of 100 Drums</div>
+    <div class="trap-text">
+      <strong>Hornbill (Nagaland)</strong> = "Festival of Festivals" · Dec 1–10 · Kohima<br>
+      <strong>Wangala (Meghalaya, Garo tribe)</strong> = "Festival of 100 Drums"<br>
+      Examiners will flip these. DRUMS → Meghalaya. HORNBILL → Nagaland.
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 2 — Hojagiri vs Kojagiri</div>
+    <div class="trap-text">
+      <strong>Hojagiri</strong> = TRIPURA (Reang tribe · acrobatic dance festival)<br>
+      <strong>Kojagiri Purnima</strong> = MAHARASHTRA<br>
+      Just one letter difference! H = Tripura · K = Maharashtra
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 3 — Elephant Festival vs Ganesh Chaturthi</div>
+    <div class="trap-text">
+      <strong>Elephant Festival</strong> (actual elephants racing/parading) = RAJASTHAN (Jaipur)<br>
+      <strong>Ganesh Chaturthi</strong> (Elephant-god Ganesh puja) = MAHARASHTRA<br>
+      The ANIMAL = Rajasthan. The GOD = Maharashtra.
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 4 — Three Cattle Fairs</div>
+    <div class="trap-text">
+      <strong>Sonpur</strong> Cattle Fair = BIHAR (Asia's largest cattle fair)<br>
+      <strong>Pushkar</strong> Fair = RAJASTHAN (famous for camels)<br>
+      <strong>Nagaur</strong> Cattle Fair = RAJASTHAN<br>
+      <strong>Surajkund Mela</strong> = HARYANA (crafts, NOT cattle!)
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 5 — Pongal vs Attukal Pongala</div>
+    <div class="trap-text">
+      <strong>Pongal</strong> = Tamil Nadu · harvest · rice dish boiled over as offering · 4 days<br>
+      <strong>Attukal Pongala</strong> = Kerala · women's festival · Attukal Bhagavathy Temple, Thiruvananthapuram<br>
+      Same sound, different states and meanings!
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 6 — Ugadi (Two States!)</div>
+    <div class="trap-text">
+      <strong>Ugadi</strong> = New Year for BOTH Andhra Pradesh (Telugu) AND Karnataka (Kannada)<br>
+      If question says "only AP" for Ugadi → WRONG. If it says "only Karnataka" → WRONG. Both celebrate it.
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 7 — Losar (Three States!)</div>
+    <div class="trap-text">
+      <strong>Losar</strong> (Tibetan Buddhist New Year) = Arunachal Pradesh + Sikkim + Ladakh (+ HP Lahaul)<br>
+      All share Tibet border. Question may say "only Sikkim" → WRONG.
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 8 — Bhagta Parab State</div>
+    <div class="trap-text">
+      <strong>Bhagta Parab</strong> = JHARKHAND (tribal festival)<br>
+      NOT Punjab. Don't confuse with "Bhakta" or Punjabi festivals.
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 9 — Udayagiri Caves (Two States!)</div>
+    <div class="trap-text">
+      <strong>Udayagiri Caves, MP</strong> (Vidisha) = Gupta period, Chandragupta II, Hindu/Jain<br>
+      <strong>Udayagiri-Khandagiri Caves, Odisha</strong> = Jain caves, Chedi dynasty, King Kharavela<br>
+      Both are exam-ready traps!
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 10 — Kut Festival States</div>
+    <div class="trap-text">
+      All <strong>Kut</strong> festivals (Chapchar, Pawl, Mim) = MIZORAM<br>
+      Exception: <strong>Kang Jatra (Kut)</strong> = MANIPUR<br>
+      If you see Chapchar/Pawl/Mim → Mizoram. If Kang → Manipur.
+    </div>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-label">🔴 TRAP 11 — Karma Festival (Three States!)</div>
+    <div class="trap-text">
+      <strong>Karma Festival</strong> = Chhattisgarh + Jharkhand + Odisha (Eastern India tribal belt)<br>
+      Common to all three. Don't attribute to only one!
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ ACTIVE RECALL ════════════ -->
+<div class="page" id="page-recall">
+  <h1 class="page-title"><span class="emoji">❓</span>Active Recall Section</h1>
+  <p class="page-subtitle">Click any question to reveal the answer. Test yourself!</p>
+
+  <div class="card">
+    <div class="card-title blue">🎯 Rapid-Fire Questions — Click to Reveal</div>
+
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">1. Which festival is called "Festival of Festivals"?</div>
+      <div class="q-answer">✅ Hornbill Festival — Nagaland (1–10 December, Kohima)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">2. Which festival is called "Festival of 100 Drums"?</div>
+      <div class="q-answer">✅ Wangala Festival — Meghalaya (Garo tribe)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">3. Ambubachi Mela is held at which temple?</div>
+      <div class="q-answer">✅ Kamakhya Devi Temple, Guwahati, Assam</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">4. Name the three types of Bihu and their local names.</div>
+      <div class="q-answer">✅ Bohag/Bahag = Rangali (New Year) · Maag = Bhogali (feast) · Kati = Kangali (autumn harvest)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">5. Which state celebrates the Elephant Festival (actual elephants)?</div>
+      <div class="q-answer">✅ Rajasthan (Jaipur) — NOT Maharashtra (that's Ganesh Chaturthi)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">6. Hojagiri festival belongs to which state?</div>
+      <div class="q-answer">✅ Tripura (Reang tribe) — Kojagiri Purnima = Maharashtra</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">7. Name the four days of Pongal festival in order.</div>
+      <div class="q-answer">✅ Bhogi → Surya (main) → Mattu → Kanum Pongal</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">8. Kambala is the name for which festival/sport in Karnataka?</div>
+      <div class="q-answer">✅ Buffalo Race — held in coastal Karnataka</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">9. Which Asian country's New Year is Losar, and in which Indian states is it celebrated?</div>
+      <div class="q-answer">✅ Tibetan Buddhist New Year. States: Arunachal Pradesh, Sikkim, Ladakh, Himachal Pradesh (Lahaul-Spiti)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">10. What is the Sonpur Cattle Fair famous for, and where is it?</div>
+      <div class="q-answer">✅ Asia's largest cattle fair — Bihar (near Patna, at Sonepur)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">11. Thrissur Puram is held at which temple?</div>
+      <div class="q-answer">✅ Vadakkumnath Temple, Thrissur, Kerala</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">12. Which state celebrates Bastar Dussehra, and what makes it unique?</div>
+      <div class="q-answer">✅ Chhattisgarh — World's longest Dussehra (75 days!)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">13. List the New Year festivals of: Tamil Nadu, Kerala, Maharashtra, West Bengal.</div>
+      <div class="q-answer">✅ TN = Puthandu · KL = Vishu · MH = Gudi Padwa · WB = Pohela Boishakh</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">14. Surajkund Mela is held in which city and state?</div>
+      <div class="q-answer">✅ Faridabad, Haryana (NOT Bihar, NOT Rajasthan!)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">15. Who celebrates Hemis Festival, when, and where?</div>
+      <div class="q-answer">✅ Buddhist community · June · Hemis Monastery, Ladakh · 2-day festival</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">16. Jallikattu is associated with which day of Pongal?</div>
+      <div class="q-answer">✅ Mattu Pongal (Day 3) — bull taming event in Tamil Nadu</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">17. Name the Kut festivals of Mizoram.</div>
+      <div class="q-answer">✅ Chapchar Kut (spring) · Pawl Kut (harvest/Dec) · Mim Kut (maize/Aug-Sep)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">18. Onam is based on the mythology of which king?</div>
+      <div class="q-answer">✅ King Mahabali (demon king who did good deeds, defeated Indra, tricked by Vamana/Vishnu)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">19. Bhagoriya Haat is a festival of which tribe in which state?</div>
+      <div class="q-answer">✅ Bhil/Bhilala tribe, Madhya Pradesh · unique "runaway marriage" custom during Holi</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">20. Which state celebrates Bathukamma, and what type of festival is it?</div>
+      <div class="q-answer">✅ Telangana — Flower festival for women (Sep–Oct)</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="card-title purple">📝 Fill in the Blanks</div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">Hornbill Festival is held from ___ to ___ December in ___ (city), ___ (state).</div>
+      <div class="q-answer">✅ 1st to 10th December · Kohima · Nagaland</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">Bihu × 3: Bohag = ___ · Maag = ___ · Kati = ___</div>
+      <div class="q-answer">✅ Rangali (New Year) · Bhogali (feast) · Kangali (autumn)</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">KUT rule: Chapchar Kut = ___ · Kang Jatra = ___</div>
+      <div class="q-answer">✅ Mizoram · Manipur</div>
+    </div>
+    <div class="recall-q" onclick="this.classList.toggle('revealed')">
+      <div class="q-text">Lord Jagannath = form of Lord ___ · Rath Yatra = ___ (state)</div>
+      <div class="q-answer">✅ Krishna (Vishnu) · Odisha (Puri)</div>
+    </div>
+  </div>
+</div>
+
+  </div><!-- end #content -->
+</div><!-- end #main -->
+</div><!-- end #app -->
+
+<script>
+const pages = ['home','memory-palace','new-years','andhra','arunachal','assam','bihar','chhattisgarh','goa','gujarat','haryana','hp','jk','jharkhand','karnataka','kerala','mp','maharashtra','manipur','meghalaya','mizoram','nagaland','odisha','punjab','rajasthan','sikkim','tamilnadu','telangana','tripura','uttarakhand','wb','hy-sheet','ultra-fast','last-night','traps','recall'];
+let currentIdx = 0;
+const titles = {
+  home:'🏠 Dashboard','memory-palace':'🧠 Memory Palace','new-years':'🎆 New Year Festivals',
+  andhra:'🏛️ Andhra Pradesh',arunachal:'🏔️ Arunachal Pradesh',assam:'🍵 Assam',
+  bihar:'🌊 Bihar',chhattisgarh:'🌿 Chhattisgarh',goa:'🏖️ Goa',gujarat:'🪁 Gujarat',
+  haryana:'💛 Haryana',hp:'⛰️ Himachal Pradesh',jk:'❄️ J&K / Ladakh',jharkhand:'🌲 Jharkhand',
+  karnataka:'🐃 Karnataka',kerala:'🌴 Kerala',mp:'🎭 Madhya Pradesh',maharashtra:'🐘 Maharashtra',
+  manipur:'🎋 Manipur',meghalaya:'🥁 Meghalaya',mizoram:'🎪 Mizoram',nagaland:'🐦 Nagaland',
+  odisha:'🎪 Odisha',punjab:'🌾 Punjab',rajasthan:'🐪 Rajasthan',sikkim:'🏔️ Sikkim',
+  tamilnadu:'☀️ Tamil Nadu',telangana:'🌸 Telangana',tripura:'🌺 Tripura',
+  uttarakhand:'🌿 Uttarakhand',wb:'🎭 West Bengal',
+  'hy-sheet':'⚡ High-Yield Sheet','ultra-fast':'🚀 Ultra-Fast Sheet',
+  'last-night':'🌙 Last Night Sheet',traps:'⚠️ Exam Traps',recall:'❓ Active Recall'
+};
+
+function goto(pageId, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + pageId);
+  if(page) page.classList.add('active');
+  if(el) el.classList.add('active');
+  document.getElementById('topbarTitle').textContent = titles[pageId] || pageId;
+  currentIdx = pages.indexOf(pageId);
+  // Scroll content to top
+  document.getElementById('content').scrollTop = 0;
+}
+
+function navNext() {
+  const next = pages[(currentIdx + 1) % pages.length];
+  const navEl = document.querySelector(`[data-page="${next}"]`);
+  goto(next, navEl);
+  if(navEl) navEl.scrollIntoView({block:'nearest'});
+}
+
+function navPrev() {
+  const prev = pages[(currentIdx - 1 + pages.length) % pages.length];
+  const navEl = document.querySelector(`[data-page="${prev}"]`);
+  goto(prev, navEl);
+  if(navEl) navEl.scrollIntoView({block:'nearest'});
+}
+
+function setLayer(n, el) {
+  document.querySelectorAll('.layer-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  // Layer switching is visual for now; in full implementation could toggle content visibility
+}
+
+function filterNav(val) {
+  const v = val.toLowerCase();
+  document.querySelectorAll('.nav-item').forEach(item => {
+    const text = item.textContent.toLowerCase();
+    item.style.display = text.includes(v) ? 'flex' : 'none';
+  });
+  document.querySelectorAll('.nav-section').forEach(s => s.style.display = v ? 'none' : 'block');
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if(e.key === 'ArrowRight' && !e.target.matches('input')) navNext();
+  if(e.key === 'ArrowLeft' && !e.target.matches('input')) navPrev();
+});
+</script>
+</body>
+</html>
