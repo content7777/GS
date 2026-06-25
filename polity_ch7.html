@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polity Revision System — Governor & PM | SSC CGL</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1e2630;
+    --green: #39d353;
+    --green-dim: #1a6b28;
+    --blue: #58a6ff;
+    --blue-dim: #1a3a5c;
+    --amber: #f0a500;
+    --red: #ff6b6b;
+    --purple: #bc8cff;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --border: #30363d;
+    --card: #161b22;
+    --card2: #1e2630;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TOP NAV ── */
+  #topnav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 12px;
+    height: 52px;
+    flex-shrink: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #topnav::-webkit-scrollbar { display: none; }
+
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--green);
+    white-space: nowrap;
+    padding-right: 16px;
+    border-right: 1px solid var(--border);
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .nav-tab {
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    white-space: nowrap;
+    color: var(--text-dim);
+    border: none;
+    background: none;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .nav-tab:hover { color: var(--text); background: var(--bg3); }
+  .nav-tab.active { color: var(--green); background: rgba(57,211,83,0.12); }
+
+  /* ── LAYOUT ── */
+  #app {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: 220px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    flex-shrink: 0;
+    padding: 12px 8px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .sidebar-section-label {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 8px 4px;
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-dim);
+    transition: all 0.15s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+  }
+  .sidebar-item:hover { color: var(--text); background: var(--bg3); }
+  .sidebar-item.active { color: var(--blue); background: rgba(88,166,255,0.1); }
+  .sidebar-item .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+  .sidebar-item.active .dot { background: var(--blue); }
+
+  /* ── MAIN CONTENT ── */
+  #content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 36px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── TYPOGRAPHY ── */
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--green);
+    margin: 28px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2::before { content: ''; display: block; width: 3px; height: 16px; background: var(--green); border-radius: 2px; }
+
+  h3 { font-size: 14px; font-weight: 600; color: var(--blue); margin: 18px 0 8px; }
+
+  p { font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 10px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .card-green { border-left: 3px solid var(--green); }
+  .card-blue { border-left: 3px solid var(--blue); }
+  .card-amber { border-left: 3px solid var(--amber); }
+  .card-red { border-left: 3px solid var(--red); }
+  .card-purple { border-left: 3px solid var(--purple); }
+
+  /* ── ARTICLE TABLE ── */
+  .article-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+  .article-table th {
+    background: var(--bg3);
+    color: var(--text-dim);
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .article-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
+  .article-table tr:last-child td { border-bottom: none; }
+  .article-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .art-num { font-family: 'JetBrains Mono', monospace; color: var(--amber); font-weight: 600; white-space: nowrap; }
+  .art-title { color: var(--text); }
+  .art-note { color: var(--text-dim); font-size: 12px; }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .tag-fire { background: rgba(255,107,107,0.15); color: var(--red); }
+  .tag-star { background: rgba(240,165,0,0.15); color: var(--amber); }
+  .tag-plus { background: rgba(88,166,255,0.12); color: var(--blue); }
+
+  /* ── MEMORY PALACE ── */
+  .palace-room {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .palace-room-num {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    background: var(--bg2);
+    padding: 0 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--purple);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .palace-room-title { font-weight: 600; color: var(--purple); margin-bottom: 6px; font-size: 14px; }
+  .palace-room p { font-size: 13px; color: var(--text-dim); margin: 0; }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: rgba(255,107,107,0.07);
+    border: 1px solid rgba(255,107,107,0.3);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+  }
+  .trap-box .trap-title { color: var(--red); font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+  .trap-box p { font-size: 13px; color: var(--text); margin: 0; }
+
+  /* ── QUIZ ── */
+  .quiz-item {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  .quiz-q { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+  .quiz-reveal {
+    display: none;
+    background: rgba(57,211,83,0.08);
+    border: 1px solid rgba(57,211,83,0.2);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--green);
+    margin-top: 8px;
+  }
+  .quiz-reveal.show { display: block; }
+  .reveal-btn {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    transition: all 0.15s;
+  }
+  .reveal-btn:hover { border-color: var(--green); color: var(--green); }
+
+  /* ── COMPARE TABLE ── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .cg-header { background: var(--bg3); padding: 10px 14px; font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); }
+  .cg-cell { background: var(--card); padding: 9px 14px; border-bottom: 1px solid var(--border); line-height: 1.5; }
+  .cg-label { color: var(--amber); font-weight: 600; }
+  .cg-pres { color: var(--blue); }
+  .cg-gov { color: var(--green); }
+
+  /* ── FAST REVISION ── */
+  .fast-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .fast-item:last-child { border-bottom: none; }
+  .fast-bullet { color: var(--green); font-size: 18px; line-height: 1; flex-shrink: 0; }
+
+  /* ── NIGHT SHEET ── */
+  .night-sheet {
+    background: linear-gradient(135deg, rgba(57,211,83,0.05), rgba(88,166,255,0.05));
+    border: 1px solid rgba(57,211,83,0.2);
+    border-radius: 14px;
+    padding: 20px 24px;
+  }
+  .night-sheet h3 { color: var(--green); margin-top: 10px; }
+  .night-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 13px;
+  }
+  .night-row:last-child { border-bottom: none; }
+  .night-key { color: var(--text-dim); }
+  .night-val { color: var(--amber); font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+
+  /* ── HOOK BOX ── */
+  .hook-box {
+    background: rgba(188,140,255,0.07);
+    border: 1px solid rgba(188,140,255,0.25);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+  }
+  .hook-box .hook-label { color: var(--purple); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .hook-box p { font-size: 13px; color: var(--text); margin: 0; line-height: 1.6; }
+
+  /* ── AMENDMENT BADGE ── */
+  .amend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(240,165,0,0.12);
+    border: 1px solid rgba(240,165,0,0.3);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--amber);
+    font-weight: 600;
+    margin-right: 6px;
+    margin-bottom: 6px;
+  }
+
+  /* ── CLAUSE LIST ── */
+  .clause-list { list-style: none; }
+  .clause-item {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .clause-item:last-child { border-bottom: none; }
+  .clause-num { font-family: 'JetBrains Mono', monospace; color: var(--amber); font-weight: 700; font-size: 12px; }
+  .clause-desc { font-size: 13px; line-height: 1.6; }
+
+  /* ── PROGRESS BAR HEADER ── */
+  .chapter-progress {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+  .cp-seg {
+    height: 3px;
+    border-radius: 2px;
+    flex: 1;
+    background: var(--border);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .cp-seg.done { background: var(--green); }
+  .cp-seg.current { background: var(--blue); }
+
+  /* ── SCROLLBAR GLOBAL ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  ul.bullet-list { padding-left: 18px; margin-bottom: 10px; }
+  ul.bullet-list li { font-size: 13px; line-height: 1.7; color: var(--text); }
+  ul.bullet-list li span.hi { color: var(--green); font-weight: 600; }
+  ul.bullet-list li span.hib { color: var(--blue); font-weight: 600; }
+  ul.bullet-list li span.hia { color: var(--amber); font-weight: 600; }
+  ul.bullet-list li span.hir { color: var(--red); font-weight: 600; }
+
+  .inline-code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg3);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--amber);
+  }
+
+  .big-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  /* Home page */
+  .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .home-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .home-card:hover { border-color: var(--blue); background: var(--card2); transform: translateY(-1px); }
+  .home-card-icon { font-size: 22px; margin-bottom: 8px; }
+  .home-card-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+  .home-card-sub { font-size: 12px; color: var(--text-dim); }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .badge-green { background: rgba(57,211,83,0.12); color: var(--green); }
+  .badge-blue { background: rgba(88,166,255,0.12); color: var(--blue); }
+  .badge-red { background: rgba(255,107,107,0.12); color: var(--red); }
+  .badge-amber { background: rgba(240,165,0,0.12); color: var(--amber); }
+  .badge-purple { background: rgba(188,140,255,0.12); color: var(--purple); }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav id="topnav">
+  <div class="nav-logo">⚡ SSC·CGL</div>
+  <button class="nav-tab active" onclick="switchChapter('governor')">Governor</button>
+  <button class="nav-tab" onclick="switchChapter('pm')">PM & CoM</button>
+  <button class="nav-tab" onclick="switchChapter('ag')">Attorney General</button>
+  <button class="nav-tab" onclick="switchChapter('compare')">Compare Table</button>
+  <button class="nav-tab" onclick="switchChapter('palace')">🧠 Memory Palace</button>
+  <button class="nav-tab" onclick="switchChapter('traps')">⚠️ Traps</button>
+  <button class="nav-tab" onclick="switchChapter('quiz')">❓ Active Recall</button>
+  <button class="nav-tab" onclick="switchChapter('flash')">⚡ Flash Revision</button>
+  <button class="nav-tab" onclick="switchChapter('night')">🌙 Night Sheet</button>
+</nav>
+
+<div id="app">
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <!-- Governor -->
+  <div class="sidebar-section-label">Governor</div>
+  <button class="sidebar-item active" data-chapter="governor" data-page="gov-overview" onclick="switchPage(this)">
+    <span class="dot"></span>Overview
+  </button>
+  <button class="sidebar-item" data-chapter="governor" data-page="gov-articles" onclick="switchPage(this)">
+    <span class="dot"></span>Articles 153–161
+  </button>
+  <button class="sidebar-item" data-chapter="governor" data-page="gov-pardon" onclick="switchPage(this)">
+    <span class="dot"></span>Pardoning Power
+  </button>
+
+  <!-- PM & CoM -->
+  <div class="sidebar-section-label" style="margin-top:8px">PM & Council</div>
+  <button class="sidebar-item" data-chapter="pm" data-page="pm-overview" onclick="switchPage(this)">
+    <span class="dot"></span>Overview
+  </button>
+  <button class="sidebar-item" data-chapter="pm" data-page="pm-74" onclick="switchPage(this)">
+    <span class="dot"></span>Art. 74 — CoM
+  </button>
+  <button class="sidebar-item" data-chapter="pm" data-page="pm-75" onclick="switchPage(this)">
+    <span class="dot"></span>Art. 75 — Clauses
+  </button>
+  <button class="sidebar-item" data-chapter="pm" data-page="pm-78" onclick="switchPage(this)">
+    <span class="dot"></span>Art. 78 — PM Duties
+  </button>
+
+  <!-- AG -->
+  <div class="sidebar-section-label" style="margin-top:8px">Law Officers</div>
+  <button class="sidebar-item" data-chapter="ag" data-page="ag-main" onclick="switchPage(this)">
+    <span class="dot"></span>Attorney General
+  </button>
+  <button class="sidebar-item" data-chapter="ag" data-page="ag-advocate" onclick="switchPage(this)">
+    <span class="dot"></span>Advocate General
+  </button>
+
+  <!-- Compare -->
+  <div class="sidebar-section-label" style="margin-top:8px">Tools</div>
+  <button class="sidebar-item" data-chapter="compare" data-page="compare-main" onclick="switchPage(this)">
+    <span class="dot"></span>Pres vs Gov vs PM
+  </button>
+  <button class="sidebar-item" data-chapter="palace" data-page="palace-main" onclick="switchPage(this)">
+    <span class="dot"></span>Memory Palace
+  </button>
+  <button class="sidebar-item" data-chapter="traps" data-page="traps-main" onclick="switchPage(this)">
+    <span class="dot"></span>Exam Traps
+  </button>
+  <button class="sidebar-item" data-chapter="quiz" data-page="quiz-main" onclick="switchPage(this)">
+    <span class="dot"></span>Active Recall
+  </button>
+  <button class="sidebar-item" data-chapter="flash" data-page="flash-main" onclick="switchPage(this)">
+    <span class="dot"></span>Flash Revision
+  </button>
+  <button class="sidebar-item" data-chapter="night" data-page="night-main" onclick="switchPage(this)">
+    <span class="dot"></span>Night Sheet
+  </button>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main id="content">
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: gov-overview                           -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page active" id="page-gov-overview">
+  <div class="page-title">Governor — State Executive Head</div>
+  <div class="page-subtitle">Part VI → Chapter II → Articles 153–161 + 213</div>
+
+  <div class="card card-green">
+    <h3 style="margin-top:0">🏛️ Big Picture</h3>
+    <p>The Governor is to the <strong>State</strong> what the President is to the <strong>Union</strong>. Part V (Union) has 5 chapters; Part VI (State) has 6 chapters. The structure is parallel — just add <span class="inline-code">+1</span> to article numbers (with exceptions).</p>
+  </div>
+
+  <h2>Part V vs Part VI — Parallel Structure</h2>
+  <div class="compare-grid">
+    <div class="cg-header">Point</div>
+    <div class="cg-header cg-pres">UNION (Part V)</div>
+    <div class="cg-header cg-gov">STATE (Part VI)</div>
+    <div class="cg-cell cg-label">Head</div>
+    <div class="cg-cell cg-pres">President</div>
+    <div class="cg-cell cg-gov">Governor</div>
+    <div class="cg-cell cg-label">Deputy</div>
+    <div class="cg-cell cg-pres">Vice President</div>
+    <div class="cg-cell cg-gov">❌ No Vice Governor</div>
+    <div class="cg-cell cg-label">Cabinet Head</div>
+    <div class="cg-cell cg-pres">Prime Minister</div>
+    <div class="cg-cell cg-gov">Chief Minister</div>
+    <div class="cg-cell cg-label">Law Officer</div>
+    <div class="cg-cell cg-pres">Attorney General (Art. 76)</div>
+    <div class="cg-cell cg-gov">Advocate General (Art. 165)</div>
+    <div class="cg-cell cg-label">Legislature</div>
+    <div class="cg-cell cg-pres">Parliament (Art. 79–122)</div>
+    <div class="cg-cell cg-gov">State Legislature</div>
+    <div class="cg-cell cg-label">Ordinance</div>
+    <div class="cg-cell cg-pres">Art. 123</div>
+    <div class="cg-cell cg-gov">Art. 213</div>
+    <div class="cg-cell cg-label">Highest Court</div>
+    <div class="cg-cell cg-pres">Supreme Court (Ch. 4)</div>
+    <div class="cg-cell cg-gov">High Court (Ch. 5)</div>
+    <div class="cg-cell cg-label">Lower Courts</div>
+    <div class="cg-cell cg-pres">—</div>
+    <div class="cg-cell cg-gov">Subordinate Courts (Ch. 6)</div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-label">🧠 The +1 Trick</div>
+    <p>For Articles 52–72 (President) → add 1 → Governor articles (153–161).<br>
+    For Articles 74–78 → add 89 → CM & CoM articles (163–167).<br>
+    Exception: 42nd/44th/91st Amendment content has no exact parallel.</p>
+  </div>
+
+  <h2>State Executive Members</h2>
+  <ul class="bullet-list">
+    <li><span class="hi">Governor</span> — Constitutional head (nominal/titular)</li>
+    <li><span class="hib">Chief Minister</span> — Real/de facto head</li>
+    <li><span class="hib">Council of Ministers</span> — Headed by CM</li>
+    <li><span class="hia">Advocate General</span> — Highest law officer of state (Art. 165)</li>
+    <li><span class="hir">Note:</span> Chapter 2 of Part VI has only ONE article — Art. 152 (General definition of "State" for Part VI — meaning UP, MP etc., NOT Art. 12 definition)</li>
+  </ul>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: gov-articles                          -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-gov-articles">
+  <div class="page-title">Articles 153–161 — Decoded</div>
+  <div class="page-subtitle">Each article explained with exam focus</div>
+
+  <table class="article-table">
+    <thead>
+      <tr>
+        <th>Article</th>
+        <th>Title</th>
+        <th>Key Fact</th>
+        <th>Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="art-num">153</td>
+        <td class="art-title">Establishment of Office</td>
+        <td class="art-note">There shall be a Governor of each State</td>
+        <td><span class="tag tag-star">⭐</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">154</td>
+        <td class="art-title">Executive Power of State</td>
+        <td class="art-note">Vested in Governor. He is the nominal executive head of state (like President for Union)</td>
+        <td><span class="tag tag-fire">🔥</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">155</td>
+        <td class="art-title">Appointment</td>
+        <td class="art-note"><strong>Appointed by President</strong> (NO election). Same person can be Governor of 2+ states (7th CA, 1956). 7th CA also removed Part VII of Constitution + allowed one HC for multiple states/UTs</td>
+        <td><span class="tag tag-fire">🔥</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">156</td>
+        <td class="art-title">Term of Office</td>
+        <td class="art-note">5 years nominal BUT holds office at pleasure of President → <strong>Doctrine of Pleasure</strong> → No fixed removal procedure. Resignation given to President</td>
+        <td><span class="tag tag-fire">🔥</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">157</td>
+        <td class="art-title">Qualifications</td>
+        <td class="art-note">Citizen of India + 35 years of age. <strong>NO</strong> "qualified to be member of Legislative Assembly" clause (unlike President → Lok Sabha qualification)</td>
+        <td><span class="tag tag-fire">🔥</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">158</td>
+        <td class="art-title">Conditions of Office</td>
+        <td class="art-note">Cannot be member of Parliament or State Legislature. Cannot hold any office of profit</td>
+        <td><span class="tag tag-star">⭐</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">159</td>
+        <td class="art-title">Oath</td>
+        <td class="art-note">Administered by <strong>Chief Justice of High Court</strong> (President's oath → CJI of Supreme Court; VP's oath → President)</td>
+        <td><span class="tag tag-fire">🔥</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">160</td>
+        <td class="art-title">Discharge of Functions</td>
+        <td class="art-note">When Governor cannot perform duties → President makes provision for discharge</td>
+        <td><span class="tag tag-plus">➕</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">161</td>
+        <td class="art-title">Pardoning Power</td>
+        <td class="art-note">Governor has pardoning power BUT <strong>CANNOT pardon death sentence</strong> and <strong>CANNOT suspend court martial</strong> sentences</td>
+        <td><span class="tag tag-fire">🔥</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card card-amber">
+    <h3 style="margin-top:0">🔑 7th Constitutional Amendment, 1956</h3>
+    <ul class="bullet-list" style="padding-left:0; list-style:none;">
+      <li>✦ Allowed <strong>one person to be Governor of 2+ states</strong></li>
+      <li>✦ Removed <strong>Part VII</strong> of the Constitution</li>
+      <li>✦ Allowed <strong>one High Court for multiple states or UTs</strong></li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <h3 style="margin-top:0">📋 No Impeachment of Governor — Why?</h3>
+    <p>Because the Governor serves at the <strong>pleasure of the President</strong> (Art. 156). The President can remove the Governor anytime. No special procedure needed → no impeachment provision exists for Governor.</p>
+    <p style="color:var(--text-dim); font-size:12px">Contrast: President has impeachment (Art. 61) — special majority in both Houses, signatures of 1/4 members to initiate, borrowed from USA Constitution.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: gov-pardon                            -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-gov-pardon">
+  <div class="page-title">Pardoning Power — President vs Governor</div>
+  <div class="page-subtitle">Art. 72 (President) vs Art. 161 (Governor)</div>
+
+  <h2>Types of Pardoning Power (Both President & Governor)</h2>
+  <div class="card card-green">
+    <ul class="bullet-list">
+      <li><span class="hi">Pardon</span> — Complete forgiveness, removes conviction entirely</li>
+      <li><span class="hi">Commute</span> — Converts punishment to lighter form (e.g. death → life)</li>
+      <li><span class="hi">Remission</span> — Reduces quantum of punishment without changing nature</li>
+      <li><span class="hi">Respite</span> — Gives a lesser sentence in special circumstances (e.g. pregnancy)</li>
+      <li><span class="hi">Reprieve</span> — Temporary stay of execution of sentence</li>
+    </ul>
+  </div>
+
+  <h2>Where Governor's Power is LESS</h2>
+  <div class="compare-grid">
+    <div class="cg-header">Power</div>
+    <div class="cg-header cg-pres">President (Art. 72)</div>
+    <div class="cg-header cg-gov">Governor (Art. 161)</div>
+    <div class="cg-cell cg-label">Death Sentence</div>
+    <div class="cg-cell cg-pres">✅ Can pardon</div>
+    <div class="cg-cell cg-gov">❌ CANNOT pardon</div>
+    <div class="cg-cell cg-label">Court Martial</div>
+    <div class="cg-cell cg-pres">✅ Can suspend/remit sentences</div>
+    <div class="cg-cell cg-gov">❌ CANNOT intervene</div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-label">🧠 Memory Hook</div>
+    <p><strong>"Death and Defence are Presidential domains."</strong><br>
+    — Death penalty → only President can pardon (not Governor)<br>
+    — Defence/Military (Court Martial) → only President can act (not Governor)</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: pm-overview                           -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-pm-overview">
+  <div class="page-title">PM & Council of Ministers</div>
+  <div class="page-subtitle">Part V → Chapter II → Articles 74–78</div>
+
+  <div class="card card-blue">
+    <h3 style="margin-top:0">🎯 The Most Important Distinction</h3>
+    <div style="display:flex; gap:24px; margin-top:8px; flex-wrap:wrap">
+      <div style="flex:1; min-width:180px">
+        <div style="color:var(--text-dim); font-size:11px; text-transform:uppercase; margin-bottom:6px">President</div>
+        <div style="font-size:18px; font-weight:700; color:var(--blue)">Head of Country</div>
+        <div style="font-size:13px; color:var(--text-dim)">Head of Executive (Nominal)</div>
+        <div style="margin-top:8px"><span class="badge badge-blue">De Jure Head</span> <span class="badge badge-blue">Titular Head</span></div>
+        <div><span class="badge badge-red">Rubber Stamp</span></div>
+      </div>
+      <div style="flex:1; min-width:180px">
+        <div style="color:var(--text-dim); font-size:11px; text-transform:uppercase; margin-bottom:6px">Prime Minister</div>
+        <div style="font-size:18px; font-weight:700; color:var(--green)">Head of Government</div>
+        <div style="font-size:13px; color:var(--text-dim)">Real Executive Power</div>
+        <div style="margin-top:8px"><span class="badge badge-green">De Facto Head</span></div>
+        <div><span class="badge badge-amber">Lynchpin of Govt</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h2>Articles 74–78 at a Glance</h2>
+  <table class="article-table">
+    <thead>
+      <tr><th>Article</th><th>Title</th><th>Priority</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="art-num">74</td>
+        <td class="art-note">Council of Ministers to <strong>aid and advise</strong> the President; PM is head; advice is <strong>binding</strong></td>
+        <td><span class="tag tag-fire">🔥</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">75</td>
+        <td class="art-note">6 Clauses: Appointment, 15% cap, individual responsibility, collective responsibility, oath, 6-month rule, salary</td>
+        <td><span class="tag tag-fire">🔥</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">76</td>
+        <td class="art-note">Attorney General for India</td>
+        <td><span class="tag tag-star">⭐</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">77</td>
+        <td class="art-note">Conduct of business of Government of India — all orders in the <strong>name of the President</strong></td>
+        <td><span class="tag tag-plus">➕</span></td>
+      </tr>
+      <tr>
+        <td class="art-num">78</td>
+        <td class="art-note">Duties of PM — Act as <strong>linkage</strong> between CoM and President</td>
+        <td><span class="tag tag-star">⭐</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: pm-74                                 -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-pm-74">
+  <div class="page-title">Article 74 — Council of Ministers</div>
+  <div class="page-subtitle">The Binding Advice Saga: 42nd → 44th Amendment</div>
+
+  <div class="card card-green">
+    <h3 style="margin-top:0">Core Rule: Art. 74</h3>
+    <p>There shall be a Council of Ministers with the <strong>Prime Minister at the head</strong> to aid and advise the President. The President <strong>shall act</strong> in accordance with such advice.</p>
+  </div>
+
+  <h2>The Amendment Timeline — Binding Advice</h2>
+
+  <div class="card card-amber">
+    <div style="display:flex; gap:12px; align-items:flex-start">
+      <span class="amend-badge">42nd CA 1976</span>
+      <div>
+        <p style="margin:0; font-size:13px"><strong>Indira Gandhi's move:</strong> Made President's acceptance of CoM advice completely <strong>binding</strong>. President has zero discretion.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <div style="display:flex; gap:12px; align-items:flex-start">
+      <span class="amend-badge">44th CA 1978</span>
+      <div>
+        <p style="margin:0; font-size:13px"><strong>Correction:</strong> Gave President one power — can send advice back for <strong>reconsideration ONCE</strong>. But reconsidered advice is <strong>binding again</strong>.</p>
+        <p style="font-size:12px; color:var(--text-dim); margin:4px 0 0">Current position: President can return once → must accept second time.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-red">
+    <div style="display:flex; gap:12px; align-items:flex-start">
+      <span class="amend-badge">24th CA 1971</span>
+      <div>
+        <p style="margin:0; font-size:13px">Also by Indira Gandhi: President <strong>must give assent</strong> to Constitutional Amendment Bills. Cannot use veto power on them.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Types of Ministers — Hierarchy</h2>
+  <p style="font-size:12px; color:var(--text-dim)">⚠️ This classification is NOT mentioned anywhere in the Constitution — it's a conventional/practical arrangement.</p>
+  <table class="article-table">
+    <thead>
+      <tr><th>Rank</th><th>Who</th><th>Reports To</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="tag tag-fire" style="background:rgba(57,211,83,0.15); color:var(--green)">CABINET</span></td>
+        <td class="art-note">Most senior, key portfolios, high PM proximity</td>
+        <td class="art-note">PM directly</td>
+        <td class="art-note">Rajnath Singh, Amit Shah</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-star">MoS IC</span></td>
+        <td class="art-note">Independent Charge — no Cabinet Minister above</td>
+        <td class="art-note">PM directly</td>
+        <td class="art-note">Handles own department independently</td>
+      </tr>
+      <tr>
+        <td><span class="tag tag-plus">MoS</span></td>
+        <td class="art-note">Minister of State — under a Cabinet Ministry</td>
+        <td class="art-note">Cabinet Minister</td>
+        <td class="art-note">Helps Amit Shah in specific Home Dept</td>
+      </tr>
+      <tr>
+        <td><span style="color:var(--text-dim); font-size:12px">Deputy</span></td>
+        <td class="art-note">Assists Minister — currently <strong>not in use in India</strong></td>
+        <td class="art-note">—</td>
+        <td class="art-note">—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: pm-75                                 -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-pm-75">
+  <div class="page-title">Article 75 — Six Clauses Decoded</div>
+  <div class="page-subtitle">The most important article for PM & CoM</div>
+
+  <ul class="clause-list">
+    <li class="clause-item">
+      <div>
+        <div class="clause-num">Clause 1(A)</div>
+        <span class="badge badge-fire" style="background:rgba(255,107,107,0.12); color:var(--red); margin-top:4px">Appointment</span>
+      </div>
+      <div class="clause-desc">
+        <strong>President appoints PM</strong>, and other ministers are appointed by President <em>on the advice of PM</em>.<br>
+        <span style="color:var(--text-dim); font-size:12px">Draupadi Murmu appoints Modi ji → Modi ji decides who else becomes minister.</span>
+      </div>
+    </li>
+    <li class="clause-item">
+      <div>
+        <div class="clause-num">Clause 1(B)</div>
+        <span class="amend-badge" style="margin:4px 0">91st CA 2003</span>
+      </div>
+      <div class="clause-desc">
+        <strong>Council strength capped at 15% of Lok Sabha members</strong> (including PM). Added by 91st Amendment, 2003.<br>
+        Also: Anyone disqualified on grounds of <strong>defection (10th Schedule / 52nd CA 1985)</strong> cannot become minister.
+      </div>
+    </li>
+    <li class="clause-item">
+      <div>
+        <div class="clause-num">Clause 2</div>
+        <span class="badge badge-amber" style="margin-top:4px">Individual Resp.</span>
+      </div>
+      <div class="clause-desc">
+        Ministers hold office <strong>during pleasure of President</strong> → Individually responsible to the President.<br>
+        <span style="color:var(--text-dim); font-size:12px">BUT President can't remove them on his own — only on PM's advice.</span>
+      </div>
+    </li>
+    <li class="clause-item">
+      <div>
+        <div class="clause-num">Clause 3</div>
+        <span class="badge badge-green" style="margin-top:4px">Collective Resp.</span>
+      </div>
+      <div class="clause-desc">
+        <strong>CoM is collectively responsible to the Lok Sabha (House of the People)</strong>.<br>
+        If PM resigns or dies → entire CoM dissolves.<br>
+        If any minister disagrees with a cabinet decision → must resign.<br>
+        <span style="color:var(--text-dim); font-size:12px">They are answerable to Lok Sabha — not Rajya Sabha.</span>
+      </div>
+    </li>
+    <li class="clause-item">
+      <div>
+        <div class="clause-num">Clause 4</div>
+        <span class="badge badge-purple" style="margin-top:4px">Oath</span>
+      </div>
+      <div class="clause-desc">
+        <strong>President administers oath</strong> to ministers (of office and secrecy).
+      </div>
+    </li>
+    <li class="clause-item">
+      <div>
+        <div class="clause-num">Clause 5</div>
+        <span class="badge badge-blue" style="margin-top:4px">6-Month Rule</span>
+      </div>
+      <div class="clause-desc">
+        If a minister is <strong>not a member of either House for 6 consecutive months</strong> → ceases to be minister.<br>
+        Within 6 months must get elected to Lok Sabha or Rajya Sabha.<br>
+        <span style="color:var(--text-dim); font-size:12px">Example: S. Jaishankar was made minister → sent to Rajya Sabha via Gujarat.</span>
+      </div>
+    </li>
+    <li class="clause-item">
+      <div>
+        <div class="clause-num">Clause 6</div>
+        <span class="badge badge-amber" style="margin-top:4px">Salary</span>
+      </div>
+      <div class="clause-desc">
+        Salaries and allowances of ministers determined by <strong>Parliament</strong>.
+      </div>
+    </li>
+  </ul>
+
+  <div class="hook-box">
+    <div class="hook-label">🧠 Remember the 6 Clauses</div>
+    <p><strong>A-D-I-C-O-S</strong> (very rough):<br>
+    <strong>A</strong>ppointment → <strong>D</strong>efection + 15% cap → <strong>I</strong>ndividual responsibility → <strong>C</strong>ollective responsibility → <strong>O</strong>ath → <strong>S</strong>ix months + Salary<br>
+    <br>
+    Better image: <em>Think of a MINISTER'S CAREER in sequence:</em> First he's <strong>Appointed</strong> (after passing Defection check + 15% space exists) → he's individually responsible to President while collectively responsible to Lok Sabha → he takes an Oath → he must win a seat in 6 months → his Salary is fixed by Parliament.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: pm-78                                 -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-pm-78">
+  <div class="page-title">Articles 77 & 78 — Business & PM Duties</div>
+  <div class="page-subtitle">The linkage role of the Prime Minister</div>
+
+  <div class="card card-blue">
+    <h3 style="margin-top:0">Art. 77 — Conduct of Business</h3>
+    <p>All business of the Government of India is conducted <strong>in the name of the President</strong>. All orders, instruments bear the President's name/signature.</p>
+  </div>
+
+  <div class="card card-green">
+    <h3 style="margin-top:0">Art. 78 — Duties of Prime Minister</h3>
+    <p>PM acts as the <strong>communication bridge</strong> between the Council of Ministers and the President:</p>
+    <ul class="bullet-list">
+      <li>Communicate all decisions of CoM to President</li>
+      <li>If President asks — furnish information about any single minister's decision that has NOT been considered by the full CoM</li>
+      <li>If President asks — submit the matter to the full CoM for consideration</li>
+    </ul>
+    <p style="margin-top:12px; font-family:'JetBrains Mono',monospace; color:var(--amber); font-size:13px">"PM is the Lynchpin of the Government" — Jawaharlal Nehru</p>
+  </div>
+
+  <h2>CM & State CoM — Art. 163–167</h2>
+  <div class="card card-purple">
+    <p>All provisions of Art. 74–78 apply to CM & State CoM. Just:</p>
+    <ul class="bullet-list">
+      <li>Replace <span class="hi">President</span> → <span class="hib">Governor</span></li>
+      <li>Replace <span class="hi">Prime Minister</span> → <span class="hib">Chief Minister</span></li>
+      <li>Replace <span class="hi">Parliament</span> → <span class="hib">State Legislature</span></li>
+      <li>Replace <span class="hi">Lok Sabha</span> → <span class="hib">Legislative Assembly (Vidhan Sabha)</span></li>
+      <li>Add 89 to Union articles: 74 → 163, 75 → 164, 78 → 167</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: ag-main                               -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-ag-main">
+  <div class="page-title">Attorney General of India</div>
+  <div class="page-subtitle">Article 76 — 4 Clauses</div>
+
+  <div class="card card-green">
+    <p><strong>Who is he?</strong> The <strong>highest law officer of India</strong> — legal advisor and lawyer for the Government of India in all courts.</p>
+  </div>
+
+  <ul class="clause-list">
+    <li class="clause-item">
+      <div class="clause-num">Clause 1</div>
+      <div class="clause-desc">
+        <strong>Appointed by the President</strong>.<br>
+        <strong>Qualification:</strong> Should be qualified to be a <strong>Judge of the Supreme Court</strong>:<br>
+        <ul class="bullet-list" style="margin-top:6px">
+          <li>HC judge for <span class="hi">5 years</span>, OR</li>
+          <li>HC advocate for <span class="hi">10 years</span>, OR</li>
+          <li>Distinguished jurist in President's opinion (e.g. eminent law professor)</li>
+        </ul>
+        <span style="color:var(--text-dim); font-size:12px">⚠️ Trap: NOT "qualified as SC judge" literally — means has the same qualifications that would make one eligible to become SC judge.</span>
+      </div>
+    </li>
+    <li class="clause-item">
+      <div class="clause-num">Clause 2</div>
+      <div class="clause-desc">AG's duty: Advise Government of India on legal matters + perform duties assigned by President/Constitution.</div>
+    </li>
+    <li class="clause-item">
+      <div class="clause-num">Clause 3</div>
+      <div class="clause-desc">
+        <strong>Right of audience in all courts of India</strong> — can appear in any court, special privilege, no restrictions.
+      </div>
+    </li>
+    <li class="clause-item">
+      <div class="clause-num">Clause 4</div>
+      <div class="clause-desc">
+        Holds office <strong>during pleasure of the President</strong> (Doctrine of Pleasure).<br>
+        <span style="color:var(--text-dim); font-size:12px">Usually holds for ~3 years. No fixed term mentioned in Constitution.</span>
+      </div>
+    </li>
+  </ul>
+
+  <h2>Key Special Facts</h2>
+  <div class="card card-amber">
+    <ul class="bullet-list">
+      <li><span class="hia">Private practice allowed</span> — AG is NOT barred from private practice (unlike government servants)</li>
+      <li>But <span class="hir">CANNOT hold brief against Government of India</span></li>
+      <li><strong>Solicitor General</strong> assists AG — but this post is <span class="hir">NOT mentioned in Constitution</span> (statutory, not constitutional)</li>
+      <li>Current AG: <span class="hi">R. Venkataramani</span> (verify for updates)</li>
+      <li>First AG: <span class="hi">M.C. Setalvad</span></li>
+      <li>Current Solicitor General: <span class="hi">Tushar Mehta</span> (verify for updates)</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: ag-advocate                           -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-ag-advocate">
+  <div class="page-title">Advocate General of State</div>
+  <div class="page-subtitle">Article 165 — State's highest law officer</div>
+
+  <div class="card card-blue">
+    <p>Exact parallel to Attorney General but at the <strong>state level</strong>. Everything is same — just replace:</p>
+    <ul class="bullet-list">
+      <li><span class="hib">President</span> → <span class="hi">Governor</span></li>
+      <li><span class="hib">Government of India</span> → <span class="hi">State Government</span></li>
+      <li><span class="hib">Art. 76</span> → <span class="hi">Art. 165</span></li>
+    </ul>
+  </div>
+
+  <table class="article-table">
+    <thead>
+      <tr><th>Point</th><th>Attorney General (Art. 76)</th><th>Advocate General (Art. 165)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="art-note">Level</td>
+        <td class="art-note">Union/India</td>
+        <td class="art-note">State</td>
+      </tr>
+      <tr>
+        <td class="art-note">Appointed by</td>
+        <td class="art-note">President</td>
+        <td class="art-note">Governor</td>
+      </tr>
+      <tr>
+        <td class="art-note">Qualification</td>
+        <td class="art-note">SC Judge qualifications</td>
+        <td class="art-note">HC Judge qualifications</td>
+      </tr>
+      <tr>
+        <td class="art-note">Tenure</td>
+        <td class="art-note">Pleasure of President</td>
+        <td class="art-note">Pleasure of Governor</td>
+      </tr>
+      <tr>
+        <td class="art-note">Audience</td>
+        <td class="art-note">All courts in India</td>
+        <td class="art-note">All courts in the state</td>
+      </tr>
+      <tr>
+        <td class="art-note">Private Practice</td>
+        <td class="art-note">Allowed (can't brief against GOI)</td>
+        <td class="art-note">Allowed (can't brief against State Govt)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: compare-main                          -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-compare-main">
+  <div class="page-title">The Master Comparison Table</div>
+  <div class="page-subtitle">President vs Governor vs PM vs CM</div>
+
+  <h2>Appointment & Selection</h2>
+  <table class="article-table">
+    <thead><tr><th>Feature</th><th>President</th><th>Governor</th><th>PM</th><th>CM</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="art-note">How selected</td>
+        <td class="art-note">Electoral College (Art. 54)</td>
+        <td class="art-note">Appointed by President</td>
+        <td class="art-note">Appointed by President (leader of majority)</td>
+        <td class="art-note">Appointed by Governor</td>
+      </tr>
+      <tr>
+        <td class="art-note">Art. of establishment</td>
+        <td class="art-num">52</td>
+        <td class="art-num">153</td>
+        <td class="art-num">74</td>
+        <td class="art-num">163</td>
+      </tr>
+      <tr>
+        <td class="art-note">Art. of executive power</td>
+        <td class="art-num">53</td>
+        <td class="art-num">154</td>
+        <td class="art-note">—</td>
+        <td class="art-note">—</td>
+      </tr>
+      <tr>
+        <td class="art-note">Art. of appointment</td>
+        <td class="art-num">54+55 (election)</td>
+        <td class="art-num">155</td>
+        <td class="art-num">75</td>
+        <td class="art-num">164</td>
+      </tr>
+      <tr>
+        <td class="art-note">Term</td>
+        <td class="art-note">5 years (Art. 56)</td>
+        <td class="art-note">5 years nominal, pleasure of President (Art. 156)</td>
+        <td class="art-note">No fixed term — LS majority</td>
+        <td class="art-note">No fixed term — LA majority</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Oath Administrator</h2>
+  <table class="article-table">
+    <thead><tr><th>Office</th><th>Oath Administered By</th></tr></thead>
+    <tbody>
+      <tr><td class="art-note">President</td><td class="art-note"><strong>Chief Justice of India (CJI)</strong></td></tr>
+      <tr><td class="art-note">Vice President</td><td class="art-note"><strong>President</strong></td></tr>
+      <tr><td class="art-note">Governor</td><td class="art-note"><strong>Chief Justice of High Court</strong></td></tr>
+      <tr><td class="art-note">Ministers (Union)</td><td class="art-note"><strong>President</strong></td></tr>
+      <tr><td class="art-note">Ministers (State)</td><td class="art-note"><strong>Governor</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Qualification Comparison</h2>
+  <table class="article-table">
+    <thead><tr><th>Office</th><th>Age</th><th>Extra Qualification</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="art-note">President</td>
+        <td class="art-note">35+</td>
+        <td class="art-note">Citizen of India + Qualified to be member of Lok Sabha</td>
+      </tr>
+      <tr>
+        <td class="art-note">Vice President</td>
+        <td class="art-note">35+</td>
+        <td class="art-note">Citizen of India + Qualified to be member of Rajya Sabha</td>
+      </tr>
+      <tr>
+        <td class="art-note">Governor</td>
+        <td class="art-note">35+</td>
+        <td class="art-note">Citizen of India ONLY (NO "qualified as MLA" clause)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Collective vs Individual Responsibility</h2>
+  <div class="compare-grid">
+    <div class="cg-header">Responsibility</div>
+    <div class="cg-header cg-pres">Union CoM</div>
+    <div class="cg-header cg-gov">State CoM</div>
+    <div class="cg-cell cg-label">Collectively responsible to</div>
+    <div class="cg-cell cg-pres">Lok Sabha</div>
+    <div class="cg-cell cg-gov">Vidhan Sabha (Legislative Assembly)</div>
+    <div class="cg-cell cg-label">Individually responsible to</div>
+    <div class="cg-cell cg-pres">President</div>
+    <div class="cg-cell cg-gov">Governor</div>
+    <div class="cg-cell cg-label">Oath administered by</div>
+    <div class="cg-cell cg-pres">President</div>
+    <div class="cg-cell cg-gov">Governor</div>
+    <div class="cg-cell cg-label">Salary determined by</div>
+    <div class="cg-cell cg-pres">Parliament</div>
+    <div class="cg-cell cg-gov">State Legislature</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: palace-main                           -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-palace-main">
+  <div class="page-title">🧠 Chapter Memory Palace</div>
+  <div class="page-subtitle">Walk through a Government Building in your mind</div>
+
+  <div class="card card-purple" style="margin-bottom:20px">
+    <p>Imagine you are visiting a <strong>Government Building</strong>. You enter through the gate, walk through several floors, each room holding a key concept. Walk through it every time you revise.</p>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-room-num">GATE</div>
+    <div class="palace-room-title">🚪 The Security Guard (Art. 152)</div>
+    <p>He checks your ID and says: "This building is the STATE — not that 12-article state, the real state like UP, MP." This is Chapter 2 of Part VI — Art. 152, the only article, defining "State" for Part VI.</p>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-room-num">FLOOR 1</div>
+    <div class="palace-room-title">🏛️ Reception Desk — The Governor (Art. 153–161)</div>
+    <p>The receptionist is the GOVERNOR. No election — he was <strong>appointed by the President's letter</strong> (Art. 155). He can cover 2 desks (2 states) since 7th CA 1956. His job contract says "5 years" but the President can fire him anytime (Doctrine of Pleasure, Art. 156). He's 35+ years old and Indian (Art. 157). He can't be an MP or MLA (Art. 158). His oath was given by the HC Chief Justice (Art. 159).</p>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-room-num">FLOOR 2</div>
+    <div class="palace-room-title">⚖️ Pardoning Room (Art. 161)</div>
+    <p>The Governor sits here granting mercy to prisoners. But there's a big LOCKED BOX labelled "DEATH PENALTY" and another "COURT MARTIAL" — he has no key to those. Only the President has the key (Art. 72). He can open all the other boxes: Pardon, Commute, Remit, Respite, Reprieve.</p>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-room-num">FLOOR 3</div>
+    <div class="palace-room-title">👔 PM's Office (Art. 74–75)</div>
+    <p>The PM sits here as <strong>real boss</strong>. On his desk: a STAMP (he advises; President rubber-stamps). A 42nd Amendment paper says "Advice is BINDING" and a 44th says "Can return once." His office has a HEADCOUNT board: "15% of Lok Sabha only" (91st CA 2003). Each minister's file has two stickers — "Individual: President" and "Collective: Lok Sabha." A calendar shows "6 MONTHS" to get elected or lose the job.</p>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-room-num">FLOOR 4</div>
+    <div class="palace-room-title">📞 Telephone Room — Art. 78 (PM Duties)</div>
+    <p>The PM sits on a telephone connecting two people — the CoM on one end and the President on the other. He is the LYNCHPIN (Nehru's word) — the bolt that holds the machine together. If he quits, the whole government falls.</p>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-room-num">FLOOR 5</div>
+    <div class="palace-room-title">⚖️ Legal Department — AG (Art. 76)</div>
+    <p>The ATTORNEY GENERAL has a bag with Supreme Court-level qualifications (5yr HC judge / 10yr HC advocate / distinguished jurist). He can walk into ANY court in India freely (right of audience). His contract says "Pleasure of President" but he still takes private cases — just not against the Government of India. First occupant: M.C. Setalvad.</p>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-room-num">MIRROR</div>
+    <div class="palace-room-title">🪞 The State Mirror</div>
+    <p>Everything you saw in this building — hold it up to a MIRROR. The reflection is the STATE government. Governor instead of President. CM instead of PM. Advocate General instead of Attorney General. Add 89 to all the article numbers (74→163, 75→164, 76→165, 78→167).</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: traps-main                            -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-traps-main">
+  <div class="page-title">⚠️ Exam Traps</div>
+  <div class="page-subtitle">What toppers know that average students don't</div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 1: Governor's Qualification</div>
+    <p>President's qualification = Citizen of India + 35 years + <strong>qualified to be member of Lok Sabha</strong>.<br>
+    Governor's qualification = Citizen of India + 35 years ONLY. <strong>NO Legislative Assembly qualification needed.</strong><br>
+    Examiners LOVE asking this difference.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 2: "Qualified to be appointed as SC/HC Judge"</div>
+    <p>AG must be "qualified to be a SC judge" — this does NOT mean he IS or WAS a SC judge. It means he has the <em>qualifications</em> (HC judge 5yrs OR HC advocate 10yrs OR distinguished jurist). Don't confuse "qualified to be" with "is."</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 3: Death Sentence Pardon</div>
+    <p>Both President AND Governor can grant pardons. But ONLY the President can pardon death sentences. If a question says "Governor can pardon death sentence" — it is FALSE.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 4: 42nd vs 44th Amendment</div>
+    <p>42nd (1976): Made advice completely binding. 44th (1978): Gave President power to return advice ONCE for reconsideration — but reconsidered advice is still binding.<br>
+    Don't confuse: 44th did NOT remove binding nature — it just added one-time reconsideration.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 5: 91st Amendment Cap</div>
+    <p>Council of Ministers strength cap = 15% of Lok Sabha members. This <strong>INCLUDES the PM</strong> (not excludes). Exam may ask "excluding PM" as wrong option.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 6: Solicitor General</div>
+    <p>Solicitor General assists the AG but is <strong>NOT a constitutional position</strong> — not mentioned in the Constitution. Examiners may try to trick you into saying it's a constitutional body.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 7: Oath — Who Administers to Whom</div>
+    <p>President → oath by CJI (Supreme Court Chief Justice)<br>
+    Vice President → oath by President<br>
+    Governor → oath by Chief Justice of <strong>High Court</strong> (NOT CJI)<br>
+    This is a favourite trap — many confuse Governor's oath administrator.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 8: 7th Constitutional Amendment</div>
+    <p>7th CA (1956) did THREE things: (1) One person can be Governor of 2+ states, (2) Removed Part VII, (3) One HC for multiple states/UTs. Exam may ask any one and present others as wrong options.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 9: Minister Classification in Constitution</div>
+    <p>Cabinet Minister, MoS (IC), MoS, Deputy Minister — this hierarchy is <strong>NOT mentioned in the Constitution</strong> anywhere. It is a conventional/practical arrangement. Exam trap: "Which is NOT mentioned in Constitution" — answer: this classification.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 10: Collective Responsibility to Lok Sabha NOT Rajya Sabha</div>
+    <p>The Council of Ministers is collectively responsible to the <strong>Lok Sabha</strong> only, not Rajya Sabha or Parliament. The PM need not be a member of Lok Sabha (can be Rajya Sabha), but CoM answers to Lok Sabha.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: quiz-main                             -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-quiz-main">
+  <div class="page-title">❓ Active Recall — Test Yourself</div>
+  <div class="page-subtitle">Click Reveal to check your answer</div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">1. Who appoints the Governor? Through what process?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">The President appoints the Governor. There is NO election — direct appointment by Presidential warrant (Art. 155).</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">2. What is the Doctrine of Pleasure in context of the Governor?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">The Governor holds office during the pleasure of the President (Art. 156). The President can remove the Governor at any time without following any specific procedure. No reason needs to be given.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">3. Who administers the oath to the Governor?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">Chief Justice of the High Court of that state (Art. 159). NOT the CJI (that's for President).</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">4. What are the TWO things the Governor CANNOT do that the President CAN do in pardoning power?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">(1) Cannot pardon a death sentence. (2) Cannot suspend, remit, or commute sentences of court martial (military courts). These two powers are exclusively Presidential.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">5. What did the 7th Constitutional Amendment of 1956 do? (All 3 points)</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">1. Allowed one person to be appointed Governor of two or more states simultaneously.<br>2. Repealed/removed Part VII of the Constitution.<br>3. Allowed one High Court to have jurisdiction over multiple states or union territories.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">6. Fill in the blank: CoM strength cannot exceed ___% of total members of ___. Added by ___th Amendment of year ___.</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">15% of total members of Lok Sabha. Added by 91st Constitutional Amendment of 2003. This includes the PM.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">7. What did the 42nd Amendment do to the President's obligation to follow CoM advice? How did the 44th Amendment change it?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">42nd CA (1976): Made it completely binding — President MUST accept CoM advice, no option to return.<br>44th CA (1978): President can now return the advice ONCE for reconsideration, but the reconsidered advice coming back is binding.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">8. What happens if a minister is not a member of any House of Parliament for 6 consecutive months?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">He ceases to be a minister (Art. 75, Clause 5). Within 6 months of becoming a minister, one must get elected to either Lok Sabha or Rajya Sabha. This route was used for S. Jaishankar via Rajya Sabha from Gujarat.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">9. Name the first Attorney General of India.</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">M.C. Setalvad (M.C. Selvad) was the first Attorney General of India.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">10. Is the classification of Cabinet Minister / MoS / MoS-IC / Deputy Minister found in the Constitution?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">NO. This hierarchy is NOT mentioned anywhere in the Constitution. It is a conventional/practical arrangement based on political practice.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">11. Who called the PM the "Lynchpin of the Government"?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">Jawaharlal Nehru called the Prime Minister the "Lynchpin of the Government" — referring to the PM's role as the link between the CoM and the President (Art. 78).</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">12. Can the Attorney General take private cases while serving? One restriction?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">YES, the AG can take private cases — private practice is NOT barred. One restriction: cannot hold a brief (fight a case) against the Government of India.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">13. Reverse: Article 78 deals with what?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">Article 78 deals with the Duties of the Prime Minister — specifically, his duty to act as a communication link between the Council of Ministers and the President.</div>
+  </div>
+
+  <div class="quiz-item">
+    <div class="quiz-q">14. What is the Article number for: Conduct of Business of Government of a State?</div>
+    <button class="reveal-btn" onclick="revealAnswer(this)">Reveal Answer</button>
+    <div class="quiz-reveal">Article 166 (= Art. 77 + 89). Art. 77 = Conduct of Business of Government of India. Add 89 → 166 = State equivalent.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: flash-main                            -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-flash-main">
+  <div class="page-title">⚡ Ultra-Fast Revision Sheet</div>
+  <div class="page-subtitle">All high-yield facts in one scroll — revise in 5 minutes</div>
+
+  <h2>GOVERNOR</h2>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>Art. 153: There shall be a Governor. Art. 154: Executive power of state vested in Governor.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 155:</strong> Appointed by President (NO election). Same person can be Governor of 2+ states (7th CA 1956).</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 156:</strong> 5-year term BUT holds at pleasure of President. No fixed removal procedure (Doctrine of Pleasure). Resignation to President.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 157:</strong> Qualification: Citizen of India + 35 years. NO "qualified as MLA" condition (unlike President → Lok Sabha).</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 158:</strong> Cannot be MP/MLA/MLC. Cannot hold office of profit.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 159:</strong> Oath administered by Chief Justice of HIGH COURT (not CJI).</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 161:</strong> Pardoning power — BUT cannot pardon death sentence; cannot suspend court martial sentence.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>7th CA 1956: One person → 2+ state Governors + Removed Part VII + One HC for multiple states/UTs.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>NO impeachment of Governor (serves at pleasure of President — can be removed anytime).</span></div>
+
+  <h2>PM & COUNCIL OF MINISTERS</h2>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 74:</strong> CoM aids and advises President. PM is head. Advice is BINDING on President.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>42nd CA (1976): Made advice completely binding. 44th CA (1978): Can return once for reconsideration; reconsidered advice still binding.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>President = Head of Country (Nominal/Titular/De Jure/Rubber Stamp). PM = Head of Government (Real/De Facto).</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 75 Cl.1:</strong> President appoints PM; other ministers on PM's advice.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 75 Cl.1(B):</strong> 15% cap on CoM strength (of Lok Sabha members, including PM). 91st CA 2003. Defection ground disqualifies from ministership.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 75 Cl.2:</strong> Ministers individually responsible to President (hold office at pleasure of President).</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 75 Cl.3:</strong> CoM collectively responsible to LOK SABHA. PM resigns/dies → entire CoM dissolves.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 75 Cl.4:</strong> Oath of office administered by President.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 75 Cl.5:</strong> Not a member of any House for 6 consecutive months → loses ministership.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 75 Cl.6:</strong> Salary determined by Parliament.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 77:</strong> Government business conducted in name of President.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span><strong>Art. 78:</strong> PM's duty = Lynchpin = link between CoM and President. (Nehru's term)</span></div>
+
+  <h2>ATTORNEY GENERAL</h2>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>Art. 76. Highest law officer of India. Appointed by President.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>Qualification = SC judge qualifications (HC judge 5yr / HC advocate 10yr / distinguished jurist).</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>Right of audience in ALL courts in India. Holds at pleasure of President.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>Can do private practice. CANNOT brief against Government of India.</span></div>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>First AG: M.C. Setalvad. Solicitor General (Tushar Mehta) — NOT a constitutional position.</span></div>
+
+  <h2>THE +89 TRICK (Part V → Part VI)</h2>
+  <div class="fast-item"><span class="fast-bullet">→</span><span>Art. 74 → 163 | Art. 75 → 164 | Art. 76 → 165 (AG → Advocate General) | Art. 77 → 166 | Art. 78 → 167</span></div>
+</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- PAGE: night-main                            -->
+<!-- ════════════════════════════════════════════ -->
+<div class="page" id="page-night-main">
+  <div class="page-title">🌙 Last Night Before Exam Sheet</div>
+  <div class="page-subtitle">Read this in 90 seconds. Trust it. Sleep.</div>
+
+  <div class="night-sheet">
+    <h3>GOVERNOR — Quick Hits</h3>
+    <div class="night-row"><span class="night-key">Appoints Governor</span><span class="night-val">PRESIDENT (no election)</span></div>
+    <div class="night-row"><span class="night-key">Governor's term</span><span class="night-val">5 yrs nominal + Pleasure of President</span></div>
+    <div class="night-row"><span class="night-key">Oath given by</span><span class="night-val">CJ of HIGH COURT</span></div>
+    <div class="night-row"><span class="night-key">Qualifications</span><span class="night-val">35yrs + Indian. NO MLA condition</span></div>
+    <div class="night-row"><span class="night-key">Pardoning — Cannot</span><span class="night-val">Death sentence + Court martial</span></div>
+    <div class="night-row"><span class="night-key">7th CA 1956</span><span class="night-val">Governor of 2+ states + Part VII removed + One HC for multiple states</span></div>
+    <div class="night-row"><span class="night-key">Impeachment</span><span class="night-val">❌ No impeachment</span></div>
+
+    <h3 style="margin-top:18px">PM & COUNCIL OF MINISTERS</h3>
+    <div class="night-row"><span class="night-key">Art. 74</span><span class="night-val">CoM advises President. Binding (42nd CA). Return once (44th CA).</span></div>
+    <div class="night-row"><span class="night-key">President</span><span class="night-val">De Jure / Titular / Rubber Stamp</span></div>
+    <div class="night-row"><span class="night-key">PM</span><span class="night-val">De Facto / Lynchpin (Nehru)</span></div>
+    <div class="night-row"><span class="night-key">CoM cap</span><span class="night-val">15% of LS members (incl. PM) — 91st CA 2003</span></div>
+    <div class="night-row"><span class="night-key">Collective responsibility</span><span class="night-val">To LOK SABHA</span></div>
+    <div class="night-row"><span class="night-key">Individual responsibility</span><span class="night-val">To PRESIDENT</span></div>
+    <div class="night-row"><span class="night-key">6-month rule</span><span class="night-val">Not in any House for 6 months → loses ministership</span></div>
+    <div class="night-row"><span class="night-key">Minister oath by</span><span class="night-val">PRESIDENT</span></div>
+    <div class="night-row"><span class="night-key">Art. 78</span><span class="night-val">PM duties = bridge between CoM and President</span></div>
+
+    <h3 style="margin-top:18px">ATTORNEY GENERAL</h3>
+    <div class="night-row"><span class="night-key">Art. 76</span><span class="night-val">Highest law officer. Appointed by President.</span></div>
+    <div class="night-row"><span class="night-key">Qualification</span><span class="night-val">Qualified to be SC Judge</span></div>
+    <div class="night-row"><span class="night-key">Private practice</span><span class="night-val">Allowed (not against GOI)</span></div>
+    <div class="night-row"><span class="night-key">First AG</span><span class="night-val">M.C. Setalvad</span></div>
+    <div class="night-row"><span class="night-key">Solicitor General</span><span class="night-val">NOT constitutional (assists AG)</span></div>
+
+    <h3 style="margin-top:18px">THE +89 / +1 TRICK</h3>
+    <div class="night-row"><span class="night-key">Part V → Part VI (articles)</span><span class="night-val">+1 for Governor (52→153 etc)</span></div>
+    <div class="night-row"><span class="night-key">PM articles → CM articles</span><span class="night-val">+89 (74→163, 75→164, 76→165, 77→166, 78→167)</span></div>
+
+    <div style="margin-top:20px; padding:14px; background:rgba(57,211,83,0.08); border-radius:8px; text-align:center">
+      <p style="color:var(--green); font-weight:700; font-size:14px; margin:0">You know this. Trust yourself. Go score. 🎯</p>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+  // ── STATE ──
+  const chapterPages = {
+    governor: 'gov-overview',
+    pm: 'pm-overview',
+    ag: 'ag-main',
+    compare: 'compare-main',
+    palace: 'palace-main',
+    traps: 'traps-main',
+    quiz: 'quiz-main',
+    flash: 'flash-main',
+    night: 'night-main'
+  };
+
+  let currentChapter = 'governor';
+  let currentPage = 'gov-overview';
+
+  // ── SWITCH CHAPTER (top nav) ──
+  function switchChapter(chapter) {
+    currentChapter = chapter;
+    const page = chapterPages[chapter];
+    currentPage = page;
+
+    // Update top nav
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => {
+      if (t.getAttribute('onclick') === `switchChapter('${chapter}')`) t.classList.add('active');
+    });
+
+    // Update sidebar
+    document.querySelectorAll('.sidebar-item').forEach(s => {
+      s.classList.remove('active');
+      if (s.dataset.chapter === chapter && s.dataset.page === page) s.classList.add('active');
+    });
+
+    showPage(page);
+  }
+
+  // ── SWITCH PAGE (sidebar) ──
+  function switchPage(el) {
+    const page = el.dataset.page;
+    const chapter = el.dataset.chapter;
+    currentChapter = chapter;
+    currentPage = page;
+
+    // Update top nav
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => {
+      if (t.getAttribute('onclick') === `switchChapter('${chapter}')`) t.classList.add('active');
+    });
+
+    // Update sidebar
+    document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+
+    showPage(page);
+  }
+
+  function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page-' + pageId);
+    if (target) {
+      target.classList.add('active');
+      document.getElementById('content').scrollTop = 0;
+    }
+  }
+
+  // ── QUIZ REVEAL ──
+  function revealAnswer(btn) {
+    const reveal = btn.nextElementSibling;
+    reveal.classList.toggle('show');
+    btn.textContent = reveal.classList.contains('show') ? 'Hide Answer' : 'Reveal Answer';
+  }
+</script>
+</body>
+</html>

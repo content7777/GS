@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Making of the Constitution — SSC CGL Revision System</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #161b27;
+    --bg3: #1e2537;
+    --bg4: #252d42;
+    --green: #4ade80;
+    --green-dim: #22c55e40;
+    --green-dark: #166534;
+    --blue: #60a5fa;
+    --blue-dim: #3b82f620;
+    --blue-dark: #1e3a5f;
+    --amber: #fbbf24;
+    --amber-dim: #f59e0b20;
+    --red: #f87171;
+    --red-dim: #ef444430;
+    --teal: #2dd4bf;
+    --purple: #a78bfa;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-faint: #475569;
+    --border: #2d3748;
+    --border-bright: #3d4f6e;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.65; overflow-x: hidden; }
+  
+  /* NAV */
+  #nav { position: fixed; top: 0; left: 0; width: 260px; height: 100vh; background: var(--bg2); border-right: 1px solid var(--border); overflow-y: auto; z-index: 100; display: flex; flex-direction: column; transition: transform 0.3s; }
+  #nav-header { padding: 20px 16px 12px; border-bottom: 1px solid var(--border); }
+  #nav-header h1 { font-size: 13px; color: var(--green); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  #nav-header p { font-size: 11px; color: var(--text-faint); margin-top: 4px; }
+  .nav-section { padding: 10px 8px 4px; }
+  .nav-label { font-size: 10px; color: var(--text-faint); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0 8px 6px; }
+  .nav-btn { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; border-radius: 8px; border: none; background: none; color: var(--text-muted); font-size: 13px; cursor: pointer; text-align: left; transition: all 0.15s; }
+  .nav-btn:hover { background: var(--bg3); color: var(--text); }
+  .nav-btn.active { background: var(--green-dim); color: var(--green); font-weight: 600; }
+  .nav-btn .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.5; flex-shrink: 0; }
+  .nav-btn.active .dot { opacity: 1; }
+  .layer-badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--blue-dim); color: var(--blue); margin-left: auto; flex-shrink: 0; }
+
+  /* MAIN */
+  #main { margin-left: 260px; min-height: 100vh; }
+  .page { display: none; padding: 32px 40px 60px; max-width: 900px; animation: fadeIn 0.2s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* TYPOGRAPHY */
+  .page-title { font-size: 28px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .page-subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 28px; }
+  h2 { font-size: 18px; font-weight: 600; color: var(--green); margin: 28px 0 12px; display: flex; align-items: center; gap: 8px; }
+  h2::before { content: ''; display: block; width: 3px; height: 18px; background: var(--green); border-radius: 2px; }
+  h3 { font-size: 15px; font-weight: 600; color: var(--blue); margin: 18px 0 8px; }
+  p { margin-bottom: 10px; color: var(--text); }
+
+  /* CARDS */
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 14px; }
+  .card-fire { border-color: #ef444450; background: linear-gradient(135deg, var(--bg2), #1a1010); }
+  .card-star { border-color: #fbbf2450; background: linear-gradient(135deg, var(--bg2), #1a1500); }
+  .card-blue { border-color: #60a5fa40; background: linear-gradient(135deg, var(--bg2), #0f1a2e); }
+  .card-green { border-color: #4ade8040; background: linear-gradient(135deg, var(--bg2), #0a1a10); }
+  .card-purple { border-color: #a78bfa40; background: linear-gradient(135deg, var(--bg2), #130f1e); }
+  .card-red { background: #1a0a0a; border-color: #f8717150; }
+
+  /* TAGS */
+  .tag { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 6px; margin-right: 6px; margin-bottom: 6px; }
+  .tag-fire { background: #ef444420; color: #f87171; border: 1px solid #ef444440; }
+  .tag-star { background: #fbbf2420; color: #fbbf24; border: 1px solid #fbbf2440; }
+  .tag-plus { background: #60a5fa20; color: #60a5fa; border: 1px solid #60a5fa40; }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th { background: var(--bg3); color: var(--green); font-weight: 600; padding: 10px 12px; text-align: left; border-bottom: 2px solid var(--border-bright); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  tr:hover td { background: var(--bg3); }
+  .td-key { color: var(--green); font-weight: 600; white-space: nowrap; }
+  .td-blue { color: var(--blue); font-weight: 600; }
+  .td-amber { color: var(--amber); font-weight: 600; }
+
+  /* MEMORY HOOK */
+  .hook { background: var(--bg3); border-left: 3px solid var(--purple); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 16px; margin: 12px 0; font-style: italic; color: var(--text-muted); }
+  .hook strong { color: var(--purple); font-style: normal; }
+  .hook-label { font-size: 11px; color: var(--purple); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; font-style: normal; }
+
+  /* TRAP BOX */
+  .trap { background: #1a0a0a; border: 1px solid #f8717150; border-radius: var(--radius); padding: 14px 16px; margin: 10px 0; }
+  .trap-title { color: var(--red); font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+  .trap p { color: #fca5a5; font-size: 14px; margin: 0; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 2px; background: var(--border-bright); }
+  .tl-item { position: relative; margin-bottom: 14px; }
+  .tl-item::before { content: ''; position: absolute; left: -21px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--green); border: 2px solid var(--bg); }
+  .tl-item.orange::before { background: var(--amber); }
+  .tl-item.red::before { background: var(--red); }
+  .tl-item.blue::before { background: var(--blue); }
+  .tl-year { font-size: 13px; font-weight: 700; color: var(--green); }
+  .tl-item.orange .tl-year { color: var(--amber); }
+  .tl-item.red .tl-year { color: var(--red); }
+  .tl-item.blue .tl-year { color: var(--blue); }
+  .tl-text { font-size: 14px; color: var(--text-muted); }
+  .tl-text strong { color: var(--text); }
+
+  /* QUIZ */
+  .quiz-q { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin: 10px 0; }
+  .quiz-q .q-text { font-weight: 600; color: var(--text); margin-bottom: 8px; }
+  .quiz-q .q-reveal { display: none; margin-top: 8px; background: var(--bg3); border-radius: 6px; padding: 10px 12px; color: var(--green); font-size: 14px; }
+  .quiz-q.revealed .q-reveal { display: block; }
+  .quiz-btn { font-size: 12px; padding: 4px 12px; border-radius: 6px; border: 1px solid var(--border-bright); background: none; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+  .quiz-btn:hover { border-color: var(--green); color: var(--green); }
+
+  /* PALACE */
+  .palace-room { background: var(--bg3); border: 1px solid var(--border-bright); border-radius: var(--radius); padding: 14px 16px; margin: 8px 0; display: flex; gap: 12px; }
+  .palace-icon { font-size: 24px; flex-shrink: 0; }
+  .palace-room h4 { font-size: 14px; font-weight: 700; color: var(--amber); margin-bottom: 4px; }
+  .palace-room p { font-size: 13px; color: var(--text-muted); margin: 0; }
+
+  /* BULLETS */
+  .bullet-list { list-style: none; padding: 0; }
+  .bullet-list li { padding: 5px 0 5px 20px; position: relative; color: var(--text); font-size: 14px; border-bottom: 1px solid var(--border); }
+  .bullet-list li:last-child { border: none; }
+  .bullet-list li::before { content: '›'; position: absolute; left: 4px; color: var(--green); font-weight: 700; }
+
+  /* FLASH CARDS */
+  .flash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin: 10px 0; }
+  .flash-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; cursor: pointer; transition: all 0.15s; min-height: 80px; display: flex; flex-direction: column; justify-content: center; }
+  .flash-card:hover { border-color: var(--blue); background: var(--bg4); }
+  .flash-card .fc-front { font-size: 13px; color: var(--text-muted); }
+  .flash-card .fc-back { display: none; font-size: 14px; font-weight: 600; color: var(--green); margin-top: 4px; }
+  .flash-card.flipped .fc-front { font-size: 11px; }
+  .flash-card.flipped .fc-back { display: block; }
+
+  /* LAYERS */
+  .layer-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .layer-num { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; flex-shrink: 0; }
+  .layer-title { font-size: 16px; font-weight: 700; color: var(--text); }
+  .layer-desc { font-size: 13px; color: var(--text-faint); }
+
+  /* SPEED CARDS */
+  .speed-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .speed-item { background: var(--bg3); border-radius: 8px; padding: 10px 12px; }
+  .speed-key { font-size: 12px; color: var(--text-faint); }
+  .speed-val { font-size: 15px; font-weight: 700; color: var(--green); }
+
+  /* HIGHLIGHT */
+  .hl { color: var(--amber); font-weight: 600; }
+  .hl-green { color: var(--green); font-weight: 600; }
+  .hl-blue { color: var(--blue); font-weight: 600; }
+  .hl-red { color: var(--red); font-weight: 600; }
+  .hl-purple { color: var(--purple); font-weight: 600; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* MOBILE TOGGLE */
+  #nav-toggle { display: none; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; cursor: pointer; color: var(--text); font-size: 18px; }
+
+  /* PROGRESS BAR */
+  .progress-pill { display: flex; gap: 4px; flex-wrap: wrap; margin: 10px 0; }
+  .pp { height: 6px; flex: 1; min-width: 20px; border-radius: 3px; background: var(--border); }
+  .pp.done { background: var(--green); }
+  .pp.partial { background: var(--amber); }
+
+  /* SCROLL */
+  ::-webkit-scrollbar { width: 6px; } 
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+  @media (max-width: 768px) {
+    #nav { transform: translateX(-260px); }
+    #nav.open { transform: translateX(0); }
+    #nav-toggle { display: block; }
+    #main { margin-left: 0; }
+    .page { padding: 60px 18px 40px; }
+    .speed-grid { grid-template-columns: 1fr; }
+  }
+  .conn-box { background: var(--bg3); border-radius: var(--radius); padding: 12px 14px; border-left: 3px solid var(--teal); margin: 8px 0; }
+  .conn-box .conn-arrow { color: var(--teal); font-weight: 700; margin: 0 6px; }
+  .big-date { font-size: 32px; font-weight: 800; color: var(--green); letter-spacing: -1px; }
+</style>
+</head>
+<body>
+
+<button id="nav-toggle" onclick="toggleNav()">☰</button>
+
+<nav id="nav">
+  <div id="nav-header">
+    <h1>SSC CGL Polity</h1>
+    <p>Making of the Constitution</p>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Layer 1 — Full Notes</div>
+    <button class="nav-btn active" onclick="goTo('home')"><span class="dot"></span>Big Picture & Palace</button>
+    <button class="nav-btn" onclick="goTo('demands')"><span class="dot"></span>Demand Timeline</button>
+    <button class="nav-btn" onclick="goTo('missions')"><span class="dot"></span>Offers & Missions</button>
+    <button class="nav-btn" onclick="goTo('assembly')"><span class="dot"></span>Constituent Assembly</button>
+    <button class="nav-btn" onclick="goTo('committees')"><span class="dot"></span>Committees</button>
+    <button class="nav-btn" onclick="goTo('dates')"><span class="dot"></span>Key Dates & Sessions</button>
+    <button class="nav-btn" onclick="goTo('facts')"><span class="dot"></span>Key Facts & People</button>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Memory & Exam</div>
+    <button class="nav-btn" onclick="goTo('hooks')"><span class="dot"></span>Memory Hooks</button>
+    <button class="nav-btn" onclick="goTo('traps')"><span class="dot"></span>⚠ Exam Traps</button>
+    <button class="nav-btn" onclick="goTo('examiner')"><span class="dot"></span>Examiner's Favourites</button>
+    <button class="nav-btn" onclick="goTo('recall')"><span class="dot"></span>Active Recall Quiz</button>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Fast Revision</div>
+    <button class="nav-btn" onclick="goTo('highyield')"><span class="dot"></span>Layer 2 — High-Yield <span class="layer-badge">L2</span></button>
+    <button class="nav-btn" onclick="goTo('ultrafast')"><span class="dot"></span>Layer 3 — Ultra-Fast <span class="layer-badge">L3</span></button>
+    <button class="nav-btn" onclick="goTo('thirtyse')"><span class="dot"></span>Layer 4 — 30-Second <span class="layer-badge">L4</span></button>
+    <button class="nav-btn" onclick="goTo('lastnight')"><span class="dot"></span>Layer 5 — Last Night <span class="layer-badge">L5</span></button>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ============ HOME ============ -->
+<div class="page active" id="page-home">
+  <p class="page-subtitle">CHAPTER 1 · POLITY</p>
+  <h1 class="page-title">Making of the Constitution</h1>
+  <p style="color:var(--text-muted); margin-bottom: 28px;">The story of how a newly independent nation of 350 million people wrote a single governing document — in 2 years, 11 months, and 17 days.</p>
+
+  <h2>Big Picture</h2>
+  <p>This chapter is about <span class="hl">WHO demanded a Constituent Assembly</span>, <span class="hl-blue">WHO rejected it and WHY</span>, <span class="hl-green">HOW it was structured</span>, and <span class="hl">WHAT it produced</span>. Every fact here links to a political drama of independence. Understanding the drama = remembering the facts forever.</p>
+
+  <div class="card card-green">
+    <p><strong>The Core Story in 3 Lines:</strong></p>
+    <p>Indians demanded a body to write their own constitution → British stalled with half-measures (Dominion Status offers) → Cabinet Mission Plan finally worked → Constituent Assembly met, fought, and produced the world's longest constitution.</p>
+  </div>
+
+  <hr class="divider">
+  <h2>Chapter Memory Palace</h2>
+  <p style="color:var(--text-muted); margin-bottom: 14px;">Imagine walking through a grand <strong style="color:var(--amber)">Parliament Building under construction</strong>. Each room holds a memory.</p>
+
+  <div class="palace-room">
+    <div class="palace-icon">🚪</div>
+    <div>
+      <h4>GATE — 1934</h4>
+      <p><strong style="color:var(--text)">MN Roy</strong> stands at the gate with a placard: <em>"We need our own Constitution!"</em> He is first. Remember: <strong style="color:var(--green)">MN Roy = 1934 = Gate (First demand)</strong>.</p>
+    </div>
+  </div>
+  <div class="palace-room">
+    <div class="palace-icon">🏛️</div>
+    <div>
+      <h4>LOBBY — 1935 & 1936</h4>
+      <p><strong style="color:var(--text)">Congress (1935)</strong> enters the lobby shouting the demand. Then <strong style="color:var(--text)">Nehru (1936)</strong> stands on the stairs (Lucknow Session) and repeats it louder.</p>
+    </div>
+  </div>
+  <div class="palace-room">
+    <div class="palace-icon">📜</div>
+    <div>
+      <h4>RECEPTION DESK — 1940–1946</h4>
+      <p>British receptionist offers three gifts: <span class="hl-red">August Offer (1940) — REJECTED</span>, <span class="hl-red">Cripps Mission (1942) — REJECTED</span>, <span class="hl-green">Cabinet Mission (1946) — ACCEPTED</span>. First two gifts were fake (Dominion Status), third was real enough.</p>
+    </div>
+  </div>
+  <div class="palace-room">
+    <div class="palace-icon">🗓️</div>
+    <div>
+      <h4>MAIN HALL — 9 Dec 1946</h4>
+      <p>First meeting of Constituent Assembly. <strong style="color:var(--text)">Sachchidanand Sinha</strong> (oldest man) sits in the temporary chair. <strong style="color:var(--text)">Rajendra Prasad</strong> takes the permanent steering wheel.</p>
+    </div>
+  </div>
+  <div class="palace-room">
+    <div class="palace-icon">📋</div>
+    <div>
+      <h4>COMMITTEE ROOMS — 8 Major, 13 Minor</h4>
+      <p><strong style="color:var(--amber)">Ambedkar's room</strong> is the most important (Drafting Committee). <strong style="color:var(--blue)">Nehru's rooms</strong> have "Union" on the door. <strong style="color:var(--green)">Patel's room</strong> has "Minorities" written. Rajendra Prasad owns the entire building.</p>
+    </div>
+  </div>
+  <div class="palace-room">
+    <div class="palace-icon">✍️</div>
+    <div>
+      <h4>WRITING ROOM — Prem Bihari + Vasant</h4>
+      <p><strong style="color:var(--text)">Prem Bihari Narayan Raizad</strong> writes English in beautiful calligraphy (for free!). <strong style="color:var(--text)">Vasant Krishna Vaidya</strong> writes Hindi. <strong style="color:var(--text)">Nandlal Bose</strong> decorates the pages.</p>
+    </div>
+  </div>
+  <div class="palace-room">
+    <div class="palace-icon">🎉</div>
+    <div>
+      <h4>ROOFTOP — 26 Jan 1950</h4>
+      <p>Constitution comes into force. Republic Day. Why 26th Jan? Because <strong style="color:var(--green)">26 Jan 1930</strong> was the first independence day celebration (Lahore Session, 1929). Sacred date → chosen deliberately.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DEMANDS ============ -->
+<div class="page" id="page-demands">
+  <p class="page-subtitle">CHAPTER 1 · LAYER 1</p>
+  <h1 class="page-title">Demand for Constituent Assembly</h1>
+
+  <div class="card card-fire">
+    <span class="tag tag-fire">🔥 Must Know</span>
+    <p style="margin-top: 8px;">Four people/bodies made the demand. Learn them in chronological order.</p>
+  </div>
+
+  <h2>The Demand Timeline</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1934</div>
+      <div class="tl-text"><strong>MN Roy</strong> (Manindranath Roy) — <em>First ever demand</em> for a Constituent Assembly. He was a Marxist thinker. Remember: Roy = Roy = Royal First.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1935</div>
+      <div class="tl-text"><strong>Indian National Congress</strong> officially placed the demand. Congress formalized what Roy started.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1936</div>
+      <div class="tl-text"><strong>Jawaharlal Nehru</strong> placed the demand at the <span class="hl">Lucknow Session</span> of Congress. Location matters for MCQs!</div>
+    </div>
+    <div class="tl-item orange">
+      <div class="tl-year">1940</div>
+      <div class="tl-text"><strong>August Offer</strong> — Viceroy <span class="hl">Linlithgow</span> gave Britain's first formal response. <span class="hl-red">REJECTED</span> — offered Dominion Status, not Purna Swaraj.</div>
+    </div>
+    <div class="tl-item red">
+      <div class="tl-year">1942</div>
+      <div class="tl-text"><strong>Cripps Mission</strong> arrived. <span class="hl-red">REJECTED</span> — again offered Dominion Status. Congress wanted full independence.</div>
+    </div>
+    <div class="tl-item blue">
+      <div class="tl-year">1945–46</div>
+      <div class="tl-text"><strong>Cabinet Mission Plan</strong> — Formed in 1945, came to India in 1946. <span class="hl-green">ACCEPTED</span>. Finally paved way for a real Constituent Assembly.</div>
+    </div>
+  </div>
+
+  <h2>Why Were August Offer & Cripps Mission Rejected?</h2>
+  <div class="conn-box">
+    <p><strong>August Offer + Cripps Mission</strong> <span class="conn-arrow">→</span> offered <strong>Dominion Status</strong> <span class="conn-arrow">→</span> Congress had declared <strong>Purna Swaraj</strong> (1929 Lahore) as goal <span class="conn-arrow">→</span> <strong>REJECTED</strong></p>
+  </div>
+  <div class="card">
+    <h3>What is Dominion Status?</h3>
+    <p>India gets power to make its own laws, BUT remains under the British Crown. Like a tenant who furnishes their own room but the landlord still owns the building. India wanted to OWN the building.</p>
+    <p style="margin-top: 8px;"><strong style="color:var(--green)">Purna Swaraj</strong> = Complete independence. No British Crown overhead.</p>
+  </div>
+
+  <h2>Why Was Cabinet Mission Accepted?</h2>
+  <div class="card card-star">
+    <span class="tag tag-star">⭐ Important</span>
+    <table>
+      <tr><th>Party</th><th>Why Accepted?</th></tr>
+      <tr><td class="td-key">Congress</td><td>No explicit mention of Dominion Status. Path to full independence was implied.</td></tr>
+      <tr><td class="td-key">Muslim League</td><td>Grouping of Provinces (Group A, B, C) — Jinnah thought he could carve Pakistan from Group B & C (Muslim majority areas).</td></tr>
+    </table>
+    <div class="hook">
+      <div class="hook-label">Memory Hook</div>
+      Jinnah saw the <strong>grouping</strong> as a back door to Pakistan. When Nehru said grouping is NOT compulsory, Jinnah slammed the door — called Direct Action Day (Aug 16, 1946), and the plan collapsed for the League. Eventually Pakistan was created separately.
+    </div>
+  </div>
+
+  <h2>Cabinet Mission — 3 Members</h2>
+  <p>Came from Britain in <span class="hl">1946</span>. Three people:</p>
+  <ul class="bullet-list">
+    <li><strong>Pathik Lawrence</strong> (Pethick-Lawrence)</li>
+    <li><strong>Alexander</strong></li>
+    <li><strong>Stafford Cripps</strong> (same person as Cripps Mission 1942)</li>
+  </ul>
+  <div class="hook">
+    <div class="hook-label">Memory Hook</div>
+    <strong>LAC</strong> — Lawrence, Alexander, Cripps. Like a lacquer coat on the constitution — they gave India its final polished path.
+  </div>
+</div>
+
+<!-- ============ MISSIONS ============ -->
+<div class="page" id="page-missions">
+  <p class="page-subtitle">CHAPTER 1 · LAYER 1</p>
+  <h1 class="page-title">British Offers — Quick Comparison</h1>
+
+  <table>
+    <tr><th>Offer</th><th>Year</th><th>By Whom</th><th>Key Feature</th><th>Result</th></tr>
+    <tr>
+      <td class="td-key">August Offer</td>
+      <td class="td-amber">1940</td>
+      <td><strong>Linlithgow</strong> (Viceroy)</td>
+      <td>Dominion Status</td>
+      <td class="hl-red">Rejected</td>
+    </tr>
+    <tr>
+      <td class="td-key">Cripps Mission</td>
+      <td class="td-amber">1942</td>
+      <td>Stafford Cripps</td>
+      <td>Dominion Status</td>
+      <td class="hl-red">Rejected</td>
+    </tr>
+    <tr>
+      <td class="td-key">Cabinet Mission</td>
+      <td class="td-amber">1946</td>
+      <td>Lawrence + Alexander + Cripps</td>
+      <td>Grouping of Provinces (A, B, C)</td>
+      <td class="hl-green">Accepted</td>
+    </tr>
+  </table>
+
+  <div class="trap">
+    <div class="trap-title">⚠ EXAM TRAP</div>
+    <p>Stafford Cripps appears in BOTH the 1942 Cripps Mission AND the 1946 Cabinet Mission. Examiners love this confusion. Don't say Cabinet Mission = only Cripps. It had 3 members.</p>
+  </div>
+
+  <h2>Why Did Muslim League Accept, Then Reject Cabinet Mission?</h2>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">May 1946</div>
+      <div class="tl-text">Cabinet Mission arrives. Jinnah accepts — sees grouping (Group B = Muslim-majority NW, Group C = Muslim-majority NE) as a path to Pakistan.</div>
+    </div>
+    <div class="tl-item orange">
+      <div class="tl-year">July 1946</div>
+      <div class="tl-text">Nehru states that grouping is NOT compulsory — provinces can opt out. Jinnah is furious.</div>
+    </div>
+    <div class="tl-item red">
+      <div class="tl-year">Aug 16, 1946</div>
+      <div class="tl-text">Muslim League calls <strong>Direct Action Day</strong>. Violence erupts. Cabinet Mission Plan effectively collapses for the League.</div>
+    </div>
+    <div class="tl-item blue">
+      <div class="tl-year">1947</div>
+      <div class="tl-text">Pakistan created as a separate country. Muslim League makes its own constitution.</div>
+    </div>
+  </div>
+
+  <h2>Interim Government</h2>
+  <div class="card">
+    <p>Formed on <span class="hl">2nd September 1946</span>. This was a transitional government before full independence. (Details covered in Lok Sabha chapter.)</p>
+  </div>
+</div>
+
+<!-- ============ ASSEMBLY ============ -->
+<div class="page" id="page-assembly">
+  <p class="page-subtitle">CHAPTER 1 · LAYER 1</p>
+  <h1 class="page-title">The Constituent Assembly — Structure</h1>
+
+  <h2>Seat Breakdown</h2>
+  <div class="card card-blue">
+    <span class="tag tag-fire">🔥 Must Know</span>
+    <table>
+      <tr><th>Source</th><th>Seats</th><th>How Selected?</th></tr>
+      <tr><td class="td-key">British India (Governor Provinces × 11)</td><td class="td-blue">292</td><td>Indirect election via Provincial Assemblies</td></tr>
+      <tr><td class="td-key">Chief Commissioner Provinces × 4</td><td class="td-blue">4</td><td>1 member each</td></tr>
+      <tr><td class="td-key">Princely States</td><td class="td-blue">93</td><td>Nomination by rulers (kings)</td></tr>
+      <tr style="background:var(--bg4)"><td class="td-key"><strong>TOTAL</strong></td><td class="td-amber"><strong>389</strong></td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Memory Hook — Rajya Sabha Analogy</div>
+    Just like <strong>Rajya Sabha</strong> members are elected by State Assembly MLAs (not directly by people), Constituent Assembly members were elected by Provincial Assembly members. Same indirect method. One difference: Princely State reps were nominated (like President nominates 12 to RS).
+  </div>
+
+  <h2>Community Division</h2>
+  <p>All seats were divided among three communities:</p>
+  <div class="flash-grid">
+    <div class="flash-card"><div class="fc-front">Community 1</div><div class="fc-back">Muslim</div></div>
+    <div class="flash-card"><div class="fc-front">Community 2</div><div class="fc-back">Sikh</div></div>
+    <div class="flash-card"><div class="fc-front">Community 3</div><div class="fc-back">General (everyone else)</div></div>
+  </div>
+  <p style="margin-top:10px; font-size:13px; color:var(--text-muted);">Representation ratio: <span class="hl">1 seat per 10 lakh population</span></p>
+
+  <h2>Elections — July-August 1946</h2>
+  <table>
+    <tr><th>Party</th><th>Seats Won</th></tr>
+    <tr><td class="td-key">Congress</td><td class="hl-green">208</td></tr>
+    <tr><td class="td-key">Muslim League</td><td class="td-amber">73</td></tr>
+    <tr><td class="td-key">Independents</td><td class="td-blue">15</td></tr>
+  </table>
+
+  <h2>After Partition (1947)</h2>
+  <div class="card card-red">
+    <p>Muslim League <strong>boycotted</strong> the Assembly and went to make their own constitution for Pakistan.</p>
+    <p>Original 389 seats → After partition & boycott → <span class="hl">299 seats remained</span> (the working assembly that made our constitution).</p>
+  </div>
+
+  <h2>Key Office Bearers</h2>
+  <table>
+    <tr><th>Position</th><th>Person</th></tr>
+    <tr><td class="td-key">Temporary President</td><td><strong>Sachchidanand Sinha</strong> (oldest member)</td></tr>
+    <tr><td class="td-key">Permanent President</td><td class="hl-green"><strong>Dr. Rajendra Prasad</strong></td></tr>
+    <tr><td class="td-key">Vice President 1</td><td><strong>H.C. Mukherjee</strong></td></tr>
+    <tr><td class="td-key">Vice President 2</td><td><strong>V.T. Krishnamachari</strong></td></tr>
+    <tr><td class="td-key">Constitutional Advisor</td><td><strong>B.N. Rao</strong> (Benegal Narasimha Rao)</td></tr>
+    <tr><td class="td-key">Chief Draftsman</td><td><strong>S.N. Mukherjee</strong></td></tr>
+    <tr><td class="td-key">Secretary</td><td><strong>H.V.R. Iyengar</strong></td></tr>
+  </table>
+
+  <div class="trap">
+    <div class="trap-title">⚠ EXAM TRAP — V.T. vs T.T. Krishnamachari</div>
+    <p>V.T. Krishnamachari = Vice President of Constituent Assembly. T.T. Krishnamachari = Member of Drafting Committee (replaced DP Khaitan). Two different people, similar names. Classic SSC trap!</p>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Memory Hook — Steering Wheel</div>
+    The President of the Assembly is like the <strong>driver</strong> — the steering is in their hands. Rajendra Prasad held the steering. When the assembly sat to make LAWS (not constitution), the steering shifted to <strong>G.V. Mavalankar</strong>.
+  </div>
+</div>
+
+<!-- ============ COMMITTEES ============ -->
+<div class="page" id="page-committees">
+  <p class="page-subtitle">CHAPTER 1 · LAYER 1</p>
+  <h1 class="page-title">Committees of the Constituent Assembly</h1>
+
+  <div class="card">
+    <p>Total: <span class="hl">8 Major + 13 Minor</span> committees (some sources say 14 minor — only major matters for exam)</p>
+  </div>
+
+  <h2>Major Committees — Must Know</h2>
+  <table>
+    <tr><th>Committee</th><th>Chairman</th><th>Memory Hook</th></tr>
+    <tr>
+      <td class="td-key">Drafting Committee</td>
+      <td class="hl-green"><strong>Dr. B.R. Ambedkar</strong></td>
+      <td style="font-size:13px; color:var(--text-muted)">Most important. 7 members total.</td>
+    </tr>
+    <tr>
+      <td class="td-key">Union Powers Committee</td>
+      <td class="td-blue"><strong>Jawaharlal Nehru</strong></td>
+      <td style="font-size:13px; color:var(--text-muted)">"Union" = Nehru always</td>
+    </tr>
+    <tr>
+      <td class="td-key">Union Constitution Committee</td>
+      <td class="td-blue"><strong>Jawaharlal Nehru</strong></td>
+      <td style="font-size:13px; color:var(--text-muted)">"Union" = Nehru always</td>
+    </tr>
+    <tr>
+      <td class="td-key">States Committee</td>
+      <td class="td-blue"><strong>Jawaharlal Nehru</strong></td>
+      <td style="font-size:13px; color:var(--text-muted)">State/Union = Nehru</td>
+    </tr>
+    <tr>
+      <td class="td-key">Advisory Comm. (Fundamental Rights, Minorities, Tribal Areas)</td>
+      <td class="td-amber"><strong>Sardar Vallabhbhai Patel</strong></td>
+      <td style="font-size:13px; color:var(--text-muted)">Patel = Father of Unity = Minorities/Integration</td>
+    </tr>
+    <tr>
+      <td class="td-key">Rules of Procedure Committee</td>
+      <td class="hl-green"><strong>Dr. Rajendra Prasad</strong></td>
+      <td style="font-size:13px; color:var(--text-muted)">Head of house makes rules</td>
+    </tr>
+    <tr>
+      <td class="td-key">Finance & Staff Committee</td>
+      <td class="hl-green"><strong>Dr. Rajendra Prasad</strong></td>
+      <td style="font-size:13px; color:var(--text-muted)">Head manages money too</td>
+    </tr>
+    <tr>
+      <td class="td-key">Steering Committee</td>
+      <td class="hl-green"><strong>Dr. Rajendra Prasad</strong></td>
+      <td style="font-size:13px; color:var(--text-muted)">Steering = Rajendra Prasad literally</td>
+    </tr>
+  </table>
+
+  <h2>The Drafting Committee — 7 Members</h2>
+  <div class="card card-fire">
+    <span class="tag tag-fire">🔥 Must Know</span>
+    <p style="margin-top: 6px;"><strong style="color:var(--green)">Chairman:</strong> Dr. B.R. Ambedkar</p>
+    <p style="margin-top: 8px;"><strong>Original 6 other members:</strong></p>
+    <ul class="bullet-list">
+      <li>Alladi Krishnaswami Iyer</li>
+      <li>N. Gopalaswami Iyengar</li>
+      <li>Mohammad Sadullah</li>
+      <li>KM Munshi (also headed Order of Business Committee)</li>
+      <li>B.L. Mitter → later replaced by <span class="hl">N. Madhav Rao</span></li>
+      <li>D.P. Khaitan → later replaced by <span class="hl">T.T. Krishnamachari</span></li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ EXAM TRAP — Ambedkar's Constituency</div>
+    <p>Ambedkar was initially from <strong>Bengal Constituency</strong>. After partition, East Bengal became East Pakistan (now Bangladesh) → Ambedkar was later elected from <strong>Bombay Constituency</strong>.</p>
+  </div>
+
+  <h2>Minor Committees — Important Ones</h2>
+  <table>
+    <tr><th>Committee</th><th>Chairman</th></tr>
+    <tr><td class="td-key">Functions of the Constituent Assembly</td><td><strong>G.V. Mavalankar</strong></td></tr>
+    <tr><td class="td-key">Order of Business Committee</td><td><strong>K.M. Munshi</strong></td></tr>
+    <tr><td class="td-key">House Committee</td><td><strong>B. Pattabhi Sitaramayya</strong></td></tr>
+    <tr><td class="td-key">Ad-hoc Committee on Supreme Court</td><td><strong>S. Varadachari</strong></td></tr>
+    <tr><td class="td-key">Linguistic Provinces</td><td><strong>S.K. Dhar</strong></td></tr>
+    <tr><td class="td-key">National Flag Committee</td><td><strong>Dr. Rajendra Prasad</strong></td></tr>
+    <tr><td class="td-key">Ad-hoc Committee on Citizenship</td><td><strong>S. Varadachari</strong></td></tr>
+  </table>
+
+  <h2>GV Mavalankar — Important Dual Role</h2>
+  <div class="card card-star">
+    <span class="tag tag-star">⭐ Important</span>
+    <ul class="bullet-list">
+      <li>When Assembly sat to <strong>make constitution</strong> → President = Rajendra Prasad</li>
+      <li>When Assembly sat to <strong>make laws</strong> → Head = GV Mavalankar</li>
+      <li>GV Mavalankar also became <strong>First Speaker of Lok Sabha</strong></li>
+    </ul>
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Memory Hook — Munshi Does Business</div>
+    <strong>KM Munshi</strong> headed the Order of Business Committee. A Munshi (clerk/manager) always does the "business" of managing order. Also remember: Munshi is ALSO in the Drafting Committee. Double role!
+  </div>
+
+  <div class="hook">
+    <div class="hook-label">Memory Hook — House Committee</div>
+    <strong>Pattabhi Sitaramayya</strong> → think of the movie "Ramaiya Vastavaiya" — it shows domestic/house things. Sitaramayya → Sita (from Ramaiya) → House Committee. Absurd but effective!
+  </div>
+</div>
+
+<!-- ============ DATES ============ -->
+<div class="page" id="page-dates">
+  <p class="page-subtitle">CHAPTER 1 · LAYER 1</p>
+  <h1 class="page-title">Key Dates, Sessions & Readings</h1>
+
+  <h2>Constituent Assembly Sessions</h2>
+  <table>
+    <tr><th>Session</th><th>Dates</th><th>Key Event</th></tr>
+    <tr><td class="td-key">1st Session</td><td class="td-amber">9–23 Dec 1946</td><td>First meeting, 211 members. Sachchidanand Sinha (temp. president). Rajendra Prasad elected permanent president.</td></tr>
+    <tr><td class="td-key">Objective Resolution</td><td class="td-amber">13 Dec 1946</td><td>Nehru presented Objective Resolution (direction for constitution-making). Adopted 22 Jan 1947.</td></tr>
+    <tr><td class="td-key">10th Session</td><td class="td-amber">6–17 Oct 1949</td><td>Important session</td></tr>
+    <tr><td class="td-key">11th Session</td><td class="td-amber">14–26 Nov 1949</td><td>Final readings and adoption</td></tr>
+  </table>
+
+  <h2>Readings (Discussions on Draft Constitution)</h2>
+  <table>
+    <tr><th>Reading</th><th>Duration</th></tr>
+    <tr><td class="td-key">First Reading</td><td>4 Nov 1948 → 9 Nov 1948 (5 days)</td></tr>
+    <tr><td class="td-key">Second Reading</td><td>15 Nov 1948 → 17 Oct 1949 (~10 months, 3 days)</td></tr>
+    <tr><td class="td-key">Third Reading</td><td>Completed 26 Nov 1949</td></tr>
+  </table>
+
+  <h2>Draft Constitution Timeline</h2>
+  <div class="timeline">
+    <div class="tl-item blue">
+      <div class="tl-year">21 Feb 1948</div>
+      <div class="tl-text"><strong>First Draft Published</strong> — made public for feedback. 8 months given to people for discussion and recommendations.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">4 Nov 1948</div>
+      <div class="tl-text"><strong>Final Draft Presented</strong> by Ambedkar to the Assembly. First Reading begins same day.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">26 Nov 1949</div>
+      <div class="tl-text"><strong>Constitution ADOPTED</strong>. Some provisions (citizenship, elections, provisional parliament) implemented immediately.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">24 Jan 1950</div>
+      <div class="tl-text"><strong>Last session events:</strong> Adopted National Anthem, National Song. Rajendra Prasad signed as First President. <strong>284 people signed</strong> (including 15 women).</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">26 Jan 1950</div>
+      <div class="tl-text"><strong>Constitution ENFORCED</strong> (came into force). Republic Day. Chosen because 26 Jan 1930 was first independence day celebration (Lahore Session 1929, Nehru presiding).</div>
+    </div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ EXAM TRAP — Adopted vs Enforced</div>
+    <p>Constitution was <strong>ADOPTED on 26 Nov 1949</strong> (Constitution Day / Samvidhan Diwas). It was <strong>ENFORCED on 26 Jan 1950</strong> (Republic Day). Two different dates. Never confuse them!</p>
+  </div>
+
+  <h2>Other Important Dates</h2>
+  <table>
+    <tr><th>Date</th><th>Event</th></tr>
+    <tr><td class="td-amber">22 Jul 1947</td><td>National Flag adopted</td></tr>
+    <tr><td class="td-amber">May 1949</td><td>Commonwealth membership ratified</td></tr>
+    <tr><td class="td-amber">24 Jan 1950</td><td>National Anthem + National Song adopted; Rajendra Prasad signed as President</td></tr>
+    <tr><td class="td-amber">2 Sep 1946</td><td>Interim Government formed</td></tr>
+  </table>
+</div>
+
+<!-- ============ FACTS ============ -->
+<div class="page" id="page-facts">
+  <p class="page-subtitle">CHAPTER 1 · LAYER 1</p>
+  <h1 class="page-title">Key Facts, Figures & People</h1>
+
+  <h2>The Constitution — Final Form</h2>
+  <div class="speed-grid">
+    <div class="speed-item"><div class="speed-key">Time taken</div><div class="speed-val">2 yrs 11 months 17/18 days</div></div>
+    <div class="speed-item"><div class="speed-key">Cost</div><div class="speed-val">₹64 Lakhs</div></div>
+    <div class="speed-item"><div class="speed-key">Articles (original)</div><div class="speed-val">395</div></div>
+    <div class="speed-item"><div class="speed-key">Parts</div><div class="speed-val">22</div></div>
+    <div class="speed-item"><div class="speed-key">Schedules</div><div class="speed-val">8</div></div>
+    <div class="speed-item"><div class="speed-key">Signatories</div><div class="speed-val">284 (15 women)</div></div>
+    <div class="speed-item"><div class="speed-key">Adopted</div><div class="speed-val">26 Nov 1949</div></div>
+    <div class="speed-item"><div class="speed-key">Enforced</div><div class="speed-val">26 Jan 1950</div></div>
+  </div>
+
+  <div class="card card-star" style="margin-top: 18px;">
+    <span class="tag tag-star">⭐ World Record</span>
+    <p>India's Constitution is the <span class="hl">largest written constitution in the world</span>.</p>
+  </div>
+
+  <h2>Who Wrote the Constitution?</h2>
+  <table>
+    <tr><th>Role</th><th>Person</th></tr>
+    <tr><td class="td-key">Calligraphy in English</td><td><strong>Prem Bihari Narayan Raizad</strong> (did it for free, asked only that his name be written on every page)</td></tr>
+    <tr><td class="td-key">Calligraphy in Hindi</td><td><strong>Vasant Krishna Vaidya</strong></td></tr>
+    <tr><td class="td-key">Decoration / Illumination</td><td><strong>Nandlal Bose</strong> + <strong>Beohar Rammanohar Sinha</strong></td></tr>
+  </table>
+
+  <h2>Sardar Patel — Father of Indian Unity</h2>
+  <div class="card card-purple">
+    <span class="tag tag-plus">➕ Good to Know</span>
+    <ul class="bullet-list">
+      <li>Merged princely states into India — hence "Father of Indian Unity"</li>
+      <li>National Unity Day celebrated on <span class="hl">31 October</span> (his birthday)</li>
+      <li>Also chaired Advisory Committee on Fundamental Rights, Minorities, and Tribal & Excluded Areas</li>
+    </ul>
+  </div>
+
+  <h2>What Else Did the Constituent Assembly Do?</h2>
+  <div class="card">
+    <p>The Constituent Assembly was not just a constitution-making body. It also:</p>
+    <ul class="bullet-list">
+      <li>Made laws for the country (Parliament function)</li>
+      <li>Adopted the National Flag (22 July 1947)</li>
+      <li>Ratified Commonwealth membership (May 1949)</li>
+      <li>Adopted National Anthem and National Song (24 Jan 1950)</li>
+      <li>Elected India's first President (Rajendra Prasad, 24 Jan 1950)</li>
+    </ul>
+  </div>
+
+  <h2>What is the Commonwealth?</h2>
+  <div class="card">
+    <p>Countries that were once British colonies. Britain is also a member. India joined voluntarily. India can leave anytime it wants. Currently still a member.</p>
+  </div>
+
+  <h2>Provisions Implemented on 26 Nov 1949 (Not Waiting for 26 Jan 1950)</h2>
+  <div class="card card-fire">
+    <span class="tag tag-fire">🔥 Must Know</span>
+    <ul class="bullet-list">
+      <li>Provisions related to <strong>Citizenship</strong></li>
+      <li>Provisions related to <strong>Elections</strong></li>
+      <li>Provisions related to <strong>Provisional Parliament</strong></li>
+    </ul>
+    <p style="font-size:13px; color:var(--text-muted); margin-top: 8px;">Why immediately? The country couldn't function without knowing who is a citizen, who can vote, and who governs provisionally.</p>
+  </div>
+</div>
+
+<!-- ============ HOOKS ============ -->
+<div class="page" id="page-hooks">
+  <p class="page-subtitle">MEMORY SYSTEM</p>
+  <h1 class="page-title">Smart Memory Hooks</h1>
+
+  <h2>Hook 1 — The Demand Chain</h2>
+  <div class="card card-purple">
+    <div class="hook">
+      <div class="hook-label">Story</div>
+      Picture a chain with 4 links: 
+      <strong>Roy's ring (1934) → Congress badge (1935) → Nehru's Lucknow scarf (1936) → British offers (1940, 1942, 1946)</strong>. Roy starts, Congress continues, Nehru amplifies at Lucknow, British finally relent (partially).
+    </div>
+  </div>
+
+  <h2>Hook 2 — Rejected/Accepted Formula</h2>
+  <div class="card card-purple">
+    <div class="hook">
+      <div class="hook-label">Formula</div>
+      <strong>If it says "Dominion Status" → REJECTED.</strong> Congress wanted full freedom (Purna Swaraj declared 1929 Lahore). August Offer = Dominion → Rejected. Cripps = Dominion → Rejected. Cabinet Mission never said "Dominion" explicitly → Accepted.
+    </div>
+  </div>
+
+  <h2>Hook 3 — 389 = 296 + 93</h2>
+  <div class="card card-purple">
+    <div class="hook">
+      <div class="hook-label">Math Hook</div>
+      <strong>British India:</strong> 292 (from 11 governor provinces) + 4 (from 4 chief commissioner provinces) = 296. <br><strong>Princely States:</strong> 93. <br><strong>Total: 389.</strong> After partition, only 299 remained active.
+    </div>
+  </div>
+
+  <h2>Hook 4 — Ambedkar's Drafting Committee = MAGIC 7</h2>
+  <div class="card card-purple">
+    <div class="hook">
+      <div class="hook-label">Story</div>
+      Seven samurai of the constitution. Ambedkar is the leader. Two samurai got injured mid-way (Mitter → Madhav Rao; Khaitan → TT Krishnamachari) and were replaced. But the team finished the job.
+    </div>
+  </div>
+
+  <h2>Hook 5 — 26 Nov vs 26 Jan</h2>
+  <div class="card card-purple">
+    <div class="hook">
+      <div class="hook-label">Mnemonic</div>
+      <strong>Nov = Written, Jan = Born.</strong> Like an author writes a book (Nov 26 = written/adopted), and the book is PUBLISHED/released on Jan 26 (enforced). Writing ≠ publishing.
+    </div>
+  </div>
+
+  <h2>Hook 6 — The Steering Wheel (Rajendra Prasad)</h2>
+  <div class="card card-purple">
+    <div class="hook">
+      <div class="hook-label">Visual</div>
+      Rajendra Prasad holds a <strong>steering wheel</strong>. He steers: Rules of Procedure, Finance, National Flag Committee, the whole Constituent Assembly. Wherever you see "head of house" or "president of assembly," the steering is Rajendra Prasad's.
+    </div>
+  </div>
+
+  <h2>Hook 7 — Prem Bihari = Free Calligrapher</h2>
+  <div class="card card-purple">
+    <div class="hook">
+      <div class="hook-label">Story</div>
+      Prem Bihari was so <em>in love</em> (Prem = love in Hindi) with the nation that he wrote the entire English constitution for FREE. His only condition: write his name on each page. Selfless patriot with a personal branding request.
+    </div>
+  </div>
+
+  <h2>Hook 8 — Why 26 January?</h2>
+  <div class="card card-purple">
+    <div class="hook">
+      <div class="hook-label">Story</div>
+      Nehru at the 1929 Lahore Session said: "Let's celebrate January 26th — it's holy because in 1930 we declared our first Purna Swaraj Day." Like how you choose an auspicious day for a housewarming — India chose a sacred day to "move in" to the new constitutional house.
+    </div>
+  </div>
+</div>
+
+<!-- ============ TRAPS ============ -->
+<div class="page" id="page-traps">
+  <p class="page-subtitle">EXAM STRATEGY</p>
+  <h1 class="page-title">⚠ Exam Traps & Confusions</h1>
+  <p style="color:var(--text-muted); margin-bottom: 20px;">These are the exact points where marks are lost. Study each one carefully.</p>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 1 — MN Roy vs M.N. Roy</div>
+    <p>MN Roy = <strong>Manindranath Roy</strong>. He made the demand in <strong>1934</strong>. Not to be confused with Ram Manohar Lohia or any other "Roy." He was the FIRST to demand a Constituent Assembly.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 2 — V.T. vs T.T. Krishnamachari</div>
+    <p><strong>V.T. Krishnamachari</strong> = Vice President of the Constituent Assembly. <strong>T.T. Krishnamachari</strong> = Member of the Drafting Committee (replaced D.P. Khaitan). Two different people, similar names. Exam loves this.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 3 — Cripps in Two Places</div>
+    <p><strong>Stafford Cripps</strong> led the 1942 Cripps Mission AND was one of the three members of the 1946 Cabinet Mission. Don't confuse Cabinet Mission as "just Cripps" — it was Lawrence + Alexander + Cripps.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 4 — 26 Nov vs 26 Jan</div>
+    <p><strong>26 November 1949</strong> = Constitution Day (Samvidhan Diwas) = Constitution ADOPTED. <strong>26 January 1950</strong> = Republic Day = Constitution ENFORCED/IMPLEMENTED. Two events, two dates. Never mix them.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 5 — 389 vs 299</div>
+    <p>The Constituent Assembly was planned for <strong>389 members</strong>. After Muslim League boycott and partition, only <strong>299 seats remained</strong> for the working assembly. The constitution was made by 299, not 389.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 6 — Drafting Committee Chairman vs Chief Draftsman</div>
+    <p><strong>Ambedkar</strong> = Chairman of the Drafting Committee. <strong>S.N. Mukherjee</strong> = Chief Draftsman (the person who actually drafted/wrote the legal text). Different roles!</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 7 — Ambedkar's Original Constituency</div>
+    <p>Ambedkar was first elected from <strong>Bengal Constituency</strong>. After partition, this became part of East Pakistan. He was then re-elected from <strong>Bombay Constituency</strong>. Trick question: "Ambedkar was always from Bombay" — FALSE.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 8 — Time Taken: 17 or 18 days?</div>
+    <p>Constitution took <strong>2 years, 11 months, and 17 days</strong>. Some sources say 18 days. Both may appear in options. The most commonly accepted answer is <strong>17 days</strong>.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 9 — National Unity Day</div>
+    <p>National Unity Day = <strong>31 October</strong> (Sardar Patel's birthday). NOT Independence Day, NOT Republic Day. Patel unified princely states → Unity Day on his birthday.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 10 — Sachchidanand Sinha's Role</div>
+    <p>Sachchidanand Sinha was the <strong>Temporary (Provisional) President</strong> of the first session on 9 Dec 1946 — because he was the oldest member. He was NOT the permanent president. Rajendra Prasad was elected permanent president.</p>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ TRAP 11 — 13 Minor vs 14 Minor</div>
+    <p>You may see "13 minor" or "14 minor" committees in different sources. For exam purposes: <strong>8 Major</strong> is the definitive number. Minor is contested — go with 13 if forced to choose.</p>
+  </div>
+</div>
+
+<!-- ============ EXAMINER ============ -->
+<div class="page" id="page-examiner">
+  <p class="page-subtitle">EXAM STRATEGY</p>
+  <h1 class="page-title">Examiner's Favourite Questions</h1>
+  <p style="color:var(--text-muted); margin-bottom: 20px;">These question types repeatedly appear in SSC CGL, CHSL, and State PSC exams.</p>
+
+  <h2>🎯 High Probability Direct Questions</h2>
+  <div class="card">
+    <ul class="bullet-list">
+      <li>Who first demanded a Constituent Assembly? → <span class="hl-green">MN Roy (1934)</span></li>
+      <li>Who was the President of the Constituent Assembly? → <span class="hl-green">Dr. Rajendra Prasad</span></li>
+      <li>Who chaired the Drafting Committee? → <span class="hl-green">Dr. B.R. Ambedkar</span></li>
+      <li>How many members were in the Drafting Committee? → <span class="hl-green">7</span></li>
+      <li>Constitution was adopted on? → <span class="hl-green">26 November 1949</span></li>
+      <li>Constitution came into force on? → <span class="hl-green">26 January 1950</span></li>
+      <li>Time taken to make constitution? → <span class="hl-green">2 years, 11 months, 17 days</span></li>
+      <li>Cost of making constitution? → <span class="hl-green">₹64 Lakhs</span></li>
+      <li>Original articles in constitution? → <span class="hl-green">395</span></li>
+      <li>Original schedules? → <span class="hl-green">8</span></li>
+      <li>Original parts? → <span class="hl-green">22</span></li>
+    </ul>
+  </div>
+
+  <h2>🎯 Statement-Based (True/False) Questions</h2>
+  <div class="card card-star">
+    <ul class="bullet-list">
+      <li>"The Constituent Assembly was directly elected by the people" — <span class="hl-red">FALSE</span> (Indirectly elected by Provincial Assemblies)</li>
+      <li>"Ambedkar was always from Bombay" — <span class="hl-red">FALSE</span> (Started from Bengal)</li>
+      <li>"Cabinet Mission offered Pakistan to Jinnah" — <span class="hl-red">FALSE</span> (No explicit Pakistan provision)</li>
+      <li>"The constitution was implemented on 26 Nov 1949" — <span class="hl-red">FALSE</span> (Adopted Nov; implemented Jan)</li>
+      <li>"Prem Bihari charged money for calligraphy" — <span class="hl-red">FALSE</span> (Did it for free)</li>
+    </ul>
+  </div>
+
+  <h2>🎯 Match the Following</h2>
+  <div class="card">
+    <table>
+      <tr><th>Person</th><th>Role</th></tr>
+      <tr><td>Ambedkar</td><td>Drafting Committee Chairman</td></tr>
+      <tr><td>Nehru</td><td>Union Powers/Constitution/States Committee</td></tr>
+      <tr><td>Patel</td><td>Advisory Committee (FR, Minorities, Tribal)</td></tr>
+      <tr><td>Rajendra Prasad</td><td>President + Rules + Finance + Flag Committee</td></tr>
+      <tr><td>GV Mavalankar</td><td>Functions Committee + First Lok Sabha Speaker</td></tr>
+      <tr><td>BN Rao</td><td>Constitutional Advisor</td></tr>
+      <tr><td>SN Mukherjee</td><td>Chief Draftsman</td></tr>
+    </table>
+  </div>
+
+  <h2>🎯 Chronology Questions</h2>
+  <div class="card card-blue">
+    <p style="margin-bottom: 8px;"><strong>Arrange in order:</strong></p>
+    <ol style="padding-left: 18px; font-size: 14px; color: var(--text-muted); line-height: 2;">
+      <li>MN Roy demands CA → 1934</li>
+      <li>Congress demands CA → 1935</li>
+      <li>Nehru at Lucknow Session → 1936</li>
+      <li>August Offer (Linlithgow) → 1940</li>
+      <li>Cripps Mission → 1942</li>
+      <li>Cabinet Mission → 1946</li>
+      <li>First CA meeting → 9 Dec 1946</li>
+      <li>Objective Resolution by Nehru → 13 Dec 1946</li>
+      <li>Elections (CA) → July-Aug 1946</li>
+      <li>First Draft published → 21 Feb 1948</li>
+      <li>Final Draft by Ambedkar → 4 Nov 1948</li>
+      <li>Constitution Adopted → 26 Nov 1949</li>
+      <li>Constitution Enforced → 26 Jan 1950</li>
+    </ol>
+  </div>
+
+  <h2>🎯 Frequently Confused Pairs</h2>
+  <table>
+    <tr><th>Pair</th><th>Difference</th></tr>
+    <tr><td><strong>V.T. Krishnamachari</strong> vs <strong>T.T. Krishnamachari</strong></td><td>VP of Assembly vs Drafting Committee member</td></tr>
+    <tr><td><strong>Adopted (26 Nov)</strong> vs <strong>Enforced (26 Jan)</strong></td><td>Written vs Implemented</td></tr>
+    <tr><td><strong>389 seats</strong> vs <strong>299 seats</strong></td><td>Planned vs Actual (post-partition)</td></tr>
+    <tr><td><strong>Ambedkar (Chairman)</strong> vs <strong>SN Mukherjee (Draftsman)</strong></td><td>Committee head vs actual writer</td></tr>
+    <tr><td><strong>Sachchidanand Sinha</strong> vs <strong>Rajendra Prasad</strong></td><td>Temporary vs Permanent President of CA</td></tr>
+  </table>
+</div>
+
+<!-- ============ RECALL ============ -->
+<div class="page" id="page-recall">
+  <p class="page-subtitle">ACTIVE RECALL SECTION</p>
+  <h1 class="page-title">Self-Test Questions</h1>
+  <p style="color:var(--text-muted); margin-bottom: 20px;">Tap "Reveal" to check your answer. Try answering before revealing!</p>
+
+  <h2>Flash Cards — Tap to Flip</h2>
+  <div class="flash-grid">
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Who first demanded CA?</div><div class="fc-back">MN Roy — 1934</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Year: Cripps Mission</div><div class="fc-back">1942</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Total CA seats planned</div><div class="fc-back">389</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">CA seats after partition</div><div class="fc-back">299</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Temp President of CA</div><div class="fc-back">Sachchidanand Sinha</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Permanent President of CA</div><div class="fc-back">Dr. Rajendra Prasad</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Drafting Committee Chair</div><div class="fc-back">Dr. B.R. Ambedkar</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Drafting Committee members</div><div class="fc-back">7 (including Ambedkar)</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Constitution adopted on</div><div class="fc-back">26 November 1949</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Constitution enforced on</div><div class="fc-back">26 January 1950</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Time to make constitution</div><div class="fc-back">2 yr 11 months 17 days</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Cost of constitution</div><div class="fc-back">₹64 Lakhs</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Original Articles</div><div class="fc-back">395</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Original Schedules</div><div class="fc-back">8</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Original Parts</div><div class="fc-back">22</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">English calligrapher</div><div class="fc-back">Prem Bihari Narayan Raizad</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Hindi calligrapher</div><div class="fc-back">Vasant Krishna Vaidya</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Constitutional Advisor</div><div class="fc-back">B.N. Rao</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Chief Draftsman</div><div class="fc-back">S.N. Mukherjee</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">CA Secretary</div><div class="fc-back">H.V.R. Iyengar</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Father of Indian Unity</div><div class="fc-back">Sardar Vallabhbhai Patel</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">National Unity Day</div><div class="fc-back">31 October</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">First Lok Sabha Speaker</div><div class="fc-back">G.V. Mavalankar</div></div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')"><div class="fc-front">Interim Govt formed</div><div class="fc-back">2 September 1946</div></div>
+  </div>
+
+  <hr class="divider">
+  <h2>One-Liner Quiz Questions</h2>
+
+  <div class="quiz-q">
+    <div class="q-text">Q1. The first person to demand a Constituent Assembly was ___________.</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">MN Roy (Manindranath Roy) — in 1934</div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">Q2. Why was the Cripps Mission (1942) rejected by Congress?</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">It offered Dominion Status, but Congress had declared Purna Swaraj (complete independence) as its goal in the 1929 Lahore Session.</div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">Q3. Why did Jinnah initially accept the Cabinet Mission Plan?</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">It had a provision for "Grouping of Provinces" (Group A, B, C). Jinnah thought he could use Muslim-majority Group B and C to eventually form Pakistan.</div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">Q4. How were members of the Constituent Assembly selected?</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">Indirectly — members of Provincial Assemblies elected CA members (like Rajya Sabha). Princely State reps were nominated by their rulers. One seat per 10 lakh population.</div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">Q5. V.T. Krishnamachari vs T.T. Krishnamachari — who was what?</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">V.T. Krishnamachari = Vice President of Constituent Assembly. T.T. Krishnamachari = Member of Drafting Committee (replaced D.P. Khaitan). TWO DIFFERENT PEOPLE.</div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">Q6. Why was the Constitution enforced on 26 January 1950, not on 26 November 1949?</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">26 January was historically significant — it was the date of the first "Purna Swaraj" declaration (Independence Day celebration) in 1930, after the 1929 Lahore Session under Nehru. It was considered a sacred/auspicious date.</div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">Q7. Which THREE provisions were implemented immediately on 26 Nov 1949 (without waiting for 26 Jan 1950)?</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">1. Citizenship provisions, 2. Election provisions, 3. Provisional Parliament provisions. The country couldn't function without knowing who is a citizen and who governs.</div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">Q8. Ambedkar was replaced from which constituency and then stood from where?</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">Originally elected from Bengal Constituency. After partition, his area became East Pakistan. He was then elected from Bombay Constituency.</div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">Q9. Who decorated the Constitution, and who wrote the calligraphy?</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">Decoration: Nandlal Bose + Beohar Rammanohar Sinha. English calligraphy: Prem Bihari Narayan Raizad (for free). Hindi calligraphy: Vasant Krishna Vaidya.</div>
+  </div>
+
+  <div class="quiz-q">
+    <div class="q-text">Q10. Nehru placed the demand for CA at which session of Congress?</div>
+    <button class="quiz-btn" onclick="this.parentElement.classList.toggle('revealed')">Reveal Answer</button>
+    <div class="q-reveal">Lucknow Session of Congress — 1936.</div>
+  </div>
+</div>
+
+<!-- ============ HIGH YIELD ============ -->
+<div class="page" id="page-highyield">
+  <div class="layer-header">
+    <div class="layer-num" style="background:var(--blue-dim); color:var(--blue)">2</div>
+    <div><div class="layer-title">High-Yield Revision Notes</div><div class="layer-desc">The 80/20 — covers 80% of exam questions in 20% of time</div></div>
+  </div>
+
+  <div class="card card-fire">
+    <h3 style="color:var(--red); margin-top:0">DEMAND TIMELINE</h3>
+    <p>1934 MN Roy → 1935 Congress → 1936 Nehru (Lucknow Session)</p>
+    <p>1940 August Offer (Linlithgow) REJECTED | 1942 Cripps Mission REJECTED → Both offered Dominion Status vs Congress's Purna Swaraj</p>
+    <p>1946 Cabinet Mission (Lawrence + Alexander + Cripps) ACCEPTED → Grouping provision (A,B,C) appealed to Jinnah temporarily</p>
+  </div>
+
+  <div class="card card-star">
+    <h3 style="color:var(--amber); margin-top:0">CA STRUCTURE</h3>
+    <p>389 total (296 British India + 93 Princely) → After partition: <strong>299 active</strong></p>
+    <p>Indirect election (like RS) + Nomination by princes | 1 seat per 10 lakh people</p>
+    <p>Congress 208 | Muslim League 73 | Independent 15 (in election)</p>
+  </div>
+
+  <div class="card card-blue">
+    <h3 style="color:var(--blue); margin-top:0">KEY OFFICE BEARERS</h3>
+    <p>Temp President: <strong>Sachchidanand Sinha</strong> (oldest) | Permanent: <strong>Rajendra Prasad</strong></p>
+    <p>VP: <strong>HC Mukherjee + VT Krishnamachari</strong></p>
+    <p>Drafting Committee (7): <strong>Ambedkar</strong> (chair) + 6 others. Replacements: Mitter→Madhav Rao; Khaitan→TT Krishnamachari</p>
+    <p>Constitutional Advisor: <strong>BN Rao</strong> | Chief Draftsman: <strong>SN Mukherjee</strong> | Secretary: <strong>HVR Iyengar</strong></p>
+  </div>
+
+  <div class="card card-green">
+    <h3 style="color:var(--green); margin-top:0">KEY DATES</h3>
+    <p>First Meeting: 9 Dec 1946 (211 members) | Objective Resolution: 13 Dec 1946 (adopted 22 Jan 1947)</p>
+    <p>First Draft: 21 Feb 1948 | Final Draft by Ambedkar: 4 Nov 1948</p>
+    <p>ADOPTED: <strong>26 Nov 1949</strong> (Samvidhan Diwas) | ENFORCED: <strong>26 Jan 1950</strong> (Republic Day)</p>
+    <p>24 Jan 1950: National Anthem + Song adopted; Rajendra Prasad signed as President; 284 signed (15 women)</p>
+  </div>
+
+  <div class="card card-purple">
+    <h3 style="color:var(--purple); margin-top:0">CONSTITUTION FACTS</h3>
+    <p>2 yrs 11 months 17 days | ₹64 Lakhs | 395 articles | 22 parts | 8 schedules | World's longest written constitution</p>
+    <p>English: Prem Bihari Narayan Raizad (free) | Hindi: Vasant Krishna Vaidya | Decoration: Nandlal Bose + Beohar Sinha</p>
+  </div>
+
+  <div class="card card-red">
+    <h3 style="color:var(--red); margin-top:0">TOP 3 TRAPS</h3>
+    <p>1. VT (VP of CA) ≠ TT (Drafting Committee) Krishnamachari</p>
+    <p>2. Adopted (26 Nov) ≠ Enforced (26 Jan)</p>
+    <p>3. 389 (planned) ≠ 299 (actual after partition)</p>
+  </div>
+</div>
+
+<!-- ============ ULTRA FAST ============ -->
+<div class="page" id="page-ultrafast">
+  <div class="layer-header">
+    <div class="layer-num" style="background:var(--amber-dim); color:var(--amber)">3</div>
+    <div><div class="layer-title">Ultra-Fast Revision Sheet</div><div class="layer-desc">Read in under 5 minutes. Know everything essential.</div></div>
+  </div>
+
+  <h2>Demand Chain</h2>
+  <p style="font-size:15px; line-height:2.2">
+    <span class="hl">1934</span> MN Roy &nbsp;→&nbsp; <span class="hl">1935</span> Congress &nbsp;→&nbsp; <span class="hl">1936</span> Nehru/Lucknow &nbsp;→&nbsp; <span class="hl-red">1940</span> Aug Offer ✗ &nbsp;→&nbsp; <span class="hl-red">1942</span> Cripps ✗ &nbsp;→&nbsp; <span class="hl-green">1946</span> Cabinet Mission ✓
+  </p>
+
+  <h2>People at a Glance</h2>
+  <div class="speed-grid">
+    <div class="speed-item"><div class="speed-key">CA Perm. President</div><div class="speed-val">Rajendra Prasad</div></div>
+    <div class="speed-item"><div class="speed-key">CA Temp President</div><div class="speed-val">Sachchidanand Sinha</div></div>
+    <div class="speed-item"><div class="speed-key">Drafting Committee</div><div class="speed-val">Ambedkar (7 members)</div></div>
+    <div class="speed-item"><div class="speed-key">Constitutional Advisor</div><div class="speed-val">BN Rao</div></div>
+    <div class="speed-item"><div class="speed-key">Chief Draftsman</div><div class="speed-val">SN Mukherjee</div></div>
+    <div class="speed-item"><div class="speed-key">CA Secretary</div><div class="speed-val">HVR Iyengar</div></div>
+    <div class="speed-item"><div class="speed-key">Union committees</div><div class="speed-val">Nehru chaired all</div></div>
+    <div class="speed-item"><div class="speed-key">Advisory Committee</div><div class="speed-val">Sardar Patel</div></div>
+    <div class="speed-item"><div class="speed-key">First Lok Sabha Speaker</div><div class="speed-val">GV Mavalankar</div></div>
+    <div class="speed-item"><div class="speed-key">English calligraphy</div><div class="speed-val">Prem Bihari (free)</div></div>
+  </div>
+
+  <h2>Number Facts</h2>
+  <div class="speed-grid">
+    <div class="speed-item"><div class="speed-key">Seats planned</div><div class="speed-val">389</div></div>
+    <div class="speed-item"><div class="speed-key">Seats after partition</div><div class="speed-val">299</div></div>
+    <div class="speed-item"><div class="speed-key">Articles</div><div class="speed-val">395</div></div>
+    <div class="speed-item"><div class="speed-key">Schedules</div><div class="speed-val">8</div></div>
+    <div class="speed-item"><div class="speed-key">Parts</div><div class="speed-val">22</div></div>
+    <div class="speed-item"><div class="speed-key">Signatories</div><div class="speed-val">284 (15 women)</div></div>
+    <div class="speed-item"><div class="speed-key">Cost</div><div class="speed-val">₹64 Lakhs</div></div>
+    <div class="speed-item"><div class="speed-key">Time taken</div><div class="speed-val">2y 11m 17d</div></div>
+  </div>
+
+  <h2>Critical Dates</h2>
+  <table>
+    <tr><td class="td-amber">9 Dec 1946</td><td>First CA meeting (211 members)</td></tr>
+    <tr><td class="td-amber">13 Dec 1946</td><td>Objective Resolution by Nehru</td></tr>
+    <tr><td class="td-amber">21 Feb 1948</td><td>First draft published</td></tr>
+    <tr><td class="td-amber">4 Nov 1948</td><td>Final draft by Ambedkar</td></tr>
+    <tr><td class="hl-green">26 Nov 1949</td><td>Constitution ADOPTED (Samvidhan Diwas)</td></tr>
+    <tr><td class="hl-green">24 Jan 1950</td><td>Anthem, Song adopted; 284 signed; Rajendra Prasad elected</td></tr>
+    <tr><td class="hl-green">26 Jan 1950</td><td>Constitution ENFORCED (Republic Day)</td></tr>
+  </table>
+</div>
+
+<!-- ============ 30 SEC ============ -->
+<div class="page" id="page-thirtyse">
+  <div class="layer-header">
+    <div class="layer-num" style="background:#16213030; color:var(--teal)">4</div>
+    <div><div class="layer-title">30-Second Revision Sheet</div><div class="layer-desc">The absolute minimum. Read right before entering exam hall.</div></div>
+  </div>
+
+  <div class="card" style="background: #0a1a0f; border-color: #4ade8050; padding: 24px;">
+    <p style="font-size:17px; line-height:2.2; font-weight:500">
+      🧠 <span class="hl">MN Roy 1934</span> → Congress 1935 → Nehru Lucknow 1936<br>
+      ❌ <span class="hl-red">Aug Offer 1940 (Linlithgow)</span> + Cripps 1942 = REJECTED (Dominion Status)<br>
+      ✅ <span class="hl-green">Cabinet Mission 1946</span> = ACCEPTED (Lawrence+Alexander+Cripps)<br>
+      🏛️ CA: <span class="hl">389 planned → 299 actual</span> | 1 seat/10 lakh<br>
+      👤 Temp Pres: <span class="hl">Sachchidanand Sinha</span> | Perm Pres: <span class="hl">Rajendra Prasad</span><br>
+      ✍️ Drafting: <span class="hl">Ambedkar</span> (7 members) | Advisor: <span class="hl">BN Rao</span><br>
+      📅 Adopted: <span class="hl-green">26 Nov 1949</span> | Enforced: <span class="hl-green">26 Jan 1950</span><br>
+      📊 395 Articles | 8 Schedules | 22 Parts | ₹64L | 2y 11m 17d<br>
+      🖊️ English: <span class="hl">Prem Bihari (FREE)</span> | Hindi: Vasant Vaidya<br>
+      ⚠️ VT ≠ TT Krishnamachari | Adopted ≠ Enforced | 389 ≠ 299
+    </p>
+  </div>
+</div>
+
+<!-- ============ LAST NIGHT ============ -->
+<div class="page" id="page-lastnight">
+  <div class="layer-header">
+    <div class="layer-num" style="background:#200a2a; color:var(--purple)">5</div>
+    <div><div class="layer-title">Last-Night-Before-Exam Sheet</div><div class="layer-desc">Only read this the night before. Pure muscle memory triggers.</div></div>
+  </div>
+
+  <div class="card" style="background: #0d0d1a; border-color: #a78bfa50; padding: 28px 24px;">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div>
+        <p style="color:var(--purple); font-weight:700; font-size:13px; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.08em">Who & What</p>
+        <p style="font-size:14px; line-height:2; color:var(--text)">
+          First demand = <span class="hl-green">MN Roy 1934</span><br>
+          Perm President = <span class="hl-green">Rajendra Prasad</span><br>
+          Temp President = <span class="hl">Sachchidanand Sinha</span><br>
+          Drafting = <span class="hl">Ambedkar</span> (7 members)<br>
+          Advisor = <span class="hl">BN Rao</span><br>
+          Draftsman = <span class="hl">SN Mukherjee</span><br>
+          English = <span class="hl">Prem Bihari (FREE)</span><br>
+          Hindi = Vasant Vaidya<br>
+          Flag = Rajendra Prasad<br>
+          1st LS Speaker = GV Mavalankar
+        </p>
+      </div>
+      <div>
+        <p style="color:var(--purple); font-weight:700; font-size:13px; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.08em">Numbers & Dates</p>
+        <p style="font-size:14px; line-height:2; color:var(--text)">
+          389 → 299 (seats)<br>
+          395 articles | 8 schedules | 22 parts<br>
+          ₹64 Lakhs | 2y 11m 17d<br>
+          284 signed (15 women)<br>
+          First meeting: <span class="hl-green">9 Dec 1946</span><br>
+          Objective Res.: <span class="hl-green">13 Dec 1946</span><br>
+          Adopted: <span class="hl-green">26 Nov 1949</span><br>
+          Enforced: <span class="hl-green">26 Jan 1950</span><br>
+          24 Jan 1950: anthem+song+sign
+        </p>
+      </div>
+    </div>
+    <hr style="border-color:var(--border); margin: 16px 0;">
+    <p style="color:var(--red); font-weight:700; font-size:13px; margin-bottom:8px; text-transform:uppercase">⚠ Last-Minute Traps</p>
+    <p style="font-size:14px; line-height:2; color:#fca5a5">
+      VT = VP of CA &nbsp;|&nbsp; TT = Drafting Committee (they're different people!)<br>
+      26 Nov = ADOPTED (written) &nbsp;|&nbsp; 26 Jan = ENFORCED (republic day)<br>
+      Ambedkar: Bengal first → then Bombay (after partition)<br>
+      Cripps was in BOTH 1942 mission AND 1946 Cabinet Mission<br>
+      8 MAJOR committees (not 8+13=21 total, it's 8+13 with 8 being major)
+    </p>
+  </div>
+</div>
+
+</main>
+
+<script>
+function goTo(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  document.getElementById('main').scrollTop = 0;
+  window.scrollTo(0,0);
+  if(window.innerWidth <= 768) {
+    document.getElementById('nav').classList.remove('open');
+  }
+}
+
+function toggleNav() {
+  document.getElementById('nav').classList.toggle('open');
+}
+
+document.addEventListener('click', function(e) {
+  if(window.innerWidth <= 768) {
+    const nav = document.getElementById('nav');
+    const toggle = document.getElementById('nav-toggle');
+    if(!nav.contains(e.target) && !toggle.contains(e.target)) {
+      nav.classList.remove('open');
+    }
+  }
+});
+</script>
+</body>
+</html>

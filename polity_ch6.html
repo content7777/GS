@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>President & Vice President — SSC CGL Revision System</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #161b27;
+    --bg3: #1e2535;
+    --bg4: #252d3f;
+    --green: #4ade80;
+    --green-dim: #22c55e;
+    --green-glow: rgba(74,222,128,0.15);
+    --blue: #60a5fa;
+    --blue-dim: #3b82f6;
+    --blue-glow: rgba(96,165,250,0.12);
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --purple: #a78bfa;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-faint: #475569;
+    --border: #1e293b;
+    --border-bright: #334155;
+    --fire: #fb923c;
+    --star: #fbbf24;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── NAV ── */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(15,17,23,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0;
+    height: 52px; padding: 0 16px;
+  }
+  .nav-brand {
+    font-size: 13px; font-weight: 700; color: var(--green);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    white-space: nowrap; margin-right: 16px;
+  }
+  .nav-pages {
+    display: flex; gap: 2px; overflow-x: auto; flex: 1;
+    scrollbar-width: none;
+  }
+  .nav-pages::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--text-dim); font-size: 11.5px;
+    padding: 5px 10px; border-radius: 6px;
+    white-space: nowrap; transition: all 0.18s;
+    font-family: inherit;
+  }
+  .nav-btn:hover { color: var(--text); background: var(--bg3); }
+  .nav-btn.active { color: var(--green); background: var(--green-glow); }
+
+  /* ── PAGES ── */
+  main { margin-top: 52px; flex: 1; }
+  .page { display: none; padding: 32px 24px 64px; max-width: 900px; margin: 0 auto; }
+  .page.active { display: block; }
+
+  /* ── TYPOGRAPHY ── */
+  h1 {
+    font-size: 28px; font-weight: 800; color: var(--green);
+    line-height: 1.2; margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: 18px; font-weight: 700; color: var(--blue);
+    margin: 32px 0 14px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-bright);
+  }
+  h3 {
+    font-size: 14px; font-weight: 700; color: var(--yellow);
+    margin: 20px 0 8px; text-transform: uppercase; letter-spacing: 0.07em;
+  }
+  p { margin-bottom: 10px; color: var(--text); }
+
+  .page-subtitle { color: var(--text-dim); font-size: 13px; margin-bottom: 28px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .card-green { border-left: 3px solid var(--green); }
+  .card-blue  { border-left: 3px solid var(--blue); }
+  .card-yellow{ border-left: 3px solid var(--yellow); }
+  .card-red   { border-left: 3px solid var(--red); }
+  .card-purple{ border-left: 3px solid var(--purple); }
+
+  /* ── ARTICLE PILLS ── */
+  .art-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .art-pill {
+    background: var(--bg3); border: 1px solid var(--border-bright);
+    border-radius: 20px; padding: 3px 12px;
+    font-size: 12px; font-weight: 700; color: var(--green);
+    white-space: nowrap;
+  }
+
+  /* ── TAGS ── */
+  .tag-fire  { color: var(--fire); font-weight: 700; margin-right: 4px; }
+  .tag-star  { color: var(--star); font-weight: 700; margin-right: 4px; }
+  .tag-plus  { color: var(--text-dim); font-weight: 700; margin-right: 4px; }
+
+  /* ── TABLE ── */
+  .tbl { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+  .tbl th {
+    background: var(--bg3); color: var(--blue);
+    padding: 9px 12px; text-align: left;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em;
+    border-bottom: 2px solid var(--border-bright);
+  }
+  .tbl td {
+    padding: 9px 12px; border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: var(--bg3); }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: rgba(248,113,113,0.07);
+    border: 1px solid rgba(248,113,113,0.3);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 12px;
+  }
+  .trap-title { color: var(--red); font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+
+  /* ── PALACE BOX ── */
+  .palace {
+    background: linear-gradient(135deg, rgba(30,37,53,0.9), rgba(21,25,38,0.9));
+    border: 1px solid var(--purple);
+    border-radius: 12px; padding: 20px 22px; margin-bottom: 20px;
+    position: relative; overflow: hidden;
+  }
+  .palace::before {
+    content: '🧠';
+    position: absolute; right: 16px; top: 14px; font-size: 28px; opacity: 0.25;
+  }
+  .palace-title { color: var(--purple); font-weight: 800; font-size: 15px; margin-bottom: 12px; }
+  .palace-step {
+    display: flex; gap: 12px; margin-bottom: 10px; align-items: flex-start;
+  }
+  .palace-num {
+    background: var(--purple); color: #fff;
+    border-radius: 50%; width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; flex-shrink: 0; margin-top: 2px;
+  }
+
+  /* ── HOOK BOX ── */
+  .hook {
+    background: rgba(96,165,250,0.07);
+    border: 1px solid rgba(96,165,250,0.25);
+    border-radius: 10px; padding: 14px 16px; margin-bottom: 12px;
+  }
+  .hook-label { color: var(--blue); font-weight: 700; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; }
+
+  /* ── Q BOX ── */
+  .q-box {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .q-box:hover { border-color: var(--green); }
+  .q-text { font-weight: 600; color: var(--text); font-size: 14px; margin-bottom: 4px; }
+  .q-ans {
+    color: var(--green); font-size: 13px; font-weight: 600;
+    display: none; margin-top: 8px; padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .q-box.open .q-ans { display: block; }
+  .q-hint { color: var(--text-faint); font-size: 11px; margin-top: 4px; }
+
+  /* ── FLASH CARD ── */
+  .flash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media(max-width:600px){ .flash-grid { grid-template-columns: 1fr; } }
+  .flash-card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px; cursor: pointer;
+    min-height: 80px; display: flex; align-items: center;
+    justify-content: center; text-align: center;
+    transition: all 0.2s; user-select: none;
+  }
+  .flash-card:hover { border-color: var(--blue); }
+  .flash-q { color: var(--text); font-weight: 600; font-size: 14px; }
+  .flash-a { color: var(--green); font-size: 14px; font-weight: 700; display: none; }
+  .flash-card.flipped .flash-q { display: none; }
+  .flash-card.flipped .flash-a { display: block; }
+  .flash-card.flipped { border-color: var(--green); background: var(--green-glow); }
+
+  /* ── ULTRA FAST ── */
+  .uf-row {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 8px 0; border-bottom: 1px solid var(--border);
+  }
+  .uf-art { color: var(--green); font-weight: 800; font-size: 13px; min-width: 42px; }
+  .uf-text { font-size: 13px; color: var(--text); }
+  .uf-key { color: var(--yellow); font-weight: 700; }
+
+  /* ── 30-SEC ── */
+  .sec30 {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px;
+  }
+  .sec30-row { display: flex; gap: 10px; margin-bottom: 7px; align-items: flex-start; }
+  .sec30-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green); flex-shrink: 0; margin-top: 7px;
+  }
+  .sec30-text { font-size: 14px; color: var(--text); }
+
+  /* ── LAST NIGHT ── */
+  .ln-box {
+    background: rgba(251,191,36,0.06);
+    border: 1px solid rgba(251,191,36,0.3);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 12px;
+  }
+  .ln-title { color: var(--yellow); font-weight: 800; font-size: 14px; margin-bottom: 8px; }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar {
+    height: 3px; background: var(--bg3);
+    border-radius: 2px; margin-bottom: 28px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--green), var(--blue));
+    border-radius: 2px; transition: width 0.4s ease;
+  }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 700; margin-left: 6px;
+  }
+  .badge-green { background: var(--green-glow); color: var(--green); border: 1px solid var(--green); }
+  .badge-blue  { background: var(--blue-glow);  color: var(--blue);  border: 1px solid var(--blue); }
+  .badge-red   { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid var(--red); }
+
+  /* ── FORMULA BOX ── */
+  .formula {
+    background: var(--bg3); border: 1px solid var(--border-bright);
+    border-radius: 8px; padding: 12px 16px; margin: 10px 0;
+    font-family: 'Courier New', monospace; font-size: 13px;
+    color: var(--yellow); text-align: center;
+  }
+
+  /* ── COMPARISON ── */
+  .cmp { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 12px 0; }
+  @media(max-width:550px){ .cmp { grid-template-columns: 1fr; } }
+  .cmp-col { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .cmp-title { font-weight: 800; font-size: 13px; margin-bottom: 8px; }
+  .cmp-col:first-child .cmp-title { color: var(--green); }
+  .cmp-col:last-child .cmp-title  { color: var(--blue); }
+  .cmp-li { font-size: 13px; color: var(--text); margin-bottom: 5px; padding-left: 12px; position: relative; }
+  .cmp-li::before { content: '→'; position: absolute; left: 0; color: var(--text-faint); }
+
+  /* ── SCROLL TO TOP ── */
+  #top-btn {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--bg3); border: 1px solid var(--border-bright);
+    color: var(--text-dim); border-radius: 50%;
+    width: 40px; height: 40px; cursor: pointer; font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; z-index: 99;
+  }
+  #top-btn:hover { color: var(--green); border-color: var(--green); }
+
+  /* ── CHAPTER TITLE BLOCK ── */
+  .chapter-header {
+    padding: 28px 0 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .chapter-meta {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;
+  }
+  .meta-chip {
+    background: var(--bg3); border: 1px solid var(--border-bright);
+    border-radius: 6px; padding: 3px 10px; font-size: 12px;
+    color: var(--text-dim);
+  }
+  .meta-chip span { color: var(--green); font-weight: 700; }
+
+  /* ── LIST STYLES ── */
+  .bullet-list { list-style: none; padding: 0; }
+  .bullet-list li {
+    padding: 5px 0 5px 20px; position: relative;
+    color: var(--text); font-size: 14px;
+    border-bottom: 1px solid rgba(30,37,53,0.6);
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before {
+    content: '▸'; position: absolute; left: 0; color: var(--green);
+  }
+
+  em { color: var(--yellow); font-style: normal; font-weight: 700; }
+  strong { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-brand">🇮🇳 Polity</div>
+  <div class="nav-pages">
+    <button class="nav-btn active" onclick="go('p0')">🏠 Overview</button>
+    <button class="nav-btn" onclick="go('p1')">🗺 Memory Palace</button>
+    <button class="nav-btn" onclick="go('p2')">📖 Full Notes</button>
+    <button class="nav-btn" onclick="go('p3')">🔗 Connections</button>
+    <button class="nav-btn" onclick="go('p4')">⚠️ Traps</button>
+    <button class="nav-btn" onclick="go('p5')">🎯 Examiner</button>
+    <button class="nav-btn" onclick="go('p6')">🧪 Self-Test</button>
+    <button class="nav-btn" onclick="go('p7')">⚡ High-Yield</button>
+    <button class="nav-btn" onclick="go('p8')">🚀 Ultra-Fast</button>
+    <button class="nav-btn" onclick="go('p9')">⏱ 30-Second</button>
+    <button class="nav-btn" onclick="go('p10')">🌙 Last Night</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ─────────── PAGE 0: OVERVIEW ─────────── -->
+<section class="page active" id="p0">
+  <div class="chapter-header">
+    <h1>President & Vice President</h1>
+    <p class="page-subtitle">Part V, Chapter I of the Indian Constitution · Union Executive</p>
+    <div class="chapter-meta">
+      <div class="meta-chip">Articles <span>52–72</span></div>
+      <div class="meta-chip">VP Articles <span>63–71</span></div>
+      <div class="meta-chip">Exam Weight <span>🔥🔥🔥</span></div>
+      <div class="meta-chip">Part V covers <span>Art. 52–151</span></div>
+    </div>
+  </div>
+
+  <h2>🗂 Big Picture</h2>
+  <div class="card card-green">
+    <p>Part V of the Constitution deals with <em>The Union</em>. It has 5 chapters: <strong>Executive → Parliament → President's Legislative Power → Supreme Court → CAG</strong>. The Union Executive (Art. 52–78) includes: President, Vice President, Prime Minister + Council of Ministers, and Attorney General.</p>
+    <p>Today's focus: <em>President (Art. 52–62, 72)</em> and <em>Vice President (Art. 63–71)</em>. The President is the constitutional head of India — nominal/titular, while real power rests with the PM. The VP is ex-officio Chairman of Rajya Sabha.</p>
+  </div>
+
+  <h2>📊 Part V — Chapter Map</h2>
+  <table class="tbl">
+    <tr><th>Chapter</th><th>Topic</th><th>Articles</th></tr>
+    <tr><td>1</td><td>Union Executive (President, VP, PM, CoM, AG)</td><td>52–78</td></tr>
+    <tr><td>2</td><td>Parliament</td><td>79–122</td></tr>
+    <tr><td>3</td><td>Legislative Power of President (Ordinance)</td><td>123</td></tr>
+    <tr><td>4</td><td>Union Judiciary / Supreme Court</td><td>124–147</td></tr>
+    <tr><td>5</td><td>CAG — Controller & Auditor General</td><td>148–151</td></tr>
+  </table>
+
+  <h2>⚙️ How to Use These Notes</h2>
+  <div class="card card-blue">
+    <ul class="bullet-list">
+      <li><strong>First time?</strong> Read Full Notes (Page 3) + Memory Palace (Page 2)</li>
+      <li><strong>2nd–5th revision:</strong> High-Yield + Self-Test (Pages 8, 7)</li>
+      <li><strong>6th–10th revision:</strong> Ultra-Fast Sheet (Page 9)</li>
+      <li><strong>Day before exam:</strong> Last Night Sheet only (Page 11)</li>
+      <li><strong>Morning of exam:</strong> 30-Second Sheet (Page 10)</li>
+    </ul>
+  </div>
+
+  <h2>🔥 Priority Tags Used Throughout</h2>
+  <div class="card">
+    <p><span class="tag-fire">🔥 Must Know</span> — Guaranteed exam question, no excuse to miss</p>
+    <p><span class="tag-star">⭐ Important</span> — High probability, revise every time</p>
+    <p><span class="tag-plus">➕ Good to Know</span> — Revise when time permits</p>
+  </div>
+</section>
+
+<!-- ─────────── PAGE 1: MEMORY PALACE ─────────── -->
+<section class="page" id="p1">
+  <div class="chapter-header">
+    <h1>🧠 Chapter Memory Palace</h1>
+    <p class="page-subtitle">Walk through this story every revision — it encodes all key facts</p>
+  </div>
+
+  <div class="palace">
+    <div class="palace-title">🏛 The Presidential Palace Story</div>
+
+    <div class="palace-step">
+      <div class="palace-num">1</div>
+      <div>
+        <strong>GATE (Art. 52):</strong> You arrive at Rashtrapati Bhavan. The gate says <em>"There SHALL be a President of India."</em> Simple. It exists.
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">2</div>
+      <div>
+        <strong>ENTRANCE HALL (Art. 53):</strong> On the wall is a painting of three military generals (Army, Navy, Air Force) bowing to a chair. Caption: <em>"All executive power + Supreme Command of Defence Forces is VESTED here."</em>
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">3</div>
+      <div>
+        <strong>ELECTORAL COLLEGE ROOM (Art. 54):</strong> You see a room full of people. Sign on door: <em>"ELECTED MPs + MLAs ONLY. No Nominated. No Public."</em> Bouncer is throwing out nominated members.
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">4</div>
+      <div>
+        <strong>VOTING BOOTH (Art. 55):</strong> Inside the room, voting is happening — but everyone is whispering. <em>Secret Ballot.</em> They are writing a ranked list — <em>Proportional Representation + Single Transferable Vote.</em> A sign says: <em>Need 50 proposers + 50 seconders to even enter!</em>
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">5</div>
+      <div>
+        <strong>CALENDAR ROOM (Art. 56):</strong> A wall calendar shows <em>5 years</em>. Below it, a resignation letter addressed to: <em>"Vice President."</em> The VP is the only one above you to resign to!
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">6</div>
+      <div>
+        <strong>TROPHY WALL (Art. 57):</strong> Endless trophies for re-election. No limit. Unlike a framed photo of Trump with a big <em>"MAX 2"</em> stamp — India has no such limit.
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">7</div>
+      <div>
+        <strong>QUALIFICATION DESK (Art. 58):</strong> Guard checks your ID: <em>Indian citizen? ✓ Age 35+? ✓ Lok Sabha eligible? ✓ No office of profit? ✓</em>
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">8</div>
+      <div>
+        <strong>RESIGNATION WARDROBE (Art. 59):</strong> Inside the wardrobe are discarded MP badges, MLA badges. Rule: <em>"Once you're President, you CANNOT hold any house membership."</em> Your salary cannot be reduced — it is charged from Consolidated Fund of India.
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">9</div>
+      <div>
+        <strong>OATH PODIUM (Art. 60):</strong> CJI stands at the podium. President takes oath before CJI (or senior-most SC judge if CJI absent). Theist = Oath, Atheist = Affirmation.
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">10</div>
+      <div>
+        <strong>COURTROOM (Art. 61 — Impeachment):</strong> A court inside Parliament. Charge: <em>Violation of Constitution.</em> Ground: Only ground. Both houses can start the charge (not state legislatures). Quasi-judicial process borrowed from USA. 14-day notice, ¼ member signatures, 2/3 special majority in BOTH houses. NO impeachment has EVER happened in India!
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">11</div>
+      <div>
+        <strong>SUCCESSION BOARD (Art. 62):</strong> A whiteboard: <em>Vacancy (death/removal/resignation) → VP acts as President → Election within 6 months.</em> Zakir Hussain died 1969 → VV Giri refused VP role → CJI M. Hidayatullah became acting President!
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">12</div>
+      <div>
+        <strong>MERCY ROOM (Art. 72 — Pardoning Powers):</strong> Five mercy cards on the table: <em>Pardon (full freedom) → Commutation (form changes) → Remission (duration cuts) → Respite (health grounds reduction) → Reprieve (temporary stay).</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="palace">
+    <div class="palace-title">🏛 The Vice-Presidential Annex Story</div>
+
+    <div class="palace-step">
+      <div class="palace-num">A</div>
+      <div>
+        <strong>ANNEX GATE (Art. 63):</strong> A smaller gate next to the main one: <em>"There SHALL be a Vice President of India."</em>
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">B</div>
+      <div>
+        <strong>RAJYA SABHA HAT RACK (Art. 64):</strong> VP walks in and automatically picks up a <em>Chairman of Rajya Sabha hat</em> — no election needed. Ex-officio = automatic.
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">C</div>
+      <div>
+        <strong>ELECTIONS ROOM (Art. 66):</strong> Same voting style as President — but voters are <em>ALL MPs</em> (elected + nominated BOTH). No MLAs. No public.
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">D</div>
+      <div>
+        <strong>REMOVAL CHAMBER (Art. 67):</strong> Resolution can START ONLY in Rajya Sabha (because VP is Chairman there). Effective majority in RS → Simple majority in LS. 14-day notice to President/Deputy Chairman (not VP himself!). No fixed ground for removal — ANY ground works.
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">E</div>
+      <div>
+        <strong>OATH CORNER (Art. 69):</strong> VP takes oath before the <em>President</em> (reverse of the President's oath — CJI administered President's oath).
+      </div>
+    </div>
+
+    <div class="palace-step">
+      <div class="palace-num">F</div>
+      <div>
+        <strong>DISPUTE BOOTH (Art. 71):</strong> Any election dispute for President or VP — goes ONLY to Supreme Court. Exclusive jurisdiction. No other court.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────── PAGE 2: FULL NOTES ─────────── -->
+<section class="page" id="p2">
+  <div class="chapter-header">
+    <h1>📖 Complete Revision Notes</h1>
+    <p class="page-subtitle">Every fact from the lecture — article by article</p>
+  </div>
+
+  <h2>THE PRESIDENT</h2>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 52</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <em>There shall be a President of India.</em> Establishes the office. Nothing more to it.</p>
+  </div>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 53</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <em>Executive power of the Union is vested in the President.</em></p>
+    <ul class="bullet-list">
+      <li>President is Supreme Commander of all Defence Forces (Army, Navy, Air Force)</li>
+      <li>All war declarations and treaties are made in the name of the President</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 54</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <strong>Electoral College for President's Election</strong></p>
+    <ul class="bullet-list">
+      <li>Elected MPs + Elected MLAs participate</li>
+      <li><em>Nominated MPs and Nominated MLAs do NOT participate</em></li>
+      <li>No direct public vote — representatives vote</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <div class="art-row">
+      <span class="art-pill">Art. 55</span>
+    </div>
+    <p><span class="tag-star">⭐</span> <strong>Manner of Election</strong></p>
+    <ul class="bullet-list">
+      <li>Indirect election</li>
+      <li>Proportional Representation + Single Transferable Vote</li>
+      <li>Secret Ballot (no EVM — ballot paper; showing your vote = cancellation; Mulayam Singh case with Pranab Mukherjee)</li>
+      <li>50 proposers + 50 seconders required to even nominate</li>
+    </ul>
+    <div class="formula">
+      Quota = Total Votes ÷ (Number of Vacancies + 1) + 1
+      <br>Since only 1 President vacancy: Quota = Total Votes ÷ 2 + 1
+    </div>
+    <div class="formula">
+      Value of MLA's Vote = State Population ÷ (Total MLAs × 1000)
+      <br>Value of MP's Vote = Total MLA Votes of All States ÷ (Total MPs × 1000)
+    </div>
+  </div>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 56</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <strong>Term of Office</strong></p>
+    <ul class="bullet-list">
+      <li>5 years from date of entering office</li>
+      <li>Resignation goes to <em>Vice President</em></li>
+      <li>Can hold office beyond 5 years until successor enters</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <div class="art-row">
+      <span class="art-pill">Art. 57</span>
+    </div>
+    <p><span class="tag-star">⭐</span> <strong>Re-election Eligibility</strong></p>
+    <ul class="bullet-list">
+      <li>A person can be elected President <em>any number of times</em> — NO limit</li>
+      <li>Unlike USA — max 2 terms for US President</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 58</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <strong>Qualifications to Become President</strong></p>
+    <ul class="bullet-list">
+      <li>Must be a <em>citizen of India</em></li>
+      <li>Must have completed <em>35 years</em> of age</li>
+      <li>Must be qualified to be elected as a member of <em>Lok Sabha</em> (House of People)</li>
+      <li>Must NOT hold any <em>office of profit</em></li>
+      <li>Exceptions: Minister, Chairman of National Commissions (SC/ST/Women) are NOT office of profit</li>
+      <li><em>Office of profit is NOWHERE defined in the Constitution</em></li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <div class="art-row">
+      <span class="art-pill">Art. 59</span>
+    </div>
+    <p><span class="tag-star">⭐</span> <strong>Conditions of Office</strong></p>
+    <ul class="bullet-list">
+      <li>President shall NOT be a member of Lok Sabha, Rajya Sabha, State Legislative Assembly, or Legislative Council</li>
+      <li>If already a member → must resign upon election as President</li>
+      <li>Allowances CANNOT be diminished (reduced) during tenure — can only be increased</li>
+      <li>Salary charged from <em>Consolidated Fund of India</em> (non-votable part of budget)</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <div class="art-row">
+      <span class="art-pill">Art. 60</span>
+    </div>
+    <p><span class="tag-star">⭐</span> <strong>Oath / Affirmation</strong></p>
+    <ul class="bullet-list">
+      <li>Administered by <em>Chief Justice of India (CJI)</em></li>
+      <li>If CJI absent → by the <em>senior-most judge</em> of Supreme Court</li>
+      <li>Oath = for theists (believers in God)</li>
+      <li>Affirmation = for atheists (non-believers)</li>
+    </ul>
+  </div>
+
+  <div class="card card-red">
+    <div class="art-row">
+      <span class="art-pill">Art. 61</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <strong>Impeachment of the President</strong></p>
+    <ul class="bullet-list">
+      <li>Ground: <em>Violation of the Constitution</em> (violation is NOT defined anywhere in Constitution)</li>
+      <li>Resolution can be started in EITHER house (Lok Sabha or Rajya Sabha)</li>
+      <li>NOT in State Legislature (Vidhan Sabha/Parishad)</li>
+      <li>14-day prior notice to the Presiding Officer (Speaker if LS; Chairman if RS)</li>
+      <li>Minimum ¼ of total house members must sign</li>
+      <li>Must be passed by <em>2/3 special majority</em> in BOTH houses</li>
+      <li>Second house investigates the charges — that's why it's called <em>Quasi-Judicial</em></li>
+      <li>Borrowed from <em>Constitution of USA</em></li>
+      <li><em>No President has EVER been impeached in India. No resolution even initiated.</em></li>
+    </ul>
+    <div class="formula">
+      Special Majority = 2/3 of TOTAL membership of the House
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <div class="art-row">
+      <span class="art-pill">Art. 62</span>
+    </div>
+    <p><span class="tag-star">⭐</span> <strong>Filling Vacancy in President's Office</strong></p>
+    <ul class="bullet-list">
+      <li>Vacancy created by: Death / Resignation / Removal / End of Term</li>
+      <li>If term ending normally → election before term expires</li>
+      <li>Premature vacancy → <em>VP acts as President</em> → election within <em>6 months</em></li>
+      <li>Historical: Zakir Hussain died (1969) → VV Giri (VP) refused acting role → wanted permanent presidency → <em>CJI M. Hidayatullah</em> became acting President</li>
+      <li>After VV Giri became permanent President → Hidayatullah returned to CJI role</li>
+      <li>Parliament passed a law: VP absent → CJI → Senior-most SC Judge</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 72</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <strong>Pardoning Powers of the President</strong></p>
+    <table class="tbl">
+      <tr><th>Power</th><th>What it means</th></tr>
+      <tr><td><em>Pardon</em></td><td>Full acquittal — go free, all charges gone</td></tr>
+      <tr><td><em>Commutation</em></td><td>Form of punishment changes (death → life imprisonment)</td></tr>
+      <tr><td><em>Remission</em></td><td>Duration is reduced (20 years → 10 years)</td></tr>
+      <tr><td><em>Respite</em></td><td>Duration reduced on health grounds (pregnancy, old age, illness)</td></tr>
+      <tr><td><em>Reprieve</em></td><td>Temporary stay/hold on execution — not permanent</td></tr>
+    </table>
+    <p>Nirbhaya case: 3 convicts went to President seeking pardon → President refused → hanging carried out.</p>
+  </div>
+
+  <h2>GOVERNOR vs PRESIDENT — Pardoning Power Difference</h2>
+  <div class="cmp">
+    <div class="cmp-col">
+      <div class="cmp-title">President (Art. 72)</div>
+      <div class="cmp-li">Can pardon death sentences</div>
+      <div class="cmp-li">Can pardon Court Martial sentences</div>
+      <div class="cmp-li">All 5 powers: Pardon, Commute, Remit, Respite, Reprieve</div>
+    </div>
+    <div class="cmp-col">
+      <div class="cmp-title">Governor (Art. 161)</div>
+      <div class="cmp-li"><em>CANNOT</em> pardon death sentences</div>
+      <div class="cmp-li"><em>CANNOT</em> pardon Court Martial sentences</div>
+      <div class="cmp-li">Same 5 powers otherwise</div>
+    </div>
+  </div>
+
+  <h2>THE VICE PRESIDENT</h2>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 63</span>
+    </div>
+    <p>There shall be a Vice President of India.</p>
+  </div>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 64</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <strong>VP = Ex-Officio Chairman of Rajya Sabha</strong></p>
+    <ul class="bullet-list">
+      <li>Automatically becomes Chairman upon becoming VP</li>
+      <li>No separate election for Chairman of Rajya Sabha</li>
+      <li>Shall not hold any office of profit</li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <div class="art-row">
+      <span class="art-pill">Art. 65</span>
+    </div>
+    <p><strong>VP Acting as President</strong></p>
+    <ul class="bullet-list">
+      <li>Casual Vacancy = President's seat permanently vacant (death, removal, resignation)</li>
+      <li>Absence = President temporarily unavailable (illness etc.)</li>
+      <li>In BOTH cases, VP discharges presidential functions</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 66</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <strong>VP Election</strong></p>
+    <ul class="bullet-list">
+      <li>Electoral College: <em>ALL MPs (elected + nominated BOTH)</em></li>
+      <li>No MLAs participate (unlike President's election)</li>
+      <li>Same people who impeach President elect the VP</li>
+      <li>Proportional Representation + Single Transferable Vote</li>
+    </ul>
+  </div>
+
+  <div class="card card-red">
+    <div class="art-row">
+      <span class="art-pill">Art. 67</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> <strong>VP Term + Removal</strong></p>
+    <ul class="bullet-list">
+      <li>Term: <em>5 years</em></li>
+      <li>Resignation: given to <em>President</em></li>
+      <li>Removal resolution can START ONLY in <em>Rajya Sabha</em></li>
+      <li>14-day notice — to <em>President or Deputy Chairman</em> (NOT VP himself)</li>
+      <li>Rajya Sabha: <em>Effective majority</em> needed</li>
+      <li>Then goes to Lok Sabha → <em>Simple majority</em> to agree</li>
+      <li>Ground for removal: <em>NO specific ground mentioned</em> — any ground works</li>
+      <li>Re-election: no limit, any number of times</li>
+    </ul>
+    <div class="formula">
+      Effective Majority = Total Seats ÷ 2 + 1 (excluding vacant seats)
+      <br>Simple Majority = Members Present & Voting ÷ 2 + 1
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <div class="art-row">
+      <span class="art-pill">Art. 68</span>
+    </div>
+    <p>VP vacancy due to death/resignation/removal → election within <em>60 days</em>.</p>
+  </div>
+
+  <div class="card card-blue">
+    <div class="art-row">
+      <span class="art-pill">Art. 69</span>
+    </div>
+    <p>VP's oath administered by <em>President</em> (reverse: President's oath by CJI)</p>
+  </div>
+
+  <div class="card card-blue">
+    <div class="art-row">
+      <span class="art-pill">Art. 70</span>
+    </div>
+    <p>If VP also can't discharge presidential duties in other contingencies → Parliament may make provisions.</p>
+  </div>
+
+  <div class="card card-green">
+    <div class="art-row">
+      <span class="art-pill">Art. 71</span>
+    </div>
+    <p><span class="tag-fire">🔥</span> Any dispute relating to election of President or VP → <em>Supreme Court has exclusive jurisdiction.</em> No other court can hear it.</p>
+  </div>
+</section>
+
+<!-- ─────────── PAGE 3: CONNECTIONS ─────────── -->
+<section class="page" id="p3">
+  <div class="chapter-header">
+    <h1>🔗 Concept Connections</h1>
+    <p class="page-subtitle">Never let facts float alone — link everything</p>
+  </div>
+
+  <h2>🔑 Key Chains</h2>
+
+  <div class="card card-green">
+    <h3>ELECTORAL COLLEGE CHAIN</h3>
+    <p>President Election → <em>Elected MPs + Elected MLAs</em></p>
+    <p>VP Election → <em>All MPs (Elected + Nominated)</em></p>
+    <p>President Impeachment → <em>All MPs (Elected + Nominated)</em></p>
+    <p style="margin-top:8px;color:var(--yellow)">Memory: "For President's election, public reps (MLAs) matter. For VP election, Parliament alone decides. For Prez removal, SAME people who chose VP are removing him."</p>
+  </div>
+
+  <div class="card card-blue">
+    <h3>OATH ADMINISTRATION CHAIN</h3>
+    <p>President → Oath by <em>CJI</em> (or senior-most SC judge)</p>
+    <p>Vice President → Oath by <em>President</em></p>
+    <p>PM + Council of Ministers → Oath by <em>President</em></p>
+    <p>SC/HC Judges → Oath by <em>President/Governor</em></p>
+  </div>
+
+  <div class="card card-yellow">
+    <h3>MAJORITY TYPES CHAIN</h3>
+    <p><em>Simple Majority</em> = Members Present & Voting ÷ 2 + 1 (e.g. Lok Sabha agrees to VP removal)</p>
+    <p><em>Absolute Majority</em> = Total membership ÷ 2 + 1</p>
+    <p><em>Effective Majority</em> = Filled seats ÷ 2 + 1 (RS for VP removal)</p>
+    <p><em>Special Majority</em> = 2/3 of total membership (Prez impeachment in BOTH houses)</p>
+  </div>
+
+  <div class="card card-purple">
+    <h3>REMOVAL GROUNDS CHAIN</h3>
+    <p>President removal ground → <em>Violation of Constitution</em> (only ground, defined NOWHERE)</p>
+    <p>VP removal ground → <em>No specific ground</em> — any reason works</p>
+    <p>SC Judge removal ground → Proved Misbehaviour or Incapacity</p>
+    <p>CAG removal ground → Same as SC Judge</p>
+  </div>
+
+  <div class="card card-green">
+    <h3>VACANCY FILLING TIMELINE CHAIN</h3>
+    <p>President vacancy → Election within <em>6 months</em></p>
+    <p>VP vacancy → Election within <em>60 days</em></p>
+    <p>Rajya Sabha seat vacancy → within <em>6 months</em></p>
+    <p>Lok Sabha vacancy → By-election within <em>6 months</em></p>
+  </div>
+
+  <div class="card card-blue">
+    <h3>PARDONING POWER CAUSE → EFFECT</h3>
+    <p>President is Supreme Commander of Defence Forces (Art. 53)</p>
+    <p>→ Therefore President can pardon Court Martial sentences (Art. 72)</p>
+    <p>→ Governor is NOT Supreme Commander</p>
+    <p>→ Therefore Governor CANNOT pardon Court Martial sentences (Art. 161)</p>
+    <p style="color:var(--yellow);margin-top:6px">The logic flows perfectly! Command = Power to pardon those forces.</p>
+  </div>
+
+  <div class="card card-red">
+    <h3>HISTORICAL EVENT CHAIN</h3>
+    <p>1969: President Zakir Hussain died (shortest tenure)</p>
+    <p>→ VP VV Giri should act as President</p>
+    <p>→ VV Giri refused (wanted to contest for permanent presidency)</p>
+    <p>→ No provision existed for this scenario</p>
+    <p>→ Parliament passed special law → CJI becomes acting President</p>
+    <p>→ CJI M. Hidayatullah became acting President</p>
+    <p>→ VV Giri won election → became permanent President</p>
+    <p>→ Hidayatullah returned to CJI role</p>
+  </div>
+
+  <h2>🔄 USA vs India — Presidential System</h2>
+  <table class="tbl">
+    <tr><th>Feature</th><th>India</th><th>USA</th></tr>
+    <tr><td>Re-election limit</td><td><em>No limit</em></td><td>Max 2 terms</td></tr>
+    <tr><td>President type</td><td>Nominal/Titular head</td><td>Executive head (real power)</td></tr>
+    <tr><td>Impeachment borrowed</td><td>Yes, from USA</td><td>Origin</td></tr>
+    <tr><td>Election method</td><td>Indirect (via MPs/MLAs)</td><td>Electoral College (different system)</td></tr>
+  </table>
+</section>
+
+<!-- ─────────── PAGE 4: TRAPS ─────────── -->
+<section class="page" id="p4">
+  <div class="chapter-header">
+    <h1>⚠️ Exam Traps</h1>
+    <p class="page-subtitle">What most students get wrong — every single exam</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 1: Nominated vs Elected in Electoral College</div>
+    <p><strong>President's ELECTION (Art. 54):</strong> Only <em>ELECTED</em> MPs + MLAs. Nominated OUT.</p>
+    <p><strong>President's IMPEACHMENT (Art. 61):</strong> ALL MPs = Elected + Nominated BOTH. MLAs OUT.</p>
+    <p><strong>VP's ELECTION (Art. 66):</strong> ALL MPs = Elected + Nominated BOTH. MLAs OUT.</p>
+    <p style="color:var(--yellow);margin-top:6px">👉 Memory: "To elect the President, you need people reps (MLAs). To remove/replace him at Parliament level — only Parliament members matter."</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 2: Resignation — To WHOM?</div>
+    <p>President resigns → to <em>Vice President</em> (Art. 56)</p>
+    <p>Vice President resigns → to <em>President</em> (Art. 67)</p>
+    <p>They resign to EACH OTHER. Don't mix them up!</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 3: VP Removal — Where Does Resolution START?</div>
+    <p>President's removal → EITHER house (Lok Sabha OR Rajya Sabha)</p>
+    <p>VP's removal → resolution can START ONLY in <em>Rajya Sabha</em></p>
+    <p style="color:var(--yellow);">Logic: VP is Chairman of RS. That's where charges against him must originate. But LS still needs to agree (simple majority).</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 4: Majority Type Confusion</div>
+    <p>President impeachment → <em>Special majority (2/3 total membership)</em> in BOTH houses</p>
+    <p>VP removal from RS → <em>Effective majority</em></p>
+    <p>VP removal from LS → <em>Simple majority</em></p>
+    <p>Simple ≠ Effective ≠ Special ≠ Absolute — Learn all four!</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 5: Qualification — Lok Sabha vs Rajya Sabha</div>
+    <p>Qualify for President → Must be Lok Sabha eligible (House of People) [Art. 58]</p>
+    <p>Qualify for VP → Must be Rajya Sabha eligible (Council of States) [Art. 66]</p>
+    <p style="color:var(--yellow);">Age for Lok Sabha = 25; Age for Rajya Sabha = 30. But both President AND VP must be 35 years old to hold office!</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 6: Vacancy Timelines</div>
+    <p>President vacancy → fill within <em>6 months</em></p>
+    <p>VP vacancy → fill within <em>60 days</em></p>
+    <p>Don't swap these! VP is filled FASTER (60 days) than President (6 months).</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 7: Pardoning — Commutation vs Remission vs Respite</div>
+    <p><em>Commutation</em> = FORM of punishment changes (death → life imprisonment)</p>
+    <p><em>Remission</em> = DURATION reduces (20 yrs → 10 yrs), no form change</p>
+    <p><em>Respite</em> = DURATION reduces BUT specifically for HEALTH reasons</p>
+    <p><em>Reprieve</em> = Only TEMPORARY hold — punishment not removed permanently</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 8: Oath Administrator</div>
+    <p>President's oath → by <em>CJI</em></p>
+    <p>VP's oath → by <em>President</em></p>
+    <p>They are NOT the same! Most students assume CJI for both.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 9: "Defined Nowhere in Constitution"</div>
+    <p>"Violation of Constitution" (ground for Prez impeachment) → <em>NOT defined</em></p>
+    <p>"Office of Profit" → <em>NOT defined</em> in Constitution</p>
+    <p>Both are deliberately left undefined. If asked — answer: NOT defined.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 10: Re-election Limit</div>
+    <p>India President → NO LIMIT on re-elections</p>
+    <p>USA President → MAX 2 terms</p>
+    <p>If asked "can Indian President be elected for third term?" → YES (there is no limit)</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 11: Notice for Removal</div>
+    <p>President's impeachment → 14-day notice to Presiding Officer (Speaker/Chairman)</p>
+    <p>VP's removal → 14-day notice to President OR Deputy Chairman (NOT to VP)</p>
+    <p>Recent real example: Resolution to remove Jagdeep Dhankhar was rejected because 14-day notice wasn't properly given.</p>
+  </div>
+</section>
+
+<!-- ─────────── PAGE 5: EXAMINER ─────────── -->
+<section class="page" id="p5">
+  <div class="chapter-header">
+    <h1>🎯 Examiner's Favourite Questions</h1>
+    <p class="page-subtitle">High-probability question patterns — study these like battle plans</p>
+  </div>
+
+  <h2>🔥 Must-Know Question Patterns</h2>
+
+  <div class="card card-green">
+    <h3>Pattern 1 — Direct Article Questions</h3>
+    <ul class="bullet-list">
+      <li>Which article provides for election of the President? → <em>Art. 54</em></li>
+      <li>Pardoning power of President is under which article? → <em>Art. 72</em></li>
+      <li>Oath of VP is administered under which article? → <em>Art. 69</em></li>
+      <li>Election dispute of President/VP is dealt by? → <em>Art. 71 — Supreme Court</em></li>
+    </ul>
+  </div>
+
+  <div class="card card-blue">
+    <h3>Pattern 2 — Who Participates? (Most Tricky)</h3>
+    <ul class="bullet-list">
+      <li>Electoral college for President election: <em>Elected MPs + Elected MLAs</em></li>
+      <li>Electoral college for VP election: <em>All MPs (Elected + Nominated)</em></li>
+      <li>President's impeachment: <em>All MPs (Elected + Nominated)</em></li>
+      <li>State Legislature participates in Prez election? → <em>Yes (Elected MLAs)</em></li>
+      <li>State Legislature participates in Prez impeachment? → <em>NO</em></li>
+    </ul>
+  </div>
+
+  <div class="card card-yellow">
+    <h3>Pattern 3 — Statement-Based True/False</h3>
+    <ul class="bullet-list">
+      <li>"Governor can pardon Court Martial sentence" → <em>FALSE</em></li>
+      <li>"VP is directly elected by people" → <em>FALSE</em></li>
+      <li>"President's salary can be reduced during emergency" → <em>FALSE (cannot be diminished)</em></li>
+      <li>"VV Giri was the acting President after Zakir Hussain" → <em>FALSE (CJI Hidayatullah was)</em></li>
+      <li>"Impeachment is a quasi-judicial process" → <em>TRUE</em></li>
+      <li>"Violation of Constitution is defined in the Constitution" → <em>FALSE</em></li>
+    </ul>
+  </div>
+
+  <div class="card card-red">
+    <h3>Pattern 4 — Match the Following</h3>
+    <table class="tbl">
+      <tr><th>Power</th><th>Meaning</th></tr>
+      <tr><td>Pardon</td><td>Full acquittal from punishment</td></tr>
+      <tr><td>Commutation</td><td>Changing form of punishment</td></tr>
+      <tr><td>Remission</td><td>Reducing duration of punishment</td></tr>
+      <tr><td>Respite</td><td>Reduced punishment on health grounds</td></tr>
+      <tr><td>Reprieve</td><td>Temporary stay of execution</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-purple">
+    <h3>Pattern 5 — Assertion-Reason</h3>
+    <p><strong>A:</strong> Governor cannot pardon a death sentence.</p>
+    <p><strong>R:</strong> Governor is not the Supreme Commander of Defence Forces.</p>
+    <p style="color:var(--yellow);margin-top:6px">→ Both A and R are true but R is NOT the correct explanation (death sentence ≠ defence forces). Be careful — the reason for no death-sentence pardon is different.</p>
+
+    <p style="margin-top:12px"><strong>A:</strong> The President's impeachment is a quasi-judicial process.</p>
+    <p><strong>R:</strong> The second house investigates the charges levelled by the first house.</p>
+    <p style="color:var(--yellow);margin-top:6px">→ Both true, R correctly explains A. ✓</p>
+  </div>
+
+  <div class="card card-blue">
+    <h3>Pattern 6 — Chronology Questions</h3>
+    <ul class="bullet-list">
+      <li>First President: <em>Rajendra Prasad</em> — longest tenure</li>
+      <li>President who died in office: <em>Zakir Hussain (1969)</em> — shortest tenure</li>
+      <li>CJI who became acting President: <em>M. Hidayatullah</em></li>
+      <li>VP who contested for Presidency: <em>VV Giri</em></li>
+      <li>Latest VP removal attempt: <em>Jagdeep Dhankhar</em> — rejected (no 14-day notice)</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <h3>Pattern 7 — Confusing Comparisons</h3>
+    <ul class="bullet-list">
+      <li>President vs Governor pardoning power — 2 key differences</li>
+      <li>Commutation vs Remission vs Respite — all three reduce punishment but HOW differs</li>
+      <li>Effective majority vs Special majority vs Simple majority</li>
+      <li>President election vs impeachment — electoral college differs</li>
+      <li>Art. 72 (President pardon) vs Art. 161 (Governor pardon)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─────────── PAGE 6: SELF-TEST ─────────── -->
+<section class="page" id="p6">
+  <div class="chapter-header">
+    <h1>🧪 Active Recall — Self Test</h1>
+    <p class="page-subtitle">Tap each card to reveal the answer. Test before you peek!</p>
+  </div>
+
+  <h2>⚡ Flash Cards</h2>
+  <div class="flash-grid">
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">Article for Electoral College of President?</span>
+      <span class="flash-a">Art. 54 — Elected MPs + Elected MLAs</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">Who takes oath of VP?</span>
+      <span class="flash-a">President administers oath to VP (Art. 69)</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">Ground for President's removal?</span>
+      <span class="flash-a">Violation of Constitution (Art. 61) — not defined anywhere</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">What is Commutation?</span>
+      <span class="flash-a">Change in FORM of punishment (death → life imprisonment)</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">Who was acting President when Zakir Hussain died?</span>
+      <span class="flash-a">CJI M. Hidayatullah (VV Giri refused to be acting Prez)</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">VP removal — where does resolution START?</span>
+      <span class="flash-a">ONLY in Rajya Sabha (Art. 67)</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">Can Governor pardon Court Martial sentences?</span>
+      <span class="flash-a">NO — only President can (Art. 161 vs Art. 72)</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">President vacancy must be filled within?</span>
+      <span class="flash-a">6 months (VP vacancy = 60 days)</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">Who is VP's ex-officio role?</span>
+      <span class="flash-a">Chairman of Rajya Sabha (Art. 64)</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">Qualification for President — age?</span>
+      <span class="flash-a">35 years + Indian citizen + Lok Sabha eligible + no office of profit</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">Maximum number of times President can be re-elected?</span>
+      <span class="flash-a">No limit — unlimited times (unlike USA: max 2)</span>
+    </div>
+    <div class="flash-card" onclick="this.classList.toggle('flipped')">
+      <span class="flash-q">What majority removes VP in Rajya Sabha?</span>
+      <span class="flash-a">Effective Majority in RS, then Simple Majority in LS</span>
+    </div>
+  </div>
+
+  <h2>❓ Click-to-Reveal Questions</h2>
+
+  <div class="q-box" onclick="this.classList.toggle('open')">
+    <div class="q-text">Which article says the President is Supreme Commander of Defence Forces?</div>
+    <div class="q-hint">Hint: Same article that vests executive power in President</div>
+    <div class="q-ans">Art. 53 — Executive power of Union vested in President + Supreme Command of Defence Forces</div>
+  </div>
+
+  <div class="q-box" onclick="this.classList.toggle('open')">
+    <div class="q-text">What is the difference between Reprieve and Respite?</div>
+    <div class="q-ans">Reprieve = Temporary STAY of execution (not permanent). Respite = Reduced punishment specifically on HEALTH grounds (pregnancy, old age, illness).</div>
+  </div>
+
+  <div class="q-box" onclick="this.classList.toggle('open')">
+    <div class="q-text">Why is Presidential impeachment called a "Quasi-Judicial" process?</div>
+    <div class="q-ans">Because the second house INVESTIGATES the charges put by the first house — this is judicial work. But it is NOT done by the judiciary — Parliament does it. Hence half-judicial = Quasi-Judicial.</div>
+  </div>
+
+  <div class="q-box" onclick="this.classList.toggle('open')">
+    <div class="q-text">Fill in the blank: The nomination for Presidential candidate requires ___ proposers and ___ seconders.</div>
+    <div class="q-ans">50 proposers + 50 seconders = 100 people total needed just to file nomination!</div>
+  </div>
+
+  <div class="q-box" onclick="this.classList.toggle('open')">
+    <div class="q-text">Which country's constitution did India borrow the Impeachment process from?</div>
+    <div class="q-ans">United States of America (USA)</div>
+  </div>
+
+  <div class="q-box" onclick="this.classList.toggle('open')">
+    <div class="q-text">If President's salary is ₹5,00,000 per month and Parliament reduces it to ₹4,50,000 — is this constitutional?</div>
+    <div class="q-ans">NO — Art. 59 says allowances of President CANNOT be diminished (reduced) during tenure. The salary is charged from Consolidated Fund of India and is non-votable.</div>
+  </div>
+
+  <div class="q-box" onclick="this.classList.toggle('open')">
+    <div class="q-text">Reverse Question: "Proportional Representation + Single Transferable Vote + Secret Ballot" describes which article?</div>
+    <div class="q-ans">Art. 55 — Manner of election of President. Also applies to VP election (Art. 66).</div>
+  </div>
+
+  <div class="q-box" onclick="this.classList.toggle('open')">
+    <div class="q-text">Who administers oath to the President if CJI is absent?</div>
+    <div class="q-ans">The senior-most judge of the Supreme Court (Art. 60)</div>
+  </div>
+
+  <div class="q-box" onclick="this.classList.toggle('open')">
+    <div class="q-text">Can a sitting Rajya Sabha member become President without first resigning?</div>
+    <div class="q-ans">NO. Art. 59 says President shall not be a member of any house. If elected as President while being RS member → must resign from RS immediately.</div>
+  </div>
+</section>
+
+<!-- ─────────── PAGE 7: HIGH-YIELD ─────────── -->
+<section class="page" id="p7">
+  <div class="chapter-header">
+    <h1>⚡ High-Yield Revision Notes</h1>
+    <p class="page-subtitle">Most exam-relevant content — ideal for 3rd–8th revisions</p>
+  </div>
+
+  <h2>🔥 President — Critical Points</h2>
+  <div class="card card-green">
+    <ul class="bullet-list">
+      <li>Art. 52 → Existence; Art. 53 → Executive Power + Supreme Command of Defence</li>
+      <li>Art. 54 → Election: <em>ELECTED MPs + ELECTED MLAs only</em> (nominated OUT)</li>
+      <li>Art. 55 → Indirect election, PR + STV, Secret Ballot, 50 proposers + 50 seconders</li>
+      <li>Art. 56 → 5-year term; resign to VP</li>
+      <li>Art. 57 → Re-election: <em>UNLIMITED times</em> (USA = max 2)</li>
+      <li>Art. 58 → Qualifications: 35 yrs, citizen, Lok Sabha eligible, no office of profit</li>
+      <li>Art. 59 → Cannot be MP/MLA/MLC; salary from CFI; cannot be reduced</li>
+      <li>Art. 60 → Oath by <em>CJI</em> (or senior-most SC judge)</li>
+      <li>Art. 61 → Impeachment: ground = violation of Constitution; either house; 14-day notice; ¼ sign; 2/3 special majority BOTH houses; quasi-judicial; borrowed from USA; <em>never happened</em></li>
+      <li>Art. 62 → Vacancy: VP acts; election in 6 months</li>
+      <li>Art. 72 → Pardoning: Pardon/Commute/Remit/Respite/Reprieve; Governor CANNOT pardon death or Court Martial</li>
+    </ul>
+  </div>
+
+  <h2>🔥 Vice President — Critical Points</h2>
+  <div class="card card-blue">
+    <ul class="bullet-list">
+      <li>Art. 63 → Existence of VP</li>
+      <li>Art. 64 → <em>Ex-officio Chairman of Rajya Sabha</em> — automatic, no separate election</li>
+      <li>Art. 65 → Acts as President during vacancy/absence</li>
+      <li>Art. 66 → Election: <em>ALL MPs (elected + nominated both)</em> — no MLAs</li>
+      <li>Art. 67 → 5-year term; resign to President; remove via Rajya Sabha ONLY (effective majority) → LS (simple majority); no fixed ground; 14-day notice to Prez/Deputy Chairman</li>
+      <li>Art. 68 → VP vacancy filled within <em>60 days</em></li>
+      <li>Art. 69 → VP oath by <em>President</em></li>
+      <li>Art. 71 → Election disputes → <em>Supreme Court exclusive jurisdiction</em></li>
+    </ul>
+  </div>
+
+  <h2>⭐ Key Comparisons Table</h2>
+  <table class="tbl">
+    <tr><th>Feature</th><th>President</th><th>Vice President</th></tr>
+    <tr><td>Establishing Article</td><td>Art. 52</td><td>Art. 63</td></tr>
+    <tr><td>Electoral College</td><td>Elected MPs + Elected MLAs</td><td>All MPs (elected + nominated)</td></tr>
+    <tr><td>Term</td><td>5 years</td><td>5 years</td></tr>
+    <tr><td>Resign to</td><td>Vice President</td><td>President</td></tr>
+    <tr><td>Oath administered by</td><td>CJI</td><td>President</td></tr>
+    <tr><td>Removal ground</td><td>Violation of Constitution</td><td>No fixed ground</td></tr>
+    <tr><td>Removal: resolution starts</td><td>Either house</td><td>Only Rajya Sabha</td></tr>
+    <tr><td>Removal: majority needed</td><td>Special (2/3 both houses)</td><td>Effective (RS) + Simple (LS)</td></tr>
+    <tr><td>Vacancy election within</td><td>6 months</td><td>60 days</td></tr>
+    <tr><td>Other role</td><td>Supreme Commander Defence</td><td>Ex-officio RS Chairman</td></tr>
+    <tr><td>Qualification age</td><td>35 years (LS eligible)</td><td>35 years (RS eligible)</td></tr>
+  </table>
+</section>
+
+<!-- ─────────── PAGE 8: ULTRA-FAST ─────────── -->
+<section class="page" id="p8">
+  <div class="chapter-header">
+    <h1>🚀 Ultra-Fast Revision Sheet</h1>
+    <p class="page-subtitle">Scan through in under 5 minutes — for 10th+ revisions</p>
+  </div>
+
+  <h2>President — Article by Article</h2>
+  <div class="uf-row"><span class="uf-art">52</span><span class="uf-text">There shall be a <span class="uf-key">President</span> of India</span></div>
+  <div class="uf-row"><span class="uf-art">53</span><span class="uf-text"><span class="uf-key">Executive power</span> vested in Prez + <span class="uf-key">Supreme Commander</span> of Army/Navy/Air Force</span></div>
+  <div class="uf-row"><span class="uf-art">54</span><span class="uf-text">Electoral College: <span class="uf-key">Elected MPs + Elected MLAs</span> (no nominated, no public)</span></div>
+  <div class="uf-row"><span class="uf-art">55</span><span class="uf-text">Manner: <span class="uf-key">Indirect</span> + <span class="uf-key">PR + STV</span> + Secret Ballot + <span class="uf-key">50P + 50S</span></span></div>
+  <div class="uf-row"><span class="uf-art">56</span><span class="uf-text">Term: <span class="uf-key">5 years</span>; Resign to: <span class="uf-key">VP</span></span></div>
+  <div class="uf-row"><span class="uf-art">57</span><span class="uf-text">Re-election: <span class="uf-key">No limit</span> (USA = max 2)</span></div>
+  <div class="uf-row"><span class="uf-art">58</span><span class="uf-text">Qualifications: Citizen + <span class="uf-key">35 yrs</span> + <span class="uf-key">LS eligible</span> + No office of profit</span></div>
+  <div class="uf-row"><span class="uf-art">59</span><span class="uf-text">Cannot hold any House seat; Salary <span class="uf-key">cannot be reduced</span>; from CFI</span></div>
+  <div class="uf-row"><span class="uf-art">60</span><span class="uf-text">Oath by <span class="uf-key">CJI</span> (or senior-most SC judge)</span></div>
+  <div class="uf-row"><span class="uf-art">61</span><span class="uf-text">Impeachment: <span class="uf-key">Violation of Const.</span> | Either house | <span class="uf-key">14-day</span> notice | ¼ sign | <span class="uf-key">2/3 both houses</span> | Quasi-judicial | From <span class="uf-key">USA</span> | Never happened</span></div>
+  <div class="uf-row"><span class="uf-art">62</span><span class="uf-text">Vacancy → VP acts → election in <span class="uf-key">6 months</span>; Zakir Hussain died → VV Giri refused → <span class="uf-key">CJI Hidayatullah</span></span></div>
+  <div class="uf-row"><span class="uf-art">72</span><span class="uf-text">Pardon(full) | Commute(form) | Remit(duration) | Respite(health) | Reprieve(temp); Governor <span class="uf-key">CANNOT</span>: death/Court Martial</span></div>
+
+  <h2 style="margin-top:28px">Vice President — Article by Article</h2>
+  <div class="uf-row"><span class="uf-art">63</span><span class="uf-text">There shall be a <span class="uf-key">Vice President</span></span></div>
+  <div class="uf-row"><span class="uf-art">64</span><span class="uf-text"><span class="uf-key">Ex-officio Chairman</span> of Rajya Sabha (automatic, no election)</span></div>
+  <div class="uf-row"><span class="uf-art">65</span><span class="uf-text">Acts as President during <span class="uf-key">vacancy or absence</span></span></div>
+  <div class="uf-row"><span class="uf-art">66</span><span class="uf-text">Election: <span class="uf-key">ALL MPs</span> (elected + nominated) | No MLAs | PR + STV</span></div>
+  <div class="uf-row"><span class="uf-art">67</span><span class="uf-text">5 yr term | Resign to <span class="uf-key">President</span> | Remove: starts <span class="uf-key">ONLY in RS</span> (effective majority) → LS (simple majority) | 14-day notice to <span class="uf-key">Prez/Dy. Chairman</span> | No fixed ground</span></div>
+  <div class="uf-row"><span class="uf-art">68</span><span class="uf-text">VP vacancy filled in <span class="uf-key">60 days</span></span></div>
+  <div class="uf-row"><span class="uf-art">69</span><span class="uf-text">VP oath by <span class="uf-key">President</span></span></div>
+  <div class="uf-row"><span class="uf-art">71</span><span class="uf-text">Election disputes → <span class="uf-key">Supreme Court exclusive jurisdiction</span></span></div>
+</section>
+
+<!-- ─────────── PAGE 9: 30-SECOND ─────────── -->
+<section class="page" id="p9">
+  <div class="chapter-header">
+    <h1>⏱ 30-Second Revision Sheet</h1>
+    <p class="page-subtitle">The absolute minimum that must be in your head walking into the exam</p>
+  </div>
+
+  <div class="sec30">
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Art. <em>54</em> → Prez election: <em>Elected MPs + Elected MLAs</em> (no nominated)</div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Art. <em>66</em> → VP election: <em>ALL MPs (elected + nominated)</em> — no MLAs</div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Prez term: <em>5 yrs</em> | Resign to: <em>VP</em> | Re-election: <em>No limit</em></div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">VP term: <em>5 yrs</em> | Resign to: <em>President</em> | Oath by: <em>President</em></div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Prez qualification: <em>35 yrs + Citizen + LS eligible + no office of profit</em></div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Prez oath by: <em>CJI</em> | VP oath by: <em>President</em></div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Prez impeachment: <em>Either house</em> | 14-day notice | ¼ sign | <em>2/3 special majority BOTH houses</em></div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">VP removal: starts <em>ONLY in RS</em> | Effective majority RS → Simple majority LS</div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Prez vacancy → fill in <em>6 months</em> | VP vacancy → fill in <em>60 days</em></div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">VP = <em>Ex-officio Chairman of Rajya Sabha</em> (Art. 64)</div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Art. 72: Pardon=full | Commute=form | Remit=duration | Respite=health | Reprieve=temp</div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Governor CANNOT: <em>pardon death sentence OR Court Martial</em> (Art. 161)</div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Art. 71: Election disputes → <em>Supreme Court only</em></div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">Zakir Hussain died (1969) → VV Giri refused acting role → <em>CJI Hidayatullah</em> was acting President</div></div>
+    <div class="sec30-row"><div class="sec30-dot"></div><div class="sec30-text">"Violation of Constitution" + "Office of Profit" = <em>NOT defined anywhere in Constitution</em></div></div>
+  </div>
+</section>
+
+<!-- ─────────── PAGE 10: LAST NIGHT ─────────── -->
+<section class="page" id="p10">
+  <div class="chapter-header">
+    <h1>🌙 Last-Night-Before-Exam Sheet</h1>
+    <p class="page-subtitle">Read once, close your eyes, mentally walk the palace. Sleep well.</p>
+  </div>
+
+  <div class="ln-box">
+    <div class="ln-title">⚡ The 3 Most Likely Questions Tomorrow</div>
+    <p>1. Who participates in President's election? → <em>Elected MPs + Elected MLAs</em></p>
+    <p>2. VP is ex-officio ___ of ___? → <em>Chairman of Rajya Sabha</em></p>
+    <p>3. Governor CANNOT pardon ___? → <em>Death sentence + Court Martial sentences</em></p>
+  </div>
+
+  <div class="ln-box">
+    <div class="ln-title">🧠 The 3 Traps Most Likely to Appear</div>
+    <p>1. "ALL MPs" elect VP — this includes <em>nominated MPs too</em> (unlike Prez election)</p>
+    <p>2. VP removal starts ONLY in <em>Rajya Sabha</em> (not either house like Prez)</p>
+    <p>3. Commutation = form changes; Remission = duration reduces; Respite = health reasons</p>
+  </div>
+
+  <div class="ln-box">
+    <div class="ln-title">📌 One-Liner Memory Bombs</div>
+    <p>"Elect Prez → MLAs matter. Remove Prez / Elect VP → Only Parliament."</p>
+    <p>"Prez resigns to VP. VP resigns to Prez. Oath is opposite: Prez sworn by CJI; VP sworn by Prez."</p>
+    <p>"Prez vacancy = 6 months. VP vacancy = 60 days. VP faster because he's acting Prez — can't be empty long."</p>
+    <p>"Governor has 2 no-pardons: death + court martial. President has zero no-pardons."</p>
+    <p>"Impeachment = Quasi-Judicial = borrowed from USA = Special majority 2/3 BOTH = NEVER happened."</p>
+  </div>
+
+  <div class="ln-box">
+    <div class="ln-title">🗓 Historical Anchors</div>
+    <p>1967–69: Zakir Hussain (President who died in office — shortest tenure)</p>
+    <p>1969: VV Giri contested presidential election instead of acting as Prez</p>
+    <p>1969: CJI M. Hidayatullah — only CJI to become acting President</p>
+    <p>First President: Rajendra Prasad — longest tenure</p>
+    <p>Latest VP removal attempt: Jagdeep Dhankhar (failed — no 14-day notice)</p>
+  </div>
+
+  <div class="ln-box">
+    <div class="ln-title">🎯 Article Numbers to Lock In Tonight</div>
+    <p>54 = Prez election | 55 = manner | 57 = re-election | 58 = qualification</p>
+    <p>60 = oath (CJI) | 61 = impeachment | 72 = pardoning powers</p>
+    <p>64 = VP is RS Chairman | 66 = VP election | 67 = VP removal | 71 = SC exclusive</p>
+  </div>
+
+  <div class="card" style="border-color:var(--green);background:var(--green-glow);text-align:center;padding:24px;">
+    <p style="font-size:18px;font-weight:800;color:var(--green);">You have prepared well. Go crush it. 🇮🇳</p>
+    <p style="color:var(--text-dim);font-size:13px;margin-top:6px;">Sleep 7-8 hours. Your brain consolidates memory during sleep.</p>
+  </div>
+</section>
+
+</main>
+
+<button id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+  function go(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const idx = ['p0','p1','p2','p3','p4','p5','p6','p7','p8','p9','p10'].indexOf(id);
+    document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DPSP & Fundamental Duties — Elite Revision System</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1e2430;
+    --bg4: #252d3a;
+    --green: #39d353;
+    --green-dim: #1a6b27;
+    --blue: #58a6ff;
+    --blue-dim: #1a3a6b;
+    --yellow: #f0c040;
+    --yellow-dim: #6b4e00;
+    --red: #ff6b6b;
+    --red-dim: #6b1a1a;
+    --purple: #c084fc;
+    --purple-dim: #3b1a6b;
+    --teal: #5eead4;
+    --teal-dim: #0f4a42;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --text-muted: #6e7681;
+    --border: #30363d;
+    --border-light: #21262d;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow: hidden;
+    height: 100vh;
+  }
+  /* NAV */
+  #nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 54px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 12px;
+    z-index: 100;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .nav-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .nav-btn.active { background: var(--blue); border-color: var(--blue); color: #000; font-weight: 600; }
+  /* PAGES */
+  #app {
+    margin-top: 54px;
+    height: calc(100vh - 54px);
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    padding: 28px 20px 60px;
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .page { display: none; }
+  .page.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* TYPOGRAPHY */
+  h1 { font-size: 26px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+  h2 { font-size: 19px; font-weight: 700; color: var(--green); margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 16px; font-weight: 600; color: var(--yellow); margin: 18px 0 8px; }
+  h4 { font-size: 14px; font-weight: 600; color: var(--teal); margin: 12px 0 6px; }
+  p { margin-bottom: 10px; color: var(--text); }
+
+  /* CARDS */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+  .card-green { border-left: 3px solid var(--green); }
+  .card-blue { border-left: 3px solid var(--blue); }
+  .card-yellow { border-left: 3px solid var(--yellow); }
+  .card-red { border-left: 3px solid var(--red); }
+  .card-purple { border-left: 3px solid var(--purple); }
+  .card-teal { border-left: 3px solid var(--teal); }
+
+  /* BADGES */
+  .badge {
+    display: inline-block;
+    padding: 2px 9px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .badge-fire { background: #6b1a00; color: var(--red); }
+  .badge-star { background: var(--yellow-dim); color: var(--yellow); }
+  .badge-plus { background: #1a2b1a; color: var(--green); }
+  .badge-trap { background: var(--red-dim); color: var(--red); }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* ARTICLE TABLE */
+  .art-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  .art-table th { background: var(--bg3); color: var(--blue); padding: 8px 12px; text-align: left; border: 1px solid var(--border); }
+  .art-table td { padding: 8px 12px; border: 1px solid var(--border); vertical-align: top; }
+  .art-table tr:nth-child(even) td { background: var(--bg3); }
+  .art-table tr:hover td { background: var(--bg4); }
+  .art-num { color: var(--yellow); font-weight: 700; font-size: 13px; }
+  .art-title { color: var(--green); font-weight: 600; }
+  .art-hook { color: var(--purple); font-size: 13px; font-style: italic; }
+
+  /* STORY BOX */
+  .story-box {
+    background: linear-gradient(135deg, #0d1b0d, #0d1117);
+    border: 1px solid var(--green-dim);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin: 14px 0;
+    position: relative;
+  }
+  .story-box::before {
+    content: '🧠 MEMORY PALACE';
+    position: absolute;
+    top: -10px; left: 16px;
+    background: var(--bg);
+    padding: 0 8px;
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* TRAP BOX */
+  .trap-box {
+    background: linear-gradient(135deg, #1b0d0d, #0d1117);
+    border: 1px solid var(--red-dim);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin: 12px 0;
+    position: relative;
+  }
+  .trap-box::before {
+    content: '⚠ EXAM TRAP';
+    position: absolute;
+    top: -10px; left: 16px;
+    background: var(--bg);
+    padding: 0 8px;
+    color: var(--red);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  /* QUIZ */
+  .quiz-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .quiz-q { font-weight: 600; margin-bottom: 10px; color: var(--text); }
+  .quiz-btn {
+    display: block;
+    width: 100%;
+    padding: 9px 14px;
+    margin: 5px 0;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .quiz-btn:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-dim); }
+  .quiz-btn.correct { border-color: var(--green); background: var(--green-dim); color: #fff; }
+  .quiz-btn.wrong { border-color: var(--red); background: var(--red-dim); color: #fff; }
+  .quiz-btn:disabled { cursor: not-allowed; opacity: 0.7; }
+  .quiz-feedback { margin-top: 10px; font-size: 13px; padding: 8px 12px; border-radius: var(--radius-sm); display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.good { background: var(--green-dim); color: var(--green); }
+  .quiz-feedback.bad { background: var(--red-dim); color: var(--red); }
+  .quiz-score { font-weight: 700; font-size: 18px; color: var(--yellow); text-align: center; margin: 16px 0; }
+
+  /* TAGS */
+  .tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-right: 4px; }
+  .tag-amend { background: var(--purple-dim); color: var(--purple); }
+  .tag-case { background: var(--blue-dim); color: var(--blue); }
+  .tag-source { background: var(--teal-dim); color: var(--teal); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 28px; margin: 14px 0; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 16px; }
+  .tl-item::before { content: ''; position: absolute; left: -24px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); border: 2px solid var(--bg); }
+  .tl-year { color: var(--yellow); font-weight: 700; font-size: 13px; }
+  .tl-text { color: var(--text); font-size: 14px; }
+
+  /* FAST REVISION */
+  .fast-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 6px;
+    background: var(--bg2);
+    border: 1px solid var(--border-light);
+    font-size: 14px;
+  }
+  .fast-num { color: var(--blue); font-weight: 700; min-width: 40px; font-size: 13px; }
+  .fast-content { flex: 1; }
+  .fast-key { color: var(--green); font-weight: 600; }
+  .fast-hook { color: var(--purple); font-size: 12px; margin-top: 2px; }
+
+  /* ULTRA FAST */
+  .uf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin: 12px 0; }
+  .uf-cell {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    text-align: center;
+  }
+  .uf-art { color: var(--yellow); font-size: 18px; font-weight: 700; }
+  .uf-desc { color: var(--text-dim); font-size: 12px; margin-top: 3px; }
+  .uf-hook { color: var(--purple); font-size: 11px; margin-top: 4px; font-style: italic; }
+
+  /* HIGHLIGHT */
+  .hl-green { color: var(--green); font-weight: 600; }
+  .hl-yellow { color: var(--yellow); font-weight: 600; }
+  .hl-blue { color: var(--blue); font-weight: 600; }
+  .hl-red { color: var(--red); font-weight: 600; }
+  .hl-purple { color: var(--purple); }
+
+  /* FLASHCARD */
+  .flashcard {
+    perspective: 1000px;
+    cursor: pointer;
+    margin-bottom: 14px;
+    height: 120px;
+  }
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+  }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .fc-front, .fc-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+  .fc-front { background: var(--bg2); color: var(--blue); font-size: 15px; font-weight: 600; }
+  .fc-back { background: var(--bg3); color: var(--green); transform: rotateY(180deg); font-size: 14px; }
+  .fc-hint { font-size: 11px; color: var(--text-muted); margin-top: 8px; display: block; }
+
+  /* COMPARISON */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin: 12px 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+  .compare-head { background: var(--bg3); padding: 10px 14px; font-weight: 700; font-size: 14px; text-align: center; }
+  .compare-cell { background: var(--bg2); padding: 10px 14px; font-size: 13px; border-top: 1px solid var(--border); }
+  .compare-cell:nth-child(odd) { border-right: 1px solid var(--border); }
+
+  /* PILL TAGS ROW */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .pill {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+  .pill-g { background: #0d1f0d; border-color: var(--green); color: var(--green); }
+  .pill-b { background: #0d1629; border-color: var(--blue); color: var(--blue); }
+  .pill-y { background: #1f1a00; border-color: var(--yellow); color: var(--yellow); }
+  .pill-r { background: #1f0d0d; border-color: var(--red); color: var(--red); }
+
+  /* LAST NIGHT */
+  .ln-box {
+    background: linear-gradient(135deg, #0d1629 0%, #0d1117 100%);
+    border: 2px solid var(--blue);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 10px 0;
+  }
+  .ln-title { color: var(--blue); font-weight: 700; font-size: 16px; margin-bottom: 14px; text-align: center; letter-spacing: 1px; }
+  .ln-item { display: flex; gap: 10px; margin-bottom: 8px; font-size: 14px; align-items: flex-start; }
+  .ln-dot { color: var(--green); font-size: 16px; min-width: 16px; line-height: 1.4; }
+
+  /* HOME CARD */
+  .home-hero {
+    background: linear-gradient(135deg, #0d1629 0%, #0d1117 50%, #0d1f0d 100%);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .home-title { font-size: 30px; font-weight: 800; background: linear-gradient(90deg, var(--blue), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .home-sub { color: var(--text-dim); margin-top: 6px; font-size: 14px; }
+  .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .nav-tile {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .nav-tile:hover { border-color: var(--blue); transform: translateY(-2px); }
+  .nav-tile-icon { font-size: 28px; margin-bottom: 6px; }
+  .nav-tile-name { font-size: 14px; font-weight: 600; color: var(--blue); }
+  .nav-tile-desc { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+  /* PROGRESS */
+  .progress-bar { background: var(--bg3); border-radius: 20px; height: 6px; margin: 4px 0 12px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--blue), var(--green)); transition: width 0.5s; }
+
+  /* SCROLL TOP */
+  #scrollTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #000;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+  }
+  #scrollTop.show { display: flex; }
+
+  /* SEPARATOR */
+  .sep { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  ul { padding-left: 20px; }
+  ul li { margin-bottom: 5px; font-size: 14px; }
+  .big-emoji { font-size: 24px; }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav id="nav">
+  <button class="nav-btn active" onclick="showPage('home')">🏠 Home</button>
+  <button class="nav-btn" onclick="showPage('bigpicture')">🌐 Big Picture</button>
+  <button class="nav-btn" onclick="showPage('palace')">🧠 Memory Palace</button>
+  <button class="nav-btn" onclick="showPage('dpsp-core')">📜 DPSP Core</button>
+  <button class="nav-btn" onclick="showPage('dpsp-articles')">📋 Articles 36–51</button>
+  <button class="nav-btn" onclick="showPage('dpsp-types')">🗂 DPSP Types</button>
+  <button class="nav-btn" onclick="showPage('fr-vs-dpsp')">⚖ FR vs DPSP</button>
+  <button class="nav-btn" onclick="showPage('fundduties')">🇮🇳 Fund. Duties</button>
+  <button class="nav-btn" onclick="showPage('duties-articles')">📝 51A Clauses</button>
+  <button class="nav-btn" onclick="showPage('amendments')">📅 Amendments</button>
+  <button class="nav-btn" onclick="showPage('traps')">⚠ Exam Traps</button>
+  <button class="nav-btn" onclick="showPage('examiner')">🎯 Examiner's Eye</button>
+  <button class="nav-btn" onclick="showPage('quiz')">❓ Quiz</button>
+  <button class="nav-btn" onclick="showPage('flashcards')">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showPage('highyield')">⚡ High Yield</button>
+  <button class="nav-btn" onclick="showPage('ultrafast')">🚀 Ultra Fast</button>
+  <button class="nav-btn" onclick="showPage('lastnight')">🌙 Last Night</button>
+</nav>
+
+<div id="app">
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="home-hero">
+    <div class="home-title">DPSP & Fundamental Duties</div>
+    <p class="home-sub">Elite Revision System — SSC CGL / UPSC Ready</p>
+    <div style="margin-top:14px;">
+      <span class="badge badge-fire">🔥 High Priority</span>
+      <span class="badge badge-star">⭐ Polity Chapter</span>
+      <span class="tag tag-source">Irish + USSR Constitution</span>
+    </div>
+  </div>
+  <p style="color:var(--text-dim); margin-bottom:16px; font-size:14px;">Select any section below to begin. Designed for 20–100 revision cycles.</p>
+  <div class="nav-grid">
+    <div class="nav-tile" onclick="showPage('bigpicture')">
+      <div class="nav-tile-icon">🌐</div>
+      <div class="nav-tile-name">Big Picture</div>
+      <div class="nav-tile-desc">What this chapter is really about</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('palace')">
+      <div class="nav-tile-icon">🧠</div>
+      <div class="nav-tile-name">Memory Palace</div>
+      <div class="nav-tile-desc">LDC at PHC story for all articles</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('dpsp-core')">
+      <div class="nav-tile-icon">📜</div>
+      <div class="nav-tile-name">DPSP Core</div>
+      <div class="nav-tile-desc">Definition, nature, enforceability</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('dpsp-articles')">
+      <div class="nav-tile-icon">📋</div>
+      <div class="nav-tile-name">Articles 36–51</div>
+      <div class="nav-tile-desc">Every article with memory hooks</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('dpsp-types')">
+      <div class="nav-tile-icon">🗂</div>
+      <div class="nav-tile-name">DPSP Types</div>
+      <div class="nav-tile-desc">Socialist / Gandhian / Liberal</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('fr-vs-dpsp')">
+      <div class="nav-tile-icon">⚖</div>
+      <div class="nav-tile-name">FR vs DPSP</div>
+      <div class="nav-tile-desc">Timeline of landmark cases</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('fundduties')">
+      <div class="nav-tile-icon">🇮🇳</div>
+      <div class="nav-tile-name">Fundamental Duties</div>
+      <div class="nav-tile-desc">Origin, committee, structure</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('duties-articles')">
+      <div class="nav-tile-icon">📝</div>
+      <div class="nav-tile-name">51A Clauses</div>
+      <div class="nav-tile-desc">All 11 duties with hooks A–K</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('amendments')">
+      <div class="nav-tile-icon">📅</div>
+      <div class="nav-tile-name">Amendments</div>
+      <div class="nav-tile-desc">All constitutional amendments here</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('traps')">
+      <div class="nav-tile-icon">⚠</div>
+      <div class="nav-tile-name">Exam Traps</div>
+      <div class="nav-tile-desc">Common confusions & traps</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('examiner')">
+      <div class="nav-tile-icon">🎯</div>
+      <div class="nav-tile-name">Examiner's Eye</div>
+      <div class="nav-tile-desc">Probable question types</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('quiz')">
+      <div class="nav-tile-icon">❓</div>
+      <div class="nav-tile-name">Quiz</div>
+      <div class="nav-tile-desc">Test your memory now</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('flashcards')">
+      <div class="nav-tile-icon">🃏</div>
+      <div class="nav-tile-name">Flashcards</div>
+      <div class="nav-tile-desc">Tap to flip & recall</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('highyield')">
+      <div class="nav-tile-icon">⚡</div>
+      <div class="nav-tile-name">High Yield</div>
+      <div class="nav-tile-desc">Top 20 must-know facts</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('ultrafast')">
+      <div class="nav-tile-icon">🚀</div>
+      <div class="nav-tile-name">Ultra Fast</div>
+      <div class="nav-tile-desc">30-second visual revision</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('lastnight')">
+      <div class="nav-tile-icon">🌙</div>
+      <div class="nav-tile-name">Last Night Sheet</div>
+      <div class="nav-tile-desc">The night before the exam</div>
+    </div>
+  </div>
+</div>
+
+<!-- BIG PICTURE -->
+<div class="page" id="page-bigpicture">
+  <h1>🌐 Big Picture</h1>
+  <p style="color:var(--text-dim)">What this chapter is <em>really</em> about</p>
+  <div class="card card-blue" style="margin-top:18px;">
+    <h3 style="margin-top:0">The Core Idea</h3>
+    <p>India's Constitution has <span class="hl-blue">two sets of rights/obligations</span> that work in tandem:</p>
+    <ul>
+      <li><span class="hl-green">Fundamental Rights (Part III, Art 12–35)</span> — what the State <em>cannot</em> do to you (negative obligations). Borrowed from <span class="hl-yellow">USA</span>.</li>
+      <li><span class="hl-yellow">DPSP (Part IV, Art 36–51)</span> — what the State <em>must try</em> to do for you (positive obligations). Borrowed from <span class="hl-purple">Ireland</span>.</li>
+      <li><span class="hl-red">Fundamental Duties (Part IV-A, Art 51A)</span> — what <em>citizens</em> must do for the nation. Borrowed from <span class="hl-teal" style="color:var(--teal)">USSR</span>.</li>
+    </ul>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-green">
+      <h4>Fundamental Rights Goal</h4>
+      <p style="font-size:14px;">Establish <span class="hl-blue">Political Democracy</span></p>
+      <p style="font-size:13px; color:var(--text-dim)">Prevent the state from oppressing you.</p>
+    </div>
+    <div class="card card-yellow">
+      <h4>DPSP Goal</h4>
+      <p style="font-size:14px;">Establish <span class="hl-green">Social & Economic Democracy</span></p>
+      <p style="font-size:13px; color:var(--text-dim)">Make the state create a welfare state for you.</p>
+    </div>
+  </div>
+
+  <h2>Key Quotes to Remember</h2>
+  <div class="card card-purple">
+    <p><span class="hl-purple">Dr B.R. Ambedkar</span> called DPSP <strong>"Novel Features of the Constitution"</strong></p>
+    <p style="margin-top:8px;"><span class="hl-purple">Granville Austin</span> called FR + DPSP together the <strong>"Conscience of the Constitution"</strong></p>
+    <p style="margin-top:8px;"><span class="hl-red">Prof. K.T. Shah</span> called DPSP <strong>"a cheque payable at the convenience of the bank"</strong> — meaning non-justiciable, enforceable only when the state has resources.</p>
+  </div>
+
+  <h2>The Structural Comparison</h2>
+  <div class="compare-grid">
+    <div class="compare-head" style="color:var(--blue)">Fundamental Rights</div>
+    <div class="compare-head" style="color:var(--yellow)">DPSP</div>
+    <div class="compare-cell">Part III</div><div class="compare-cell">Part IV</div>
+    <div class="compare-cell">Art 12–35</div><div class="compare-cell">Art 36–51</div>
+    <div class="compare-cell">Negative obligations</div><div class="compare-cell">Positive obligations</div>
+    <div class="compare-cell">Justiciable (court enforceable)</div><div class="compare-cell">Non-justiciable (Art 37)</div>
+    <div class="compare-cell">Borrowed from USA</div><div class="compare-cell">Borrowed from Ireland</div>
+    <div class="compare-cell">Establishes Political Democracy</div><div class="compare-cell">Establishes Social & Economic Democracy</div>
+  </div>
+</div>
+
+<!-- MEMORY PALACE -->
+<div class="page" id="page-palace">
+  <h1>🧠 Memory Palace</h1>
+  <p style="color:var(--text-dim)">The complete story that encodes Articles 38–51 in your brain</p>
+
+  <div class="story-box" style="margin-top:18px;">
+    <h3 style="color:var(--green); margin-top:0;">🏥 The LDC at the Public Health Centre</h3>
+    <p style="font-size:14px; line-height:1.8;">
+      A <span class="hl-yellow">Lower Division Clerk (LDC)</span> worked at a <span class="hl-blue">Public Health Centre (PHC)</span>. One fine morning, this LDC decided to do something about the <span class="hl-green">welfare of the people</span> <em>(Art 38)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      First, he made sure everyone had <span class="hl-yellow">Livelihood, Distribution of resources, no Concentration of wealth, equal Pay, Health protection, and Children's care</span> — <span class="hl-purple">LDC = PHC (Art 39 A–F)</span>
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      Since many people were poor, he gave them all <span class="hl-green">Free Legal Aid</span> <em>(Art 39A)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      Then he took them to their village and called a <span class="hl-blue">Panchayat</span> <em>(Art 40)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      The Panchayat gave them the <span class="hl-yellow">Right to Work, Education, Public Assistance</span> <em>(Art 41)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      The LDC made sure working conditions were <span class="hl-green">Just and Humane</span>, and women got <span class="hl-purple">Maternity Relief</span> <em>(Art 42)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      He secured everyone a <span class="hl-blue">Living Wage</span> — enough to enjoy social and cultural life <em>(Art 43)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      He ensured <span class="hl-green">Workers' Participation in Industry Management</span> — so they'd run things themselves <em>(Art 43A)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      He also promoted <span class="hl-purple">Cooperative Societies</span> <em>(Art 43B)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      He then put on his <span class="hl-yellow">uniform</span> — because <span class="hl-yellow">4 and 4 = UNIFORM</span> — to implement <span class="hl-blue">Uniform Civil Code</span> <em>(Art 44)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      He saw small <span class="hl-green">children</span> playing — <span class="hl-blue">Early Childhood Care</span> (0–6 yrs) <em>(Art 45)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      He noticed the <span class="hl-red">Dalit parents</span> were struggling — so he promoted educational & economic interests of <span class="hl-red">SC/ST</span> <em>(Art 46)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      He raised their <span class="hl-green">Nutrition</span> and reduced <span class="hl-red">Intoxicants</span> <em>(Art 47)</em>. To do this he promoted <span class="hl-yellow">Agriculture & Animal Husbandry</span> <em>(Art 48)</em> — no more intoxicants, now they drink <span class="hl-teal">milk from cows</span>!
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      With their health improved, they went to clean the <span class="hl-green">Environment</span> and protect the forests <em>(Art 48A)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      Then they visited our great <span class="hl-blue">Monuments</span> — Taj Mahal, Red Fort — and swore to protect them <em>(Art 49)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      The LDC insisted: keep <span class="hl-yellow">Judiciary separate from Executive</span> <em>(Art 50)</em>.
+    </p>
+    <p style="font-size:14px; line-height:1.8; margin-top:10px;">
+      Finally, he offered <span class="hl-green">₹51 prasad for Peace</span> — <span class="hl-purple">International Peace & Security</span> <em>(Art 51)</em>.
+    </p>
+  </div>
+
+  <h2>Memory Hook: Article 39 — LDC = PHC</h2>
+  <div class="card card-purple">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+      <div>
+        <p><span class="hl-blue">L</span> = <strong>Livelihood</strong> (39a)</p>
+        <p><span class="hl-blue">D</span> = <strong>Distribution</strong> of material resources (39b)</p>
+        <p><span class="hl-blue">C</span> = No <strong>Concentration</strong> of wealth (39c)</p>
+      </div>
+      <div>
+        <p><span class="hl-yellow">P</span> = Equal <strong>Pay</strong> for equal work (39d)</p>
+        <p><span class="hl-yellow">H</span> = <strong>Health</strong> & strength of workers (39e)</p>
+        <p><span class="hl-yellow">C</span> = <strong>Children's</strong> holistic development (39f)</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>Memory Hook: Fundamental Duties A–K</h2>
+  <div class="card card-green">
+    <p style="font-size:14px; line-height:2;">
+      <span class="hl-blue">A</span> = <strong>A</strong>nthem & Constitution 🎵 | <span class="hl-blue">B</span> = <strong>B</strong>apu/Bhagat Singh ideals | <span class="hl-blue">C</span> = <strong>C</strong>ountry's sovereignty (3 things) | <span class="hl-blue">D</span> = <strong>D</strong>efend the country | <span class="hl-blue">E</span> = <strong>E</strong>quality/Brotherhood (5 fingers) | <span class="hl-blue">F</span> = <strong>F</strong>ort (composite culture) | <span class="hl-blue">G</span> = <strong>G</strong>reenery (environment) | <span class="hl-blue">H</span> = <strong>H</strong>umanism & scientific temper | <span class="hl-blue">I</span> = <strong>I</strong>nspire non-violence (ANI → Gandhi) | <span class="hl-blue">J</span> = <strong>J</strong>adeja (excellence) | <span class="hl-blue">K</span> = <strong>K</strong>ids education 6–14
+    </p>
+  </div>
+</div>
+
+<!-- DPSP CORE -->
+<div class="page" id="page-dpsp-core">
+  <h1>📜 DPSP — Core Concepts</h1>
+  <p style="color:var(--text-dim)">The foundation you must never forget</p>
+
+  <h2>What Are DPSPs?</h2>
+  <div class="card card-blue">
+    <p><span class="badge badge-fire">🔥 Must Know</span></p>
+    <ul style="margin-top:8px;">
+      <li><strong>Borrowed from:</strong> <span class="hl-blue">Constitution of Ireland</span></li>
+      <li><strong>Location:</strong> <span class="hl-yellow">Part IV, Articles 36–51</span></li>
+      <li><strong>Nature:</strong> <span class="hl-green">Positive obligations</span> on the State (state is asked TO DO something)</li>
+      <li><strong>Contrast with FR:</strong> FR = mostly negative obligations (state told NOT to do something)</li>
+      <li><strong>Justiciability:</strong> <span class="hl-red">Non-justiciable</span> (Art 37) — cannot enforce in court</li>
+    </ul>
+  </div>
+
+  <h2>Article 36 — Definition of State</h2>
+  <div class="card card-yellow">
+    <p>Same meaning as Art 12 (in Part III). State = Central Govt + State Govts + Parliament + State Legislatures + Local Bodies + Other Govt Authorities.</p>
+    <p style="font-size:13px; color:var(--text-dim); margin-top:6px;">Think: 36 just says "same state as Art 12." No new definition.</p>
+  </div>
+
+  <h2>Article 37 — Non-Justiciability</h2>
+  <div class="card card-red">
+    <p><span class="hl-red">"The provisions contained in this Part shall not be enforceable by any court."</span></p>
+    <p style="margin-top:8px;">This is K.T. Shah's "cheque" — the bank (State) pays when it wants, not when you demand.</p>
+    <p style="margin-top:8px; font-size:14px;">BUT: They are still <span class="hl-green">fundamental in governance</span> — the State must keep them in mind while making laws.</p>
+  </div>
+
+  <h2>Comparison: FR vs DPSP</h2>
+  <div class="compare-grid">
+    <div class="compare-head" style="color:var(--blue)">Fundamental Rights</div>
+    <div class="compare-head" style="color:var(--yellow)">DPSP</div>
+    <div class="compare-cell">Negative obligations (don't do this)</div><div class="compare-cell">Positive obligations (do this)</div>
+    <div class="compare-cell">Justiciable — court can enforce</div><div class="compare-cell">Non-justiciable — court cannot enforce</div>
+    <div class="compare-cell">Political democracy</div><div class="compare-cell">Social + Economic democracy</div>
+    <div class="compare-cell">Part III, Art 12–35</div><div class="compare-cell">Part IV, Art 36–51</div>
+    <div class="compare-cell">Borrowed from USA</div><div class="compare-cell">Borrowed from Ireland</div>
+    <div class="compare-cell">Individual rights</div><div class="compare-cell">Community welfare</div>
+  </div>
+
+  <h2>Ambedkar's Connection to Government of India Act 1935</h2>
+  <div class="card card-purple">
+    <p>Ambedkar said DPSP should reinforce the <span class="hl-purple">Instrument of Instructions</span> in the <span class="hl-yellow">Government of India Act, 1935</span>. That Act had instructions to the Governor — similarly DPSP instructs the State.</p>
+  </div>
+
+  <h2>Article 38 — Welfare State</h2>
+  <div class="card card-green">
+    <p><strong>Clause 1 (original):</strong> State shall promote welfare of people.</p>
+    <p style="margin-top:6px;"><strong>Clause 2 (added by 44th Amendment, 1978):</strong> State shall reduce inequalities in income, status, facilities and opportunities.</p>
+    <p style="margin-top:6px; font-size:13px; color:var(--text-dim)"><span class="tag tag-amend">44th Amendment</span> also removed Right to Property as a FR (Art 31) and moved it to Art 300A.</p>
+  </div>
+</div>
+
+<!-- DPSP ARTICLES -->
+<div class="page" id="page-dpsp-articles">
+  <h1>📋 DPSP Articles 36–51</h1>
+  <p style="color:var(--text-dim)">Every article with memory hooks</p>
+
+  <table class="art-table" style="margin-top:18px;">
+    <tr>
+      <th>Article</th>
+      <th>Subject</th>
+      <th>Key Detail</th>
+      <th>Memory Hook</th>
+    </tr>
+    <tr>
+      <td class="art-num">36</td>
+      <td class="art-title">Definition of State</td>
+      <td>Same as Art 12</td>
+      <td class="art-hook">36 = 12. Twins.</td>
+    </tr>
+    <tr>
+      <td class="art-num">37</td>
+      <td class="art-title">Non-Justiciable</td>
+      <td>Cannot enforce in court</td>
+      <td class="art-hook">KT Shah's "cheque payable at bank's convenience"</td>
+    </tr>
+    <tr>
+      <td class="art-num">38</td>
+      <td class="art-title">Welfare State</td>
+      <td>Cl.2 added by 44th Amendment 1978</td>
+      <td class="art-hook">38 = welfare. State shall promote welfare of people</td>
+    </tr>
+    <tr>
+      <td class="art-num">39 a–f</td>
+      <td class="art-title">Six Policy Directives</td>
+      <td>LDC = PHC formula</td>
+      <td class="art-hook">L-ivelihood, D-istrib, C-oncentration, P-ay, H-ealth, C-hildren</td>
+    </tr>
+    <tr>
+      <td class="art-num">39A</td>
+      <td class="art-title">Free Legal Aid</td>
+      <td>Added by 42nd Amendment</td>
+      <td class="art-hook">A = Aid. Poor get free lawyers.</td>
+    </tr>
+    <tr>
+      <td class="art-num">40</td>
+      <td class="art-title">Village Panchayats</td>
+      <td>Organise & give powers for self-govt</td>
+      <td class="art-hook">40 = Panchayat. 4-0 = 4 directions = village council meeting</td>
+    </tr>
+    <tr>
+      <td class="art-num">41</td>
+      <td class="art-title">Right to Work, Education, Public Assistance</td>
+      <td>In cases of unemployment, old age, sickness, disability</td>
+      <td class="art-hook">41 = Three rights (W-E-PA)</td>
+    </tr>
+    <tr>
+      <td class="art-num">42</td>
+      <td class="art-title">Just & Humane Conditions + Maternity Relief</td>
+      <td>Good work environment + 26 weeks maternity leave (2 children)</td>
+      <td class="art-hook">42 = Mom's age. Maternity.</td>
+    </tr>
+    <tr>
+      <td class="art-num">43</td>
+      <td class="art-title">Living Wage</td>
+      <td>Full enjoyment of social & cultural opportunities</td>
+      <td class="art-hook">43 = enough salary to LIVE</td>
+    </tr>
+    <tr>
+      <td class="art-num">43A</td>
+      <td class="art-title">Workers' Participation in Industry Management</td>
+      <td>Added by 42nd Amendment</td>
+      <td class="art-hook">Trade unions = workers in management</td>
+    </tr>
+    <tr>
+      <td class="art-num">43B</td>
+      <td class="art-title">Cooperative Societies</td>
+      <td>Added by 97th Amendment 2011</td>
+      <td class="art-hook">97th Amendment = Only about co-ops</td>
+    </tr>
+    <tr>
+      <td class="art-num">44</td>
+      <td class="art-title">Uniform Civil Code</td>
+      <td>Goa = 1st state; Uttarakhand = 2nd state to implement</td>
+      <td class="art-hook">4+4 = uniform. All wear same uniform = same law for all</td>
+    </tr>
+    <tr>
+      <td class="art-num">45</td>
+      <td class="art-title">Early Childhood Care (0–6 yrs)</td>
+      <td>86th Amendment 2002 moved 6–14 to Art 21A; 45 now covers 0–6 (Anganwadis)</td>
+      <td class="art-hook">45 = tiny kids. Anganwadi mausi.</td>
+    </tr>
+    <tr>
+      <td class="art-num">46</td>
+      <td class="art-title">Education & Economic Interests of SC/ST</td>
+      <td>Special care for Dalits and Adivasis</td>
+      <td class="art-hook">46 = for the 46% marginalized. Protect Dalits.</td>
+    </tr>
+    <tr>
+      <td class="art-num">47</td>
+      <td class="art-title">Level of Nutrition & Prohibition</td>
+      <td>Raise nutrition + reduce/prohibit intoxicant drinks & drugs</td>
+      <td class="art-hook">47 = ban booze. Drink milk instead!</td>
+    </tr>
+    <tr>
+      <td class="art-num">48</td>
+      <td class="art-title">Agriculture & Animal Husbandry</td>
+      <td>Scientific lines; no cow slaughter (Gandhian)</td>
+      <td class="art-hook">48 = farmer. Tractor > hoe.</td>
+    </tr>
+    <tr>
+      <td class="art-num">48A</td>
+      <td class="art-title">Environment Protection</td>
+      <td>Protect & improve environment, forests, wildlife</td>
+      <td class="art-hook">48A = A for Arboreal. Go green!</td>
+    </tr>
+    <tr>
+      <td class="art-num">49</td>
+      <td class="art-title">Protect National Monuments</td>
+      <td>Taj Mahal, Red Fort, artistic & historical places</td>
+      <td class="art-hook">49 = protect our 49 UNESCO monuments</td>
+    </tr>
+    <tr>
+      <td class="art-num">50</td>
+      <td class="art-title">Separation of Judiciary & Executive</td>
+      <td>Not like USA's strict separation; but separate they must be</td>
+      <td class="art-hook">50-50 = balanced. J and E stay in their lane.</td>
+    </tr>
+    <tr>
+      <td class="art-num">51</td>
+      <td class="art-title">International Peace & Security</td>
+      <td>Promote peace, maintain good relations with neighbours</td>
+      <td class="art-hook">₹51 prasad for PEACE 🙏</td>
+    </tr>
+  </table>
+</div>
+
+<!-- DPSP TYPES -->
+<div class="page" id="page-dpsp-types">
+  <h1>🗂 DPSP Types</h1>
+  <p style="color:var(--text-dim)">Not mentioned in Constitution — but important for MCQs</p>
+
+  <div class="card" style="background:var(--bg2); border-color:var(--red); margin-top:18px;">
+    <p>⚠ <span class="hl-red">This classification is NOT in the Constitution.</span> It's an academic categorization. Still exam-relevant!</p>
+  </div>
+
+  <div class="grid-2" style="margin-top:14px;">
+    <div class="card card-red">
+      <h3 style="margin-top:0; color:var(--red)">🔴 Socialist DPSPs</h3>
+      <p style="font-size:13px; color:var(--text-dim); margin-bottom:10px;">Reduce inequality; protect workers' rights</p>
+      <ul style="font-size:13px;">
+        <li>Art 38 — Welfare state</li>
+        <li>Art 39 (a–f) — LDC=PHC</li>
+        <li>Art 39A — Free legal aid</li>
+        <li>Art 41 — Right to work, education</li>
+        <li>Art 42 — Maternity relief</li>
+        <li>Art 43 — Living wage</li>
+        <li>Art 43A — Workers in management</li>
+        <li>Art 47 — Nutrition & prohibition</li>
+      </ul>
+    </div>
+    <div class="card card-green">
+      <h3 style="margin-top:0; color:var(--green)">🟢 Gandhian DPSPs</h3>
+      <p style="font-size:13px; color:var(--text-dim); margin-bottom:10px;">Based on Gandhiji's vision of villages & upliftment</p>
+      <ul style="font-size:13px;">
+        <li>Art 40 — Village Panchayats</li>
+        <li>Art 43B — Cooperative Societies</li>
+        <li>Art 46 — Uplift SC/ST</li>
+        <li>Art 48 — Agriculture & Animal Husbandry (+ no cow slaughter)</li>
+      </ul>
+      <p style="font-size:12px; color:var(--text-muted); margin-top:10px;">Gandhiji believed: gram swaraj, Harijan upliftment, khadi, anti-slaughter</p>
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <h3 style="margin-top:0; color:var(--blue)">🔵 Liberal Intellectual DPSPs</h3>
+    <p style="font-size:13px; color:var(--text-dim); margin-bottom:10px;">Modern ideas of governance, environment, equal law, peace</p>
+    <div class="grid-2" style="margin-top:10px;">
+      <ul style="font-size:13px;">
+        <li>Art 44 — Uniform Civil Code</li>
+        <li>Art 45 — Early childhood care</li>
+        <li>Art 48A — Environment protection</li>
+      </ul>
+      <ul style="font-size:13px;">
+        <li>Art 49 — Protect monuments</li>
+        <li>Art 50 — Separation of judiciary & executive</li>
+        <li>Art 51 — International peace</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Quick Sort Test</h2>
+  <div class="card card-yellow">
+    <p style="font-size:14px;">Quick rule of thumb:</p>
+    <ul style="font-size:14px; margin-top:8px;">
+      <li><span class="hl-red">Workers, wages, equality, welfare</span> → <strong>Socialist</strong></li>
+      <li><span class="hl-green">Villages, cows, Dalits, cooperatives</span> → <strong>Gandhian</strong></li>
+      <li><span class="hl-blue">UCC, environment, monuments, peace, judiciary</span> → <strong>Liberal Intellectual</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- FR vs DPSP CASES -->
+<div class="page" id="page-fr-vs-dpsp">
+  <h1>⚖ FR vs DPSP — The Battle</h1>
+  <p style="color:var(--text-dim)">Timeline of landmark cases — extremely exam-relevant</p>
+
+  <div class="timeline" style="margin-top:18px;">
+    <div class="tl-item">
+      <div class="tl-year">1951 — Champakam Dorairajan Case</div>
+      <div class="tl-text">Brahmin girl challenged Tamil Nadu's caste-based reservation as violation of Art 15 (FR). Supreme Court said: <span class="hl-blue">Fundamental Rights are ABOVE DPSP</span>. If both clash, FR wins. Government responded with <span class="tag tag-amend">1st Amendment</span> — added Clause 4 to Art 15 (reservations for SC/ST not a violation).</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1951 — Shankari Prasad Case</div>
+      <div class="tl-text">SC said: <span class="hl-green">Parliament CAN amend Fundamental Rights</span> via Constitutional Amendment.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1967 — Golaknath Case</div>
+      <div class="tl-text">SC reversed! Said: <span class="hl-red">Parliament CANNOT amend Fundamental Rights.</span> Parliament was furious.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1971 — 24th Amendment</div>
+      <div class="tl-text">Indira Gandhi's government passed this to overturn Golaknath. <span class="hl-yellow">Parliament CAN amend FR</span>.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1971 — 25th Amendment + Art 31C</div>
+      <div class="tl-text">Added Art 31C: Laws implementing <span class="hl-green">Art 39B and 39C (DPSP)</span> cannot be struck down on grounds of violating Art 14, 19, and 31 (FR). Two DPSPs now had priority over 3 FRs. Clause 2 said judiciary cannot review — but this was struck down later.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1973 — Kesavananda Bharati Case (13-judge bench!)</div>
+      <div class="tl-text"><span class="hl-blue">Basic Structure Doctrine</span> created. SC said: Parliament can amend FR (✅ 24th Amendment upheld) and Art 31C Clause 1 (✅ upheld), but <span class="hl-red">NOT Clause 2</span> — judicial review is part of Basic Structure. Basic Structure includes: judicial review, free & fair elections, separation of powers, supremacy of Constitution.</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1976 — 42nd Amendment</div>
+      <div class="tl-text">Parliament extended Art 31C to cover <span class="hl-yellow">ALL DPSPs</span> — not just 39B/C. Any DPSP could now override any FR (14, 19, 31 at that time, 31 was still a FR).</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">1980 — Minerva Mills Case ⭐ FINAL VERDICT</div>
+      <div class="tl-text">Supreme Court said: <span class="hl-green">NEITHER FR is above DPSP NOR DPSP is above FR. BOTH exist in balance.</span> The 42nd Amendment's extension of Art 31C to all DPSPs was struck down. Constitution is based on harmony of both. <strong>This is the settled position today.</strong></div>
+    </div>
+  </div>
+
+  <div class="card card-green" style="margin-top:18px;">
+    <h4>The Journey in One Line</h4>
+    <p>Champakam (FR above) → Indira Gandhi fights back → Kesavananda Bharati (Basic Structure) → <span class="hl-green">Minerva Mills (Balance wins)</span></p>
+  </div>
+
+  <h2>Basic Structure — Key Elements</h2>
+  <div class="pill-row">
+    <span class="pill pill-b">Judicial Review</span>
+    <span class="pill pill-b">Free & Fair Elections</span>
+    <span class="pill pill-b">Separation of Powers</span>
+    <span class="pill pill-b">Supremacy of Constitution</span>
+    <span class="pill pill-b">Federal Character</span>
+    <span class="pill pill-b">Rule of Law</span>
+  </div>
+  <p style="font-size:13px; color:var(--text-dim)">Source: Raj Narain v State of UP — free & fair elections part of Basic Structure.</p>
+
+  <div class="trap-box">
+    <p><strong>Raj Narain case</strong> — don't confuse with Kesavananda. Raj Narain specifically said <span class="hl-red">free & fair elections</span> are Basic Structure.</p>
+    <p style="margin-top:6px;"><strong>IR case (2007)</strong> — SC said post-1973 additions to 9th Schedule CAN be reviewed by courts. Pre-1973 additions are safe.</p>
+  </div>
+</div>
+
+<!-- FUNDAMENTAL DUTIES -->
+<div class="page" id="page-fundduties">
+  <h1>🇮🇳 Fundamental Duties</h1>
+  <p style="color:var(--text-dim)">Origin, structure, and enforceability</p>
+
+  <h2>Key Facts</h2>
+  <div class="card card-blue" style="margin-top:12px;">
+    <ul>
+      <li><strong>Borrowed from:</strong> <span class="hl-blue">USSR</span> Constitution</li>
+      <li><strong>Originally in Constitution:</strong> <span class="hl-red">NO</span> — added later</li>
+      <li><strong>Location:</strong> <span class="hl-yellow">Part IV-A, Article 51A</span></li>
+      <li><strong>Part IV:</strong> DPSP | <strong>Part V:</strong> Already existed | So Part IV-A inserted in between</li>
+      <li><strong>Original 10 duties:</strong> Added by <span class="tag tag-amend">42nd Amendment, 1976</span> (during Indira Gandhi's PM tenure)</li>
+      <li><strong>11th duty:</strong> Added by <span class="tag tag-amend">86th Amendment, 2002</span> (during Atal Bihari Vajpayee's PM tenure)</li>
+      <li><strong>Applicable to:</strong> <span class="hl-green">Indians only, NOT foreigners</span></li>
+      <li><strong>Justiciability:</strong> <span class="hl-red">Non-justiciable</span> (but enforceable through legislation)</li>
+    </ul>
+  </div>
+
+  <h2>Swaran Singh Committee</h2>
+  <div class="card card-purple">
+    <p><strong>Formed by:</strong> Congress government (Indira Gandhi era)</p>
+    <p style="margin-top:6px;"><strong>Recommended:</strong> 8 duties</p>
+    <p style="margin-top:6px;"><strong>Government:</strong> Removed 3, kept 5 from recommendations + added 5 of its own = <span class="hl-yellow">Total 10 duties</span></p>
+    <h4>3 Recommendations NOT adopted:</h4>
+    <ul style="font-size:14px;">
+      <li>Duties should be justiciable (penalty for non-compliance) ❌</li>
+      <li>Duty to pay taxes ❌</li>
+      <li>Should not be challenged in court ❌</li>
+    </ul>
+  </div>
+
+  <h2>Justice Verma Committee (1999)</h2>
+  <div class="card card-green">
+    <p>Identified <span class="hl-green">existing legal provisions</span> that can enforce Fundamental Duties:</p>
+    <ul style="font-size:14px; margin-top:8px;">
+      <li><span class="hl-yellow">Prevention of Insults to National Honour Act, 1971</span> — enforces duty to respect flag/anthem (51A-a)</li>
+      <li><span class="hl-yellow">UAPA (Unlawful Activities Prevention Act), 1967</span> — enforces duty to protect sovereignty/integrity (51A-c)</li>
+      <li><span class="hl-yellow">Wildlife Protection Act, 1972</span> — enforces duty of compassion for living creatures (51A-g)</li>
+      <li><span class="hl-yellow">Representation of People Act (RPA), 1951</span> — election-related duties</li>
+    </ul>
+    <p style="font-size:13px; color:var(--text-dim); margin-top:8px;">Committee also recommended teaching Fundamental Duties to children in schools.</p>
+  </div>
+
+  <h2>42nd Amendment — "Mini Constitution"</h2>
+  <div class="card card-yellow">
+    <p>The 42nd Amendment (1976) is called the <span class="hl-yellow">"Mini Constitution"</span> because it made SO many changes:</p>
+    <ul style="font-size:14px; margin-top:8px;">
+      <li>Added 10 Fundamental Duties (Part IV-A)</li>
+      <li>Added Art 39A (Free Legal Aid)</li>
+      <li>Added Art 43A (Workers in management)</li>
+      <li>Extended Art 31C to all DPSPs</li>
+      <li>Many other changes</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 51A CLAUSES -->
+<div class="page" id="page-duties-articles">
+  <h1>📝 Article 51A — All 11 Duties</h1>
+  <p style="color:var(--text-dim)">With memory hooks for each clause</p>
+
+  <table class="art-table" style="margin-top:18px;">
+    <tr>
+      <th>Clause</th>
+      <th>Duty</th>
+      <th>Key Detail</th>
+      <th>Hook</th>
+    </tr>
+    <tr>
+      <td class="art-num">51A (a)</td>
+      <td class="art-title">Abide by Constitution; respect national flag & anthem</td>
+      <td>Most basic civic duty</td>
+      <td class="art-hook">A = Anthem 🎵</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (b)</td>
+      <td class="art-title">Cherish noble ideals of freedom struggle</td>
+      <td>Follow Gandhiji, Bhagat Singh's ideals</td>
+      <td class="art-hook">B = Bapu & Bhagat Singh</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (c)</td>
+      <td class="art-title">Uphold sovereignty, unity & integrity of India</td>
+      <td>Three things — C is 3rd letter</td>
+      <td class="art-hook">C = C for Country (3 things = C's position)</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (d)</td>
+      <td class="art-title">Defend the country; render national service when called</td>
+      <td>Not just military — any national service</td>
+      <td class="art-hook">D = Defend 🛡️</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (e)</td>
+      <td class="art-title">Promote harmony & brotherhood; renounce practices derogatory to women</td>
+      <td>Two parts: brotherhood + women's dignity</td>
+      <td class="art-hook">E = Equality (5 fingers together = brotherhood)</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (f)</td>
+      <td class="art-title">Value & preserve rich heritage of composite culture</td>
+      <td>Our forts, traditions, art</td>
+      <td class="art-hook">F = Fort 🏯 (Composite culture)</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (g)</td>
+      <td class="art-title">Protect & improve natural environment; compassion for living creatures</td>
+      <td>Forests, rivers, wildlife</td>
+      <td class="art-hook">G = Greenery 🌿 Go Green!</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (h)</td>
+      <td class="art-title">Develop scientific temper, humanism, spirit of inquiry & reform</td>
+      <td>Question things. Don't blindly follow. Fight fake news.</td>
+      <td class="art-hook">H = Humanism 🔬 Science not superstition</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (i)</td>
+      <td class="art-title">Safeguard public property; abjure violence</td>
+      <td>Don't damage trains, buses, public property</td>
+      <td class="art-hook">I = An Eye for an eye makes everyone blind (Gandhi's non-violence)</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (j)</td>
+      <td class="art-title">Strive towards excellence in all spheres of individual & collective activity</td>
+      <td>Both personal & national excellence</td>
+      <td class="art-hook">J = Jadeja 🏏 (Individual + collective excellence)</td>
+    </tr>
+    <tr>
+      <td class="art-num">51A (k)</td>
+      <td class="art-title">Parent/guardian duty: provide education to children aged 6–14</td>
+      <td>Added by 86th Amendment 2002 (Vajpayee era); linked to Art 21A</td>
+      <td class="art-hook">K = Kids 🎒 Go to school!</td>
+    </tr>
+  </table>
+
+  <div class="card card-yellow" style="margin-top:18px;">
+    <h4>Quick ABCs Story</h4>
+    <p style="font-size:14px; line-height:1.9;">
+      <span class="hl-blue">A</span>nthem → <span class="hl-blue">B</span>apu → <span class="hl-blue">C</span>ountry → <span class="hl-blue">D</span>efend → <span class="hl-blue">E</span>quality → <span class="hl-blue">F</span>ort → <span class="hl-blue">G</span>reen → <span class="hl-blue">H</span>umanism → <span class="hl-blue">I</span>nspire peace → <span class="hl-blue">J</span>adeja excellence → <span class="hl-blue">K</span>ids education
+    </p>
+  </div>
+</div>
+
+<!-- AMENDMENTS -->
+<div class="page" id="page-amendments">
+  <h1>📅 Key Amendments</h1>
+  <p style="color:var(--text-dim)">Every amendment related to DPSP and Fundamental Duties</p>
+
+  <table class="art-table" style="margin-top:18px;">
+    <tr>
+      <th>Amendment</th>
+      <th>Year</th>
+      <th>Key Change</th>
+      <th>Remember As</th>
+    </tr>
+    <tr>
+      <td class="art-num">1st</td>
+      <td>1951</td>
+      <td>Added Art 15(4) — reservations for SC/ST not a violation; added 9th Schedule</td>
+      <td class="art-hook">First = First step after Champakam case</td>
+    </tr>
+    <tr>
+      <td class="art-num">24th</td>
+      <td>1971</td>
+      <td>Parliament CAN amend Fundamental Rights</td>
+      <td class="art-hook">24 = Indira retaliates against Golaknath</td>
+    </tr>
+    <tr>
+      <td class="art-num">25th</td>
+      <td>1971</td>
+      <td>Art 31C — Laws implementing Art 39B & 39C override Art 14, 19, 31</td>
+      <td class="art-hook">25 = 39B & 39C above 3 FRs</td>
+    </tr>
+    <tr>
+      <td class="art-num">42nd</td>
+      <td>1976</td>
+      <td>"Mini Constitution": Added 10 FDs, Art 39A, Art 43A, extended Art 31C</td>
+      <td class="art-hook">42 = Mini Constitution. Biggest changes.</td>
+    </tr>
+    <tr>
+      <td class="art-num">44th</td>
+      <td>1978</td>
+      <td>Added Art 38 Clause 2 (reduce inequality); removed Art 31 FR (Right to Property) → Art 300A</td>
+      <td class="art-hook">44 = Property removed as FR</td>
+    </tr>
+    <tr>
+      <td class="art-num">86th</td>
+      <td>2002</td>
+      <td>Added Art 21A (Right to Education 6–14); restructured Art 45 (0–6 yrs); added 11th FD (51A-k)</td>
+      <td class="art-hook">86 = Vajpayee + Right to Education + 11th duty</td>
+    </tr>
+    <tr>
+      <td class="art-num">97th</td>
+      <td>2011</td>
+      <td>Added Art 43B (Cooperative Societies); Added Part IX-B to Constitution</td>
+      <td class="art-hook">97 = ONLY about Cooperatives. One-topic amendment.</td>
+    </tr>
+  </table>
+
+  <h2>Amendment Quick Recall</h2>
+  <div class="card card-purple">
+    <p style="font-size:14px; line-height:2;">
+      <span class="hl-yellow">1st</span> = Champakam aftermath | <span class="hl-yellow">24th</span> = FR can be amended | <span class="hl-yellow">25th</span> = 39B/C over FRs | <span class="hl-yellow">42nd</span> = Mini Constitution (FDs added) | <span class="hl-yellow">44th</span> = Property out of FRs | <span class="hl-yellow">86th</span> = Education right + 11th FD | <span class="hl-yellow">97th</span> = Only cooperatives
+    </p>
+  </div>
+</div>
+
+<!-- EXAM TRAPS -->
+<div class="page" id="page-traps">
+  <h1>⚠ Exam Traps</h1>
+  <p style="color:var(--text-dim)">What toppers never get wrong — and average students always do</p>
+
+  <div class="trap-box" style="margin-top:18px;">
+    <h4>Trap 1: DPSP borrowed from Ireland — NOT UK</h4>
+    <p style="font-size:14px;">FR borrowed from USA. FD borrowed from USSR. DPSP borrowed from <span class="hl-red">Ireland</span>. Students often write UK or Australia. WRONG.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 2: Art 37 says DPSP are "not enforceable by court" — but Art 37 ALSO says they are "fundamental in governance"</h4>
+    <p style="font-size:14px;">Non-justiciable ≠ useless. They are FUNDAMENTAL in governance. Both parts of Art 37 are exam-worthy.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 3: Article 45 changed after 86th Amendment</h4>
+    <p style="font-size:14px;">Before 2002: Art 45 = Primary education 6–14 yrs. After 86th Amendment: Art 21A = Right to Education 6–14 (FR). Art 45 now = Early Childhood Care 0–6 yrs (Anganwadis).</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 4: 42nd Amendment added 10 FDs — 42nd added 39A and 43A too</h4>
+    <p style="font-size:14px;">Students forget that 42nd Amendment also added Art 39A (Free Legal Aid) and Art 43A (Workers in management) to DPSP — not just FDs.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 5: Swaran Singh Committee vs Verma Committee</h4>
+    <p style="font-size:14px;"><span class="hl-yellow">Swaran Singh Committee</span> → recommended FDs (1976). <span class="hl-yellow">Justice Verma Committee</span> → identified laws to enforce FDs (1999). Different purpose, different year!</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 6: Cooperative Societies = 97th Amendment ONLY</h4>
+    <p style="font-size:14px;">Any question about any constitutional amendment concerning Cooperative Societies → Answer is always <span class="hl-red">97th Amendment (2011)</span>. Added Art 43B and Part IX-B.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 7: FDs apply to Indians only</h4>
+    <p style="font-size:14px;">Fundamental Duties are NOT applicable to foreigners. FRs have some applicability to foreigners. FDs = Indians only.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 8: Uniform Civil Code — Goa first, Uttarakhand second</h4>
+    <p style="font-size:14px;">First state to implement UCC = <span class="hl-green">Goa</span>. Second = <span class="hl-yellow">Uttarakhand</span>. Don't confuse order.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 9: Champakam case — not Golaknath — said FR is above DPSP</h4>
+    <p style="font-size:14px;">Students mix up cases. <span class="hl-blue">Champakam (1951)</span> = FR above DPSP. <span class="hl-blue">Golaknath (1967)</span> = Parliament cannot amend FR. Different issues!</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 10: Maternity leave — 26 weeks for first 2 children</h4>
+    <p style="font-size:14px;">India's maternity relief is 26 weeks for the first 2 children. It reduces after the 3rd child. Art 42 covers this.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 11: 9th Schedule — IR Case 2007</h4>
+    <p style="font-size:14px;">Pre-1973 additions to 9th Schedule: Courts CANNOT review. Post-1973 additions: Courts CAN review. The cutoff year is 1973 (Kesavananda Bharati case year).</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>Trap 12: DPSP "non-justiciable" but FDs also "non-justiciable"</h4>
+    <p style="font-size:14px;">Both DPSP and Fundamental Duties are non-justiciable. But FDs CAN be enforced through suitable legislation (like Wildlife Protection Act). DPSP CAN be used to guide law-making.</p>
+  </div>
+</div>
+
+<!-- EXAMINER'S FAVOURITES -->
+<div class="page" id="page-examiner">
+  <h1>🎯 Examiner's Favourite Questions</h1>
+  <p style="color:var(--text-dim)">How the examiner will attack this chapter</p>
+
+  <h2>🎯 High Probability Direct Questions</h2>
+  <div class="card card-blue">
+    <ul style="font-size:14px; line-height:2;">
+      <li>From which country's constitution was DPSP borrowed? → <span class="hl-green">Ireland</span></li>
+      <li>DPSP is contained in which Part & Articles? → <span class="hl-yellow">Part IV, Art 36–51</span></li>
+      <li>Which Article makes DPSP non-justiciable? → <span class="hl-yellow">Article 37</span></li>
+      <li>Who called DPSP "novel features of the Constitution"? → <span class="hl-green">Dr B.R. Ambedkar</span></li>
+      <li>Who called FR + DPSP "Conscience of the Constitution"? → <span class="hl-purple">Granville Austin</span></li>
+      <li>Which Article deals with Uniform Civil Code? → <span class="hl-yellow">Article 44</span></li>
+      <li>Which state first implemented UCC? → <span class="hl-green">Goa</span></li>
+      <li>Fundamental Duties borrowed from? → <span class="hl-blue">USSR</span></li>
+      <li>FDs contained in? → <span class="hl-yellow">Part IV-A, Article 51A</span></li>
+      <li>Who added FDs? → <span class="hl-green">42nd Amendment, 1976</span></li>
+      <li>Which amendment added the 11th FD? → <span class="hl-yellow">86th Amendment, 2002</span></li>
+      <li>What is the 11th FD? → <span class="hl-green">Parents provide education to children 6–14 yrs</span></li>
+      <li>Which committee recommended FDs? → <span class="hl-purple">Sardar Swaran Singh Committee</span></li>
+      <li>Which case established Basic Structure Doctrine? → <span class="hl-blue">Kesavananda Bharati Case, 1973</span></li>
+      <li>Which case said FR & DPSP exist in balance? → <span class="hl-green">Minerva Mills Case, 1980</span></li>
+      <li>97th Amendment → <span class="hl-yellow">Cooperative Societies (2011)</span></li>
+    </ul>
+  </div>
+
+  <h2>🎯 Statement-Based / Assertion-Reason</h2>
+  <div class="card card-yellow">
+    <p><strong>Statement 1:</strong> DPSP are non-justiciable. → <span class="hl-green">TRUE</span> (Art 37)</p>
+    <p style="margin-top:6px;"><strong>Statement 2:</strong> DPSP are fundamental in governance. → <span class="hl-green">TRUE</span> (same Art 37)</p>
+    <p style="margin-top:6px;"><strong>Statement:</strong> Fundamental Duties are applicable to foreigners. → <span class="hl-red">FALSE</span></p>
+    <p style="margin-top:6px;"><strong>Statement:</strong> Art 45 talks about education for 6–14 year olds. → <span class="hl-red">FALSE after 2002</span>. Now Art 21A does. Art 45 = 0–6 yrs.</p>
+    <p style="margin-top:6px;"><strong>Statement:</strong> 42nd Amendment added FDs, 39A, and 43A. → <span class="hl-green">TRUE</span></p>
+  </div>
+
+  <h2>🎯 Match the Following Danger Zones</h2>
+  <div class="card card-purple">
+    <ul style="font-size:14px; line-height:2;">
+      <li>Art 38 → Welfare state</li>
+      <li>Art 39A → Free legal aid</li>
+      <li>Art 40 → Village Panchayats</li>
+      <li>Art 44 → Uniform Civil Code</li>
+      <li>Art 48A → Environment protection</li>
+      <li>Art 50 → Separation of judiciary & executive</li>
+      <li>Art 51 → International peace</li>
+      <li>Art 51A → Fundamental Duties</li>
+    </ul>
+  </div>
+
+  <h2>🎯 Chronology Questions (Order these)</h2>
+  <div class="card card-teal">
+    <p style="font-size:14px; color:var(--teal); font-weight:700; margin-bottom:8px;">Cases in order:</p>
+    <p style="font-size:14px;">Champakam (1951) → Shankari Prasad (1951) → Golaknath (1967) → 24th+25th Amend. (1971) → Kesavananda (1973) → 42nd Amend. (1976) → Minerva Mills (1980)</p>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div class="page" id="page-quiz">
+  <h1>❓ Active Recall Quiz</h1>
+  <p style="color:var(--text-dim)">Test your memory. Every question is exam-pattern.</p>
+  <div id="quiz-score-bar" style="display:none;">
+    <div class="progress-bar"><div class="progress-fill" id="quiz-progress" style="width:0%"></div></div>
+    <p style="color:var(--text-dim); font-size:13px; margin-bottom:12px;" id="quiz-score-text">0/0 correct</p>
+  </div>
+  <div id="quiz-container"></div>
+  <button onclick="resetQuiz()" style="margin-top:16px; padding:10px 22px; background:var(--blue); color:#000; border:none; border-radius:var(--radius); cursor:pointer; font-weight:700; font-family:inherit; font-size:14px;">🔄 Restart Quiz</button>
+</div>
+
+<!-- FLASHCARDS -->
+<div class="page" id="page-flashcards">
+  <h1>🃏 Flashcards</h1>
+  <p style="color:var(--text-dim)">Click/tap any card to flip and see the answer</p>
+  <div id="flashcard-container" style="margin-top:18px;"></div>
+</div>
+
+<!-- HIGH YIELD -->
+<div class="page" id="page-highyield">
+  <h1>⚡ High-Yield Revision Notes</h1>
+  <p style="color:var(--text-dim)">Top 25 facts. Know these or you lose marks.</p>
+
+  <div style="margin-top:18px;">
+    <div class="fast-item">
+      <span class="fast-num">🔥 1</span>
+      <div class="fast-content"><span class="fast-key">DPSP borrowed from Ireland</span> | FRs = USA | FDs = USSR
+        <div class="fast-hook">Ireland → DPSP | USA → FR | USSR → FD</div>
+      </div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">🔥 2</span>
+      <div class="fast-content"><span class="fast-key">DPSP: Part IV, Art 36–51</span> | Non-justiciable (Art 37)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">🔥 3</span>
+      <div class="fast-content"><span class="fast-key">FDs: Part IV-A, Art 51A</span> | Non-justiciable but enforceable via law</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">🔥 4</span>
+      <div class="fast-content"><span class="fast-key">42nd Amendment 1976</span> = Added 10 FDs + Art 39A + Art 43A (Mini Constitution)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">🔥 5</span>
+      <div class="fast-content"><span class="fast-key">86th Amendment 2002</span> = Art 21A (Right to Education) + Art 45 restructured + 11th FD (51A-k)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">🔥 6</span>
+      <div class="fast-content"><span class="fast-key">97th Amendment 2011</span> = Cooperative Societies ONLY (Art 43B + Part IX-B)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">🔥 7</span>
+      <div class="fast-content"><span class="fast-key">Minerva Mills Case 1980</span> = FR and DPSP exist in BALANCE. Final verdict.</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">🔥 8</span>
+      <div class="fast-content"><span class="fast-key">Kesavananda Bharati Case 1973</span> = Basic Structure Doctrine (13 judges)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">🔥 9</span>
+      <div class="fast-content"><span class="fast-key">Art 44 — Uniform Civil Code</span> | Goa = 1st state | Uttarakhand = 2nd state</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">🔥 10</span>
+      <div class="fast-content"><span class="fast-key">Art 39 = LDC = PHC</span> (6 clauses a-f)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 11</span>
+      <div class="fast-content"><span class="fast-key">Art 38 Clause 2</span> = Added by 44th Amendment 1978 (reduce inequalities)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 12</span>
+      <div class="fast-content"><span class="fast-key">44th Amendment 1978</span> also removed Right to Property as FR → moved to Art 300A</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 13</span>
+      <div class="fast-content"><span class="fast-key">Swaran Singh Committee</span> = recommended 8 duties; govt added 10 total</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 14</span>
+      <div class="fast-content"><span class="fast-key">Justice Verma Committee 1999</span> = identified laws to enforce FDs (Prevention of Insults Act 1971, UAPA 1967, Wildlife Act 1972, RPA 1951)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 15</span>
+      <div class="fast-content"><span class="fast-key">FDs applicable to Indians ONLY</span> — not foreigners</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 16</span>
+      <div class="fast-content"><span class="fast-key">Champakam Dorairajan 1951</span> = First major FR vs DPSP case. FR held superior.</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 17</span>
+      <div class="fast-content"><span class="fast-key">Art 39B & 39C</span> = Distribution of resources + No concentration of wealth (placed above FRs by 25th Amendment)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 18</span>
+      <div class="fast-content"><span class="fast-key">Art 45 after 86th Amendment</span> = Early Childhood Care 0–6 yrs (Anganwadis). Art 21A = 6–14 yrs education.</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 19</span>
+      <div class="fast-content"><span class="fast-key">Art 50</span> = Separation of Judiciary & Executive (no watertight compartments like USA)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">⭐ 20</span>
+      <div class="fast-content"><span class="fast-key">3 Types of DPSP</span> = Socialist / Gandhian / Liberal Intellectual (NOT in Constitution — academic classification)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">➕ 21</span>
+      <div class="fast-content"><span class="fast-key">Golaknath Case 1967</span> = Parliament CANNOT amend FR (reversed by 24th Amendment 1971)</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">➕ 22</span>
+      <div class="fast-content"><span class="fast-key">Art 31C</span> = Added by 25th Amendment; laws implementing 39B/39C cannot be challenged</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">➕ 23</span>
+      <div class="fast-content"><span class="fast-key">Maternity Relief (Art 42)</span> = 26 weeks for first 2 children</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">➕ 24</span>
+      <div class="fast-content"><span class="fast-key">Art 51 = International Peace</span> = ₹51 prasad for peace 🙏</div>
+    </div>
+    <div class="fast-item">
+      <span class="fast-num">➕ 25</span>
+      <div class="fast-content"><span class="fast-key">Raj Narain v State of UP</span> = Free & fair elections are part of Basic Structure</div>
+    </div>
+  </div>
+</div>
+
+<!-- ULTRA FAST -->
+<div class="page" id="page-ultrafast">
+  <h1>🚀 Ultra-Fast Revision Sheet</h1>
+  <p style="color:var(--text-dim)">Scan this in under 3 minutes before any test</p>
+
+  <h2>DPSP Articles — One Line Each</h2>
+  <div class="uf-grid" style="margin-top:12px;">
+    <div class="uf-cell"><div class="uf-art">36</div><div class="uf-desc">State = Art 12</div></div>
+    <div class="uf-cell"><div class="uf-art">37</div><div class="uf-desc">Non-justiciable</div></div>
+    <div class="uf-cell"><div class="uf-art">38</div><div class="uf-desc">Welfare State</div></div>
+    <div class="uf-cell"><div class="uf-art">39 a-f</div><div class="uf-desc">LDC = PHC</div></div>
+    <div class="uf-cell"><div class="uf-art">39A</div><div class="uf-desc">Free Legal Aid</div><div class="uf-hook">42nd Amend</div></div>
+    <div class="uf-cell"><div class="uf-art">40</div><div class="uf-desc">Panchayats</div></div>
+    <div class="uf-cell"><div class="uf-art">41</div><div class="uf-desc">Work+Education+Assistance</div></div>
+    <div class="uf-cell"><div class="uf-art">42</div><div class="uf-desc">Maternity Relief</div><div class="uf-hook">26 weeks</div></div>
+    <div class="uf-cell"><div class="uf-art">43</div><div class="uf-desc">Living Wage</div></div>
+    <div class="uf-cell"><div class="uf-art">43A</div><div class="uf-desc">Workers in Mgmt</div><div class="uf-hook">42nd Amend</div></div>
+    <div class="uf-cell"><div class="uf-art">43B</div><div class="uf-desc">Cooperatives</div><div class="uf-hook">97th Amend</div></div>
+    <div class="uf-cell"><div class="uf-art">44</div><div class="uf-desc">Uniform Civil Code</div><div class="uf-hook">Goa 1st</div></div>
+    <div class="uf-cell"><div class="uf-art">45</div><div class="uf-desc">Early Care 0–6</div><div class="uf-hook">86th Amend</div></div>
+    <div class="uf-cell"><div class="uf-art">46</div><div class="uf-desc">SC/ST upliftment</div></div>
+    <div class="uf-cell"><div class="uf-art">47</div><div class="uf-desc">Nutrition+No Alcohol</div></div>
+    <div class="uf-cell"><div class="uf-art">48</div><div class="uf-desc">Agriculture+Animals</div></div>
+    <div class="uf-cell"><div class="uf-art">48A</div><div class="uf-desc">Environment</div></div>
+    <div class="uf-cell"><div class="uf-art">49</div><div class="uf-desc">Monuments</div></div>
+    <div class="uf-cell"><div class="uf-art">50</div><div class="uf-desc">J & E Separation</div></div>
+    <div class="uf-cell"><div class="uf-art">51</div><div class="uf-desc">Intl Peace</div><div class="uf-hook">₹51 prasad</div></div>
+  </div>
+
+  <h2>11 Fundamental Duties — One Word</h2>
+  <div class="uf-grid">
+    <div class="uf-cell"><div class="uf-art">A</div><div class="uf-desc">Anthem 🎵</div></div>
+    <div class="uf-cell"><div class="uf-art">B</div><div class="uf-desc">Bapu ideals</div></div>
+    <div class="uf-cell"><div class="uf-art">C</div><div class="uf-desc">Country (3)</div></div>
+    <div class="uf-cell"><div class="uf-art">D</div><div class="uf-desc">Defend 🛡</div></div>
+    <div class="uf-cell"><div class="uf-art">E</div><div class="uf-desc">Equality 👐</div></div>
+    <div class="uf-cell"><div class="uf-art">F</div><div class="uf-desc">Fort 🏯</div></div>
+    <div class="uf-cell"><div class="uf-art">G</div><div class="uf-desc">Green 🌿</div></div>
+    <div class="uf-cell"><div class="uf-art">H</div><div class="uf-desc">Humanism 🔬</div></div>
+    <div class="uf-cell"><div class="uf-art">I</div><div class="uf-desc">Non-Violence ✌</div></div>
+    <div class="uf-cell"><div class="uf-art">J</div><div class="uf-desc">Jadeja 🏏</div></div>
+    <div class="uf-cell"><div class="uf-art">K</div><div class="uf-desc">Kids 6–14 🎒</div></div>
+  </div>
+
+  <h2>3-Line Case Summary</h2>
+  <div class="card card-blue">
+    <p style="font-size:14px; line-height:1.9;">
+      <span class="hl-yellow">Champakam (1951)</span>: FR > DPSP →
+      <span class="hl-yellow">24th+25th (1971)</span>: Parliament fixes it →
+      <span class="hl-yellow">Kesavananda (1973)</span>: Basic Structure →
+      <span class="hl-green">Minerva Mills (1980)</span>: BALANCE = FINAL ANSWER
+    </p>
+  </div>
+
+  <h2>3 Amendment Numbers to Never Forget</h2>
+  <div class="pill-row">
+    <span class="pill pill-y">42nd = Mini Constitution (FDs)</span>
+    <span class="pill pill-b">86th = Education + 11th FD</span>
+    <span class="pill pill-g">97th = ONLY Cooperatives</span>
+  </div>
+</div>
+
+<!-- LAST NIGHT -->
+<div class="page" id="page-lastnight">
+  <h1>🌙 Last Night Before Exam</h1>
+  <p style="color:var(--text-dim)">Read this once. Trust your preparation. Walk in confident.</p>
+
+  <div class="ln-box" style="margin-top:18px;">
+    <div class="ln-title">⚡ DPSP ABSOLUTE ESSENTIALS</div>
+    <div class="ln-item"><span class="ln-dot">●</span><span>DPSP = Ireland | Part IV | Art 36–51 | Non-justiciable (Art 37)</span></div>
+    <div class="ln-item"><span class="ln-dot">●</span><span>FR = USA | Negative obligations | Political democracy</span></div>
+    <div class="ln-item"><span class="ln-dot">●</span><span>DPSP = Positive obligations | Social & Economic democracy</span></div>
+    <div class="ln-item"><span class="ln-dot">●</span><span>Art 39 = LDC=PHC (Livelihood, Distribution, Concentration, Pay, Health, Children)</span></div>
+    <div class="ln-item"><span class="ln-dot">●</span><span>Art 44 = UCC | Goa = 1st, Uttarakhand = 2nd</span></div>
+    <div class="ln-item"><span class="ln-dot">●</span><span>Art 45 = Now 0–6 yrs (Anganwadi) after 86th Amendment</span></div>
+    <div class="ln-item"><span class="ln-dot">●</span><span>Art 48 = Agriculture + Animal Husbandry (Gandhian)</span></div>
+    <div class="ln-item"><span class="ln-dot">●</span><span>Art 51 = International Peace (₹51 prasad hook)</span></div>
+  </div>
+
+  <div class="ln-box" style="border-color:var(--green);">
+    <div class="ln-title" style="color:var(--green);">⚡ FUNDAMENTAL DUTIES ESSENTIALS</div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--green);">●</span><span>FDs = USSR | Part IV-A | Art 51A | Indians ONLY</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--green);">●</span><span>10 FDs by 42nd Amendment 1976 (Indira Gandhi)</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--green);">●</span><span>11th FD (51A-k) by 86th Amendment 2002 (Vajpayee) — Kids 6–14</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--green);">●</span><span>Swaran Singh Committee = recommended FDs</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--green);">●</span><span>Justice Verma Committee 1999 = laws to enforce FDs</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--green);">●</span><span>A=Anthem, B=Bapu, C=Country, D=Defend, E=Equality, F=Fort, G=Green, H=Humanism, I=Non-Violence, J=Jadeja, K=Kids</span></div>
+  </div>
+
+  <div class="ln-box" style="border-color:var(--yellow);">
+    <div class="ln-title" style="color:var(--yellow);">⚡ AMENDMENTS TO NEVER FORGET</div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--yellow);">●</span><span>42nd (1976) = Mini Constitution = FDs + 39A + 43A</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--yellow);">●</span><span>44th (1978) = Reduce inequality clause (Art 38-2) + Property removed from FRs</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--yellow);">●</span><span>86th (2002) = Art 21A + Art 45 restructured + 11th FD</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--yellow);">●</span><span>97th (2011) = Cooperative Societies ONLY</span></div>
+  </div>
+
+  <div class="ln-box" style="border-color:var(--red);">
+    <div class="ln-title" style="color:var(--red);">⚡ CASES TO NAIL</div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--red);">●</span><span>Champakam (1951) = FR above DPSP (first case)</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--red);">●</span><span>Golaknath (1967) = Parliament cannot amend FR</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--red);">●</span><span>Kesavananda Bharati (1973) = Basic Structure Doctrine</span></div>
+    <div class="ln-item"><span class="ln-dot" style="color:var(--red);">●</span><span>Minerva Mills (1980) = FR + DPSP exist in BALANCE ← THIS IS THE ANSWER</span></div>
+  </div>
+
+  <div style="text-align:center; margin-top:24px; padding: 20px; background: linear-gradient(135deg, #0d1629, #0d1f0d); border-radius: var(--radius); border: 1px solid var(--border);">
+    <p style="font-size:20px; font-weight:800; background: linear-gradient(90deg, var(--blue), var(--green)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">You've got this. 💪</p>
+    <p style="color:var(--text-dim); font-size:14px; margin-top:8px;">Sleep well. Your brain will consolidate everything. All the best!</p>
+  </div>
+</div>
+
+</div><!-- /app -->
+
+<button id="scrollTop" onclick="document.getElementById('app').scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// PAGE NAVIGATION
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if (page) { page.classList.add('active'); document.getElementById('app').scrollTo({top:0}); }
+  // Find matching nav button
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active');
+  });
+}
+
+// SCROLL TOP
+document.getElementById('app').addEventListener('scroll', function() {
+  const btn = document.getElementById('scrollTop');
+  btn.classList.toggle('show', this.scrollTop > 200);
+});
+
+// QUIZ DATA
+const quizData = [
+  { q: "DPSP is borrowed from which country's constitution?", opts: ["USA", "Ireland", "UK", "Australia"], ans: 1, exp: "Ireland! FR = USA, FD = USSR, DPSP = Ireland." },
+  { q: "DPSP is contained in which Part of the Constitution?", opts: ["Part III", "Part IV", "Part IV-A", "Part V"], ans: 1, exp: "Part IV, Articles 36–51." },
+  { q: "Which Article makes DPSP non-justiciable?", opts: ["Article 36", "Article 37", "Article 38", "Article 51"], ans: 1, exp: "Article 37 explicitly states DPSP cannot be enforced by any court." },
+  { q: "Who called DPSP 'novel features of the Constitution'?", opts: ["Granville Austin", "K.T. Shah", "B.R. Ambedkar", "Jawaharlal Nehru"], ans: 2, exp: "Dr B.R. Ambedkar called them 'novel features'. Granville Austin called FR+DPSP 'conscience of the constitution'." },
+  { q: "Article 39 has how many clauses?", opts: ["4", "5", "6", "7"], ans: 2, exp: "6 clauses: a, b, c, d, e, f. Remember LDC = PHC." },
+  { q: "Free Legal Aid for the poor is covered under which Article?", opts: ["Art 39", "Art 39A", "Art 40", "Art 41"], ans: 1, exp: "Art 39A — Free Legal Aid. Added by 42nd Amendment." },
+  { q: "Uniform Civil Code is in which Article?", opts: ["Art 42", "Art 43", "Art 44", "Art 45"], ans: 2, exp: "Art 44 — Uniform Civil Code. 4+4 = UNIFORM!" },
+  { q: "Which state first implemented the Uniform Civil Code?", opts: ["Uttarakhand", "Rajasthan", "Goa", "Gujarat"], ans: 2, exp: "Goa was the first state. Uttarakhand is the second." },
+  { q: "The 42nd Amendment is also known as?", opts: ["Mother Constitution", "Mini Constitution", "Baby Constitution", "Master Amendment"], ans: 1, exp: "42nd Amendment (1976) is called the 'Mini Constitution' due to the large number of changes it made." },
+  { q: "How many Fundamental Duties were added by the 42nd Amendment?", opts: ["8", "10", "11", "5"], ans: 1, exp: "10 duties were added by the 42nd Amendment in 1976. The 11th was added later by the 86th Amendment." },
+  { q: "The 11th Fundamental Duty was added by which Amendment?", opts: ["42nd", "44th", "86th", "97th"], ans: 2, exp: "86th Amendment (2002) during Vajpayee's PM tenure added the 11th duty (51A-k): parents must provide education to children aged 6-14." },
+  { q: "Fundamental Duties are applicable to?", opts: ["All persons in India", "Indian citizens only", "Foreigners only", "Both citizens and foreigners"], ans: 1, exp: "Fundamental Duties apply to Indian citizens ONLY, not to foreigners." },
+  { q: "Which committee recommended Fundamental Duties?", opts: ["Justice Verma Committee", "Sardar Swaran Singh Committee", "Mandal Commission", "Sarkaria Commission"], ans: 1, exp: "Sardar Swaran Singh Committee recommended FDs. Justice Verma Committee (1999) identified laws to enforce them." },
+  { q: "The Kesavananda Bharati case (1973) established what doctrine?", opts: ["Separation of Powers", "Basic Structure Doctrine", "Welfare State Doctrine", "Judicial Supremacy"], ans: 1, exp: "Kesavananda Bharati case (1973) with a 13-judge bench established the Basic Structure Doctrine." },
+  { q: "The Minerva Mills Case (1980) held that:", opts: ["FR is above DPSP", "DPSP is above FR", "FR and DPSP exist in balance", "Both FR and DPSP are non-justiciable"], ans: 2, exp: "Minerva Mills (1980) is the final settled position: FR and DPSP exist in balance. Neither is above the other." },
+  { q: "Which Amendment ONLY deals with Cooperative Societies?", opts: ["42nd Amendment", "86th Amendment", "44th Amendment", "97th Amendment"], ans: 3, exp: "97th Amendment (2011) added Art 43B about Cooperatives and also added Part IX-B to the Constitution." },
+  { q: "Article 45 after the 86th Amendment covers:", opts: ["Education for 6-14 years", "Early childhood care for 0-6 years", "Vocational education", "Higher education"], ans: 1, exp: "Before 86th Amendment (2002), Art 45 covered 6-14 yrs education. After, that moved to Art 21A. Art 45 now covers 0-6 yrs (Anganwadis)." },
+  { q: "Fundamental Duties are contained in which Article?", opts: ["Article 49", "Article 50", "Article 51", "Article 51A"], ans: 3, exp: "Article 51A (Part IV-A) contains all 11 Fundamental Duties." },
+  { q: "Champakam Dorairajan Case (1951) decided that:", opts: ["DPSP is above FR", "FR is above DPSP", "Both are equal", "Neither is enforceable"], ans: 1, exp: "Champakam Dorairajan (1951) was the first major case — it held that Fundamental Rights prevail over DPSP when there is a conflict." },
+  { q: "Art 38 Clause 2 (reduce inequality) was added by which amendment?", opts: ["42nd Amendment", "44th Amendment", "25th Amendment", "86th Amendment"], ans: 1, exp: "44th Amendment (1978) added Clause 2 to Art 38 requiring the State to reduce inequalities in income, status, facilities and opportunities." }
+];
+
+let quizAnswered = {};
+let quizCorrect = 0;
+
+function buildQuiz() {
+  quizAnswered = {};
+  quizCorrect = 0;
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  document.getElementById('quiz-score-bar').style.display = 'none';
+  quizData.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.id = 'qc-' + i;
+    card.innerHTML = `<div class="quiz-q">${i+1}. ${q.q}</div>` +
+      q.opts.map((o, j) => `<button class="quiz-btn" onclick="answerQuiz(${i},${j})">${String.fromCharCode(65+j)}) ${o}</button>`).join('') +
+      `<div class="quiz-feedback" id="qf-${i}"></div>`;
+    container.appendChild(card);
+  });
+}
+
+function answerQuiz(qi, chosen) {
+  if (quizAnswered[qi] !== undefined) return;
+  quizAnswered[qi] = chosen;
+  const q = quizData[qi];
+  const card = document.getElementById('qc-' + qi);
+  const btns = card.querySelectorAll('.quiz-btn');
+  btns.forEach((b, j) => {
+    b.disabled = true;
+    if (j === q.ans) b.classList.add('correct');
+    else if (j === chosen) b.classList.add('wrong');
+  });
+  const fb = document.getElementById('qf-' + qi);
+  if (chosen === q.ans) {
+    quizCorrect++;
+    fb.className = 'quiz-feedback show good';
+    fb.textContent = '✅ Correct! ' + q.exp;
+  } else {
+    fb.className = 'quiz-feedback show bad';
+    fb.textContent = '❌ ' + q.exp;
+  }
+  updateScore();
+}
+
+function updateScore() {
+  const total = Object.keys(quizAnswered).length;
+  const bar = document.getElementById('quiz-score-bar');
+  bar.style.display = 'block';
+  document.getElementById('quiz-progress').style.width = (quizCorrect / quizData.length * 100) + '%';
+  document.getElementById('quiz-score-text').textContent = `${quizCorrect}/${total} correct (${quizData.length - total} remaining)`;
+}
+
+function resetQuiz() { buildQuiz(); }
+
+// FLASHCARDS
+const flashcards = [
+  { q: "DPSP borrowed from?", a: "Ireland 🇮🇪" },
+  { q: "FR borrowed from?", a: "USA 🇺🇸" },
+  { q: "FD borrowed from?", a: "USSR 🇷🇺" },
+  { q: "DPSP = Part?", a: "Part IV, Articles 36–51" },
+  { q: "FD = Part?", a: "Part IV-A, Article 51A" },
+  { q: "Art 37 significance?", a: "DPSP are Non-Justiciable" },
+  { q: "Art 39 = ?", a: "LDC = PHC (6 clauses)" },
+  { q: "Art 39A = ?", a: "Free Legal Aid (42nd Amendment)" },
+  { q: "Art 40 = ?", a: "Village Panchayats" },
+  { q: "Art 44 = ?", a: "Uniform Civil Code | Goa 1st" },
+  { q: "Art 45 after 86th Amendment = ?", a: "Early Childhood Care 0–6 yrs" },
+  { q: "Art 48 = ?", a: "Agriculture & Animal Husbandry (Gandhian)" },
+  { q: "Art 48A = ?", a: "Environment Protection" },
+  { q: "Art 50 = ?", a: "Separation of Judiciary & Executive" },
+  { q: "Art 51 = ?", a: "International Peace & Security" },
+  { q: "42nd Amendment (1976)?", a: "Mini Constitution: 10 FDs + Art 39A + Art 43A" },
+  { q: "44th Amendment (1978)?", a: "Art 38 Cl.2 + Property out of FRs → Art 300A" },
+  { q: "86th Amendment (2002)?", a: "Art 21A + Restructured Art 45 + 11th FD" },
+  { q: "97th Amendment (2011)?", a: "ONLY Cooperative Societies (Art 43B + Part IX-B)" },
+  { q: "Kesavananda Bharati Case (1973)?", a: "Basic Structure Doctrine — 13 judge bench" },
+  { q: "Minerva Mills Case (1980)?", a: "FR and DPSP exist in BALANCE — FINAL VERDICT" },
+  { q: "Champakam Dorairajan Case (1951)?", a: "First FR vs DPSP case — FR held superior" },
+  { q: "Swaran Singh Committee?", a: "Recommended Fundamental Duties" },
+  { q: "Justice Verma Committee (1999)?", a: "Identified laws to enforce FDs" },
+  { q: "51A (k) added by?", a: "86th Amendment 2002 — Kids 6–14 education (Vajpayee)" },
+  { q: "FDs applicable to?", a: "Indians ONLY — not foreigners" },
+  { q: "DPSP types (not in Constitution)?", a: "Socialist / Gandhian / Liberal Intellectual" },
+  { q: "3 types: Panchayats, Cooperatives, SC/ST, Cows?", a: "GANDHIAN DPSPs" },
+  { q: "UCC, Environment, Monuments, Peace?", a: "LIBERAL INTELLECTUAL DPSPs" },
+  { q: "Workers' rights, wages, inequality?", a: "SOCIALIST DPSPs" }
+];
+
+function buildFlashcards() {
+  const container = document.getElementById('flashcard-container');
+  flashcards.forEach((fc, i) => {
+    const div = document.createElement('div');
+    div.className = 'flashcard';
+    div.id = 'fc-' + i;
+    div.onclick = function() { this.classList.toggle('flipped'); };
+    div.innerHTML = `<div class="flashcard-inner">
+      <div class="fc-front">${fc.q}<span class="fc-hint">tap to flip</span></div>
+      <div class="fc-back">${fc.a}</div>
+    </div>`;
+    container.appendChild(div);
+  });
+}
+
+// INIT
+buildQuiz();
+buildFlashcards();
+</script>
+</body>
+</html>

@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Constitution — Salient Features & Preamble | Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1c2333;
+    --bg4: #21262d;
+    --green: #3fb950;
+    --green-dim: #1a4428;
+    --blue: #58a6ff;
+    --blue-dim: #1a3055;
+    --amber: #e3b341;
+    --amber-dim: #3d2f0a;
+    --red: #f85149;
+    --red-dim: #3d0f0e;
+    --purple: #bc8cff;
+    --purple-dim: #2d1f4a;
+    --teal: #39d353;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --text-muted: #484f58;
+    --border: #30363d;
+    --border-light: #21262d;
+    --glow-green: 0 0 20px rgba(63,185,80,0.15);
+    --glow-blue: 0 0 20px rgba(88,166,255,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  #app { display: flex; height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: width 0.3s ease;
+    z-index: 100;
+  }
+
+  #sidebar.collapsed { width: 56px; min-width: 56px; }
+
+  .sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 60px;
+  }
+
+  .sidebar-logo {
+    width: 30px; height: 30px; min-width: 30px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: #000; flex-shrink: 0;
+  }
+
+  .sidebar-title {
+    font-size: 13px; font-weight: 600; color: var(--text);
+    line-height: 1.3; overflow: hidden; white-space: nowrap;
+  }
+  .sidebar-title span { color: var(--green); display: block; font-size: 11px; font-weight: 400; color: var(--text-dim); }
+
+  #sidebar.collapsed .sidebar-title { display: none; }
+
+  #toggle-sidebar {
+    background: none; border: none; cursor: pointer;
+    color: var(--text-dim); padding: 4px;
+    margin-left: auto; flex-shrink: 0;
+    font-size: 16px; line-height: 1;
+    transition: color 0.2s;
+  }
+  #toggle-sidebar:hover { color: var(--green); }
+
+  .nav-section-label {
+    font-size: 10px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    padding: 12px 16px 4px;
+    white-space: nowrap; overflow: hidden;
+  }
+  #sidebar.collapsed .nav-section-label { display: none; }
+
+  #sidebar-nav { overflow-y: auto; flex: 1; padding: 4px 0; }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 16px; cursor: pointer;
+    border-radius: 0; transition: background 0.15s;
+    border-left: 3px solid transparent;
+    white-space: nowrap; overflow: hidden;
+    font-size: 13px; color: var(--text-dim);
+    user-select: none;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active { background: var(--bg3); color: var(--green); border-left-color: var(--green); }
+
+  .nav-icon { font-size: 15px; min-width: 20px; text-align: center; }
+  #sidebar.collapsed .nav-label { display: none; }
+  #sidebar.collapsed .nav-item { padding: 8px; justify-content: center; }
+
+  .progress-bar-wrap { padding: 12px 16px; border-top: 1px solid var(--border); }
+  #sidebar.collapsed .progress-bar-wrap { display: none; }
+  .progress-label { font-size: 11px; color: var(--text-dim); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .progress-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), var(--blue)); border-radius: 2px; transition: width 0.4s ease; }
+
+  /* ── MAIN ── */
+  #main { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+
+  #topbar {
+    height: 56px; min-height: 56px;
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 20px; gap: 12px;
+  }
+
+  .topbar-breadcrumb { font-size: 12px; color: var(--text-dim); display: flex; align-items: center; gap: 6px; flex: 1; }
+  .topbar-breadcrumb .sep { color: var(--border); }
+  .topbar-breadcrumb .current { color: var(--text); font-weight: 500; }
+
+  .topbar-actions { display: flex; gap: 8px; }
+  .tb-btn {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text-dim); padding: 5px 12px; border-radius: 6px;
+    font-size: 12px; cursor: pointer; font-family: inherit;
+    transition: all 0.15s;
+  }
+  .tb-btn:hover { background: var(--bg4); color: var(--text); border-color: var(--green); }
+
+  #page-container { flex: 1; overflow-y: auto; padding: 28px 32px 60px; }
+
+  /* ── PAGE STYLES ── */
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .page-header { margin-bottom: 28px; }
+  .page-eyebrow { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green); font-weight: 600; margin-bottom: 8px; }
+  .page-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; line-height: 1.2; }
+  .page-subtitle { font-size: 14px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
+
+  /* Cards */
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 13px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.06em; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .card-green { border-left: 3px solid var(--green); }
+  .card-blue { border-left: 3px solid var(--blue); }
+  .card-amber { border-left: 3px solid var(--amber); }
+  .card-red { border-left: 3px solid var(--red); }
+  .card-purple { border-left: 3px solid var(--purple); }
+
+  /* Tags */
+  .tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
+  }
+  .tag-must { background: var(--red-dim); color: var(--red); }
+  .tag-imp { background: var(--amber-dim); color: var(--amber); }
+  .tag-good { background: var(--blue-dim); color: var(--blue); }
+
+  /* Source Table */
+  .source-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .source-table th { background: var(--bg3); padding: 10px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); border-bottom: 1px solid var(--border); }
+  .source-table td { padding: 10px 14px; border-bottom: 1px solid var(--border-light); vertical-align: top; line-height: 1.5; }
+  .source-table tr:last-child td { border-bottom: none; }
+  .source-table tr:hover td { background: var(--bg3); }
+  .source-country { font-weight: 600; color: var(--blue); white-space: nowrap; }
+  .source-items { color: var(--text-dim); }
+  .source-items strong { color: var(--text); font-weight: 500; }
+
+  /* Schedule Grid */
+  .schedule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+  .sched-card {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 14px; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .sched-card:hover { border-color: var(--green); box-shadow: var(--glow-green); }
+  .sched-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green); font-weight: 600; margin-bottom: 4px; }
+  .sched-title { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .sched-detail { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+
+  /* Memory Palace */
+  .palace-station {
+    display: flex; gap: 14px; margin-bottom: 16px; align-items: flex-start;
+  }
+  .palace-icon {
+    width: 40px; height: 40px; min-width: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; background: var(--bg3); border: 1px solid var(--border);
+  }
+  .palace-content { flex: 1; }
+  .palace-label { font-size: 12px; color: var(--green); font-weight: 600; margin-bottom: 4px; }
+  .palace-text { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .palace-text strong { color: var(--text); }
+
+  /* Hook boxes */
+  .hook-box {
+    background: var(--purple-dim); border: 1px solid var(--purple);
+    border-radius: 8px; padding: 14px; margin-bottom: 12px;
+  }
+  .hook-label { font-size: 11px; color: var(--purple); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .hook-text { font-size: 13px; line-height: 1.6; }
+
+  /* Trap boxes */
+  .trap-box {
+    background: var(--red-dim); border: 1px solid var(--red);
+    border-radius: 8px; padding: 14px; margin-bottom: 12px;
+  }
+  .trap-label { font-size: 11px; color: var(--red); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .trap-text { font-size: 13px; line-height: 1.6; }
+
+  /* Q&A */
+  .qa-item { margin-bottom: 14px; }
+  .qa-q {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 14px; cursor: pointer;
+    font-size: 13px; font-weight: 500; display: flex; justify-content: space-between; align-items: center;
+    transition: border-color 0.2s;
+  }
+  .qa-q:hover { border-color: var(--blue); }
+  .qa-q .chevron { transition: transform 0.2s; color: var(--text-muted); }
+  .qa-q.open .chevron { transform: rotate(180deg); }
+  .qa-a {
+    background: var(--blue-dim); border: 1px solid var(--blue);
+    border-top: none; border-radius: 0 0 8px 8px;
+    padding: 12px 14px; font-size: 13px; color: var(--text-dim);
+    line-height: 1.6; display: none;
+  }
+  .qa-a.open { display: block; }
+  .qa-a strong { color: var(--blue); }
+
+  /* Fill blank */
+  .fill-item { margin-bottom: 12px; }
+  .fill-q { font-size: 13px; line-height: 1.7; }
+  .fill-blank {
+    display: inline-block; background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2px 12px; min-width: 80px;
+    cursor: pointer; transition: all 0.2s; font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: transparent; user-select: none;
+  }
+  .fill-blank:hover { border-color: var(--green); }
+  .fill-blank.revealed { color: var(--green); background: var(--green-dim); border-color: var(--green); }
+
+  /* Rapid fire */
+  .rf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+  .rf-card {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+  }
+  .rf-card:hover { border-color: var(--amber); }
+  .rf-q { font-size: 12px; font-weight: 600; margin-bottom: 8px; }
+  .rf-a { font-size: 12px; color: var(--amber); display: none; margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+  .rf-a.show { display: block; }
+  .rf-tap { font-size: 10px; color: var(--text-muted); }
+
+  /* Mini sheets */
+  .yield-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0; border-bottom: 1px solid var(--border-light); font-size: 13px;
+  }
+  .yield-item:last-child { border-bottom: none; }
+  .yield-dot { width: 6px; height: 6px; min-width: 6px; border-radius: 50%; background: var(--green); margin-top: 5px; }
+
+  .ufast-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+  .ufast-chip {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; font-size: 12px;
+  }
+  .ufast-key { color: var(--text-muted); font-size: 11px; margin-bottom: 2px; }
+  .ufast-val { color: var(--green); font-weight: 600; }
+
+  /* Last night sheet */
+  .ln-row {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 13px;
+  }
+  .ln-row:last-child { border-bottom: none; }
+  .ln-emoji { font-size: 16px; min-width: 24px; }
+  .ln-text { flex: 1; line-height: 1.5; }
+  .ln-text strong { color: var(--amber); }
+
+  /* 30 second */
+  .thirty-list { list-style: none; }
+  .thirty-list li {
+    padding: 6px 0; font-size: 13px; border-bottom: 1px solid var(--border-light);
+    display: flex; align-items: flex-start; gap: 8px; line-height: 1.5;
+  }
+  .thirty-list li:before {
+    content: '→'; color: var(--green); font-weight: 700; min-width: 16px; margin-top: 1px;
+  }
+
+  /* Connection arrows */
+  .connection {
+    display: flex; align-items: center; gap: 0; margin-bottom: 10px; font-size: 13px;
+  }
+  .conn-box {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 12px; flex: 1; text-align: center; font-size: 12px;
+  }
+  .conn-arrow { padding: 0 8px; color: var(--green); font-weight: 700; font-size: 16px; }
+  .conn-label { color: var(--text-dim); font-size: 11px; }
+
+  /* Federal vs Unitary */
+  .fvu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .fvu-col { background: var(--bg3); border-radius: 8px; padding: 14px; }
+  .fvu-head { font-size: 12px; font-weight: 600; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .fvu-item { font-size: 12px; color: var(--text-dim); padding: 5px 0; border-bottom: 1px solid var(--border-light); display: flex; gap: 6px; }
+  .fvu-item:last-child { border-bottom: none; }
+  .fvu-check { color: var(--green); font-weight: 700; }
+  .fvu-x { color: var(--amber); font-weight: 700; }
+
+  /* Preamble word cards */
+  .preamble-words { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+  .pw-chip {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 12px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .pw-chip:hover, .pw-chip.active { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+
+  .pw-detail { background: var(--bg3); border: 1px solid var(--green); border-radius: 8px; padding: 14px; display: none; font-size: 13px; line-height: 1.6; margin-top: 8px; }
+  .pw-detail.active { display: block; }
+
+  /* Info rows */
+  .info-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 13px;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-key { color: var(--text-dim); max-width: 50%; }
+  .info-val { color: var(--text); font-weight: 500; text-align: right; }
+
+  /* Big picture grid */
+  .bp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; }
+  .bp-item {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; text-align: center; transition: all 0.2s;
+  }
+  .bp-item:hover { border-color: var(--blue); box-shadow: var(--glow-blue); }
+  .bp-icon { font-size: 28px; margin-bottom: 8px; }
+  .bp-label { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .bp-desc { font-size: 11px; color: var(--text-dim); line-height: 1.5; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 20px; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; padding: 0 0 16px 20px; }
+  .tl-dot { position: absolute; left: -24px; top: 2px; width: 10px; height: 10px; border-radius: 50%; background: var(--green); border: 2px solid var(--bg); }
+  .tl-year { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green); font-weight: 600; margin-bottom: 2px; }
+  .tl-event { font-size: 13px; line-height: 1.5; }
+  .tl-note { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+  /* Scroll styles */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* Welcome page special */
+  .welcome-hero {
+    text-align: center; padding: 40px 20px;
+    background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+    border: 1px solid var(--border); border-radius: 16px; margin-bottom: 24px;
+  }
+  .welcome-badge {
+    display: inline-block; background: var(--green-dim); border: 1px solid var(--green);
+    color: var(--green); font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 16px;
+  }
+  .welcome-title { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+  .welcome-title span { color: var(--green); }
+  .welcome-sub { font-size: 14px; color: var(--text-dim); max-width: 480px; margin: 0 auto 24px; line-height: 1.6; }
+  .welcome-nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .wn-btn {
+    background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); padding: 10px 18px; border-radius: 8px;
+    font-size: 13px; font-weight: 500; cursor: pointer;
+    transition: all 0.2s; font-family: inherit;
+  }
+  .wn-btn:hover { background: var(--bg4); border-color: var(--green); color: var(--green); }
+
+  /* Highlight */
+  .hl-green { color: var(--green); font-weight: 600; }
+  .hl-blue { color: var(--blue); font-weight: 600; }
+  .hl-amber { color: var(--amber); font-weight: 600; }
+  .hl-red { color: var(--red); font-weight: 600; }
+  .hl-purple { color: var(--purple); font-weight: 600; }
+
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: 12px;
+    background: var(--bg3); border: 1px solid var(--border);
+    padding: 1px 6px; border-radius: 4px; color: var(--amber);
+  }
+
+  p { font-size: 13px; line-height: 1.7; color: var(--text-dim); margin-bottom: 10px; }
+  p strong { color: var(--text); }
+  h3 { font-size: 15px; font-weight: 600; margin-bottom: 10px; margin-top: 18px; }
+  h4 { font-size: 13px; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; margin-top: 14px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } .fvu-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">IC</div>
+      <div class="sidebar-title">
+        Indian Constitution
+        <span>Salient Features & Preamble</span>
+      </div>
+      <button id="toggle-sidebar" title="Toggle sidebar">☰</button>
+    </div>
+
+    <div id="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <div class="nav-item active" data-page="home">
+        <span class="nav-icon">🏠</span><span class="nav-label">Home</span>
+      </div>
+      <div class="nav-item" data-page="bigpicture">
+        <span class="nav-icon">🌐</span><span class="nav-label">Big Picture</span>
+      </div>
+      <div class="nav-item" data-page="palace">
+        <span class="nav-icon">🧠</span><span class="nav-label">Memory Palace</span>
+      </div>
+
+      <div class="nav-section-label">Core Content</div>
+      <div class="nav-item" data-page="sources">
+        <span class="nav-icon">📜</span><span class="nav-label">Sources of Constitution</span>
+      </div>
+      <div class="nav-item" data-page="schedules">
+        <span class="nav-icon">📋</span><span class="nav-label">12 Schedules</span>
+      </div>
+      <div class="nav-item" data-page="federal">
+        <span class="nav-icon">⚖️</span><span class="nav-label">Federal vs Unitary</span>
+      </div>
+      <div class="nav-item" data-page="preamble">
+        <span class="nav-icon">📖</span><span class="nav-label">Preamble Deep Dive</span>
+      </div>
+      <div class="nav-item" data-page="timeline">
+        <span class="nav-icon">🕐</span><span class="nav-label">Key Timeline</span>
+      </div>
+
+      <div class="nav-section-label">Exam Prep</div>
+      <div class="nav-item" data-page="hooks">
+        <span class="nav-icon">🪝</span><span class="nav-label">Memory Hooks</span>
+      </div>
+      <div class="nav-item" data-page="connections">
+        <span class="nav-icon">🔗</span><span class="nav-label">Concept Connections</span>
+      </div>
+      <div class="nav-item" data-page="traps">
+        <span class="nav-icon">⚠️</span><span class="nav-label">Exam Traps</span>
+      </div>
+      <div class="nav-item" data-page="examiner">
+        <span class="nav-icon">🎯</span><span class="nav-label">Examiner's Questions</span>
+      </div>
+      <div class="nav-item" data-page="recall">
+        <span class="nav-icon">❓</span><span class="nav-label">Active Recall</span>
+      </div>
+
+      <div class="nav-section-label">Quick Revision</div>
+      <div class="nav-item" data-page="highyield">
+        <span class="nav-icon">⭐</span><span class="nav-label">High-Yield Notes</span>
+      </div>
+      <div class="nav-item" data-page="ultrafast">
+        <span class="nav-icon">⚡</span><span class="nav-label">Ultra-Fast Sheet</span>
+      </div>
+      <div class="nav-item" data-page="thirty">
+        <span class="nav-icon">⏱️</span><span class="nav-label">30-Second Sheet</span>
+      </div>
+      <div class="nav-item" data-page="lastnight">
+        <span class="nav-icon">🌙</span><span class="nav-label">Last Night Sheet</span>
+      </div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-label">
+        <span>Pages visited</span>
+        <span id="progress-count">1/16</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:6.25%"></div></div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="topbar">
+      <div class="topbar-breadcrumb">
+        <span>Polity</span>
+        <span class="sep">›</span>
+        <span class="current" id="topbar-current">Home</span>
+      </div>
+      <div class="topbar-actions">
+        <button class="tb-btn" onclick="revealAllBlanks()">Reveal All</button>
+        <button class="tb-btn" onclick="navigatePage(-1)">← Prev</button>
+        <button class="tb-btn" onclick="navigatePage(1)">Next →</button>
+      </div>
+    </div>
+
+    <div id="page-container">
+
+      <!-- HOME -->
+      <div class="page active" id="page-home">
+        <div class="welcome-hero">
+          <div class="welcome-badge">SSC CGL · Polity</div>
+          <div class="welcome-title">Salient Features &<br><span>The Preamble</span></div>
+          <div class="welcome-sub">Your complete high-retention revision system. Built for 20–100 revisions. Every fact, every trick, every trap — ready for exam day.</div>
+          <div class="welcome-nav">
+            <button class="wn-btn" onclick="goToPage('bigpicture')">🌐 Big Picture</button>
+            <button class="wn-btn" onclick="goToPage('palace')">🧠 Memory Palace</button>
+            <button class="wn-btn" onclick="goToPage('sources')">📜 Sources</button>
+            <button class="wn-btn" onclick="goToPage('traps')">⚠️ Exam Traps</button>
+            <button class="wn-btn" onclick="goToPage('lastnight')">🌙 Last Night Sheet</button>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="card card-green">
+            <div class="card-title" style="color:var(--green)">📊 What's Inside</div>
+            <div class="yield-item"><div class="yield-dot"></div><div>Sources of Constitution — all countries & features borrowed</div></div>
+            <div class="yield-item"><div class="yield-dot"></div><div>All 12 Schedules with tricks to remember them</div></div>
+            <div class="yield-item"><div class="yield-dot"></div><div>Federal vs Unitary features with reasons</div></div>
+            <div class="yield-item"><div class="yield-dot"></div><div>Preamble — every word, every case, every amendment</div></div>
+            <div class="yield-item"><div class="yield-dot"></div><div>Key cases: Berubari, Keshavananda Bharati, IR Coelho</div></div>
+            <div class="yield-item"><div class="yield-dot"></div><div>5-layer revision system from complete to 30-second</div></div>
+          </div>
+          <div class="card card-amber">
+            <div class="card-title" style="color:var(--amber)">🔥 Must-Know Facts</div>
+            <div class="info-row"><span class="info-key">Largest written constitution</span><span class="info-val hl-green">India</span></div>
+            <div class="info-row"><span class="info-key">Biggest influence on our constitution</span><span class="info-val hl-amber">GOI Act 1935 (~40%)</span></div>
+            <div class="info-row"><span class="info-key">Original schedules</span><span class="info-val">8 → now 12</span></div>
+            <div class="info-row"><span class="info-key">Preamble amended by</span><span class="info-val hl-amber">42nd Amendment 1976</span></div>
+            <div class="info-row"><span class="info-key">Words added to Preamble</span><span class="info-val">Socialist, Secular, Integrity</span></div>
+            <div class="info-row"><span class="info-key">Preamble amended times</span><span class="info-val hl-green">ONLY ONCE</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BIG PICTURE -->
+      <div class="page" id="page-bigpicture">
+        <div class="page-header">
+          <div class="page-eyebrow">Overview</div>
+          <div class="page-title">Big Picture</div>
+          <div class="page-subtitle">What this chapter is really about — and why it matters for the exam</div>
+        </div>
+        <p>The Indian Constitution is the <strong>longest written constitution</strong> in the world. This chapter teaches you WHERE our constitution borrowed its features from and HOW those features are structured inside the constitution (schedules).</p>
+        <p>Think of it this way: India's constitution makers were like master chefs — they tasted the best dishes from 10+ countries and created a unique recipe. Your job is to remember which ingredient came from which country.</p>
+
+        <div class="bp-grid">
+          <div class="bp-item">
+            <div class="bp-icon">🇬🇧</div>
+            <div class="bp-label">UK — Our Ruler</div>
+            <div class="bp-desc">Parliamentary system, Rule of Law, Single Citizenship, Writs, Bicameralism</div>
+          </div>
+          <div class="bp-item">
+            <div class="bp-icon">🇺🇸</div>
+            <div class="bp-label">USA — Rights & Structure</div>
+            <div class="bp-desc">Fundamental Rights, Preamble, Judicial Review, Impeachment, VP post</div>
+          </div>
+          <div class="bp-item">
+            <div class="bp-icon">🇨🇦</div>
+            <div class="bp-label">Canada — Strong Centre</div>
+            <div class="bp-desc">Federation with Strong Centre, Residual Powers, Advisory Jurisdiction</div>
+          </div>
+          <div class="bp-item">
+            <div class="bp-icon">🇮🇪</div>
+            <div class="bp-label">Ireland — DPSP</div>
+            <div class="bp-desc">DPSP, Nomination to Rajya Sabha, Suspension of FR during Emergency</div>
+          </div>
+          <div class="bp-item">
+            <div class="bp-icon">🇦🇺</div>
+            <div class="bp-label">Australia — Lists</div>
+            <div class="bp-desc">Concurrent List, Trade & Commerce, Joint Sitting of Parliament</div>
+          </div>
+          <div class="bp-item">
+            <div class="bp-icon">🇩🇪</div>
+            <div class="bp-label">Germany/USSR/France</div>
+            <div class="bp-desc">FR suspension (Germany), Fundamental Duties+5-yr plan (USSR), Liberty+Fraternity (France)</div>
+          </div>
+        </div>
+
+        <div class="card card-blue" style="margin-top:20px">
+          <div class="card-title" style="color:var(--blue)">📌 Key Insight for Exam</div>
+          <p style="margin:0">The exam loves asking <em>"Which feature was borrowed from which country?"</em> and <em>"Which Schedule contains what?"</em> These two are the backbone of this chapter. Master them first.</p>
+        </div>
+
+        <h3>Written vs Unwritten Constitution</h3>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Written Constitution (India, USA)</div>
+            <div class="yield-item"><div class="yield-dot"></div><div>Made by a Constituent Assembly</div></div>
+            <div class="yield-item"><div class="yield-dot"></div><div><strong>Constitution is Supreme</strong></div></div>
+            <div class="yield-item"><div class="yield-dot"></div><div>Not easy to amend → Rigid</div></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Unwritten Constitution (UK)</div>
+            <div class="yield-item"><div class="yield-dot" style="background:var(--amber)"></div><div>No constituent assembly</div></div>
+            <div class="yield-item"><div class="yield-dot" style="background:var(--amber)"></div><div><strong>Parliament is Supreme</strong></div></div>
+            <div class="yield-item"><div class="yield-dot" style="background:var(--amber)"></div><div>Easier to amend → Flexible</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEMORY PALACE -->
+      <div class="page" id="page-palace">
+        <div class="page-header">
+          <div class="page-eyebrow">🧠 Chapter Memory Palace</div>
+          <div class="page-title">The Constitution Museum</div>
+          <div class="page-subtitle">Walk through this museum in your mind to recall everything</div>
+        </div>
+
+        <div class="card card-purple" style="margin-bottom:20px">
+          <div class="card-title" style="color:var(--purple)">🏛️ The Story</div>
+          <p>Imagine you're walking into a grand museum called <strong style="color:var(--purple)">The Constitution Museum of India</strong>. Each hall represents a country. As you walk through each hall, you see our borrowed features displayed on the walls.</p>
+        </div>
+
+        <div class="palace-station">
+          <div class="palace-icon">🚪</div>
+          <div class="palace-content">
+            <div class="palace-label">ENTRANCE HALL — Government of India Act 1935</div>
+            <div class="palace-text">At the entrance, a giant <strong>1935</strong> is carved. A guard tells you: <em>"40% of this building was copied from here."</em> You see rooms labelled: Emergency, Supreme Court, Public Service Commission, Federal Scheme, Governor's Office.</div>
+          </div>
+        </div>
+        <div class="palace-station">
+          <div class="palace-icon">🇬🇧</div>
+          <div class="palace-content">
+            <div class="palace-label">HALL 1 — UK (The Ruler's Hall)</div>
+            <div class="palace-text">A portrait of the Queen hangs. Nearby: <strong>Parliament procedures, Single citizenship card, Writs on a scroll, Rule of Law tablet (A.V. Dicey wrote it), Martial Law badge, Bicameral Parliament model.</strong></div>
+          </div>
+        </div>
+        <div class="palace-station">
+          <div class="palace-icon">🇺🇸</div>
+          <div class="palace-content">
+            <div class="palace-label">HALL 2 — USA (The Rights Hall)</div>
+            <div class="palace-text">Statue of Liberty stands here. Glass cases show: <strong>Fundamental Rights scrolls, Preamble draft, Separation of Powers diagram (3 circles: Legislature, Executive, Judiciary), Impeachment scroll, Vice President badge, Financial Emergency document.</strong></div>
+          </div>
+        </div>
+        <div class="palace-station">
+          <div class="palace-icon">🍁</div>
+          <div class="palace-content">
+            <div class="palace-label">HALL 3 — Canada (The Strong Centre Hall)</div>
+            <div class="palace-text">A maple leaf logo. Everything here has "CENTRE WINS" stamped on it: <strong>Residual Powers box, Federation with Strong Centre banner, Advisory Jurisdiction scroll (Art 143), Governor Appointment notice.</strong></div>
+          </div>
+        </div>
+        <div class="palace-station">
+          <div class="palace-icon">🍀</div>
+          <div class="palace-content">
+            <div class="palace-label">HALL 4 — Ireland (The Directive Hall)</div>
+            <div class="palace-text">A shamrock at the door. Inside: <strong>DPSP tablets, Rajya Sabha Nomination list, Suspension of Fundamental Rights during Emergency.</strong></div>
+          </div>
+        </div>
+        <div class="palace-station">
+          <div class="palace-icon">🦘</div>
+          <div class="palace-content">
+            <div class="palace-label">HALL 5 — Australia (The List Hall)</div>
+            <div class="palace-text">Remember: <strong>STL → Joint Sitting (S), Trade & Commerce (T), Concurrent List (L).</strong> A kangaroo holds three cards with these letters.</div>
+          </div>
+        </div>
+        <div class="palace-station">
+          <div class="palace-icon">🌍</div>
+          <div class="palace-content">
+            <div class="palace-label">HALLS 6, 7, 8 — Germany, USSR, France, Japan</div>
+            <div class="palace-text"><strong>Germany (Weimar)</strong>: FR suspended during emergency. <strong>USSR/Russia</strong>: Fundamental Duties + 5-year plan + Justice (social/eco/political). <strong>France</strong>: Liberty, Equality, Fraternity + Republic. <strong>Japan</strong>: Procedure established by Law (Art 21).</div>
+          </div>
+        </div>
+        <div class="palace-station">
+          <div class="palace-icon">🗓️</div>
+          <div class="palace-content">
+            <div class="palace-label">SCHEDULE WING — The 12 Rooms</div>
+            <div class="palace-text">A corridor with 12 doors. Above each door: <strong>T-E-O-A-S-T-F-L-L-D-P-M</strong> — the 12 schedules in order. You'll learn these next!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOURCES -->
+      <div class="page" id="page-sources">
+        <div class="page-header">
+          <div class="page-eyebrow">Core Content</div>
+          <div class="page-title">Sources of the Constitution</div>
+          <div class="page-subtitle">Which features were borrowed from which country — the most asked topic</div>
+        </div>
+
+        <div class="card card-amber" style="margin-bottom:16px">
+          <div class="card-title" style="color:var(--amber)">🔥 #1 Priority: GOI Act 1935</div>
+          <p style="margin:0">The single biggest source — <strong>~40% of our constitution</strong> comes from here. Emergency provisions, Supreme Court, Public Service Commission, Federal Scheme, Governor's Office are all from here.</p>
+        </div>
+
+        <table class="source-table">
+          <thead><tr><th>Country / Source</th><th>Features Borrowed</th><th>Tag</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="source-country">🇮🇳 GOI Act 1935</td>
+              <td class="source-items">Emergency provisions, Supreme Court establishment, Public Service Commission, Federal Scheme, <strong>Office</strong> of Governor (not appointment), Judicial review concept</td>
+              <td><span class="tag tag-must">🔥 Must</span></td>
+            </tr>
+            <tr>
+              <td class="source-country">🇬🇧 United Kingdom</td>
+              <td class="source-items">Parliamentary form of government, Parliamentary privileges, Single citizenship, <strong>Rule of Law (A.V. Dicey)</strong>, Writs (Prerogative writs), Legislative procedure, Bicameral Parliament, Martial Law</td>
+              <td><span class="tag tag-must">🔥 Must</span></td>
+            </tr>
+            <tr>
+              <td class="source-country">🇺🇸 United States</td>
+              <td class="source-items">Fundamental Rights, Preamble, Supremacy of Constitution, Separation of Powers (not strict), Judicial Review, Equal protection of laws, Impeachment of President, Post of Vice President, Financial Emergency</td>
+              <td><span class="tag tag-must">🔥 Must</span></td>
+            </tr>
+            <tr>
+              <td class="source-country">🍁 Canada</td>
+              <td class="source-items"><strong>Federation with Strong Centre</strong>, Residual Powers with Centre, Advisory jurisdiction of Supreme Court (Art 143), Appointment of Governor by Centre</td>
+              <td><span class="tag tag-must">🔥 Must</span></td>
+            </tr>
+            <tr>
+              <td class="source-country">🇦🇺 Australia</td>
+              <td class="source-items">Concurrent List, Freedom of Trade & Commerce, Joint Sitting of Parliament [Remember: STL — Joint <strong>S</strong>itting, <strong>T</strong>rade, Concurrent <strong>L</strong>ist]</td>
+              <td><span class="tag tag-imp">⭐ Imp</span></td>
+            </tr>
+            <tr>
+              <td class="source-country">🇮🇪 Ireland</td>
+              <td class="source-items">Directive Principles of State Policy (DPSP), Nomination of members to Rajya Sabha, Suspension of Fundamental Rights during Emergency</td>
+              <td><span class="tag tag-must">🔥 Must</span></td>
+            </tr>
+            <tr>
+              <td class="source-country">🇩🇪 Germany (Weimar)</td>
+              <td class="source-items">Suspension of Fundamental Rights during Emergency</td>
+              <td><span class="tag tag-imp">⭐ Imp</span></td>
+            </tr>
+            <tr>
+              <td class="source-country">🇷🇺 USSR / Russia</td>
+              <td class="source-items">Fundamental Duties, Five Year Plans, Ideals of Justice (Social, Economic, Political)</td>
+              <td><span class="tag tag-must">🔥 Must</span></td>
+            </tr>
+            <tr>
+              <td class="source-country">🇫🇷 France</td>
+              <td class="source-items">Liberty, Equality, Fraternity (from French Revolution), Republic system</td>
+              <td><span class="tag tag-must">🔥 Must</span></td>
+            </tr>
+            <tr>
+              <td class="source-country">🇯🇵 Japan</td>
+              <td class="source-items">Procedure Established by Law (Article 21) — contrast with USA's "Due Process of Law"</td>
+              <td><span class="tag tag-imp">⭐ Imp</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="card card-red" style="margin-top:16px">
+          <div class="card-title" style="color:var(--red)">⚠️ Critical Distinction — Japan vs USA</div>
+          <div class="info-row"><span class="info-key">Japan → Art 21 India</span><span class="info-val hl-green">Procedure Established by Law</span></div>
+          <div class="info-row"><span class="info-key">USA concept (not in our constitution)</span><span class="info-val hl-red">Due Process of Law</span></div>
+          <p style="margin-top:8px;margin-bottom:0;font-size:12px">The Supreme Court discussed "Due Process of Law" in the <strong>Maneka Gandhi case</strong> but it is NOT part of our constitution. Only Procedure Established by Law (Japan) is our Art 21.</p>
+        </div>
+
+        <div class="card card-purple" style="margin-top:16px">
+          <div class="card-title" style="color:var(--purple)">🪝 The A.V. Dicey Hook</div>
+          <p style="margin:0">Whenever you see <strong>Rule of Law</strong> → think <strong>A.V. Dicey</strong> (UK legal scholar). Whenever Rule of Law comes in an MCQ, the concept-giver is <em>always</em> A.V. Dicey. Don't mix with Montesquieu (Separation of Powers).</p>
+        </div>
+      </div>
+
+      <!-- SCHEDULES -->
+      <div class="page" id="page-schedules">
+        <div class="page-header">
+          <div class="page-eyebrow">Core Content</div>
+          <div class="page-title">The 12 Schedules</div>
+          <div class="page-subtitle">Original: 8 schedules. Current: 12 schedules. Master the trick: "Tears of Old PM"</div>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-label">🪝 The Master Trick — "TEARS OF OLD PM"</div>
+          <div class="hook-text">
+            <strong style="color:var(--purple)">T</strong>erritories (Sch 1) · <strong style="color:var(--purple)">E</strong>moluments (Sch 2) · <strong style="color:var(--purple)">O</strong>aths (Sch 3) · <strong style="color:var(--purple)">A</strong>llocation Rajya Sabha (Sch 4) · <strong style="color:var(--purple)">S</strong>cheduled Areas (Sch 5) · <strong style="color:var(--purple)">T</strong>ribal Areas (Sch 6) · <strong style="color:var(--purple)">F</strong>ederal Provisions/Lists (Sch 7) · <strong style="color:var(--purple)">L</strong>anguages (Sch 8) · <strong style="color:var(--purple)">L</strong>and Reforms (Sch 9) · <strong style="color:var(--purple)">D</strong>efections (Sch 10) · <strong style="color:var(--purple)">P</strong>anchayat (Sch 11) · <strong style="color:var(--purple)">M</strong>unicipality (Sch 12)
+          </div>
+        </div>
+
+        <div class="schedule-grid">
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 1</div>
+            <div class="sched-title">🗺️ Territories & States</div>
+            <div class="sched-detail">Names and territorial jurisdictions of all States and Union Territories. <span class="tag tag-must">🔥</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 2</div>
+            <div class="sched-title">💰 Emoluments (Salaries)</div>
+            <div class="sched-detail">Salaries of: President, Vice President, CAG, Judges of SC & HC. <em>Note: No President/VP oath here — that's Schedule 3!</em> <span class="tag tag-must">🔥</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 3</div>
+            <div class="sched-title">🤝 Oaths & Affirmations</div>
+            <div class="sched-detail">Oaths of: CAG, SC & HC Judges, MPs, MLAs, Ministers of Centre & State. <em>NOT President & VP — their oath is in Art 60/69!</em> <span class="tag tag-must">🔥</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 4</div>
+            <div class="sched-title">🏛️ Rajya Sabha Seats</div>
+            <div class="sched-detail">Allocation of seats to states and UTs in Rajya Sabha. <span class="tag tag-imp">⭐</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 5</div>
+            <div class="sched-title">🏔️ Scheduled Areas</div>
+            <div class="sched-detail">Administration of Scheduled (tribal) areas — General. <span class="tag tag-imp">⭐</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 6</div>
+            <div class="sched-title">🌿 Tribal Areas — NE States</div>
+            <div class="sched-detail">Tribal areas of <strong>Assam, Tripura, Mizoram, Meghalaya</strong>. Hook: <strong>ATM Money</strong> (A=Assam, T=Tripura, M=Mizoram, M=Meghalaya). <em>⚠️ Manipur NOT included!</em> <span class="tag tag-must">🔥</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 7</div>
+            <div class="sched-title">📋 Three Lists</div>
+            <div class="sched-detail">Union List (100 subjects), State List (61 subjects), Concurrent List (52 subjects). Originally: 97, 66, 47. <span class="tag tag-must">🔥</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 8</div>
+            <div class="sched-title">🗣️ Official Languages</div>
+            <div class="sched-detail">Originally 14 → now 22. Added: Sindhi (21st Amend), KMN—Konkani, Manipuri, Nepali (71st Amend), BDSM—Bodo, Dogri, Santhali, Maithili (92nd Amend). No language added since 1996; only Oriya→Odia renamed. <span class="tag tag-must">🔥</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 9</div>
+            <div class="sched-title">🌾 Land Reforms</div>
+            <div class="sched-detail">Added by <strong>1st Constitutional Amendment 1951</strong>. Key case: <strong>IR Coelho case</strong> — SC can review laws in Schedule 9 if inserted after 24 April 1973. <span class="tag tag-must">🔥</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 10</div>
+            <div class="sched-title">🏃 Anti-Defection Law</div>
+            <div class="sched-detail">Added by <strong>52nd Amendment 1985</strong>. An MP/MLA leaving their party = defection. Exceptions: independent joining after win, nominated member after 6 months. <span class="tag tag-must">🔥</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 11</div>
+            <div class="sched-title">🏘️ Panchayats (29 subjects)</div>
+            <div class="sched-detail">Added by <strong>73rd Amendment 1992</strong>. <span class="tag tag-imp">⭐</span></div>
+          </div>
+          <div class="sched-card">
+            <div class="sched-num">SCHEDULE 12</div>
+            <div class="sched-title">🏙️ Municipalities (18 subjects)</div>
+            <div class="sched-detail">Added by <strong>74th Amendment 1993</strong>. <span class="tag tag-imp">⭐</span></div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:20px">Schedule 7 — The Three Lists in Detail</h3>
+        <div class="card card-blue">
+          <div class="card-title" style="color:var(--blue)">Current Numbers</div>
+          <div class="info-row"><span class="info-key">Union List (Parliament legislates)</span><span class="info-val hl-green">100 subjects (was 97)</span></div>
+          <div class="info-row"><span class="info-key">State List (State legislates)</span><span class="info-val hl-amber">61 subjects (was 66) ↓</span></div>
+          <div class="info-row"><span class="info-key">Concurrent List (Both can legislate)</span><span class="info-val hl-blue">52 subjects (was 47) ↑</span></div>
+        </div>
+        <div class="card card-amber" style="margin-top:0">
+          <div class="card-title" style="color:var(--amber)">42nd Amendment — 4 Subjects Shifted State → Concurrent</div>
+          <p style="margin:0">Education · Forest & Wildlife · Weights & Measurements · Administration of Justice (these 4 moved from State List to Concurrent List)</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Key Subjects by List</div>
+          <div class="info-row"><span class="info-key">Union List examples</span><span class="info-val" style="text-align:right;font-size:12px">Defence, Banking, Currency, Foreign Affairs, Communication</span></div>
+          <div class="info-row"><span class="info-key">State List examples</span><span class="info-val" style="text-align:right;font-size:12px">Police, Trade (intra-state), Agriculture, Irrigation, Health</span></div>
+          <div class="info-row"><span class="info-key">Concurrent List examples</span><span class="info-val" style="text-align:right;font-size:12px">Education, Forest, Marriage, Divorce, Industrial disputes, Weights & Measures</span></div>
+          <div class="info-row"><span class="info-key">Residual Powers</span><span class="info-val hl-green">Centre (from Canada)</span></div>
+        </div>
+      </div>
+
+      <!-- FEDERAL vs UNITARY -->
+      <div class="page" id="page-federal">
+        <div class="page-header">
+          <div class="page-eyebrow">Core Content</div>
+          <div class="page-title">Federal vs Unitary Features</div>
+          <div class="page-subtitle">India is neither fully federal nor fully unitary — remember the scholars' views</div>
+        </div>
+
+        <div class="card card-purple">
+          <div class="card-title" style="color:var(--purple)">🎓 Famous Descriptions of India's Federation</div>
+          <div class="info-row"><span class="info-key">K.C. Wheare</span><span class="info-val hl-amber">Quasi-Federal (half-incomplete federal)</span></div>
+          <div class="info-row"><span class="info-key">Granville Austin</span><span class="info-val hl-green">Cooperative Federalism</span></div>
+          <div class="info-row"><span class="info-key">Ivor Jennings</span><span class="info-val hl-blue">Federation with a Unitary Bias</span></div>
+          <div class="info-row"><span class="info-key">Morris Jones</span><span class="info-val hl-purple">Bargaining Federalism</span></div>
+        </div>
+
+        <div class="fvu-grid" style="margin-top:16px">
+          <div class="fvu-col">
+            <div class="fvu-head" style="color:var(--green)">✅ Federal Features</div>
+            <div class="fvu-item"><span class="fvu-check">✓</span><span>Written Constitution → supreme, hard to amend → protects states</span></div>
+            <div class="fvu-item"><span class="fvu-check">✓</span><span>Division of powers (Union, State, Concurrent Lists)</span></div>
+            <div class="fvu-item"><span class="fvu-check">✓</span><span>Independent Judiciary (no political control)</span></div>
+            <div class="fvu-item"><span class="fvu-check">✓</span><span>Bicameral Parliament (Rajya Sabha = states' voice)</span></div>
+            <div class="fvu-item"><span class="fvu-check">✓</span><span>Dual Government (Centre + State both exist)</span></div>
+            <div class="fvu-item"><span class="fvu-check">✓</span><span>Rigid Constitution → federal feature</span></div>
+          </div>
+          <div class="fvu-col">
+            <div class="fvu-head" style="color:var(--amber)">⚡ Unitary Features</div>
+            <div class="fvu-item"><span class="fvu-x">→</span><span>Single citizenship (not dual like USA)</span></div>
+            <div class="fvu-item"><span class="fvu-x">→</span><span>Single constitution (states have no separate constitution)</span></div>
+            <div class="fvu-item"><span class="fvu-x">→</span><span>Governor appointed by Centre (not elected by state)</span></div>
+            <div class="fvu-item"><span class="fvu-x">→</span><span>Residual powers with Centre (not states)</span></div>
+            <div class="fvu-item"><span class="fvu-x">→</span><span>During President's Rule: Centre makes laws on State List subjects</span></div>
+            <div class="fvu-item"><span class="fvu-x">→</span><span>Flexibility of constitution → unitary feature</span></div>
+          </div>
+        </div>
+
+        <h3 style="margin-top:20px">Separation of Powers — USA vs India</h3>
+        <div class="two-col">
+          <div class="card card-blue">
+            <div class="card-title" style="color:var(--blue)">USA — STRICT Separation</div>
+            <p>Legislature makes laws. Executive implements them. Judiciary checks them. <strong>No overlap at all.</strong> Each organ stays in its lane strictly.</p>
+          </div>
+          <div class="card card-amber">
+            <div class="card-title" style="color:var(--amber)">India — NOT Strict</div>
+            <p>Separation exists (Art 50 — state shall separate Executive & Judiciary) but <strong>Judicial Activism</strong> means judiciary sometimes enters executive/legislative territory. Not strict separation.</p>
+          </div>
+        </div>
+
+        <div class="card card-green" style="margin-top:0">
+          <div class="card-title" style="color:var(--green)">🧠 The Three Organs — Never Forget</div>
+          <div class="info-row"><span class="info-key">Legislature</span><span class="info-val">Makes the law (Parliament)</span></div>
+          <div class="info-row"><span class="info-key">Executive</span><span class="info-val">Implements the law (Government)</span></div>
+          <div class="info-row"><span class="info-key">Judiciary</span><span class="info-val">Checks the law (Courts)</span></div>
+        </div>
+      </div>
+
+      <!-- PREAMBLE -->
+      <div class="page" id="page-preamble">
+        <div class="page-header">
+          <div class="page-eyebrow">Core Content</div>
+          <div class="page-title">Preamble — Deep Dive</div>
+          <div class="page-subtitle">The soul of the constitution. Every word here has been asked in SSC CGL.</div>
+        </div>
+
+        <div class="card card-green">
+          <div class="card-title" style="color:var(--green)">📜 What the Preamble Tells Us</div>
+          <div class="info-row"><span class="info-key">Source of authority</span><span class="info-val hl-green">"We the People of India" → People are supreme</span></div>
+          <div class="info-row"><span class="info-key">Nature of India</span><span class="info-val">Sovereign Socialist Secular Democratic Republic</span></div>
+          <div class="info-row"><span class="info-key">Objective</span><span class="info-val">Justice, Liberty, Equality, Fraternity</span></div>
+          <div class="info-row"><span class="info-key">Date</span><span class="info-val hl-amber">26th November 1949</span></div>
+        </div>
+
+        <h3 style="margin-top:16px">Click each word to explore:</h3>
+        <div class="preamble-words">
+          <div class="pw-chip" onclick="togglePW('sovereign')">SOVEREIGN</div>
+          <div class="pw-chip" onclick="togglePW('socialist')">SOCIALIST</div>
+          <div class="pw-chip" onclick="togglePW('secular')">SECULAR</div>
+          <div class="pw-chip" onclick="togglePW('democratic')">DEMOCRATIC</div>
+          <div class="pw-chip" onclick="togglePW('republic')">REPUBLIC</div>
+          <div class="pw-chip" onclick="togglePW('justice')">JUSTICE</div>
+          <div class="pw-chip" onclick="togglePW('liberty')">LIBERTY</div>
+          <div class="pw-chip" onclick="togglePW('equality')">EQUALITY</div>
+          <div class="pw-chip" onclick="togglePW('fraternity')">FRATERNITY</div>
+        </div>
+        <div class="pw-detail" id="pw-sovereign"><strong style="color:var(--green)">SOVEREIGN</strong> — India is fully independent; no external authority controls it. <em>Was in original Preamble. NOT added by 42nd Amendment.</em> Examiners love putting Sovereign in options — it was already there!</div>
+        <div class="pw-detail" id="pw-socialist"><strong style="color:var(--amber)">SOCIALIST</strong> — Added by <strong>42nd Amendment 1976</strong>. India follows a mixed economy — neither pure capitalism nor pure socialism.</div>
+        <div class="pw-detail" id="pw-secular"><strong style="color:var(--amber)">SECULAR</strong> — Added by <strong>42nd Amendment 1976</strong>. No official state religion. Equal respect for all religions.</div>
+        <div class="pw-detail" id="pw-democratic"><strong style="color:var(--blue)">DEMOCRATIC</strong> — Power vested in the people. Representatives elected. Was in original Preamble.</div>
+        <div class="pw-detail" id="pw-republic"><strong style="color:var(--blue)">REPUBLIC</strong> — Head of state (President) is elected, not hereditary. Borrowed concept from France. Was in original Preamble.</div>
+        <div class="pw-detail" id="pw-justice"><strong style="color:var(--purple)">JUSTICE</strong> — Three types: Social, Economic, Political. Borrowed from <strong>USSR/Russia</strong>. Social = no discrimination; Economic = equal pay for equal work; Political = universal suffrage.</div>
+        <div class="pw-detail" id="pw-liberty"><strong style="color:var(--green)">LIBERTY</strong> — Five types: Thought, Expression, Belief, Faith, Worship. Borrowed from <strong>French Revolution</strong>.</div>
+        <div class="pw-detail" id="pw-equality"><strong style="color:var(--green)">EQUALITY</strong> — Two types: of Status and of Opportunity. Borrowed from <strong>French Revolution</strong>.</div>
+        <div class="pw-detail" id="pw-fraternity"><strong style="color:var(--green)">FRATERNITY</strong> — Brotherhood among citizens. Assuring: Dignity of Individual AND Unity & <strong>Integrity</strong> of Nation. The word "Integrity" was added by 42nd Amendment.</div>
+
+        <h3 style="margin-top:20px">Key Descriptions of the Preamble</h3>
+        <div class="card">
+          <div class="info-row"><span class="info-key">N.A. Palkhiwala</span><span class="info-val hl-green">Political Horoscope</span></div>
+          <div class="info-row"><span class="info-key">K.M. Munshi</span><span class="info-val hl-blue">Note to the Constitution</span></div>
+          <div class="info-row"><span class="info-key">Thakurdas Bhargava</span><span class="info-val hl-amber">Soul & Key to the Constitution</span></div>
+          <div class="info-row"><span class="info-key">General description</span><span class="info-val">ID Card / Summary / Essence of Constitution</span></div>
+        </div>
+
+        <h3 style="margin-top:16px">Objective Resolution vs Preamble</h3>
+        <div class="card card-red">
+          <div class="card-title" style="color:var(--red)">⚠️ Common Confusion — Do NOT mix these!</div>
+          <div class="info-row"><span class="info-key">Objective Resolution presented</span><span class="info-val">13 December 1946</span></div>
+          <div class="info-row"><span class="info-key">Objective Resolution adopted</span><span class="info-val">22 January 1947</span></div>
+          <div class="info-row"><span class="info-key">Preamble is</span><span class="info-val hl-green">DERIVED FROM (not same as) Objective Resolution</span></div>
+          <div class="info-row"><span class="info-key">Preamble was ready when</span><span class="info-val">After the whole constitution was written (logic: summary comes after book!)</span></div>
+        </div>
+
+        <h3 style="margin-top:16px">Amendment Cases — Preamble</h3>
+        <div class="timeline" style="margin-top:12px">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">1960 — Berubari Union Case</div>
+            <div class="tl-event">SC says: Preamble is <strong>NOT a part of the Constitution</strong> → cannot be amended.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--amber)"></div>
+            <div class="tl-year">1973 — Keshavananda Bharati Case</div>
+            <div class="tl-event">SC reverses: Preamble <strong>IS a part of the Constitution</strong> → CAN be amended. But Basic Structure cannot be destroyed.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--blue)"></div>
+            <div class="tl-year">LIC vs Union of India Case</div>
+            <div class="tl-event">SC reaffirms Keshavananda Bharati ruling — Preamble is part of Constitution.</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--purple)"></div>
+            <div class="tl-year">1976 — 42nd Amendment</div>
+            <div class="tl-event">Only amendment to the Preamble (till date). Added: <strong>Socialist, Secular, Integrity</strong>.</div>
+            <div class="tl-note">Also called "Mini Constitution" — amended many parts of the Constitution.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="page" id="page-timeline">
+        <div class="page-header">
+          <div class="page-eyebrow">Reference</div>
+          <div class="page-title">Key Dates & Timeline</div>
+          <div class="page-subtitle">Chronology questions are a goldmine — know these cold</div>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">1935</div>
+            <div class="tl-event">Government of India Act — biggest single source of our constitution (~40%)</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">13 Dec 1946</div>
+            <div class="tl-event">Objective Resolution presented by Jawaharlal Nehru</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">22 Jan 1947</div>
+            <div class="tl-event">Objective Resolution adopted by Constituent Assembly</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--amber)"></div>
+            <div class="tl-year">26 Nov 1949</div>
+            <div class="tl-event">Constitution adopted (and Preamble finalized)</div>
+            <div class="tl-note">Law Day / Constitution Day celebrated on this date</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--green)"></div>
+            <div class="tl-year">26 Jan 1950</div>
+            <div class="tl-event">Constitution came into force — Republic Day</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">1951 — 1st Amendment</div>
+            <div class="tl-event">Schedule 9 added — Land Reforms protection</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">1960 — Berubari Union Case</div>
+            <div class="tl-event">SC: Preamble NOT part of constitution</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">1973 — Keshavananda Bharati Case</div>
+            <div class="tl-event">SC: Preamble IS part of constitution; Basic Structure doctrine established</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot" style="background:var(--amber)"></div>
+            <div class="tl-year">1976 — 42nd Amendment (Mini Constitution)</div>
+            <div class="tl-event">Preamble amended — Socialist, Secular, Integrity added. 4 subjects shifted State→Concurrent List (Education, Forest, Weights, Administration).</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">1985 — 52nd Amendment</div>
+            <div class="tl-event">Schedule 10 added — Anti-Defection Law</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">1992 — 73rd Amendment</div>
+            <div class="tl-event">Schedule 11 added — Panchayati Raj (29 subjects)</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">1993 — 74th Amendment</div>
+            <div class="tl-event">Schedule 12 added — Municipalities (18 subjects). Also: KMN languages added to Schedule 8 (Konkani, Manipuri, Nepali)</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-year">2003 — 92nd Amendment</div>
+            <div class="tl-event">BDSM languages added to Schedule 8 — Bodo, Dongri, Santhali, Maithili</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HOOKS -->
+      <div class="page" id="page-hooks">
+        <div class="page-header">
+          <div class="page-eyebrow">Memory System</div>
+          <div class="page-title">Smart Memory Hooks</div>
+          <div class="page-subtitle">Tricks that work months after you learn them</div>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-label">🪝 Hook 1 — "TEARS OF OLD PM"</div>
+          <div class="hook-text">Imagine an old Prime Minister crying (<em>tears</em>). Remember the 12 schedules: <strong>T</strong>erritory · <strong>E</strong>molument · <strong>O</strong>ath · <strong>A</strong>llocation (RS) · <strong>S</strong>cheduled Areas · <strong>T</strong>ribal Areas · <strong>F</strong>ederal Lists · <strong>L</strong>anguages · <strong>L</strong>and Reforms · <strong>D</strong>efection · <strong>P</strong>anchayat · <strong>M</strong>unicipality</div>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-label">🪝 Hook 2 — ATM Money for Schedule 6</div>
+          <div class="hook-text"><strong>ATM — but there's NO Money (Manipur)</strong>. Assam, Tripura, Mizoram, Meghalaya are in Schedule 6. Manipur is NOT, even though it's a Northeast state like the others. When you go to this ATM, it denies your card → No Manipur!</div>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-label">🪝 Hook 3 — STL for Australia</div>
+          <div class="hook-text">Australia = STL: <strong>S</strong>itting (Joint Sitting of Parliament) · <strong>T</strong>rade (Freedom of Trade & Commerce) · <strong>L</strong>ist (Concurrent List). Picture a kangaroo (Australia) sitting at a trade fair making a list.</div>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-label">🪝 Hook 4 — Canada = "Centre Wins" country</div>
+          <div class="hook-text">Everything from Canada gives power to the Centre: Residual Powers, Strong Centre Federation, Advisory Jurisdiction (Centre can ask SC), Governor appointment. Canada = Centre Always Nabs Domain Advantage.</div>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-label">🪝 Hook 5 — KMN & BDSM for Schedule 8 Languages</div>
+          <div class="hook-text"><strong>KMN</strong> (74th Amendment): <strong>K</strong>onkani · <strong>M</strong>anipuri · <strong>N</strong>epali. <strong>BDSM</strong> (92nd Amendment): <strong>B</strong>odo · <strong>D</strong>ogri · <strong>S</strong>anthali · <strong>M</strong>aithili. Sindhi was alone — added by 21st Amendment.</div>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-label">🪝 Hook 6 — 42nd Amendment "ISS" words in Preamble</div>
+          <div class="hook-text">42nd Amendment added <strong>ISS</strong>: <strong>I</strong>ntegrity · <strong>S</strong>ocialist · <strong>S</strong>ecular. Remember: ISS (International Space Station) was launched in the same spirit as 1976 — adding new things to an existing structure. Sovereign was ALREADY there — examiners try to trick you with it!</div>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-label">🪝 Hook 7 — Objective Resolution vs Preamble (The Book Analogy)</div>
+          <div class="hook-text">You can't write the preface/summary of a book BEFORE writing the book. Same way, the Preamble (summary of constitution) was written AFTER the whole constitution was ready. The Objective Resolution (1946-47) was the VISION → not the same as Preamble.</div>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-label">🪝 Hook 8 — Three Organs of Government (Traffic Metaphor)</div>
+          <div class="hook-text"><strong>Legislature</strong> = the city planner who makes traffic rules. <strong>Executive</strong> = the traffic police who implements them. <strong>Judiciary</strong> = the court that checks if the police is doing it right or if the rules are fair. When police starts making rules = executive overreach. When court starts policing = judicial activism.</div>
+        </div>
+      </div>
+
+      <!-- CONNECTIONS -->
+      <div class="page" id="page-connections">
+        <div class="page-header">
+          <div class="page-eyebrow">Exam Prep</div>
+          <div class="page-title">Concept Connections</div>
+          <div class="page-subtitle">How facts link together — essential for tricky questions</div>
+        </div>
+
+        <h3>Cause → Effect Chains</h3>
+
+        <div class="connection">
+          <div class="conn-box">Written Constitution</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">Constitution is Supreme</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">Rigid (hard to amend)</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">Federal Feature</div>
+        </div>
+
+        <div class="connection">
+          <div class="conn-box">Unwritten Constitution (UK)</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">Parliament is Supreme</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">Flexible</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">Unitary Feature</div>
+        </div>
+
+        <div class="connection">
+          <div class="conn-box">President's Rule imposed</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">Centre makes laws on State List subjects</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">Unitary feature dominates</div>
+        </div>
+
+        <div class="connection">
+          <div class="conn-box">Schedule 9 insertion (Parliament)</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">IR Coelho Case 2007</div>
+          <div class="conn-arrow">→</div>
+          <div class="conn-box">SC can review laws after 24 Apr 1973</div>
+        </div>
+
+        <h3 style="margin-top:20px">Feature → Source Connections</h3>
+        <div class="card">
+          <div class="info-row"><span class="info-key">Rule of Law concept</span><span class="info-val hl-blue">A.V. Dicey (UK) → Not Montesquieu!</span></div>
+          <div class="info-row"><span class="info-key">Separation of Powers (doctrine)</span><span class="info-val hl-blue">Montesquieu → USA adopted it strictly</span></div>
+          <div class="info-row"><span class="info-key">Art 21 Procedure Established by Law</span><span class="info-val hl-green">Japan → NOT Due Process (USA)</span></div>
+          <div class="info-row"><span class="info-key">Advisory Jurisdiction Art 143</span><span class="info-val hl-amber">Canada → Recently used by Pres. Draupadi Murmu</span></div>
+          <div class="info-row"><span class="info-key">42nd Amendment</span><span class="info-val">Added ISS to Preamble + 4 subjects State→Concurrent</span></div>
+        </div>
+
+        <h3 style="margin-top:16px">Schedules → Amendments Connection</h3>
+        <div class="card">
+          <div class="info-row"><span class="info-key">Original schedules</span><span class="info-val">1 to 8 (1949)</span></div>
+          <div class="info-row"><span class="info-key">Schedule 9 added</span><span class="info-val hl-amber">1st Amendment 1951</span></div>
+          <div class="info-row"><span class="info-key">Schedule 10 added</span><span class="info-val hl-amber">52nd Amendment 1985</span></div>
+          <div class="info-row"><span class="info-key">Schedule 11 added</span><span class="info-val hl-amber">73rd Amendment 1992</span></div>
+          <div class="info-row"><span class="info-key">Schedule 12 added</span><span class="info-val hl-amber">74th Amendment 1993</span></div>
+        </div>
+      </div>
+
+      <!-- TRAPS -->
+      <div class="page" id="page-traps">
+        <div class="page-header">
+          <div class="page-eyebrow">⚠️ Exam Traps</div>
+          <div class="page-title">What Examiners Use to Trick You</div>
+          <div class="page-subtitle">Study these harder than the main content — these are where marks are lost</div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-label">⚠️ TRAP 1 — Sovereign was ALREADY in Preamble</div>
+          <div class="trap-text">The 42nd Amendment added <strong>Socialist, Secular, and Integrity</strong>. <strong>NOT Sovereign</strong>. Examiners almost always put "Sovereign" as one of the options to confuse you. When the question asks "which words were added by 42nd Amendment" → answer is <em>Socialist, Secular, Integrity</em> → NOT Sovereign.</div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-label">⚠️ TRAP 2 — Manipur in Schedule 6</div>
+          <div class="trap-text">Schedule 6 covers tribal areas of Assam, Tripura, Mizoram, Meghalaya. <strong>Manipur is NOT in Schedule 6.</strong> Examiners put Manipur as an option specifically to trap students. The ATM no money trick: A=Assam, T=Tripura, M=Mizoram, M=Meghalaya. Manipur = No Money = Not in it.</div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-label">⚠️ TRAP 3 — Objective Resolution vs Preamble dates</div>
+          <div class="trap-text">Objective Resolution presented: 13 Dec 1946. Adopted: 22 Jan 1947. The Preamble was NOT adopted on these dates. Preamble was part of the final constitution on 26 Nov 1949. Do NOT use 1946/1947 for the Preamble's dates.</div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-label">⚠️ TRAP 4 — Japan's "Procedure Established by Law" vs USA's "Due Process"</div>
+          <div class="trap-text">India uses <strong>Procedure Established by Law</strong> (from Japan) in Article 21. "Due Process of Law" is the USA concept — it was discussed in Maneka Gandhi case but is <strong>NOT written in our constitution</strong>. Don't mix these.</div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-label">⚠️ TRAP 5 — President/VP Oath NOT in Schedule 3</div>
+          <div class="trap-text">Schedule 3 has oaths of: MPs, MLAs, Ministers, SC/HC Judges, CAG. <strong>President's oath is in Article 60. VP's oath is in Article 69.</strong> They are NOT in Schedule 3. Schedule 2 has their salaries (emoluments), not oaths.</div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-label">⚠️ TRAP 6 — Office of Governor vs Appointment of Governor</div>
+          <div class="trap-text">From GOI Act 1935, we borrowed the <strong>Office of Governor</strong> (the position itself). The concept that the Centre appoints the Governor is a Unitary Feature taken from <strong>Canada</strong>. Don't say appointment of Governor comes from GOI Act 1935.</div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-label">⚠️ TRAP 7 — "Strict Separation of Powers" — India has it? NO.</div>
+          <div class="trap-text">India has separation of powers (borrowed from USA) but NOT strict separation. Article 50 directs the state to separate Executive and Judiciary, but judicial activism means the judiciary often enters others' territory. Only USA has strict separation.</div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-label">⚠️ TRAP 8 — Schedule 8 Languages count</div>
+          <div class="trap-text">Original: 14 languages. Current: 22 languages. Sindhi added by 21st Amendment. <strong>Not by 22nd or any other.</strong> KMN added by 71st Amendment. BDSM added by 92nd Amendment. Know which amendment added which group.</div>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-label">⚠️ TRAP 9 — Union List, State List, Concurrent List numbers</div>
+          <div class="trap-text">Original: Union 97, State 66, Concurrent 47. Current: Union <strong>100</strong> (↑3), State <strong>61</strong> (↓5), Concurrent <strong>52</strong> (↑5). The State List DECREASED. Examiners may say it increased — wrong. The 4 subjects from State to Concurrent (42nd Amendment) is a common question.</div>
+        </div>
+      </div>
+
+      <!-- EXAMINER'S QUESTIONS -->
+      <div class="page" id="page-examiner">
+        <div class="page-header">
+          <div class="page-eyebrow">🎯 Examiner Strategy</div>
+          <div class="page-title">Examiner's Favourite Questions</div>
+          <div class="page-subtitle">Predict the exam. Know what they'll ask before you sit down.</div>
+        </div>
+
+        <h3>🔥 High Probability Questions</h3>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. The concept of Rule of Law was given by whom? <span class="chevron">▼</span></div>
+          <div class="qa-a"><strong>A.V. Dicey</strong> (British legal scholar). Rule of Law borrowed from UK.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. Which words were added to the Preamble by the 42nd Amendment? <span class="chevron">▼</span></div>
+          <div class="qa-a"><strong>Socialist, Secular, and Integrity</strong>. NOT Sovereign (it was already there). Year: 1976. Also called Mini Constitution.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. How many times has the Preamble been amended? <span class="chevron">▼</span></div>
+          <div class="qa-a"><strong>Only once</strong> — by the 42nd Amendment in 1976.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. Which Schedule has tribal areas of NE India? Which states are included? <span class="chevron">▼</span></div>
+          <div class="qa-a"><strong>Schedule 6</strong>. States: Assam, Tripura, Mizoram, Meghalaya. Manipur is NOT included (ATM — no Money for Manipur).</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. The single biggest influence on the Indian Constitution is? <span class="chevron">▼</span></div>
+          <div class="qa-a"><strong>Government of India Act 1935</strong> — approximately 40% of our constitution is borrowed from it.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. In which case did the SC say the Preamble IS part of the Constitution? <span class="chevron">▼</span></div>
+          <div class="qa-a"><strong>Keshavananda Bharati case (1973)</strong>. Earlier in Berubari Union case (1960), SC said it is NOT. Keshavananda reversed that.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. Which amendment added Education and Forest to the Concurrent List? <span class="chevron">▼</span></div>
+          <div class="qa-a"><strong>42nd Amendment 1976</strong>. Transferred Education, Forest & Wildlife, Weights & Measures, Administration of Justice from State to Concurrent List.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. Fundamental Duties and Five Year Plan concept — from which country? <span class="chevron">▼</span></div>
+          <div class="qa-a"><strong>USSR (Russia)</strong>. Also, ideals of Justice (Social, Economic, Political) from USSR/Russia.</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. Ivor Jennings described India's constitution as? <span class="chevron">▼</span></div>
+          <div class="qa-a"><strong>"Federation with a Unitary Bias"</strong>. K.C. Wheare said "Quasi-Federal", Granville Austin said "Cooperative Federalism", Morris Jones said "Bargaining Federalism".</div>
+        </div>
+        <div class="qa-item">
+          <div class="qa-q" onclick="toggleQA(this)">Q. What is residual power and where have we taken it from? <span class="chevron">▼</span></div>
+          <div class="qa-a">Residual power = power to make laws on subjects NOT in Union, State, or Concurrent Lists. This power is with the <strong>Centre</strong>. Taken from <strong>Canada</strong>.</div>
+        </div>
+
+        <h3 style="margin-top:20px">🎯 Statement-Based Questions</h3>
+        <div class="card card-blue">
+          <div class="card-title" style="color:var(--blue)">True/False Statements to Practice</div>
+          <div class="info-row"><span class="info-key">Preamble was adopted on 22 Jan 1947</span><span class="info-val hl-red">FALSE (that's Objective Resolution)</span></div>
+          <div class="info-row"><span class="info-key">India has strict separation of powers</span><span class="info-val hl-red">FALSE (USA has it, India doesn't)</span></div>
+          <div class="info-row"><span class="info-key">Manipur is in Schedule 6</span><span class="info-val hl-red">FALSE</span></div>
+          <div class="info-row"><span class="info-key">Preamble has been amended twice</span><span class="info-val hl-red">FALSE (only once)</span></div>
+          <div class="info-row"><span class="info-key">Sovereign was added by 42nd Amendment</span><span class="info-val hl-red">FALSE (already there)</span></div>
+          <div class="info-row"><span class="info-key">Schedule 3 has President's oath</span><span class="info-val hl-red">FALSE (Art 60 has it)</span></div>
+        </div>
+      </div>
+
+      <!-- ACTIVE RECALL -->
+      <div class="page" id="page-recall">
+        <div class="page-header">
+          <div class="page-eyebrow">Active Recall</div>
+          <div class="page-title">Test Yourself</div>
+          <div class="page-subtitle">Click blanks to reveal answers · Tap rapid-fire cards to flip</div>
+        </div>
+
+        <h3>Fill in the Blanks <span style="font-size:12px;color:var(--text-dim);font-weight:400">(click each blank)</span></h3>
+
+        <div class="fill-item">
+          <div class="fill-q">The Indian Constitution is the <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'LARGEST WRITTEN':'_____________'">_____________</span> constitution in the world.</div>
+        </div>
+        <div class="fill-item">
+          <div class="fill-q">About <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'40%':'____'">____</span> of India's constitution is borrowed from the <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'GOI Act 1935':'_______________'">_______________</span>.</div>
+        </div>
+        <div class="fill-item">
+          <div class="fill-q">The concept of Rule of Law was given by <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'A.V. Dicey':'_________'">_________</span> and borrowed from <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'UK':'___'">___</span>.</div>
+        </div>
+        <div class="fill-item">
+          <div class="fill-q">The three words added to the Preamble by 42nd Amendment are <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'Socialist':'_________'">_________</span>, <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'Secular':'_______'">_______</span>, and <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'Integrity':'_________'">_________</span>.</div>
+        </div>
+        <div class="fill-item">
+          <div class="fill-q">Schedule 6 covers tribal areas of <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'Assam, Tripura, Mizoram, Meghalaya':'_____________________'">_____________________</span>. The state NOT included is <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'Manipur':'________'">________</span>.</div>
+        </div>
+        <div class="fill-item">
+          <div class="fill-q">Residual powers in India lie with the <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'Centre':'______'">______</span>, borrowed from <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'Canada':'______'">______</span>.</div>
+        </div>
+        <div class="fill-item">
+          <div class="fill-q">The Preamble was held to be part of the Constitution in the <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'Keshavananda Bharati case (1973)':'________________________'">________________________</span>.</div>
+        </div>
+        <div class="fill-item">
+          <div class="fill-q">Anti-Defection Law is in Schedule <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'10':'___'">___</span>, added by the <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'52nd Amendment 1985':'________________'">________________</span>.</div>
+        </div>
+        <div class="fill-item">
+          <div class="fill-q">Concurrent List originally had <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'47':'__'">__</span> subjects; now has <span class="fill-blank" onclick="this.classList.toggle('revealed');this.textContent=this.classList.contains('revealed')?'52':'__'">__</span>.</div>
+        </div>
+
+        <h3 style="margin-top:24px">⚡ Rapid-Fire Cards <span style="font-size:12px;color:var(--text-dim);font-weight:400">(click to flip)</span></h3>
+        <div class="rf-grid">
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Liberty, Equality, Fraternity in Preamble → from?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">🇫🇷 France (French Revolution)</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">DPSP borrowed from?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">🇮🇪 Ireland</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Original number of Schedules?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">8 (now 12)</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Which Amendment is called Mini Constitution?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">42nd Amendment, 1976</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">K.C. Wheare's description of Indian Federation?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">Quasi-Federal</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Procedure Established by Law (Art 21) → from?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">🇯🇵 Japan (NOT USA's Due Process)</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Schedule 9 was added by?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">1st Constitutional Amendment 1951 (Land Reforms)</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Sindhi added to Schedule 8 by which amendment?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">21st Amendment</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Preamble called Political Horoscope by?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">N.A. Palkhiwala</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Advisory Jurisdiction of SC → Article?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">Article 143 (from Canada)</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Panchayats → which Schedule?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">Schedule 11 (73rd Amendment 1992)</div>
+          </div>
+          <div class="rf-card" onclick="this.querySelector('.rf-a').classList.toggle('show')">
+            <div class="rf-q">Current Union List subjects?</div>
+            <div class="rf-tap">Tap to reveal</div>
+            <div class="rf-a">100 (originally 97)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- HIGH YIELD -->
+      <div class="page" id="page-highyield">
+        <div class="page-header">
+          <div class="page-eyebrow">⭐ Layer 2 — High-Yield Revision</div>
+          <div class="page-title">High-Yield Revision Notes</div>
+          <div class="page-subtitle">Everything important — nothing extra. Use after your first complete read.</div>
+        </div>
+
+        <div class="card card-green">
+          <div class="card-title" style="color:var(--green)">🔥 Top Sources (Must Know)</div>
+          <div class="yield-item"><div class="yield-dot"></div><div><strong>GOI Act 1935</strong> → Emergency, SC, PSC, Federal Scheme, Governor's Office (~40%)</div></div>
+          <div class="yield-item"><div class="yield-dot"></div><div><strong>UK</strong> → Parliamentary system, Single citizenship, Rule of Law (Dicey), Writs, Bicameralism, Martial Law</div></div>
+          <div class="yield-item"><div class="yield-dot"></div><div><strong>USA</strong> → Fundamental Rights, Preamble, Judicial Review, Impeachment, VP, Financial Emergency</div></div>
+          <div class="yield-item"><div class="yield-dot"></div><div><strong>Canada</strong> → Strong Centre, Residual Powers, Advisory Jurisdiction (Art 143)</div></div>
+          <div class="yield-item"><div class="yield-dot"></div><div><strong>Ireland</strong> → DPSP, Rajya Sabha nomination, FR suspension during emergency</div></div>
+          <div class="yield-item"><div class="yield-dot"></div><div><strong>USSR</strong> → Fundamental Duties, 5-Year Plan, Justice (social/eco/political)</div></div>
+          <div class="yield-item"><div class="yield-dot"></div><div><strong>France</strong> → Liberty, Equality, Fraternity; Republic</div></div>
+          <div class="yield-item"><div class="yield-dot"></div><div><strong>Japan</strong> → Procedure Established by Law (Art 21)</div></div>
+          <div class="yield-item"><div class="yield-dot"></div><div><strong>Australia</strong> → STL (Joint Sitting, Trade, Concurrent List)</div></div>
+        </div>
+
+        <div class="card card-blue" style="margin-top:12px">
+          <div class="card-title" style="color:var(--blue)">📋 Schedules Quick-Fire</div>
+          <div class="yield-item"><div class="yield-dot" style="background:var(--blue)"></div><div>Sch 1=Territory, 2=Salaries, 3=Oaths, 4=RS Seats, 5=Scheduled Areas, 6=Tribal NE (ATM no Manipur)</div></div>
+          <div class="yield-item"><div class="yield-dot" style="background:var(--blue)"></div><div>Sch 7=3 Lists (100/61/52), 8=22 Languages (14+Sindhi+KMN+BDSM)</div></div>
+          <div class="yield-item"><div class="yield-dot" style="background:var(--blue)"></div><div>Sch 9=Land Reforms (1st Amend), 10=Defection (52nd), 11=Panchayat (73rd), 12=Municipality (74th)</div></div>
+        </div>
+
+        <div class="card card-amber" style="margin-top:12px">
+          <div class="card-title" style="color:var(--amber)">📖 Preamble Essentials</div>
+          <div class="yield-item"><div class="yield-dot" style="background:var(--amber)"></div><div>42nd Amendment 1976 added: Socialist + Secular + Integrity (ISS)</div></div>
+          <div class="yield-item"><div class="yield-dot" style="background:var(--amber)"></div><div>Berubari (1960): NOT part. Keshavananda (1973): IS part. LIC case: Reaffirmed.</div></div>
+          <div class="yield-item"><div class="yield-dot" style="background:var(--amber)"></div><div>Preamble amended ONLY ONCE. Objective Resolution ≠ Preamble.</div></div>
+          <div class="yield-item"><div class="yield-dot" style="background:var(--amber)"></div><div>K.C. Wheare=Quasi-Federal, Granville Austin=Cooperative, Ivor Jennings=Unitary Bias, Morris Jones=Bargaining</div></div>
+        </div>
+      </div>
+
+      <!-- ULTRA FAST -->
+      <div class="page" id="page-ultrafast">
+        <div class="page-header">
+          <div class="page-eyebrow">⚡ Layer 3 — Ultra-Fast</div>
+          <div class="page-title">Ultra-Fast Revision Sheet</div>
+          <div class="page-subtitle">Key-value pairs only. For when you have 20 minutes before a test.</div>
+        </div>
+
+        <div class="ufast-grid">
+          <div class="ufast-chip"><div class="ufast-key">Largest written constitution</div><div class="ufast-val">India</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Biggest source</div><div class="ufast-val">GOI Act 1935 (~40%)</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Rule of Law — concept giver</div><div class="ufast-val">A.V. Dicey (UK)</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Fundamental Rights from</div><div class="ufast-val">USA</div></div>
+          <div class="ufast-chip"><div class="ufast-key">DPSP from</div><div class="ufast-val">Ireland</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Fundamental Duties from</div><div class="ufast-val">USSR/Russia</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Liberty, Equality, Fraternity from</div><div class="ufast-val">France</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Art 21 Procedure by Law from</div><div class="ufast-val">Japan</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Strong Centre, Residual Powers from</div><div class="ufast-val">Canada</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Concurrent List, Joint Sitting from</div><div class="ufast-val">Australia (STL)</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Original schedules</div><div class="ufast-val">8 → now 12</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Schedule 6 — NE tribal states</div><div class="ufast-val">ATM (no Manipur)</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Schedule 8 languages</div><div class="ufast-val">14 → 22</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Union List (current)</div><div class="ufast-val">100 subjects</div></div>
+          <div class="ufast-chip"><div class="ufast-key">State List (current)</div><div class="ufast-val">61 subjects</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Concurrent List (current)</div><div class="ufast-val">52 subjects</div></div>
+          <div class="ufast-chip"><div class="ufast-key">42nd Amendment added to Preamble</div><div class="ufast-val">Socialist, Secular, Integrity</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Preamble amendments total</div><div class="ufast-val">Only ONCE (1976)</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Preamble part of constitution?</div><div class="ufast-val">YES (Keshavananda 1973)</div></div>
+          <div class="ufast-chip"><div class="ufast-key">K.C. Wheare on India's federation</div><div class="ufast-val">Quasi-Federal</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Schedule 9 added by</div><div class="ufast-val">1st Amendment 1951</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Anti-Defection — Schedule</div><div class="ufast-val">10 (52nd Amend, 1985)</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Panchayat — Schedule</div><div class="ufast-val">11 (73rd, 1992)</div></div>
+          <div class="ufast-chip"><div class="ufast-key">Municipality — Schedule</div><div class="ufast-val">12 (74th, 1993)</div></div>
+        </div>
+      </div>
+
+      <!-- 30 SECOND -->
+      <div class="page" id="page-thirty">
+        <div class="page-header">
+          <div class="page-eyebrow">⏱️ Layer 4 — 30-Second Sheet</div>
+          <div class="page-title">30-Second Revision Sheet</div>
+          <div class="page-subtitle">Read this in 30 seconds. You'll remember 80% of the chapter.</div>
+        </div>
+
+        <div class="card card-green">
+          <ul class="thirty-list">
+            <li>India = LARGEST written constitution. GOI Act 1935 = biggest source (40%)</li>
+            <li>UK → Parliamentary + Single Citizenship + Rule of Law (Dicey) + Writs + Bicameralism</li>
+            <li>USA → Fundamental Rights + Preamble + Judicial Review + VP + Impeachment</li>
+            <li>Canada → Strong Centre + Residual Powers + Art 143 Advisory</li>
+            <li>Ireland → DPSP + RS nomination. USSR → Fundamental Duties + 5-yr plan. France → Liberty/Equality/Fraternity. Japan → Art 21</li>
+            <li>12 Schedules: Tears Of old PM (Territory·Emolument·Oath·Allocation·Scheduled·Tribal·Federal·Language·LandReform·Defection·Panchayat·Municipality)</li>
+            <li>Schedule 6 = ATM no Manipur. Schedule 8 = 14→22 (Sindhi+KMN+BDSM)</li>
+            <li>42nd Amendment (Mini Constitution) 1976 = ISS in Preamble (Integrity+Socialist+Secular) + 4 subjects State→Concurrent</li>
+            <li>Berubari 1960 = Preamble NOT part. Keshavananda 1973 = IS part. Amended ONLY ONCE.</li>
+            <li>K.C. Wheare = Quasi-Federal. India has separation but NOT strict separation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- LAST NIGHT -->
+      <div class="page" id="page-lastnight">
+        <div class="page-header">
+          <div class="page-eyebrow">🌙 Layer 5 — Last Night Sheet</div>
+          <div class="page-title">Last-Night-Before-Exam Sheet</div>
+          <div class="page-subtitle">Only the things most likely to be asked tomorrow. Nothing else.</div>
+        </div>
+
+        <div class="card" style="border:1px solid var(--amber)">
+          <div class="card-title" style="color:var(--amber)">🌙 Read this once. Sleep. Score.</div>
+
+          <div class="ln-row"><div class="ln-emoji">🔥</div><div class="ln-text"><strong>GOI Act 1935 = ~40%</strong> of Indian Constitution. Emergency, SC, Federal Scheme, Governor's Office</div></div>
+          <div class="ln-row"><div class="ln-emoji">🇬🇧</div><div class="ln-text">From UK: Parliamentary system, <strong>A.V. Dicey's Rule of Law</strong>, Single Citizenship, Writs, Bicameralism, Martial Law</div></div>
+          <div class="ln-row"><div class="ln-emoji">🇺🇸</div><div class="ln-text">From USA: Fundamental Rights, Preamble, Judicial Review, <strong>NOT Due Process (that's Japan's Procedure by Law)</strong></div></div>
+          <div class="ln-row"><div class="ln-emoji">🍁</div><div class="ln-text">From Canada: Residual Powers + Advisory Jurisdiction <strong>(Art 143)</strong> + Strong Centre = all things Centre wins</div></div>
+          <div class="ln-row"><div class="ln-emoji">🇮🇪</div><div class="ln-text">From Ireland: <strong>DPSP</strong> + Rajya Sabha Nomination + Suspension of FR during Emergency</div></div>
+          <div class="ln-row"><div class="ln-emoji">⚠️</div><div class="ln-text">42nd Amendment 1976 added: <strong>Socialist + Secular + Integrity</strong>. SOVEREIGN was already there. Do NOT pick Sovereign!</div></div>
+          <div class="ln-row"><div class="ln-emoji">⚠️</div><div class="ln-text">Schedule 6 = NE Tribal Areas = <strong>ATM no Manipur</strong> (Assam, Tripura, Mizoram, Meghalaya only)</div></div>
+          <div class="ln-row"><div class="ln-emoji">📋</div><div class="ln-text">Schedules: 9=Land Reform (1st Amend), 10=Defection (52nd, 1985), 11=Panchayat (73rd, 1992), 12=Municipality (74th, 1993)</div></div>
+          <div class="ln-row"><div class="ln-emoji">⚠️</div><div class="ln-text">Preamble: Berubari 1960 = NOT part. <strong>Keshavananda Bharati 1973 = IS part</strong>. Amended ONLY ONCE.</div></div>
+          <div class="ln-row"><div class="ln-emoji">📊</div><div class="ln-text">Lists now: Union=<strong>100</strong>, State=<strong>61</strong> (decreased!), Concurrent=<strong>52</strong>. 42nd Amend moved 4 from State to Concurrent.</div></div>
+          <div class="ln-row"><div class="ln-emoji">🎓</div><div class="ln-text">K.C. Wheare = <strong>Quasi-Federal</strong>. Ivor Jennings = Federation with Unitary Bias. India = NOT strict separation of powers.</div></div>
+          <div class="ln-row"><div class="ln-emoji">🗣️</div><div class="ln-text">Schedule 8: 14 originally → 22 now. BDSM (92nd Amend) = Bodo, Dogri, Santhali, Maithili. No new language since 1996.</div></div>
+        </div>
+      </div>
+
+    </div><!-- /page-container -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+  const pages = ['home','bigpicture','palace','sources','schedules','federal','preamble','timeline','hooks','connections','traps','examiner','recall','highyield','ultrafast','thirty','lastnight'];
+  const pageNames = {
+    home:'Home', bigpicture:'Big Picture', palace:'Memory Palace',
+    sources:'Sources of Constitution', schedules:'12 Schedules', federal:'Federal vs Unitary',
+    preamble:'Preamble', timeline:'Key Timeline', hooks:'Memory Hooks',
+    connections:'Concept Connections', traps:'Exam Traps', examiner:"Examiner's Questions",
+    recall:'Active Recall', highyield:'High-Yield Notes', ultrafast:'Ultra-Fast Sheet',
+    thirty:'30-Second Sheet', lastnight:'Last Night Sheet'
+  };
+  const visited = new Set(['home']);
+
+  function goToPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const page = document.getElementById('page-' + id);
+    if (page) { page.classList.add('active'); document.getElementById('page-container').scrollTop = 0; }
+    const nav = document.querySelector('.nav-item[data-page="' + id + '"]');
+    if (nav) { nav.classList.add('active'); nav.scrollIntoView({block:'nearest'}); }
+    document.getElementById('topbar-current').textContent = pageNames[id] || id;
+    visited.add(id);
+    const count = visited.size;
+    document.getElementById('progress-count').textContent = count + '/' + pages.length;
+    document.getElementById('progress-fill').style.width = (count / pages.length * 100) + '%';
+  }
+
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => goToPage(item.dataset.page));
+  });
+
+  document.getElementById('toggle-sidebar').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+  });
+
+  function navigatePage(dir) {
+    const active = document.querySelector('.nav-item.active');
+    if (!active) return;
+    const all = Array.from(document.querySelectorAll('.nav-item[data-page]'));
+    const idx = all.indexOf(active);
+    const next = all[idx + dir];
+    if (next) goToPage(next.dataset.page);
+  }
+
+  function toggleQA(el) {
+    el.classList.toggle('open');
+    const ans = el.nextElementSibling;
+    if (ans) ans.classList.toggle('open');
+  }
+
+  function togglePW(id) {
+    document.querySelectorAll('.pw-detail').forEach(d => { if (d.id !== 'pw-' + id) { d.classList.remove('active'); } });
+    document.querySelectorAll('.pw-chip').forEach(c => { if (c.onclick.toString().indexOf(id) === -1) c.classList.remove('active'); });
+    const detail = document.getElementById('pw-' + id);
+    const chip = document.querySelector(`.pw-chip[onclick*="${id}"]`);
+    if (detail) detail.classList.toggle('active');
+    if (chip) chip.classList.toggle('active');
+  }
+
+  function revealAllBlanks() {
+    document.querySelectorAll('.fill-blank').forEach(b => {
+      if (!b.classList.contains('revealed')) b.click();
+    });
+  }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') navigatePage(1);
+    if (e.key === 'ArrowLeft') navigatePage(-1);
+  });
+</script>
+</body>
+</html>

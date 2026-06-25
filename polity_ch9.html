@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parliament — SSC CGL Revision System</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #161b27;
+    --bg3: #1e2535;
+    --bg4: #252d40;
+    --green: #4ade80;
+    --green-dim: #22c55e55;
+    --blue: #60a5fa;
+    --blue-dim: #3b82f644;
+    --purple: #a78bfa;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-dimmer: #475569;
+    --border: #2d3748;
+    --fire: #fb923c;
+    --star: #facc15;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── TOP NAV ─── */
+  #topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  #topbar .logo {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  #topbar .divider { color: var(--border); }
+  #layer-tabs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .layer-btn {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .layer-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .layer-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; font-weight: 600; }
+  #progress-text {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-dimmer);
+    white-space: nowrap;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  #app {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ─── LEFT SIDEBAR ─── */
+  #sidebar {
+    width: 220px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  #sidebar::-webkit-scrollbar { width: 4px; }
+  #sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .sidebar-section { padding: 12px 0 4px; }
+  .sidebar-label {
+    padding: 4px 16px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dimmer);
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-dim);
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active { background: var(--bg3); color: var(--green); border-left-color: var(--green); font-weight: 600; }
+  .nav-item .icon { font-size: 14px; flex-shrink: 0; }
+
+  /* ─── CONTENT AREA ─── */
+  #content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px;
+  }
+  #content::-webkit-scrollbar { width: 6px; }
+  #content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ─── TYPOGRAPHY ─── */
+  h1 { font-size: 26px; font-weight: 700; color: var(--green); margin-bottom: 6px; }
+  h2 { font-size: 20px; font-weight: 700; color: var(--blue); margin: 28px 0 14px; }
+  h3 { font-size: 16px; font-weight: 600; color: var(--purple); margin: 20px 0 10px; }
+  h4 { font-size: 14px; font-weight: 600; color: var(--yellow); margin: 14px 0 8px; }
+  p { font-size: 14px; line-height: 1.75; color: var(--text); margin-bottom: 10px; }
+  .subtitle { color: var(--text-dim); font-size: 13px; margin-bottom: 20px; }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .card-green { border-left: 3px solid var(--green); }
+  .card-blue { border-left: 3px solid var(--blue); }
+  .card-purple { border-left: 3px solid var(--purple); }
+  .card-yellow { border-left: 3px solid var(--yellow); }
+  .card-red { border-left: 3px solid var(--red); }
+
+  /* ─── ARTICLE PILLS ─── */
+  .article-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+  }
+  .art-pill {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .art-pill:hover { border-color: var(--blue); background: var(--blue-dim); }
+  .art-pill .num { color: var(--blue); font-weight: 700; margin-right: 4px; }
+  .art-pill .desc { color: var(--text-dim); }
+
+  /* ─── TAGS ─── */
+  .tag-fire { color: var(--fire); font-size: 13px; }
+  .tag-star { color: var(--star); font-size: 13px; }
+  .tag-plus { color: var(--green); font-size: 13px; }
+
+  /* ─── FACT ROWS ─── */
+  .fact-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+  .fact-table th {
+    text-align: left;
+    padding: 8px 12px;
+    background: var(--bg3);
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .fact-table td {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .fact-table tr:last-child td { border-bottom: none; }
+  .fact-table tr:hover td { background: var(--bg3); }
+  .fact-table td:first-child { color: var(--green); font-weight: 600; }
+
+  /* ─── TRAP BOXES ─── */
+  .trap-box {
+    background: #2d1515;
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 10px 0;
+  }
+  .trap-box .trap-title {
+    color: var(--red);
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .trap-box p { font-size: 13px; margin-bottom: 6px; }
+
+  /* ─── MEMORY HOOK ─── */
+  .hook-box {
+    background: #1a1f2e;
+    border: 1px solid var(--purple);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-style: italic;
+    font-size: 13px;
+    color: #c4b5fd;
+    line-height: 1.7;
+  }
+  .hook-box::before {
+    content: "🧠 Memory Hook: ";
+    font-style: normal;
+    font-weight: 700;
+    color: var(--purple);
+    font-size: 12px;
+  }
+
+  /* ─── QUESTION CARDS ─── */
+  .q-card {
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .q-card:hover { background: var(--bg4); }
+  .q-card .q-text { font-size: 14px; color: var(--text); margin-bottom: 8px; }
+  .q-card .q-answer {
+    font-size: 13px;
+    color: var(--green);
+    display: none;
+    padding: 8px 12px;
+    background: var(--bg);
+    border-radius: 6px;
+    border-left: 3px solid var(--green);
+    margin-top: 8px;
+  }
+  .q-card.revealed .q-answer { display: block; }
+  .q-hint { font-size: 11px; color: var(--text-dimmer); margin-top: 6px; }
+
+  /* ─── ULTRA FAST SHEET ─── */
+  .uf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .uf-cell {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .uf-cell .uf-title { color: var(--blue); font-weight: 700; font-size: 12px; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .uf-cell .uf-val { color: var(--text); line-height: 1.6; }
+  .uf-cell .uf-val strong { color: var(--green); }
+
+  /* ─── PALACE ─── */
+  .palace-room {
+    display: flex;
+    gap: 14px;
+    margin: 10px 0;
+    align-items: flex-start;
+  }
+  .palace-icon { font-size: 28px; flex-shrink: 0; }
+  .palace-content h4 { color: var(--yellow); margin: 0 0 4px; font-size: 14px; }
+  .palace-content p { font-size: 13px; margin: 0; color: var(--text-dim); }
+
+  /* ─── LAST NIGHT SHEET ─── */
+  .ln-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .ln-bullet { color: var(--green); font-size: 16px; flex-shrink: 0; line-height: 1.4; }
+  .ln-item span { line-height: 1.6; }
+  .ln-item span b { color: var(--yellow); }
+
+  /* ─── COMPARISON TABLE ─── */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .compare-table th {
+    background: var(--bg3);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 12px;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    border-bottom: 2px solid var(--blue);
+  }
+  .compare-table td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .compare-table td:first-child { color: var(--yellow); font-weight: 600; }
+  .compare-table tr:hover td { background: var(--bg3); }
+
+  /* ─── FILL BLANK ─── */
+  .blank { display: inline-block; min-width: 80px; border-bottom: 2px solid var(--blue); color: transparent; user-select: none; cursor: pointer; }
+  .blank.shown { color: var(--green); border-color: var(--green); }
+
+  /* ─── FLOW DIAGRAM ─── */
+  .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+  .flow-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 13px;
+    text-align: center;
+  }
+  .flow-box.green { border-color: var(--green); color: var(--green); }
+  .flow-box.blue { border-color: var(--blue); color: var(--blue); }
+  .flow-box.purple { border-color: var(--purple); color: var(--purple); }
+  .flow-arrow { color: var(--text-dimmer); font-size: 18px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 700px) {
+    #sidebar { display: none; }
+    #content { padding: 16px; }
+    h1 { font-size: 20px; }
+  }
+
+  /* ─── LAYER VISIBILITY ─── */
+  .only-l1, .only-l2, .only-l3, .only-l4, .only-l5 { display: none; }
+  body[data-layer="1"] .only-l1 { display: block; }
+  body[data-layer="2"] .only-l2 { display: block; }
+  body[data-layer="3"] .only-l3 { display: block; }
+  body[data-layer="4"] .only-l4 { display: block; }
+  body[data-layer="5"] .only-l5 { display: block; }
+  body[data-layer="1"] .hide-l1 { display: none; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 6px;
+  }
+  .badge-green { background: var(--green-dim); color: var(--green); }
+  .badge-red { background: #2d1515; color: var(--red); }
+  .badge-yellow { background: #2d2200; color: var(--yellow); }
+</style>
+</head>
+<body data-layer="1">
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo">⚡ Parliament</div>
+  <div class="divider">|</div>
+  <div id="layer-tabs">
+    <button class="layer-btn active" onclick="setLayer(1)">📖 Full Notes</button>
+    <button class="layer-btn" onclick="setLayer(2)">🎯 High-Yield</button>
+    <button class="layer-btn" onclick="setLayer(3)">⚡ Ultra-Fast</button>
+    <button class="layer-btn" onclick="setLayer(4)">🔥 30-Second</button>
+    <button class="layer-btn" onclick="setLayer(5)">🌙 Last Night</button>
+  </div>
+  <div id="progress-text">Art. 89–123 · Part V</div>
+</div>
+
+<div id="app">
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Navigation</div>
+    <div class="nav-item active" onclick="showPage('big-picture')" id="nav-big-picture">
+      <span class="icon">🗺️</span> Big Picture
+    </div>
+    <div class="nav-item" onclick="showPage('memory-palace')" id="nav-memory-palace">
+      <span class="icon">🏛️</span> Memory Palace
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Officers of Parliament</div>
+    <div class="nav-item" onclick="showPage('rajya-officers')" id="nav-rajya-officers">
+      <span class="icon">👑</span> Rajya Sabha Officers
+    </div>
+    <div class="nav-item" onclick="showPage('lok-officers')" id="nav-lok-officers">
+      <span class="icon">🎙️</span> Lok Sabha Officers
+    </div>
+    <div class="nav-item" onclick="showPage('sessions')" id="nav-sessions">
+      <span class="icon">🕐</span> Sessions & Sittings
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Membership</div>
+    <div class="nav-item" onclick="showPage('qualifications')" id="nav-qualifications">
+      <span class="icon">✅</span> Qualifications & Oaths
+    </div>
+    <div class="nav-item" onclick="showPage('disqualification')" id="nav-disqualification">
+      <span class="icon">🚫</span> Disqualification
+    </div>
+    <div class="nav-item" onclick="showPage('privileges')" id="nav-privileges">
+      <span class="icon">🛡️</span> Privileges
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Legislative Process</div>
+    <div class="nav-item" onclick="showPage('ordinary-bill')" id="nav-ordinary-bill">
+      <span class="icon">📜</span> Ordinary Bill
+    </div>
+    <div class="nav-item" onclick="showPage('money-bill')" id="nav-money-bill">
+      <span class="icon">💰</span> Money Bill & Budget
+    </div>
+    <div class="nav-item" onclick="showPage('veto')" id="nav-veto">
+      <span class="icon">✋</span> President's Veto
+    </div>
+    <div class="nav-item" onclick="showPage('ordinance')" id="nav-ordinance">
+      <span class="icon">⚡</span> Ordinance (Art. 123)
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Committees</div>
+    <div class="nav-item" onclick="showPage('committees')" id="nav-committees">
+      <span class="icon">🏢</span> Parliamentary Committees
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Exam Tools</div>
+    <div class="nav-item" onclick="showPage('traps')" id="nav-traps">
+      <span class="icon">⚠️</span> Exam Traps
+    </div>
+    <div class="nav-item" onclick="showPage('active-recall')" id="nav-active-recall">
+      <span class="icon">🧪</span> Active Recall
+    </div>
+    <div class="nav-item" onclick="showPage('articles-quick')" id="nav-articles-quick">
+      <span class="icon">📋</span> All Articles
+    </div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div id="content">
+
+<!-- ══════════════════════════════════ BIG PICTURE ══════════════════════════════════ -->
+<div class="page active" id="page-big-picture">
+  <h1>Parliament — Big Picture</h1>
+  <p class="subtitle">Articles 79–123 · Part V of the Constitution of India</p>
+
+  <div class="card card-green">
+    <h3 style="margin-top:0">What This Chapter Is Really About</h3>
+    <p>Parliament is the supreme legislative body of India. This chapter explains <strong>who sits in Parliament</strong>, <strong>how they're elected/chosen</strong>, <strong>how laws are made</strong>, and <strong>what powers the President has</strong> in the legislative process. The chapter also covers <strong>financial procedures</strong> — how India's money is controlled through Parliament.</p>
+  </div>
+
+  <h2>Structure at a Glance</h2>
+  <div class="uf-grid">
+    <div class="uf-cell">
+      <div class="uf-title">Parliament = 3 Parts</div>
+      <div class="uf-val"><strong>President</strong> + <strong>Rajya Sabha</strong> + <strong>Lok Sabha</strong></div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Rajya Sabha</div>
+      <div class="uf-val">Upper House · Council of States · <strong>Permanent House</strong> · Second Chamber · House of Elders</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Lok Sabha</div>
+      <div class="uf-val">Lower House · House of the People · Can be <strong>dissolved</strong></div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Articles Covered</div>
+      <div class="uf-val">Art. <strong>89–123</strong> (Lecture 2) · Part V</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Key Amendment</div>
+      <div class="uf-val"><strong>52nd Amendment (1985)</strong> — 10th Schedule (Anti-Defection Law)</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Financial Year</div>
+      <div class="uf-val"><strong>1 April → 31 March</strong></div>
+    </div>
+  </div>
+
+  <h2>Chapter Map</h2>
+  <div class="flow">
+    <div class="flow-box green">Officers (Art.89–98)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box blue">Membership (Art.99–106)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box purple">Bills (Art.107–117)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="border-color:var(--yellow);color:var(--yellow)">Finance (Art.112–116)</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="border-color:var(--fire);color:var(--fire)">Ordinance (Art.123)</div>
+  </div>
+
+  <h2>Priority Tags Legend</h2>
+  <div class="card">
+    <p><span class="tag-fire">🔥 Must Know</span> — Directly tested in SSC CGL. Expect questions.</p>
+    <p><span class="tag-star">⭐ Important</span> — Often appears in competitive exams.</p>
+    <p><span class="tag-plus">➕ Good to Know</span> — Supports understanding; rare direct questions.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ MEMORY PALACE ══════════════════════════════════ -->
+<div class="page" id="page-memory-palace">
+  <h1>🏛️ Chapter Memory Palace</h1>
+  <p class="subtitle">Walk through the Parliament building in your mind — each room = one concept cluster</p>
+
+  <div class="card card-purple">
+    <p><strong>The Story:</strong> You are a new MP entering Parliament House on Day 1. You walk through each room, and in each room, something memorable happens. This walk is your memory palace.</p>
+  </div>
+
+  <h2>The Palace Rooms</h2>
+
+  <div class="palace-room">
+    <div class="palace-icon">🚪</div>
+    <div class="palace-content">
+      <h4>GATE — Vice President / Chairman</h4>
+      <p>At the gate stands the <strong>Vice President</strong>. He is the gatekeeper of Rajya Sabha. He is the Chairman — but NOT a member of Rajya Sabha. He was elected by all MPs (both houses). His deputy was elected only by Rajya Sabha members.</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🪑</div>
+    <div class="palace-content">
+      <h4>CHAIR ROOM — Speaker / Deputy Speaker</h4>
+      <p>Inside Lok Sabha, on the big chair sits the <strong>Speaker</strong> — elected by Lok Sabha members, from among Lok Sabha members. Deputy Speaker sits to the side. First Speaker = <strong>GV Mavalankar</strong>. Both resign to each other. Removal = effective majority in Lok Sabha only.</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">👶</div>
+    <div class="palace-content">
+      <h4>BABY ROOM — Pro-Tem Speaker</h4>
+      <p>A newborn Lok Sabha needs a "welcome aunty" — the <strong>Pro-Tem Speaker</strong>. Appointed by President (most senior MP by experience, not age). Only job: administer oath to new MPs. Once permanent Speaker is elected, Pro-Tem steps aside.</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">📝</div>
+    <div class="palace-content">
+      <h4>OATH ROOM — Art. 99</h4>
+      <p>Every MP must take an oath before participating. If you vote/speak without oath → fine of <strong>₹500 per day</strong>. The President or Protem Speaker administers oath.</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🔢</div>
+    <div class="palace-content">
+      <h4>QUORUM ROOM — Art. 100</h4>
+      <p>A sign says: "Minimum 10% must be present." If not — adjournment. Casting vote given to presiding officer only in case of tie. VP (Chairman) never votes at first instance — not a member!</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🚫</div>
+    <div class="palace-content">
+      <h4>EXIT DOOR — Disqualification (Art. 102)</h4>
+      <p>5 reasons to be thrown out: Office of Profit · Unsound Mind · Insolvency · Foreign Citizenship · Anti-Defection (10th Schedule). The President decides — but on advice of Election Commission.</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">📜</div>
+    <div class="palace-content">
+      <h4>BILL FACTORY — Art. 107–111</h4>
+      <p>Ordinary bills born in any room (either house). Money bills born only in the Lok Sabha delivery room. After passing both houses → President either signs (assent), returns (suspensive veto), pockets (pocket veto), or keeps forever (absolute veto).</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">💰</div>
+    <div class="palace-content">
+      <h4>TREASURY ROOM — Budget (Art. 112)</h4>
+      <p>Annual Financial Statement = Budget. President's name on it, Finance Minister presents it. Rajya Sabha can only discuss — no voting on budget. CFI = Consolidated Fund. Money from CFI requires Appropriation Bill.</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">⚡</div>
+    <div class="palace-content">
+      <h4>EMERGENCY SWITCH — Ordinance (Art. 123)</h4>
+      <p>Parliament is on holiday. Emergency law needed. President flips the ordinance switch. But it must be approved within <strong>6 weeks</strong> of next session. Max life = <strong>6 months + 6 weeks</strong>.</p>
+    </div>
+  </div>
+
+  <div class="hook-box">
+    Walk through this palace 3 times a week. Each room has one character doing one memorable action. The Vice President stands at the gate but never goes inside (not a member). The baby speaker gives everyone oath and then goes home. The emergency switch gives 6+6 weeks.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ RAJYA OFFICERS ══════════════════════════════════ -->
+<div class="page" id="page-rajya-officers">
+  <h1>Officers of Rajya Sabha</h1>
+  <p class="subtitle">Articles 89–92, 97, 98</p>
+
+  <h2>Chairman — Art. 89 <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>Feature</th><th>Detail</th></tr>
+    <tr><td>Who is Chairman?</td><td>Vice President of India (ex-officio) · Also Art. 64</td></tr>
+    <tr><td>Is VP a member of Rajya Sabha?</td><td><strong style="color:var(--red)">NO</strong> — He presides but is NOT a member</td></tr>
+    <tr><td>Who elected VP?</td><td>All MPs of both houses (Lok Sabha + Rajya Sabha)</td></tr>
+    <tr><td>VP's term?</td><td>5 years</td></tr>
+    <tr><td>Resignation goes to?</td><td>VP resigns to President; President resigns to VP</td></tr>
+  </table>
+
+  <div class="hook-box">
+    VP at Rajya Sabha is like a hotel manager who runs the hotel but doesn't live there. He manages everything but has no room (membership). He was chosen by all guests of both hotels (both Houses).
+  </div>
+
+  <h2>Deputy Chairman — Art. 89, 90, 91 <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>Feature</th><th>Detail</th></tr>
+    <tr><td>Elected by?</td><td>Members of Rajya Sabha only</td></tr>
+    <tr><td>Term?</td><td>6 years (same as RS member term)</td></tr>
+    <tr><td>Resignation to?</td><td>Chairman (= VP)</td></tr>
+    <tr><td>Removal majority?</td><td><strong>Effective majority</strong> in Rajya Sabha → then simple majority in Lok Sabha</td></tr>
+    <tr><td>Where removal motion starts?</td><td>Only in Rajya Sabha (cannot start in Lok Sabha)</td></tr>
+    <tr><td>Powers when Chairman is absent/vacant?</td><td>All presiding powers of Chairman</td></tr>
+    <tr><td>Powers when Chairman is presiding?</td><td>Like any other ordinary RS member</td></tr>
+  </table>
+
+  <h2>Art. 92 — Restriction During Removal Motion <span class="tag-star">⭐</span></h2>
+  <div class="card card-red">
+    <p>Neither Chairman nor Deputy Chairman can <strong>preside</strong> over the house during the removal motion against them. <em>(You cannot be judge of your own case — Natural Justice)</em></p>
+    <p style="margin-top:8px;">But they can still <strong>vote at first instance</strong> (as members) — except the VP/Chairman who is not a member and can NEVER vote.</p>
+  </div>
+
+  <h2>Panel of Vice-Chairpersons <span class="tag-plus">➕</span></h2>
+  <div class="card card-blue">
+    <p>If <strong>both</strong> Chairman and Deputy Chairman are <strong>absent</strong> → a panel of <strong>6 vice-chairpersons</strong> presides.</p>
+    <p style="margin-top:6px;">If <strong>both</strong> are <strong>vacant</strong> → President appoints a member as temporary Chairman.</p>
+    <p style="margin-top:6px;color:var(--red)">⚠️ Absent ≠ Vacant! Absent = temporary. Vacant = permanent (resigned/removed/died/term over).</p>
+  </div>
+
+  <h2>Secretariat — Art. 98 <span class="tag-plus">➕</span></h2>
+  <p>Each House has its own separate Secretariat. Presiding officers appoint their respective officers.</p>
+
+  <h2>Salaries — Art. 97</h2>
+  <p>Salaries of Speaker/Chairman are decided by Parliament itself.</p>
+</div>
+
+<!-- ══════════════════════════════════ LOK OFFICERS ══════════════════════════════════ -->
+<div class="page" id="page-lok-officers">
+  <h1>Officers of Lok Sabha</h1>
+  <p class="subtitle">Articles 93–97</p>
+
+  <h2>Speaker — Art. 93 <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>Feature</th><th>Detail</th></tr>
+    <tr><td>Elected by?</td><td>Members of Lok Sabha</td></tr>
+    <tr><td>From among?</td><td>Members of Lok Sabha (must be LS member)</td></tr>
+    <tr><td>First Speaker of Lok Sabha?</td><td><strong>GV Mavalankar</strong> (Ganesh Vasudev Mavalankar)</td></tr>
+    <tr><td>Convention for ruling party?</td><td>Speaker from ruling party, Deputy Speaker from opposition</td></tr>
+    <tr><td>Is this in Constitution?</td><td>No — it's a convention, not a legal requirement</td></tr>
+    <tr><td>Deputy Speaker post (2014→)?</td><td>Vacant since 2014 (no election held for ~11 years)</td></tr>
+    <tr><td>Current Speaker?</td><td>Om Birla (17th Lok Sabha)</td></tr>
+  </table>
+
+  <h2>Resignation & Removal — Art. 94 <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>Scenario</th><th>Resigns To</th></tr>
+    <tr><td>Speaker resigns</td><td>Deputy Speaker</td></tr>
+    <tr><td>Deputy Speaker resigns</td><td>Speaker</td></tr>
+    <tr><td>Removal majority required</td><td><strong>Effective majority in Lok Sabha</strong> only (no Rajya Sabha needed)</td></tr>
+  </table>
+
+  <div class="hook-box">
+    Speaker and Deputy Speaker are like best friends who hand their resignation to each other. But both can be fired only by the same house (Lok Sabha) — no need to involve the other house.
+  </div>
+
+  <h2>Pro-Tem Speaker — Art. 95 <span class="tag-fire">🔥</span></h2>
+  <div class="card card-yellow">
+    <h4 style="margin-top:0">The "Welcome Aunty" of Lok Sabha</h4>
+    <p>When a new Lok Sabha is formed — no Speaker yet. But MPs can't vote without taking oath. And oath needs the Speaker. <strong>Chicken-and-egg problem!</strong></p>
+    <p style="margin-top:8px;">Solution: President appoints the <strong>most senior MP by experience</strong> (not age) as <strong>Pro-Tem Speaker</strong>.</p>
+    <p style="margin-top:8px;">Pro-Tem Speaker's job: Administer oath to all MPs → then step aside when permanent Speaker is elected.</p>
+    <p style="margin-top:8px;color:var(--red)">⚠️ No Pro-Tem Speaker in Rajya Sabha — it's a permanent house, never dissolved.</p>
+  </div>
+
+  <h2>Absent vs Vacant — The Critical Difference <span class="tag-fire">🔥</span></h2>
+  <table class="compare-table">
+    <tr>
+      <th>Situation</th>
+      <th>Absent (both)</th>
+      <th>Vacant (both)</th>
+    </tr>
+    <tr>
+      <td>Lok Sabha</td>
+      <td>Panel of <strong>10 Chairpersons</strong> presides</td>
+      <td>President appoints any Lok Sabha member as Speaker</td>
+    </tr>
+    <tr>
+      <td>Rajya Sabha</td>
+      <td>Panel of <strong>6 Vice-Chairpersons</strong> presides</td>
+      <td>President appoints a member as temporary Chairman</td>
+    </tr>
+  </table>
+
+  <h2>Art. 96 — Restriction During Removal Motion</h2>
+  <p>Same rule as Rajya Sabha: Speaker/Deputy Speaker cannot preside when removal motion against them is being discussed.</p>
+
+  <h2>Casting Vote — Art. 100 <span class="tag-fire">🔥</span></h2>
+  <div class="card card-blue">
+    <p><strong>Two types of votes:</strong></p>
+    <p>1. <strong>Vote at first instance</strong> — Regular vote during proceedings. Every member can vote.</p>
+    <p>2. <strong>Casting vote</strong> — Given to presiding officer only when votes are <strong>tied (50-50)</strong>. Acts as a tiebreaker.</p>
+    <p style="margin-top:10px;color:var(--red)"><strong>Exception:</strong> VP/Chairman of Rajya Sabha gets NEITHER vote (not a member of RS). He has no vote at first instance AND no casting vote in Rajya Sabha.</p>
+    <p style="margin-top:6px;color:var(--yellow)"><strong>During removal motion:</strong> Presiding officer steps down, sits as member → loses casting vote but retains first instance vote (except VP).</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ SESSIONS ══════════════════════════════════ -->
+<div class="page" id="page-sessions">
+  <h1>Sessions, Sittings & Question Hour</h1>
+  <p class="subtitle">Articles 85, 100 (Quorum) + Parliamentary Procedures</p>
+
+  <h2>Three Key Terms <span class="tag-fire">🔥</span></h2>
+  <table class="compare-table">
+    <tr>
+      <th>Term</th>
+      <th>Meaning</th>
+      <th>Who Does It</th>
+      <th>Bills Lapse?</th>
+    </tr>
+    <tr>
+      <td>Adjournment</td>
+      <td>Meeting of the house is paused (for day, hour, sine die)</td>
+      <td>Presiding Officer</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Prorogation</td>
+      <td>Session is ended (terminated)</td>
+      <td>President</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Dissolution</td>
+      <td>Entire Lok Sabha is dissolved</td>
+      <td>President</td>
+      <td><strong style="color:var(--red)">YES</strong> (with exceptions)</td>
+    </tr>
+  </table>
+
+  <div class="hook-box">
+    Adjournment = pausing a movie. Prorogation = ending the show for today. Dissolution = closing the cinema hall forever (and hiring new staff for next Lok Sabha).
+  </div>
+
+  <h2>Adjournment Sine Die <span class="tag-star">⭐</span></h2>
+  <p>Adjourning without naming a date for next meeting. Done just before Prorogation. Bills do NOT lapse in Adjournment Sine Die.</p>
+
+  <h2>Quorum — Art. 100 <span class="tag-fire">🔥</span></h2>
+  <div class="uf-grid">
+    <div class="uf-cell">
+      <div class="uf-title">Quorum Requirement</div>
+      <div class="uf-val"><strong>1/10th (10%)</strong> of total members must be present</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">If Quorum Not Met</div>
+      <div class="uf-val">Presiding officer <strong>adjourns</strong> the house</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Valid For</div>
+      <div class="uf-val">Both Lok Sabha and Rajya Sabha</div>
+    </div>
+  </div>
+
+  <h2>Daily Schedule of Parliament <span class="tag-star">⭐</span></h2>
+  <div class="flow" style="flex-direction:column; align-items:flex-start; gap:8px">
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="flow-box green" style="min-width:140px">11:00 AM — Start</div>
+      <span style="font-size:13px;color:var(--text-dim)">Session begins</span>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="flow-box blue" style="min-width:140px">12:00–1:00 PM</div>
+      <span style="font-size:13px;color:var(--text-dim)"><strong style="color:var(--blue)">Question Hour</strong> — ministers/private members answer questions</span>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="flow-box purple" style="min-width:140px">After Q Hour</div>
+      <span style="font-size:13px;color:var(--text-dim)"><strong style="color:var(--purple)">Zero Hour</strong> — agenda of next meeting decided</span>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="flow-box" style="min-width:140px;border-color:var(--yellow);color:var(--yellow)">2:00 PM onwards</div>
+      <span style="font-size:13px;color:var(--text-dim)">Main business resumes after lunch</span>
+    </div>
+  </div>
+
+  <h2>Types of Questions in Question Hour <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>Type</th><th>Answer Type</th><th>Notice Required</th><th>Supplementary?</th></tr>
+    <tr><td>Starred (*) Question</td><td>Oral answer</td><td>—</td><td>Yes, supplementaries can follow</td></tr>
+    <tr><td>Unstarred Question</td><td>Written answer</td><td>—</td><td>No supplementaries</td></tr>
+    <tr><td>Short Notice Question</td><td>Oral answer</td><td><strong>At least 10 days</strong></td><td>Yes</td></tr>
+  </table>
+
+  <div class="card card-yellow">
+    <p><strong>Who can be asked questions?</strong> Private members who are <strong>not ministers</strong>. Ministers obviously also answer. A private member = one without a portfolio.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ QUALIFICATIONS ══════════════════════════════════ -->
+<div class="page" id="page-qualifications">
+  <h1>Oaths, Qualifications & Vacating Seats</h1>
+  <p class="subtitle">Articles 99–101</p>
+
+  <h2>Oath — Art. 99 <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>House</th><th>Oath Administered By</th></tr>
+    <tr><td>Lok Sabha</td><td>President or <strong>Pro-Tem Speaker</strong> appointed by President</td></tr>
+    <tr><td>Rajya Sabha</td><td>President or person appointed by President (no Pro-Tem concept)</td></tr>
+  </table>
+
+  <div class="card card-red">
+    <p><span class="tag-fire">🔥</span> <strong>Penalty for participating without oath:</strong> ₹500 fine per day (Art. 104)</p>
+    <p style="margin-top:6px;">This includes: sitting, speaking, voting in the house without having taken the oath.</p>
+  </div>
+
+  <h2>Vacating Seats — Art. 101 <span class="tag-star">⭐</span></h2>
+  <p>A seat becomes vacant if:</p>
+  <table class="fact-table">
+    <tr><th>Reason</th><th>Detail</th></tr>
+    <tr><td>Dual Membership</td><td>Member of both LS and RS → must choose within <strong>2 months</strong> or RS membership is lost</td></tr>
+    <tr><td>State Legislature + Parliament</td><td>Member of both → must choose or Parliament seat is lost</td></tr>
+    <tr><td>Win two seats in same house</td><td>Both seats go vacant (no choice given)</td></tr>
+    <tr><td>Absent without leave</td><td>Absent from proceedings for <strong>more than 60 days</strong> without permission</td></tr>
+    <tr><td>Resignation / Death / Disqualification</td><td>Seat becomes vacant</td></tr>
+  </table>
+
+  <div class="hook-box">
+    Dual membership = you can't sit in two chairs at once. If you try to sit in both Lok Sabha and Rajya Sabha chairs, you have 2 months to pick one. If you win two seats in the same house, both chairs collapse — you lose both.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ DISQUALIFICATION ══════════════════════════════════ -->
+<div class="page" id="page-disqualification">
+  <h1>Disqualification of MPs</h1>
+  <p class="subtitle">Articles 102, 103 | 10th Schedule (52nd Amendment, 1985)</p>
+
+  <h2>5 Grounds for Disqualification — Art. 102 <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>#</th><th>Ground</th><th>Note</th></tr>
+    <tr><td>1</td><td>Office of Profit</td><td>Not defined in Constitution! No constitutional definition exists.</td></tr>
+    <tr><td>2</td><td>Unsound Mind</td><td>Declared by a competent court</td></tr>
+    <tr><td>3</td><td>Insolvency (Bankruptcy)</td><td>e.g., Vijay Mallya was a Rajya Sabha MP who went bankrupt</td></tr>
+    <tr><td>4</td><td>Foreign Citizenship</td><td>Renounced Indian citizenship or acquired foreign citizenship</td></tr>
+    <tr><td>5</td><td>Anti-Defection (10th Schedule)</td><td>52nd Amendment, 1985</td></tr>
+  </table>
+
+  <h2>Who Decides Disqualification? — Art. 103 <span class="tag-fire">🔥</span></h2>
+  <div class="card card-yellow">
+    <p><strong>President decides</strong> — but NOT on his own. He acts on the advice of the <strong>Election Commission of India</strong>.</p>
+    <p style="margin-top:8px;color:var(--text-dim)">(Note: President usually acts on advice of PM/CoM under Art. 74, but for MP disqualification specifically, it's Election Commission's advice.)</p>
+  </div>
+
+  <h2>Anti-Defection Law — 10th Schedule <span class="tag-fire">🔥</span></h2>
+  <div class="card card-blue">
+    <p><strong>Added by:</strong> 52nd Constitutional Amendment, 1985</p>
+    <p style="margin-top:8px;"><strong>3 grounds for disqualification under Anti-Defection:</strong></p>
+  </div>
+  <table class="fact-table">
+    <tr><th>#</th><th>Ground</th></tr>
+    <tr><td>1</td><td>You left the party that gave you the ticket and joined another party</td></tr>
+    <tr><td>2</td><td>You were an independent candidate but joined a political party after winning</td></tr>
+    <tr><td>3</td><td>You are a nominated member and joined a party after 6 months (nominated members get 6-month grace period)</td></tr>
+  </table>
+
+  <div class="card card-red">
+    <p><strong>Whip:</strong> Every party appoints a Whip who directs MPs how to vote. If you vote against the Whip's direction or abstain from voting — this can amount to defection.</p>
+    <p style="margin-top:8px;"><strong>Important:</strong> If disqualified under Anti-Defection → also disqualified from being appointed as minister (Art. 75 Clause 1 Sub-clause b).</p>
+  </div>
+
+  <div class="hook-box">
+    Anti-Defection = "Dance with the one who brought you." You won on BJP ticket? You dance with BJP. You switch to Congress mid-party? You're out. An independent MP is like a solo dancer — if they join a group dance after winning, that's defection too.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ PRIVILEGES ══════════════════════════════════ -->
+<div class="page" id="page-privileges">
+  <h1>Powers, Privileges & Salary</h1>
+  <p class="subtitle">Articles 105, 106</p>
+
+  <h2>Privileges of MPs — Art. 105 <span class="tag-fire">🔥</span></h2>
+  <div class="uf-grid">
+    <div class="uf-cell">
+      <div class="uf-title">Freedom of Speech</div>
+      <div class="uf-val">MPs can say <strong>anything</strong> inside Parliament. Art. 19(2) restrictions (defamation, sovereignty etc.) do <strong>NOT apply</strong> inside Parliament.</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">No Court Proceedings</div>
+      <div class="uf-val">Courts cannot prosecute MPs for anything said or voted inside Parliament.</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Civil Immunity</div>
+      <div class="uf-val">No <strong>civil</strong> case can be filed: 40 days <em>before</em> session + during session + 40 days <em>after</em> session.</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Criminal Cases</div>
+      <div class="uf-val">Criminal proceedings <strong>can</strong> still be initiated — no immunity for criminal acts.</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Who Punishes MPs?</div>
+      <div class="uf-val">Only the House itself can punish them for language — not courts. Presiding officer can expel from session.</div>
+    </div>
+  </div>
+
+  <div class="hook-box">
+    Inside Parliament, MPs have a "magic circle." Within it, they can say anything. Courts cannot enter the circle. But 40 days before and after session, the civil circle extends outside Parliament too. Criminal cases, however, always pierce the circle.
+  </div>
+
+  <h2>Art. 121 — Judges' Conduct <span class="tag-star">⭐</span></h2>
+  <div class="card card-purple">
+    <p>Inside Parliament, you <strong>cannot discuss the conduct of judges</strong> of Supreme Court or High Courts. This protects judicial independence and public faith in the judiciary.</p>
+    <p style="margin-top:8px;">Similarly, courts don't interfere in Parliamentary proceedings — <strong>Separation of Powers</strong> (Art. 50 directs executive-judiciary separation).</p>
+  </div>
+
+  <h2>Salary — Art. 106</h2>
+  <p>Salary of MPs is decided by <strong>Parliament itself</strong>. (They decide their own pay — a privilege often discussed!)</p>
+
+  <h2>Language — Art. 120</h2>
+  <p>Parliament proceedings are in <strong>Hindi or English</strong>. If member wants to speak in mother tongue, presiding officer's permission is needed.</p>
+</div>
+
+<!-- ══════════════════════════════════ ORDINARY BILL ══════════════════════════════════ -->
+<div class="page" id="page-ordinary-bill">
+  <h1>Legislative Procedure — Ordinary Bill</h1>
+  <p class="subtitle">Articles 107, 108 | Joint Sitting</p>
+
+  <h2>Ordinary Bill — Art. 107 <span class="tag-fire">🔥</span></h2>
+  <div class="flow">
+    <div class="flow-box green">Introduced in Either House</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box blue">Passed by First House</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box purple">Sent to Second House</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="border-color:var(--yellow);color:var(--yellow)">Passed by Second House</div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="border-color:var(--green);color:var(--green)">President's Assent</div>
+  </div>
+
+  <h2>When Does Bill Lapse? <span class="tag-fire">🔥</span></h2>
+  <div class="card card-red">
+    <p>A bill lapses only on <strong>dissolution of Lok Sabha</strong> — not on Prorogation or Adjournment.</p>
+  </div>
+
+  <h2>Exceptions — Bills That Do NOT Lapse Even on Dissolution <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>#</th><th>Exception</th></tr>
+    <tr><td>1</td><td>Bill initiated in <strong>Rajya Sabha</strong> and still pending there (Rajya Sabha is permanent — not dissolved)</td></tr>
+    <tr><td>2</td><td>Bill passed by Lok Sabha, pending in Rajya Sabha + <strong>President has called a joint sitting</strong></td></tr>
+    <tr><td>3</td><td>Bill passed by <strong>both houses</strong> but President's assent is pending</td></tr>
+  </table>
+
+  <h2>Joint Sitting — Art. 108 <span class="tag-fire">🔥</span></h2>
+  <div class="card card-blue">
+    <p><strong>When is Joint Sitting called?</strong> When there is a <strong>deadlock</strong> between Lok Sabha and Rajya Sabha:</p>
+    <p style="margin-top:8px;">• Rajya Sabha rejects the bill</p>
+    <p>• Rajya Sabha doesn't respond for <strong>6 months</strong></p>
+    <p>• Rajya Sabha sends amendments unacceptable to Lok Sabha</p>
+    <p style="margin-top:8px;"><strong>Called by:</strong> President of India</p>
+    <p><strong>Presided by:</strong> Speaker of Lok Sabha</p>
+    <p><strong>Majority required:</strong> Simple majority of members present and voting</p>
+  </div>
+
+  <h2>Joint Sittings in History — Only 3 Times! <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>#</th><th>Bill</th><th>Memory Hook</th></tr>
+    <tr><td>1</td><td>Dowry Prohibition Bill (1961)</td><td>—</td></tr>
+    <tr><td>2</td><td>Banking Service Commission (Repeal) Bill (1978)</td><td>"Terrorist got bank job"</td></tr>
+    <tr><td>3</td><td>Prevention of Terrorism Act (POTA) 2002</td><td>"Terrorist" theme</td></tr>
+  </table>
+
+  <div class="hook-box">
+    Think: "The terrorist robbed the bank and got away twice." Joint sitting happened for the bank bill (banking service commission) and for the terror bill (POTA). Two terror-related themes = 2 of the 3 joint sittings.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ MONEY BILL ══════════════════════════════════ -->
+<div class="page" id="page-money-bill">
+  <h1>Money Bill, Budget & Financial Procedure</h1>
+  <p class="subtitle">Articles 109, 110, 112–116</p>
+
+  <h2>Money Bill — Art. 109, 110 <span class="tag-fire">🔥</span></h2>
+  <table class="compare-table">
+    <tr>
+      <th>Feature</th>
+      <th>Money Bill</th>
+      <th>Ordinary Bill</th>
+    </tr>
+    <tr>
+      <td>Origin</td>
+      <td><strong>Only Lok Sabha</strong></td>
+      <td>Either house</td>
+    </tr>
+    <tr>
+      <td>Rajya Sabha role</td>
+      <td><strong>Recommending</strong> power only (14 days)</td>
+      <td>Full powers (can amend, reject)</td>
+    </tr>
+    <tr>
+      <td>Joint Sitting?</td>
+      <td><strong>No</strong> — no joint sitting for money bill</td>
+      <td>Yes, possible</td>
+    </tr>
+    <tr>
+      <td>President's Prior Recommendation?</td>
+      <td><strong>Yes</strong> — required before introduction</td>
+      <td>Not required</td>
+    </tr>
+    <tr>
+      <td>Certified by?</td>
+      <td><strong>Speaker of Lok Sabha</strong></td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td>President's Suspensive Veto?</td>
+      <td><strong>Not available</strong></td>
+      <td>Available</td>
+    </tr>
+  </table>
+
+  <div class="hook-box">
+    Money Bill is like a baby born only in one hospital (Lok Sabha). Rajya Sabha is just a 14-day babysitter who can only suggest, not decide. The Speaker signs the birth certificate (certification). President can't return it (no suspensive veto) because he already gave permission before birth (prior recommendation).
+  </div>
+
+  <h2>Budget (Annual Financial Statement) — Art. 112 <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>Feature</th><th>Detail</th></tr>
+    <tr><td>What is it?</td><td>Annual Financial Statement (Constitution doesn't use the word "budget")</td></tr>
+    <tr><td>Who lays it before Parliament?</td><td><strong>President</strong> (it's in the President's name)</td></tr>
+    <tr><td>Who presents it?</td><td><strong>Finance Minister</strong></td></tr>
+    <tr><td>Budget is part of?</td><td><strong>Money Bill</strong> (financial bill)</td></tr>
+    <tr><td>Rajya Sabha's role?</td><td>Can only <strong>discuss</strong> — no voting power on budget</td></tr>
+    <tr><td>Word "budget" in Constitution?</td><td><strong>Not mentioned anywhere!</strong></td></tr>
+    <tr><td>Financial Year</td><td><strong>1 April → 31 March</strong></td></tr>
+  </table>
+
+  <h2>Types of Expenditure — Art. 113 <span class="tag-star">⭐</span></h2>
+  <table class="compare-table">
+    <tr>
+      <th>Type</th>
+      <th>Voted?</th>
+      <th>What goes here?</th>
+    </tr>
+    <tr>
+      <td>Charged Expenditure</td>
+      <td><strong>Non-votable</strong></td>
+      <td>Salaries of President, Judges, CAG, etc. Cannot be reduced/stopped.</td>
+    </tr>
+    <tr>
+      <td>Voted Expenditure</td>
+      <td><strong>Voted in Lok Sabha</strong></td>
+      <td>All other government expenditure — requires Demand for Grants</td>
+    </tr>
+  </table>
+
+  <h2>Consolidated Fund of India (CFI) — Art. 266 <span class="tag-fire">🔥</span></h2>
+  <div class="card card-green">
+    <p>All tax revenues, loans, and receipts of Government go into CFI.</p>
+    <p style="margin-top:8px;"><strong>To withdraw from CFI:</strong> Need <strong>Appropriation Bill</strong> passed by Lok Sabha.</p>
+    <p style="margin-top:8px;"><strong>Appropriation Bill</strong> = permission slip to withdraw from CFI. Without it, not even ₹1 can be withdrawn.</p>
+  </div>
+
+  <h2>Other Funds <span class="tag-star">⭐</span></h2>
+  <table class="fact-table">
+    <tr><th>Fund</th><th>Article</th><th>Parliament Permission to Withdraw?</th></tr>
+    <tr><td>Consolidated Fund of India</td><td>Art. 266</td><td><strong>Yes</strong> — need Appropriation Bill + Lok Sabha approval</td></tr>
+    <tr><td>Public Account of India</td><td>Art. 266</td><td><strong>No</strong> — in hands of executive (government)</td></tr>
+    <tr><td>Contingency Fund of India</td><td>Art. 267</td><td><strong>No</strong> — mainly President's disposal for emergencies</td></tr>
+  </table>
+
+  <h2>Financial Bill — Art. 117 <span class="tag-plus">➕</span></h2>
+  <div class="card card-purple">
+    <p><strong>All money bills are financial bills</strong> — but NOT all financial bills are money bills.</p>
+    <p style="margin-top:8px;">Financial Bill (Art. 117 Cl. 1): Like a money bill — President's prior recommendation needed, can only originate in LS, Rajya Sabha has limited power.</p>
+    <p style="margin-top:8px;">Financial Bill (Art. 117 Cl. 3): President's recommendation needed, can only originate in LS — but <em>thereafter treated like ordinary bill</em> (Rajya Sabha has full powers).</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ VETO ══════════════════════════════════ -->
+<div class="page" id="page-veto">
+  <h1>President's Veto Powers</h1>
+  <p class="subtitle">Article 111</p>
+
+  <h2>After a Bill is Passed by Both Houses <span class="tag-fire">🔥</span></h2>
+  <p>Every bill passed by Parliament goes to the President. The President has 4 options:</p>
+
+  <table class="fact-table">
+    <tr><th>Option</th><th>Name</th><th>Effect</th></tr>
+    <tr><td>Give Assent</td><td>(Positive Power)</td><td>Bill becomes an Act</td></tr>
+    <tr><td>Withhold Assent</td><td><strong>Absolute Veto</strong></td><td>Bill is dead permanently</td></tr>
+    <tr><td>Return the Bill</td><td><strong>Suspensive Veto</strong></td><td>Bill goes back for reconsideration. If Parliament passes again → President must give assent</td></tr>
+    <tr><td>Keep without responding</td><td><strong>Pocket Veto</strong></td><td>Bill in limbo. No time limit in Constitution — can be kept indefinitely</td></tr>
+  </table>
+
+  <h2>Pocket Veto — The Only Real Example <span class="tag-fire">🔥</span></h2>
+  <div class="card card-yellow">
+    <p><strong>Who?</strong> President <strong>Giani Zail Singh</strong></p>
+    <p><strong>When?</strong> <strong>1986</strong></p>
+    <p><strong>Against which bill?</strong> <strong>Indian Postal Amendment Bill</strong> (passed by Rajiv Gandhi government)</p>
+    <p style="margin-top:8px;">He neither signed it nor returned it → Classic Pocket Veto. No time limit in Constitution, so it was legal.</p>
+  </div>
+
+  <div class="hook-box">
+    Giani Zail Singh put Rajiv Gandhi's Postal Bill in his pocket in 1986 and said nothing. Like putting a letter in your pocket and forgetting to post it — except it was intentional. Pocket Veto = ignoring the bill indefinitely.
+  </div>
+
+  <h2>When is Suspensive Veto NOT Available? <span class="tag-fire">🔥</span></h2>
+  <div class="card card-red">
+    <p>President <strong>cannot return (suspensive veto)</strong> a <strong>Money Bill</strong>.</p>
+    <p style="margin-top:8px;">Reason: Money bill was introduced with <strong>President's prior recommendation</strong>. He already approved it at the start. He can't change his mind at the end.</p>
+    <p style="margin-top:8px;">For money bills: President can give assent OR use pocket veto / absolute veto — but NOT suspensive veto.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ ORDINANCE ══════════════════════════════════ -->
+<div class="page" id="page-ordinance">
+  <h1>Ordinance — Legislative Power of President</h1>
+  <p class="subtitle">Article 123</p>
+
+  <h2>What is an Ordinance? <span class="tag-fire">🔥</span></h2>
+  <div class="card card-green">
+    <p>When Parliament is <strong>not in session</strong> (or one house is not in session) and an urgent law is needed — the President can promulgate an <strong>Ordinance</strong>.</p>
+    <p style="margin-top:8px;">An ordinance has the same <strong>force and effect</strong> as an Act of Parliament — but it is <strong>temporary</strong>.</p>
+  </div>
+
+  <h2>Key Rules of Ordinance <span class="tag-fire">🔥</span></h2>
+  <table class="fact-table">
+    <tr><th>Rule</th><th>Detail</th></tr>
+    <tr><td>When can it be promulgated?</td><td>Only when <strong>at least one house is not in session</strong></td></tr>
+    <tr><td>Must be approved within?</td><td><strong>6 weeks</strong> of reassembly of Parliament</td></tr>
+    <tr><td>If not approved?</td><td>Ordinance ceases to operate automatically</td></tr>
+    <tr><td>Maximum possible life?</td><td><strong>6 months + 6 weeks</strong> (max gap between sessions = 6 months, + 6 weeks grace)</td></tr>
+    <tr><td>President's discretion?</td><td>Acts on advice of PM and Council of Ministers (not independently)</td></tr>
+    <tr><td>Can Parliament revoke it?</td><td>Yes — either house can pass a resolution against it</td></tr>
+    <tr><td>Scope of ordinance?</td><td>Same as Parliament's legislative power — cannot exceed it</td></tr>
+  </table>
+
+  <div class="hook-box">
+    Ordinance is like a temporary employee hired in emergency when regular staff (Parliament) is on leave. The moment staff returns (Parliament reconvenes), the temp has 6 weeks to get regularized (approved). If not regularized within 6 weeks, he's automatically fired.
+  </div>
+
+  <h2>Article 123 — Chapter III</h2>
+  <div class="card card-blue">
+    <p>Art. 123 is the <strong>only article in Chapter III</strong> of Part V. It deals with the legislative power of the President when Parliament is not in session.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ COMMITTEES ══════════════════════════════════ -->
+<div class="page" id="page-committees">
+  <h1>Parliamentary Committees</h1>
+  <p class="subtitle">Standing Committees · Adhoc Committees</p>
+
+  <h2>Types Overview <span class="tag-fire">🔥</span></h2>
+  <div class="uf-grid">
+    <div class="uf-cell">
+      <div class="uf-title">Standing Committees</div>
+      <div class="uf-val"><strong>Permanent</strong> nature. Set up on regular basis. Includes Financial Committees.</div>
+    </div>
+    <div class="uf-cell">
+      <div class="uf-title">Adhoc Committees</div>
+      <div class="uf-val"><strong>Temporary</strong> nature. Set up for a specific purpose. Dissolves when job is done.</div>
+    </div>
+  </div>
+
+  <h2>Three Financial Standing Committees <span class="tag-fire">🔥</span></h2>
+  <table class="compare-table">
+    <tr>
+      <th>Committee</th>
+      <th>Members</th>
+      <th>Established</th>
+      <th>Key Facts</th>
+    </tr>
+    <tr>
+      <td>Public Accounts Committee (PAC)</td>
+      <td>22 total<br>15 LS + 7 RS</td>
+      <td><strong>1921</strong> (Govt. of India Act 1919 / Montagu-Chelmsford Reforms)</td>
+      <td>Examines whether money was spent as Parliament intended</td>
+    </tr>
+    <tr>
+      <td>Estimates Committee</td>
+      <td>30 total<br>All from Lok Sabha<br>(0 from RS)</td>
+      <td><strong>1950</strong> (after Independence) on recommendation of <strong>John Mathai Committee</strong></td>
+      <td>Examines estimates/demands for grants. Only from Lok Sabha.</td>
+    </tr>
+    <tr>
+      <td>Committee on Public Undertakings (CPU)</td>
+      <td>22 total<br>15 LS + 7 RS</td>
+      <td>On recommendation of <strong>Krishna Menon Committee</strong></td>
+      <td>Examines PSU accounts and working</td>
+    </tr>
+  </table>
+
+  <h2>Common Features — All Three Financial Committees <span class="tag-fire">🔥</span></h2>
+  <div class="card card-green">
+    <p>✅ <strong>No minister</strong> can be a member (only private members)</p>
+    <p>✅ Members elected by <strong>Proportional Representation</strong></p>
+    <p>✅ Term = <strong>1 year</strong></p>
+  </div>
+
+  <div class="hook-box">
+    Financial committees = "No VIPs allowed." Ministers (VIPs) can't be members. All three share the same "house rules": proportional representation, 1-year term, no ministers. The Estimates Committee is the introvert — only Lok Sabha members, no Rajya Sabha.
+  </div>
+
+  <h2>Special Membership Facts <span class="tag-star">⭐</span></h2>
+  <div class="card card-yellow">
+    <p><strong>Speaker's privilege:</strong> Speaker is member and Chairman of 3 committees:</p>
+    <p>1. <strong>Rules Committee</strong></p>
+    <p>2. <strong>Business Advisory Committee</strong></p>
+    <p>3. <strong>General Purpose Committee</strong></p>
+    <p style="margin-top:10px;"><strong>Deputy Chairman's privilege:</strong> Whichever committee he becomes a member of → he automatically becomes its <strong>Chairman</strong>.</p>
+  </div>
+
+  <h2>Departmentally Related Standing Committees <span class="tag-star">⭐</span></h2>
+  <table class="fact-table">
+    <tr><th>Feature</th><th>Detail</th></tr>
+    <tr><td>Total committees</td><td><strong>24 committees</strong></td></tr>
+    <tr><td>Distribution</td><td>16 under Lok Sabha + 8 under Rajya Sabha</td></tr>
+    <tr><td>Max members per committee</td><td><strong>31 total</strong> (21 from LS + 10 from RS)</td></tr>
+  </table>
+
+  <h2>Memory Hook — Committees Numbers</h2>
+  <div class="hook-box">
+    PAC and CPU both have 22 members (15+7). Estimates Committee is lonely with 30 members but only from Lok Sabha — it's a Lok Sabha-only club. 24 departmental committees with 31 members each (21+10). Remember: 22, 30, 24, 31.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ EXAM TRAPS ══════════════════════════════════ -->
+<div class="page" id="page-traps">
+  <h1>⚠️ Exam Traps</h1>
+  <p class="subtitle">Common confusions that cost marks — study these carefully</p>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 1: VP is NOT a member of Rajya Sabha</div>
+    <p>The Vice President is the <strong>Chairman</strong> of Rajya Sabha but is <strong>NOT a member</strong>.</p>
+    <p>→ He cannot vote at first instance in RS</p>
+    <p>→ He has no casting vote in RS (only members vote)</p>
+    <p>→ Attorney General also attends Parliament but cannot vote (not a member)</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 2: Absent ≠ Vacant</div>
+    <p><strong>Absent</strong> = temporarily not present (ill, traveling) → Panel of chairpersons presides</p>
+    <p><strong>Vacant</strong> = permanently gone (resigned/removed/died) → President appoints someone</p>
+    <p>This distinction appears in questions about BOTH Lok Sabha and Rajya Sabha.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 3: Deputy Speaker post has been VACANT since 2014</div>
+    <p>Questions may ask "who is the current Deputy Speaker of Lok Sabha?" — correct answer: the post is vacant (no election held since 2014). Not "Speaker" or any person's name.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 4: Removal of VP (Chairman RS)</div>
+    <p>Resolution starts in <strong>Rajya Sabha</strong> (not Lok Sabha)</p>
+    <p>Passes in RS with <strong>effective majority</strong></p>
+    <p>Then goes to LS with <strong>simple majority</strong></p>
+    <p>⚠️ Common trap: saying "impeachment" for VP — it's called "removal", not impeachment (that's for President/judges)</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 5: Money Bill vs Financial Bill</div>
+    <p>All money bills are financial bills ✅</p>
+    <p>All financial bills are money bills ❌ — WRONG!</p>
+    <p>Financial bills (Art. 117 Cl. 3) are treated like ordinary bills after introduction. Money bills are not.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 6: Budget word is NOT in Constitution</div>
+    <p>Constitution uses "Annual Financial Statement" (Art. 112). "Budget" is informal/colloquial. Questions may ask what the Constitution calls the budget.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 7: Estimates Committee — No RS Members</div>
+    <p>PAC and CPU have 15+7 = 22 members (both houses). Estimates Committee has 30 members — ALL from Lok Sabha. No Rajya Sabha representation. A frequent trick question.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 8: Ordinance Life</div>
+    <p>Ordinance must be approved within <strong>6 weeks</strong> of Parliament reconvening — NOT 6 months.</p>
+    <p>Maximum life = 6 months (max gap between sessions) + 6 weeks (grace period) = 6 months + 6 weeks.</p>
+    <p>Don't confuse 6 weeks with 6 months.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 9: Pocket Veto — Real Example</div>
+    <p>Pocket Veto was used by <strong>Giani Zail Singh</strong> in <strong>1986</strong> against <strong>Indian Postal Amendment Bill</strong>.</p>
+    <p>Don't confuse: it was NOT used during Rajiv Gandhi's Postal Bill for speech-related reasons. The PM was Rajiv Gandhi when this happened.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 10: Joint Sitting — Only Ordinary Bills</div>
+    <p>Joint sitting is possible only for ordinary bills and financial bills (Art. 117 Cl. 3).</p>
+    <p>Joint sitting is <strong>NOT possible</strong> for Money Bills or Constitutional Amendment Bills.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 11: "Office of Profit" Not Defined in Constitution</div>
+    <p>Art. 102 mentions disqualification for "Office of Profit" — but it is <strong>NOT defined anywhere in the Constitution</strong>. Examiners love to ask this.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 12: Anti-Defection Law</div>
+    <p>52nd Amendment = 1985 (not 1984, not 1986)</p>
+    <p>Schedule = 10th Schedule (not 9th, not 11th)</p>
+    <p>Nominated members get 6 months grace to join a party (not 3 months, not 1 year)</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ ACTIVE RECALL ══════════════════════════════════ -->
+<div class="page" id="page-active-recall">
+  <h1>🧪 Active Recall Section</h1>
+  <p class="subtitle">Click each card to reveal the answer. Test yourself before looking!</p>
+
+  <h2>🎯 Round 1: Officers of Parliament</h2>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Who is the Chairman of Rajya Sabha and is he a member of Rajya Sabha?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">Vice President of India. NO — he is NOT a member of Rajya Sabha. (Art. 89, 64)</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Who was the first Speaker of Lok Sabha?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">G.V. Mavalankar (Ganesh Vasudev Mavalankar)</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">What is a Pro-Tem Speaker and who appoints him?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">Temporary Speaker appointed by President to administer oath to new MPs in a newly formed Lok Sabha. Appointed from the most senior MP by experience (not age). Steps down once permanent Speaker is elected.</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">What is the difference between the panel of chairpersons for "absent" vs "vacant" presiding officers in Lok Sabha?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">If both Speaker and Deputy Speaker are ABSENT → Panel of 10 chairpersons presides. If both are VACANT → President appoints any LS member as Speaker.</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">What majority is needed to remove the Deputy Chairman of Rajya Sabha?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">Effective majority in Rajya Sabha, then simple majority in Lok Sabha. Resolution must START in Rajya Sabha.</div>
+  </div>
+
+  <h2>🎯 Round 2: Bills & Legislation</h2>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Name the 3 times a joint sitting of Parliament has been held in Indian history.</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">1. Dowry Prohibition Bill (1961) 2. Banking Service Commission (Repeal) Bill (1978) 3. Prevention of Terrorism Act / POTA (2002)</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Can Rajya Sabha amend a money bill?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">NO. Rajya Sabha has only RECOMMENDING power for money bills — it can suggest amendments to Lok Sabha, but Lok Sabha can accept or reject those recommendations. Rajya Sabha cannot amend on its own. Time limit: 14 days.</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Who certifies a bill as a Money Bill?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">Speaker of Lok Sabha (Art. 110)</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Which President used the Pocket Veto, against which bill, and in which year?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">Giani Zail Singh — Indian Postal Amendment Bill — 1986</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">What is the maximum life of an Ordinance?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">6 months (max gap between two sessions) + 6 weeks (time to approve after Parliament reconvenes) = 6 months and 6 weeks</div>
+  </div>
+
+  <h2>🎯 Round 3: Financial Matters</h2>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">The word "budget" appears how many times in the Constitution?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">ZERO times. Constitution uses "Annual Financial Statement" (Art. 112). "Budget" is not a constitutional term.</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">What is an Appropriation Bill and why is it needed?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">An Appropriation Bill is required to authorize withdrawal of money from the Consolidated Fund of India (CFI). Without the Appropriation Bill being passed by Lok Sabha, the government cannot spend money from CFI.</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Which financial committee has ONLY Lok Sabha members?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">Estimates Committee — 30 members, all from Lok Sabha. No Rajya Sabha members.</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">On whose recommendation was the Estimates Committee constituted after Independence (1950)?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">John Mathai Committee. (Committee on Public Undertakings → Krishna Menon Committee)</div>
+  </div>
+
+  <h2>🎯 Round 4: Disqualification & Anti-Defection</h2>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Is "Office of Profit" defined anywhere in the Constitution?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">NO — Office of Profit is mentioned as a disqualification ground (Art. 102) but is NOT defined anywhere in the Constitution.</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Which amendment introduced the Anti-Defection Law and to which schedule?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">52nd Constitutional Amendment, 1985 → 10th Schedule</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">How long can a nominated Rajya Sabha member wait before joining a political party?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">6 months from the date of taking the seat. After 6 months, joining a party = disqualification under Anti-Defection Law.</div>
+  </div>
+
+  <div class="q-card" onclick="toggleAnswer(this)">
+    <div class="q-text">Who decides MP disqualification under Art. 102?</div>
+    <div class="q-hint">Click to reveal</div>
+    <div class="q-answer">The President decides — but on the advice of the Election Commission of India (NOT on the advice of PM/CoM in this case).</div>
+  </div>
+
+  <h2>🎯 Fill in the Blanks</h2>
+  <div class="card card-blue">
+    <p style="font-size:13px;margin-bottom:6px;">Click the blanks to reveal answers:</p>
+    <p style="font-size:14px;line-height:2.2;">
+      The Chairman of Rajya Sabha is the <span class="blank" onclick="this.classList.toggle('shown')">Vice President</span> of India. He is <span class="blank" onclick="this.classList.toggle('shown')">NOT</span> a member of Rajya Sabha. The first Speaker of Lok Sabha was <span class="blank" onclick="this.classList.toggle('shown')">G.V. Mavalankar</span>. Rajya Sabha has a maximum of <span class="blank" onclick="this.classList.toggle('shown')">14 days</span> to act on a Money Bill. Joint sitting has been convened <span class="blank" onclick="this.classList.toggle('shown')">3 times</span> in India's history. An ordinance must be approved within <span class="blank" onclick="this.classList.toggle('shown')">6 weeks</span> of Parliament reconvening. The Anti-Defection Law was added by the <span class="blank" onclick="this.classList.toggle('shown')">52nd Amendment, 1985</span> as the <span class="blank" onclick="this.classList.toggle('shown')">10th Schedule</span>. Pocket Veto was used by <span class="blank" onclick="this.classList.toggle('shown')">Giani Zail Singh</span> in <span class="blank" onclick="this.classList.toggle('shown')">1986</span>. Quorum = <span class="blank" onclick="this.classList.toggle('shown')">1/10th (10%)</span> of total members.
+    </p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ ALL ARTICLES ══════════════════════════════════ -->
+<div class="page" id="page-articles-quick">
+  <h1>📋 All Articles — Quick Reference</h1>
+  <p class="subtitle">Articles 89–123 · Tap any pill to see details</p>
+
+  <h2>Officers (89–98)</h2>
+  <div class="article-row">
+    <div class="art-pill"><span class="num">89</span><span class="desc">Chairman & Dy. Chairman of RS</span></div>
+    <div class="art-pill"><span class="num">90</span><span class="desc">Vacation of Dy Chairman's office</span></div>
+    <div class="art-pill"><span class="num">91</span><span class="desc">Powers of Dy. Chairman</span></div>
+    <div class="art-pill"><span class="num">92</span><span class="desc">Restriction during removal motion (RS)</span></div>
+    <div class="art-pill"><span class="num">93</span><span class="desc">Speaker & Deputy Speaker of LS</span></div>
+    <div class="art-pill"><span class="num">94</span><span class="desc">Vacation/removal of Speaker</span></div>
+    <div class="art-pill"><span class="num">95</span><span class="desc">Acting Speaker · Pro-Tem</span></div>
+    <div class="art-pill"><span class="num">96</span><span class="desc">Restriction during removal (LS)</span></div>
+    <div class="art-pill"><span class="num">97</span><span class="desc">Salaries of Chairman/Speaker</span></div>
+    <div class="art-pill"><span class="num">98</span><span class="desc">Secretariat of Parliament</span></div>
+  </div>
+
+  <h2>Members (99–106)</h2>
+  <div class="article-row">
+    <div class="art-pill"><span class="num">99</span><span class="desc">Oath by members</span></div>
+    <div class="art-pill"><span class="num">100</span><span class="desc">Voting, Quorum (1/10th)</span></div>
+    <div class="art-pill"><span class="num">101</span><span class="desc">Vacation of seats</span></div>
+    <div class="art-pill"><span class="num">102</span><span class="desc">Disqualification of MPs</span></div>
+    <div class="art-pill"><span class="num">103</span><span class="desc">President decides disqualification</span></div>
+    <div class="art-pill"><span class="num">104</span><span class="desc">₹500 fine for unqualified sitting</span></div>
+    <div class="art-pill"><span class="num">105</span><span class="desc">Powers & Privileges of MPs</span></div>
+    <div class="art-pill"><span class="num">106</span><span class="desc">Salary of MPs</span></div>
+  </div>
+
+  <h2>Legislative Procedure (107–122)</h2>
+  <div class="article-row">
+    <div class="art-pill"><span class="num">107</span><span class="desc">Introduction & passing of bills</span></div>
+    <div class="art-pill"><span class="num">108</span><span class="desc">Joint Sitting (deadlock)</span></div>
+    <div class="art-pill"><span class="num">109</span><span class="desc">Procedure for Money Bill</span></div>
+    <div class="art-pill"><span class="num">110</span><span class="desc">Definition of Money Bill</span></div>
+    <div class="art-pill"><span class="num">111</span><span class="desc">Assent to Bills (Veto powers)</span></div>
+    <div class="art-pill"><span class="num">112</span><span class="desc">Annual Financial Statement (Budget)</span></div>
+    <div class="art-pill"><span class="num">113</span><span class="desc">Estimates & Demand for Grants</span></div>
+    <div class="art-pill"><span class="num">114</span><span class="desc">Appropriation Bill</span></div>
+    <div class="art-pill"><span class="num">115</span><span class="desc">Supplementary/Additional Grants</span></div>
+    <div class="art-pill"><span class="num">116</span><span class="desc">Vote on Account</span></div>
+    <div class="art-pill"><span class="num">117</span><span class="desc">Financial Bills (two types)</span></div>
+    <div class="art-pill"><span class="num">118</span><span class="desc">Rules of Procedure (each house)</span></div>
+    <div class="art-pill"><span class="num">119</span><span class="desc">Regulation for Financial Business</span></div>
+    <div class="art-pill"><span class="num">120</span><span class="desc">Language in Parliament (Hindi/English)</span></div>
+    <div class="art-pill"><span class="num">121</span><span class="desc">No discussion on judges' conduct</span></div>
+    <div class="art-pill"><span class="num">122</span><span class="desc">Courts not to inquire into Parliamentary proceedings</span></div>
+  </div>
+
+  <h2>Chapter III (123)</h2>
+  <div class="article-row">
+    <div class="art-pill"><span class="num">123</span><span class="desc">Legislative Power of President — Ordinance</span></div>
+  </div>
+
+  <h2>Related Articles</h2>
+  <div class="article-row">
+    <div class="art-pill"><span class="num">64</span><span class="desc">VP = Ex-Officio Chairman of RS</span></div>
+    <div class="art-pill"><span class="num">74</span><span class="desc">Council of Ministers advice to President</span></div>
+    <div class="art-pill"><span class="num">75(3)</span><span class="desc">Collective responsibility to Lok Sabha</span></div>
+    <div class="art-pill"><span class="num">88</span><span class="desc">Rights of ministers & AG in Parliament (no vote)</span></div>
+    <div class="art-pill"><span class="num">266</span><span class="desc">CFI & Public Account</span></div>
+    <div class="art-pill"><span class="num">267</span><span class="desc">Contingency Fund of India</span></div>
+    <div class="art-pill"><span class="num">10th Sch.</span><span class="desc">Anti-Defection Law (52nd Amdt, 1985)</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ HIGH YIELD ══════════════════════════════════ -->
+<div class="page" id="page-high-yield" style="display:none">
+  <h1>🎯 High-Yield Revision Notes</h1>
+  <p class="subtitle">The most exam-tested facts from this chapter</p>
+
+  <h2>Officers — Must-Know Facts</h2>
+  <div class="uf-grid">
+    <div class="uf-cell"><div class="uf-title">VP = Chairman RS</div><div class="uf-val">NOT a member · Cannot vote</div></div>
+    <div class="uf-cell"><div class="uf-title">Deputy Chairman RS</div><div class="uf-val">Elected by RS · Resigns to VP · Removed: eff. majority RS → simple LS</div></div>
+    <div class="uf-cell"><div class="uf-title">Speaker LS</div><div class="uf-val">Elected by LS · First: GV Mavalankar · Removed: eff. majority LS only</div></div>
+    <div class="uf-cell"><div class="uf-title">Pro-Tem Speaker</div><div class="uf-val">Appointed by President · Most senior MP (experience) · Only Lok Sabha</div></div>
+    <div class="uf-cell"><div class="uf-title">Casting Vote</div><div class="uf-val">Only on tie · Presiding officer · VP has NO vote in RS</div></div>
+    <div class="uf-cell"><div class="uf-title">Quorum</div><div class="uf-val">1/10th (10%) · Both houses · Presiding officer adjourns if not met</div></div>
+  </div>
+
+  <h2>Bills — Must-Know Facts</h2>
+  <div class="uf-grid">
+    <div class="uf-cell"><div class="uf-title">Money Bill Origin</div><div class="uf-val">ONLY Lok Sabha · RS = 14 days, recommend only</div></div>
+    <div class="uf-cell"><div class="uf-title">Joint Sitting</div><div class="uf-val">3 times in history · Called by President · Simple majority</div></div>
+    <div class="uf-cell"><div class="uf-title">Pocket Veto</div><div class="uf-val">Giani Zail Singh · 1986 · Indian Postal Amendment Bill</div></div>
+    <div class="uf-cell"><div class="uf-title">Suspensive Veto</div><div class="uf-val">NOT available for Money Bill · Available for ordinary bills</div></div>
+    <div class="uf-cell"><div class="uf-title">Ordinance</div><div class="uf-val">Art. 123 · Approved within 6 weeks · Max life: 6M+6W</div></div>
+    <div class="uf-cell"><div class="uf-title">Budget</div><div class="uf-val">"Budget" NOT in Constitution · Annual Financial Statement · Art. 112</div></div>
+  </div>
+
+  <h2>Anti-Defection — Must-Know Facts</h2>
+  <div class="uf-grid">
+    <div class="uf-cell"><div class="uf-title">Amendment & Schedule</div><div class="uf-val">52nd Amendment · 1985 · 10th Schedule</div></div>
+    <div class="uf-cell"><div class="uf-title">Nominated MP grace</div><div class="uf-val">6 months to join a party · After = disqualification</div></div>
+    <div class="uf-cell"><div class="uf-title">Decides disqualification</div><div class="uf-val">President · On advice of Election Commission (NOT PM)</div></div>
+  </div>
+
+  <h2>Committees — Must-Know Facts</h2>
+  <div class="uf-grid">
+    <div class="uf-cell"><div class="uf-title">PAC</div><div class="uf-val">22 members (15LS+7RS) · Est. 1921 (Montagu-Chelmsford)</div></div>
+    <div class="uf-cell"><div class="uf-title">Estimates Committee</div><div class="uf-val">30 members · ALL LS only · Est. 1950 · John Mathai Committee</div></div>
+    <div class="uf-cell"><div class="uf-title">CPU</div><div class="uf-val">22 members · Krishna Menon Committee</div></div>
+    <div class="uf-cell"><div class="uf-title">Common to all 3</div><div class="uf-val">No ministers · Proportional Representation · 1-year term</div></div>
+    <div class="uf-cell"><div class="uf-title">Speaker chairs</div><div class="uf-val">Rules + Business Advisory + General Purpose Committees</div></div>
+    <div class="uf-cell"><div class="uf-title">Departmental</div><div class="uf-val">24 committees · 16 LS + 8 RS · Max 31 members (21+10)</div></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ 30-SECOND SHEET ══════════════════════════════════ -->
+<div class="page" id="page-30sec" style="display:none">
+  <h1>🔥 30-Second Revision Sheet</h1>
+  <p class="subtitle">Scan this when you have less than a minute</p>
+
+  <div class="card card-green" style="font-size:13px;line-height:2.2">
+    <strong style="color:var(--green)">VP</strong> = Chairman RS, NOT member · 
+    <strong style="color:var(--blue)">Speaker</strong> = elected by LS, GV Mavalankar (1st) ·
+    <strong style="color:var(--yellow)">Pro-Tem</strong> = appointed by President, senior MP (experience), oath only ·
+    <strong style="color:var(--purple)">Quorum</strong> = 1/10th ·
+    <strong style="color:var(--fire)">Anti-Defection</strong> = 52nd Amdt 1985, 10th Schedule ·
+    <strong style="color:var(--green)">Money Bill</strong> = only LS, RS=14 days recommend, Speaker certifies ·
+    <strong style="color:var(--blue)">Joint Sitting</strong> = 3 times (Dowry/Banking/POTA), called by President ·
+    <strong style="color:var(--red)">Pocket Veto</strong> = Giani Zail Singh, 1986, Postal Bill ·
+    <strong style="color:var(--yellow)">Ordinance</strong> = Art 123, 6 weeks approval, max 6M+6W ·
+    <strong style="color:var(--purple)">Budget</strong> = NOT in Constitution, Annual Financial Statement, Art 112 ·
+    <strong style="color:var(--green)">Appropriation Bill</strong> = needed to withdraw from CFI ·
+    <strong style="color:var(--blue)">Estimates Cmt</strong> = 30 members, ALL LS, John Mathai, 1950 ·
+    <strong style="color:var(--fire)">PAC/CPU</strong> = 22 members each (15+7), no ministers, 1-year term
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ LAST NIGHT ══════════════════════════════════ -->
+<div class="page" id="page-last-night" style="display:none">
+  <h1>🌙 Last Night Before Exam</h1>
+  <p class="subtitle">Only read this. Nothing else. These are the highest-probability points.</p>
+
+  <div class="ln-item"><div class="ln-bullet">①</div><span>VP = Chairman Rajya Sabha (Art. 89 + 64). <b>NOT a member</b> of RS. No vote at first instance. No casting vote.</span></div>
+  <div class="ln-item"><div class="ln-bullet">②</div><span>First Speaker = <b>GV Mavalankar</b>. Deputy Speaker post vacant since <b>2014</b>.</span></div>
+  <div class="ln-item"><div class="ln-bullet">③</div><span>Pro-Tem Speaker = President appoints most senior MP by <b>experience</b> (not age). Job: administer oath. Only in Lok Sabha.</span></div>
+  <div class="ln-item"><div class="ln-bullet">④</div><span>Quorum = <b>1/10th</b> of members. If absent → presiding officer adjourns.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑤</div><span>Dual membership: 2 months to choose. If you win 2 seats same house → <b>both vacant</b>. Absent >60 days → seat lost.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑥</div><span>Disqualification (5 grounds): Office of Profit (not defined in Const.) · Unsound mind · Insolvency · Foreign citizenship · Anti-Defection.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑦</div><span>Anti-Defection = <b>52nd Amendment, 1985 → 10th Schedule</b>. President decides on advice of <b>Election Commission</b>.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑧</div><span>Nominated RS member grace period = <b>6 months</b> to join a party.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑨</div><span>Fine for unqualified voting/sitting = <b>₹500 per day</b> (Art. 104).</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑩</div><span>Civil immunity for MPs: 40 days before session + during + 40 days after. <b>Criminal cases can proceed.</b></span></div>
+  <div class="ln-item"><div class="ln-bullet">⑪</div><span>Money Bill = ONLY Lok Sabha. RS = <b>14 days</b>, recommend only. Certified by <b>Speaker LS</b>. No joint sitting for Money Bill.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑫</div><span>Joint Sitting = <b>3 times</b>: Dowry Prohibition (1961) + Banking Commission (1978) + POTA (2002). Simple majority. Called by President.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑬</div><span>Pocket Veto = <b>Giani Zail Singh, 1986, Indian Postal Amendment Bill</b>. No time limit in Constitution.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑭</div><span>Suspensive Veto NOT available for Money Bill (already had President's prior recommendation).</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑮</div><span>Ordinance = Art. 123. Approved within <b>6 weeks</b>. Max life = <b>6 months + 6 weeks</b>.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑯</div><span>Budget = "Annual Financial Statement" (Art. 112). Word "Budget" NOT in Constitution. Presented by Finance Minister.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑰</div><span>Appropriation Bill needed to withdraw from <b>Consolidated Fund of India</b> (Art. 266).</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑱</div><span>Estimates Committee = <b>30 members, ALL from LS</b>. Est. 1950 on <b>John Mathai Committee</b> recommendation.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑲</div><span>PAC and CPU = 22 members each (15 LS + 7 RS). All three financial committees: no ministers, proportional rep, 1-year term.</span></div>
+  <div class="ln-item"><div class="ln-bullet">⑳</div><span>Speaker chairs 3 committees: <b>Rules + Business Advisory + General Purpose</b>. Deputy Chairman becomes automatic chairman of any committee he joins.</span></div>
+</div>
+
+</div><!-- end content -->
+</div><!-- end app -->
+
+<script>
+  // Navigation
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const page = document.getElementById('page-' + id);
+    const nav = document.getElementById('nav-' + id);
+    if (page) page.classList.add('active');
+    if (nav) nav.classList.add('active');
+    document.getElementById('content').scrollTop = 0;
+  }
+
+  // Layer system
+  function setLayer(n) {
+    // Hide layer-specific pages
+    const layerPages = {
+      1: ['big-picture','memory-palace','rajya-officers','lok-officers','sessions','qualifications','disqualification','privileges','ordinary-bill','money-bill','veto','ordinance','committees','traps','active-recall','articles-quick'],
+      2: ['high-yield'],
+      3: ['ultra-fast-sheet'],
+      4: ['30sec'],
+      5: ['last-night']
+    };
+
+    document.querySelectorAll('.layer-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.layer-btn')[n-1].classList.add('active');
+
+    document.body.setAttribute('data-layer', n);
+
+    // Show appropriate page
+    const pagesForLayer = {
+      1: 'big-picture',
+      2: 'high-yield',
+      3: 'ultra-fast-sheet',
+      4: '30sec',
+      5: 'last-night'
+    };
+
+    // Show all pages in the DOM but only display the right one
+    document.querySelectorAll('.page').forEach(p => { p.style.display = 'none'; p.classList.remove('active'); });
+
+    const targetId = pagesForLayer[n];
+    const el = document.getElementById('page-' + targetId);
+    if (el) { el.style.display = 'block'; el.classList.add('active'); }
+
+    // If layer 1, restore all pages (hide them but keep in DOM)
+    if (n === 1) {
+      document.querySelectorAll('.page').forEach(p => { p.style.display = ''; p.classList.remove('active'); });
+      showPage('big-picture');
+    }
+
+    document.getElementById('content').scrollTop = 0;
+  }
+
+  // Active recall toggle
+  function toggleAnswer(card) {
+    card.classList.toggle('revealed');
+  }
+
+  // Layer 1 sidebar — show all pages accessible
+  // Layer 2+ — show only that layer's page
+
+  // Make all pages visible in DOM with display:block initially
+  // They are controlled via .active class
+  document.querySelectorAll('.page').forEach(p => { p.style.display = ''; });
+</script>
+
+</body>
+</html>

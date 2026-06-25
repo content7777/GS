@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State Legislature — Mirror Delhi Revision System</title>
+<style>
+:root{
+  --bg:#0b0d12;
+  --bg-card:#141821;
+  --bg-card2:#181d28;
+  --border:#232a3a;
+  --green:#86efac;
+  --green-dim:#4ade8055;
+  --blue:#7dd3fc;
+  --blue-dim:#38bdf855;
+  --text:#e8eaed;
+  --muted:#9aa4b2;
+  --amber:#fbbf8f;
+  --red:#fca5a5;
+  --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:var(--sans);}
+body{display:flex;min-height:100vh;overflow-x:hidden;}
+::selection{background:var(--green-dim);}
+a{color:var(--blue);}
+
+/* ---------- Layout shell ---------- */
+.sidebar{
+  width:240px;flex-shrink:0;background:linear-gradient(180deg,#0d1018,#0a0c11);
+  border-right:1px solid var(--border);position:fixed;top:0;left:0;bottom:0;
+  display:flex;flex-direction:column;overflow-y:auto;z-index:50;
+}
+.brand{
+  padding:22px 18px 14px;border-bottom:1px solid var(--border);
+}
+.brand .badge{
+  font-family:var(--serif);font-size:13px;letter-spacing:.06em;color:var(--muted);
+  display:flex;align-items:center;gap:8px;
+}
+.bridge{
+  font-family:var(--serif);font-size:20px;font-weight:700;margin-top:6px;
+  color:var(--text);
+}
+.bridge span.num{color:var(--green);}
+.bridge span.arrow{color:var(--muted);font-size:14px;margin:0 4px;}
+.bridge .plus{font-size:11px;color:var(--blue);display:block;margin-top:2px;font-family:var(--sans);letter-spacing:.04em;}
+.brand .sub{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.4;}
+
+nav.navlist{flex:1;padding:10px;}
+.navbtn{
+  display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+  background:transparent;border:none;color:var(--muted);padding:10px 12px;
+  border-radius:8px;font-size:13.5px;cursor:pointer;margin-bottom:2px;
+  transition:background .15s, color .15s;font-family:var(--sans);
+}
+.navbtn:hover{background:#171c27;color:var(--text);}
+.navbtn.active{background:linear-gradient(90deg,#16241c,#10151f);color:var(--green);box-shadow:inset 2px 0 0 var(--green);}
+.navbtn .ic{width:18px;text-align:center;flex-shrink:0;}
+
+.sidebar-foot{padding:14px 18px;border-top:1px solid var(--border);font-size:10.5px;color:#5d6577;}
+
+main{margin-left:240px;flex:1;min-width:0;}
+.page{display:none;padding:38px 48px 80px;max-width:980px;margin:0 auto;animation:fadein .25s ease;}
+.page.active{display:block;}
+@keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+h1.pagetitle{font-family:var(--serif);font-size:30px;margin:0 0 6px;color:var(--text);}
+.pagetitle .accent{color:var(--green);}
+.eyebrow{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:8px;font-weight:600;}
+.lede{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:28px;max-width:760px;}
+
+.card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:12px;
+  padding:20px 22px;margin-bottom:18px;
+}
+.card h3{margin:0 0 10px;font-family:var(--serif);font-size:17px;color:var(--green);}
+.card h3.blue{color:var(--blue);}
+.card p{color:#c7cdd6;font-size:14px;line-height:1.65;margin:0 0 8px;}
+.card ul{margin:6px 0 0;padding-left:20px;color:#c7cdd6;font-size:14px;line-height:1.7;}
+.card li{margin-bottom:4px;}
+
+.tagrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.tag{font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--border);color:var(--muted);}
+.tag.must{border-color:#4ade8055;color:var(--green);background:#16241c;}
+.tag.imp{border-color:#fbbf8f55;color:var(--amber);background:#241d16;}
+.tag.good{border-color:#7dd3fc55;color:var(--blue);background:#101c24;}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0;}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+th{color:var(--blue);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;}
+td{color:#c7cdd6;}
+tr:hover td{background:#161b25;}
+
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:700px){.twocol{grid-template-columns:1fr;}}
+
+.pill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0;}
+.pill{background:var(--bg-card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;}
+.pill .label{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+.pill .val{font-family:var(--serif);font-size:19px;color:var(--green);margin-top:3px;}
+
+/* mirror bridge graphic */
+.numbridge{
+  display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;
+  background:radial-gradient(circle at 30% 20%, #122019 0%, #0b0d12 70%);
+  border:1px solid var(--border);border-radius:14px;padding:22px;margin:18px 0;
+}
+.numbridge .block{text-align:center;}
+.numbridge .block .art{font-family:var(--serif);font-size:26px;color:var(--text);}
+.numbridge .block .lbl{font-size:11px;color:var(--muted);margin-top:2px;}
+.numbridge .op{font-size:13px;color:var(--green);background:#102016;border:1px solid #4ade8055;border-radius:20px;padding:6px 14px;}
+
+/* Exam trap callout */
+.trap{
+  border-left:3px solid var(--red);background:#1c1316;border-radius:0 10px 10px 0;
+  padding:14px 16px;margin-bottom:12px;
+}
+.trap .head{color:var(--red);font-weight:700;font-size:13.5px;margin-bottom:4px;}
+.trap p{color:#d8b9b9;font-size:13.5px;margin:0;line-height:1.6;}
+
+/* flashcard */
+.flash{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:12px;
+  padding:18px 20px;margin-bottom:12px;cursor:pointer;transition:border-color .15s;
+}
+.flash:hover{border-color:var(--green-dim);}
+.flash .q{color:var(--blue);font-size:14px;font-weight:600;}
+.flash .a{display:none;color:var(--green);font-size:14px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);line-height:1.6;}
+.flash.open .a{display:block;}
+.flash .hint{font-size:10.5px;color:#5d6577;margin-top:8px;}
+
+/* memory palace path */
+.palace-step{
+  display:flex;gap:16px;margin-bottom:22px;position:relative;
+}
+.palace-step .node{
+  width:38px;height:38px;border-radius:50%;background:#10151f;border:1px solid var(--green-dim);
+  display:flex;align-items:center;justify-content:center;font-family:var(--serif);color:var(--green);
+  flex-shrink:0;font-size:14px;
+}
+.palace-step .line{
+  position:absolute;left:18px;top:38px;bottom:-22px;width:1px;background:var(--border);
+}
+.palace-step:last-child .line{display:none;}
+.palace-step .content h4{margin:2px 0 4px;color:var(--text);font-family:var(--serif);font-size:16px;}
+.palace-step .content p{color:#c7cdd6;font-size:13.5px;line-height:1.6;margin:0;}
+.palace-step .content .art-tag{display:inline-block;font-size:11px;color:var(--blue);border:1px solid var(--blue-dim);padding:1px 7px;border-radius:10px;margin-top:6px;}
+
+.heroband{
+  background:linear-gradient(135deg,#0f1a14,#0b0d12 60%);border:1px solid var(--border);
+  border-radius:16px;padding:26px 26px;margin-bottom:24px;
+}
+
+.subnav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;position:sticky;top:0;background:var(--bg);padding:10px 0;z-index:5;}
+.subnav button{
+  background:var(--bg-card2);border:1px solid var(--border);color:var(--muted);font-size:12px;
+  padding:6px 12px;border-radius:20px;cursor:pointer;font-family:var(--sans);
+}
+.subnav button:hover{color:var(--green);border-color:var(--green-dim);}
+
+.cheat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
+.cheat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+.cheat-card .t{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.cheat-card .v{font-family:var(--serif);color:var(--green);font-size:15px;line-height:1.4;}
+
+.lastnight{
+  background:radial-gradient(circle at 50% 0%, #14201a, #0b0d12 70%);
+  border:1px solid var(--green-dim);border-radius:16px;padding:28px;
+}
+.lastnight h2{font-family:var(--serif);color:var(--green);margin-top:0;}
+.lastnight ul{font-size:14.5px;line-height:1.9;}
+
+.divider{height:1px;background:var(--border);margin:26px 0;}
+
+/* mobile */
+.hamburger{display:none;position:fixed;top:14px;left:14px;z-index:60;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:8px;width:38px;height:38px;color:var(--green);font-size:18px;cursor:pointer;}
+@media(max-width:880px){
+  .sidebar{transform:translateX(-100%);transition:transform .2s ease;width:240px;}
+  .sidebar.open{transform:translateX(0);}
+  main{margin-left:0;}
+  .hamburger{display:flex;align-items:center;justify-content:center;}
+  .page{padding:70px 18px 60px;}
+}
+footer.pagefoot{color:#5d6577;font-size:11px;margin-top:30px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="hamburger" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</div>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="badge">🏛️ FRB 2.0 — Polity</div>
+    <div class="bridge">Art <span class="num">163</span><span class="arrow">→</span><span class="num">213</span></div>
+    <span class="plus">PART VI · CHAPTER III</span>
+    <div class="sub">State Legislature, decoded as the mirror image of Parliament you already know.</div>
+  </div>
+  <nav class="navlist" id="navlist">
+    <button class="navbtn active" data-page="p1"><span class="ic">🏠</span> Big Picture</button>
+    <button class="navbtn" data-page="p2"><span class="ic">🏯</span> Memory Palace</button>
+    <button class="navbtn" data-page="p3"><span class="ic">📘</span> Complete Notes</button>
+    <button class="navbtn" data-page="p4"><span class="ic">🧠</span> Memory Hooks</button>
+    <button class="navbtn" data-page="p5"><span class="ic">🔗</span> Concept Connections</button>
+    <button class="navbtn" data-page="p6"><span class="ic">⚠️</span> Exam Traps</button>
+    <button class="navbtn" data-page="p7"><span class="ic">🎯</span> Examiner's Questions</button>
+    <button class="navbtn" data-page="p8"><span class="ic">❓</span> Active Recall</button>
+    <button class="navbtn" data-page="p9"><span class="ic">⭐</span> High-Yield Notes</button>
+    <button class="navbtn" data-page="p10"><span class="ic">⚡</span> Ultra-Fast Sheet</button>
+    <button class="navbtn" data-page="p11"><span class="ic">⏱️</span> 30-Second Sheet</button>
+    <button class="navbtn" data-page="p12"><span class="ic">🌙</span> Last Night Before Exam</button>
+  </nav>
+  <div class="sidebar-foot">Tap any flashcard to reveal the answer. Revise top → bottom, 12 layers, one chapter.</div>
+</aside>
+
+<main>
+
+<!-- PAGE 1: BIG PICTURE -->
+<section class="page active" id="p1">
+  <div class="eyebrow">Big Picture</div>
+  <h1 class="pagetitle">State Legislature is <span class="accent">Parliament wearing a state costume</span></h1>
+  <p class="lede">Part VI of the Constitution deals with the States. It has six chapters. You are sitting in Chapter III — State Legislature (Art 168–212), plus Chapter IV's Ordinance power (Art 213). Almost every article here is a renumbered twin of an article you already studied in Parliament. Learn the renumbering rule once, and the whole chapter becomes recall, not new learning.</p>
+
+  <div class="heroband">
+    <div class="numbridge">
+      <div class="block"><div class="art">74–111</div><div class="lbl">Parliament (Part V)</div></div>
+      <div class="op">+ 89</div>
+      <div class="block"><div class="art">163–200</div><div class="lbl">State Legislature</div></div>
+    </div>
+    <div class="numbridge">
+      <div class="block"><div class="art">112–123</div><div class="lbl">Parliament (Part V)</div></div>
+      <div class="op">+ 90</div>
+      <div class="block"><div class="art">202–213</div><div class="lbl">State Legislature</div></div>
+    </div>
+    <p style="text-align:center;color:var(--muted);font-size:13px;margin-top:4px;">The offset jumps from <b style="color:var(--green)">+89</b> to <b style="color:var(--blue)">+90</b> right after the Governor's Assent article (200), because the Governor has one extra power the President doesn't: <i>reserving a bill for the President</i>. That single extra power is the reason one extra article slots in — remember this and you'll never miscalculate an article number again.</p>
+  </div>
+
+  <div class="card">
+    <h3>Part VI — the six chapters of "State"</h3>
+    <table>
+      <tr><th>Ch.</th><th>Subject</th><th>Key Articles</th></tr>
+      <tr><td>I</td><td>General</td><td>152</td></tr>
+      <tr><td>II</td><td>State Executive (Governor, CM, Council of Ministers, Advocate General)</td><td>153–167</td></tr>
+      <tr><td>III</td><td><b style="color:var(--green)">State Legislature</b> (this chapter)</td><td>168–212</td></tr>
+      <tr><td>IV</td><td>Legislative Power of the Governor (Ordinances)</td><td>213</td></tr>
+      <tr><td>V</td><td>High Court</td><td>214–231</td></tr>
+      <tr><td>VI</td><td>Subordinate Courts</td><td>233–237</td></tr>
+    </table>
+    <p style="margin-top:8px;"><span class="tag good">Good to know</span> Part VII (which dealt with Part-B states) once existed but was <b>repealed by the 7th Constitutional Amendment Act, 1956</b>. Don't confuse "Part VI repealed" — it's Part VII that's gone, Part VI is alive and is exactly what you're studying.</p>
+  </div>
+
+  <div class="card">
+    <h3 class="blue">The master parallel — memorise this table once</h3>
+    <table>
+      <tr><th>Centre (Union)</th><th>State</th></tr>
+      <tr><td>President</td><td>Governor</td></tr>
+      <tr><td>Prime Minister</td><td>Chief Minister</td></tr>
+      <tr><td>Council of Ministers</td><td>Council of Ministers</td></tr>
+      <tr><td>Attorney General</td><td>Advocate General</td></tr>
+      <tr><td>Lok Sabha (Lower House)</td><td>Legislative Assembly / Vidhan Sabha</td></tr>
+      <tr><td>Rajya Sabha (Upper House)</td><td>Legislative Council / Vidhan Parishad</td></tr>
+    </table>
+    <p><span class="tag must">Must know</span> Rajya Sabha exists in <b>every</b> Parliament — permanently. The Legislative Council, by contrast, exists in only <b>6 states</b> and can be created or abolished. That single asymmetry generates half the "exam traps" in this chapter.</p>
+  </div>
+</section>
+
+<!-- PAGE 2: MEMORY PALACE -->
+<section class="page" id="p2">
+  <div class="eyebrow">Chapter Memory Palace</div>
+  <h1 class="pagetitle">Walk through <span class="accent">Mirror Delhi</span></h1>
+  <p class="lede">Picture a city built as the exact mirror of Delhi (Parliament). Same buildings, same roads — but every street address has been shifted by +89 (and later +90). You are walking through this city gate to gate. Each stop is one article.</p>
+
+  <div class="palace-step">
+    <div class="node">1</div><div class="line"></div>
+    <div class="content">
+      <h4>The Executive Lane (entry gate)</h4>
+      <p>Before the Legislature begins, you pass the Governor's Mansion, the CM's house, the shared Council-of-Ministers bungalow, and the Advocate General's chamber — the exact mirror of the President/PM/Attorney-General lane you already walked in Parliament. Same rules, same 15% ministers cap, same 6-month "must become a member of a House" clock.</p>
+      <span class="art-tag">Art 163–167 ( = 74–78 + 89 )</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">2</div><div class="line"></div>
+    <div class="content">
+      <h4>Composition Square — three statues</h4>
+      <p>A plaza with three statues: the Governor, a tower labelled "Legislative Assembly" (standing in every city), and a second tower labelled "Legislative Council" — but this second tower is only built in <b>6 of 29 cities</b>. A sign reads "Bicameral cities only."</p>
+      <span class="art-tag">Art 168</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">3</div><div class="line"></div>
+    <div class="content">
+      <h4>The Construction Site that comes and goes</h4>
+      <p>Next to the Council tower is a permit office. A city Assembly can apply to "Parliament Corp" to build (create) or demolish (abolish) its Council tower — and Parliament Corp can approve it with just a <b>simple majority</b>, no special constitutional permit required. Unlike the Rajya Sabha tower in true Delhi, which can never be demolished.</p>
+      <span class="art-tag">Art 169</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">4</div><div class="line"></div>
+    <div class="content">
+      <h4>Assembly Hall — 500 seats, 60 minimum</h4>
+      <p>A grand hall with a capacity sign: max <b>500</b>, min <b>60</b> — smaller than the Lok Sabha hall (552 / no fixed minimum mentioned) but built on the same blueprint.</p>
+      <span class="art-tag">Art 170</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">5</div><div class="line"></div>
+    <div class="content">
+      <h4>The Council's Composition Workshop — a pie being cut</h4>
+      <p>A workshop slicing a pie into 1/3 (local bodies), 1/3 (sent by the Assembly), 1/12 (graduates), 1/12 (teachers) — that's 5/6 of the pie, all <i>indirectly elected</i>. The Governor stands at a VIP booth nominating the last 1/6 — people skilled in Literature, Art, Science, Cooperative movement or Social service.</p>
+      <span class="art-tag">Art 171</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">6</div><div class="line"></div>
+    <div class="content">
+      <h4>Two Clock Towers — Duration</h4>
+      <p>The Assembly's clock resets fully every <b>5 years</b>. The Council's clock never stops (a "continuing chamber," like Rajya Sabha) but loses one-third of its gears every 2 years — so any single gear (member) lasts <b>6 years</b>.</p>
+      <span class="art-tag">Art 172</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">7</div><div class="line"></div>
+    <div class="content">
+      <h4>The ID-Check Gate</h4>
+      <p>Two queues: "25 and above" for the Assembly gate, "30 and above" for the Council gate — identical to the Lok Sabha/Rajya Sabha age gates.</p>
+      <span class="art-tag">Art 173</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">8</div><div class="line"></div>
+    <div class="content">
+      <h4>Session Hall + Governor's Stage</h4>
+      <p>Sessions can never go silent for more than 6 months. Once a year (Budget session) and after every general election, the Governor walks onto a special stage to give the opening Address (also called the Motion of Thanks address) — same script as the President's.</p>
+      <span class="art-tag">Art 174–176</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">9</div><div class="line"></div>
+    <div class="content">
+      <h4>Advocate General's Podium — speak anywhere, vote nowhere</h4>
+      <p>The AG can walk onto either house's podium and speak freely, but since he belongs to no house, there's no ballot box with his name on it anywhere.</p>
+      <span class="art-tag">Art 177</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">10</div><div class="line"></div>
+    <div class="content">
+      <h4>The Reversed Staircase</h4>
+      <p>In true Delhi you climb the Rajya Sabha officers' stairs (Chairman, Dy. Chairman) before the Lok Sabha stairs. In Mirror Delhi the staircase is flipped — you meet the Assembly's Speaker & Dy. Speaker first, then the Council's Chairman & Dy. Chairman.</p>
+      <span class="art-tag">Art 178 onward</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">11</div><div class="line"></div>
+    <div class="content">
+      <h4>The Money Bill Factory</h4>
+      <p>Bills marked "Money" can only roll off the Assembly's assembly-line. If a Council exists, it gets 14 days to suggest changes — it cannot rewrite the bill. No Council in the state? The bill walks straight to the Governor's desk.</p>
+      <span class="art-tag">Art 198–199</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">12</div><div class="line"></div>
+    <div class="content">
+      <h4>Governor's Assent Desk — with one extra red lever</h4>
+      <p>Same desk as the President's: stamp it ("absolute veto"), send it back once ("suspensive veto" — not available for Money Bills), or sit on it forever ("pocket veto," no deadline exists). But this desk has one extra red lever the President's desk does not have: <b>"Reserve for the President."</b> Pulling it sends the bill up to Delhi if it threatens the federal structure. This one extra lever is why the city's address numbers jump from +89 to +90 from here on.</p>
+      <span class="art-tag">Art 200</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">13</div><div class="line"></div>
+    <div class="content">
+      <h4>The Budget Vault — no sign says "Budget"</h4>
+      <p>A vault displays, every April 1st, an "Annual Financial Statement" in the Governor's name — the word "Budget" is nowhere written on the vault door, in Delhi or in Mirror Delhi.</p>
+      <span class="art-tag">Art 202</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">14</div><div class="line"></div>
+    <div class="content">
+      <h4>Language Hall → Judges' Silence Room → Courts' Blind-Eye Room</h4>
+      <p>Three quiet rooms in sequence: the Language Hall (debates may be in the state's official language), the room where the House must stay silent about a judge's conduct, and the room where courts must look away from internal House proceedings.</p>
+      <span class="art-tag">Art 210–212</span>
+    </div>
+  </div>
+
+  <div class="palace-step">
+    <div class="node">15</div><div class="line"></div>
+    <div class="content">
+      <h4>The Ordinance Bunker — red phone, 6-week timer, two ghosts</h4>
+      <p>A bunker the Governor opens only when both houses are dark (not in session). A red phone has a 6-week countdown — if the reassembled House doesn't approve, the ordinance dies. Two ghosts haunt this room: the <b>DC Wadhwa ghost</b>, warning against bringing the same ordinance back from the dead again and again ("fraud on the Constitution," 1986), and the <b>Cooper ghost</b>, reminding everyone that even this bunker is watched — ordinances are subject to judicial review.</p>
+      <span class="art-tag">Art 213</span>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 3: COMPLETE NOTES -->
+<section class="page" id="p3">
+  <div class="eyebrow">Complete Revision Notes</div>
+  <h1 class="pagetitle">Every fact, in order</h1>
+  <p class="lede">Full detail layer. Use this for your first 2–3 revisions; later, drop to the High-Yield / Ultra-Fast layers.</p>
+
+  <div class="card">
+    <h3>A. State Executive carried into the Legislature chapter (163–167)</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <table>
+      <tr><th>Centre</th><th>State</th><th>Content</th></tr>
+      <tr><td>74</td><td>163</td><td>Council of Ministers headed by the CM to aid &amp; advise the Governor</td></tr>
+      <tr><td>75</td><td>164</td><td>Governor appoints CM; appoints other ministers on CM's advice</td></tr>
+      <tr><td>76</td><td>165</td><td>Advocate General — appointment, qualification, functions</td></tr>
+      <tr><td>77</td><td>166</td><td>Conduct of business of the State Government</td></tr>
+      <tr><td>78</td><td>167</td><td>Duties of CM as respects furnishing information to the Governor</td></tr>
+    </table>
+    <p><b>Six clauses inside 75 (mirrored in 164):</b></p>
+    <ul>
+      <li>(1) Appointment of CM/PM by the Governor/President</li>
+      <li>(2) Ministers hold office during the pleasure of the Governor/President — individual responsibility</li>
+      <li>(3) Council of Ministers collectively responsible to the Legislative Assembly/Lok Sabha</li>
+      <li>(4) Oath and affirmation before entering office</li>
+      <li>(5) A minister who is not a member of either House for 6 consecutive months ceases to be a minister</li>
+      <li>(6) Salary of ministers determined by the Legislature</li>
+      <li>(1A) — <b>91st Amendment, 2003:</b> Council of Ministers size capped at <b>15%</b> of the strength of the Legislative Assembly / Lok Sabha</li>
+      <li>(1B) — A member disqualified under the anti-defection law (10th Schedule) is also disqualified from being appointed a minister</li>
+    </ul>
+    <p><b>Advocate General (165, mirroring Attorney General 76):</b></p>
+    <ul>
+      <li>Appointed by the Governor (AG by the President)</li>
+      <li>Must be qualified to be appointed a <b>High Court</b> judge (AG: Supreme Court judge)</li>
+      <li>Right of audience in all courts of the state (AG: all courts of India)</li>
+      <li>Holds office during the pleasure of the Governor (AG: pleasure of the President)</li>
+      <li>Highest law officer of the State (AG: of the country)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>B. Composition of the State Legislature — Art 168 ( = 79 + 89 )</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <p>State Legislature = Governor + Legislative Assembly (+ Legislative Council, only where it exists).</p>
+    <ul>
+      <li><b>Legislative Assembly</b> exists in every state, and additionally in 3 Union Territories: <b>Delhi, Puducherry, and Jammu &amp; Kashmir</b>.</li>
+      <li><b>Legislative Council (Vidhan Parishad)</b> exists in only <b>6 states</b>: Andhra Pradesh, Bihar, Karnataka, Maharashtra, Telangana, Uttar Pradesh. States with a Council are called <b>bicameral legislatures</b>; the rest are unicameral.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>C. Creation or Abolition of the Legislative Council — Art 169 ( = 80 + 89, but content differs)</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <ul>
+      <li>Unlike the Rajya Sabha (permanent, cannot be abolished), the Legislative Council <b>can be created or abolished</b>.</li>
+      <li>Process: the state's Legislative Assembly passes a resolution requesting Parliament to create/abolish its Council. Parliament then enacts a law to do so.</li>
+      <li>It is entirely <b>Parliament's discretion</b> whether to act on the request — not mandatory.</li>
+      <li><b>No constitutional amendment is required</b> — Parliament can create or abolish a Legislative Council by an ordinary law passed with a <b>simple majority</b>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>D. Composition of the Legislative Assembly — Art 170 ( = 81 + 89 )</h3>
+    <div class="tagrow"><span class="tag imp">Important</span></div>
+    <table>
+      <tr><th></th><th>Lok Sabha</th><th>Legislative Assembly</th></tr>
+      <tr><td>Maximum</td><td>552 (commonly cited)</td><td>500</td></tr>
+      <tr><td>Minimum</td><td>No fixed minimum mentioned</td><td>60</td></tr>
+    </table>
+    <p>The same 15% rule that applies to Lok Sabha Council-of-Ministers strength applies to the Assembly's Council of Ministers as well.</p>
+  </div>
+
+  <div class="card">
+    <h3>E. Composition of the Legislative Council — Art 171</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <p>This article exists instead of a direct "delimitation" parallel — Lok Sabha/Assembly seats share one common Delimitation framework, so the slot at this point in the Council is used to define how the Upper House (Council) is built.</p>
+    <ul>
+      <li>Total Council strength: not more than <b>1/3rd</b> of the total Assembly strength, with a minimum of <b>40</b> members.</li>
+      <li>Of the total Council members — broken into <b>5/6 elected (indirectly)</b> + <b>1/6 nominated</b>:
+        <ul>
+          <li>1/3 elected by local bodies (municipalities, district boards, etc.)</li>
+          <li>1/3 elected by members of the Legislative Assembly</li>
+          <li>1/12 elected by graduates</li>
+          <li>1/12 elected by teachers (teaching at least at secondary-school level)</li>
+          <li>Remaining 1/6 nominated by the Governor — persons with special knowledge/experience in <b>Literature, Science, Art, Cooperative Movement, or Social Service</b></li>
+        </ul>
+      </li>
+      <li>Election to the Council is <b>indirect</b> (unlike the Legislative Assembly's direct election).</li>
+      <li><span class="tag good">Good to know</span> "Cooperative movement" as a nominating category connects to the <b>97th Constitutional Amendment Act, 2011</b> (on cooperative societies) — covered separately under Local Bodies.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>F. Duration — Art 172 ( = 83 + 89 )</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <table>
+      <tr><th></th><th>Term</th><th>Nature</th></tr>
+      <tr><td>Legislative Assembly</td><td>5 years</td><td>Dissolves like Lok Sabha</td></tr>
+      <tr><td>Legislative Council</td><td>No fixed House term</td><td>Permanent / continuing chamber, like Rajya Sabha</td></tr>
+      <tr><td>Council — individual member</td><td>6 years</td><td>1/3 of members retire every 2 years</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>G. Qualification for Membership — Art 173 ( = 84 + 89 )</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <ul>
+      <li>Must be a citizen of India.</li>
+      <li>Minimum age: <b>25 years</b> for the Legislative Assembly (same as Lok Sabha).</li>
+      <li>Minimum age: <b>30 years</b> for the Legislative Council (same as Rajya Sabha).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>H. Sessions, Prorogation, Dissolution &amp; Governor's Address — Art 174–176</h3>
+    <div class="tagrow"><span class="tag imp">Important</span></div>
+    <ul>
+      <li>The Governor summons, prorogues the House and can dissolve the Assembly (mirroring the President for Parliament). The presiding officer can adjourn a sitting.</li>
+      <li>Maximum permissible gap between two sessions: <b>6 months</b>.</li>
+      <li>Governor's Address (174–176, mirroring 86–87): a general Address, plus a <b>special Address</b> at the start of the year (usually the Budget session) and after every general election to the Assembly — also called the <b>Motion of Thanks</b> address, delivered to both Houses jointly.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>I. Advocate General's Rights — Art 177 ( = 88 + 89 )</h3>
+    <div class="tagrow"><span class="tag good">Good to know</span></div>
+    <p>The Advocate General may speak in, and otherwise take part in the proceedings of, either House — but may <b>vote only</b> in a House of which he is a member. Since the AG (like the Attorney General) is not a member of any House, he cannot vote in either.</p>
+  </div>
+
+  <div class="card">
+    <h3>J. Officers of the State Legislature — Art 178 onward</h3>
+    <div class="tagrow"><span class="tag imp">Important</span></div>
+    <p><b style="color:var(--red)">Order is reversed</b> compared to Parliament:</p>
+    <ul>
+      <li><b>Parliament:</b> Rajya Sabha's Chairman/Deputy Chairman are dealt with first, then Lok Sabha's Speaker/Deputy Speaker.</li>
+      <li><b>State Legislature:</b> Legislative Assembly's Speaker/Deputy Speaker come first, then Legislative Council's Chairman/Deputy Chairman.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>K. Voting and Quorum — Art 189 ( = 100 + 89 )</h3>
+    <div class="tagrow"><span class="tag good">Good to know</span></div>
+    <p>Mirrors Parliament's quorum and voting rules; presiding officer has an original vote plus a casting vote in case of a tie.</p>
+  </div>
+
+  <div class="card">
+    <h3>L. Money Bills — Art 198–199 ( = 109–110 + 89 )</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <ul>
+      <li>A Money Bill can be introduced <b>only in the Legislative Assembly</b>, and only on the Governor's prior recommendation (mirroring the President's prior recommendation for a Union Money Bill).</li>
+      <li>If a Legislative Council exists: it must return the bill within <b>14 days</b> with recommendations; the Assembly may accept or reject these. If the Council does not act within 14 days, the bill is deemed passed as sent by the Assembly.</li>
+      <li>If <b>no Legislative Council</b> exists in the state (the majority of states), the Money Bill passed by the Assembly goes <b>directly to the Governor</b>.</li>
+      <li>The Speaker of the Legislative Assembly certifies whether a bill is a Money Bill or not (mirroring the Lok Sabha Speaker) — this certification is final, and was discussed in the <b>Aadhaar / K.S. Puttaswamy case (2017)</b>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>M. Ordinary Bills — power comparison</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <table>
+      <tr><th></th><th>Centre</th><th>State</th></tr>
+      <tr><td>Ordinary Bill power between Houses</td><td><b>Equal</b> — Lok Sabha &amp; Rajya Sabha</td><td><b>Unequal</b> — Assembly has more power than Council</td></tr>
+      <tr><td>Council/Rajya Sabha can delay Ordinary Bill by</td><td>—</td><td>Max <b>4 months</b> total (3 months first time + 1 month second time)</td></tr>
+      <tr><td>Where can an Ordinary Bill be passed</td><td>Both Houses</td><td>Both Houses (if Council exists)</td></tr>
+      <tr><td>Where can a Money Bill be passed</td><td>Only Lok Sabha</td><td>Only Legislative Assembly</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>N. Governor's Assent &amp; Veto Powers — Art 200 ( = 111 + 89 )</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <ul>
+      <li>The Governor may: (a) give assent — bill becomes an Act/law; (b) withhold assent — <b>absolute veto</b>; (c) return the bill for reconsideration — <b>suspensive veto</b>; or (d) <b>reserve the bill for the President's consideration</b> — an <b>extra power the Governor has that the President does not</b>, typically used if the bill threatens the federal structure.</li>
+      <li><b>Pocket veto:</b> no time limit binds the President (or Governor) to act, so a bill can simply be "kept in the pocket." Example: President Giani Zail Singh pocket-vetoed the <b>Indian Post Office (Amendment) Bill, 1986</b> — it has never been acted upon.</li>
+      <li><b>Suspensive veto is not available for Money Bills</b> (cannot be returned).</li>
+      <li><b>No veto at all (must give assent)</b> for a <b>Constitutional Amendment Bill</b> — settled by the <b>24th Amendment Act, 1971</b>, which made the President's assent to such bills obligatory.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>O. Annual Financial Statement — Art 202 ( = 112 + 90 )</h3>
+    <div class="tagrow"><span class="tag imp">Important</span></div>
+    <ul>
+      <li>A statement of estimated receipts and expenditure for each financial year is laid before both Houses in the <b>Governor's name</b> (Centre: in the <b>President's name</b>).</li>
+      <li>The word "<b>Budget</b>" appears nowhere in the Constitution — the constitutional term is <b>"Annual Financial Statement."</b></li>
+      <li>Financial year: <b>1 April to 31 March</b>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>P. Language, Judges' Conduct &amp; Courts — Art 210–212</h3>
+    <div class="tagrow"><span class="tag good">Good to know</span></div>
+    <table>
+      <tr><th>Centre</th><th>State</th><th>Content</th></tr>
+      <tr><td>120</td><td>210</td><td>Language to be used in the Legislature</td></tr>
+      <tr><td>121</td><td>211</td><td>House shall not discuss the conduct of judges</td></tr>
+      <tr><td>122</td><td>212</td><td>Courts not to inquire into proceedings of the Legislature</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Q. Governor's Ordinance-Making Power — Art 213 ( = 123 + 90 )</h3>
+    <div class="tagrow"><span class="tag must">Must know</span></div>
+    <ul>
+      <li>The Governor may promulgate an ordinance <b>only when the Legislative Assembly (or Council, if it exists) is not in session</b> — used for urgent matters that cannot wait for the next session.</li>
+      <li>Must be approved by the Legislature within <b>6 weeks of reassembly</b>, otherwise it ceases to operate.</li>
+      <li><b>DC Wadhwa case (1986/87):</b> Supreme Court held that the Governor of Bihar's practice of repeatedly re-promulgating the same ordinance, without placing it before the Legislature, was a <b>"fraud on the Constitution."</b></li>
+      <li><b>R.C. Cooper (Cooper) case:</b> Supreme Court held that an ordinance is <b>subject to judicial review</b> — courts can examine it like any other law.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>R. Disqualification &amp; key case laws</h3>
+    <div class="tagrow"><span class="tag imp">Important</span></div>
+    <ul>
+      <li>Disqualification of a member is generally decided by the <b>President/Governor on the advice of the Election Commission</b>.</li>
+      <li><b>Exception — defection cases:</b> decided by the <b>Presiding Officer</b> (Speaker of Lok Sabha / Speaker of the Legislative Assembly), not the President/Governor.</li>
+      <li><b>Kihoto Hollohan vs. Zachillhu (1992):</b> Supreme Court held that the Speaker's decision on a defection case <b>can be judicially reviewed</b>.</li>
+      <li><b>K.S. Puttaswamy case (2017) / Aadhaar judgment:</b> primarily famous for holding the <b>Right to Privacy is a Fundamental Right</b>; in the same Aadhaar-Act litigation the question of the Speaker's Money-Bill certification was examined.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PAGE 4: MEMORY HOOKS -->
+<section class="page" id="p4">
+  <div class="eyebrow">Smart Memory Hooks</div>
+  <h1 class="pagetitle">Pictures that stick</h1>
+  <p class="lede">One vivid image per hard-to-remember cluster. Don't just read these — close your eyes and actually see them for 3 seconds.</p>
+
+  <div class="card">
+    <h3>The Bridge with a Speed Bump</h3>
+    <p>Picture a long bridge numbered 74 to 111, with a toll sign "+89" — every car that crosses gets 89 added to its number plate. Just after plate 200, there's a sudden speed bump, and a sign flips from "+89" to "+90." The bump exists because the Governor's car has one extra accessory (the "reserve for President" lever) that the President's car doesn't.</p>
+  </div>
+
+  <div class="card">
+    <h3>BAUKMT — the Pigeon that lands on 6 nests</h3>
+    <p>A pigeon flying over India's map lands on exactly six big nests and nowhere else: <b>B</b>ihar, <b>A</b>ndhra Pradesh, <b>U</b>ttar Pradesh, <b>K</b>arnataka, <b>M</b>aharashtra, <b>T</b>elangana — say it like a word, "BAUKMT." These are the only six states with a Legislative Council.</p>
+  </div>
+
+  <div class="card">
+    <h3>The 15% Velvet Rope</h3>
+    <p>Imagine the Council of Ministers as a VIP party. A velvet rope at the door only lets in 15% of the total Assembly/Lok Sabha headcount — no matter how many people want to be ministers, the rope holds firm at 15%.</p>
+  </div>
+
+  <div class="card">
+    <h3>Council's Pie — 1/3, 1/3, 1/12, 1/12, 1/6</h3>
+    <p>A pie chart: two big equal slices (1/3 local bodies, 1/3 MLAs), two thin slices (1/12 graduates, 1/12 teachers) — these four slices make 5/6 of the pie. The Governor eats the last slice alone (1/6, nominated) — and he only nominates people from <b>L</b>iterature, <b>A</b>rt, <b>S</b>cience, <b>C</b>ooperative movement, <b>S</b>ocial service — "LASCS," his five favourite hobbies.</p>
+  </div>
+
+  <div class="card">
+    <h3>Two Clocks, One Frozen</h3>
+    <p>The Assembly's clock is a kitchen timer — it rings and resets every 5 years. The Council's clock is a grandfather clock that never stops, but one-third of its gears get replaced every 2 years, so no single gear lives past 6 years.</p>
+  </div>
+
+  <div class="card">
+    <h3>Zail Singh's Pocket</h3>
+    <p>An old coat pocket with a moth-eaten paper inside labelled "Indian Post Office (Amendment) Bill, 1986." It's still there. No deadline ever forced it out — that's a pocket veto.</p>
+  </div>
+
+  <div class="card">
+    <h3>The Wadhwa Zombie Ordinance</h3>
+    <p>An ordinance that keeps "dying" every 6 weeks and getting re-promulgated from its grave by the Bihar Governor, over and over. The Supreme Court (DC Wadhwa, 1986/87) finally drives a stake through it: "this is a fraud on the Constitution."</p>
+  </div>
+
+  <div class="card">
+    <h3>The Mirror Staircase</h3>
+    <p>You walk up a staircase in Parliament: Rajya Sabha officers first, Lok Sabha officers second. Now look in a mirror — the reflection shows the steps in reverse order: Assembly officers first, Council officers second. That's exactly how Articles 178 onward are arranged for states.</p>
+  </div>
+</section>
+
+<!-- PAGE 5: CONCEPT CONNECTIONS -->
+<section class="page" id="p5">
+  <div class="eyebrow">Concept Connections</div>
+  <h1 class="pagetitle">Nothing stands alone</h1>
+  <p class="lede">Facts remembered as a chain survive exam pressure far better than facts remembered in isolation.</p>
+
+  <div class="card">
+    <h3>EVENT → CONSEQUENCE</h3>
+    <ul>
+      <li>7th Constitutional Amendment Act, <b>1956</b> → Part B states abolished → <b>Part VII repealed</b> entirely.</li>
+      <li>91st Amendment, <b>2003</b> → anti-defection clean-up → <b>15% Council-of-Ministers cap</b> + defectors barred from ministership.</li>
+      <li>24th Amendment, <b>1971</b> → President/Governor's discretion removed for Constitutional Amendment Bills → <b>assent becomes obligatory</b>, no veto possible.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>PROBLEM → SOLUTION</h3>
+    <ul>
+      <li>Problem: Bihar Governor kept re-issuing the same ordinance without legislative approval → Solution: <b>DC Wadhwa (1986/87)</b> bans repeated re-promulgation as "fraud on the Constitution."</li>
+      <li>Problem: Could a Speaker's defection ruling escape all scrutiny? → Solution: <b>Kihoto Hollohan (1992)</b> makes it judicially reviewable.</li>
+      <li>Problem: A state wants an Upper House but creating one shouldn't require a heavy constitutional process → Solution: Art 169 allows creation/abolition by <b>ordinary law, simple majority</b>.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>FEATURE → EXCEPTION</h3>
+    <ul>
+      <li>Feature: President/Governor decides disqualification on EC's advice → Exception: <b>defection cases are decided by the Presiding Officer</b>, not the President/Governor.</li>
+      <li>Feature: Suspensive veto lets a bill be returned → Exception: <b>not available for Money Bills</b>.</li>
+      <li>Feature: Ordinary Bills get equal power at the Centre → Exception: <b>State Assembly has more power than the Council</b> for Ordinary Bills.</li>
+      <li>Feature: Both Houses have a fixed term pattern at the Centre (LS 5 yrs dissolves, RS permanent) → State mirrors this exactly with Assembly/Council — <b>no exception here</b>, a rare case where the parallel is perfect.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>CONCEPT → APPLICATION</h3>
+    <ul>
+      <li>Governor's unique "reserve for President" power → applied when a state bill threatens the <b>federal structure</b> of the Constitution.</li>
+      <li>"Cooperative movement" as a Council-nomination category → connects forward to the <b>97th Amendment, 2011</b> (cooperative societies, studied under Local Bodies).</li>
+      <li>Speaker's Money-Bill certification (final, binding) → became central to the <b>Aadhaar Act litigation</b> in K.S. Puttaswamy (2017), since the Aadhaar Act itself was passed as a Money Bill.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PAGE 6: EXAM TRAPS -->
+<section class="page" id="p6">
+  <div class="eyebrow">⚠ Exam Traps</div>
+  <h1 class="pagetitle">Where students lose easy marks</h1>
+  <p class="lede">Every one of these has tripped up real candidates. Read each trap twice.</p>
+
+  <div class="trap"><div class="head">Trap 1 — "Council exists in 6 states," but which 6?</div><p>Students often add/remove a state. Lock in: Andhra Pradesh, Bihar, Karnataka, Maharashtra, Telangana, Uttar Pradesh. West Bengal, Odisha, Tamil Nadu, etc. do <b>not</b> currently have one (though some have requested it in the past).</p></div>
+
+  <div class="trap"><div class="head">Trap 2 — Legislative Assembly in UTs</div><p>Legislative Assembly exists in only <b>3 Union Territories</b>: Delhi, Puducherry, J&K. Don't confuse this with "all UTs" or with the number of states having a Council.</p></div>
+
+  <div class="trap"><div class="head">Trap 3 — Creating/abolishing a Council needs a constitutional amendment</div><p>FALSE. It needs only an ordinary law of Parliament passed by a <b>simple majority</b>, after the state Assembly's request. No special/constitutional-amendment procedure is involved.</p></div>
+
+  <div class="trap"><div class="head">Trap 4 — "Legislative Council is permanent, just like Rajya Sabha"</div><p>Partially true, partially a trap. Like Rajya Sabha, the Council is a continuing chamber that never dissolves as a body and has 1/3 retirement every 2 years (6-year member term). UNLIKE Rajya Sabha, the Council itself <b>can be abolished</b> by Parliament — it isn't permanent in that deeper sense.</p></div>
+
+  <div class="trap"><div class="head">Trap 5 — Mixing up the Council's composition fractions</div><p>1/3 local bodies + 1/3 MLAs + 1/12 graduates + 1/12 teachers (= 5/6) + 1/6 Governor-nominated. Students often swap "1/3" and "1/6," or forget that graduates/teachers are 1/12 each, not 1/6 each.</p></div>
+
+  <div class="trap"><div class="head">Trap 6 — Mechanically adding 89 throughout</div><p>The offset is <b>+89 only up to Article 200</b> (mapped from 111). From Article 202 onward (mapped from 112), the offset becomes <b>+90</b>. Forgetting this break is the single most common numbering error.</p></div>
+
+  <div class="trap"><div class="head">Trap 7 — Officer order at Centre vs State</div><p>Centre: Rajya Sabha's officers (Chairman/Dy. Chairman) are covered before Lok Sabha's (Speaker/Dy. Speaker). State: it's <b>reversed</b> — Assembly's Speaker/Dy. Speaker before Council's Chairman/Dy. Chairman.</p></div>
+
+  <div class="trap"><div class="head">Trap 8 — Veto-type confusion</div><p>Suspensive veto (returning the bill) is unavailable for <b>Money Bills</b>. No veto at all is available for <b>Constitutional Amendment Bills</b> (assent is obligatory, since the 24th Amendment, 1971). These are two different rules about two different bill types — don't merge them.</p></div>
+
+  <div class="trap"><div class="head">Trap 9 — Case law mix-up</div><p><b>DC Wadhwa</b> = repeated re-promulgation of ordinances is a fraud on the Constitution. <b>Cooper case</b> = ordinances are subject to judicial review. <b>Kihoto Hollohan</b> = Speaker's defection decision is judicially reviewable. <b>K.S. Puttaswamy / Aadhaar</b> = Right to Privacy is a Fundamental Right (and Money Bill certification was examined in the same litigation). Four different cases, four different specific holdings — match carefully.</p></div>
+
+  <div class="trap"><div class="head">Trap 10 — Part VI vs Part VII</div><p>Part VI (States) is very much in force — it's what you're studying. Part VII (which dealt with Part-B states) was the one <b>repealed</b>, by the 7th Amendment Act, 1956. Don't let "repealed" attach itself to the wrong Part in your memory.</p></div>
+
+  <div class="trap"><div class="head">Trap 11 — Ordinary Bill power: Centre vs State</div><p>At the Centre, Lok Sabha and Rajya Sabha have <b>equal</b> power over an Ordinary Bill. At the State level, the Assembly has <b>more</b> power than the Council — the Council can only delay an Ordinary Bill (max 4 months total). Don't assume the Centre's "equal power" rule carries over to the State.</p></div>
+</section>
+
+<!-- PAGE 7: EXAMINER'S QUESTIONS -->
+<section class="page" id="p7">
+  <div class="eyebrow">Examiner's Favourite Questions</div>
+  <h1 class="pagetitle">Think like the question-setter</h1>
+
+  <div class="card">
+    <h3>🎯 Statement-based</h3>
+    <p><b>Statement I:</b> The Legislative Council is a permanent body and cannot be abolished.<br><b>Statement II:</b> One-third of its members retire every two years.<br><b>Q:</b> Which statement(s) is/are correct?<br><span style="color:var(--green)">Answer logic: Statement I is false (it CAN be abolished); Statement II is true.</span></p>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Match the Following</h3>
+    <table>
+      <tr><th>Column A</th><th>Column B</th></tr>
+      <tr><td>(1) DC Wadhwa case</td><td>(a) Right to Privacy is a Fundamental Right</td></tr>
+      <tr><td>(2) Kihoto Hollohan case</td><td>(b) Re-promulgation of ordinance is a fraud on the Constitution</td></tr>
+      <tr><td>(3) Cooper case</td><td>(c) Speaker's decision on defection is judicially reviewable</td></tr>
+      <tr><td>(4) K.S. Puttaswamy case</td><td>(d) Ordinance is subject to judicial review</td></tr>
+    </table>
+    <p style="color:var(--green)">Answer: 1-b, 2-c, 3-d, 4-a</p>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Chronology</h3>
+    <p>Arrange in chronological order: (i) DC Wadhwa case (ii) 7th Amendment Act (iii) 24th Amendment Act (iv) K.S. Puttaswamy case (v) 91st Amendment Act</p>
+    <p style="color:var(--green)">Answer: ii (1956) → iii (1971) → i (1986/87) → v (2003) → iv (2017)</p>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Assertion–Reason</h3>
+    <p><b>Assertion (A):</b> A Money Bill passed by the Legislative Assembly cannot be amended by the Legislative Council.<br><b>Reason (R):</b> The Council can only recommend amendments within 14 days; the Assembly may accept or reject them.<br><span style="color:var(--green)">Both A and R are true, and R correctly explains A.</span></p>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Frequently misread / confusing facts the examiner loves</h3>
+    <ul>
+      <li>Which states currently have a Legislative Council? (6 — BAUKMT)</li>
+      <li>Article number for Governor's Ordinance power vs President's Ordinance power (213 vs 123).</li>
+      <li>Minimum age for Assembly vs Council membership (25 vs 30).</li>
+      <li>Maximum/minimum strength of Legislative Assembly (500 / 60) vs Lok Sabha (552 / no fixed minimum stated).</li>
+      <li>Who certifies a Money Bill at the state level — the Speaker of the Legislative Assembly, not the Governor.</li>
+      <li>Where the "+89" rule breaks and becomes "+90" (after Article 200/111).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PAGE 8: ACTIVE RECALL -->
+<section class="page" id="p8">
+  <div class="eyebrow">❓ Active Recall</div>
+  <h1 class="pagetitle">Force the retrieval — don't just re-read</h1>
+  <p class="lede">Tap each card. Try to answer in your head <i>before</i> you tap.</p>
+
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. How many states currently have a Legislative Council, and name them.</div>
+    <div class="a">6 states — Andhra Pradesh, Bihar, Karnataka, Maharashtra, Telangana, Uttar Pradesh (BAUKMT).</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. Fill in the blank: A Legislative Council can be created or abolished by Parliament through an ordinary law passed with a ____ majority — no constitutional amendment is needed.</div>
+    <div class="a">Simple majority.</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. What is the maximum permissible Council of Ministers size, as a percentage of Assembly/Lok Sabha strength?</div>
+    <div class="a">15% (Art 164(1A) for states / Art 75(1A) for the Centre, both via the 91st Amendment, 2003).</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. Which Article gives the Governor the power to promulgate ordinances, and what is the mandatory approval window once the House reassembles?</div>
+    <div class="a">Article 213; must be approved within 6 weeks of reassembly, else it lapses.</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. One-liner: What did the Supreme Court say in the DC Wadhwa case?</div>
+    <div class="a">Repeated re-promulgation of the same ordinance without legislative approval is a fraud on the Constitution.</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. Reverse question: If you know Article 121 says "Parliament shall not discuss the conduct of judges," what is the parallel State article, and what is it?</div>
+    <div class="a">Article 211 — the State Legislature shall not discuss the conduct of judges (121 + 90 = 211).</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. Fill in the blank: Of the elected 5/6 portion of the Legislative Council, ____ are elected by local bodies, ____ by the Legislative Assembly, ____ by graduates and ____ by teachers.</div>
+    <div class="a">1/3 by local bodies, 1/3 by the Legislative Assembly, 1/12 by graduates, 1/12 by teachers (remaining 1/6 nominated by the Governor).</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. Rapid fire: Name the extra power the Governor has in bill-assent that the President does not.</div>
+    <div class="a">The power to reserve a bill for the President's consideration.</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. Rapid fire: What is the constitutional term for "Budget"?</div>
+    <div class="a">Annual Financial Statement — the word "Budget" does not appear in the Constitution.</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. Rapid fire: Who decides disqualification on grounds of defection?</div>
+    <div class="a">The Presiding Officer (Speaker of the Assembly/Lok Sabha) — not the President/Governor.</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. One-liner: In which case did the Supreme Court hold that a Speaker's decision on defection is subject to judicial review?</div>
+    <div class="a">Kihoto Hollohan vs. Zachillhu (1992).</div>
+  </div>
+  <div class="flash" onclick="this.classList.toggle('open')">
+    <div class="q">Q. Fill in the blank: For an Ordinary Bill, the Legislative Council can delay passage by a maximum of ____ months in total.</div>
+    <div class="a">4 months (3 months the first time + 1 month the second time).</div>
+  </div>
+</section>
+
+<!-- PAGE 9: HIGH-YIELD -->
+<section class="page" id="p9">
+  <div class="eyebrow">⭐ High-Yield Revision Notes</div>
+  <h1 class="pagetitle">The condensed version</h1>
+  <p class="lede">Use from your 4th revision onward.</p>
+
+  <div class="card">
+    <ul>
+      <li><b>Rule:</b> Art 74–111 (Parliament) → Art 163–200 (State) = <b>+89</b>. Art 112–123 → Art 202–213 = <b>+90</b>. Break happens after 200 because of the Governor's extra "reserve for President" power.</li>
+      <li><b>Composition (168):</b> Governor + Assembly (everywhere + 3 UTs: Delhi, Puducherry, J&K) + Council (only 6 states: BAUKMT).</li>
+      <li><b>Council creation/abolition (169):</b> Assembly resolution → Parliament law, simple majority, no constitutional amendment.</li>
+      <li><b>Assembly strength (170):</b> Max 500, min 60.</li>
+      <li><b>Council strength (171):</b> Max 1/3 of Assembly, min 40. Composition: 1/3 local bodies + 1/3 MLAs + 1/12 graduates + 1/12 teachers + 1/6 Governor-nominated (LASCS).</li>
+      <li><b>Duration (172):</b> Assembly 5 yrs; Council permanent, members serve 6 yrs, 1/3 retire every 2 yrs.</li>
+      <li><b>Age (173):</b> 25 for Assembly, 30 for Council.</li>
+      <li><b>Session gap (174–176):</b> Max 6 months; Governor's special Address = Motion of Thanks.</li>
+      <li><b>AG (177):</b> Speaks in both Houses, votes in neither.</li>
+      <li><b>Officers (178+):</b> Assembly officers before Council officers (reversed vs Centre).</li>
+      <li><b>Money Bill (198–199):</b> Only in Assembly; Council gets 14 days to recommend only; no Council → straight to Governor.</li>
+      <li><b>Ordinary Bill:</b> Assembly > Council in power (Council can delay max 4 months) — unlike Centre's equal LS-RS power.</li>
+      <li><b>Assent (200):</b> Assent / withhold (absolute veto) / return (suspensive veto, not for Money Bills) / reserve for President (Governor-only power). Pocket veto = no deadline (Zail Singh, 1986 Post Office Bill). No veto for Constitutional Amendment Bills (24th Amendment, 1971).</li>
+      <li><b>Budget (202):</b> Annual Financial Statement, Governor's name, FY = 1 Apr–31 Mar, word "Budget" not in Constitution.</li>
+      <li><b>Ordinance (213):</b> Only when House not in session; 6-week approval window; DC Wadhwa (no re-promulgation, 1986/87); Cooper (judicial review).</li>
+      <li><b>Defection:</b> Presiding Officer decides, reviewable per Kihoto Hollohan (1992). Money Bill certification by Speaker discussed in Puttaswamy/Aadhaar (2017).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PAGE 10: ULTRA-FAST -->
+<section class="page" id="p10">
+  <div class="eyebrow">⚡ Ultra-Fast Revision Sheet</div>
+  <h1 class="pagetitle">Numbers only</h1>
+  <div class="cheat-grid">
+    <div class="cheat-card"><div class="t">Offset rule</div><div class="v">74–111 → +89 → 163–200<br>112–123 → +90 → 202–213</div></div>
+    <div class="cheat-card"><div class="t">Council states</div><div class="v">6 — BAUKMT</div></div>
+    <div class="cheat-card"><div class="t">Assembly UTs</div><div class="v">3 — Delhi, Puducherry, J&K</div></div>
+    <div class="cheat-card"><div class="t">Assembly size</div><div class="v">Max 500 / Min 60</div></div>
+    <div class="cheat-card"><div class="t">Council size</div><div class="v">Max 1/3 of Assembly / Min 40</div></div>
+    <div class="cheat-card"><div class="t">Council composition</div><div class="v">1/3 + 1/3 + 1/12 + 1/12 + 1/6 (Gov.)</div></div>
+    <div class="cheat-card"><div class="t">Duration</div><div class="v">Assembly 5 yrs / Council member 6 yrs (1/3 every 2 yrs)</div></div>
+    <div class="cheat-card"><div class="t">Age</div><div class="v">Assembly 25 / Council 30</div></div>
+    <div class="cheat-card"><div class="t">Ministers cap</div><div class="v">15% of Assembly/LS</div></div>
+    <div class="cheat-card"><div class="t">Money Bill recommendation window</div><div class="v">14 days</div></div>
+    <div class="cheat-card"><div class="t">Ordinary Bill delay by Council</div><div class="v">Max 4 months (3+1)</div></div>
+    <div class="cheat-card"><div class="t">Session gap</div><div class="v">Max 6 months</div></div>
+    <div class="cheat-card"><div class="t">Ordinance approval window</div><div class="v">6 weeks of reassembly</div></div>
+    <div class="cheat-card"><div class="t">Annual Financial Statement</div><div class="v">FY: 1 Apr – 31 Mar; Governor's name</div></div>
+    <div class="cheat-card"><div class="t">Cases</div><div class="v">DC Wadhwa · Cooper · Kihoto Hollohan · K.S. Puttaswamy</div></div>
+    <div class="cheat-card"><div class="t">Repealed</div><div class="v">Part VII, by 7th Amendment 1956</div></div>
+  </div>
+</section>
+
+<!-- PAGE 11: 30-SECOND -->
+<section class="page" id="p11">
+  <div class="eyebrow">⏱ 30-Second Revision Sheet</div>
+  <h1 class="pagetitle">One screen, ten lines</h1>
+  <div class="card">
+    <ul style="font-size:15px;line-height:2;">
+      <li>Add 89: Art 74–111 → 163–200. Add 90: Art 112–123 → 202–213.</li>
+      <li>Council in 6 states only (BAUKMT); Assembly everywhere + Delhi/Puducherry/J&K.</li>
+      <li>Council creation/abolition = simple majority law, no amendment.</li>
+      <li>Assembly 500/60; Council 1/3 of Assembly, min 40.</li>
+      <li>Council composition: 1/3 local bodies, 1/3 MLAs, 1/12 graduates, 1/12 teachers, 1/6 Governor.</li>
+      <li>Age: 25 Assembly, 30 Council. Term: 5 yrs / 6 yrs (permanent house).</li>
+      <li>Money Bill: Assembly only, Governor's prior recommendation, Speaker certifies.</li>
+      <li>Assent: assent / absolute veto / suspensive veto (not Money Bills) / reserve for President (Governor-only) / pocket veto (no deadline).</li>
+      <li>Ordinance: only when House not in session, 6-week window; DC Wadhwa bans repeat; Cooper allows judicial review.</li>
+      <li>Defection decided by Presiding Officer, reviewable (Kihoto Hollohan).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PAGE 12: LAST NIGHT -->
+<section class="page" id="p12">
+  <div class="eyebrow">🌙 Last-Night-Before-Exam Sheet</div>
+  <h1 class="pagetitle">If you read nothing else, read this</h1>
+  <div class="lastnight">
+    <h2>5 things that will save you marks tomorrow</h2>
+    <ul>
+      <li><b>The offset:</b> +89 till Article 200, then +90. The break happens because the Governor alone can "reserve a bill for the President."</li>
+      <li><b>The 6:</b> Only Bihar, UP, Andhra Pradesh, Karnataka, Maharashtra, Telangana have a Legislative Council — BAUKMT.</li>
+      <li><b>The fractions:</b> Council = 1/3 local bodies + 1/3 MLAs + 1/12 graduates + 1/12 teachers + 1/6 Governor-nominated.</li>
+      <li><b>The four cases:</b> Wadhwa = no repeat ordinances. Cooper = ordinance reviewable. Kihoto Hollohan = Speaker's defection call reviewable. Puttaswamy = Right to Privacy is a Fundamental Right.</li>
+      <li><b>The vetoes:</b> No suspensive veto for Money Bills. No veto at all for Constitutional Amendment Bills (since 1971's 24th Amendment). Pocket veto has no deadline — remember Zail Singh's Post Office Bill, still pending since 1986.</li>
+    </ul>
+    <p style="color:var(--muted);font-size:13px;margin-top:18px;">Breathe. You already knew Parliament. This chapter was just Parliament wearing a different name tag.</p>
+  </div>
+</section>
+
+<footer class="pagefoot">State Legislature · Part VI, Chapter III · Built for spaced revision, not single-pass reading.</footer>
+</main>
+
+<script>
+const buttons = document.querySelectorAll('.navbtn');
+const pages = document.querySelectorAll('.page');
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    buttons.forEach(b => b.classList.remove('active'));
+    pages.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.page).classList.add('active');
+    document.querySelector('main').scrollTo(0,0);
+    window.scrollTo(0,0);
+    if(window.innerWidth <= 880){ document.querySelector('.sidebar').classList.remove('open'); }
+  });
+});
+</script>
+</body>
+</html>

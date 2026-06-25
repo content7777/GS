@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parliament — SSC CGL Revision Notes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161e;
+    --surface2: #1a1e28;
+    --border: #232737;
+    --green: #4ade80;
+    --green-dim: #1a4a2e;
+    --blue: #60a5fa;
+    --blue-dim: #1a2e4a;
+    --amber: #fbbf24;
+    --amber-dim: #3a2a0a;
+    --red: #f87171;
+    --red-dim: #3a1a1a;
+    --purple: #c084fc;
+    --purple-dim: #2a1a3a;
+    --text: #e2e8f0;
+    --text-muted: #7a8399;
+    --text-dim: #4a5568;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ─── LAYOUT ─── */
+  .app { display: flex; height: 100vh; }
+
+  /* ─── SIDEBAR ─── */
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: width 0.3s;
+  }
+
+  .sidebar-header {
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-header .brand {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--green);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .sidebar-header h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px 0;
+  }
+  .sidebar-nav::-webkit-scrollbar { width: 4px; }
+  .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+  .sidebar-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .nav-section-label {
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 16px 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.15s;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active {
+    background: var(--surface2);
+    border-left-color: var(--green);
+    color: var(--green);
+  }
+  .nav-item .nav-icon { font-size: 15px; flex-shrink: 0; }
+  .nav-item .nav-label { flex: 1; line-height: 1.3; }
+  .nav-item .nav-badge {
+    font-size: 10px;
+    font-family: var(--mono);
+    background: var(--green-dim);
+    color: var(--green);
+    padding: 1px 6px;
+    border-radius: 99px;
+  }
+
+  /* ─── MAIN CONTENT ─── */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .main::-webkit-scrollbar { width: 6px; }
+  .main::-webkit-scrollbar-track { background: transparent; }
+  .main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .page { display: none; padding: 32px 36px; max-width: 900px; }
+  .page.active { display: block; }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header .eyebrow {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--green);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .page-header h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .page-header p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ─── CARDS ─── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title::before {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 12px;
+    background: var(--green);
+    border-radius: 2px;
+  }
+
+  /* ─── ARTICLE GRID ─── */
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .article-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .article-chip .num {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .article-chip .desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  /* ─── COMPARISON TABLE ─── */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .compare-table th {
+    background: var(--surface2);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  .compare-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table tr:hover td { background: var(--surface2); }
+  .compare-table .label { color: var(--text-muted); font-size: 12px; }
+  .compare-table .val-lok { color: var(--green); font-weight: 600; }
+  .compare-table .val-raj { color: var(--blue); font-weight: 600; }
+
+  /* ─── TAGS ─── */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-family: var(--mono);
+    font-weight: 500;
+  }
+  .tag-fire { background: #3a1f0d; color: #fb923c; }
+  .tag-star { background: var(--amber-dim); color: var(--amber); }
+  .tag-plus { background: var(--blue-dim); color: var(--blue); }
+  .tag-trap { background: var(--red-dim); color: var(--red); }
+
+  /* ─── FACT ROWS ─── */
+  .fact-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .fact-row:last-child { border-bottom: none; }
+  .fact-row .fact-icon { flex-shrink: 0; margin-top: 1px; }
+  .fact-row .fact-body { flex: 1; line-height: 1.6; }
+  .fact-row .fact-body strong { color: var(--amber); }
+  .fact-row .fact-body .note { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+  /* ─── MEMORY HOOK BOXES ─── */
+  .memory-hook {
+    background: linear-gradient(135deg, #0d1f17 0%, #0d1524 100%);
+    border: 1px solid #2a4a38;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .memory-hook::before {
+    content: '🧠';
+    position: absolute;
+    right: 16px;
+    top: 14px;
+    font-size: 24px;
+    opacity: 0.3;
+  }
+  .memory-hook .hook-title {
+    font-size: 12px;
+    font-family: var(--mono);
+    color: var(--green);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .memory-hook p { font-size: 13px; color: var(--text); line-height: 1.7; }
+
+  /* ─── TRAP BOX ─── */
+  .trap-box {
+    background: #150e0e;
+    border: 1px solid #4a2020;
+    border-left: 3px solid var(--red);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .trap-box .trap-header {
+    color: var(--red);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .trap-box p { color: var(--text); line-height: 1.6; }
+  .trap-box strong { color: var(--red); }
+
+  /* ─── QUIZ ─── */
+  .quiz-item {
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .quiz-q {
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .quiz-answer {
+    display: none;
+    font-size: 13px;
+    color: var(--green);
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+  }
+  .quiz-answer.revealed { display: block; }
+  .quiz-hint {
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: var(--mono);
+  }
+
+  /* ─── PALACE STOP ─── */
+  .palace-stop {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .palace-stop:last-child { border-bottom: none; }
+  .palace-stop .stop-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--green);
+    flex-shrink: 0;
+  }
+  .palace-stop .stop-body { flex: 1; }
+  .palace-stop .stop-loc { font-weight: 600; color: var(--amber); margin-bottom: 3px; }
+  .palace-stop .stop-concept { color: var(--text-muted); line-height: 1.5; }
+
+  /* ─── SPEED SHEET ─── */
+  .speed-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 13px;
+  }
+  .speed-row:last-child { border-bottom: none; }
+  .speed-row .sr-key {
+    font-family: var(--mono);
+    color: var(--blue);
+    font-size: 12px;
+    min-width: 90px;
+    flex-shrink: 0;
+  }
+  .speed-row .sr-val { color: var(--text); flex: 1; }
+  .speed-row .sr-val strong { color: var(--green); }
+
+  /* ─── TIMELINE ─── */
+  .timeline { padding: 8px 0; }
+  .tl-item {
+    display: flex;
+    gap: 14px;
+    padding-bottom: 16px;
+    position: relative;
+  }
+  .tl-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 34px;
+    width: 2px;
+    bottom: 0;
+    background: var(--border);
+  }
+  .tl-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--blue);
+    flex-shrink: 0;
+    z-index: 1;
+  }
+  .tl-body { flex: 1; padding-top: 6px; }
+  .tl-year { font-family: var(--mono); font-size: 13px; color: var(--amber); font-weight: 600; }
+  .tl-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ─── PILL ROW ─── */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+  .pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .pill.green { background: var(--green-dim); border-color: #2a5a3a; color: var(--green); }
+  .pill.blue { background: var(--blue-dim); border-color: #2a3a5a; color: var(--blue); }
+  .pill.amber { background: var(--amber-dim); border-color: #4a3a0a; color: var(--amber); }
+
+  /* ─── LAST NIGHT SHEET ─── */
+  .ln-item {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 6px 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ln-item:last-child { border-bottom: none; }
+  .ln-bullet { color: var(--green); font-size: 16px; flex-shrink: 0; }
+  .ln-text { color: var(--text); line-height: 1.5; }
+  .ln-text strong { color: var(--amber); }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-bar-wrap { 
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+  }
+  .progress-label {
+    font-size: 10px;
+    font-family: var(--mono);
+    color: var(--text-dim);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    border-radius: 99px;
+    transition: width 0.4s ease;
+  }
+
+  /* ─── HIGHLIGHT ─── */
+  .hl-green { color: var(--green); font-weight: 600; }
+  .hl-blue { color: var(--blue); font-weight: 600; }
+  .hl-amber { color: var(--amber); font-weight: 600; }
+  .hl-red { color: var(--red); font-weight: 600; }
+
+  /* ─── GRID 2-COL ─── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 720px) {
+    .sidebar { width: 56px; min-width: 56px; }
+    .sidebar-header h1, .nav-label, .nav-badge, .sidebar-header .brand,
+    .nav-section-label, .progress-label { display: none; }
+    .nav-item { justify-content: center; padding: 12px; }
+    .page { padding: 20px 16px; }
+    .grid2, .grid3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ─── SIDEBAR ─── -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand">SSC CGL · Polity</div>
+      <h1>Parliament<br>Art. 79–88</h1>
+    </div>
+    <nav class="sidebar-nav" id="nav">
+      <div class="nav-section-label">Revision Layers</div>
+      <div class="nav-item active" data-page="bigpicture">
+        <span class="nav-icon">🗺️</span>
+        <span class="nav-label">Big Picture</span>
+      </div>
+      <div class="nav-item" data-page="palace">
+        <span class="nav-icon">🏛️</span>
+        <span class="nav-label">Memory Palace</span>
+      </div>
+
+      <div class="nav-section-label">Complete Notes</div>
+      <div class="nav-item" data-page="art79">
+        <span class="nav-icon">📜</span>
+        <span class="nav-label">Art. 79 — Constitution</span>
+        <span class="nav-badge">🔥</span>
+      </div>
+      <div class="nav-item" data-page="art80">
+        <span class="nav-icon">⬆️</span>
+        <span class="nav-label">Art. 80 — Rajya Sabha</span>
+        <span class="nav-badge">🔥</span>
+      </div>
+      <div class="nav-item" data-page="art81">
+        <span class="nav-icon">⬇️</span>
+        <span class="nav-label">Art. 81 — Lok Sabha</span>
+        <span class="nav-badge">🔥</span>
+      </div>
+      <div class="nav-item" data-page="art82">
+        <span class="nav-icon">📐</span>
+        <span class="nav-label">Art. 82 — Delimitation</span>
+      </div>
+      <div class="nav-item" data-page="art83">
+        <span class="nav-icon">⏱️</span>
+        <span class="nav-label">Art. 83 — Duration</span>
+        <span class="nav-badge">🔥</span>
+      </div>
+      <div class="nav-item" data-page="art84">
+        <span class="nav-icon">🪪</span>
+        <span class="nav-label">Art. 84 — Qualification</span>
+      </div>
+      <div class="nav-item" data-page="art85">
+        <span class="nav-icon">📅</span>
+        <span class="nav-label">Art. 85–86 — Sessions</span>
+      </div>
+      <div class="nav-item" data-page="art88">
+        <span class="nav-icon">⚖️</span>
+        <span class="nav-label">Art. 88 — AG Rights</span>
+      </div>
+
+      <div class="nav-section-label">Exam Prep</div>
+      <div class="nav-item" data-page="traps">
+        <span class="nav-icon">⚠️</span>
+        <span class="nav-label">Exam Traps</span>
+        <span class="nav-badge" style="background:#3a1a1a;color:var(--red)">!</span>
+      </div>
+      <div class="nav-item" data-page="examqs">
+        <span class="nav-icon">🎯</span>
+        <span class="nav-label">Examiner's Fav. Qs</span>
+      </div>
+      <div class="nav-item" data-page="quiz">
+        <span class="nav-icon">❓</span>
+        <span class="nav-label">Active Recall Quiz</span>
+      </div>
+
+      <div class="nav-section-label">Fast Revision</div>
+      <div class="nav-item" data-page="highyield">
+        <span class="nav-icon">⭐</span>
+        <span class="nav-label">High-Yield Sheet</span>
+      </div>
+      <div class="nav-item" data-page="ultrafast">
+        <span class="nav-icon">⚡</span>
+        <span class="nav-label">Ultra-Fast Sheet</span>
+      </div>
+      <div class="nav-item" data-page="lastnight">
+        <span class="nav-icon">🌙</span>
+        <span class="nav-label">Last-Night Sheet</span>
+      </div>
+    </nav>
+    <div class="progress-bar-wrap">
+      <div class="progress-label"><span>Progress</span><span id="prog-pct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─── -->
+  <main class="main" id="main">
+
+    <!-- ══ BIG PICTURE ══ -->
+    <div class="page active" id="page-bigpicture">
+      <div class="page-header">
+        <div class="eyebrow">Chapter Overview</div>
+        <h2>What is this chapter really about?</h2>
+        <p>Articles 79–88 define the architecture of India's Parliament — who sits in it, how they get there, how long they stay, and what they can do.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">The One-Line Summary</div>
+        <p style="font-size:15px; line-height:1.7; color:var(--text)">Parliament = <span class="hl-blue">President</span> + <span class="hl-green">Lok Sabha</span> + <span class="hl-amber">Rajya Sabha</span>. Every article from 79–88 zooms into one part of this triangle.</p>
+      </div>
+
+      <div class="article-grid">
+        <div class="article-chip"><span class="num">79</span><span class="desc">Constitution of Parliament (who's in it)</span></div>
+        <div class="article-chip"><span class="num">80</span><span class="desc">Composition of Rajya Sabha (250 max)</span></div>
+        <div class="article-chip"><span class="num">81</span><span class="desc">Composition of Lok Sabha (550 max)</span></div>
+        <div class="article-chip"><span class="num">82</span><span class="desc">Delimitation after each Census</span></div>
+        <div class="article-chip"><span class="num">83</span><span class="desc">Duration — RS permanent, LS 5 yrs</span></div>
+        <div class="article-chip"><span class="num">84</span><span class="desc">Qualifications — age, citizenship</span></div>
+        <div class="article-chip"><span class="num">85</span><span class="desc">Sessions, Prorogation, Dissolution</span></div>
+        <div class="article-chip"><span class="num">86</span><span class="desc">President's Right to Address</span></div>
+        <div class="article-chip"><span class="num">88</span><span class="desc">Ministers + AG rights in Parliament</span></div>
+      </div>
+
+      <div class="memory-hook">
+        <div class="hook-title">The Parliament Building Mental Image</div>
+        <p>Picture a grand triangle-shaped Parliament House. The <strong style="color:var(--blue)">top floor</strong> is Rajya Sabha (upper house — wise elders, 30+). The <strong style="color:var(--green)">ground floor</strong> is Lok Sabha (lower house — the people, 25+). And standing at the <strong style="color:var(--amber)">main gate</strong> is the President — nothing enters or leaves (becomes law) without passing through the gate.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Where did we borrow this?</div>
+        <div class="fact-row">
+          <span class="fact-icon">🇬🇧</span>
+          <div class="fact-body"><strong>Parliamentary System</strong> → borrowed from <strong>UK</strong></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🇺🇸</span>
+          <div class="fact-body">USA has <strong>Presidential System</strong> (not Parliamentary)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ MEMORY PALACE ══ -->
+    <div class="page" id="page-palace">
+      <div class="page-header">
+        <div class="eyebrow">Chapter Memory Palace</div>
+        <h2>🏛️ The Parliament Museum Tour</h2>
+        <p>Mentally walk through this museum. Each room holds one article. Visit it 3 times and you'll never forget the sequence.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">The Museum Story</div>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:12px">You are a tourist visiting the Parliament Museum. The guard at the entrance hands you a ticket numbered 79. You walk through 10 rooms. Each room has a sign and an exhibit.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="palace-stop">
+          <div class="stop-num">79</div>
+          <div class="stop-body">
+            <div class="stop-loc">🚪 Entrance Gate — "Who's inside?"</div>
+            <div class="stop-concept">Three statues at the entrance: <span class="hl-green">Lok Sabha</span>, <span class="hl-blue">Rajya Sabha</span>, <span class="hl-amber">President</span>. This is Parliament. You must pass all three.</div>
+          </div>
+        </div>
+        <div class="palace-stop">
+          <div class="stop-num">80</div>
+          <div class="stop-body">
+            <div class="stop-loc">🔵 Blue Hall — "The Elder Council"</div>
+            <div class="stop-concept">250 blue chairs (238 elected by state assemblies + 12 nominated by President for Literature/Science/Art/Social Service). Only 245 are filled today — 5 UTs without assemblies left empty.</div>
+          </div>
+        </div>
+        <div class="palace-stop">
+          <div class="stop-num">81</div>
+          <div class="stop-body">
+            <div class="stop-loc">🟢 Green Hall — "The People's Chamber"</div>
+            <div class="stop-concept">550 green chairs (530 from States + up to 20 from UTs). Used to be 552 — two Anglo-Indian chairs removed after 104th Amendment.</div>
+          </div>
+        </div>
+        <div class="palace-stop">
+          <div class="stop-num">82</div>
+          <div class="stop-body">
+            <div class="stop-loc">📐 Survey Room — "Redrawing the map"</div>
+            <div class="stop-concept">After every Census, a Delimitation Commission redraws constituencies. Formed 4 times: 1952, 1962, 1972, 2002. Frozen till 2026 (42nd Amendment→2000, 84th→2026).</div>
+          </div>
+        </div>
+        <div class="palace-stop">
+          <div class="stop-num">83</div>
+          <div class="stop-body">
+            <div class="stop-loc">⏱️ Clock Room — "Who runs out of time?"</div>
+            <div class="stop-concept">Rajya Sabha clock = ∞ (permanent). Lok Sabha clock = 5 years max. Rajya Sabha members: 6-year term, 1/3 retire every 2 years — like an evergreen forest.</div>
+          </div>
+        </div>
+        <div class="palace-stop">
+          <div class="stop-num">84</div>
+          <div class="stop-body">
+            <div class="stop-loc">🪪 ID Booth — "Are you eligible?"</div>
+            <div class="stop-concept">Citizen of India ✓. Rajya Sabha: age ≥ 30 (elders!). Lok Sabha: age ≥ 25 (youth!). That's why RS = House of Elders.</div>
+          </div>
+        </div>
+        <div class="palace-stop">
+          <div class="stop-num">85</div>
+          <div class="stop-body">
+            <div class="stop-loc">📅 Calendar Room — "When do they meet?"</div>
+            <div class="stop-concept">3 sessions/year. Budget = longest. Winter = shortest. Gap between sessions ≤ 6 months. President summons & prorogues. President can dissolve Lok Sabha only.</div>
+          </div>
+        </div>
+        <div class="palace-stop">
+          <div class="stop-num">86</div>
+          <div class="stop-body">
+            <div class="stop-loc">🎤 Stage Room — "The Presidential address"</div>
+            <div class="stop-concept">President gives Special Address at start of first session each year + first session of new Lok Sabha. Called Motion of Thanks. If it fails → government lost majority.</div>
+          </div>
+        </div>
+        <div class="palace-stop">
+          <div class="stop-num">88</div>
+          <div class="stop-body">
+            <div class="stop-loc">⚖️ Exit Hall — "Who can speak anywhere?"</div>
+            <div class="stop-concept">Every Minister + Attorney General can speak in ANY house. But can vote only in their own house. AG is not a member of either house → can never vote.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ART. 79 ══ -->
+    <div class="page" id="page-art79">
+      <div class="page-header">
+        <div class="eyebrow">Article 79 · <span class="tag tag-fire">🔥 Must Know</span></div>
+        <h2>Constitution of Parliament</h2>
+        <p>Defines who makes up the Parliament of India.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">The Triangle Formula</div>
+        <p style="text-align:center; font-size:20px; padding:16px 0; font-family:var(--mono); color:var(--text)">
+          Parliament = <span class="hl-blue">President</span> + <span class="hl-green">Lok Sabha</span> + <span class="hl-amber">Rajya Sabha</span>
+        </p>
+        <p style="font-size:13px; color:var(--text-muted)">The President is part of Parliament because <strong style="color:var(--amber)">no bill can become an Act without Presidential assent</strong>.</p>
+      </div>
+
+      <table class="compare-table">
+        <tr>
+          <th>House</th>
+          <th class="val-lok">Lok Sabha</th>
+          <th class="val-raj">Rajya Sabha</th>
+        </tr>
+        <tr>
+          <td class="label">Official Name</td>
+          <td class="val-lok">House of the People</td>
+          <td class="val-raj">Council of States</td>
+        </tr>
+        <tr>
+          <td class="label">Also called</td>
+          <td class="val-lok">Lower House / First Chamber</td>
+          <td class="val-raj">Upper House / Second Chamber / House of Elders</td>
+        </tr>
+        <tr>
+          <td class="label">Election type</td>
+          <td class="val-lok">Direct election (First Past The Post)</td>
+          <td class="val-raj">Indirect election (Proportional Representation + Single Transferable Vote)</td>
+        </tr>
+        <tr>
+          <td class="label">Elected by</td>
+          <td class="val-lok">Citizens directly</td>
+          <td class="val-raj">State Legislative Assemblies</td>
+        </tr>
+        <tr>
+          <td class="label">Hindi name adopted</td>
+          <td class="val-lok" colspan="2">1954</td>
+        </tr>
+        <tr>
+          <td class="label">First sitting</td>
+          <td class="val-lok" colspan="2"><strong>17 April 1952</strong></td>
+        </tr>
+        <tr>
+          <td class="label">First meeting</td>
+          <td class="val-lok" colspan="2"><strong>13 May 1952</strong></td>
+        </tr>
+      </table>
+
+      <div class="memory-hook">
+        <div class="hook-title">Date Trap — 17 April vs 13 May</div>
+        <p><strong>First SITTING</strong> = <span style="color:var(--green)">17 April 1952</span> (like a new student showing up on Day 1 — just sitting there).<br><br><strong>First MEETING</strong> = <span style="color:var(--blue)">13 May 1952</span> (actual business starts after some settling in — May is later). <br><br>⚡ Rule: If the question says "first meeting" → <strong>13 May</strong>. If it says just "first", still tick <strong>13 May</strong> — it's the safer answer.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Union Territories in Rajya Sabha</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px">Only UTs with Legislative Assemblies can send representatives to RS.</p>
+        <div class="fact-row">
+          <span class="fact-icon">🏙️</span>
+          <div class="fact-body"><strong>Delhi</strong> → <span class="hl-green">3 seats</span> in Rajya Sabha</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🌊</span>
+          <div class="fact-body"><strong>Puducherry</strong> → <span class="hl-green">1 seat</span> in Rajya Sabha</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🏔️</span>
+          <div class="fact-body"><strong>Jammu & Kashmir</strong> → <span class="hl-green">4 seats</span> in Rajya Sabha</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❌</span>
+          <div class="fact-body">Other 5 UTs → No legislative assembly → <span class="hl-red">No Rajya Sabha seats</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Rajya Sabha Seats — Key States</div>
+        <div class="fact-row">
+          <span class="fact-icon">🏆</span>
+          <div class="fact-body"><strong>Maximum:</strong> <span class="hl-amber">Uttar Pradesh — 31 seats</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">📍</span>
+          <div class="fact-body"><strong>Lok Sabha Maximum:</strong> <span class="hl-green">Uttar Pradesh — 80 seats</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ART. 80 ══ -->
+    <div class="page" id="page-art80">
+      <div class="page-header">
+        <div class="eyebrow">Article 80 · <span class="tag tag-fire">🔥 Must Know</span></div>
+        <h2>Composition of Rajya Sabha</h2>
+        <p>The Council of States — how many, from where, and who nominates.</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Maximum Strength</div>
+          <p style="font-size:36px; font-weight:700; font-family:var(--mono); color:var(--blue)">250</p>
+          <p style="font-size:13px; color:var(--text-muted)">238 elected + 12 nominated</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Current Strength</div>
+          <p style="font-size:36px; font-weight:700; font-family:var(--mono); color:var(--green)">245</p>
+          <p style="font-size:13px; color:var(--text-muted)">5 seats vacant (5 UTs without assembly)</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">The 12 Nominated Members</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px">Nominated by the <strong style="color:var(--amber)">President</strong> — for persons with special knowledge or practical experience in:</p>
+        <div class="pill-row">
+          <span class="pill amber">📚 Literature</span>
+          <span class="pill amber">🔬 Science</span>
+          <span class="pill amber">🎨 Art</span>
+          <span class="pill amber">🤝 Social Service</span>
+        </div>
+        <p style="font-size:12px; color:var(--text-muted); margin-top:8px">⚠ These exact 4 fields are mentioned in the Constitution. No others.</p>
+      </div>
+
+      <div class="memory-hook">
+        <div class="hook-title">Hook: Remember "LASS"</div>
+        <p>The President nominates people from <strong>L</strong>iterature, <strong>A</strong>rt, <strong>S</strong>cience, <strong>S</strong>ocial Service = <strong>LASS</strong>. Think of a talented lass (young woman) who is too talented to contest elections but deserves to be in Parliament.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Why 245 and not 250?</div>
+        <p style="font-size:13px; line-height:1.7; color:var(--text-muted)">India has 8 UTs total. Only 3 have Legislative Assemblies (Delhi, Puducherry, J&K) → only they get RS seats. The remaining <strong style="color:var(--red)">5 UTs have no assembly → 5 potential seats are vacant</strong>. Hence 250 − 5 = <strong style="color:var(--green)">245 currently</strong>.</p>
+      </div>
+    </div>
+
+    <!-- ══ ART. 81 ══ -->
+    <div class="page" id="page-art81">
+      <div class="page-header">
+        <div class="eyebrow">Article 81 · <span class="tag tag-fire">🔥 Must Know</span></div>
+        <h2>Composition of Lok Sabha</h2>
+        <p>The House of the People — maximum seats, reservation, and the Anglo-Indian clause.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Seat Breakdown</div>
+        <div class="fact-row">
+          <span class="fact-icon">🏛️</span>
+          <div class="fact-body"><strong>530</strong> members — chosen by direct election from <span class="hl-green">States</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🏙️</span>
+          <div class="fact-body"><strong>Up to 20</strong> members — from <span class="hl-blue">Union Territories</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🔢</span>
+          <div class="fact-body"><strong>Maximum = 550</strong> (current maximum after 104th Amendment)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">104th Constitutional Amendment — Key Change</div>
+        <div class="fact-row">
+          <span class="fact-icon">❌</span>
+          <div class="fact-body"><strong>Stopped:</strong> Nomination of 2 Anglo-Indians by President<br><span class="fact-body note">Before 104th Amend., max was 552 (550 + 2 Anglo-Indian)</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">✅</span>
+          <div class="fact-body"><strong>Continued:</strong> SC/ST reservation in Lok Sabha — extended for another <strong>10 years</strong></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">ℹ️</span>
+          <div class="fact-body">Rajya Sabha has <strong>NO SC/ST reservation</strong></div>
+        </div>
+      </div>
+
+      <div class="memory-hook">
+        <div class="hook-title">552 → 550 After 104th Amendment</div>
+        <p>Before: 550 + 2 Anglo-Indians = <strong>552</strong>.<br>After 104th Amendment (2020): Anglo-Indian nomination <strong>removed</strong>. Now max = <strong>550</strong>.<br><br>Think of it as: "One oh four = 2 go out the door."</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">The Equality Principle (Delimitation)</div>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7">The Constitution mandates that the ratio of <strong style="color:var(--amber)">seats : population</strong> must be the same across all states. So if UP grows faster than Tamil Nadu, UP gets more seats after the next Census. This is why states like Tamil Nadu oppose delimitation — they followed family planning, reduced population, and fear losing parliamentary seats.</p>
+      </div>
+    </div>
+
+    <!-- ══ ART. 82 ══ -->
+    <div class="page" id="page-art82">
+      <div class="page-header">
+        <div class="eyebrow">Article 82 · <span class="tag tag-star">⭐ Important</span></div>
+        <h2>Delimitation Commission</h2>
+        <p>Redrawing constituency boundaries after every Census.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">What is Delimitation?</div>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7">After each Census, population changes. Delimitation is the process of redrawing the boundaries and increasing/decreasing seats of constituencies to ensure equal representation (population : seats ratio stays constant).</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Delimitation Commission — Key Facts</div>
+        <div class="fact-row">
+          <span class="fact-icon">📌</span>
+          <div class="fact-body">Mentioned in Constitution but <strong style="color:var(--red)">NOT a Constitutional body</strong></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">4️⃣</span>
+          <div class="fact-body">Formed <strong>4 times</strong> till date: <span class="hl-amber">1952 · 1962 · 1972 · 2002</span></div>
+        </div>
+      </div>
+
+      <div class="memory-hook">
+        <div class="hook-title">Remember 52-62-72-2002</div>
+        <p>The four years follow a pattern: <strong>52, 62, 72</strong> (every 10 years for the first 3), then a big jump to <strong>2002</strong> (skipping 1982 and 1992 due to freeze). Say it fast: <em>"Fifty-two, sixty-two, seventy-two, two thousand and two."</em></p>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot">42nd</div>
+          <div class="tl-body">
+            <div class="tl-year">42nd Amendment — Indira Gandhi</div>
+            <div class="tl-desc">Froze delimitation till <strong>2000</strong>. Representation fixed based on <strong>1971 Census</strong>.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">84th</div>
+          <div class="tl-body">
+            <div class="tl-year">84th Amendment</div>
+            <div class="tl-desc">Extended freeze till <strong>2026</strong>. Still based on 1971 Census.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">2027</div>
+          <div class="tl-body">
+            <div class="tl-year">Census 2027 (upcoming)</div>
+            <div class="tl-desc">After this census, Delimitation Commission will sit again. States like Tamil Nadu are already objecting — they fear losing seats for following family planning.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">⚠️ Common Trap</div>
+        <p>Delimitation Commission is <strong>NOT a Constitutional body</strong> — it is a <strong>statutory body</strong> created under a Parliament Act. Students often confuse this. The Constitution mentions it, but it's not created BY the Constitution.</p>
+      </div>
+    </div>
+
+    <!-- ══ ART. 83 ══ -->
+    <div class="page" id="page-art83">
+      <div class="page-header">
+        <div class="eyebrow">Article 83 · <span class="tag tag-fire">🔥 Must Know</span></div>
+        <h2>Duration of Houses</h2>
+        <p>How long do the houses last? When can they be dissolved?</p>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Rajya Sabha</div>
+          <p style="font-size:14px; font-weight:700; color:var(--blue); margin-bottom:8px">PERMANENT HOUSE ♾️</p>
+          <div class="fact-row" style="border:none; padding:6px 0;">
+            <span class="fact-icon">✅</span>
+            <div class="fact-body" style="font-size:13px">Never dissolved</div>
+          </div>
+          <div class="fact-row" style="border:none; padding:6px 0;">
+            <span class="fact-icon">📅</span>
+            <div class="fact-body" style="font-size:13px">Members serve <span class="hl-blue">6 years</span></div>
+          </div>
+          <div class="fact-row" style="border:none; padding:6px 0;">
+            <span class="fact-icon">🔄</span>
+            <div class="fact-body" style="font-size:13px">1/3 members retire every <span class="hl-blue">2 years</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Lok Sabha</div>
+          <p style="font-size:14px; font-weight:700; color:var(--green); margin-bottom:8px">5-YEAR TERM ⏱️</p>
+          <div class="fact-row" style="border:none; padding:6px 0;">
+            <span class="fact-icon">✅</span>
+            <div class="fact-body" style="font-size:13px">Max term = <span class="hl-green">5 years</span></div>
+          </div>
+          <div class="fact-row" style="border:none; padding:6px 0;">
+            <span class="fact-icon">❌</span>
+            <div class="fact-body" style="font-size:13px">No minimum term (can end in 13 days!)</div>
+          </div>
+          <div class="fact-row" style="border:none; padding:6px 0;">
+            <span class="fact-icon">🔐</span>
+            <div class="fact-body" style="font-size:13px">Only extended during <span class="hl-amber">Emergency</span>, 1 year at a time</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="memory-hook">
+        <div class="hook-title">The Evergreen Forest Analogy</div>
+        <p>Rajya Sabha = An evergreen forest. It always looks full and green NOT because leaves never fall, but because they fall one by one (1/3 every 2 years), never all at once. The forest is <strong>never completely bare</strong>. That's why Rajya Sabha is called a <strong>permanent/continuing house</strong>.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Emergency Extension of Lok Sabha</div>
+        <div class="fact-row">
+          <span class="fact-icon">📋</span>
+          <div class="fact-body">Can be extended <strong>1 year at a time</strong> during National Emergency</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">♾️</span>
+          <div class="fact-body">No cap on total extension — as long as Emergency continues</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🏛️</span>
+          <div class="fact-body">Parliament must <strong>approve</strong> each extension — it's not automatic</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🗓️</span>
+          <div class="fact-body">After Emergency ends → elections within <strong>6 months</strong></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">When does President Dissolve Lok Sabha?</div>
+        <div class="fact-row">
+          <span class="fact-icon">1️⃣</span>
+          <div class="fact-body">No-confidence motion passed against government</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">2️⃣</span>
+          <div class="fact-body">PM resigns and no alternative majority is possible</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">3️⃣</span>
+          <div class="fact-body">PM dies and no party can prove majority</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❌</span>
+          <div class="fact-body">President <strong>CANNOT dissolve Rajya Sabha</strong> — it's permanent</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ART. 84 ══ -->
+    <div class="page" id="page-art84">
+      <div class="page-header">
+        <div class="eyebrow">Article 84 · <span class="tag tag-star">⭐ Important</span></div>
+        <h2>Qualifications for Parliament Membership</h2>
+        <p>Who can become an MP?</p>
+      </div>
+
+      <table class="compare-table">
+        <tr>
+          <th>Qualification</th>
+          <th class="val-lok">Lok Sabha</th>
+          <th class="val-raj">Rajya Sabha</th>
+        </tr>
+        <tr>
+          <td class="label">Citizenship</td>
+          <td colspan="2" style="text-align:center; color:var(--text)">Must be a <strong>citizen of India</strong></td>
+        </tr>
+        <tr>
+          <td class="label">Minimum Age</td>
+          <td class="val-lok">25 years</td>
+          <td class="val-raj">30 years</td>
+        </tr>
+        <tr>
+          <td class="label">Other</td>
+          <td colspan="2" style="color:var(--text)">Any other qualifications as prescribed by Parliament by law</td>
+        </tr>
+      </table>
+
+      <div class="memory-hook">
+        <div class="hook-title">Age Hook: Lower House → Lower Age</div>
+        <p>Lok Sabha = Lower House = Lower age (25).<br>Rajya Sabha = Upper House = Upper age (30).<br><br>It's a pyramid: the higher you go, the older you need to be. That's literally why Rajya Sabha is called the <strong>"House of Elders."</strong></p>
+      </div>
+    </div>
+
+    <!-- ══ ART. 85-86 ══ -->
+    <div class="page" id="page-art85">
+      <div class="page-header">
+        <div class="eyebrow">Articles 85–86 · <span class="tag tag-fire">🔥 Must Know</span></div>
+        <h2>Sessions, Prorogation & Presidential Address</h2>
+        <p>When does Parliament meet, and what does the President say?</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">3 Sessions of Parliament</div>
+        <div class="fact-row">
+          <span class="fact-icon">📊</span>
+          <div class="fact-body"><strong>Budget Session</strong> — <span class="hl-green">Longest</span> session (Feb–May)</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🌧️</span>
+          <div class="fact-body"><strong>Monsoon Session</strong> — July–August</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❄️</span>
+          <div class="fact-body"><strong>Winter Session</strong> — <span class="hl-blue">Shortest</span> session (Nov–Dec)</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❌</span>
+          <div class="fact-body"><span class="hl-red">No "Summer Session"</span> — a common trap question!</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">The 6-Month Rule</div>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7">The gap between any two sessions (<em>recess period</em>) must NOT exceed <strong style="color:var(--amber)">6 months</strong>. This ensures at least <strong style="color:var(--green)">2 sessions per year</strong>.</p>
+      </div>
+
+      <table class="compare-table">
+        <tr>
+          <th>Action</th>
+          <th>Who Does It</th>
+          <th>Meaning</th>
+        </tr>
+        <tr>
+          <td><strong>Summon</strong></td>
+          <td class="val-raj">President</td>
+          <td class="label">"Come in, let's meet"</td>
+        </tr>
+        <tr>
+          <td><strong>Prorogue</strong></td>
+          <td class="val-raj">President</td>
+          <td class="label">"Session is over, go home — come back next session"</td>
+        </tr>
+        <tr>
+          <td><strong>Dissolve</strong></td>
+          <td class="val-raj">President</td>
+          <td class="label">"You're done. New elections needed." (Lok Sabha only)</td>
+        </tr>
+        <tr>
+          <td><strong>Adjourn</strong></td>
+          <td class="val-raj">Speaker / Chairman</td>
+          <td class="label">"Break within a session"</td>
+        </tr>
+      </table>
+
+      <div class="memory-hook">
+        <div class="hook-title">Prorogue vs Dissolve — The Hotel Analogy</div>
+        <p><strong>Prorogue</strong> = "Check out for now, your reservation is still valid. Come back for the next session." (The same Lok Sabha continues.)<br><br><strong>Dissolve</strong> = "Hotel demolished. Everyone out. A brand-new hotel will be built after elections."</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Article 86 — Presidential Special Address</div>
+        <div class="fact-row">
+          <span class="fact-icon">📅</span>
+          <div class="fact-body">Happens at: <strong>(1)</strong> First session of each year <strong>AND (2)</strong> First session of a new Lok Sabha after general elections</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">📜</span>
+          <div class="fact-body">Called <strong>Special Address</strong> in Article 86; in practice called <strong>Motion of Thanks</strong></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">⚡</span>
+          <div class="fact-body">If Motion of Thanks is <strong>defeated</strong> → signals the government has <span class="hl-red">lost majority in Lok Sabha</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ART. 88 ══ -->
+    <div class="page" id="page-art88">
+      <div class="page-header">
+        <div class="eyebrow">Article 88 · <span class="tag tag-fire">🔥 Must Know</span></div>
+        <h2>Rights of Ministers & Attorney General</h2>
+        <p>Who can speak in which house? Who can vote?</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">The Rule</div>
+        <p style="font-size:15px; line-height:1.8; color:var(--text)">Every <strong style="color:var(--green)">Minister</strong> and the <strong style="color:var(--blue)">Attorney General</strong> can <span class="hl-amber">speak in either House</span> of Parliament, but can <span class="hl-red">vote only in the House they are a member of</span>.</p>
+      </div>
+
+      <table class="compare-table">
+        <tr>
+          <th>Person</th>
+          <th>Member of</th>
+          <th>Can Speak in</th>
+          <th>Can Vote in</th>
+        </tr>
+        <tr>
+          <td><strong>PM (Modi)</strong></td>
+          <td class="val-lok">Lok Sabha</td>
+          <td style="color:var(--text)">Both houses</td>
+          <td class="val-lok">Lok Sabha only</td>
+        </tr>
+        <tr>
+          <td><strong>Nirmala Sitharaman</strong></td>
+          <td class="val-raj">Rajya Sabha</td>
+          <td style="color:var(--text)">Both houses</td>
+          <td class="val-raj">Rajya Sabha only</td>
+        </tr>
+        <tr>
+          <td><strong>S. Jaishankar</strong></td>
+          <td class="val-raj">Rajya Sabha</td>
+          <td style="color:var(--text)">Both houses</td>
+          <td class="val-raj">Rajya Sabha only</td>
+        </tr>
+        <tr>
+          <td><strong>Attorney General</strong></td>
+          <td class="label">Neither house</td>
+          <td style="color:var(--text)">Both houses</td>
+          <td class="val-lok" style="color:var(--red)">Cannot vote anywhere</td>
+        </tr>
+      </table>
+
+      <div class="memory-hook">
+        <div class="hook-title">The "Spectator with a Mic" Rule</div>
+        <p>The Attorney General is like a <strong>guest anchor</strong> on a debate show. He can <strong>speak</strong> on any channel (Lok Sabha or Rajya Sabha), but since he owns no share in the company (not a member), he has <strong>no voting rights</strong> anywhere.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Exam Special: No-Confidence Motion Trap</div>
+        <p style="font-size:13px; color:var(--text-muted); line-height:1.7; margin-bottom:8px">A no-confidence motion can only be introduced in <strong style="color:var(--green)">Lok Sabha</strong>. If a minister is a Rajya Sabha member (like Manmohan Singh was PM via RS), then during a no-confidence motion:</p>
+        <div class="fact-row">
+          <span class="fact-icon">✅</span>
+          <div class="fact-body">They can go to Lok Sabha and <strong>speak/debate</strong></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❌</span>
+          <div class="fact-body">They <strong>CANNOT vote</strong> to save their own government</div>
+        </div>
+        <p style="font-size:13px; color:var(--text-muted); margin-top:8px">This is a frequently asked question: "In which case can the PM not vote in a no-confidence motion?" → <strong style="color:var(--amber)">When the PM is a member of Rajya Sabha.</strong></p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">PM from Rajya Sabha — Historical Examples</div>
+        <div class="fact-row">
+          <span class="fact-icon">🏅</span>
+          <div class="fact-body"><strong>Manmohan Singh</strong> — PM and Rajya Sabha member (could never have won a direct Lok Sabha election)</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🏅</span>
+          <div class="fact-body"><strong>Indira Gandhi</strong> — was also a Rajya Sabha member at one point</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ EXAM TRAPS ══ -->
+    <div class="page" id="page-traps">
+      <div class="page-header">
+        <div class="eyebrow">⚠️ Exam Traps</div>
+        <h2>What Examiners Use to Trip You Up</h2>
+        <p>Every trap here has cost students marks. Read each one carefully.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 1 — First Sitting vs First Meeting</div>
+        <p><strong>First Sitting</strong> = 17 April 1952 (both houses sat separately for first time)<br><strong>First Meeting</strong> = 13 May 1952 (joint business began)<br><br>If no qualifier → go with <strong>13 May 1952</strong>.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 2 — Rajya Sabha Max vs Current</div>
+        <p><strong>Maximum</strong> = 250 | <strong>Current</strong> = 245<br>Students write 250 when asked "current strength." Always check if Q says "maximum" or "present/current."</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 3 — Lok Sabha Maximum</div>
+        <p>Before 104th Amendment: <strong>552</strong> (550 + 2 Anglo-Indian).<br>After 104th Amendment: <strong>550</strong>.<br>Current actual Lok Sabha = <strong>543</strong> seats elected.<br>Don't confuse 550 (constitutional max) with 543 (actual).</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 4 — Delimitation Commission is NOT Constitutional</div>
+        <p>It is mentioned IN the Constitution but it is a <strong>statutory body</strong> (created by Parliament's law), NOT a Constitutional body (created directly by the Constitution like UPSC, CAG, EC).</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 5 — No Summer Session</div>
+        <p>Parliament has <strong>3</strong> sessions: Budget, Monsoon, Winter. There is <strong>NO summer session</strong>. A question may give "summer session" as an option — it's always wrong.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 6 — Rajya Sabha Dissolution</div>
+        <p>President can dissolve <strong>Lok Sabha ONLY</strong>. Rajya Sabha is a <strong>permanent house</strong> and can <strong>never be dissolved</strong> by anyone.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 7 — 12 Nominated Members' Fields</div>
+        <p>The Constitution says exactly: <strong>Literature, Science, Art, Social Service</strong>. "Sports" or "Technology" or "Law" are NOT in the list. Watch out for these fake options in exams.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 8 — Delimitation Dates</div>
+        <p>Commission formed: <strong>1952, 1962, 1972, 2002</strong> (note: NOT 1982 or 1992 — those were frozen periods).<br>Frozen by 42nd Amendment till <strong>2000</strong>.<br>Extended by 84th Amendment till <strong>2026</strong>.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 9 — AG Voting Rights</div>
+        <p>Attorney General can <strong>speak</strong> in both houses but <strong>CANNOT vote</strong> in either because he is not a member of any house.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-header">🪤 Trap 10 — Emergency Extension</div>
+        <p>Lok Sabha can be extended "one year at a time" during Emergency. This does NOT mean just once — it can be extended repeatedly for as long as Emergency continues. Parliament must approve each extension.</p>
+      </div>
+    </div>
+
+    <!-- ══ EXAMINER Qs ══ -->
+    <div class="page" id="page-examqs">
+      <div class="page-header">
+        <div class="eyebrow">🎯 Examiner's Favourite Questions</div>
+        <h2>How Examiners Attack This Chapter</h2>
+        <p>Based on the lecture's emphasis and common exam patterns.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔥 High-Probability Direct Questions</div>
+        <div class="fact-row">
+          <span class="fact-icon">❓</span>
+          <div class="fact-body">Maximum seats in Rajya Sabha? → <span class="hl-blue">250</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❓</span>
+          <div class="fact-body">Current Rajya Sabha strength? → <span class="hl-green">245</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❓</span>
+          <div class="fact-body">First session of Parliament? → <span class="hl-amber">13 May 1952</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❓</span>
+          <div class="fact-body">Which state has max Rajya Sabha seats? → <span class="hl-green">UP (31)</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❓</span>
+          <div class="fact-body">Which state has max Lok Sabha seats? → <span class="hl-green">UP (80)</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❓</span>
+          <div class="fact-body">Shortest Parliament session? → <span class="hl-amber">Winter Session</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❓</span>
+          <div class="fact-body">Longest Parliament session? → <span class="hl-green">Budget Session</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">❓</span>
+          <div class="fact-body">104th Amendment removed? → <span class="hl-blue">Anglo-Indian nomination</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎯 Statement-Based / Assertion-Reason Patterns</div>
+        <div class="fact-row">
+          <span class="fact-icon">📋</span>
+          <div class="fact-body">"Rajya Sabha is not subject to dissolution" → <span class="hl-green">TRUE</span></div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">📋</span>
+          <div class="fact-body">"Delimitation Commission is a constitutional body" → <span class="hl-red">FALSE</span> (statutory)</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">📋</span>
+          <div class="fact-body">"AG can vote in either house" → <span class="hl-red">FALSE</span> (can speak but not vote)</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">📋</span>
+          <div class="fact-body">"Parliament has 4 sessions annually" → <span class="hl-red">FALSE</span> (3 sessions)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🎯 Match-the-Following Possibilities</div>
+        <div class="fact-row">
+          <span class="fact-icon">🔗</span>
+          <div class="fact-body">Article 79 → Constitution of Parliament</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🔗</span>
+          <div class="fact-body">Article 80 → Composition of Rajya Sabha</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🔗</span>
+          <div class="fact-body">Article 81 → Composition of Lok Sabha</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🔗</span>
+          <div class="fact-body">Article 83 → Duration of Houses</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🔗</span>
+          <div class="fact-body">Article 84 → Qualifications for MPs</div>
+        </div>
+        <div class="fact-row">
+          <span class="fact-icon">🔗</span>
+          <div class="fact-body">Article 88 → Rights of Ministers + AG</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ QUIZ ══ -->
+    <div class="page" id="page-quiz">
+      <div class="page-header">
+        <div class="eyebrow">❓ Active Recall</div>
+        <h2>Self-Test Questions</h2>
+        <p>Click any question to reveal the answer. Test yourself without looking!</p>
+      </div>
+
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q1. Parliament consists of which three bodies?</div>
+        <div class="quiz-answer">President + Lok Sabha + Rajya Sabha</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q2. What is the maximum strength of Rajya Sabha? And current strength?</div>
+        <div class="quiz-answer">Maximum = 250 | Current = 245 (5 UTs without assemblies)</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q3. How many members does the President nominate to Rajya Sabha, and from which fields?</div>
+        <div class="quiz-answer">12 members from: Literature, Science, Art, Social Service</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q4. What was the first session date of Parliament and what was the first sitting date?</div>
+        <div class="quiz-answer">First Sitting = 17 April 1952 | First Meeting = 13 May 1952</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q5. Rajya Sabha maximum = 250. Maximum Lok Sabha seats = ?</div>
+        <div class="quiz-answer">550 (after 104th Amendment removed 2 Anglo-Indian seats from 552)</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q6. Which amendment stopped Anglo-Indian nomination? What was the max before it?</div>
+        <div class="quiz-answer">104th Amendment | Before = 552 (550 + 2 Anglo-Indians)</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q7. Delimitation Commission has been formed how many times? In which years?</div>
+        <div class="quiz-answer">4 times: 1952, 1962, 1972, 2002</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q8. Which amendment froze delimitation and till when?</div>
+        <div class="quiz-answer">42nd Amendment → till 2000 | 84th Amendment → extended till 2026</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q9. Rajya Sabha: term of house vs term of members?</div>
+        <div class="quiz-answer">House = Permanent (no dissolution) | Members = 6 years, 1/3 retire every 2 years</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q10. Age qualification: Lok Sabha vs Rajya Sabha?</div>
+        <div class="quiz-answer">Lok Sabha = 25 years | Rajya Sabha = 30 years</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q11. Can the Attorney General vote in Parliament? Why/why not?</div>
+        <div class="quiz-answer">NO — he can speak in both houses but cannot vote because he is NOT a member of either house.</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q12. In which case can a PM NOT vote in a no-confidence motion?</div>
+        <div class="quiz-answer">When the PM is a member of Rajya Sabha (no-confidence motion is only in Lok Sabha)</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q13. Maximum gap between two sessions of Parliament?</div>
+        <div class="quiz-answer">6 months (so minimum 2 sessions per year)</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q14. Which is the longest and which is the shortest Parliamentary session?</div>
+        <div class="quiz-answer">Longest = Budget Session | Shortest = Winter Session</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+      <div class="quiz-item" onclick="toggleQuiz(this)">
+        <div class="quiz-q">Q15. Who summons Parliament? Who prorogues it? Who dissolves Lok Sabha?</div>
+        <div class="quiz-answer">All three: The President</div>
+        <div class="quiz-hint">tap to reveal ↓</div>
+      </div>
+    </div>
+
+    <!-- ══ HIGH YIELD ══ -->
+    <div class="page" id="page-highyield">
+      <div class="page-header">
+        <div class="eyebrow">⭐ Layer 2</div>
+        <h2>High-Yield Revision Notes</h2>
+        <p>The 20% of facts that appear in 80% of questions.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔥 Numbers You Must Know</div>
+        <div class="speed-row"><div class="sr-key">RS Max</div><div class="sr-val"><strong>250</strong> (238 elected + 12 nominated)</div></div>
+        <div class="speed-row"><div class="sr-key">RS Current</div><div class="sr-val"><strong>245</strong></div></div>
+        <div class="speed-row"><div class="sr-key">LS Max</div><div class="sr-val"><strong>550</strong> (after 104th Amend.)</div></div>
+        <div class="speed-row"><div class="sr-key">LS States</div><div class="sr-val"><strong>530</strong> from states</div></div>
+        <div class="speed-row"><div class="sr-key">LS UTs</div><div class="sr-val">up to <strong>20</strong> from UTs</div></div>
+        <div class="speed-row"><div class="sr-key">UP (RS)</div><div class="sr-val"><strong>31 seats</strong> (maximum)</div></div>
+        <div class="speed-row"><div class="sr-key">UP (LS)</div><div class="sr-val"><strong>80 seats</strong> (maximum)</div></div>
+        <div class="speed-row"><div class="sr-key">LS age</div><div class="sr-val"><strong>25 years</strong></div></div>
+        <div class="speed-row"><div class="sr-key">RS age</div><div class="sr-val"><strong>30 years</strong></div></div>
+        <div class="speed-row"><div class="sr-key">RS member term</div><div class="sr-val"><strong>6 years</strong></div></div>
+        <div class="speed-row"><div class="sr-key">LS max term</div><div class="sr-val"><strong>5 years</strong></div></div>
+        <div class="speed-row"><div class="sr-key">RS retire cycle</div><div class="sr-val"><strong>1/3 every 2 years</strong></div></div>
+        <div class="speed-row"><div class="sr-key">Session gap</div><div class="sr-val">Max <strong>6 months</strong></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔥 Key Dates</div>
+        <div class="speed-row"><div class="sr-key">First sitting</div><div class="sr-val"><strong>17 April 1952</strong></div></div>
+        <div class="speed-row"><div class="sr-key">First meeting</div><div class="sr-val"><strong>13 May 1952</strong></div></div>
+        <div class="speed-row"><div class="sr-key">Hindi names</div><div class="sr-val">Adopted in <strong>1954</strong></div></div>
+        <div class="speed-row"><div class="sr-key">Delimitation</div><div class="sr-val"><strong>1952, 1962, 1972, 2002</strong></div></div>
+        <div class="speed-row"><div class="sr-key">42nd Amend.</div><div class="sr-val">Froze till <strong>2000</strong></div></div>
+        <div class="speed-row"><div class="sr-key">84th Amend.</div><div class="sr-val">Extended till <strong>2026</strong></div></div>
+        <div class="speed-row"><div class="sr-key">104th Amend.</div><div class="sr-val">Removed Anglo-Indian seats; extended SC/ST for 10 yrs</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔥 Key Concepts (True/False Ready)</div>
+        <div class="speed-row"><div class="sr-key">RS dissolved?</div><div class="sr-val"><strong style="color:var(--red)">NEVER</strong> — permanent house</div></div>
+        <div class="speed-row"><div class="sr-key">AG votes?</div><div class="sr-val"><strong style="color:var(--red)">NO</strong> — speaks but doesn't vote</div></div>
+        <div class="speed-row"><div class="sr-key">Delimitation type</div><div class="sr-val"><strong style="color:var(--amber)">Statutory</strong> body (not constitutional)</div></div>
+        <div class="speed-row"><div class="sr-key">Summer session?</div><div class="sr-val"><strong style="color:var(--red)">DOES NOT EXIST</strong></div></div>
+        <div class="speed-row"><div class="sr-key">RS — SC/ST?</div><div class="sr-val"><strong style="color:var(--red)">NO</strong> reservation in RS</div></div>
+      </div>
+    </div>
+
+    <!-- ══ ULTRA FAST ══ -->
+    <div class="page" id="page-ultrafast">
+      <div class="page-header">
+        <div class="eyebrow">⚡ Layer 3 — Ultra-Fast</div>
+        <h2>Rapid-Fire Facts</h2>
+        <p>Scan this in 3 minutes. Know all of these cold.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Article → Topic (Memorize the Map)</div>
+        <div class="pill-row">
+          <span class="pill blue">79 → Parliament constitution</span>
+          <span class="pill blue">80 → RS composition</span>
+          <span class="pill blue">81 → LS composition</span>
+          <span class="pill blue">82 → Delimitation</span>
+          <span class="pill blue">83 → Duration</span>
+          <span class="pill blue">84 → Qualification</span>
+          <span class="pill blue">85 → Sessions/Dissolution</span>
+          <span class="pill blue">86 → President's address</span>
+          <span class="pill blue">88 → Minister/AG rights</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Numbers at a Glance</div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; font-size:12px; font-family:var(--mono);">
+          <div style="text-align:center; padding:10px; background:var(--surface2); border-radius:6px;"><div style="font-size:24px;font-weight:700;color:var(--blue)">250</div><div style="color:var(--text-muted)">RS Max</div></div>
+          <div style="text-align:center; padding:10px; background:var(--surface2); border-radius:6px;"><div style="font-size:24px;font-weight:700;color:var(--green)">245</div><div style="color:var(--text-muted)">RS Now</div></div>
+          <div style="text-align:center; padding:10px; background:var(--surface2); border-radius:6px;"><div style="font-size:24px;font-weight:700;color:var(--amber)">12</div><div style="color:var(--text-muted)">RS Nominated</div></div>
+          <div style="text-align:center; padding:10px; background:var(--surface2); border-radius:6px;"><div style="font-size:24px;font-weight:700;color:var(--blue)">550</div><div style="color:var(--text-muted)">LS Max</div></div>
+          <div style="text-align:center; padding:10px; background:var(--surface2); border-radius:6px;"><div style="font-size:24px;font-weight:700;color:var(--green)">530</div><div style="color:var(--text-muted)">LS States</div></div>
+          <div style="text-align:center; padding:10px; background:var(--surface2); border-radius:6px;"><div style="font-size:24px;font-weight:700;color:var(--amber)">20</div><div style="color:var(--text-muted)">LS UTs max</div></div>
+          <div style="text-align:center; padding:10px; background:var(--surface2); border-radius:6px;"><div style="font-size:24px;font-weight:700;color:var(--purple)">25</div><div style="color:var(--text-muted)">LS age</div></div>
+          <div style="text-align:center; padding:10px; background:var(--surface2); border-radius:6px;"><div style="font-size:24px;font-weight:700;color:var(--purple)">30</div><div style="color:var(--text-muted)">RS age</div></div>
+          <div style="text-align:center; padding:10px; background:var(--surface2); border-radius:6px;"><div style="font-size:24px;font-weight:700;color:var(--red)">6</div><div style="color:var(--text-muted)">RS member yrs</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Critical TRUE / FALSE</div>
+        <div class="speed-row"><div class="sr-key" style="color:var(--green)">TRUE ✅</div><div class="sr-val">RS is permanent and never dissolved</div></div>
+        <div class="speed-row"><div class="sr-key" style="color:var(--green)">TRUE ✅</div><div class="sr-val">AG can speak in both houses</div></div>
+        <div class="speed-row"><div class="sr-key" style="color:var(--red)">FALSE ❌</div><div class="sr-val">AG can vote in either house</div></div>
+        <div class="speed-row"><div class="sr-key" style="color:var(--red)">FALSE ❌</div><div class="sr-val">Delimitation Commission is a Constitutional body</div></div>
+        <div class="speed-row"><div class="sr-key" style="color:var(--red)">FALSE ❌</div><div class="sr-val">There is a Summer session of Parliament</div></div>
+        <div class="speed-row"><div class="sr-key" style="color:var(--red)">FALSE ❌</div><div class="sr-val">RS has SC/ST reservation</div></div>
+        <div class="speed-row"><div class="sr-key" style="color:var(--green)">TRUE ✅</div><div class="sr-val">LS can be dissolved by President</div></div>
+      </div>
+    </div>
+
+    <!-- ══ LAST NIGHT ══ -->
+    <div class="page" id="page-lastnight">
+      <div class="page-header">
+        <div class="eyebrow">🌙 Layer 5 — Last Night</div>
+        <h2>Last-Night-Before-Exam Sheet</h2>
+        <p>30 bullets. Read once, walk into the exam hall with confidence.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">The Final 30</div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Parliament = <strong>President + Lok Sabha + Rajya Sabha</strong> (Art. 79)</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Parliamentary system borrowed from <strong>UK</strong>; US has Presidential</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Lok Sabha = House of People = Lower House = <strong>First Chamber</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Rajya Sabha = Council of States = Upper House = <strong>Second Chamber / House of Elders</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">First sitting: <strong>17 April 1952</strong> | First meeting: <strong>13 May 1952</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Hindi names adopted: <strong>1954</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">LS election = Direct + <strong>First Past The Post</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">RS election = Indirect + <strong>Proportional Representation + Single Transferable Vote</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">RS Max = <strong>250</strong> | RS Current = <strong>245</strong> (5 UTs no assembly)</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">12 RS seats nominated by President from <strong>Literature, Science, Art, Social Service</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">RS UTs: Delhi (3), Puducherry (1), J&K (4) — only 3 UTs</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">LS Max = <strong>550</strong> (530 states + 20 UTs). Old max was 552 before 104th Amend.</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">104th Amendment: removed Anglo-Indian seats; extended SC/ST for 10 years</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">UP: <strong>80 LS seats</strong> + <strong>31 RS seats</strong> (both maximums)</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Delimitation Commission = <strong>statutory body</strong> (NOT Constitutional)</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Delimitation formed 4 times: <strong>1952, 1962, 1972, 2002</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">42nd Amend → frozen till 2000 | 84th Amend → frozen till 2026 (1971 census)</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">RS = Permanent house. <strong>NEVER dissolved.</strong> Members: 6-year term, 1/3 retire every 2 years</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">LS max term = <strong>5 years</strong>. No minimum. Extended 1 year at a time during Emergency</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">LS age = <strong>25</strong> | RS age = <strong>30</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">3 sessions: <strong>Budget (longest)</strong>, Monsoon, <strong>Winter (shortest)</strong>. NO summer session.</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Gap between sessions ≤ <strong>6 months</strong> → minimum 2 sessions/year</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">President summons, prorogues Parliament; dissolves <strong>Lok Sabha only</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Presidential Special Address (Art. 86): start of each year's 1st session + new LS after elections</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Motion of Thanks defeated = government <strong>lost majority</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Art. 88: All Ministers + AG can <strong>speak in either house</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Can vote only in <strong>own house</strong>. AG cannot vote anywhere (not a member)</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">No-confidence motion only in Lok Sabha. RS member minister = can speak, CANNOT vote</span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">Manmohan Singh & Indira Gandhi were PMs from <strong>Rajya Sabha</strong></span></div>
+        <div class="ln-item"><span class="ln-bullet">→</span><span class="ln-text">No bill becomes Act without <strong>Presidential assent</strong> → President is part of Parliament</span></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // ─── SPA Navigation ───
+  const navItems = document.querySelectorAll('.nav-item');
+  const pages = document.querySelectorAll('.page');
+  const total = navItems.length;
+  const visitedPages = new Set(['bigpicture']);
+  
+  function navigate(pageId) {
+    pages.forEach(p => p.classList.remove('active'));
+    navItems.forEach(n => n.classList.remove('active'));
+    const targetPage = document.getElementById('page-' + pageId);
+    const targetNav = document.querySelector(`[data-page="${pageId}"]`);
+    if (targetPage) targetPage.classList.add('active');
+    if (targetNav) targetNav.classList.add('active');
+    document.getElementById('main').scrollTo(0, 0);
+    visitedPages.add(pageId);
+    updateProgress();
+  }
+  
+  function updateProgress() {
+    const pct = Math.round((visitedPages.size / total) * 100);
+    document.getElementById('prog-fill').style.width = pct + '%';
+    document.getElementById('prog-pct').textContent = pct + '%';
+  }
+  
+  navItems.forEach(item => {
+    item.addEventListener('click', () => navigate(item.dataset.page));
+  });
+  
+  // ─── Quiz Toggle ───
+  function toggleQuiz(el) {
+    const ans = el.querySelector('.quiz-answer');
+    const hint = el.querySelector('.quiz-hint');
+    ans.classList.toggle('revealed');
+    hint.textContent = ans.classList.contains('revealed') ? 'tap to hide ↑' : 'tap to reveal ↓';
+  }
+  
+  updateProgress();
+</script>
+</body>
+</html>
