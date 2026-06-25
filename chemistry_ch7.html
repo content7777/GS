@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carbon & Its Compounds — Retention System</title>
+<style>
+  :root{
+    --bg:#0f1117;
+    --bg-soft:#151823;
+    --bg-card:#181c28;
+    --bg-card-hover:#1d2230;
+    --border:#262b3a;
+    --green:#5eead4;
+    --green-soft:rgba(94,234,212,0.12);
+    --blue:#7aa7ff;
+    --blue-soft:rgba(122,167,255,0.12);
+    --text:#e9ecf3;
+    --text-dim:#9aa4b8;
+    --text-faint:#6b7488;
+    --amber:#f0c674;
+    --red:#ef8b8b;
+    --radius:14px;
+    --maxw:920px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* layout */
+  .app{display:flex; min-height:100vh;}
+  .sidebar{
+    width:268px; flex-shrink:0; background:var(--bg-soft);
+    border-right:1px solid var(--border);
+    padding:22px 14px 22px 18px;
+    position:fixed; top:0; left:0; height:100vh; overflow-y:auto;
+    transition:transform .25s ease;
+    z-index:50;
+  }
+  .sidebar::-webkit-scrollbar{width:6px;}
+  .sidebar::-webkit-scrollbar-thumb{background:#2a2f3f;border-radius:3px;}
+  .brand{
+    display:flex; align-items:center; gap:10px; padding:4px 8px 18px 4px;
+    border-bottom:1px solid var(--border); margin-bottom:14px;
+  }
+  .brand .atom{
+    width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(135deg,var(--green),var(--blue));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:#0f1117;font-size:15px;flex-shrink:0;
+  }
+  .brand .title{font-size:14.5px;font-weight:700;color:var(--text);line-height:1.2;}
+  .brand .sub{font-size:11px;color:var(--text-faint);}
+  .nav-group-label{
+    font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--text-faint); margin:18px 10px 6px; font-weight:700;
+  }
+  .nav-item{
+    display:flex; align-items:center; gap:10px;
+    padding:9px 10px; border-radius:10px; cursor:pointer;
+    color:var(--text-dim); font-size:13.5px; font-weight:500;
+    border:1px solid transparent; margin-bottom:2px;
+  }
+  .nav-item:hover{background:var(--bg-card); color:var(--text);}
+  .nav-item.active{
+    background:var(--green-soft); color:var(--green);
+    border-color:rgba(94,234,212,0.25);
+  }
+  .nav-item .dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.6;flex-shrink:0;}
+  .main{
+    flex:1; margin-left:268px; min-height:100vh;
+    display:flex; justify-content:center;
+    padding:38px 28px 90px;
+  }
+  .page{display:none; width:100%; max-width:var(--maxw); animation:fadein .35s ease;}
+  .page.active{display:block;}
+  @keyframes fadein{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:11.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--blue); background:var(--blue-soft); padding:5px 11px; border-radius:99px;
+    margin-bottom:14px;
+  }
+  h1.page-title{font-size:30px; font-weight:800; margin:0 0 6px; letter-spacing:-0.01em;}
+  .page-desc{color:var(--text-dim); font-size:15px; margin:0 0 28px; max-width:640px;}
+
+  .card{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:20px 22px; margin-bottom:16px;
+  }
+  .card h3{margin:0 0 10px; font-size:16.5px; font-weight:700; color:var(--text);}
+  .card h3 .tag{font-size:12px; margin-right:6px;}
+  .card p{margin:6px 0; color:var(--text-dim); font-size:14.5px;}
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .grid-3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;}
+  @media(max-width:760px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  .stat{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+    padding:16px 18px;
+  }
+  .stat .num{font-size:24px; font-weight:800; color:var(--green);}
+  .stat .label{font-size:12.5px; color:var(--text-dim); margin-top:2px;}
+
+  ul.clean{margin:6px 0; padding-left:20px;}
+  ul.clean li{margin-bottom:6px; color:var(--text-dim); font-size:14.5px;}
+  ul.clean li b, ul.clean li strong{color:var(--text);}
+  .pill{
+    display:inline-block; font-size:11px; font-weight:700; padding:2px 9px; border-radius:99px;
+    margin-right:6px;
+  }
+  .pill.must{background:rgba(239,139,139,0.15); color:var(--red);}
+  .pill.imp{background:rgba(240,198,116,0.15); color:var(--amber);}
+  .pill.good{background:rgba(94,234,212,0.15); color:var(--green);}
+
+  .accordion{border:1px solid var(--border); border-radius:var(--radius); margin-bottom:12px; overflow:hidden; background:var(--bg-card);}
+  .accordion-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 20px; cursor:pointer; user-select:none;
+  }
+  .accordion-head:hover{background:var(--bg-card-hover);}
+  .accordion-head .htitle{font-size:15.5px; font-weight:700; color:var(--text); display:flex; align-items:center; gap:8px;}
+  .accordion-head .chevron{transition:transform .25s ease; color:var(--text-faint); font-size:13px;}
+  .accordion.open .chevron{transform:rotate(180deg);}
+  .accordion-body{display:none; padding:0 20px 20px;}
+  .accordion.open .accordion-body{display:block;}
+  .accordion-body h4{color:var(--blue); font-size:13.5px; text-transform:uppercase; letter-spacing:.04em; margin:16px 0 6px;}
+  .accordion-body h4:first-child{margin-top:4px;}
+
+  table{width:100%; border-collapse:collapse; margin:10px 0; font-size:13.5px;}
+  table th{
+    text-align:left; color:var(--blue); font-size:12px; text-transform:uppercase; letter-spacing:.03em;
+    padding:8px 10px; border-bottom:1px solid var(--border);
+  }
+  table td{padding:9px 10px; border-bottom:1px solid var(--border); color:var(--text-dim);}
+  table td b{color:var(--text);}
+  table tr:last-child td{border-bottom:none;}
+  .formula{
+    font-family:"SF Mono",Consolas,Menlo,monospace; background:var(--bg-soft);
+    padding:1px 7px; border-radius:6px; color:var(--green); font-size:13px;
+  }
+
+  .palace-room{
+    border-left:3px solid var(--blue); padding:4px 0 4px 16px; margin-bottom:22px;
+  }
+  .palace-room h3{color:var(--blue); margin:0 0 8px; font-size:16px;}
+  .palace-room p{color:var(--text-dim); font-size:14.5px; margin:0 0 8px;}
+
+  .hook-card{
+    background:linear-gradient(145deg, var(--bg-card), var(--bg-soft));
+    border:1px solid var(--border); border-radius:var(--radius); padding:18px 20px; margin-bottom:14px;
+  }
+  .hook-card .htitle{font-weight:700; color:var(--green); font-size:15px; margin-bottom:6px;}
+  .hook-card .image{color:var(--text); font-size:14.5px; font-style:italic; margin-bottom:8px; line-height:1.6;}
+  .hook-card .recall{font-size:13px; color:var(--text-dim);}
+
+  .trap-card{
+    border:1px solid rgba(239,139,139,0.3); background:rgba(239,139,139,0.06);
+    border-radius:var(--radius); padding:16px 20px; margin-bottom:12px;
+  }
+  .trap-card .ttitle{color:var(--red); font-weight:700; font-size:14.5px; margin-bottom:6px;}
+  .trap-card p{margin:4px 0; font-size:14px; color:var(--text-dim);}
+
+  .qa{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+    padding:14px 18px; margin-bottom:10px; cursor:pointer;
+  }
+  .qa .q{font-size:14.5px; font-weight:600; color:var(--text); display:flex; justify-content:space-between; gap:10px;}
+  .qa .q .arrow{color:var(--text-faint); font-size:12px;}
+  .qa .a{display:none; margin-top:10px; padding-top:10px; border-top:1px dashed var(--border); color:var(--green); font-size:14px;}
+  .qa.open .a{display:block;}
+
+  .flow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin:10px 0;}
+  .flow .node{
+    background:var(--bg-soft); border:1px solid var(--border); border-radius:9px;
+    padding:8px 13px; font-size:13.5px; color:var(--text);
+  }
+  .flow .arrow{color:var(--green); font-weight:700;}
+
+  .fastbox{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:18px 20px; margin-bottom:14px;
+  }
+  .fastbox h4{margin:0 0 10px; color:var(--green); font-size:14px; text-transform:uppercase; letter-spacing:.04em;}
+
+  .toggle-btn{
+    border:none; background:transparent; cursor:pointer;
+  }
+  .menu-toggle{
+    display:none; position:fixed; top:16px; left:16px; z-index:60;
+    width:40px; height:40px; border-radius:10px; background:var(--bg-card);
+    border:1px solid var(--border); color:var(--text); font-size:18px; align-items:center; justify-content:center;
+  }
+  .scrim{display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:40;}
+
+  @media(max-width:880px){
+    .sidebar{transform:translateX(-100%);}
+    .sidebar.open{transform:translateX(0);}
+    .main{margin-left:0; padding:78px 18px 70px;}
+    .menu-toggle{display:flex;}
+    .scrim.show{display:block;}
+  }
+  .footer-nav{
+    display:flex; justify-content:space-between; margin-top:30px; gap:12px;
+  }
+  .nbtn{
+    flex:1; background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
+    padding:12px 16px; cursor:pointer; color:var(--text-dim); font-size:13px;
+  }
+  .nbtn:hover{border-color:var(--green); color:var(--green);}
+  .nbtn .lbl{font-size:10.5px; text-transform:uppercase; color:var(--text-faint); letter-spacing:.05em;}
+  .nbtn .name{font-weight:700; color:var(--text); font-size:13.5px;}
+  .nbtn:hover .name{color:var(--green);}
+  .nbtn.next{text-align:right;}
+
+  blockquote.insight{
+    border-left:3px solid var(--green); margin:14px 0; padding:4px 0 4px 16px;
+    color:var(--text); font-size:14.5px; font-style:italic;
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle">☰</button>
+<div class="scrim" id="scrim"></div>
+
+<div class="app">
+
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="atom">C</div>
+      <div>
+        <div class="title">Carbon & Compounds</div>
+        <div class="sub">SSC CGL · Retention System</div>
+      </div>
+    </div>
+
+    <div class="nav-group-label">Build Understanding</div>
+    <div class="nav-item" data-page="home"><span class="dot"></span>Big Picture</div>
+    <div class="nav-item" data-page="palace"><span class="dot"></span>Memory Palace</div>
+    <div class="nav-item" data-page="notes"><span class="dot"></span>Complete Notes</div>
+    <div class="nav-item" data-page="hooks"><span class="dot"></span>Memory Hooks</div>
+    <div class="nav-item" data-page="connections"><span class="dot"></span>Concept Connections</div>
+
+    <div class="nav-group-label">Exam Readiness</div>
+    <div class="nav-item" data-page="traps"><span class="dot"></span>Exam Traps</div>
+    <div class="nav-item" data-page="examiner"><span class="dot"></span>Examiner's Favourites</div>
+    <div class="nav-item" data-page="recall"><span class="dot"></span>Active Recall</div>
+
+    <div class="nav-group-label">Revise Fast</div>
+    <div class="nav-item" data-page="highyield"><span class="dot"></span>High-Yield Notes</div>
+    <div class="nav-item" data-page="ultrafast"><span class="dot"></span>Ultra-Fast Sheet</div>
+    <div class="nav-item" data-page="thirtysec"><span class="dot"></span>30-Second Sheet</div>
+    <div class="nav-item" data-page="lastnight"><span class="dot"></span>Last Night Sheet</div>
+  </nav>
+
+  <main class="main">
+
+    <!-- ============ HOME ============ -->
+    <section class="page" id="page-home">
+      <div class="eyebrow">Chapter Overview</div>
+      <h1 class="page-title">Carbon & Its Compounds</h1>
+      <p class="page-desc">Carbon is barely 0.036% of the air and 0.025% of the crust — yet it builds almost every compound you'll ever touch. This chapter is tested heavily in SSC CGL through allotropes, hydrocarbon classification, functional groups, nomenclature, isomers, and soaps/detergents.</p>
+
+      <div class="grid-3">
+        <div class="stat"><div class="num">6</div><div class="label">Atomic number of Carbon</div></div>
+        <div class="stat"><div class="num">2,4</div><div class="label">Electronic configuration</div></div>
+        <div class="stat"><div class="num">0.036%</div><div class="label">Carbon in atmosphere</div></div>
+        <div class="stat"><div class="num">0.025%</div><div class="label">Carbon in earth's crust</div></div>
+        <div class="stat"><div class="num">4</div><div class="label">Valence electrons → versatility</div></div>
+        <div class="stat"><div class="num">C₆₀</div><div class="label">Buckminsterfullerene formula</div></div>
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <h3>Why carbon is "versatile"</h3>
+        <p>Carbon has exactly 4 valence electrons — too many to lose easily, too many to gain easily. This indecision is actually its superpower: instead of forming ions, carbon <b>shares</b> electrons (covalent bonding) and links endlessly with itself. This single fact — <b>tetravalency + catenation</b> — is the root cause of every other property in this chapter: allotropes, hydrocarbons, isomers, and the entire branch of organic chemistry.</p>
+      </div>
+
+      <div class="card">
+        <h3>The exam map of this chapter</h3>
+        <ul class="clean">
+          <li><b>Allotropes</b> — graphite, diamond, fullerene (structure → property questions)</li>
+          <li><b>Hydrocarbons</b> — saturated vs unsaturated, formulas, flame colour</li>
+          <li><b>Ring chemistry</b> — acyclic / alicyclic / aromatic, heterocyclics</li>
+          <li><b>Functional groups & nomenclature</b> — prefixes, suffixes, IUPAC naming</li>
+          <li><b>Homologous series & isomers</b> — formula tricks</li>
+          <li><b>Alcohols, acids, esters</b> — ethanol, ethanoic acid, denaturing</li>
+          <li><b>Soaps & detergents</b> — saponification, micelles, hard water</li>
+        </ul>
+      </div>
+
+      <blockquote class="insight">Treat this chapter as one story, not seven topics: a 4-armed atom (carbon) refuses to become an ion, so it shares bonds instead — and every structure in this chapter is just a different way carbon shares those 4 arms.</blockquote>
+
+      <div class="footer-nav">
+        <div></div>
+        <div class="nbtn next" data-goto="palace"><div class="lbl">Next</div><div class="name">Memory Palace →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ MEMORY PALACE ============ -->
+    <section class="page" id="page-palace">
+      <div class="eyebrow">🧠 Chapter Memory Palace</div>
+      <h1 class="page-title">Welcome to Carbon City</h1>
+      <p class="page-desc">Walk through this city in your mind during revision. Every building holds one cluster of facts. If you forget a fact, "walk" back to its room.</p>
+
+      <div class="palace-room">
+        <h3>🏙️ Gate of the City — The Tiny Resident</h3>
+        <p>You enter Carbon City through a small gate — a sign reads "Population: 0.036% of the sky, 0.025% of the ground." Despite being tiny, the gatekeeper has <b>4 arms</b> (valence electrons) and refuses to shake just 1-2 hands or grab 5-6 — he'd rather <b>share</b> all 4 arms with neighbours. This is Carbon's nature: <b>tetravalent and covalent.</b></p>
+      </div>
+
+      <div class="palace-room">
+        <h3>⛏️ The Allotrope District</h3>
+        <p><b>Graphite Mine:</b> dark, slippery tunnels where each miner (carbon atom) holds hands with exactly <b>3</b> neighbours (sp²), forming flat, slippery <b>2D layers</b> you can slide pencils through. One hand is always free — that free hand passes electricity along, so Graphite Mine is the only mine in the city with working lights despite being made of a non-metal.</p>
+        <p><b>Diamond Tower:</b> next door, a glittering tetrahedral skyscraper where every miner holds hands with <b>4</b> neighbours (sp³) — no free hands, no electricity, but unbreakable: the <b>hardest natural building</b> in the city, structured in 3D.</p>
+        <p><b>Buckyball Stadium:</b> a football-shaped stadium built from exactly <b>60</b> carbon atoms in a cage — the purest carbon in the city. Three mysterious architects (scientists) designed it; exams love asking "which 3 names built this stadium?"</p>
+      </div>
+
+      <div class="palace-room">
+        <h3>🔗 Catenation Street → Family Avenue</h3>
+        <p>Walk down Catenation Street and you see an endless human chain — carbon atoms holding hands with each other, stretching as far as you can see. This is <b>catenation</b>: carbon's unique gift to bond with itself in long chains. At the end of the street is <b>Family Avenue</b>, where Carbon's cousins live, getting lazier (and bigger) as you walk: <b>Carbon → Silicon → Germanium → Tin → Lead.</b> By the time you reach Lead's house, the cousin is too big and heavy to hold hands with many others — catenation fades as atomic size grows down the family.</p>
+      </div>
+
+      <div class="palace-room">
+        <h3>⛽ Hydrocarbon Highway</h3>
+        <p>One lane is the <b>Saturated Lane</b> — every car (bond) here is single, the traffic is calm and orderly, and engines burn with a clean <b>blue flame</b>. The other lane is <b>Unsaturated Lane</b> — cars double-park or triple-park (double/triple bonds), traffic is messy, and engines cough out <b>yellow, sooty</b> smoke. At the highway's gas station, LPG cylinders are labelled "mainly Butane, some Propane" — both saturated, hence the clean blue flame on your kitchen stove.</p>
+      </div>
+
+      <div class="palace-room">
+        <h3>⭕ The Ring Plaza</h3>
+        <p>In the centre of the city is a circular plaza. Streets that never loop back are <b>Acyclic Lane</b> (open chains). Streets that loop into a ring are split into two kinds: the <b>Aromatic Café</b>, which always smells sweet (follows Hückel's 4n+2 rule, like Benzene — the simplest aromatic ring) — attach a methyl group and you get Toluene, attach an NH₂ and you get Aniline; and the odourless <b>Alicyclic Park</b>, a ring with no fragrance at all.</p>
+      </div>
+
+      <div class="palace-room">
+        <h3>🏛️ The Heterocyclic Museum</h3>
+        <p>Inside a museum shaped like a ring, each room has swapped one carbon "brick" for a different element: the <b>Oxygen Room (Furan)</b>, the <b>Sulphur Room (Thiophene)</b>, the <b>Nitrogen Room — 5-sided (Pyrrole)</b>, and the <b>Nitrogen Room — 6-sided (Pyridine)</b>. Further inside are the rarer exhibits: Pyrimidine, Imidazole, Oxadiazole. Next door stands <b>Naphthalene Hall</b>, famous for vanishing — it sublimes straight from solid to gas, like a magic trick.</p>
+      </div>
+
+      <div class="palace-room">
+        <h3>🏢 Functional Group Tower</h3>
+        <p>A tower with a lobby rule: <b>halogens must use the front door (prefix "halo-")</b>, but everyone else — alcohol (-ol), aldehyde (-al), ketone (-one), nitrile (-nitrile), acid (-oic acid) — takes the elevator straight to the <b>top floor (suffix)</b>. Each floor's plaque shows its functional group: OH, CHO, C=O, C≡N, COOH, COOR (ester), ROR (ether — don't confuse with the ester floor next door).</p>
+      </div>
+
+      <div class="palace-room">
+        <h3>🍷 Ethanol Distillery & Acetic Acid Factory</h3>
+        <p>The Distillery ferments sugarcane juice (no oxygen needed) into Ethanol — a good solvent used in cough syrup and tincture of iodine. A warning sign on the wall reads: "Drinking industrial alcohol? We added <b>Methanol — Wood Spirit, poison</b> — to stop you." Heat ethanol with conc. H₂SO₄ and it loses water, escaping the distillery as <b>Ethene</b> gas. Next door, the Acetic Acid Factory bottles vinegar (5–8% ethanoic acid) and keeps a freezer labelled <b>"Glacial Acetic Acid"</b> — pure acid that freezes like ice.</p>
+      </div>
+
+      <div class="palace-room">
+        <h3>🧼 The Soap & Detergent Laundromat</h3>
+        <p>At the edge of the city, a laundromat run by tiny molecules with a <b>water-loving head</b> and an <b>oil-loving tail</b>. They surround grease balls to form bubble-like <b>micelles</b> and lift dirt away. A sign on one washer reads "Soap — does NOT work in Hard Water (Ca/Mg) or acid, forms scum," while the washer beside it reads "Detergent — works in hard water AND acid, dissolves faster." On your way out, don't confuse the Laundromat's <b>Hard Water</b> sign with the Nuclear Plant's <b>Heavy Water</b> sign across town (deuterium, used as moderator/coolant) — different buildings entirely.</p>
+      </div>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="home"><div class="lbl">Back</div><div class="name">← Big Picture</div></div>
+        <div class="nbtn next" data-goto="notes"><div class="lbl">Next</div><div class="name">Complete Notes →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ COMPLETE NOTES ============ -->
+    <section class="page" id="page-notes">
+      <div class="eyebrow">Layer 1</div>
+      <h1 class="page-title">Complete Revision Notes</h1>
+      <p class="page-desc">Every fact from the lecture, organised into expandable sections. Tags: <span class="pill must">🔥 Must Know</span><span class="pill imp">⭐ Important</span><span class="pill good">➕ Good to Know</span></p>
+
+      <div id="accordions"></div>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="palace"><div class="lbl">Back</div><div class="name">← Memory Palace</div></div>
+        <div class="nbtn next" data-goto="hooks"><div class="lbl">Next</div><div class="name">Memory Hooks →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ MEMORY HOOKS ============ -->
+    <section class="page" id="page-hooks">
+      <div class="eyebrow">Smart Memory Hooks</div>
+      <h1 class="page-title">Hooks That Stick</h1>
+      <p class="page-desc">Vivid images and one-line associations — designed to be recalled months later, not just today.</p>
+
+      <div class="hook-card">
+        <div class="htitle">Graphite vs Diamond — the lazy 2D student vs the 3D bodybuilder</div>
+        <div class="image">Graphite is a lazy student who only links arms with 3 friends in a flat row (sp², 2D layers) — slippery enough to be a lubricant, and since one hand is always free, he can pass notes (electricity) around. Diamond is the gym-obsessed sibling who links all 4 arms in 3D (sp³, tetrahedral) — unbreakable, the hardest natural substance, but with no free hand, he can't pass anything — an insulator.</div>
+        <div class="recall">Recall trigger: "3 friends, flat, slippery, conducts" = Graphite. "4 friends, 3D, hardest, insulator" = Diamond.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Buckminsterfullerene — the football cage</div>
+        <div class="image">Picture an actual football made of exactly 60 carbon dots stitched into hexagons and pentagons — that's C₆₀, the purest form of carbon, discovered by three scientists. Exam tip: if a question gives 3 unfamiliar names and asks "who discovered an allotrope of carbon," the safe answer is fullerene.</div>
+        <div class="recall">Recall trigger: Football = cage = C₆₀ = purest carbon = 3 discoverers.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Group 14 family — shrinking chain-makers</div>
+        <div class="image">Imagine a family reunion photo of Carbon, Silicon, Germanium, Tin, and Lead, lined up by age. Carbon (the youngest) is hyperactive, holding hands with dozens of cousins (great catenation). By the time you reach Lead (the oldest, heaviest), he's lying on a couch, too big and tired to hold more than one hand — almost no catenation.</div>
+        <div class="recall">Recall trigger: bigger atom size down the family → weaker catenation. Order: C → Si → Ge → Sn → Pb.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Bond types as handshakes</div>
+        <div class="image">A single bond is one handshake (1 sigma bond). A double bond is a handshake plus a hug (1 sigma + 1 pi). A triple bond is a handshake, a hug, AND a high-five (1 sigma + 2 pi). The more "extra contact," the harder the bond is to break apart — which is why triple-bonded alkynes have a different boiling-point ranking than single-bonded alkanes.</div>
+        <div class="recall">Recall trigger: handshake = σ, hug = one π, high-five = second π.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Clean blue flame vs messy yellow soot</div>
+        <div class="image">Saturated hydrocarbons (alkanes, single bonds only) are the "tidy roommate" — they burn completely and leave a clean blue flame. Unsaturated hydrocarbons (alkenes/alkynes, double/triple bonds) are the "messy roommate" — incomplete combustion, yellow sooty flame, black marks on your kitchen pan if the LPG burner is blocked.</div>
+        <div class="recall">Recall trigger: Saturated = neat = blue. Unsaturated = messy = yellow + soot.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Halogens stand at the door — prefix only</div>
+        <div class="image">Picture every functional group as a guest arriving at a naming-party. Alcohol, aldehyde, ketone, nitrile, and acid all get to walk in and take the "last name" seat at the table (suffix: -ol, -al, -one, -nitrile, -oic acid). Halogens (F, Cl, Br, I) are told "you can only stand at the doorway" — they're announced first as a prefix ("halo-/chloro-/bromo-") and never get the suffix seat.</div>
+        <div class="recall">Recall trigger: halogens = doorway = prefix, never suffix.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Wood spirit = methanol = silent poison</div>
+        <div class="image">"Wood spirit" sounds harmless — like a ghost in a forest — but it's actually methanol, added to industrial ethanol to make it undrinkable (denaturing). Drink it and it heads straight for your liver, clotting (coagulating) the protoplasm of every liver cell — a quiet but deadly haunting.</div>
+        <div class="recall">Recall trigger: Wood spirit = Methanol = denaturing agent = liver poison.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Glacial acetic acid — frozen vinegar</div>
+        <div class="image">Pure ethanoic (acetic) acid has such a low melting point that it can freeze into ice-like crystals in cool weather — like a glacier forming overnight. That's why 100% pure acetic acid is called "glacial acetic acid," while vinegar is just a diluted 5–8% solution of it.</div>
+        <div class="recall">Recall trigger: Glacial = freezes easily = pure (100%) acetic acid. Vinegar = 5–8% acetic acid.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Soap molecule — head waves "hi" to water, tail hides in oil</div>
+        <div class="image">Picture a tadpole: its round head loves water and waves at it (hydrophilic head), while its long tail is shy of water and burrows into a ball of oil/grease (hydrophobic tail). Hundreds of these tadpoles surround a speck of dirt, tails-in, heads-out, forming a ball called a micelle — which then gets rinsed away by water.</div>
+        <div class="recall">Recall trigger: head = water-loving (hydrophilic), tail = oil-loving (hydrophobic), ball = micelle.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Hard water vs heavy water — don't mix the buildings</div>
+        <div class="image">Hard water lives at the Laundromat — it's "hard" because of dissolved Calcium/Magnesium salts, and it ruins soap (forms scum). Heavy water lives at the Nuclear Power Plant across town — it's "heavy" because hydrogen is replaced by its heavier isotope, deuterium, and it's used as a coolant/moderator. Same-sounding names, completely different buildings.</div>
+        <div class="recall">Recall trigger: HARD = minerals (Ca/Mg), ruins soap. HEAVY = deuterium, nuclear reactor.</div>
+      </div>
+
+      <div class="hook-card">
+        <div class="htitle">Saponification — the ester's makeover</div>
+        <div class="image">An ester walks into a salon run by NaOH (or KOH). It comes out transformed into soap (a sodium/potassium salt of a long carboxylic acid) plus its old alcohol partner is set free. This salon makeover is called saponification — literally "soap-making."</div>
+        <div class="recall">Recall trigger: Ester + NaOH/KOH → Soap + Alcohol = saponification.</div>
+      </div>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="notes"><div class="lbl">Back</div><div class="name">← Complete Notes</div></div>
+        <div class="nbtn next" data-goto="connections"><div class="lbl">Next</div><div class="name">Concept Connections →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ CONNECTIONS ============ -->
+    <section class="page" id="page-connections">
+      <div class="eyebrow">Concept Connections</div>
+      <h1 class="page-title">Nothing Stands Alone</h1>
+      <p class="page-desc">Every fact in this chapter is a domino — push one and the rest fall in line. These chains are exam gold because examiners test the link, not just the fact.</p>
+
+      <div class="card">
+        <h3>1. Tetravalency → everything else</h3>
+        <div class="flow">
+          <div class="node">4 valence e⁻</div><div class="arrow">→</div>
+          <div class="node">Can't easily lose/gain</div><div class="arrow">→</div>
+          <div class="node">Shares electrons (covalent)</div><div class="arrow">→</div>
+          <div class="node">Catenation + tetravalency</div><div class="arrow">→</div>
+          <div class="node">Organic chemistry exists</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>2. Atomic size → catenation strength</h3>
+        <div class="flow">
+          <div class="node">Down Group 14</div><div class="arrow">→</div>
+          <div class="node">Atomic size ↑</div><div class="arrow">→</div>
+          <div class="node">Catenation ↓</div><div class="arrow">→</div>
+          <div class="node">Si, Ge, Sn, Pb form weaker/no long chains</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>3. Bond type → flame colour</h3>
+        <div class="flow">
+          <div class="node">Single bonds only</div><div class="arrow">→</div>
+          <div class="node">Saturated (alkane)</div><div class="arrow">→</div>
+          <div class="node">Complete combustion</div><div class="arrow">→</div>
+          <div class="node">Clean blue flame</div>
+        </div>
+        <div class="flow">
+          <div class="node">Double/triple bonds</div><div class="arrow">→</div>
+          <div class="node">Unsaturated (alkene/alkyne)</div><div class="arrow">→</div>
+          <div class="node">Incomplete combustion</div><div class="arrow">→</div>
+          <div class="node">Yellow sooty flame</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>4. Ring shape → smell/aromaticity</h3>
+        <div class="flow">
+          <div class="node">Ring closes</div><div class="arrow">→</div>
+          <div class="node">Cyclic</div><div class="arrow">→</div>
+          <div class="node">Follows Hückel's 4n+2 rule?</div><div class="arrow">→</div>
+          <div class="node">Yes = Aromatic</div>
+        </div>
+        <div class="flow">
+          <div class="node">Cyclic but rule fails</div><div class="arrow">→</div>
+          <div class="node">Alicyclic (non-benzenoid, no fragrance)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>5. Functional group → chemical property; chain length → physical property</h3>
+        <p>Add -OH to propane and it becomes an alcohol — completely different chemistry. Add one more carbon to that same alcohol and the chemical behaviour stays similar, but boiling/melting point physically rises. <b>Functional group changes chemistry; chain length changes physical properties only.</b></p>
+      </div>
+
+      <div class="card">
+        <h3>6. Ethanol's full journey</h3>
+        <div class="flow">
+          <div class="node">Sugarcane juice</div><div class="arrow">→</div>
+          <div class="node">Fermentation (no O₂)</div><div class="arrow">→</div>
+          <div class="node">Ethanol</div><div class="arrow">→</div>
+          <div class="node">+ conc. H₂SO₄ + heat</div><div class="arrow">→</div>
+          <div class="node">Loses water</div><div class="arrow">→</div>
+          <div class="node">Ethene</div>
+        </div>
+        <div class="flow">
+          <div class="node">Ethanol misused as drink</div><div class="arrow">→</div>
+          <div class="node">Denaturing</div><div class="arrow">→</div>
+          <div class="node">Add Methanol/dye</div><div class="arrow">→</div>
+          <div class="node">Undrinkable, poisonous</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>7. Ester → soap → cleaning</h3>
+        <div class="flow">
+          <div class="node">Acid + Alcohol</div><div class="arrow">→</div>
+          <div class="node">Esterification</div><div class="arrow">→</div>
+          <div class="node">Ester (+ water out)</div><div class="arrow">→</div>
+          <div class="node">+ NaOH/KOH</div><div class="arrow">→</div>
+          <div class="node">Saponification</div><div class="arrow">→</div>
+          <div class="node">Soap + Alcohol</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>8. Hard water → soap fails → detergent solves it</h3>
+        <div class="flow">
+          <div class="node">Water has Ca²⁺/Mg²⁺</div><div class="arrow">→</div>
+          <div class="node">Hard water</div><div class="arrow">→</div>
+          <div class="node">Soap forms scum</div><div class="arrow">→</div>
+          <div class="node">Doesn't clean</div><div class="arrow">→</div>
+          <div class="node">Use detergent instead (works in hard water + acid)</div>
+        </div>
+      </div>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="hooks"><div class="lbl">Back</div><div class="name">← Memory Hooks</div></div>
+        <div class="nbtn next" data-goto="traps"><div class="lbl">Next</div><div class="name">Exam Traps →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ EXAM TRAPS ============ -->
+    <section class="page" id="page-traps">
+      <div class="eyebrow">⚠ Exam Traps</div>
+      <h1 class="page-title">What Students Usually Get Wrong</h1>
+      <p class="page-desc">These are the confusions examiners deliberately exploit. Read each one twice.</p>
+
+      <div id="traps-container"></div>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="connections"><div class="lbl">Back</div><div class="name">← Concept Connections</div></div>
+        <div class="nbtn next" data-goto="examiner"><div class="lbl">Next</div><div class="name">Examiner's Favourites →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ EXAMINER FAVOURITES ============ -->
+    <section class="page" id="page-examiner">
+      <div class="eyebrow">🎯 Think Like an Examiner</div>
+      <h1 class="page-title">How This Chapter Gets Attacked</h1>
+      <p class="page-desc">Common question patterns built from this exact content. Use these to test yourself before checking notes.</p>
+
+      <div class="card">
+        <h3>🎯 Statement-based questions</h3>
+        <ul class="clean">
+          <li><b>Statement I:</b> Graphite is a good conductor of electricity. <b>Statement II:</b> Graphite is a non-metal. → Both true; the conduction happens <i>despite</i> being a non-metal, because one carbon's bonding electron stays free (sp², only 3 bonds used).</li>
+          <li><b>Statement:</b> "All cyclic hydrocarbons are aromatic." → False. Cyclic compounds can be aromatic (follow 4n+2 rule) or alicyclic (cyclic, non-aromatic).</li>
+          <li><b>Statement:</b> "Vinegar is pure acetic acid." → False. Vinegar is only 5–8% acetic acid; 100% pure acid is "glacial acetic acid."</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Match-the-following possibilities</h3>
+        <table>
+          <tr><th>Column A</th><th>Column B</th></tr>
+          <tr><td>-OH</td><td>Alcohol</td></tr>
+          <tr><td>-CHO</td><td>Aldehyde</td></tr>
+          <tr><td>-COOH</td><td>Carboxylic acid</td></tr>
+          <tr><td>-COOR</td><td>Ester</td></tr>
+          <tr><td>R-O-R</td><td>Ether</td></tr>
+          <tr><td>C₆₀</td><td>Buckminsterfullerene</td></tr>
+          <tr><td>Sodium/Potassium salt of long-chain carboxylic acid</td><td>Soap</td></tr>
+          <tr><td>Sodium/Potassium salt of long-chain sulfonic acid</td><td>Detergent</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Assertion–Reason style</h3>
+        <p><b>Assertion:</b> Diamond does not conduct electricity. <b>Reason:</b> Each carbon atom in diamond is bonded to four other carbon atoms, leaving no free electron. → Both true, and Reason correctly explains Assertion.</p>
+        <p><b>Assertion:</b> Soap does not work well in hard water. <b>Reason:</b> Calcium/Magnesium ions in hard water react with soap to form scum (insoluble precipitate). → Both true, Reason explains Assertion.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Confusing-pair / frequently misread facts</h3>
+        <ul class="clean">
+          <li>Ester (-COOR) vs Ether (R-O-R) — one letter apart in name, very different structure.</li>
+          <li>Hard water (Ca/Mg salts) vs Heavy water (deuterium) — sound similar, totally different chemistry.</li>
+          <li>Saturated → blue flame vs Unsaturated → yellow sooty flame (often reversed by mistake).</li>
+          <li>Wood spirit = methanol, not ethanol.</li>
+          <li>Graphite = sp², 2D; Diamond = sp³, 3D (hybridisation swap is the most common error).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Numerical/formula-based</h3>
+        <ul class="clean">
+          <li>"How many isomers does hexane have?" → Use 2^(n-4)+1 for n=6 → 2²+1 = 5.</li>
+          <li>"What is the molecular formula of icosane?" → 20 carbons, alkane → C₂₀H₄₂.</li>
+          <li>"Which has the highest boiling point — alkane, alkene, or alkyne (same carbon count)?" → Alkyne (triple bond, hardest to break) highest; alkane lowest.</li>
+        </ul>
+      </div>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="traps"><div class="lbl">Back</div><div class="name">← Exam Traps</div></div>
+        <div class="nbtn next" data-goto="recall"><div class="lbl">Next</div><div class="name">Active Recall →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ ACTIVE RECALL ============ -->
+    <section class="page" id="page-recall">
+      <div class="eyebrow">❓ Active Recall</div>
+      <h1 class="page-title">Test Yourself — Don't Just Read</h1>
+      <p class="page-desc">Tap any question to reveal the answer. Try to answer in your head <i>before</i> tapping.</p>
+
+      <div id="recall-container"></div>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="examiner"><div class="lbl">Back</div><div class="name">← Examiner's Favourites</div></div>
+        <div class="nbtn next" data-goto="highyield"><div class="lbl">Next</div><div class="name">High-Yield Notes →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ HIGH YIELD ============ -->
+    <section class="page" id="page-highyield">
+      <div class="eyebrow">Layer 2</div>
+      <h1 class="page-title">High-Yield Revision Notes</h1>
+      <p class="page-desc">Only the 🔥 Must-Know facts. Read this when you have 15 minutes.</p>
+
+      <div class="card">
+        <h3>🔥 Carbon basics</h3>
+        <ul class="clean">
+          <li>Atomic number <b>6</b>, configuration <b>2,4</b> → 4 valence electrons → versatile, covalent, catenating.</li>
+          <li>Atmosphere: <b>0.036%</b>, Earth's crust: <b>0.025%</b>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🔥 Allotropes</h3>
+        <ul class="clean">
+          <li><b>Graphite:</b> sp², 1 C bonded to 3 C, 2D layered, slippery (lubricant), conducts electricity, used in pencils.</li>
+          <li><b>Diamond:</b> sp³, 1 C bonded to 4 C, 3D tetrahedral, hardest natural substance, does not conduct.</li>
+          <li><b>Fullerene (C₆₀):</b> purest carbon, cage/football-shaped, discovered by 3 scientists.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🔥 Hydrocarbon formulas</h3>
+        <table>
+          <tr><th>Type</th><th>Bond</th><th>Acyclic formula</th><th>Cyclic formula</th></tr>
+          <tr><td>Alkane</td><td>Single</td><td><span class="formula">CₙH₂ₙ₊₂</span></td><td><span class="formula">CₙH₂ₙ</span></td></tr>
+          <tr><td>Alkene</td><td>Double</td><td><span class="formula">CₙH₂ₙ</span></td><td><span class="formula">CₙH₂ₙ₋₂</span></td></tr>
+          <tr><td>Alkyne</td><td>Triple</td><td><span class="formula">CₙH₂ₙ₋₂</span></td><td><span class="formula">CₙH₂ₙ₋₄</span></td></tr>
+        </table>
+        <p>Saturated (alkane) burns with a <b>clean blue flame</b>; unsaturated (alkene/alkyne) burns with a <b>yellow sooty flame</b>. LPG = mainly butane + propane.</p>
+      </div>
+
+      <div class="card">
+        <h3>🔥 Ring classification</h3>
+        <ul class="clean">
+          <li><b>Acyclic</b> = open chain, no ring.</li>
+          <li><b>Alicyclic</b> = ring, but non-aromatic (non-benzenoid, no fragrance).</li>
+          <li><b>Aromatic</b> = ring + follows Hückel's rule (4n+2 π electrons); benzene is the simplest example.</li>
+          <li>Toluene = benzene + CH₃. Aniline = benzene + NH₂. Naphthalene sublimes.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🔥 Functional groups (prefix vs suffix)</h3>
+        <table>
+          <tr><th>Group</th><th>Formula</th><th>Naming</th></tr>
+          <tr><td>Halide</td><td>-F/-Cl/-Br/-I</td><td><b>Prefix:</b> halo-</td></tr>
+          <tr><td>Alcohol</td><td>-OH</td><td><b>Suffix:</b> -ol</td></tr>
+          <tr><td>Aldehyde</td><td>-CHO</td><td><b>Suffix:</b> -al</td></tr>
+          <tr><td>Ketone</td><td>C=O</td><td><b>Suffix:</b> -one</td></tr>
+          <tr><td>Nitrile</td><td>-C≡N</td><td><b>Suffix:</b> -nitrile</td></tr>
+          <tr><td>Carboxylic acid</td><td>-COOH</td><td><b>Suffix:</b> -oic acid</td></tr>
+          <tr><td>Ester</td><td>-COOR</td><td>named as alkyl alkanoate</td></tr>
+          <tr><td>Ether</td><td>R-O-R</td><td>named as alkoxyalkane</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>🔥 Homologous series & isomers</h3>
+        <ul class="clean">
+          <li>Same functional group, formula differs by <b>CH₂</b>, mass differs by <b>14</b>.</li>
+          <li>Isomers: same formula, different structure/name (e.g. n-butane vs 2-methylpropane, both C₄H₁₀).</li>
+          <li>Quick isomer-count trick: <span class="formula">2^(n-4) + 1</span> (valid roughly up to 7–9 carbons).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🔥 Ethanol & ethanoic acid</h3>
+        <ul class="clean">
+          <li>Ethanol made from sugarcane juice by <b>fermentation</b> (no oxygen). Good solvent — used in cough syrup, tincture of iodine.</li>
+          <li>Ethanol + conc. H₂SO₄ + heat → loses water → <b>Ethene</b>.</li>
+          <li><b>Denaturing:</b> add dye or <b>methanol (wood spirit, poisonous)</b> to industrial ethanol to stop people drinking it.</li>
+          <li>Ethanol + Sodium → Sodium ethoxide + H₂ gas.</li>
+          <li>Ethanoic acid (acetic acid) = vinegar's main component (5–8%). 100% pure = <b>glacial acetic acid</b>.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🔥 Soaps & detergents</h3>
+        <ul class="clean">
+          <li><b>Saponification:</b> Ester + NaOH/KOH → Soap + Alcohol.</li>
+          <li><b>Soap</b> = Na/K salt of long-chain <b>carboxylic</b> acid. Fails in hard water/acid (scum).</li>
+          <li><b>Detergent</b> = Na/K salt of long-chain <b>sulfonic</b> acid. Works in hard water and acid; dissolves faster.</li>
+          <li>Micelle: hydrophilic head (water-loving) + hydrophobic tail (oil-loving) surrounding dirt/grease.</li>
+          <li><b>Hard water</b> = has Ca/Mg salts ≠ <b>Heavy water</b> = has deuterium (nuclear coolant/moderator; graphite is also a moderator).</li>
+        </ul>
+      </div>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="recall"><div class="lbl">Back</div><div class="name">← Active Recall</div></div>
+        <div class="nbtn next" data-goto="ultrafast"><div class="lbl">Next</div><div class="name">Ultra-Fast Sheet →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ ULTRA FAST ============ -->
+    <section class="page" id="page-ultrafast">
+      <div class="eyebrow">Layer 3</div>
+      <h1 class="page-title">Ultra-Fast Revision Sheet</h1>
+      <p class="page-desc">For a 5-minute pass. Pure facts, no explanation.</p>
+
+      <div class="fastbox">
+        <h4>Carbon</h4>
+        <p>Z=6 · config 2,4 · atmosphere 0.036% · crust 0.025% · 4 valence e⁻ → versatile</p>
+      </div>
+      <div class="fastbox">
+        <h4>Allotropes</h4>
+        <p>Graphite: sp², 3 bonds, 2D, slippery, conducts, pencil · Diamond: sp³, 4 bonds, 3D, hardest, insulator · Fullerene: C₆₀, cage/football, purest, 3 discoverers</p>
+      </div>
+      <div class="fastbox">
+        <h4>Group 14</h4>
+        <p>C → Si → Ge → Sn → Pb — catenation decreases as size increases</p>
+      </div>
+      <div class="fastbox">
+        <h4>Hydrocarbon formulas</h4>
+        <p>Alkane CₙH₂ₙ₊₂ (blue flame) · Alkene CₙH₂ₙ · Alkyne CₙH₂ₙ₋₂ (yellow sooty flame) · Cyclic = subtract 2H more</p>
+      </div>
+      <div class="fastbox">
+        <h4>Bonds</h4>
+        <p>Single = 1σ · Double = 1σ+1π · Triple = 1σ+2π · BP: alkyne &gt; alkene &gt; alkane</p>
+      </div>
+      <div class="fastbox">
+        <h4>Ring types</h4>
+        <p>Acyclic (open) · Alicyclic (ring, non-aromatic) · Aromatic (ring + Hückel 4n+2π, e.g. benzene) · Toluene = benzene+CH₃ · Aniline = benzene+NH₂ · Naphthalene sublimes</p>
+      </div>
+      <div class="fastbox">
+        <h4>Heterocyclics</h4>
+        <p>Furan=O · Thiophene=S · Pyrrole=N(5-ring) · Pyridine=N(6-ring) · also Pyrimidine, Imidazole, Oxadiazole</p>
+      </div>
+      <div class="fastbox">
+        <h4>Reactions of hydrocarbons</h4>
+        <p>Combustion = exothermic · Oxidation = alkaline KMnO₄/K₂Cr₂O₇ · Addition = +H₂ with Ni/Pd catalyst (unsaturated→saturated) · Substitution = +Cl₂ in sunlight (CH₃Cl→CH₂Cl₂→CHCl₃ chloroform→CCl₄ carbon tetrachloride)</p>
+      </div>
+      <div class="fastbox">
+        <h4>Naming prefixes (C count)</h4>
+        <p>1 meth · 2 eth · 3 prop · 4 but · 5 pent · 6 hex · 7 hept · 8 oct · 9 non · 10 dec · 12 dodec · 20 icos</p>
+      </div>
+      <div class="fastbox">
+        <h4>Functional groups</h4>
+        <p>Halo- (prefix only) · -ol alcohol · -al aldehyde · -one ketone · -nitrile · -oic acid carboxylic acid · ester COOR · ether ROR</p>
+      </div>
+      <div class="fastbox">
+        <h4>Homologous series / isomers</h4>
+        <p>Same FG, differ by CH₂ (mass diff 14) · Isomer count ≈ 2^(n-4)+1 · n-butane vs 2-methylpropane (C₄H₁₀)</p>
+      </div>
+      <div class="fastbox">
+        <h4>Alcohol classification</h4>
+        <p>1° OH-C with 2H+1 alkyl · 2° OH-C with 1H+2 alkyl · 3° OH-C with 0H+3 alkyl</p>
+      </div>
+      <div class="fastbox">
+        <h4>Ethanol</h4>
+        <p>Fermentation of sugarcane juice (no O₂) · solvent in cough syrup, tincture of iodine · +conc.H₂SO₄+heat→Ethene · denatured with methanol (wood spirit, poison)/dye · +Na → sodium ethoxide + H₂</p>
+      </div>
+      <div class="fastbox">
+        <h4>Ethanoic acid</h4>
+        <p>= acetic acid · vinegar = 5–8% · pure = glacial acetic acid · +NaOH → sodium ethanoate + H₂O</p>
+      </div>
+      <div class="fastbox">
+        <h4>Soap vs Detergent</h4>
+        <p>Soap = Na/K salt of carboxylic acid, fails in hard water/acid · Detergent = Na/K salt of sulfonic acid, works in hard water/acid, faster · Saponification: ester+NaOH/KOH→soap+alcohol · Micelle: hydrophilic head + hydrophobic tail</p>
+      </div>
+      <div class="fastbox">
+        <h4>Hard vs heavy water</h4>
+        <p>Hard water = Ca/Mg salts · Heavy water = deuterium, nuclear coolant/moderator (graphite also a moderator)</p>
+      </div>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="highyield"><div class="lbl">Back</div><div class="name">← High-Yield Notes</div></div>
+        <div class="nbtn next" data-goto="thirtysec"><div class="lbl">Next</div><div class="name">30-Second Sheet →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ 30 SECOND ============ -->
+    <section class="page" id="page-thirtysec">
+      <div class="eyebrow">Layer 4</div>
+      <h1 class="page-title">30-Second Revision Sheet</h1>
+      <p class="page-desc">One glance, maximum density.</p>
+
+      <table>
+        <tr><th>Topic</th><th>Key fact</th></tr>
+        <tr><td>Carbon</td><td>Z=6, config 2,4, 0.036% air / 0.025% crust</td></tr>
+        <tr><td>Graphite</td><td>sp², 3 bonds, 2D, slippery, <b>conducts</b></td></tr>
+        <tr><td>Diamond</td><td>sp³, 4 bonds, 3D, hardest, insulator</td></tr>
+        <tr><td>Fullerene</td><td>C₆₀, football cage, purest, 3 discoverers</td></tr>
+        <tr><td>Group 14</td><td>C&gt;Si&gt;Ge&gt;Sn&gt;Pb catenation ↓</td></tr>
+        <tr><td>Alkane/ene/yne</td><td>CₙH₂ₙ₊₂ / CₙH₂ₙ / CₙH₂ₙ₋₂</td></tr>
+        <tr><td>Flame</td><td>Saturated=blue clean; Unsaturated=yellow sooty</td></tr>
+        <tr><td>Ring</td><td>Acyclic / Alicyclic(no smell) / Aromatic(4n+2π)</td></tr>
+        <tr><td>Heterocyclic</td><td>Furan-O, Thiophene-S, Pyrrole/Pyridine-N</td></tr>
+        <tr><td>Halogen naming</td><td>Prefix ONLY (halo-)</td></tr>
+        <tr><td>FG suffixes</td><td>-ol, -al, -one, -nitrile, -oic acid</td></tr>
+        <tr><td>Ester vs Ether</td><td>COOR vs ROR — don't mix!</td></tr>
+        <tr><td>Isomer trick</td><td>2^(n-4)+1</td></tr>
+        <tr><td>Ethanol source</td><td>Fermentation of sugarcane juice</td></tr>
+        <tr><td>Wood spirit</td><td>= Methanol = poison = denaturing agent</td></tr>
+        <tr><td>Glacial acetic acid</td><td>= 100% pure ethanoic acid</td></tr>
+        <tr><td>Saponification</td><td>Ester + NaOH/KOH → Soap + Alcohol</td></tr>
+        <tr><td>Soap vs Detergent</td><td>Carboxylic salt vs Sulfonic salt</td></tr>
+        <tr><td>Hard vs Heavy water</td><td>Ca/Mg salts vs Deuterium (nuclear)</td></tr>
+      </table>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="ultrafast"><div class="lbl">Back</div><div class="name">← Ultra-Fast Sheet</div></div>
+        <div class="nbtn next" data-goto="lastnight"><div class="lbl">Next</div><div class="name">Last Night Sheet →</div></div>
+      </div>
+    </section>
+
+    <!-- ============ LAST NIGHT ============ -->
+    <section class="page" id="page-lastnight">
+      <div class="eyebrow">Layer 5 · Exam Eve</div>
+      <h1 class="page-title">Last-Night-Before-Exam Sheet</h1>
+      <p class="page-desc">If you read nothing else tonight, read this.</p>
+
+      <div class="card" style="border-color:rgba(94,234,212,0.4);">
+        <h3>🔥 The 12 facts most likely to save you marks</h3>
+        <ul class="clean">
+          <li>Graphite = sp² / conducts. Diamond = sp³ / insulator / hardest.</li>
+          <li>Fullerene = C₆₀ = football cage = purest carbon.</li>
+          <li>Alkane CₙH₂ₙ₊₂ (blue flame) · Alkene CₙH₂ₙ · Alkyne CₙH₂ₙ₋₂ (yellow sooty flame).</li>
+          <li>Aromatic needs Hückel's 4n+2π rule (benzene = simplest). Alicyclic = ring, no smell.</li>
+          <li>Halogens are named with a <b>prefix</b> (halo-); everything else uses a <b>suffix</b>.</li>
+          <li>Ester = COOR. Ether = ROR. Do not swap them.</li>
+          <li>Isomer count trick: 2^(n-4)+1.</li>
+          <li>Ethanol comes from fermenting sugarcane juice (no oxygen).</li>
+          <li>Wood spirit = Methanol = poison used to denature alcohol.</li>
+          <li>Glacial acetic acid = 100% pure ethanoic acid; vinegar = only 5–8%.</li>
+          <li>Saponification: Ester + NaOH/KOH → Soap + Alcohol.</li>
+          <li>Hard water (Ca/Mg) ruins soap → use Detergent. Don't confuse with Heavy water (deuterium, nuclear reactor).</li>
+        </ul>
+      </div>
+
+      <blockquote class="insight">One sentence to remember everything: Carbon shares its 4 arms instead of becoming an ion — and every topic in this chapter is just a different way it shares them (with itself = catenation, in rings = aromatics, with O/N/S = heterocyclics, with functional groups = organic compounds).</blockquote>
+
+      <div class="footer-nav">
+        <div class="nbtn" data-goto="thirtysec"><div class="lbl">Back</div><div class="name">← 30-Second Sheet</div></div>
+        <div class="nbtn next" data-goto="home"><div class="lbl">Restart</div><div class="name">Big Picture →</div></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* ---------------- NAVIGATION ---------------- */
+const navItems = document.querySelectorAll('.nav-item');
+const pages = document.querySelectorAll('.page');
+function gotoPage(id){
+  pages.forEach(p=>p.classList.remove('active'));
+  navItems.forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  const nav = document.querySelector('.nav-item[data-page="'+id+'"]');
+  if(nav) nav.classList.add('active');
+  window.scrollTo(0,0);
+  closeSidebar();
+}
+navItems.forEach(item=>{
+  item.addEventListener('click', ()=> gotoPage(item.getAttribute('data-page')));
+});
+document.querySelectorAll('[data-goto]').forEach(btn=>{
+  btn.addEventListener('click', ()=> gotoPage(btn.getAttribute('data-goto')));
+});
+
+/* mobile sidebar */
+const sidebar = document.getElementById('sidebar');
+const menuToggle = document.getElementById('menuToggle');
+const scrim = document.getElementById('scrim');
+function openSidebar(){ sidebar.classList.add('open'); scrim.classList.add('show'); }
+function closeSidebar(){ sidebar.classList.remove('open'); scrim.classList.remove('show'); }
+menuToggle.addEventListener('click', ()=>{
+  sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+});
+scrim.addEventListener('click', closeSidebar);
+
+gotoPage('home');
+
+/* ---------------- COMPLETE NOTES ACCORDIONS ---------------- */
+const accordionData = [
+{
+  title: "1 · Carbon Basics & Allotropes",
+  html: `
+  <h4>Where carbon is found</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>Atmosphere: <b>0.036%</b>. Earth's crust: <b>0.025%</b>.</li>
+    <li><span class="pill must">🔥</span>Atomic number <b>6</b>; electronic configuration <b>2, 4</b> → 4 valence electrons → versatile nature.</li>
+  </ul>
+  <h4>Graphite</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>One carbon bonded to <b>3</b> other carbons → <b>sp² hybridisation</b>.</li>
+    <li><span class="pill must">🔥</span>Structure: <b>2D layered</b> → slippery → used as a <b>lubricant</b>.</li>
+    <li><span class="pill must">🔥</span>Despite carbon being a non-metal, graphite <b>conducts electricity</b> (one bonding electron stays free per carbon).</li>
+    <li><span class="pill good">➕</span>Used in pencils.</li>
+  </ul>
+  <h4>Diamond</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>One carbon bonded to <b>4</b> other carbons → <b>sp³ hybridisation</b>, <b>3D tetrahedral</b> structure.</li>
+    <li><span class="pill must">🔥</span><b>Hardest natural substance</b>; no free electrons → does not conduct electricity.</li>
+  </ul>
+  <h4>Fullerene / Buckminsterfullerene</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>Formula <b>C₆₀</b> — purest form of carbon.</li>
+    <li><span class="pill imp">⭐</span>Cage-like, football-shaped structure.</li>
+    <li><span class="pill imp">⭐</span>Discovered by <b>three scientists</b> (names not commonly recalled — exams often ask "which 3 names discovered it," so recognise fullerene as the answer when three unfamiliar names appear in an allotrope question).</li>
+  </ul>
+  `
+},
+{
+  title: "2 · Versatile Nature, Catenation & the Carbon Family",
+  html: `
+  <h4>Why carbon is versatile</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>4 valence electrons → equally "hard" to lose 4 or gain 4 to complete the octet → carbon prefers <b>sharing</b> electrons (covalent bonding) over forming ions.</li>
+    <li><span class="pill good">➕</span>The octet rule does not apply to two elements: <b>Hydrogen and Helium</b> (they are stable with just 2 electrons).</li>
+  </ul>
+  <h4>Catenation</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Catenation</b> = the unique ability of an atom to form bonds with other atoms of the same element, creating long chains.</li>
+    <li><span class="pill must">🔥</span>Carbon shows catenation strongly; it forms very long, stable chains with itself.</li>
+  </ul>
+  <h4>Carbon family (Group 14)</h4>
+  <ul class="clean">
+    <li><span class="pill imp">⭐</span>Order: <b>Carbon → Silicon → Germanium → Tin → Lead</b>.</li>
+    <li><span class="pill imp">⭐</span>As atomic size increases down the group, catenation ability <b>decreases</b> — silicon can form only short chains, and lower members show negligible catenation.</li>
+  </ul>
+  `
+},
+{
+  title: "3 · Hydrocarbons — Saturated & Unsaturated",
+  html: `
+  <h4>Hydrocarbons & bonding</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>Hydrocarbons = compounds made only of carbon and hydrogen.</li>
+    <li><span class="pill must">🔥</span>Bonding in hydrocarbons (and catenation) is always <b>covalent</b> — formed by sharing of electrons, not transfer.</li>
+    <li><span class="pill imp">⭐</span>Transfer of electrons gives <b>ionic/electrovalent</b> bonding/compounds, which have <b>higher</b> melting and boiling points than covalent compounds (stronger bonds).</li>
+  </ul>
+  <h4>Saturated vs Unsaturated</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Saturated hydrocarbons</b> = only single bonds = <b>Alkanes</b>, general formula <span class="formula">CₙH₂ₙ₊₂</span>.</li>
+    <li><span class="pill must">🔥</span><b>Unsaturated hydrocarbons</b> = double or triple bonds = <b>Alkenes</b> <span class="formula">CₙH₂ₙ</span> and <b>Alkynes</b> <span class="formula">CₙH₂ₙ₋₂</span>.</li>
+    <li><span class="pill must">🔥</span>Single bond = 1 sigma (σ) bond. Double bond = 1σ + 1 pi (π). Triple bond = 1σ + 2π.</li>
+    <li><span class="pill good">➕</span>Boiling/melting point order (same carbon count): Alkyne &gt; Alkene &gt; Alkane (more bonds = harder to break).</li>
+  </ul>
+  `
+},
+{
+  title: "4 · Cyclic vs Acyclic, Aromatic vs Alicyclic",
+  html: `
+  <h4>Classification</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Acyclic (aliphatic):</b> open chain, no ring formed.</li>
+    <li><span class="pill must">🔥</span><b>Cyclic:</b> ring structure present — splits into Aromatic and Alicyclic.</li>
+    <li><span class="pill must">🔥</span><b>Aromatic:</b> cyclic + follows <b>Hückel's rule</b> (4n+2 π electrons); always benzenoid. <b>Benzene</b> is the simplest aromatic compound.</li>
+    <li><span class="pill must">🔥</span><b>Alicyclic:</b> cyclic but <b>non-aromatic / non-benzenoid</b> — has no fragrance.</li>
+  </ul>
+  <h4>Formula shift for cyclic compounds</h4>
+  <ul class="clean">
+    <li><span class="pill imp">⭐</span>Cyclic alkane: <span class="formula">CₙH₂ₙ</span>; cyclic alkene: <span class="formula">CₙH₂ₙ₋₂</span>; cyclic alkyne: <span class="formula">CₙH₂ₙ₋₄</span> (each loses 2 extra H compared to the acyclic version because of ring closure).</li>
+  </ul>
+  <h4>Benzene derivatives</h4>
+  <ul class="clean">
+    <li><span class="pill imp">⭐</span><b>Toluene</b> = benzene ring + CH₃ (methyl) group.</li>
+    <li><span class="pill imp">⭐</span><b>Aniline</b> = benzene ring + NH₂ (amino) group.</li>
+    <li><span class="pill good">➕</span><b>Naphthalene</b> = fused double benzene ring; sublimes (goes directly solid → gas).</li>
+  </ul>
+  <h4>Structural representations</h4>
+  <ul class="clean">
+    <li><span class="pill good">➕</span><b>Full/open structural formula:</b> every bond drawn out explicitly.</li>
+    <li><span class="pill good">➕</span><b>Condensed structural formula:</b> e.g. CH₃-CH₂-CH₃ (groups written together).</li>
+    <li><span class="pill good">➕</span><b>Bond-line / skeletal structure:</b> only lines for bonds, carbons/hydrogens not shown.</li>
+    <li><span class="pill good">➕</span><b>Wedge-dash structure:</b> shows 3D orientation of bonds.</li>
+  </ul>
+  `
+},
+{
+  title: "5 · Heterocyclic Compounds",
+  html: `
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Heterocyclic</b> = a ring where one carbon is replaced by a different element.</li>
+    <li><span class="pill imp">⭐</span><b>Furan</b> — oxygen in the ring.</li>
+    <li><span class="pill imp">⭐</span><b>Thiophene</b> — sulphur in the ring.</li>
+    <li><span class="pill imp">⭐</span><b>Pyrrole</b> — nitrogen in a 5-membered ring.</li>
+    <li><span class="pill imp">⭐</span><b>Pyridine</b> — nitrogen in a 6-membered ring (like benzene with one N).</li>
+    <li><span class="pill good">➕</span>Other named heterocyclics: <b>Pyrimidine, Imidazole, Oxadiazole, Isoquinoline</b>.</li>
+    <li><span class="pill good">➕</span>Note: attaching NH₂ to a carbon of the benzene ring (outside the ring) gives Aniline — that is NOT heterocyclic, since the ring atom itself wasn't replaced.</li>
+  </ul>
+  `
+},
+{
+  title: "6 · Combustion & Flame Types",
+  html: `
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>Saturated hydrocarbons (alkanes) burn with a <b>clear blue flame</b> — complete combustion.</li>
+    <li><span class="pill must">🔥</span>If air supply is blocked (e.g. clogged stove holes) → incomplete combustion → black <b>soot</b>.</li>
+    <li><span class="pill must">🔥</span>Unsaturated hydrocarbons (alkenes/alkynes) burn with a <b>yellow, sooty flame</b>.</li>
+    <li><span class="pill imp">⭐</span>LPG cylinders are filled mainly with <b>butane</b>, along with some <b>propane</b> — both saturated, hence clean blue flame on a working stove.</li>
+  </ul>
+  `
+},
+{
+  title: "7 · Chemical Reactions of Hydrocarbons",
+  html: `
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Combustion:</b> exothermic reaction (releases heat); produces CO₂ + H₂O.</li>
+    <li><span class="pill must">🔥</span><b>Oxidation:</b> done using strong oxidising agents — <b>alkaline KMnO₄</b> (potassium permanganate) or <b>K₂Cr₂O₇</b> (potassium dichromate); e.g. converts alcohol to acid.</li>
+    <li><span class="pill must">🔥</span><b>Addition reaction:</b> unsaturated hydrocarbon + H₂ in presence of <b>Nickel or Palladium catalyst</b> → saturated hydrocarbon (hydrogenation). General chemistry note: animal fats tend to be saturated (less healthy); vegetable oils tend to be unsaturated (generally healthier).</li>
+    <li><span class="pill must">🔥</span><b>Substitution reaction:</b> alkane + Cl₂ in presence of <b>sunlight</b> — one H replaced by Cl at a time: CH₃Cl (chloromethane) → CH₂Cl₂ (dichloromethane) → CHCl₃ (trichloromethane, also called <b>chloroform</b>) → CCl₄ (carbon tetrachloride).</li>
+  </ul>
+  `
+},
+{
+  title: "8 · Nomenclature — Prefixes & Functional Groups",
+  html: `
+  <h4>Carbon-count prefixes</h4>
+  <table>
+    <tr><th>Carbons</th><th>Prefix</th><th>Carbons</th><th>Prefix</th></tr>
+    <tr><td>1</td><td>meth-</td><td>7</td><td>hept-</td></tr>
+    <tr><td>2</td><td>eth-</td><td>8</td><td>oct-</td></tr>
+    <tr><td>3</td><td>prop-</td><td>9</td><td>non-</td></tr>
+    <tr><td>4</td><td>but-</td><td>10</td><td>dec-</td></tr>
+    <tr><td>5</td><td>pent-</td><td>12</td><td>dodec-</td></tr>
+    <tr><td>6</td><td>hex-</td><td>20</td><td>icos-</td></tr>
+  </table>
+  <p style="font-size:13.5px;">Example: <b>icosane</b> = 20 carbons → C₂₀H₄₂ (alkane, CₙH₂ₙ₊₂). <b>Dodecane</b> = 12 carbons.</p>
+  <h4>Functional groups</h4>
+  <table>
+    <tr><th>Group</th><th>Formula</th><th>Naming rule</th></tr>
+    <tr><td>Halide (F, Cl, Br, I)</td><td>-X</td><td><b>Prefix only:</b> "halo-" (e.g. chloro-, bromo-) — never a suffix</td></tr>
+    <tr><td>Alcohol</td><td>-OH</td><td>Suffix: -ol</td></tr>
+    <tr><td>Aldehyde</td><td>-CHO</td><td>Suffix: -al</td></tr>
+    <tr><td>Ketone</td><td>C=O (between 2 alkyls)</td><td>Suffix: -one</td></tr>
+    <tr><td>Nitrile</td><td>-C≡N</td><td>Suffix: -nitrile</td></tr>
+    <tr><td>Ether</td><td>R-O-R</td><td>Named as alkoxyalkane (oxygen between 2 alkyl groups)</td></tr>
+    <tr><td>Ester</td><td>-COOR</td><td>Named as alkyl alkanoate</td></tr>
+    <tr><td>Carboxylic acid</td><td>-COOH</td><td>Suffix: -oic acid</td></tr>
+  </table>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>Halogens (group 17 elements) have valency <b>-1</b>: F, Cl, Br, I.</li>
+    <li><span class="pill imp">⭐</span>Changing the functional group changes the <b>chemical property</b>; lengthening the carbon chain (same functional group) mainly changes <b>physical properties</b> like boiling point.</li>
+  </ul>
+  `
+},
+{
+  title: "9 · Homologous Series & IUPAC Naming Rules",
+  html: `
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Homologous series:</b> a family with the same functional group, where consecutive members differ by a <b>CH₂</b> unit and by <b>14</b> units of molar mass (C=12, H=1, so CH₂=14).</li>
+    <li><span class="pill imp">⭐</span>Example: CH₄ → C₂H₆ → C₃H₈ → C₄H₁₀ (adding CH₂ each time).</li>
+    <li><span class="pill must">🔥</span><b>IUPAC naming rule 1:</b> always pick the <b>longest carbon chain</b> as the main/root chain.</li>
+    <li><span class="pill must">🔥</span><b>IUPAC naming rule 2:</b> number the chain so that the branch/substituent gets the <b>lowest possible position number</b> (count from whichever end gives the smaller locant).</li>
+    <li><span class="pill good">➕</span>Examples worked in lecture: 3-methylpentane; depending on numbering direction, a hexane chain with a methyl branch becomes 3-methylhexane (not 4-methylhexane) because the lower locant must be chosen.</li>
+  </ul>
+  `
+},
+{
+  title: "10 · Alcohols — Classification & Ethanol",
+  html: `
+  <h4>Classifying alcohols by carbon type</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Primary (1°) alcohol:</b> OH attached to a carbon bonded to <b>2 hydrogens + 1 alkyl group</b>.</li>
+    <li><span class="pill must">🔥</span><b>Secondary (2°) alcohol:</b> OH attached to a carbon bonded to <b>1 hydrogen + 2 alkyl groups</b>.</li>
+    <li><span class="pill must">🔥</span><b>Tertiary (3°) alcohol:</b> OH attached to a carbon bonded to <b>0 hydrogens + 3 alkyl groups</b>.</li>
+  </ul>
+  <h4>Ethanol (C₂H₅OH)</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>Made from <b>sugarcane juice</b> by <b>fermentation</b> (occurs in absence of oxygen — anaerobic).</li>
+    <li><span class="pill imp">⭐</span>A good solvent — used in <b>cough syrups</b> and in <b>tincture of iodine</b> (iodine = solute, ethanol = solvent; used as an antiseptic).</li>
+    <li><span class="pill must">🔥</span>Ethanol heated with <b>concentrated H₂SO₄</b> loses water (dehydration) → forms <b>ethene</b>.</li>
+    <li><span class="pill must">🔥</span><b>Denaturing of alcohol:</b> done to stop misuse/addiction (e.g. people misusing cough syrup) — a dye or <b>methanol</b> is added to industrial ethanol.</li>
+    <li><span class="pill must">🔥</span><b>Methanol</b> = "wood spirit"; extremely poisonous — directly damages the liver by coagulating the protoplasm of liver cells, causing death if consumed.</li>
+    <li><span class="pill imp">⭐</span>Ethanol + Sodium → Sodium ethoxide (salt) + Hydrogen gas released.</li>
+  </ul>
+  `
+},
+{
+  title: "11 · Isomers",
+  html: `
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Isomers:</b> compounds with the <b>same chemical formula</b> but <b>different structure</b> (hence different names and often different properties).</li>
+    <li><span class="pill imp">⭐</span>Example: n-Butane and 2-methylpropane (isobutane) — both <b>C₄H₁₀</b>, but n-butane is a straight chain while 2-methylpropane has a branch on the middle carbon.</li>
+    <li><span class="pill imp">⭐</span><b>Quick trick for number of isomers:</b> use <span class="formula">2^(n-4) + 1</span> where n = number of carbons. Valid roughly up to 7–9 carbons.</li>
+    <li><span class="pill good">➕</span>Example: Hexane (n=6) → 2^(6-4)+1 = 2²+1 = <b>5 isomers</b>.</li>
+  </ul>
+  `
+},
+{
+  title: "12 · Ethanoic Acid, Esters & Related Groups",
+  html: `
+  <h4>Ethanoic acid (CH₃COOH)</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span>Common name: <b>acetic acid</b>.</li>
+    <li><span class="pill must">🔥</span><b>Vinegar</b> = 5–8% solution of acetic acid.</li>
+    <li><span class="pill must">🔥</span><b>Glacial acetic acid</b> = pure (100%) acetic acid — called "glacial" because of its very low melting point (it can freeze into ice-like crystals).</li>
+    <li><span class="pill imp">⭐</span>Ethanoic acid + NaOH → <b>Sodium ethanoate (CH₃COONa)</b> + Water.</li>
+  </ul>
+  <h4>Esters, Ethers, Ketones — don't mix them up</h4>
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Ester (RCOOR'):</b> sweet-smelling compound, formed when an acid reacts with an alcohol (water is released) — this is <b>esterification</b>.</li>
+    <li><span class="pill must">🔥</span><b>Ether (R-O-R):</b> oxygen placed directly between two alkyl groups — structurally different from an ester; don't confuse the two.</li>
+    <li><span class="pill imp">⭐</span><b>Ketone (R-CO-R'):</b> has a C=O functional group with alkyl groups on both sides.</li>
+  </ul>
+  `
+},
+{
+  title: "13 · Soaps & Detergents",
+  html: `
+  <ul class="clean">
+    <li><span class="pill must">🔥</span><b>Saponification:</b> an ester reacted with NaOH (caustic soda) or KOH (caustic potash) gives <b>soap + alcohol</b>.</li>
+    <li><span class="pill must">🔥</span><b>Soap</b> = sodium or potassium salt of a long-chain <b>carboxylic acid</b>.</li>
+    <li><span class="pill must">🔥</span><b>Detergent</b> = sodium or potassium salt of a long-chain <b>sulfonic acid</b>.</li>
+    <li><span class="pill must">🔥</span>Soap molecule structure: a <b>hydrophilic</b> head (attracted to water) and a <b>hydrophobic</b> tail (attracted to oil/grease/dirt).</li>
+    <li><span class="pill must">🔥</span>In water, soap molecules surround oil/dirt/grease particles (tail inward, head outward) forming a <b>micelle</b>, which lifts the dirt away — this is the cleansing action.</li>
+    <li><span class="pill must">🔥</span><b>Soap does not work well in hard water or acidic conditions</b> — it forms an insoluble <b>scum</b>.</li>
+    <li><span class="pill must">🔥</span><b>Detergent works even in hard water and acidic conditions</b>, and dissolves faster than soap.</li>
+    <li><span class="pill imp">⭐</span><b>Hard water:</b> water containing dissolved <b>calcium and magnesium</b> salts.</li>
+    <li><span class="pill imp">⭐</span><b>Heavy water</b> (different from hard water!): water in which hydrogen is replaced by its heavier isotope <b>deuterium</b>; used as a coolant/moderator in nuclear reactors. <b>Graphite</b> is also used as a moderator in nuclear reactors.</li>
+  </ul>
+  `
+}
+];
+
+const accContainer = document.getElementById('accordions');
+accordionData.forEach((item, idx)=>{
+  const div = document.createElement('div');
+  div.className = 'accordion' + (idx===0 ? ' open' : '');
+  div.innerHTML = `
+    <div class="accordion-head">
+      <div class="htitle">${item.title}</div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="accordion-body">${item.html}</div>
+  `;
+  div.querySelector('.accordion-head').addEventListener('click', ()=>{
+    div.classList.toggle('open');
+  });
+  accContainer.appendChild(div);
+});
+
+/* ---------------- EXAM TRAPS ---------------- */
+const traps = [
+  {t:"Graphite vs Diamond hybridisation", d:"Graphite is sp² (bonded to 3 carbons, 2D layers). Diamond is sp³ (bonded to 4 carbons, 3D tetrahedral). Students frequently swap these two."},
+  {t:"A non-metal that conducts electricity", d:"Carbon is a non-metal, yet its allotrope Graphite conducts electricity — because one bonding electron per carbon remains free. Diamond, also carbon, does NOT conduct (all 4 electrons used in bonds)."},
+  {t:"Acyclic vs Alicyclic vs Aromatic", d:"Acyclic = no ring at all. Alicyclic = ring present but NOT aromatic. Aromatic = ring + follows Hückel's 4n+2 π electron rule. All three sound similar but mean very different things."},
+  {t:"Acyclic vs Cyclic formula shift", d:"Cyclic compounds have 2 fewer hydrogens than their acyclic counterpart of the same type: cyclic alkane=CₙH₂ₙ, cyclic alkene=CₙH₂ₙ₋₂, cyclic alkyne=CₙH₂ₙ₋₄ — easy to confuse with the open-chain formulas."},
+  {t:"Ester vs Ether", d:"Ester = -COOR (carbon double-bonded to one oxygen, single-bonded to another which connects to R). Ether = R-O-R (oxygen simply between two alkyl groups). Visually and phonetically similar — a favourite trap."},
+  {t:"Soap vs Detergent — which salt?", d:"Soap = salt of a long-chain CARBOXYLIC acid. Detergent = salt of a long-chain SULFONIC acid. Mixing these up is one of the most common errors."},
+  {t:"Hard water vs Heavy water", d:"Hard water = water with dissolved Calcium/Magnesium salts (relevant to soap). Heavy water = water with deuterium instead of normal hydrogen (relevant to nuclear reactors). Same-sounding names, unrelated chemistry."},
+  {t:"Halogen naming — prefix, not suffix", d:"Every other functional group (alcohol, aldehyde, ketone, acid, nitrile) is named using a SUFFIX. Halogens are the exception — always named using a PREFIX (halo-/chloro-/bromo-) and never given a suffix position."},
+  {t:"Wood spirit ≠ ethanol", d:"'Wood spirit' refers to METHANOL, not ethanol. Methanol is added to denature industrial ethanol and is highly poisonous — a frequently misread fact."},
+  {t:"Saturated/Unsaturated flame colour reversal", d:"Saturated hydrocarbons (single bonds) burn with a clean BLUE flame. Unsaturated hydrocarbons (double/triple bonds) burn with a YELLOW, sooty flame. Students often remember this backwards."},
+  {t:"Octet rule exceptions", d:"The octet rule does NOT apply to Hydrogen and Helium (they are stable with just 2 electrons, not 8) — a frequently asked exception."},
+  {t:"Isomer-count trick has a limit", d:"The shortcut 2^(n-4)+1 for counting isomers is only reliable up to roughly 7–9 carbons; beyond that it is not a guaranteed accurate count."},
+  {t:"Glacial acetic acid is NOT vinegar", d:"Vinegar is a dilute 5–8% solution of acetic acid. 'Glacial acetic acid' refers to the 100% pure compound, named for its tendency to freeze (low melting point) — students sometimes treat the two as identical."}
+];
+const trapsContainer = document.getElementById('traps-container');
+traps.forEach(tr=>{
+  const div = document.createElement('div');
+  div.className = 'trap-card';
+  div.innerHTML = `<div class="ttitle">⚠ ${tr.t}</div><p>${tr.d}</p>`;
+  trapsContainer.appendChild(div);
+});
+
+/* ---------------- ACTIVE RECALL ---------------- */
+const recallItems = [
+  {q:"What is the hybridisation of carbon in graphite, and why does it conduct electricity?", a:"sp² hybridisation (bonded to 3 other carbons). It conducts because each carbon has one free electron not used in bonding."},
+  {q:"Why is diamond the hardest natural substance?", a:"Each carbon atom is bonded to 4 other carbons (sp³) in a rigid 3D tetrahedral structure with no free electrons or weak points."},
+  {q:"What is the formula of Buckminsterfullerene, and what shape is it?", a:"C₆₀ — a cage-like, football-shaped structure; the purest form of carbon."},
+  {q:"Fill in the blank: Catenation is the ability of carbon to form ____ with other carbon atoms.", a:"bonds (long chains) with atoms of the same element."},
+  {q:"Name the carbon family (Group 14) in order.", a:"Carbon → Silicon → Germanium → Tin → Lead."},
+  {q:"Why does catenation decrease down Group 14?", a:"Atomic size increases down the group, weakening the element's ability to form long self-bonded chains."},
+  {q:"What is the general formula of an alkane, alkene, and alkyne?", a:"Alkane: CₙH₂ₙ₊₂. Alkene: CₙH₂ₙ. Alkyne: CₙH₂ₙ₋₂."},
+  {q:"One-liner: What colour flame do saturated hydrocarbons produce?", a:"A clean blue flame (complete combustion)."},
+  {q:"One-liner: What colour flame do unsaturated hydrocarbons produce?", a:"A yellow, sooty flame (incomplete combustion)."},
+  {q:"Reverse question: A ring compound follows Hückel's 4n+2 rule. What category is it?", a:"Aromatic (e.g. benzene)."},
+  {q:"Reverse question: A ring compound does NOT follow Hückel's rule. What category is it?", a:"Alicyclic (non-aromatic, non-benzenoid, no fragrance)."},
+  {q:"What do you get when you attach a CH₃ group to benzene? An NH₂ group?", a:"CH₃ → Toluene. NH₂ → Aniline."},
+  {q:"Name four heterocyclic 5/6-membered rings and the element replacing carbon in each.", a:"Furan (Oxygen), Thiophene (Sulphur), Pyrrole (Nitrogen, 5-ring), Pyridine (Nitrogen, 6-ring)."},
+  {q:"Fill in the blank: Combustion of hydrocarbons is an ____ reaction.", a:"exothermic (releases heat)."},
+  {q:"Which catalysts are used in the addition (hydrogenation) reaction of unsaturated hydrocarbons?", a:"Nickel or Palladium."},
+  {q:"What is the sequence of products when methane reacts with Cl₂ in sunlight (substitution)?", a:"CH₃Cl (chloromethane) → CH₂Cl₂ (dichloromethane) → CHCl₃ (chloroform) → CCl₄ (carbon tetrachloride)."},
+  {q:"Rapid fire: Naming prefix for 1, 2, 3, 4, 5 carbons?", a:"meth-, eth-, prop-, but-, pent-."},
+  {q:"Rapid fire: How are halogens named — prefix or suffix?", a:"Always prefix (halo-) — never suffix."},
+  {q:"What is the suffix for alcohol, aldehyde, ketone, and carboxylic acid?", a:"Alcohol: -ol. Aldehyde: -al. Ketone: -one. Carboxylic acid: -oic acid."},
+  {q:"In a homologous series, members differ by what unit, and by how much mass?", a:"Differ by a CH₂ unit; mass differs by 14 units."},
+  {q:"IUPAC rule: which chain do you pick as the 'root' when naming?", a:"Always the longest carbon chain, numbered to give substituents the lowest possible position."},
+  {q:"Classify: OH attached to a carbon with 2 H and 1 alkyl group.", a:"Primary (1°) alcohol."},
+  {q:"Classify: OH attached to a carbon with 0 H and 3 alkyl groups.", a:"Tertiary (3°) alcohol."},
+  {q:"How is ethanol industrially produced from sugarcane?", a:"By fermentation of sugarcane juice, which occurs in the absence of oxygen."},
+  {q:"What happens when ethanol is heated with concentrated H₂SO₄?", a:"It loses water (dehydration) and forms ethene."},
+  {q:"What is added to denature industrial alcohol, and why is it dangerous?", a:"Methanol (wood spirit) or a dye is added; methanol is highly poisonous and damages the liver."},
+  {q:"Fill in the blank: Ethanol + Sodium → Sodium ethoxide + ____ gas.", a:"Hydrogen gas."},
+  {q:"What are isomers? Give an example with C₄H₁₀.", a:"Same chemical formula, different structure. Example: n-butane and 2-methylpropane, both C₄H₁₀."},
+  {q:"Quick formula: how many isomers does hexane (C₆H₁₄) have?", a:"Using 2^(n-4)+1: 2^(6-4)+1 = 2²+1 = 5 isomers."},
+  {q:"What is the common name of ethanoic acid, and what is vinegar made of?", a:"Common name: acetic acid. Vinegar is a 5–8% solution of acetic acid."},
+  {q:"Why is pure acetic acid called 'glacial acetic acid'?", a:"Because it has a very low melting point and can freeze into ice-like crystals."},
+  {q:"What is formed when an acid reacts with an alcohol, and what is this reaction called?", a:"An ester is formed (plus water); the reaction is called esterification."},
+  {q:"Distinguish: Ester formula vs Ether formula.", a:"Ester: R-COO-R'. Ether: R-O-R (oxygen directly between two alkyl groups, no carbonyl)."},
+  {q:"What is saponification?", a:"The reaction of an ester with NaOH/KOH to form soap and alcohol."},
+  {q:"What is the chemical difference between soap and detergent?", a:"Soap = Na/K salt of a long-chain carboxylic acid. Detergent = Na/K salt of a long-chain sulfonic acid."},
+  {q:"Why doesn't soap work well in hard water?", a:"Calcium/magnesium ions in hard water react with soap to form an insoluble scum, preventing proper cleaning."},
+  {q:"Describe the structure of a micelle.", a:"Soap molecules arrange with hydrophobic tails pointing inward (toward trapped oil/dirt) and hydrophilic heads pointing outward (toward water)."},
+  {q:"Distinguish: Hard water vs Heavy water.", a:"Hard water contains dissolved Ca/Mg salts. Heavy water contains deuterium (heavy hydrogen isotope) and is used in nuclear reactors as a coolant/moderator."},
+  {q:"Which two elements are exceptions to the octet rule?", a:"Hydrogen and Helium."}
+];
+const recallContainer = document.getElementById('recall-container');
+recallItems.forEach((item, idx)=>{
+  const div = document.createElement('div');
+  div.className = 'qa';
+  div.innerHTML = `<div class="q"><span>${idx+1}. ${item.q}</span><span class="arrow">▾</span></div><div class="a">${item.a}</div>`;
+  div.addEventListener('click', ()=> div.classList.toggle('open'));
+  recallContainer.appendChild(div);
+});
+</script>
+</body>
+</html>

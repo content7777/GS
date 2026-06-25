@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Periodic Table — High-Retention Revision System</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #161b27;
+    --bg3: #1e2436;
+    --green: #4ade80;
+    --green-dim: #22543d;
+    --blue: #60a5fa;
+    --blue-dim: #1e3a5f;
+    --yellow: #fbbf24;
+    --yellow-dim: #451a03;
+    --red: #f87171;
+    --red-dim: #450a0a;
+    --purple: #c084fc;
+    --purple-dim: #3b0764;
+    --teal: #2dd4bf;
+    --teal-dim: #0f3d38;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --border: #2d3748;
+    --radius: 12px;
+    --font-display: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-display);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── LAYOUT ─────────────────────────── */
+  #app { display: flex; height: 100vh; overflow: hidden; }
+
+  /* ─── SIDEBAR ────────────────────────── */
+  #sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .sidebar-header {
+    padding: 20px 16px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-header .chapter-tag {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .sidebar-header h1 {
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .nav-section-label {
+    padding: 14px 16px 6px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    background: var(--bg3);
+    border-left-color: var(--green);
+    color: var(--green);
+    font-weight: 600;
+  }
+  .nav-icon { font-size: 15px; width: 20px; text-align: center; }
+
+  /* ─── MAIN CONTENT ───────────────────── */
+  #main {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--bg);
+  }
+
+  .page { display: none; padding: 32px 40px; max-width: 900px; }
+  .page.active { display: block; }
+
+  .page-header {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .page-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .page-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ─── CARDS ──────────────────────────── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .green-card { border-left: 4px solid var(--green); }
+  .blue-card  { border-left: 4px solid var(--blue);  }
+  .yellow-card{ border-left: 4px solid var(--yellow);}
+  .red-card   { border-left: 4px solid var(--red);   }
+  .purple-card{ border-left: 4px solid var(--purple); }
+  .teal-card  { border-left: 4px solid var(--teal);  }
+
+  .green-card .card-title { color: var(--green); }
+  .blue-card .card-title  { color: var(--blue);  }
+  .yellow-card .card-title{ color: var(--yellow);}
+  .red-card .card-title   { color: var(--red);   }
+  .purple-card .card-title{ color: var(--purple); }
+  .teal-card .card-title  { color: var(--teal);  }
+
+  /* ─── TAGS ───────────────────────────── */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 4px;
+    margin-bottom: 4px;
+  }
+  .tag-fire { background: rgba(248,113,113,0.15); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+  .tag-star { background: rgba(251,191,36,0.15);  color: var(--yellow); border: 1px solid rgba(251,191,36,0.3); }
+  .tag-plus { background: rgba(96,165,250,0.15);  color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+
+  /* ─── TABLES ─────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 12px 0;
+  }
+  th {
+    background: var(--bg3);
+    color: var(--green);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg3); }
+
+  /* ─── LISTS ──────────────────────────── */
+  .fact-list { list-style: none; }
+  .fact-list li {
+    padding: 7px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    line-height: 1.5;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .fact-list li:last-child { border-bottom: none; }
+  .fact-list .bullet { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* ─── HIGHLIGHT ──────────────────────── */
+  .hl-green { color: var(--green); font-weight: 700; }
+  .hl-blue  { color: var(--blue);  font-weight: 700; }
+  .hl-yellow{ color: var(--yellow); font-weight: 700; }
+  .hl-red   { color: var(--red);   font-weight: 700; }
+  .hl-purple{ color: var(--purple); font-weight: 700; }
+  .hl-teal  { color: var(--teal);  font-weight: 700; }
+
+  /* ─── MEMORY HOOK ─────────────────────── */
+  .memory-hook {
+    background: linear-gradient(135deg, rgba(74,222,128,0.07), rgba(96,165,250,0.07));
+    border: 1px solid rgba(74,222,128,0.25);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    margin: 12px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .memory-hook .hook-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  /* ─── TRAP BOX ────────────────────────── */
+  .trap-box {
+    background: rgba(248,113,113,0.06);
+    border: 1px solid rgba(248,113,113,0.3);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin: 10px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .trap-box .trap-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  /* ─── QUIZ ────────────────────────────── */
+  .quiz-item {
+    background: var(--bg3);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+  .quiz-q { color: var(--text); margin-bottom: 8px; font-weight: 600; }
+  .quiz-reveal-btn {
+    background: none;
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: all 0.15s;
+  }
+  .quiz-reveal-btn:hover { background: var(--green); color: var(--bg); }
+  .quiz-answer {
+    display: none;
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: rgba(74,222,128,0.08);
+    border-left: 3px solid var(--green);
+    border-radius: 6px;
+    color: var(--green);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .quiz-answer.shown { display: block; }
+
+  /* ─── MNEMONICS ──────────────────────── */
+  .mnemonic {
+    background: rgba(192,132,252,0.08);
+    border: 1px solid rgba(192,132,252,0.3);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 8px 0;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .mnemonic .mnemonic-label {
+    font-size: 10px;
+    color: var(--purple);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  /* ─── PALACE ─────────────────────────── */
+  .palace-room {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 12px;
+    align-items: flex-start;
+  }
+  .palace-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--bg3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+  .palace-content { flex: 1; font-size: 13px; line-height: 1.5; }
+  .palace-content strong { color: var(--blue); }
+
+  /* ─── RAPID FIRE ─────────────────────── */
+  .rapid-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .rapid-card {
+    background: var(--bg3);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+  }
+  .rapid-card .rq { color: var(--text-dim); margin-bottom: 4px; }
+  .rapid-card .ra { color: var(--green); font-weight: 700; font-size: 13px; }
+
+  /* ─── LAST NIGHT ─────────────────────── */
+  .ln-box {
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    border: 1px solid var(--green);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin-bottom: 14px;
+  }
+  .ln-box h3 { color: var(--green); font-size: 14px; margin-bottom: 12px; letter-spacing: 1px; }
+  .ln-box p  { font-size: 13px; line-height: 1.6; color: var(--text); }
+
+  /* ─── GRID HELPERS ────────────────────── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  /* ─── DIVIDER ─────────────────────────── */
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  /* ─── MOBILE TOGGLE ───────────────────── */
+  #menu-toggle {
+    display: none;
+    position: fixed;
+    top: 12px; left: 12px;
+    z-index: 100;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 18px;
+  }
+
+  /* ─── SCROLLBAR ──────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ─── PROGRESS BAR ───────────────────── */
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 8px 0 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    border-radius: 2px;
+    transition: width 0.4s;
+  }
+
+  /* ─── TIMELINE ────────────────────────── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -23px;
+    top: 4px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--bg);
+  }
+  .tl-year {
+    display: inline-block;
+    background: var(--green);
+    color: var(--bg);
+    font-weight: 800;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-bottom: 4px;
+  }
+  .tl-name { color: var(--blue); font-weight: 700; font-size: 14px; }
+  .tl-desc { color: var(--text-dim); }
+
+  @media (max-width: 700px) {
+    #sidebar { position: fixed; left: -270px; top: 0; height: 100%; transition: left 0.25s; }
+    #sidebar.open { left: 0; }
+    #menu-toggle { display: block; }
+    .page { padding: 60px 18px 24px; }
+    .two-col, .three-col, .rapid-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<div id="app">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <div class="chapter-tag">Chemistry · SSC CGL</div>
+      <h1>⚗️ Periodic Table</h1>
+      <div class="progress-bar"><div class="progress-fill" id="progress" style="width:10%"></div></div>
+    </div>
+
+    <div class="nav-section-label">Overview</div>
+    <div class="nav-item active" onclick="showPage('big-picture')"><span class="nav-icon">🌐</span> Big Picture</div>
+    <div class="nav-item" onclick="showPage('palace')"><span class="nav-icon">🧠</span> Memory Palace</div>
+
+    <div class="nav-section-label">Complete Notes</div>
+    <div class="nav-item" onclick="showPage('history')"><span class="nav-icon">📜</span> Historical Development</div>
+    <div class="nav-item" onclick="showPage('modern')"><span class="nav-icon">🔬</span> Modern Periodic Table</div>
+    <div class="nav-item" onclick="showPage('blocks')"><span class="nav-icon">🧱</span> S P D F Blocks</div>
+    <div class="nav-item" onclick="showPage('groups')"><span class="nav-icon">👥</span> Groups & Elements</div>
+    <div class="nav-item" onclick="showPage('trends')"><span class="nav-icon">📈</span> Periodic Trends</div>
+    <div class="nav-item" onclick="showPage('valency')"><span class="nav-icon">⚡</span> Valency & Concepts</div>
+    <div class="nav-item" onclick="showPage('quantum')"><span class="nav-icon">🌀</span> Quantum Numbers</div>
+
+    <div class="nav-section-label">Exam Prep</div>
+    <div class="nav-item" onclick="showPage('traps')"><span class="nav-icon">⚠️</span> Exam Traps</div>
+    <div class="nav-item" onclick="showPage('examiner')"><span class="nav-icon">🎯</span> Examiner's Favourites</div>
+    <div class="nav-item" onclick="showPage('recall')"><span class="nav-icon">❓</span> Active Recall</div>
+
+    <div class="nav-section-label">Speed Revision</div>
+    <div class="nav-item" onclick="showPage('highyield')"><span class="nav-icon">⭐</span> High-Yield Notes</div>
+    <div class="nav-item" onclick="showPage('ultrafast')"><span class="nav-icon">⚡</span> Ultra-Fast Sheet</div>
+    <div class="nav-item" onclick="showPage('lastnight')"><span class="nav-icon">🌙</span> Last-Night Sheet</div>
+  </nav>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- ═══ BIG PICTURE ═══ -->
+    <div class="page active" id="page-big-picture">
+      <div class="page-header">
+        <div class="page-eyebrow">Overview</div>
+        <div class="page-title">Big Picture</div>
+        <div class="page-subtitle">What is this chapter really about — and why does it matter for SSC CGL?</div>
+      </div>
+
+      <div class="card green-card">
+        <div class="card-title">The Core Idea</div>
+        <p style="font-size:14px;line-height:1.7">The periodic table is humanity's master organizer of all matter. Scientists kept finding elements that behaved similarly, and they slowly realized: <span class="hl-green">order by atomic mass → pattern; order by atomic number → perfection.</span> Every exam question on this chapter is really testing whether you know <em>who said what, when, with what limitation.</em></p>
+      </div>
+
+      <div class="two-col">
+        <div class="card blue-card">
+          <div class="card-title">What SSC Asks</div>
+          <ul class="fact-list">
+            <li><span class="bullet">→</span> Who gave which law and in which year</li>
+            <li><span class="bullet">→</span> Limitations of each early table</li>
+            <li><span class="bullet">→</span> Names of element groups (halogens, etc.)</li>
+            <li><span class="bullet">→</span> Direction of periodic trends</li>
+            <li><span class="bullet">→</span> Highest/lowest values of each property</li>
+            <li><span class="bullet">→</span> Important element atomic numbers</li>
+          </ul>
+        </div>
+        <div class="card yellow-card">
+          <div class="card-title">Chapter at a Glance</div>
+          <ul class="fact-list">
+            <li><span class="bullet" style="color:var(--yellow)">1</span> History: Döbereiner → Newlands → Mendeleev → Moseley</li>
+            <li><span class="bullet" style="color:var(--yellow)">2</span> Modern table: 118 elements, 18 groups, 7 periods</li>
+            <li><span class="bullet" style="color:var(--yellow)">3</span> Blocks: S, P, D, F</li>
+            <li><span class="bullet" style="color:var(--yellow)">4</span> Trends: size, metallic character, IE, EN</li>
+            <li><span class="bullet" style="color:var(--yellow)">5</span> Valency, atomicity, isoelectronic</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="memory-hook">
+        <div class="hook-label">🧠 Golden Rule for This Chapter</div>
+        <strong style="color:var(--green);font-size:15px">"Top → Bottom = Size ↑ IE ↓ EN ↓ | Left → Right = Opposite of Top→Bottom"</strong>
+        <p style="margin-top:8px;color:var(--text-dim)">If you remember ONLY one thing from this chapter, let it be this. All trend questions collapse into this single rule.</p>
+      </div>
+    </div>
+
+    <!-- ═══ MEMORY PALACE ═══ -->
+    <div class="page" id="page-palace">
+      <div class="page-header">
+        <div class="page-eyebrow">🧠 Memory Palace</div>
+        <div class="page-title">The Periodic Museum</div>
+        <div class="page-subtitle">Walk through this museum — each room stores a different part of the chapter.</div>
+      </div>
+
+      <div class="card green-card" style="margin-bottom:20px">
+        <div class="card-title">Story Setup</div>
+        <p style="font-size:13px;line-height:1.7">Imagine you enter a grand <span class="hl-green">Science Museum</span>. There are 5 rooms inside. Each room has scientists, displays, and charts. As you walk room to room, you recall the entire chapter.</p>
+      </div>
+
+      <div class="palace-room">
+        <div class="palace-icon">🚪</div>
+        <div class="palace-content">
+          <strong>Room 1 — Hall of Three Triads (1817)</strong><br>
+          <span style="color:var(--text-dim)">You see <span class="hl-green">Döbereiner</span> standing with three identical triplets. He's weighing them — the middle one always weighs exactly the average of the outer two. Three groups of triplets play around: <em>Li-Na-K</em>, <em>Ca-Sr-Ba</em>, <em>Cl-Br-I</em>. But the hall is small — only 9 elements fit. He shrugs: "That's all I can accommodate."</span>
+        </div>
+      </div>
+
+      <div class="palace-room">
+        <div class="palace-icon">🎵</div>
+        <div class="palace-content">
+          <strong>Room 2 — Musical Octave Room (1865)</strong><br>
+          <span style="color:var(--text-dim)"><span class="hl-blue">Newlands</span> plays piano. Sa Re Ga Ma Pa Dha Ni Sa — 7 notes, then the 8th repeats. He lines elements by atomic mass; every 8th element resembles the 1st. But iron sits next to oxygen (a non-metal!) and cobalt+nickel share one seat. Piano breaks after calcium — only 56 elements, from H to Th.</span>
+        </div>
+      </div>
+
+      <div class="palace-room">
+        <div class="palace-icon">📋</div>
+        <div class="palace-content">
+          <strong>Room 3 — Mendeleev's Workshop (1869)</strong><br>
+          <span style="color:var(--text-dim)"><span class="hl-yellow">Mendeleev</span> (from Russia 🇷🇺) has 63 cards on a giant board — 8 columns, 7 rows. He leaves gaps deliberately and writes predictions: "Eka-Boron → Scandium (44), Eka-Silicon → Germanium (72), Eka-Aluminium → Gallium." His predictions come TRUE years later.</span>
+        </div>
+      </div>
+
+      <div class="palace-room">
+        <div class="palace-icon">☢️</div>
+        <div class="palace-content">
+          <strong>Room 4 — Moseley's X-Ray Lab (1913)</strong><br>
+          <span style="color:var(--text-dim)"><span class="hl-purple">Henry Moseley</span> fires X-rays at metals and reads their atomic numbers like a barcode scanner. He announces: "It's atomic NUMBER, not atomic mass that determines chemical properties!" 18 groups, 7 periods, 118 elements (94 natural). Modern periodic table born.</span>
+        </div>
+      </div>
+
+      <div class="palace-room">
+        <div class="palace-icon">📐</div>
+        <div class="palace-content">
+          <strong>Room 5 — Trend Observatory</strong><br>
+          <span style="color:var(--text-dim)">A giant see-saw: as you go <span class="hl-green">DOWN</span> the group, size and metallic character go UP; IE, EN, EGA go DOWN. From LEFT to RIGHT it's the exact opposite. Fluorine flag at top-right: highest EN. Chlorine badge: highest EGA. Francium at bottom-left: biggest, most metallic.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ HISTORY ═══ -->
+    <div class="page" id="page-history">
+      <div class="page-header">
+        <div class="page-eyebrow">Complete Notes</div>
+        <div class="page-title">Historical Development of the Periodic Table</div>
+        <div class="page-subtitle">From Döbereiner's triads to the modern table — every scientist, every year, every limitation.</div>
+      </div>
+
+      <div class="timeline">
+
+        <div class="tl-item">
+          <span class="tl-year">1817 / 1829</span><br>
+          <span class="tl-name">Döbereiner — Law of Triads</span>
+          <p class="tl-desc">
+            Arranged elements by <strong>increasing atomic mass</strong>. Found that in groups of three (triads), the atomic mass of the <em>middle element ≈ average of 1st and 3rd</em>.
+          </p>
+          <div class="two-col" style="margin-top:10px">
+            <div class="mnemonic">
+              <div class="mnemonic-label">Triads to Remember</div>
+              <strong style="color:var(--purple)">Li – Na – K</strong> (alkali metals)<br>
+              <strong style="color:var(--purple)">Ca – Sr – Ba</strong> (alkaline earth)<br>
+              <strong style="color:var(--purple)">Cl – Br – I</strong> (halogens)
+            </div>
+            <div class="trap-box" style="margin:0">
+              <div class="trap-label">⚠ Limitation</div>
+              Worked only for a <strong>few elements</strong> — not universal. Could not accommodate all known elements.
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1865</span><br>
+          <span class="tl-name">John Alexander Reina Newlands — Law of Octaves</span>
+          <p class="tl-desc">
+            Arranged elements by increasing atomic mass. Discovered: the <strong>1st and 8th element show similar properties</strong> — just like musical octaves (Do Re Mi Fa Sol La Ti Do).
+          </p>
+          <div class="card blue-card" style="margin-top:10px">
+            <div class="card-title">Musical Notes → Element Pairs</div>
+            <table>
+              <tr><th>Note</th><th>Position</th><th>Example</th></tr>
+              <tr><td>Do (Sa)</td><td>1</td><td>H, F, Cl...</td></tr>
+              <tr><td>Re</td><td>2</td><td>Li, Na...</td></tr>
+              <tr><td>Mi</td><td>3</td><td>Be, Mg...</td></tr>
+              <tr><td>Fa</td><td>4</td><td>B, Al...</td></tr>
+              <tr><td>Sol (So)</td><td>5</td><td>C, Si...</td></tr>
+              <tr><td>La</td><td>6</td><td>N, P...</td></tr>
+              <tr><td>Ti</td><td>7</td><td>O, S...</td></tr>
+            </table>
+          </div>
+          <div class="trap-box">
+            <div class="trap-label">⚠ Limitations of Newlands</div>
+            <ul class="fact-list">
+              <li><span class="bullet">1</span> <strong>Fe was placed with O & S</strong> (a metal with non-metals — totally wrong)</li>
+              <li><span class="bullet">2</span> <strong>Co and Ni shared one slot</strong> — impossible for two elements</li>
+              <li><span class="bullet">3</span> Law worked only <strong>till Calcium</strong> — failed beyond that</li>
+              <li><span class="bullet">4</span> Total elements covered: <strong>56</strong> (H to Th)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1864</span><br>
+          <span class="tl-name">Lothar Meyer — Atomic Volume vs Mass Graph</span>
+          <p class="tl-desc">
+            Published 1864. Plotted <strong>Atomic Volume vs Atomic Mass</strong>. First to show periodic <em>trends</em> — how properties change with mass. Precursor to Mendeleev's table.
+          </p>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1869</span><br>
+          <span class="tl-name">Dmitri Mendeleev — Father of Periodic Table 🇷🇺</span>
+          <p class="tl-desc">
+            Arranged <strong>63 elements</strong> by increasing atomic mass → <strong>8 groups, 7 periods</strong>. Left gaps and predicted properties of undiscovered elements.
+          </p>
+          <div class="two-col" style="margin-top:10px">
+            <div class="card green-card" style="margin:0">
+              <div class="card-title">🏆 Mendeleev's Genius</div>
+              <ul class="fact-list">
+                <li><span class="bullet">★</span> Left gaps intentionally for undiscovered elements</li>
+                <li><span class="bullet">★</span> Predicted mass, density, oxide formula</li>
+                <li><span class="bullet">★</span> Predictions came TRUE:</li>
+              </ul>
+              <table style="margin-top:8px">
+                <tr><th>Prediction</th><th>Actual Element</th><th>Mass</th></tr>
+                <tr><td>Eka-Boron</td><td>Scandium (Sc)</td><td>44</td></tr>
+                <tr><td>Eka-Silicon</td><td>Germanium (Ge)</td><td>72</td></tr>
+                <tr><td>Eka-Aluminium</td><td>Gallium (Ga)</td><td>~68</td></tr>
+              </table>
+            </div>
+            <div class="card red-card" style="margin:0">
+              <div class="card-title">❌ Mendeleev's Defects</div>
+              <ul class="fact-list">
+                <li><span class="bullet">✗</span> Couldn't fix position of <strong>Hydrogen</strong></li>
+                <li><span class="bullet">✗</span> Used atomic mass (wrong basis) — should be atomic number</li>
+                <li><span class="bullet">✗</span> <strong>Lanthanides & Actinides</strong> had no place</li>
+                <li><span class="bullet">✗</span> Isotopes couldn't be accommodated</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-year">1913</span><br>
+          <span class="tl-name">Henry Moseley — Modern Periodic Law</span>
+          <p class="tl-desc">
+            Used <strong>X-rays</strong> (discovered by Wilhelm Röntgen) to find atomic numbers. Declared: <em>"Chemical properties depend on <strong>atomic number</strong>, NOT atomic mass."</em>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="memory-hook">
+        <div class="hook-label">🧠 Timeline Mnemonic</div>
+        <strong style="color:var(--green);font-size:15px">"Don't Let Me Miss (Moseley)"</strong><br>
+        <span style="color:var(--text-dim);margin-top:4px;display:block"><strong>D</strong>öbereiner (1817) → <strong>L</strong>othar Meyer (1864) → <strong>M</strong>endeleev (1869) → <strong>M</strong>oseley (1913)</span>
+      </div>
+    </div>
+
+    <!-- ═══ MODERN ═══ -->
+    <div class="page" id="page-modern">
+      <div class="page-header">
+        <div class="page-eyebrow">Complete Notes</div>
+        <div class="page-title">Modern Periodic Table — Key Numbers</div>
+        <div class="page-subtitle">Every number you must know cold before the exam.</div>
+      </div>
+
+      <div class="three-col">
+        <div class="card green-card" style="text-align:center">
+          <div class="card-title">Total Elements</div>
+          <div style="font-size:42px;font-weight:900;color:var(--green)">118</div>
+          <div style="font-size:12px;color:var(--text-dim)">Total known elements</div>
+        </div>
+        <div class="card blue-card" style="text-align:center">
+          <div class="card-title">Natural Elements</div>
+          <div style="font-size:42px;font-weight:900;color:var(--blue)">94</div>
+          <div style="font-size:12px;color:var(--text-dim)">Naturally occurring</div>
+        </div>
+        <div class="card yellow-card" style="text-align:center">
+          <div class="card-title">Groups / Periods</div>
+          <div style="font-size:42px;font-weight:900;color:var(--yellow)">18/7</div>
+          <div style="font-size:12px;color:var(--text-dim)">Groups (vertical) / Periods (horizontal)</div>
+        </div>
+      </div>
+
+      <div class="card teal-card">
+        <div class="card-title">Important Element Atomic Numbers — MUST MEMORIZE</div>
+        <table>
+          <tr><th>Element</th><th>Symbol</th><th>Atomic No.</th><th>Group</th><th>Why Important</th></tr>
+          <tr><td>Silver</td><td>Ag</td><td>47</td><td>11</td><td><span class="tag tag-fire">🔥 Must Know</span></td></tr>
+          <tr><td>Mercury</td><td>Hg</td><td>80</td><td>12</td><td><span class="tag tag-fire">🔥 Must Know</span></td></tr>
+          <tr><td>Zinc</td><td>Zn</td><td>30</td><td>12</td><td><span class="tag tag-fire">🔥 Must Know</span></td></tr>
+          <tr><td>Iron</td><td>Fe</td><td>26</td><td>8</td><td><span class="tag tag-fire">🔥 Must Know</span></td></tr>
+          <tr><td>Nickel</td><td>Ni</td><td>28</td><td>10</td><td><span class="tag tag-fire">🔥 Must Know</span></td></tr>
+          <tr><td>Osmium</td><td>Os</td><td>76</td><td>8</td><td>Highest density</td></tr>
+          <tr><td>Technetium</td><td>Tc</td><td>43</td><td>7</td><td>1st artificially produced</td></tr>
+          <tr><td>Seaborgium</td><td>Sg</td><td>106</td><td>6</td><td>Named after Seaborg</td></tr>
+          <tr><td>Mendelevium</td><td>Md</td><td>101</td><td>—</td><td>Named after Mendeleev</td></tr>
+          <tr><td>Rutherfordium</td><td>Rf</td><td>104</td><td>4</td><td>Named after Rutherford</td></tr>
+          <tr><td>Nobelium</td><td>No</td><td>102</td><td>—</td><td>Named after Nobel</td></tr>
+          <tr><td>Bohrium</td><td>Bh</td><td>107</td><td>7</td><td>Named after Niels Bohr</td></tr>
+          <tr><td>Francium</td><td>Fr</td><td>87</td><td>1</td><td>Half-life = 22 min; most metallic</td></tr>
+        </table>
+      </div>
+
+      <div class="card purple-card">
+        <div class="card-title">First 20 Elements — YOU MUST KNOW THESE IN ORDER</div>
+        <div class="mnemonic">
+          <div class="mnemonic-label">🔮 Mnemonic (1–10)</div>
+          <strong style="color:var(--purple)">H He Li Be B C N O F Ne</strong><br>
+          <span style="color:var(--text-dim)">Harry Has Lovely Big Bright Clear Night-skies Over Fine Neighbourhoods</span>
+        </div>
+        <div class="mnemonic">
+          <div class="mnemonic-label">🔮 Mnemonic (11–20)</div>
+          <strong style="color:var(--purple)">Na Mg Al Si P S Cl Ar K Ca</strong><br>
+          <span style="color:var(--text-dim)">Na Mg — "Naughty Monkeys Always Sing Perfectly, Silly Chlorine Argues, Potassium Calculates"</span>
+        </div>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:10px">⚡ These are essential to work out electronic configurations, valency, and neutron counts in exam questions.</p>
+      </div>
+    </div>
+
+    <!-- ═══ BLOCKS ═══ -->
+    <div class="page" id="page-blocks">
+      <div class="page-header">
+        <div class="page-eyebrow">Complete Notes</div>
+        <div class="page-title">S P D F Blocks</div>
+        <div class="page-subtitle">Which groups form which blocks — and what they're called.</div>
+      </div>
+
+      <div class="card green-card">
+        <div class="card-title">Block Logic: Where Is the Last Electron Entering?</div>
+        <p style="font-size:13px;line-height:1.7">The block is named by the <strong>orbital receiving the valence (last) electron</strong>.</p>
+        <table style="margin-top:12px">
+          <tr><th>Block</th><th>Groups</th><th>Orbital</th><th>Called</th></tr>
+          <tr><td class="hl-green"><strong>S-Block</strong></td><td>1, 2</td><td>s orbital</td><td>Representative elements</td></tr>
+          <tr><td class="hl-blue"><strong>P-Block</strong></td><td>13–18</td><td>p orbital</td><td>Representative elements</td></tr>
+          <tr><td class="hl-yellow"><strong>D-Block</strong></td><td>3–12</td><td>d orbital</td><td><span class="hl-yellow">Transition Metals</span></td></tr>
+          <tr><td class="hl-purple"><strong>F-Block</strong></td><td>Lanthanides & Actinides</td><td>f orbital</td><td><span class="hl-purple">Inner Transition Metals</span></td></tr>
+        </table>
+      </div>
+
+      <div class="two-col">
+        <div class="card blue-card">
+          <div class="card-title">Metals vs Non-Metals</div>
+          <ul class="fact-list">
+            <li><span class="bullet">→</span> Entire S-block: <span class="hl-green">Metals</span></li>
+            <li><span class="bullet">→</span> Entire D-block: <span class="hl-green">Metals</span></li>
+            <li><span class="bullet">→</span> Non-metals exist <strong>ONLY in P-block</strong></li>
+            <li><span class="bullet">→</span> P-block has both metals AND non-metals</li>
+          </ul>
+        </div>
+        <div class="card purple-card">
+          <div class="card-title">Metalloids (Semi-metals)</div>
+          <p style="font-size:13px;margin-bottom:8px">Elements on the staircase between metals and non-metals:</p>
+          <div class="mnemonic" style="margin:0">
+            <div class="mnemonic-label">Metalloids List</div>
+            <strong style="color:var(--purple)">B, Si, Ge, As, Sb, Te</strong><br>
+            <span style="color:var(--text-dim);font-size:12px">"Best Silicon Germanium Asks Smartly, Tellurium"</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-dim);margin-top:8px">Not as good conductors as metals, not as bad as non-metals.</p>
+        </div>
+      </div>
+
+      <div class="card yellow-card">
+        <div class="card-title">D-Block Special Feature: Variable Valency</div>
+        <table>
+          <tr><th>Element</th><th>Valencies Shown</th></tr>
+          <tr><td>Iron (Fe)</td><td>+2, +3</td></tr>
+          <tr><td>Copper (Cu)</td><td>+1, +2</td></tr>
+          <tr><td>Mercury (Hg)</td><td>+1, +2</td></tr>
+          <tr><td>Phosphorus (P)</td><td>+3, +5</td></tr>
+          <tr><td>Sulphur (S)</td><td>+2, +4, +6</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ GROUPS ═══ -->
+    <div class="page" id="page-groups">
+      <div class="page-header">
+        <div class="page-eyebrow">Complete Notes</div>
+        <div class="page-title">Groups — Names, Elements & Mnemonics</div>
+        <div class="page-subtitle">All group names and their elements from top to bottom, with memory tricks.</div>
+      </div>
+
+      <table>
+        <tr><th>Group</th><th>Name</th><th>Elements (Top → Bottom)</th><th>Mnemonic</th></tr>
+        <tr>
+          <td><strong class="hl-green">1</strong></td>
+          <td>Alkali Metals</td>
+          <td>H, Li, Na, K, Rb, Cs, Fr</td>
+          <td class="hl-purple">"Halina, Lena ran, Karan rubbed Caesar's frame"</td>
+        </tr>
+        <tr>
+          <td><strong class="hl-green">2</strong></td>
+          <td>Alkaline Earth Metals</td>
+          <td>Be, Mg, Ca, Sr, Ba, Ra</td>
+          <td class="hl-purple">"Beta Mangayi Car, Scooter, Baap Roya"</td>
+        </tr>
+        <tr>
+          <td><strong class="hl-green">13</strong></td>
+          <td>Boron family</td>
+          <td>B, Al, Ga, In, Tl</td>
+          <td class="hl-purple">"Baigan, Aloo, Gajar, In a bag, Thal mein"</td>
+        </tr>
+        <tr>
+          <td><strong class="hl-green">14</strong></td>
+          <td>Carbon family</td>
+          <td>C, Si, Ge, Sn, Pb</td>
+          <td class="hl-purple">"Carbon Sings, Germans Snap, PBs"</td>
+        </tr>
+        <tr>
+          <td><strong class="hl-green">15</strong></td>
+          <td>Pnictogens / Nitrogen family</td>
+          <td>N, P, As, Sb, Bi</td>
+          <td class="hl-purple">"Nepal Pakistan Australia Sab Bikahenge"</td>
+        </tr>
+        <tr>
+          <td><strong class="hl-green">16</strong></td>
+          <td>Chalcogens / Oxygen family</td>
+          <td>O, S, Se, Te, Po</td>
+          <td class="hl-purple">"Old Servants Sell Tea, Politely"</td>
+        </tr>
+        <tr>
+          <td><strong class="hl-green">17</strong></td>
+          <td>Halogens</td>
+          <td>F, Cl, Br, I, At</td>
+          <td class="hl-purple">"Kal IRT aayi, At last" / "kal Arti aayi"</td>
+        </tr>
+        <tr>
+          <td><strong class="hl-green">18</strong></td>
+          <td>Noble/Inert Gases (Group 0)</td>
+          <td>He, Ne, Ar, Kr, Xe, Rn</td>
+          <td class="hl-purple">"Hema Neha aur Kareena jeeti rahna"</td>
+        </tr>
+      </table>
+
+      <div class="card teal-card" style="margin-top:20px">
+        <div class="card-title">Noble Gas Discoverers — William Ramsay is the KEY NAME</div>
+        <table>
+          <tr><th>Gas</th><th>Discoverers</th><th>Use</th></tr>
+          <tr><td>Helium (He)</td><td>Lockyer + Frankland (sun); Ramsay (Earth)</td><td>Balloons, MRI cooling</td></tr>
+          <tr><td>Neon (Ne)</td><td>Ramsay + Travers</td><td>Neon lighting / signs</td></tr>
+          <tr><td>Argon (Ar)</td><td>Ramsay + Lord Rayleigh</td><td>Double-pane windows, bulb filler</td></tr>
+          <tr><td>Krypton (Kr)</td><td>Ramsay + Travers</td><td>Fluorescent lights</td></tr>
+          <tr><td>Xenon (Xe)</td><td>Ramsay + Travers</td><td>Known as <strong>"Stranger Gas"</strong></td></tr>
+          <tr><td>Radon (Rn)</td><td>—</td><td>Radioactive</td></tr>
+        </table>
+        <div class="memory-hook" style="margin-top:12px">
+          <div class="hook-label">Memory Hook</div>
+          <strong style="color:var(--green)">William Ramsay = Common name for Ne, Ar, Kr, Xe</strong><br>
+          <span style="color:var(--text-dim)">Helium's first discoverer on the sun = Norman Lockyer (spectroscopy, 1868)</span>
+        </div>
+      </div>
+
+      <div class="card red-card" style="margin-top:16px">
+        <div class="card-title">Francium — The Extreme Element</div>
+        <ul class="fact-list">
+          <li><span class="bullet">→</span> <strong>Half-life: 22 minutes</strong> — if you take it out, half melts in 22 min</li>
+          <li><span class="bullet">→</span> Melting point extremely low — would melt in your palm</li>
+          <li><span class="bullet">→</span> So soft it can be cut with a knife (like Na and K)</li>
+          <li><span class="bullet">→</span> <strong>Most metallic element</strong> (bottom-left corner)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══ TRENDS ═══ -->
+    <div class="page" id="page-trends">
+      <div class="page-header">
+        <div class="page-eyebrow">Complete Notes</div>
+        <div class="page-title">Periodic Trends</div>
+        <div class="page-subtitle">The most tested section. Master the direction of every trend.</div>
+      </div>
+
+      <div class="card green-card">
+        <div class="card-title">The Master Rule (Memorize This First!)</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
+          <div style="background:var(--bg3);border-radius:8px;padding:14px;text-align:center">
+            <div style="font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:6px">DOWN THE GROUP ↓</div>
+            <div style="font-size:20px;font-weight:800;color:var(--green)">Size ↑ Metallic ↑</div>
+            <div style="font-size:13px;color:var(--red);margin-top:4px">IE ↓ EN ↓ EGA ↓</div>
+          </div>
+          <div style="background:var(--bg3);border-radius:8px;padding:14px;text-align:center">
+            <div style="font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-bottom:6px">ACROSS PERIOD →</div>
+            <div style="font-size:20px;font-weight:800;color:var(--red)">Size ↓ Metallic ↓</div>
+            <div style="font-size:13px;color:var(--green);margin-top:4px">IE ↑ EN ↑ EGA ↑</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="card blue-card">
+        <div class="card-title">Atomic Size</div>
+        <ul class="fact-list">
+          <li><span class="bullet">→</span> Each new period = new shell added → size increases DOWN the group</li>
+          <li><span class="bullet">→</span> Li: 2 shells (K,L); Na: 3 (K,L,M); K: 4 (K,L,M,N)</li>
+          <li><span class="bullet">→</span> Going right in a period: same shells, more protons pulling electrons inward → size DECREASES</li>
+        </ul>
+      </div>
+
+      <div class="card yellow-card">
+        <div class="card-title">Ionization Energy (IE)</div>
+        <p style="font-size:13px;line-height:1.6"><strong>Definition:</strong> Energy required to REMOVE the outermost electron from a gaseous atom.</p>
+        <ul class="fact-list" style="margin-top:10px">
+          <li><span class="bullet">→</span> Bigger atom = electron farther from nucleus = less pull = LESS energy needed to remove</li>
+          <li><span class="bullet">→</span> IE decreases DOWN the group (bigger atoms = easier to ionize)</li>
+          <li><span class="bullet">→</span> IE increases LEFT to RIGHT (smaller atoms = tighter hold)</li>
+          <li><span class="bullet">★</span> <strong>Highest IE:</strong> He (noble gas, fully stable)</li>
+          <li><span class="bullet">★</span> <strong>Lowest IE:</strong> Francium (largest atom)</li>
+        </ul>
+      </div>
+
+      <div class="card teal-card">
+        <div class="card-title">Electronegativity (EN)</div>
+        <p style="font-size:13px;line-height:1.6"><strong>Definition:</strong> Tendency of an atom to attract the SHARED pair of electrons in a bond.</p>
+        <ul class="fact-list" style="margin-top:10px">
+          <li><span class="bullet">→</span> Metals give electrons → low EN; Non-metals grab electrons → high EN</li>
+          <li><span class="bullet">→</span> EN decreases DOWN the group (metals become more metallic = less greedy)</li>
+          <li><span class="bullet">→</span> EN increases LEFT to RIGHT</li>
+          <li><span class="bullet">★</span> <strong class="hl-green">HIGHEST EN: Fluorine (F)</strong> — most electronegative element</li>
+        </ul>
+      </div>
+
+      <div class="card purple-card">
+        <div class="card-title">Electron Gain Affinity/Enthalpy (EGA)</div>
+        <p style="font-size:13px;line-height:1.6"><strong>Definition:</strong> Energy RELEASED when an electron is ADDED to a neutral atom.</p>
+        <ul class="fact-list" style="margin-top:10px">
+          <li><span class="bullet">→</span> Similar trend to EN: decreases down group, increases left to right</li>
+          <li><span class="bullet">★</span> <strong class="hl-yellow">HIGHEST EGA: Chlorine (Cl)</strong> — NOT Fluorine!</li>
+        </ul>
+        <div class="trap-box" style="margin-top:10px">
+          <div class="trap-label">⚠ CRITICAL DISTINCTION</div>
+          <strong>Highest EN = Fluorine ≠ Highest EGA = Chlorine</strong><br>
+          <span style="color:var(--text-dim)">Why? Fluorine is so small its electron cloud is already crowded — adding another electron causes more repulsion. Cl has more room.</span>
+        </div>
+      </div>
+
+      <div class="card green-card" style="margin-top:16px">
+        <div class="card-title">Diagonal Relationship</div>
+        <p style="font-size:13px;line-height:1.6">Going DOWN increases a property; going RIGHT decreases it. The diagonal movement cancels these effects → diagonal elements show <strong>SIMILAR properties</strong>.</p>
+        <div class="mnemonic">
+          <div class="mnemonic-label">Diagonal Pairs</div>
+          <strong class="hl-green">Li ↔ Mg</strong> &nbsp;|&nbsp; <strong class="hl-blue">Be ↔ Al</strong> &nbsp;|&nbsp; <strong class="hl-yellow">B ↔ Si</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ VALENCY ═══ -->
+    <div class="page" id="page-valency">
+      <div class="page-header">
+        <div class="page-eyebrow">Complete Notes</div>
+        <div class="page-title">Valency, Octet Rule & Atomicity</div>
+        <div class="page-subtitle">Combining capacity, stability rules, and how many atoms make a molecule.</div>
+      </div>
+
+      <div class="card green-card">
+        <div class="card-title">Octet Rule vs Duet Rule</div>
+        <div class="two-col">
+          <div>
+            <p style="font-size:13px;margin-bottom:8px"><strong class="hl-green">Octet Rule</strong></p>
+            <p style="font-size:13px;line-height:1.6;color:var(--text-dim)">All atoms want <strong>8 electrons</strong> in their valence shell for stability. This applies to all elements EXCEPT H and He.</p>
+          </div>
+          <div>
+            <p style="font-size:13px;margin-bottom:8px"><strong class="hl-blue">Duet Rule</strong></p>
+            <p style="font-size:13px;line-height:1.6;color:var(--text-dim)">Only for <strong>H and He</strong>: they achieve stability with just 2 electrons (K shell only).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card blue-card">
+        <div class="card-title">How to Find Valency</div>
+        <table>
+          <tr><th>Valence Electrons</th><th>Action</th><th>Valency</th><th>Example</th></tr>
+          <tr><td>1</td><td>Lose 1</td><td>+1</td><td>Na, K (Group 1)</td></tr>
+          <tr><td>2</td><td>Lose 2</td><td>+2</td><td>Mg, Ca (Group 2)</td></tr>
+          <tr><td>3</td><td>Lose 3</td><td>+3</td><td>Al (Group 13)</td></tr>
+          <tr><td>4</td><td>Share (exception)</td><td>4</td><td>C, Si (Group 14)</td></tr>
+          <tr><td>5</td><td>Gain 3 (8−5)</td><td>−3</td><td>N, P (Group 15)</td></tr>
+          <tr><td>6</td><td>Gain 2 (8−6)</td><td>−2</td><td>O, S (Group 16)</td></tr>
+          <tr><td>7</td><td>Gain 1 (8−7)</td><td>−1</td><td>F, Cl (Group 17)</td></tr>
+          <tr><td>8</td><td>Already complete</td><td>0</td><td>He, Ne (Group 18)</td></tr>
+        </table>
+        <div class="memory-hook" style="margin-top:12px">
+          <div class="hook-label">Formula</div>
+          <strong style="color:var(--green)">If valence e⁻ ≥ 5: Valency = 8 − (valence electrons)</strong>
+        </div>
+      </div>
+
+      <div class="card yellow-card">
+        <div class="card-title">Atomicity — How Many Atoms in a Molecule?</div>
+        <table>
+          <tr><th>Atomicity</th><th>Name</th><th>Examples</th></tr>
+          <tr><td>1</td><td>Monoatomic</td><td><strong>All Noble Gases</strong> (He, Ne, Ar, Kr, Xe, Rn)</td></tr>
+          <tr><td>2</td><td>Diatomic</td><td>O₂, N₂, H₂, F₂, Cl₂, Br₂, I₂</td></tr>
+          <tr><td>3</td><td>Triatomic</td><td>O₃ (Ozone), H₂O, CO₂</td></tr>
+          <tr><td>4</td><td>Tetra-atomic</td><td><strong>Phosphorus (P₄)</strong></td></tr>
+          <tr><td>8</td><td>Octa-atomic</td><td><strong>Sulphur (S₈)</strong></td></tr>
+          <tr><td>5+</td><td>Polyatomic</td><td>S₈, P₄, many organic molecules</td></tr>
+        </table>
+        <div class="trap-box" style="margin-top:12px">
+          <div class="trap-label">⚠ Exam Targets</div>
+          <strong>Sulphur atomicity = 8</strong> | <strong>Phosphorus atomicity = 4</strong> | Noble gases are always monoatomic
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ QUANTUM ═══ -->
+    <div class="page" id="page-quantum">
+      <div class="page-header">
+        <div class="page-eyebrow">Complete Notes</div>
+        <div class="page-title">Quantum Numbers</div>
+        <div class="page-subtitle">NLMS — basic understanding for SSC Railway level questions.</div>
+      </div>
+
+      <div class="card green-card">
+        <div class="card-title">Four Quantum Numbers</div>
+        <table>
+          <tr><th>Quantum Number</th><th>Symbol</th><th>Also Called</th><th>What It Tells</th></tr>
+          <tr><td>Principal</td><td><strong class="hl-green">n</strong></td><td>—</td><td>Shell number (1,2,3…); the "floor" of the atom</td></tr>
+          <tr><td>Azimuthal / Angular</td><td><strong class="hl-blue">l</strong></td><td>Azimuthal</td><td>Sub-shell type (s,p,d,f)</td></tr>
+          <tr><td>Magnetic</td><td><strong class="hl-yellow">m</strong></td><td>—</td><td>Orientation of orbital</td></tr>
+          <tr><td>Spin</td><td><strong class="hl-purple">s</strong></td><td>—</td><td>Electron spin (+½ or −½)</td></tr>
+        </table>
+      </div>
+
+      <div class="card blue-card">
+        <div class="card-title">Value Rules</div>
+        <table>
+          <tr><th>QN</th><th>Allowed Values</th><th>Example for 4p</th></tr>
+          <tr><td>n</td><td>1, 2, 3, 4 … (the number before the letter)</td><td>n = 4</td></tr>
+          <tr><td>l</td><td>s=0, p=1, d=2, f=3</td><td>l = 1 (because p)</td></tr>
+          <tr><td>m</td><td>−l to +l (integers)</td><td>m = −1, 0, +1</td></tr>
+          <tr><td>s</td><td>+½ or −½ only</td><td>s = +½ or −½</td></tr>
+        </table>
+        <div class="memory-hook" style="margin-top:12px">
+          <div class="hook-label">Memory Hook</div>
+          <strong style="color:var(--green)">N L M S = "No Lazy Math Students"</strong><br>
+          <span style="color:var(--text-dim)">Principal → Azimuthal → Magnetic → Spin</span>
+        </div>
+      </div>
+
+      <div class="card yellow-card">
+        <div class="card-title">L Values for Sub-shells</div>
+        <div class="three-col">
+          <div style="text-align:center;background:var(--bg3);border-radius:8px;padding:12px"><div style="font-size:24px;font-weight:900;color:var(--green)">s</div><div style="color:var(--text-dim);font-size:13px">l = 0</div></div>
+          <div style="text-align:center;background:var(--bg3);border-radius:8px;padding:12px"><div style="font-size:24px;font-weight:900;color:var(--blue)">p</div><div style="color:var(--text-dim);font-size:13px">l = 1</div></div>
+          <div style="text-align:center;background:var(--bg3);border-radius:8px;padding:12px"><div style="font-size:24px;font-weight:900;color:var(--yellow)">d</div><div style="color:var(--text-dim);font-size:13px">l = 2</div></div>
+        </div>
+        <div style="text-align:center;background:var(--bg3);border-radius:8px;padding:12px;margin-top:10px"><div style="font-size:24px;font-weight:900;color:var(--purple)">f</div><div style="color:var(--text-dim);font-size:13px">l = 3</div></div>
+      </div>
+    </div>
+
+    <!-- ═══ TRAPS ═══ -->
+    <div class="page" id="page-traps">
+      <div class="page-header">
+        <div class="page-eyebrow">Exam Prep</div>
+        <div class="page-title">⚠️ Exam Traps</div>
+        <div class="page-subtitle">Common confusions, similar facts, and what students always get wrong.</div>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 1 — Highest EN vs Highest EGA</div>
+        <p>❌ Students write: "Fluorine has highest electron gain affinity"<br>
+        ✅ Correct: <strong>Fluorine = Highest Electronegativity</strong> | <strong>Chlorine = Highest EGA</strong></p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 2 — Döbereiner's Year</div>
+        <p>Both <strong>1817</strong> and <strong>1829</strong> appear in sources. Remember BOTH.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 3 — Mendeleev vs Lothar Meyer</div>
+        <p>Lothar Meyer <strong>(1864)</strong> plotted Atomic Volume vs Mass — periodic trend graph.<br>
+        Mendeleev <strong>(1869)</strong> made the actual table with 63 elements, 8 groups, 7 periods.<br>
+        ⚠ Don't confuse their years or contributions.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 4 — Atomic Mass vs Atomic Number</div>
+        <p>Early tables used <strong>Atomic Mass</strong> (Döbereiner, Newlands, Mendeleev).<br>
+        Modern law uses <strong>Atomic Number</strong> (Moseley, 1913).<br>
+        ⚠ If a question says "Mendeleev used atomic number" — it's FALSE.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 5 — Newland's Numbers</div>
+        <p>Total elements in Newland's table: <strong>56</strong>, from H to Th (Thorium).<br>
+        Law valid only till: <strong>Calcium</strong>.<br>
+        ⚠ Don't mix these two numbers.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 6 — Xenon's Nickname</div>
+        <p>Xenon is called <strong>"Stranger Gas"</strong> — not "Strange element" or anything else.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 7 — Technetium</div>
+        <p><strong>First artificially produced element</strong> = Technetium (Tc), atomic number <strong>43</strong>.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 8 — Noble Gas Group</div>
+        <p>Noble gases are Group <strong>18</strong> but also called <strong>Group 0</strong>. Both names are valid.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 9 — Francium's Half-Life</div>
+        <p>Half-life of Francium = <strong>22 minutes</strong>. Not 22 hours. Not 22 days.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 10 — Sulphur vs Phosphorus Atomicity</div>
+        <p>Phosphorus = P<strong>₄</strong> (atomicity 4) | Sulphur = S<strong>₈</strong> (atomicity 8)<br>
+        ⚠ Students often swap these.</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 11 — Eka Elements</div>
+        <p>"Eka" is a <strong>Sanskrit</strong> word meaning "one beyond". Mendeleev's predictions:<br>
+        Eka-Boron → Scandium | Eka-Silicon → Germanium | Eka-Aluminium → Gallium</p>
+      </div>
+
+      <div class="trap-box">
+        <div class="trap-label">Trap 12 — Highest Density Metal</div>
+        <p><strong>Osmium (Os)</strong>, atomic number 76, Group 8 → Highest density among all elements.</p>
+      </div>
+    </div>
+
+    <!-- ═══ EXAMINER ═══ -->
+    <div class="page" id="page-examiner">
+      <div class="page-header">
+        <div class="page-eyebrow">Exam Prep</div>
+        <div class="page-title">🎯 Examiner's Favourite Questions</div>
+        <div class="page-subtitle">Most probable question types with model answers.</div>
+      </div>
+
+      <div class="card green-card">
+        <div class="card-title">🔥 Direct Fact Questions</div>
+        <table>
+          <tr><th>Question Pattern</th><th>Answer</th></tr>
+          <tr><td>Father of Periodic Table</td><td><strong>Mendeleev</strong> (Russia)</td></tr>
+          <tr><td>Law of Triads given by</td><td><strong>Döbereiner</strong> (1817/1829)</td></tr>
+          <tr><td>Law of Octaves given by</td><td><strong>Newlands</strong> (1865)</td></tr>
+          <tr><td>Modern Periodic Law given by</td><td><strong>Henry Moseley</strong> (1913)</td></tr>
+          <tr><td>Total elements in modern table</td><td><strong>118</strong></td></tr>
+          <tr><td>Naturally occurring elements</td><td><strong>94</strong></td></tr>
+          <tr><td>Groups in modern table</td><td><strong>18</strong></td></tr>
+          <tr><td>Periods in modern table</td><td><strong>7</strong></td></tr>
+          <tr><td>Highest electronegativity element</td><td><strong>Fluorine (F)</strong></td></tr>
+          <tr><td>Highest electron gain affinity</td><td><strong>Chlorine (Cl)</strong></td></tr>
+          <tr><td>Most metallic element</td><td><strong>Francium (Fr)</strong></td></tr>
+          <tr><td>Highest density element</td><td><strong>Osmium (Os)</strong></td></tr>
+          <tr><td>1st artificially produced element</td><td><strong>Technetium (Tc), Z=43</strong></td></tr>
+          <tr><td>Stranger gas / Stranger element</td><td><strong>Xenon (Xe)</strong></td></tr>
+          <tr><td>Element 107 named after</td><td><strong>Bohrium → Niels Bohr</strong></td></tr>
+          <tr><td>Element 101 named after</td><td><strong>Mendelevium → Mendeleev</strong></td></tr>
+        </table>
+      </div>
+
+      <div class="card blue-card" style="margin-top:16px">
+        <div class="card-title">🎯 Trend-Based Questions</div>
+        <table>
+          <tr><th>Q</th><th>A</th></tr>
+          <tr><td>Which has higher IE: Li or Cs?</td><td>Li (smaller, top of group)</td></tr>
+          <tr><td>Which has lower EN: F or Na?</td><td>Na (metal, left side)</td></tr>
+          <tr><td>Atomic size: N or P?</td><td>P (below N in same group)</td></tr>
+          <tr><td>Most electronegative element?</td><td>Fluorine</td></tr>
+          <tr><td>Metallic character increases from left to right: True/False?</td><td>FALSE (it decreases)</td></tr>
+          <tr><td>IE increases down the group: True/False?</td><td>FALSE (it decreases)</td></tr>
+        </table>
+      </div>
+
+      <div class="card yellow-card" style="margin-top:16px">
+        <div class="card-title">🎯 Match the Following Possibilities</div>
+        <table>
+          <tr><th>Element/Scientist</th><th>Associated With</th></tr>
+          <tr><td>Döbereiner</td><td>Law of Triads / 1817</td></tr>
+          <tr><td>Newlands</td><td>Law of Octaves / 1865</td></tr>
+          <tr><td>Lothar Meyer</td><td>Atomic Volume vs Mass graph / 1864</td></tr>
+          <tr><td>Mendeleev</td><td>63 elements, 8 groups, 7 periods / Father of PT</td></tr>
+          <tr><td>Moseley</td><td>Atomic number basis / X-rays / 1913</td></tr>
+          <tr><td>William Ramsay</td><td>Discovered Ne, Ar, Kr, Xe</td></tr>
+          <tr><td>Frankland + Lockyer</td><td>Helium (discovered in sun)</td></tr>
+        </table>
+      </div>
+
+      <div class="card purple-card" style="margin-top:16px">
+        <div class="card-title">🎯 Statement-True/False Type</div>
+        <ul class="fact-list">
+          <li><span class="bullet">?</span> "Mendeleev arranged elements by atomic number" → <strong class="hl-red">FALSE</strong> (he used atomic mass)</li>
+          <li><span class="bullet">?</span> "Newland's law applies to all elements" → <strong class="hl-red">FALSE</strong> (only till Calcium)</li>
+          <li><span class="bullet">?</span> "Fluorine has highest electron gain affinity" → <strong class="hl-red">FALSE</strong> (Chlorine does)</li>
+          <li><span class="bullet">?</span> "Noble gases are diatomic" → <strong class="hl-red">FALSE</strong> (monoatomic)</li>
+          <li><span class="bullet">?</span> "Eka is a Latin word" → <strong class="hl-red">FALSE</strong> (it's Sanskrit)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══ ACTIVE RECALL ═══ -->
+    <div class="page" id="page-recall">
+      <div class="page-header">
+        <div class="page-eyebrow">Exam Prep</div>
+        <div class="page-title">❓ Active Recall Section</div>
+        <div class="page-subtitle">Test yourself. Click "Reveal" only after you've answered in your head.</div>
+      </div>
+
+      <div id="quiz-container"></div>
+    </div>
+
+    <!-- ═══ HIGH YIELD ═══ -->
+    <div class="page" id="page-highyield">
+      <div class="page-header">
+        <div class="page-eyebrow">Speed Revision</div>
+        <div class="page-title">⭐ High-Yield Revision Notes</div>
+        <div class="page-subtitle">The 20% of content that gives 80% of exam marks.</div>
+      </div>
+
+      <div class="card green-card">
+        <div class="card-title">🔥 Scientists — Names, Years, Contributions</div>
+        <ul class="fact-list">
+          <li><span class="bullet">★</span> <strong>Döbereiner</strong> → 1817/1829 → Law of Triads (3 elements, middle = avg of 1st & 3rd)</li>
+          <li><span class="bullet">★</span> <strong>Newlands</strong> → 1865 → Law of Octaves (1st ≈ 8th; valid till Ca; 56 elements; H to Th)</li>
+          <li><span class="bullet">★</span> <strong>Lothar Meyer</strong> → 1864 → Atomic Volume vs Mass graph (periodic trends)</li>
+          <li><span class="bullet">★</span> <strong>Mendeleev</strong> → 1869 → 63 elements; 8 groups; 7 periods; left gaps; Eka predictions</li>
+          <li><span class="bullet">★</span> <strong>Moseley</strong> → 1913 → Atomic number basis; X-ray method; Modern table born</li>
+        </ul>
+      </div>
+
+      <div class="card blue-card">
+        <div class="card-title">🔥 Numbers to Remember</div>
+        <div class="rapid-grid">
+          <div class="rapid-card"><div class="rq">Total elements</div><div class="ra">118</div></div>
+          <div class="rapid-card"><div class="rq">Natural elements</div><div class="ra">94</div></div>
+          <div class="rapid-card"><div class="rq">Groups (modern)</div><div class="ra">18</div></div>
+          <div class="rapid-card"><div class="rq">Periods (modern)</div><div class="ra">7</div></div>
+          <div class="rapid-card"><div class="rq">Mendeleev's elements</div><div class="ra">63</div></div>
+          <div class="rapid-card"><div class="rq">Mendeleev's groups/periods</div><div class="ra">8 / 7</div></div>
+          <div class="rapid-card"><div class="rq">Newland's elements</div><div class="ra">56</div></div>
+          <div class="rapid-card"><div class="rq">Francium half-life</div><div class="ra">22 min</div></div>
+          <div class="rapid-card"><div class="rq">Technetium (1st artificial)</div><div class="ra">Z = 43</div></div>
+          <div class="rapid-card"><div class="rq">Sulphur atomicity</div><div class="ra">8 (S₈)</div></div>
+          <div class="rapid-card"><div class="rq">Phosphorus atomicity</div><div class="ra">4 (P₄)</div></div>
+          <div class="rapid-card"><div class="rq">Eka-Boron → element</div><div class="ra">Scandium (44)</div></div>
+        </div>
+      </div>
+
+      <div class="card yellow-card">
+        <div class="card-title">🔥 Highest/Lowest Values</div>
+        <table>
+          <tr><th>Property</th><th>Highest</th><th>Lowest/Smallest</th></tr>
+          <tr><td>Electronegativity</td><td><strong>Fluorine (F)</strong></td><td>Francium (Fr)</td></tr>
+          <tr><td>Electron Gain Affinity</td><td><strong>Chlorine (Cl)</strong></td><td>Noble Gases</td></tr>
+          <tr><td>Metallic character</td><td><strong>Francium (Fr)</strong></td><td>Fluorine region</td></tr>
+          <tr><td>Ionization Energy</td><td><strong>Helium (He)</strong></td><td>Francium (Fr)</td></tr>
+          <tr><td>Atomic size</td><td><strong>Francium (Fr)</strong></td><td>Helium (He)</td></tr>
+          <tr><td>Density</td><td><strong>Osmium (Os)</strong></td><td>—</td></tr>
+        </table>
+      </div>
+
+      <div class="card teal-card">
+        <div class="card-title">🔥 Blocks & Their Names</div>
+        <ul class="fact-list">
+          <li><span class="bullet">→</span> S+P blocks together = <strong>Representative elements</strong></li>
+          <li><span class="bullet">→</span> D block = <strong>Transition metals</strong></li>
+          <li><span class="bullet">→</span> F block = <strong>Inner transition metals</strong></li>
+          <li><span class="bullet">→</span> Non-metals = ONLY in P block</li>
+          <li><span class="bullet">→</span> Metalloids: B, Si, Ge, As, Sb, Te</li>
+          <li><span class="bullet">→</span> Noble gases = Monoatomic; Group 18 = Group 0</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══ ULTRAFAST ═══ -->
+    <div class="page" id="page-ultrafast">
+      <div class="page-header">
+        <div class="page-eyebrow">Speed Revision</div>
+        <div class="page-title">⚡ Ultra-Fast Revision Sheet</div>
+        <div class="page-subtitle">One glance, full recall. Use this after your 5th+ revision.</div>
+      </div>
+
+      <div class="card green-card">
+        <div class="card-title">Periodic Table — Complete Snapshot</div>
+        <div style="font-size:13px;line-height:2">
+          <strong class="hl-green">D→N→M→Mo:</strong> Triads(1817) → Octaves(1865,H→Th,56el) → 63el,8G,7P(1869) → AtomicNo,X-ray(1913)<br>
+          <strong class="hl-blue">Modern:</strong> 118 total | 94 natural | 18 groups | 7 periods<br>
+          <strong class="hl-yellow">Blocks:</strong> S(1-2) P(13-18) D(3-12) F(Ln+Ac) | S+P=Rep | D=Trans | F=InnerTrans<br>
+          <strong class="hl-purple">Trends ↓group:</strong> Size↑ Metal↑ | IE↓ EN↓ EGA↓<br>
+          <strong class="hl-red">Trends →period:</strong> Size↓ Metal↓ | IE↑ EN↑ EGA↑<br>
+          <strong class="hl-teal">Extremes:</strong> Highest EN=F | Highest EGA=Cl | Most metallic=Fr | Highest density=Os<br>
+          <strong class="hl-green">Valency formula:</strong> ≤4 valence e⁻ = lose them | ≥5 = gain (8-n) electrons<br>
+          <strong class="hl-blue">Atomicity:</strong> Noble=1 | O₂/N₂=2 | O₃=3 | P=4 | S=8<br>
+          <strong class="hl-yellow">Eka:</strong> Boron→Sc(44) | Silicon→Ge(72) | Al→Ga<br>
+          <strong class="hl-purple">Special:</strong> Tc(43)=1st artificial | Xe=Stranger gas | Fr half-life=22min
+        </div>
+      </div>
+
+      <div class="card red-card" style="margin-top:16px">
+        <div class="card-title">⚠ Common Mistakes — Quick Warning</div>
+        <ul class="fact-list" style="font-size:13px">
+          <li><span class="bullet">✗→✓</span> EN highest = F (NOT Cl) | EGA highest = Cl (NOT F)</li>
+          <li><span class="bullet">✗→✓</span> Mendeleev used atomic MASS (not number)</li>
+          <li><span class="bullet">✗→✓</span> Noble gases = monoatomic (NOT diatomic)</li>
+          <li><span class="bullet">✗→✓</span> Eka = Sanskrit (NOT Latin)</li>
+          <li><span class="bullet">✗→✓</span> Non-metals ONLY in P block (not D or S)</li>
+          <li><span class="bullet">✗→✓</span> S₈ (sulphur=8 atoms) vs P₄ (phosphorus=4 atoms)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══ LAST NIGHT ═══ -->
+    <div class="page" id="page-lastnight">
+      <div class="page-header">
+        <div class="page-eyebrow">Speed Revision</div>
+        <div class="page-title">🌙 Last-Night-Before-Exam Sheet</div>
+        <div class="page-subtitle">Read this once, sleep well, walk in confident.</div>
+      </div>
+
+      <div class="ln-box">
+        <h3>THE STORY IN 5 LINES</h3>
+        <p>Döbereiner grouped 3 elements in triads (1817). Newlands matched notes to elements — 1st and 8th alike (1865, only till Ca). Mendeleev predicted 63 elements in 8×7 table, left gaps, and was proven right by Sc/Ge/Ga (1869). Moseley used X-rays to prove it's atomic number not mass (1913). Today we have 18 groups, 7 periods, 118 elements (94 natural).</p>
+      </div>
+
+      <div class="ln-box">
+        <h3>THE 6 FACTS EXAMINERS LOVE</h3>
+        <p>
+          1. <strong>Highest EN = F | Highest EGA = Cl</strong><br>
+          2. <strong>Down the group: Size↑ Metallic↑ IE↓ EN↓</strong><br>
+          3. <strong>Technetium (Z=43) = 1st artificial element</strong><br>
+          4. <strong>Xenon = Stranger Gas</strong><br>
+          5. <strong>Francium = most metallic; half-life = 22 min</strong><br>
+          6. <strong>Sulphur = S₈ (8 atoms) | Phosphorus = P₄ (4 atoms)</strong>
+        </p>
+      </div>
+
+      <div class="ln-box">
+        <h3>WHAT NOT TO CONFUSE TOMORROW</h3>
+        <p>
+          ❌ "Mendeleev used atomic number" → He used atomic <strong>MASS</strong><br>
+          ❌ "Fluorine has highest EGA" → It's <strong>CHLORINE</strong><br>
+          ❌ "Eka is Latin" → It's <strong>SANSKRIT</strong><br>
+          ❌ "Noble gases are diatomic" → They're <strong>MONOATOMIC</strong>
+        </p>
+      </div>
+
+      <div class="ln-box">
+        <h3>GROUP NAMES (In 10 Seconds)</h3>
+        <p>
+          G1 = Alkali Metals | G2 = Alkaline Earth Metals<br>
+          G13 = Boron family | G14 = Carbon family | G15 = Pnictogens<br>
+          G16 = Chalcogens | G17 = Halogens | G18 = Noble/Inert Gases (Group 0)<br>
+          D-block = Transition Metals | F-block = Inner Transition Metals
+        </p>
+      </div>
+
+      <div class="ln-box">
+        <h3>QUANTUM NUMBERS (NLMS)</h3>
+        <p>
+          n = Principal (shell number)<br>
+          l = Azimuthal (s=0, p=1, d=2, f=3)<br>
+          m = Magnetic (−l to +l)<br>
+          s = Spin (+½ or −½)
+        </p>
+      </div>
+
+      <div style="text-align:center;padding:24px;background:rgba(74,222,128,0.05);border-radius:12px;border:1px solid rgba(74,222,128,0.2);margin-top:16px">
+        <div style="font-size:28px;margin-bottom:8px">🌟</div>
+        <div style="color:var(--green);font-size:16px;font-weight:700">You've got this.</div>
+        <div style="color:var(--text-dim);font-size:13px;margin-top:6px">Every revision you've done has wired these facts into your brain. Trust the process.</div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // ─── QUIZ DATA ─────────────────────────────
+  const quizzes = [
+    { q: "Who gave the Law of Triads, and in which year(s)?", a: "Döbereiner — 1817 and/or 1829. The middle element's mass ≈ average of 1st and 3rd." },
+    { q: "What is the Law of Octaves and who gave it?", a: "Newlands (1865) — 1st and 8th element show similar properties when arranged by increasing atomic mass, like musical octaves." },
+    { q: "Name three limitations of Newlands' Law of Octaves.", a: "1. Iron placed with O and S (metal with non-metals). 2. Co and Ni in one slot. 3. Valid only till Calcium. Total elements = 56 (H to Th)." },
+    { q: "What did Mendeleev predict using 'Eka' prefixes? Name the three main ones.", a: "Eka-Boron → Scandium (mass 44) | Eka-Silicon → Germanium (mass 72) | Eka-Aluminium → Gallium" },
+    { q: "What is the basis of Moseley's Periodic Law, and how did he establish it?", a: "Chemical properties depend on ATOMIC NUMBER (not atomic mass). He used X-rays to determine atomic numbers of elements (1913)." },
+    { q: "Total elements: 118 or 94? What's the difference?", a: "118 = total elements in modern periodic table. 94 = naturally occurring elements. The rest are synthetically produced." },
+    { q: "Which element has the highest electronegativity? Which has the highest electron gain affinity?", a: "Highest EN = Fluorine (F). Highest EGA = Chlorine (Cl). Never confuse these two!" },
+    { q: "State the trend of atomic size going down a group. Explain WHY.", a: "Atomic size INCREASES down the group. Each new period adds a new electron shell, so electrons are farther from the nucleus → larger atom." },
+    { q: "What is ionization energy? How does it change down the group?", a: "IE = energy needed to remove the outermost electron. It DECREASES down the group because the atom is larger and the outer electron is farther from the nucleus (less attraction)." },
+    { q: "What are the 6 metalloids?", a: "Boron (B), Silicon (Si), Germanium (Ge), Arsenic (As), Antimony (Sb), Tellurium (Te). They lie on the staircase between metals and non-metals." },
+    { q: "What is the atomicity of Sulphur? Phosphorus? All Noble Gases?", a: "Sulphur = 8 (S₈) | Phosphorus = 4 (P₄) | All Noble Gases = 1 (monoatomic)" },
+    { q: "What are the four quantum numbers? Give their symbols.", a: "Principal (n), Azimuthal/Angular (l), Magnetic (m), Spin (s). Remember: NLMS = 'No Lazy Math Students'" },
+    { q: "For the orbital 4p: what are n, l, and possible m values?", a: "n = 4 | l = 1 (because p) | m = −1, 0, +1 (from −l to +l)" },
+    { q: "Name the element: First artificially produced element.", a: "Technetium (Tc), Atomic Number = 43" },
+    { q: "What is the half-life of Francium? Why is it significant?", a: "22 minutes. This means half of any Francium sample disintegrates in just 22 minutes — it's extremely unstable. It's also the most metallic element." },
+    { q: "Diagonal relationship: Give the three main diagonal pairs.", a: "Li ↔ Mg | Be ↔ Al | B ↔ Si (They show similar chemical properties)" },
+    { q: "What is Valency? How do you find it for an element with 7 valence electrons?", a: "Valency = combining capacity. For 7 valence electrons: it gains 1 electron (8−7=1) → valency = −1. Example: all halogens have valency −1." },
+    { q: "Which noble gas is called 'Stranger Gas'?", a: "Xenon (Xe)" },
+    { q: "Element 107 is named after which scientist?", a: "Bohrium (Bh) — named after Niels Bohr (who gave the 2n² formula for electron shells)" },
+    { q: "Which group forms the S-block? Which forms the P-block? What are they collectively called?", a: "S-block: Groups 1 & 2. P-block: Groups 13–18. Together = Representative elements." }
+  ];
+
+  function buildQuiz() {
+    const container = document.getElementById('quiz-container');
+    quizzes.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'quiz-item';
+      div.innerHTML = `
+        <div class="quiz-q">Q${i+1}. ${item.q}</div>
+        <button class="quiz-reveal-btn" onclick="revealAnswer(${i})">Reveal Answer</button>
+        <div class="quiz-answer" id="ans-${i}">${item.a}</div>
+      `;
+      container.appendChild(div);
+    });
+  }
+
+  function revealAnswer(i) {
+    const ans = document.getElementById('ans-' + i);
+    ans.classList.toggle('shown');
+  }
+
+  // ─── NAVIGATION ───────────────────────────
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+
+    // Progress
+    const pages = ['big-picture','palace','history','modern','blocks','groups','trends','valency','quantum','traps','examiner','recall','highyield','ultrafast','lastnight'];
+    const idx = pages.indexOf(id);
+    const pct = Math.round(((idx + 1) / pages.length) * 100);
+    document.getElementById('progress').style.width = pct + '%';
+
+    document.getElementById('main').scrollTo(0, 0);
+    if (window.innerWidth <= 700) document.getElementById('sidebar').classList.remove('open');
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  buildQuiz();
+</script>
+</body>
+</html>

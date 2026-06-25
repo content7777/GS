@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matter — SSC CGL Chemistry Revision</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg2: #161b22;
+    --bg3: #1c2333;
+    --border: #30363d;
+    --green: #3fb950;
+    --green-dim: #1a3a1e;
+    --blue: #58a6ff;
+    --blue-dim: #1a2a3e;
+    --yellow: #e3b341;
+    --yellow-dim: #2e2418;
+    --red: #f85149;
+    --red-dim: #3a1a1a;
+    --purple: #bc8cff;
+    --purple-dim: #2a1a3e;
+    --teal: #39d353;
+    --text: #e6edf3;
+    --text2: #8b949e;
+    --text3: #c9d1d9;
+    --fire: #ff7b39;
+    --radius: 10px;
+    --font: 'Segoe UI', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 54px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 1rem;
+  }
+  .nav-brand {
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--green);
+    white-space: nowrap;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex: 1;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-size: .78rem;
+    font-weight: 500;
+    padding: .35rem .7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all .18s;
+    letter-spacing: .02em;
+  }
+  .tab-btn:hover { color: var(--text); background: var(--bg3); }
+  .tab-btn.active { color: var(--green); background: var(--green-dim); }
+
+  /* ── PAGES ── */
+  .page { display: none; padding: 1.5rem 1rem 4rem; max-width: 860px; margin: 0 auto; width: 100%; }
+  .page.active { display: block; }
+
+  /* ── TYPOGRAPHY ── */
+  h1 { font-size: 1.8rem; font-weight: 800; color: var(--green); margin-bottom: .4rem; line-height: 1.2; }
+  h2 { font-size: 1.25rem; font-weight: 700; color: var(--blue); margin: 1.8rem 0 .8rem; border-left: 3px solid var(--blue); padding-left: .7rem; }
+  h3 { font-size: 1rem; font-weight: 700; color: var(--yellow); margin: 1.2rem 0 .5rem; }
+  h4 { font-size: .9rem; font-weight: 700; color: var(--purple); margin: .8rem 0 .3rem; }
+  p { color: var(--text3); line-height: 1.7; margin-bottom: .6rem; font-size: .92rem; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .card-green { border-color: var(--green); background: var(--green-dim); }
+  .card-blue { border-color: var(--blue); background: var(--blue-dim); }
+  .card-yellow { border-color: var(--yellow); background: var(--yellow-dim); }
+  .card-red { border-color: var(--red); background: var(--red-dim); }
+  .card-purple { border-color: var(--purple); background: var(--purple-dim); }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    font-size: .72rem;
+    font-weight: 700;
+    padding: .15rem .5rem;
+    border-radius: 20px;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    margin-right: .3rem;
+    margin-bottom: .25rem;
+  }
+  .tag-fire { background: #3a200a; color: var(--fire); border: 1px solid var(--fire); }
+  .tag-star { background: var(--yellow-dim); color: var(--yellow); border: 1px solid var(--yellow); }
+  .tag-plus { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue); }
+  .tag-trap { background: var(--red-dim); color: var(--red); border: 1px solid var(--red); }
+  .tag-hook { background: var(--purple-dim); color: var(--purple); border: 1px solid var(--purple); }
+  .tag-exam { background: var(--green-dim); color: var(--green); border: 1px solid var(--green); }
+
+  /* ── TABLES ── */
+  .tbl-wrap { overflow-x: auto; margin: .8rem 0; border-radius: var(--radius); }
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  th {
+    background: var(--bg3);
+    color: var(--blue);
+    font-weight: 700;
+    padding: .55rem .75rem;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    letter-spacing: .03em;
+  }
+  td { padding: .5rem .75rem; border-bottom: 1px solid var(--border); color: var(--text3); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,.03); }
+
+  /* ── HOOKS ── */
+  .hook {
+    background: var(--purple-dim);
+    border: 1px solid var(--purple);
+    border-radius: var(--radius);
+    padding: .9rem 1.1rem;
+    margin: .8rem 0;
+    font-size: .9rem;
+    color: var(--text3);
+    line-height: 1.6;
+  }
+  .hook::before { content: '🧠 '; }
+
+  /* ── TRAP BLOCK ── */
+  .trap {
+    background: var(--red-dim);
+    border: 1px solid var(--red);
+    border-radius: var(--radius);
+    padding: .9rem 1.1rem;
+    margin: .8rem 0;
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+  .trap-title { color: var(--red); font-weight: 800; font-size: .95rem; margin-bottom: .4rem; }
+
+  /* ── EXAM Q ── */
+  .exam-q {
+    background: var(--bg3);
+    border: 1px solid var(--green);
+    border-radius: var(--radius);
+    padding: .8rem 1rem;
+    margin: .6rem 0;
+    font-size: .88rem;
+    color: var(--text3);
+    line-height: 1.6;
+  }
+  .exam-q .q-label { color: var(--green); font-weight: 700; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: .3rem; }
+
+  /* ── FLOW ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin: .7rem 0;
+    font-size: .88rem;
+  }
+  .flow-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: .3rem .7rem;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .flow-arrow { color: var(--green); font-weight: 700; font-size: 1.1rem; }
+  .flow-label { color: var(--yellow); font-size: .78rem; background: var(--yellow-dim); border-radius: 4px; padding: .15rem .4rem; }
+
+  /* ── SELF-TEST ── */
+  .quiz-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin: .7rem 0;
+  }
+  .quiz-q { font-weight: 700; color: var(--text); margin-bottom: .5rem; font-size: .9rem; }
+  .quiz-ans {
+    background: var(--bg3);
+    border-radius: 6px;
+    padding: .5rem .8rem;
+    color: var(--green);
+    font-size: .88rem;
+    display: none;
+  }
+  .quiz-ans.revealed { display: block; }
+  .reveal-btn {
+    background: var(--green-dim);
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-size: .78rem;
+    font-weight: 700;
+    padding: .3rem .7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    transition: all .15s;
+    margin-top: .4rem;
+  }
+  .reveal-btn:hover { background: var(--green); color: #000; }
+
+  /* ── PROGRESS ── */
+  .progress-bar {
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    border-radius: 2px;
+    transition: width .4s;
+  }
+
+  /* ── PALACE ── */
+  .palace-stop {
+    display: flex;
+    gap: .9rem;
+    align-items: flex-start;
+    margin-bottom: .9rem;
+  }
+  .palace-icon {
+    font-size: 1.5rem;
+    min-width: 2.2rem;
+    text-align: center;
+    margin-top: .15rem;
+  }
+  .palace-text { font-size: .88rem; color: var(--text3); line-height: 1.6; }
+  .palace-text strong { color: var(--yellow); }
+
+  /* ── FAST REVISION ── */
+  .bullet-list { list-style: none; padding: 0; }
+  .bullet-list li {
+    padding: .35rem 0 .35rem 1.4rem;
+    position: relative;
+    font-size: .88rem;
+    color: var(--text3);
+    line-height: 1.5;
+    border-bottom: 1px solid var(--border);
+  }
+  .bullet-list li:last-child { border-bottom: none; }
+  .bullet-list li::before { content: '▸'; position: absolute; left: 0; color: var(--green); font-size: .85rem; }
+
+  /* ── FORMULA BOX ── */
+  .formula {
+    display: inline-block;
+    background: var(--bg3);
+    border: 1px solid var(--blue);
+    border-radius: 6px;
+    padding: .25rem .7rem;
+    font-family: 'Courier New', monospace;
+    font-size: .88rem;
+    color: var(--blue);
+    margin: .15rem;
+  }
+
+  /* ── 30-SEC SHEET ── */
+  .fast-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .7rem;
+  }
+  @media (max-width: 520px) { .fast-grid { grid-template-columns: 1fr; } }
+  .fast-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: .8rem;
+    font-size: .82rem;
+    color: var(--text3);
+    line-height: 1.6;
+  }
+  .fast-card-title { font-weight: 700; color: var(--green); margin-bottom: .4rem; font-size: .85rem; }
+
+  /* ── NIGHT SHEET ── */
+  .night-item {
+    padding: .5rem .8rem;
+    border-left: 3px solid var(--blue);
+    margin-bottom: .5rem;
+    background: var(--bg2);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: .88rem;
+    color: var(--text3);
+  }
+  .night-item b { color: var(--yellow); }
+
+  /* ── BIG PICTURE ── */
+  .big-pic {
+    font-size: 1rem;
+    color: var(--text3);
+    line-height: 1.8;
+    background: var(--bg2);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+  .big-pic span { color: var(--green); font-weight: 700; }
+
+  /* pill */
+  .pill { display: inline-block; padding: .1rem .5rem; border-radius: 20px; font-size: .76rem; font-weight: 700; margin: 0 .15rem; }
+  .pill-g { background: var(--green-dim); color: var(--green); }
+  .pill-b { background: var(--blue-dim); color: var(--blue); }
+  .pill-y { background: var(--yellow-dim); color: var(--yellow); }
+  .pill-r { background: var(--red-dim); color: var(--red); }
+
+  /* Separator */
+  .sep { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+  /* Footnote */
+  .footnote { font-size: .78rem; color: var(--text2); margin-top: .4rem; }
+
+  /* hero title area */
+  .page-hero { margin-bottom: 1.5rem; }
+  .chapter-subtitle { font-size: .9rem; color: var(--text2); margin-top: .25rem; }
+
+  .connection-row {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: .85rem;
+    color: var(--text3);
+    padding: .4rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .connection-row:last-child { border-bottom: none; }
+  .conn-cause { color: var(--yellow); font-weight: 700; }
+  .conn-arrow { color: var(--text2); }
+  .conn-effect { color: var(--green); }
+
+  /* mobile bottom nav hint */
+  .scroll-hint { display: none; }
+  @media (max-width: 600px) {
+    .scroll-hint { display: block; font-size: .72rem; color: var(--text2); text-align: center; padding: .3rem 0 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">⚗️ Matter</div>
+  <div class="nav-tabs" id="navTabs">
+    <button class="tab-btn active" onclick="showPage('overview')">Overview</button>
+    <button class="tab-btn" onclick="showPage('states')">States</button>
+    <button class="tab-btn" onclick="showPage('changes')">Changes</button>
+    <button class="tab-btn" onclick="showPage('pure')">Pure/Mixture</button>
+    <button class="tab-btn" onclick="showPage('colloid')">Colloid</button>
+    <button class="tab-btn" onclick="showPage('separation')">Separation</button>
+    <button class="tab-btn" onclick="showPage('traps')">⚠ Traps</button>
+    <button class="tab-btn" onclick="showPage('palace')">🧠 Palace</button>
+    <button class="tab-btn" onclick="showPage('quiz')">Quiz</button>
+    <button class="tab-btn" onclick="showPage('rapid')">⚡ Rapid Rev</button>
+    <button class="tab-btn" onclick="showPage('night')">🌙 Last Night</button>
+  </div>
+</nav>
+<div class="scroll-hint">← swipe tabs →</div>
+
+<!-- ═══════════════════════════════ PAGE: OVERVIEW ═══════════════════════════════ -->
+<div class="page active" id="page-overview">
+  <div class="page-hero">
+    <h1>Matter (पदार्थ)</h1>
+    <div class="chapter-subtitle">SSC CGL Chemistry — Chapter 1 | Complete Revision System</div>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" style="width:9%"></div></div>
+
+  <div class="big-pic">
+    This chapter is the <span>foundation of all chemistry</span>. Everything around you is matter. The examiner loves testing: 
+    <span>5 states of matter</span>, <span>Bose-Einstein Condensate dates</span>, <span>Tyndall Effect discovery</span>, 
+    <span>separation techniques</span>, and the trap between <span>homogeneous vs heterogeneous</span> mixtures. 
+    Master this chapter and you get free marks in every exam.
+  </div>
+
+  <h2>Chapter Map</h2>
+  <div class="card">
+    <div class="flow">
+      <div class="flow-box">MATTER</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">5 States</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Changes</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Pure / Mixture</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Separation</div>
+    </div>
+  </div>
+
+  <h2>What the Examiner Loves</h2>
+  <div class="exam-q">
+    <div class="q-label">🎯 High Frequency</div>
+    <ul class="bullet-list">
+      <li><span class="tag tag-fire">🔥</span> 4th state of matter = Plasma | 5th = Bose-Einstein Condensate</li>
+      <li><span class="tag tag-fire">🔥</span> Tyndall Effect discovered by John Tyndall in 1859</li>
+      <li><span class="tag tag-fire">🔥</span> BEC first created in 1995 by Cornell &amp; Wieman (gas: Rubidium)</li>
+      <li><span class="tag tag-fire">🔥</span> Which state shows maximum behavioural uniformity? → GAS</li>
+      <li><span class="tag tag-fire">🔥</span> Separation technique for air components → Fractional Distillation</li>
+      <li><span class="tag tag-star">⭐</span> Colloidal particle size: 1nm – 1000nm</li>
+      <li><span class="tag tag-star">⭐</span> Absolute Zero = 0 K = −273.15°C = −459.67°F</li>
+    </ul>
+  </div>
+
+  <h2>Priority Tags Used Throughout</h2>
+  <div class="card">
+    <span class="tag tag-fire">🔥 Must Know</span> — Appeared in SSC exams multiple times<br><br>
+    <span class="tag tag-star">⭐ Important</span> — High probability this cycle<br><br>
+    <span class="tag tag-plus">➕ Good to Know</span> — Helpful for MCQ elimination<br><br>
+    <span class="tag tag-trap">⚠ Trap</span> — Students commonly get this wrong
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: STATES ═══════════════════════════════ -->
+<div class="page" id="page-states">
+  <div class="page-hero">
+    <h1>States of Matter</h1>
+    <div class="chapter-subtitle">3 Main + 2 Special = 5 Total States</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:18%"></div></div>
+
+  <h2>The 3 Main States — Quick Comparison</h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Property</th>
+        <th>Solid 🧱</th>
+        <th>Liquid 💧</th>
+        <th>Gas 💨</th>
+      </tr>
+      <tr>
+        <td>Intermolecular Space</td>
+        <td>Least</td>
+        <td>Medium</td>
+        <td>Most</td>
+      </tr>
+      <tr>
+        <td>Intermolecular Force</td>
+        <td>Highest</td>
+        <td>Medium</td>
+        <td>Lowest</td>
+      </tr>
+      <tr>
+        <td>Particle Movement</td>
+        <td>Lowest</td>
+        <td>Medium</td>
+        <td>Highest</td>
+      </tr>
+      <tr>
+        <td>Kinetic Energy</td>
+        <td>Least</td>
+        <td>Medium</td>
+        <td>Maximum</td>
+      </tr>
+      <tr>
+        <td>Diffusion Rate</td>
+        <td>Very Slow</td>
+        <td>Slow</td>
+        <td><b style="color:var(--green)">Fastest</b></td>
+      </tr>
+      <tr>
+        <td>Behavioural Uniformity</td>
+        <td>Low</td>
+        <td>Medium</td>
+        <td><b style="color:var(--green)">Maximum ★ SSC asked this</b></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="hook">
+    <b>Memory Hook — SGK Rule:</b> From Solid → Gas, everything <b>increases</b>: Space, Motion, Kinetic Energy, Diffusion. Everything <b>decreases</b>: Force of attraction. One direction, one rule.
+  </div>
+
+  <hr class="sep">
+
+  <h2>4th State: Plasma <span class="tag tag-fire">🔥</span></h2>
+  <div class="card card-blue">
+    <h4>How it forms</h4>
+    <div class="flow">
+      <div class="flow-box">Gas</div>
+      <div class="flow-arrow">→ Heat Intensely →</div>
+      <div class="flow-box">Gas Ionizes</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">Electrons &amp; Protons become free</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--blue);color:var(--blue)">PLASMA</div>
+    </div>
+    <p style="margin-top:.7rem;"><b style="color:var(--yellow)">Properties of Plasma:</b></p>
+    <ul class="bullet-list">
+      <li>Good conductor of electricity</li>
+      <li>Glows (emits light)</li>
+      <li>Examples: stars (like the Sun), lightning, neon signs, fluorescent lights</li>
+    </ul>
+  </div>
+
+  <hr class="sep">
+
+  <h2>5th State: Bose-Einstein Condensate (BEC) <span class="tag tag-fire">🔥</span></h2>
+  <div class="card card-purple">
+    <div class="flow">
+      <div class="flow-box">Gas</div>
+      <div class="flow-arrow">→ Cool to Absolute Zero →</div>
+      <div class="flow-box" style="border-color:var(--purple);color:var(--purple)">BEC</div>
+    </div>
+    <h4>The Timeline — Dates are Exam Favourites!</h4>
+    <div class="tbl-wrap">
+      <table>
+        <tr><th>Year</th><th>Who</th><th>What</th></tr>
+        <tr><td>1921</td><td>Satyendranath Bose</td><td>Proposed the concept of BEC</td></tr>
+        <tr><td>1924</td><td>Satyendranath Bose</td><td>Published research paper on it</td></tr>
+        <tr><td>1925</td><td>Albert Einstein</td><td>Extended the theory; confirmed a 5th state can exist</td></tr>
+        <tr><td><b style="color:var(--green)">1995</b></td><td><b style="color:var(--green)">Eric Cornell &amp; Carl Wieman</b></td><td>First actually created BEC (gas: <b>Rubidium</b>)</td></tr>
+        <tr><td>1995</td><td>Wolfgang Ketterle</td><td>Created BEC of <b>Sodium</b> (8 atoms)</td></tr>
+        <tr><td><b style="color:var(--fire)">2001</b></td><td>Cornell, Wieman, Ketterle</td><td><b style="color:var(--fire)">Nobel Prize in Physics</b></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="hook">
+    <b>Story Hook for BEC:</b> Imagine Bose (an Indian scientist, 1921) had a dream: "What if we freeze gas to absolute zero?" Einstein heard this dream in 1924–25 and said "Yes, it's theoretically possible!" Then 70 years later in 1995, Cornell &amp; Wieman actually did it — they froze Rubidium. Wolfgang froze Sodium the same year. All three got Nobel in 2001. 🏆
+  </div>
+
+  <h2>Absolute Zero <span class="tag tag-star">⭐</span></h2>
+  <div class="card card-yellow">
+    <span class="formula">0 K</span> = <span class="formula">−273.15 °C</span> = <span class="formula">−459.67 °F</span>
+    <p style="margin-top:.7rem;">Formula to convert: <span class="formula">K = °C + 273</span></p>
+    <p>Formula for C↔F: <span class="formula">°F = (°C × 9/5) + 32</span></p>
+    <div class="trap" style="margin-top:.8rem;">
+      <div class="trap-title">⚠ Trap</div>
+      At <b>−40°</b>, both Celsius and Fahrenheit give the <b>same value</b>: −40°C = −40°F. This is a classic MCQ trap!
+    </div>
+  </div>
+
+  <h2>Diffusion — Key Concept</h2>
+  <div class="card">
+    <p><b style="color:var(--yellow)">Definition:</b> Movement of particles from <b style="color:var(--green)">high concentration → low concentration</b></p>
+    <p>Happens in all 3 states but fastest in gas.</p>
+    <p>Example: Room freshener spreads uniformly → gas diffuses fastest → that's why gas shows maximum <b>behavioural uniformity</b>.</p>
+    <p>Example: Chalk particles slowly spread on a blackboard → solid diffusion (very slow).</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: CHANGES ═══════════════════════════════ -->
+<div class="page" id="page-changes">
+  <div class="page-hero">
+    <h1>Changes in Matter</h1>
+    <div class="chapter-subtitle">Phase transitions, Latent Heat &amp; Evaporation conditions</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:27%"></div></div>
+
+  <h2>Phase Change Map <span class="tag tag-fire">🔥</span></h2>
+  <div class="card">
+    <div class="flow">
+      <div class="flow-box">SOLID</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-label">Fusion (melting)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">LIQUID</div>
+    </div>
+    <div class="flow" style="margin-top:.3rem;">
+      <div class="flow-box">LIQUID</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-label">Solidification</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">SOLID</div>
+    </div>
+    <div class="flow" style="margin-top:.3rem;">
+      <div class="flow-box">LIQUID</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-label">Vaporization / Evaporation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">GAS</div>
+    </div>
+    <div class="flow" style="margin-top:.3rem;">
+      <div class="flow-box">GAS</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-label">Condensation</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">LIQUID</div>
+    </div>
+    <div class="flow" style="margin-top:.3rem;">
+      <div class="flow-box" style="border-color:var(--yellow);color:var(--yellow)">SOLID</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-label" style="background:#2e2418;color:var(--yellow)">Sublimation ★</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--yellow);color:var(--yellow)">GAS</div>
+    </div>
+    <div class="flow" style="margin-top:.3rem;">
+      <div class="flow-box" style="border-color:var(--purple);color:var(--purple)">GAS</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-label" style="background:var(--purple-dim);color:var(--purple)">Deposition</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box" style="border-color:var(--purple);color:var(--purple)">SOLID</div>
+    </div>
+  </div>
+
+  <div class="hook">
+    <b>Sublimation Hook:</b> Think of a naphthalene ball (mothball) or camphor in your closet. It never becomes liquid — it just disappears into thin air. That's sublimation. Solid → Gas directly. "It skips the liquid date altogether."
+  </div>
+
+  <h2>Sublimation Examples <span class="tag tag-star">⭐</span></h2>
+  <div class="card card-yellow">
+    <ul class="bullet-list">
+      <li>Camphor (Kapoor) 🪔</li>
+      <li>Naphthalene balls (mothballs)</li>
+      <li>Ammonium Chloride (NH₄Cl)</li>
+      <li>Dry ice (CO₂ → directly becomes gas)</li>
+      <li>Iodine (in certain conditions)</li>
+    </ul>
+  </div>
+
+  <h2>Latent Heat <span class="tag tag-star">⭐</span></h2>
+  <div class="card card-blue">
+    <p><b style="color:var(--blue)">Latent</b> = Hidden | <b style="color:var(--blue)">Hidden Heat = Heat that changes the phase (face)</b></p>
+    <p>When you heat ice, temperature rises gradually. But at 0°C, the temperature <b>stops rising</b> even though you keep adding heat. That extra absorbed heat changes the phase from solid → liquid. This is <b>Latent Heat of Fusion</b>.</p>
+    <p>Similarly: <b>Latent Heat of Vaporization</b> = heat absorbed to change liquid → gas.</p>
+  </div>
+  <div class="hook">
+    <b>Hook:</b> "Latent" sounds like "Latent criminal" — hidden. It's the hidden heat that secretly changes the phase without increasing temperature. The thermometer lies still but the phase is changing underneath!
+  </div>
+
+  <h2>Condensation Forms (→ Geography link)</h2>
+  <div class="card">
+    <p>Gas → Liquid = Condensation. Examples you'll see in Geography too:</p>
+    <ul class="bullet-list">
+      <li>Dew (Shabnam / Oas) — water vapour condenses on cold surfaces at night</li>
+      <li>Fog — suspended water droplets in air</li>
+      <li>Mist — lighter form of fog</li>
+      <li>Clouds — high altitude condensation</li>
+    </ul>
+  </div>
+
+  <h2>Rate of Evaporation — When is it HIGH? <span class="tag tag-star">⭐</span></h2>
+  <div class="card card-green">
+    <p style="color:var(--green);font-weight:700;">Evaporation INCREASES when:</p>
+    <ul class="bullet-list">
+      <li>Temperature ↑ (more heat = more evaporation)</li>
+      <li>Surface area ↑ (more exposed area = more evaporation)</li>
+      <li>Wind speed ↑ (wind carries away vapours)</li>
+    </ul>
+    <p style="color:var(--red);font-weight:700;margin-top:.8rem;">Evaporation DECREASES when:</p>
+    <ul class="bullet-list">
+      <li>Humidity ↑ (already lots of moisture in air → slows evaporation)</li>
+    </ul>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ Exam Trap</div>
+    "Fusion" in chemistry = Melting (solid → liquid). In common English "fusion" means combining. Don't confuse! In chemistry, fusion = solid to liquid only.
+  </div>
+
+  <h2>Types of Solids <span class="tag tag-plus">➕</span></h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Type</th><th>Shape</th><th>Properties direction</th><th>Example</th></tr>
+      <tr>
+        <td><b style="color:var(--blue)">Crystalline</b></td>
+        <td>Definite / Regular</td>
+        <td><b style="color:var(--red)">Anisotropic</b> (properties differ in diff. directions)</td>
+        <td>NaCl, Diamond, Quartz</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--yellow)">Amorphous</b></td>
+        <td>Irregular</td>
+        <td><b style="color:var(--green)">Isotropic</b> (same properties in all directions)</td>
+        <td>Glass, Rubber, Plastic</td>
+      </tr>
+    </table>
+  </div>
+  <div class="hook">
+    <b>Hook:</b> <b>Amorphous = Amor (love) + phous</b> — loves being equal in all directions (isotropic). Crystalline is like a strict crystal that changes personality depending on which way you look at it (anisotropic).
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: PURE/MIXTURE ═══════════════════════════════ -->
+<div class="page" id="page-pure">
+  <div class="page-hero">
+    <h1>Pure Substance vs Mixture</h1>
+    <div class="chapter-subtitle">Element · Compound · Solution · Suspension · Colloid</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:36%"></div></div>
+
+  <h2>The Master Classification Tree</h2>
+  <div class="card">
+    <div class="flow">
+      <div class="flow-box" style="border-color:var(--green);color:var(--green)">MATTER</div>
+    </div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:.6rem;">
+      <div style="flex:1;min-width:160px;">
+        <div class="flow-box" style="border-color:var(--blue);color:var(--blue);margin-bottom:.4rem;display:inline-block;">Pure Substance</div>
+        <ul class="bullet-list">
+          <li><b style="color:var(--blue)">Element</b> — one kind of atom (O₂, Fe)</li>
+          <li><b style="color:var(--blue)">Compound</b> — two+ kinds of atoms, fixed ratio (H₂O, NaCl)</li>
+        </ul>
+      </div>
+      <div style="flex:1;min-width:160px;">
+        <div class="flow-box" style="border-color:var(--yellow);color:var(--yellow);margin-bottom:.4rem;display:inline-block;">Mixture (Impure)</div>
+        <ul class="bullet-list">
+          <li><b style="color:var(--green)">Homogeneous</b> → Solution</li>
+          <li><b style="color:var(--fire)">Heterogeneous</b> → Suspension / Colloid</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ Biggest Trap in This Chapter</div>
+    <b>MILK</b> looks homogeneous (uniform appearance) but is actually a <b>MIXTURE / COLLOID</b> (contains water, fat, casein protein, lactose — multiple molecule types).<br><br>
+    <b>WATER (H₂O)</b> looks simple — it IS pure (only H₂O molecules). <b>OXYGEN (O₂)</b> is also pure (only O atoms). Both are pure but: Oxygen = Element, Water = Compound.
+  </div>
+
+  <h2>Pure Substance Detail</h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th></th><th>Element</th><th>Compound</th></tr>
+      <tr><td>Made of</td><td>One kind of atom</td><td>Two+ kinds of atoms, fixed ratio</td></tr>
+      <tr><td>Can be broken?</td><td>No (by chemical means)</td><td>Yes (into simpler substances)</td></tr>
+      <tr><td>Example</td><td>O₂, Fe, Au, Na</td><td>H₂O, NaCl, CO₂</td></tr>
+    </table>
+  </div>
+
+  <h2>Solution (Homogeneous Mixture) <span class="tag tag-fire">🔥</span></h2>
+  <div class="card card-green">
+    <p><b style="color:var(--green)">Solute</b> = the thing added (less in quantity) | <b style="color:var(--green)">Solvent</b> = the thing it dissolves in (more in quantity)</p>
+    <p>Particle size: <b>&lt; 1 nm (10⁻⁹ m)</b> — invisible, cannot scatter light</p>
+    <p>Stable (doesn't settle down)</p>
+    <p>Cannot be separated by filtration</p>
+    <p>Uniform composition throughout (first sip = last sip)</p>
+  </div>
+
+  <h3>Types of Solutions</h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Solute</th><th>Solvent</th><th>Type</th><th>Example</th></tr>
+      <tr><td>Gas</td><td>Liquid</td><td>Solution</td><td>Cold drink / Soda water (CO₂ in water)</td></tr>
+      <tr><td>Liquid</td><td>Liquid</td><td>Solution</td><td>Alcohol in water</td></tr>
+      <tr><td>Solid</td><td>Solid</td><td><b style="color:var(--yellow)">Alloy</b></td><td>Brass, Bronze, Solder</td></tr>
+      <tr><td>Solid</td><td>Liquid</td><td>Solution</td><td>Salt/Sugar in water</td></tr>
+      <tr><td>Solid</td><td>Gas</td><td>Aerosol?</td><td>Smoke</td></tr>
+    </table>
+  </div>
+
+  <h3>Important Alloys <span class="tag tag-star">⭐</span></h3>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Alloy</th><th>Components</th></tr>
+      <tr><td>Brass</td><td>Copper + Zinc</td></tr>
+      <tr><td>Bronze</td><td>Copper + Tin</td></tr>
+      <tr><td>Solder</td><td>Lead + Tin</td></tr>
+    </table>
+  </div>
+  <div class="hook">
+    <b>Alloy Hook:</b> "Brass = CuZn (Copper-Zinc) — think BRass = BeRyllium? No! B-R-A-S-S → BRass = cuZn. Bronze = CupboaRd + TiN (Cup + Tin). Solder = Lead + Tin — the PlumBer Tin-kered with solder."
+  </div>
+
+  <h3>Saturated vs Concentrated</h3>
+  <div class="card card-blue">
+    <p><b style="color:var(--blue)">Saturated:</b> Solvent has reached maximum capacity — cannot dissolve MORE solute.</p>
+    <p><b style="color:var(--yellow)">Concentrated vs Dilute:</b> Relative terms. More solute per unit solution = concentrated. Less solute = dilute.</p>
+    <p>Concentration formula: <span class="formula">Conc = (mass of solute) / (mass of solution) × 100</span></p>
+  </div>
+
+  <h3>Tincture of Iodine <span class="tag tag-star">⭐</span></h3>
+  <div class="card">
+    <p>Iodine (solute) dissolved in Ethyl Alcohol (solvent) = <b style="color:var(--yellow)">Tincture of Iodine</b></p>
+    <p>Used as: <b style="color:var(--green)">Antiseptic</b></p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: COLLOID ═══════════════════════════════ -->
+<div class="page" id="page-colloid">
+  <div class="page-hero">
+    <h1>Suspension, Colloid &amp; Tyndall Effect</h1>
+    <div class="chapter-subtitle">The confusing middle ground — master it here</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+
+  <h2>The Three-Way Comparison <span class="tag tag-fire">🔥</span></h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr>
+        <th>Feature</th>
+        <th>Solution 🟢</th>
+        <th>Colloid 🔵</th>
+        <th>Suspension 🔴</th>
+      </tr>
+      <tr><td>Type</td><td>Homogeneous</td><td>Appears homo, IS hetero</td><td>Heterogeneous</td></tr>
+      <tr><td>Particle Size</td><td>&lt; 1 nm</td><td>1 nm – 1000 nm</td><td>&gt; 1000 nm</td></tr>
+      <tr><td>Visible to naked eye?</td><td>No</td><td>No</td><td><b style="color:var(--green)">Yes</b></td></tr>
+      <tr><td>Settles down?</td><td>No (Stable)</td><td>No</td><td><b style="color:var(--red)">Yes (Unstable)</b></td></tr>
+      <tr><td>Tyndall Effect</td><td>❌ No</td><td>✅ <b style="color:var(--green)">Yes</b></td><td>✅ Yes</td></tr>
+      <tr><td>Filterable?</td><td>No</td><td>No (special membrane needed)</td><td><b style="color:var(--green)">Yes</b></td></tr>
+      <tr><td>Example</td><td>Salt water, soft drink</td><td>Milk, Starch, Blood</td><td>Sand in water, chalk in water</td></tr>
+    </table>
+  </div>
+
+  <div class="hook">
+    <b>Particle Size Hook — "1 to 1000":</b> Think of it as a dart board. Bullseye = Solution (&lt;1 nm — tiny tiny). Middle ring = Colloid (1–1000 nm). Outer ring = Suspension (&gt;1000 nm — huge, settles down). The bigger the particle, the less stable it is.
+  </div>
+
+  <h2>Colloid Terminology</h2>
+  <div class="card card-blue">
+    <p>In colloids, instead of solute/solvent, we say:</p>
+    <p><b style="color:var(--blue)">Dispersed Phase</b> = the one that is spread (like solute)</p>
+    <p><b style="color:var(--blue)">Dispersing Medium</b> = the medium it's spread in (like solvent)</p>
+  </div>
+
+  <h2>Types of Colloids <span class="tag tag-star">⭐</span></h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Dispersed Phase</th><th>Dispersing Medium</th><th>Name</th><th>Example</th></tr>
+      <tr><td>Liquid</td><td>Gas</td><td><b>Aerosol</b></td><td>Fog, Mist, Cloud, deodorant spray</td></tr>
+      <tr><td>Solid</td><td>Gas</td><td><b>Aerosol</b></td><td>Smoke, Dust</td></tr>
+      <tr><td>Liquid</td><td>Liquid</td><td><b>Emulsion</b></td><td>Milk, Mayonnaise</td></tr>
+      <tr><td>Solid</td><td>Liquid</td><td><b>Sol</b></td><td>Paint, Mud (fine), Starch solution</td></tr>
+      <tr><td>Gas</td><td>Liquid</td><td><b>Foam</b></td><td>Whipped cream, Shaving foam</td></tr>
+      <tr><td>Solid</td><td>Solid</td><td><b>Solid Sol</b></td><td>Coloured glass, alloy gems</td></tr>
+    </table>
+  </div>
+  <div class="hook">
+    <b>Rule of thumb:</b> If the <b>Dispersing Medium = Gas</b>, the colloid is <b>Aerosol</b> (regardless of dispersed phase — solid or liquid). If the <b>Dispersed Phase = Solid</b> and medium is liquid → <b>Sol</b>.
+  </div>
+
+  <h2>Tyndall Effect <span class="tag tag-fire">🔥</span></h2>
+  <div class="card card-green">
+    <p><b style="color:var(--green)">Definition:</b> Scattering of light by colloidal particles making the path of light beam visible.</p>
+    <p>Discovered by: <b style="color:var(--yellow)">John Tyndall</b> in <b style="color:var(--yellow)">1859</b></p>
+    <p><b>Who shows it?</b> Colloids ✅ | Suspensions ✅ | Solutions ❌</p>
+    <p><b>Why not solutions?</b> Particles too small (&lt;1nm) — cannot scatter light.</p>
+    <p><b>Why colloids show it?</b> Particles (1–1000nm) are big enough to scatter light but too small to settle. That's the "Goldilocks zone" — just right to scatter but not settle.</p>
+  </div>
+  <div class="hook">
+    <b>Real-life Tyndall Effect:</b> Shine a torch in milk (colloid) — you see the beam path. Shine it in pure water (solution) — you see only the spot, not the beam. When sunlight enters a dusty room through a gap — that's Tyndall Effect with dust particles (aerosol colloid). When you see sunrays through forest trees — Tyndall Effect in fog/mist!
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ The Milk Trap</div>
+    Milk appears homogeneous (uniform, no visible particles) but it is actually a <b>COLLOID</b> (heterogeneous). It shows the Tyndall Effect. Contains: water + fat + casein protein + lactose. This is one of the most-asked confusing facts in SSC Chemistry.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: SEPARATION ═══════════════════════════════ -->
+<div class="page" id="page-separation">
+  <div class="page-hero">
+    <h1>Separation Techniques</h1>
+    <div class="chapter-subtitle">Which method, when and why — the examiner's playground</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:54%"></div></div>
+
+  <h2>Master Table of Separation Techniques <span class="tag tag-fire">🔥</span></h2>
+  <div class="tbl-wrap">
+    <table>
+      <tr><th>Technique</th><th>When to Use</th><th>Key Example</th></tr>
+      <tr>
+        <td><b style="color:var(--green)">Hand Picking</b></td>
+        <td>Particles clearly visible, large, different</td>
+        <td>Pebbles from rice/dal</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--green)">Sieving</b></td>
+        <td>Different sized solid particles</td>
+        <td>Wheat flour from bran</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--green)">Filtration</b></td>
+        <td>Solid from liquid (heterogeneous)</td>
+        <td>Chalk from water</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--yellow)">Evaporation</b></td>
+        <td>Solid dissolved in liquid; want to recover solid</td>
+        <td>Salt from seawater, dye from ink</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--yellow)">Chromatography</b></td>
+        <td>Separate colour components of a dye / drugs from blood</td>
+        <td>Dye components, drug detection in blood</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--yellow)">Centrifugation</b></td>
+        <td>Dense particles from light particles (spinning at high speed)</td>
+        <td>Cream from milk, blood components</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--blue)">Separating Funnel</b></td>
+        <td>Two immiscible liquids (don't mix)</td>
+        <td>Water + Oil</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--blue)">Distillation</b></td>
+        <td>Miscible liquids, boiling point difference <b>&gt; 25 K</b></td>
+        <td>Acetone + Water</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--fire)">Fractional Distillation</b></td>
+        <td>Miscible liquids, boiling point difference <b>&lt; 25 K</b></td>
+        <td>Air components, Crude oil refining</td>
+      </tr>
+      <tr>
+        <td><b style="color:var(--purple)">Sublimation</b></td>
+        <td>One component sublimates (solid → gas directly)</td>
+        <td>Camphor, Naphthalene, NH₄Cl separation</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2>Decision Tree: Which Technique?</h2>
+  <div class="card">
+    <div style="font-size:.88rem;color:var(--text3);line-height:2;">
+      Are they <b>solid + liquid</b> (big particles visible)?<br>
+      &nbsp;&nbsp;→ Filtration / Sieving / Hand picking<br><br>
+      Is the <b>solvent water</b> and you want the solid back?<br>
+      &nbsp;&nbsp;→ Evaporation<br><br>
+      Is it a <b>coloured dye</b> with multiple colours OR drugs in blood?<br>
+      &nbsp;&nbsp;→ Chromatography (chroma = colour)<br><br>
+      Is it <b>dense + light particles</b> (like cream from milk, blood cells from plasma)?<br>
+      &nbsp;&nbsp;→ Centrifugation (spin it fast)<br><br>
+      Are they <b>two liquids that don't mix</b> (immiscible)?<br>
+      &nbsp;&nbsp;→ Separating Funnel<br><br>
+      Are they <b>two liquids that DO mix</b> (miscible)?<br>
+      &nbsp;&nbsp;→ Boiling point diff &gt; 25K → Distillation<br>
+      &nbsp;&nbsp;→ Boiling point diff &lt; 25K → <b>Fractional Distillation</b><br><br>
+      Does one component <b>sublimate</b> (solid → gas)?<br>
+      &nbsp;&nbsp;→ Sublimation
+    </div>
+  </div>
+
+  <h2>Key Facts to Memorise</h2>
+  <div class="card card-yellow">
+    <ul class="bullet-list">
+      <li><span class="tag tag-fire">🔥</span> Air = Homogeneous mixture. Separated by <b>Fractional Distillation</b></li>
+      <li><span class="tag tag-star">⭐</span> Cream from milk = <b>Centrifugation</b> (not filtration!)</li>
+      <li><span class="tag tag-star">⭐</span> Chromatography: "Chroma" means colour</li>
+      <li><span class="tag tag-star">⭐</span> Oil floats on water (less dense) → separating funnel: open tap → water flows first, close when oil comes</li>
+      <li><span class="tag tag-plus">➕</span> Centrifuge of blood separates: Plasma (liquid) from RBC, WBC, Platelets (solid)</li>
+    </ul>
+  </div>
+
+  <div class="hook">
+    <b>Separation Hook — Restaurant Analogy:</b><br>
+    Waiter (hand picking) handles large visible things. Sieve in kitchen filters flour. Evaporation is like boiling tea — water goes, taste stays. Chromatography is the CSI crime lab (separates colours in ink). Centrifuge is a washing machine spin — heavy stuff flings out. Separating funnel = oil and water in salad dressing — just tilt and pour. Distillation = distillery making alcohol. Fractional distillation = refinery making petrol, diesel, kerosene from crude oil.
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">⚠ Distillation vs Fractional Distillation</div>
+    <b>Distillation</b>: boiling point difference <b>&gt; 25 K</b> (large gap = easy to separate)<br>
+    <b>Fractional Distillation</b>: boiling point difference <b>&lt; 25 K</b> (small gap = need fractional columns)<br>
+    Students often reverse this. Remember: "Fraction" of a difference = SMALL difference.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: TRAPS ═══════════════════════════════ -->
+<div class="page" id="page-traps">
+  <div class="page-hero">
+    <h1>⚠ Exam Traps</h1>
+    <div class="chapter-subtitle">What toppers know that average students don't</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:63%"></div></div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 1 — Milk is Heterogeneous (NOT Homogeneous)</div>
+    Milk appears uniform but contains water + fat + casein protein + lactose. It is a COLLOID (heterogeneous). It shows the Tyndall Effect. It is NOT a solution. 
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 2 — −40° is Same in Celsius and Fahrenheit</div>
+    −40°C = −40°F. This is the only temperature where both scales give the same number. Classic MCQ trap: "At what temperature are Celsius and Fahrenheit equal?" → −40°.
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 3 — Fusion ≠ Nuclear Fusion</div>
+    In chemistry, "Fusion" = Melting (solid → liquid). In physics, "Nuclear Fusion" = combining of atomic nuclei. Two completely different things. Context matters!
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 4 — Bose-Einstein Condensate: Bose proposed, Cornell/Wieman created it</div>
+    • Satyendranath Bose proposed the concept (1921–1924)<br>
+    • Einstein extended the theory (1925)<br>
+    • Eric Cornell + Carl Wieman ACTUALLY CREATED it in 1995 (Rubidium gas)<br>
+    • Nobel Prize: 2001 — Given to Cornell, Wieman, AND Wolfgang Ketterle (Sodium BEC)<br>
+    Trap: Exam asks "who first created BEC?" → Cornell &amp; Wieman (not Bose!)
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 5 — Crystalline vs Amorphous Solids</div>
+    <b>Crystalline</b> = Anisotropic (properties DIFFER in different directions)<br>
+    <b>Amorphous</b> = Isotropic (properties SAME in all directions)<br>
+    Students think crystalline = uniform = same. Wrong! Crystals are directional.
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 6 — Solution cannot show Tyndall Effect</div>
+    Solutions: particles &lt;1nm → cannot scatter light → NO Tyndall Effect.<br>
+    Colloids and Suspensions: larger particles → scatter light → Tyndall Effect visible.<br>
+    Trap: "Milk shows Tyndall Effect" — TRUE (it's a colloid, not a solution!).
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 7 — Distillation vs Fractional Distillation (REVERSED by students)</div>
+    <b>Distillation</b>: BP difference &gt; 25 K<br>
+    <b>Fractional Distillation</b>: BP difference &lt; 25 K<br>
+    Fraction = smaller difference. Fractional = fine separation needed.
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 8 — Solute vs Solvent</div>
+    <b>Solute</b> = added substance, LESS in amount<br>
+    <b>Solvent</b> = dissolving medium, MORE in amount<br>
+    Sugar in water: Sugar = solute, Water = solvent<br>
+    In alloys: minor metal = solute, major metal = solvent.
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 9 — Behavioural Uniformity Question (actual SSC question)</div>
+    "Which state of matter shows maximum behavioural uniformity?" → <b>GAS</b><br>
+    Not solid (rigid structure), not liquid (surface tension varies), GAS molecules move freely and distribute uniformly everywhere — that's uniformity.
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 10 — Tyndall Effect: Discoverer and Year</div>
+    Discovered by <b>John Tyndall</b> in <b>1859</b>. Not Maxwell, not Faraday. John Tyndall.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: MEMORY PALACE ═══════════════════════════════ -->
+<div class="page" id="page-palace">
+  <div class="page-hero">
+    <h1>🧠 Chapter Memory Palace</h1>
+    <div class="chapter-subtitle">The Chemistry Laboratory — A Mental Journey</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:72%"></div></div>
+
+  <div class="card card-purple" style="margin-bottom:1.2rem;">
+    <p style="color:var(--purple);font-weight:700;margin-bottom:.5rem;">Welcome to Dr. Matter's Legendary Laboratory</p>
+    <p>You walk into a massive laboratory. Every room teaches you one cluster of facts. Walk through it mentally and recall everything. Let's begin the tour.</p>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-icon">🚪</div>
+    <div class="palace-text">
+      <strong>Entrance Gate — 3 Jars</strong><br>
+      You enter and see three giant jars: a brick (SOLID), a water bottle (LIQUID), and a balloon (GAS). The brick particles are crushed together. The balloon is about to burst — so much space inside! You remember: <b>Solid → least space, most force. Gas → most space, least force, most KE, most diffusion.</b>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-icon">🔥</div>
+    <div class="palace-text">
+      <strong>Room 1 — The Plasma Furnace</strong><br>
+      You see a giant furnace blasting a gas with extreme heat. The electrons are flying free like escaped prisoners! The glowing plasma lights up the room. Sign on the wall: "Plasma — Good conductor. Glows. 4th state." <b>Gas + extreme heat = Plasma.</b>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-icon">❄️</div>
+    <div class="palace-text">
+      <strong>Room 2 — The Absolute Zero Freezer</strong><br>
+      You enter a frozen chamber. A photograph of <b>Satyendranath Bose (1921, 1924)</b> is on the wall. Einstein's portrait is next to it (1925). At the deepest corner, a machine holds a tiny jar of Rubidium at −273.15°C. The sign says: "Cornell &amp; Wieman did it — 1995. Nobel 2001." This is BEC — the 5th state. <b>Gas + extreme cooling = BEC.</b>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-icon">🧊</div>
+    <div class="palace-text">
+      <strong>Room 3 — The Phase Change Theater</strong><br>
+      A theater screen shows ice melting: "Fusion!" Then water boiling: "Vaporization!" Then steam condensing on glass: "Condensation!" Then camphor vanishing with no liquid stage: "Sublimation!" And a note on the wall: "Deposition — reverse of sublimation." Also: Latent heat sign — "Hidden heat, hidden inside, changes the phase, not the thermometer."
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-icon">⚗️</div>
+    <div class="palace-text">
+      <strong>Room 4 — The Purity Testing Station</strong><br>
+      A scientist holds two glasses: oxygen and water. "Both are pure!" she says. "Oxygen = Element (one atom type). Water = Compound (H+O)." Behind her, a vat of milk sits with a label: "Looks pure, IS NOT. Colloid!" A sugar-water glass is labeled: "Solution — Homogeneous." A sand-water glass: "Suspension — Heterogeneous." Milk sits between them: "Colloid — appears homo, is hetero."
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-icon">💡</div>
+    <div class="palace-text">
+      <strong>Room 5 — The Tyndall Light Show (1859)</strong><br>
+      John Tyndall himself stands here with a torch. He shines it through milk — you see the beam. He shines it through saltwater — you see only the far end, not the beam. "Particle size too small!" he says. "Must be &gt;1nm to scatter light." Sign: "John Tyndall — 1859 — Light scattering by colloids."
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-icon">🏭</div>
+    <div class="palace-text">
+      <strong>Room 6 — The Separation Factory</strong><br>
+      Multiple machines: Mother hand-picking pebbles from rice (hand picking). A sieve filtering flour. A funnel draining water from oil (separating funnel). A spinning drum of milk throwing cream to edges (centrifuge). A distillery column (distillation — BP diff &gt;25K). A more sophisticated column (fractional distillation — BP diff &lt;25K). A torch being used by a CSI agent on ink (chromatography). Camphor vanishing into air (sublimation).
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem;">
+    <p style="color:var(--green);font-weight:700;">How to Use This Palace</p>
+    <p style="font-size:.88rem;color:var(--text3);">Close your eyes. Walk through this lab room by room. At each room, ask yourself: what is here? What does it teach? Try to "see" each object, each person, each sign. Do this 3 times and you'll never forget this chapter.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: QUIZ ═══════════════════════════════ -->
+<div class="page" id="page-quiz">
+  <div class="page-hero">
+    <h1>Active Recall Quiz</h1>
+    <div class="chapter-subtitle">Force retrieval — don't peek before trying!</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:81%"></div></div>
+
+  <h2>Self-Test Questions</h2>
+  <p style="color:var(--text2);font-size:.85rem;">Think of the answer first, then click REVEAL.</p>
+
+  <div id="quizContainer"></div>
+
+  <h2 style="margin-top:2rem;">Fill in the Blanks</h2>
+  <div class="card">
+    <ul class="bullet-list">
+      <li>4th state of matter = _____ (Plasma)</li>
+      <li>5th state of matter = _____ (Bose-Einstein Condensate)</li>
+      <li>BEC first created in _____ by _____ and _____ (1995, Eric Cornell, Carl Wieman)</li>
+      <li>Gas used to first create BEC = _____ (Rubidium)</li>
+      <li>Nobel Prize for BEC given in _____ (2001)</li>
+      <li>Tyndall Effect discovered by _____ in _____ (John Tyndall, 1859)</li>
+      <li>Absolute Zero = _____ K = _____ °C (0 K, −273.15°C)</li>
+      <li>At _____ °C and °F, both scales give the same reading (−40)</li>
+      <li>Tincture of Iodine: Iodine in _____, used as _____ (Ethyl Alcohol, antiseptic)</li>
+      <li>Brass = _____ + _____ (Copper + Zinc)</li>
+      <li>Bronze = _____ + _____ (Copper + Tin)</li>
+      <li>Separation of air components uses _____ (Fractional Distillation)</li>
+      <li>Cream from milk is separated using _____ (Centrifugation)</li>
+      <li>Chromatography: "Chroma" means _____ (colour)</li>
+      <li>Colloidal particle size: _____ nm to _____ nm (1 to 1000)</li>
+    </ul>
+  </div>
+
+  <h2>Rapid Fire One-Liners</h2>
+  <div class="card card-blue">
+    <ul class="bullet-list">
+      <li>Which state shows MAXIMUM behavioural uniformity? → Gas</li>
+      <li>Which diffuses fastest — solid, liquid or gas? → Gas</li>
+      <li>What is diffusion? → High concentration → Low concentration movement</li>
+      <li>Milk is homo or hetero? → Heterogeneous (Colloid)</li>
+      <li>Which shows Tyndall Effect? → Colloid and Suspension</li>
+      <li>Latent = ? → Hidden</li>
+      <li>Camphor phase change = ? → Sublimation</li>
+      <li>Immiscible liquids → Separating Funnel</li>
+      <li>BP diff &gt; 25K → Distillation; &lt;25K → Fractional Distillation</li>
+      <li>Alloy = ? → Solid-in-solid solution</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: RAPID REVISION ═══════════════════════════════ -->
+<div class="page" id="page-rapid">
+  <div class="page-hero">
+    <h1>⚡ Rapid Revision Sheets</h1>
+    <div class="chapter-subtitle">High-Yield → Ultra-Fast → 30-Second</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+
+  <h2>High-Yield Revision Notes</h2>
+  <div class="card card-green">
+    <ul class="bullet-list">
+      <li><b>3 main states:</b> Solid (least KE, most force), Liquid, Gas (most KE, least force, fastest diffusion)</li>
+      <li><b>4th state:</b> Plasma (gas + extreme heat → ionization → free electrons → glows, conducts electricity)</li>
+      <li><b>5th state:</b> BEC (gas + absolute zero = 0K = −273.15°C). Proposed: Bose 1921→1924, Einstein 1925. Created: Cornell &amp; Wieman 1995 (Rubidium). Nobel 2001.</li>
+      <li><b>Phase changes:</b> Fusion(S→L), Solidification(L→S), Vaporization(L→G), Condensation(G→L), Sublimation(S→G), Deposition(G→S)</li>
+      <li><b>Sublimation examples:</b> Camphor, Naphthalene, NH₄Cl, Dry Ice, Iodine</li>
+      <li><b>Latent heat:</b> Hidden heat that changes phase without raising temperature</li>
+      <li><b>Pure = Element or Compound. Impure = Mixture</b></li>
+      <li><b>Element:</b> one kind of atom. <b>Compound:</b> two+ kinds, fixed ratio. <b>Mixture:</b> two+ kinds, variable ratio</li>
+      <li><b>Homogeneous (Solution):</b> particle &lt;1nm, stable, no Tyndall. <b>Colloid:</b> 1–1000nm, shows Tyndall. <b>Suspension:</b> &gt;1000nm, unstable, shows Tyndall</li>
+      <li><b>Milk = Colloid</b> (not solution!). Shows Tyndall Effect.</li>
+      <li><b>Tyndall Effect:</b> John Tyndall, 1859</li>
+      <li><b>Alloys:</b> Brass=Cu+Zn, Bronze=Cu+Sn, Solder=Pb+Sn</li>
+      <li><b>Tincture of Iodine:</b> Iodine in ethyl alcohol → antiseptic</li>
+      <li><b>Air:</b> Homogeneous mixture → Fractional Distillation</li>
+      <li><b>Distillation:</b> BP diff &gt;25K | Fractional Distillation: BP diff &lt;25K</li>
+      <li><b>Centrifugation:</b> cream from milk, blood components</li>
+      <li><b>Chromatography:</b> colour components of dye, drugs from blood</li>
+      <li><b>−40° = same in Celsius and Fahrenheit</b></li>
+      <li><b>Crystalline solid:</b> anisotropic (directional properties). <b>Amorphous:</b> isotropic (same in all directions)</li>
+    </ul>
+  </div>
+
+  <h2>Ultra-Fast Revision Sheet</h2>
+  <div class="fast-grid">
+    <div class="fast-card">
+      <div class="fast-card-title">5 States</div>
+      Solid → Liquid → Gas → Plasma (heat gas) → BEC (cool gas to 0K)
+    </div>
+    <div class="fast-card">
+      <div class="fast-card-title">BEC Dates</div>
+      Bose 1921/1924 → Einstein 1925 → Cornell+Wieman 1995 (Rb) → Nobel 2001
+    </div>
+    <div class="fast-card">
+      <div class="fast-card-title">Tyndall Effect</div>
+      John Tyndall, 1859 | Colloids + Suspensions show it. Solutions don't.
+    </div>
+    <div class="fast-card">
+      <div class="fast-card-title">Particle Sizes</div>
+      Solution: &lt;1nm | Colloid: 1–1000nm | Suspension: &gt;1000nm
+    </div>
+    <div class="fast-card">
+      <div class="fast-card-title">Alloys</div>
+      Brass=Cu+Zn | Bronze=Cu+Sn | Solder=Pb+Sn
+    </div>
+    <div class="fast-card">
+      <div class="fast-card-title">Separation</div>
+      Immiscible→SepFunnel | &gt;25K→Distill | &lt;25K→Fract.Distill | Dense→Centrifuge | Colour→Chroma | Sublimate→Sublimation
+    </div>
+    <div class="fast-card">
+      <div class="fast-card-title">Absolute Zero</div>
+      0K = −273.15°C = −459.67°F | −40°C = −40°F (same!)
+    </div>
+    <div class="fast-card">
+      <div class="fast-card-title">Milk Trap</div>
+      Milk = COLLOID (heterogeneous). Appears homogeneous. Shows Tyndall Effect. Contains water+fat+casein+lactose.
+    </div>
+  </div>
+
+  <h2>30-Second Revision Sheet</h2>
+  <div class="card card-purple">
+    <ul class="bullet-list">
+      <li>Gas = max diffusion, max KE, max behavioural uniformity</li>
+      <li>Plasma = 4th state | BEC = 5th state</li>
+      <li>BEC: Bose1921 → Einstein1925 → Cornell+Wieman1995(Rb) → Nobel2001</li>
+      <li>Sublimation = Camphor/Naphthalene/NH₄Cl | Tyndall = John Tyndall 1859</li>
+      <li>Milk = Colloid | Solution: &lt;1nm | Colloid: 1–1000nm | Suspension: &gt;1000nm</li>
+      <li>Brass=Cu+Zn | Bronze=Cu+Sn | Solder=Pb+Sn</li>
+      <li>Air = Fractional Distillation | &gt;25K = Distill | &lt;25K = Fract.Distill</li>
+      <li>−40° = same Celsius and Fahrenheit | 0K = −273.15°C</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ PAGE: LAST NIGHT ═══════════════════════════════ -->
+<div class="page" id="page-night">
+  <div class="page-hero">
+    <h1>🌙 Last Night Sheet</h1>
+    <div class="chapter-subtitle">Read this the night before the exam — nothing else</div>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+
+  <div class="card card-red" style="margin-bottom:1.2rem;">
+    <p style="color:var(--red);font-weight:700;">⚠ Tonight: Only This Sheet. Trust Your Preparation.</p>
+  </div>
+
+  <div class="night-item"><b>Gas = max</b> KE, max diffusion, max behavioural uniformity (SSC asked this!)</div>
+  <div class="night-item"><b>4th state = Plasma</b> (gas + extreme heat = ionization, glows, conducts)</div>
+  <div class="night-item"><b>5th state = BEC</b> | Bose 1921/1924 | Einstein 1925 | Cornell+Wieman 1995 (Rubidium) | Nobel 2001</div>
+  <div class="night-item"><b>Absolute Zero = 0K = −273.15°C</b> | −40°C = −40°F (same value, classic trap)</div>
+  <div class="night-item"><b>Sublimation</b> = Solid→Gas directly | Examples: Camphor, Naphthalene, NH₄Cl, Dry Ice</div>
+  <div class="night-item"><b>Latent heat</b> = hidden heat that changes phase, NOT temperature</div>
+  <div class="night-item"><b>Milk = COLLOID</b> (not solution!) | Heterogeneous | Shows Tyndall Effect</div>
+  <div class="night-item"><b>Particle sizes</b>: Solution &lt;1nm | Colloid 1–1000nm | Suspension &gt;1000nm</div>
+  <div class="night-item"><b>Tyndall Effect</b> = John Tyndall, 1859 | Colloids + Suspensions show it | Solutions don't</div>
+  <div class="night-item"><b>Tincture of Iodine</b> = Iodine in Ethyl Alcohol | Antiseptic</div>
+  <div class="night-item"><b>Alloys</b>: Brass = Cu+Zn | Bronze = Cu+Sn | Solder = Pb+Sn</div>
+  <div class="night-item"><b>Air separation</b> = Fractional Distillation (air = homogeneous mixture)</div>
+  <div class="night-item"><b>Distillation</b>: BP diff &gt;25K | <b>Fractional</b>: BP diff &lt;25K</div>
+  <div class="night-item"><b>Centrifugation</b>: cream from milk, blood components (dense from light)</div>
+  <div class="night-item"><b>Chromatography</b>: colour in dye, drugs in blood (Chroma = colour)</div>
+  <div class="night-item"><b>Crystalline</b> = Anisotropic (properties differ by direction) | <b>Amorphous</b> = Isotropic</div>
+  <div class="night-item"><b>Saturated solution</b> = cannot dissolve more solute | <b>Concentrated/Dilute</b> = relative terms</div>
+
+  <div class="card card-green" style="margin-top:1.5rem;">
+    <p style="color:var(--green);font-weight:700;font-size:1rem;">You've got this. 🏆</p>
+    <p style="font-size:.88rem;color:var(--text3);">Sleep well. Your brain consolidates memory during sleep. Trust what you've studied. Walk into that exam knowing you're prepared.</p>
+  </div>
+</div>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // Quiz data
+  const quizData = [
+    { q: "What is the 4th state of matter and how is it formed?", a: "Plasma. Formed when gas is heated intensely → electrons and protons become free (ionization) → creates plasma. It glows and conducts electricity." },
+    { q: "Who proposed BEC and who first actually created it? What gas was used?", a: "Proposed by Satyendranath Bose (1921/1924) and Einstein (1925). First CREATED in 1995 by Eric Cornell & Carl Wieman using Rubidium gas. Nobel Prize 2001." },
+    { q: "What is absolute zero? Give values in all three scales.", a: "0 Kelvin = −273.15°C = −459.67°F. The lowest possible temperature. Required for BEC formation." },
+    { q: "At what temperature are Celsius and Fahrenheit equal?", a: "−40°. Both −40°C and −40°F are the same. This is a classic exam trap!" },
+    { q: "What is the Tyndall Effect? Who discovered it and when?", a: "Scattering of light by colloidal particles, making the beam path visible. Discovered by John Tyndall in 1859. Shown by colloids and suspensions, NOT solutions." },
+    { q: "Why does milk show the Tyndall Effect despite appearing uniform?", a: "Milk is a COLLOID (heterogeneous), not a solution. It contains water + fat + casein protein + lactose. Particle size 1–1000nm — large enough to scatter light." },
+    { q: "What is the difference between Distillation and Fractional Distillation?", a: "Distillation: BP difference > 25K. Fractional Distillation: BP difference < 25K. Air components are separated by Fractional Distillation." },
+    { q: "Name the alloys: Brass, Bronze, Solder.", a: "Brass = Copper + Zinc | Bronze = Copper + Tin | Solder = Lead + Tin" },
+    { q: "What is sublimation? Give 3 examples.", a: "Direct conversion of solid to gas (skipping liquid stage). Examples: Camphor, Naphthalene balls, Ammonium Chloride (NH₄Cl), Dry Ice, Iodine." },
+    { q: "What is Tincture of Iodine and what is it used for?", a: "Iodine (solute) dissolved in Ethyl Alcohol (solvent). Used as an ANTISEPTIC." },
+    { q: "Which state of matter shows maximum behavioural uniformity and why?", a: "GAS. Gas molecules diffuse freely and distribute uniformly throughout any container — this was a direct SSC question." },
+    { q: "What are crystalline and amorphous solids? Give one key property each.", a: "Crystalline: definite shape, ANISOTROPIC (properties differ in different directions). Amorphous: irregular shape, ISOTROPIC (properties same in all directions)." },
+    { q: "How is cream separated from milk?", a: "By CENTRIFUGATION. The spinning separates denser particles (cream) to the edges from lighter particles (skim milk)." },
+    { q: "What is the particle size range for colloids?", a: "1 nm to 1000 nm. Below 1nm = solution. Above 1000nm = suspension." },
+    { q: "What technique separates water and oil?", a: "Separating Funnel. Oil (less dense) floats on top. Water (more dense) drains from the tap first; close it when oil starts flowing." },
+  ];
+
+  function buildQuiz() {
+    const container = document.getElementById('quizContainer');
+    quizData.forEach((item, i) => {
+      const card = document.createElement('div');
+      card.className = 'quiz-card';
+      card.innerHTML = `
+        <div class="quiz-q">Q${i+1}. ${item.q}</div>
+        <button class="reveal-btn" onclick="revealAns(${i})">REVEAL ANSWER</button>
+        <div class="quiz-ans" id="ans-${i}">✅ ${item.a}</div>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function revealAns(i) {
+    const ans = document.getElementById('ans-' + i);
+    ans.classList.toggle('revealed');
+  }
+
+  buildQuiz();
+</script>
+</body>
+</html>

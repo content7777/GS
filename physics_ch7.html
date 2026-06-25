@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Physics: Motion & Force — SSC CGL Revision System</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #161b27;
+    --bg3: #1e2535;
+    --bg4: #252d3f;
+    --green: #4ade80;
+    --green-dim: #22543d;
+    --blue: #60a5fa;
+    --blue-dim: #1e3a5f;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --purple: #c084fc;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --border: #2d3748;
+    --accent: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: 260px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    z-index: 100;
+    transition: transform .3s ease;
+    overflow-y: auto;
+  }
+  #sidebar-header {
+    padding: 20px 18px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+  }
+  #sidebar-header .subject-tag {
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--green); font-weight: 700; margin-bottom: 4px;
+  }
+  #sidebar-header h2 {
+    font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3;
+  }
+  #sidebar-header p { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+  .nav-section { padding: 10px 0; }
+  .nav-label {
+    padding: 4px 18px;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-dim); font-weight: 600;
+  }
+  .nav-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 18px;
+    cursor: pointer; border: none; background: none;
+    color: var(--text-dim); font-size: 13px; text-align: left; width: 100%;
+    transition: all .18s;
+    border-left: 3px solid transparent;
+  }
+  .nav-btn:hover { background: var(--bg3); color: var(--text); }
+  .nav-btn.active {
+    background: var(--bg4); color: var(--green);
+    border-left-color: var(--green);
+    font-weight: 600;
+  }
+  .nav-btn .icon { font-size: 15px; flex-shrink: 0; width: 20px; text-align: center; }
+  .nav-btn .badge {
+    margin-left: auto; font-size: 10px; padding: 2px 6px;
+    border-radius: 10px; background: var(--bg4); color: var(--text-dim);
+  }
+  .nav-btn.active .badge { background: var(--green-dim); color: var(--green); }
+
+  /* ── MAIN CONTENT ── */
+  #main {
+    margin-left: 260px;
+    min-height: 100vh;
+  }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── TOP BAR ── */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    padding: 12px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .topbar-title { font-size: 14px; font-weight: 600; color: var(--text-dim); }
+  .topbar-title span { color: var(--green); }
+  .progress-dots { display: flex; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); cursor: pointer; transition: .2s; }
+  .dot.done { background: var(--green); }
+
+  /* ── CONTENT AREA ── */
+  .content { padding: 32px 36px 60px; max-width: 860px; }
+
+  /* ── CARDS & BOXES ── */
+  .card {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 22px; margin-bottom: 16px;
+  }
+  .card-green { border-left: 4px solid var(--green); }
+  .card-blue { border-left: 4px solid var(--blue); }
+  .card-yellow { border-left: 4px solid var(--yellow); }
+  .card-red { border-left: 4px solid var(--red); }
+  .card-purple { border-left: 4px solid var(--purple); }
+
+  .section-title {
+    font-size: 22px; font-weight: 800; color: var(--text);
+    margin-bottom: 6px; line-height: 1.2;
+  }
+  .section-sub {
+    font-size: 13px; color: var(--text-dim); margin-bottom: 28px;
+  }
+
+  h3 { font-size: 15px; font-weight: 700; color: var(--green); margin-bottom: 10px; }
+  h4 { font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+
+  .tag {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    padding: 2px 9px; border-radius: 20px; margin-right: 4px; margin-bottom: 4px;
+  }
+  .tag-fire { background: #7c2d12; color: #fb923c; }
+  .tag-star { background: #1e3a5f; color: var(--blue); }
+  .tag-plus { background: #1a2e1a; color: #86efac; }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 5px 12px;
+    font-size: 12px; font-weight: 600; color: var(--text-dim);
+    margin: 3px;
+  }
+  .pill .key { color: var(--green); font-size: 13px; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    background: var(--bg3); color: var(--green);
+    padding: 10px 14px; text-align: left; font-weight: 700;
+    border: 1px solid var(--border); font-size: 12px; letter-spacing: .5px;
+  }
+  td {
+    padding: 9px 14px; border: 1px solid var(--border);
+    color: var(--text); vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #13182080; }
+  tr:hover td { background: var(--bg3); }
+
+  /* ── MEMORY HOOK ── */
+  .memory-palace {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    border: 1px solid #2d5a72; border-radius: 14px;
+    padding: 22px; margin-bottom: 16px;
+  }
+  .memory-palace h3 { color: #67e8f9; }
+  .palace-stop {
+    display: flex; gap: 14px; align-items: flex-start;
+    margin: 12px 0; padding: 12px; background: rgba(255,255,255,.04);
+    border-radius: 10px;
+  }
+  .palace-stop .num {
+    background: #0e7490; color: white; border-radius: 50%;
+    width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 800; flex-shrink: 0;
+  }
+  .palace-stop .text { font-size: 13px; color: var(--text); }
+  .palace-stop strong { color: #67e8f9; }
+
+  /* ── EQUATION BOX ── */
+  .eq-box {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 18px; margin: 10px 0;
+    font-family: 'Courier New', monospace;
+  }
+  .eq-main { font-size: 17px; font-weight: 700; color: var(--yellow); }
+  .eq-desc { font-size: 12px; color: var(--text-dim); margin-top: 4px; font-family: inherit; }
+
+  /* ── TRAP BOX ── */
+  .trap-item {
+    background: #2d1515; border: 1px solid #7f1d1d;
+    border-radius: 10px; padding: 14px 16px; margin: 8px 0;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .trap-icon { font-size: 20px; flex-shrink: 0; }
+  .trap-text { font-size: 13px; color: var(--text); }
+  .trap-text strong { color: var(--red); }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; margin: 10px 0;
+  }
+  .quiz-q .q { font-size: 13px; font-weight: 600; color: var(--blue); margin-bottom: 10px; }
+  .quiz-opt {
+    display: block; width: 100%; text-align: left; background: var(--bg4);
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 14px; margin: 5px 0; cursor: pointer;
+    color: var(--text); font-size: 13px; transition: .15s;
+  }
+  .quiz-opt:hover { border-color: var(--blue); color: var(--blue); }
+  .quiz-opt.correct { background: #14532d; border-color: var(--green); color: var(--green); }
+  .quiz-opt.wrong { background: #450a0a; border-color: var(--red); color: var(--red); }
+  .quiz-exp {
+    margin-top: 10px; font-size: 12px; color: var(--text-dim);
+    background: var(--bg); border-radius: 6px; padding: 8px 12px;
+    display: none;
+  }
+  .quiz-exp.show { display: block; }
+
+  /* ── RAPID FIRE ── */
+  .rf-card {
+    background: var(--bg3); border-radius: 12px;
+    padding: 24px; text-align: center; min-height: 160px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 1px solid var(--border); cursor: pointer;
+    transition: border-color .2s;
+  }
+  .rf-card:hover { border-color: var(--green); }
+  .rf-q { font-size: 17px; font-weight: 700; color: var(--text); }
+  .rf-a { font-size: 14px; color: var(--green); margin-top: 14px; display: none; }
+  .rf-a.show { display: block; }
+  .rf-hint { font-size: 11px; color: var(--text-dim); margin-top: 12px; }
+  .rf-controls { display: flex; gap: 12px; justify-content: center; margin-top: 16px; }
+  .btn {
+    padding: 9px 20px; border-radius: 8px; border: none;
+    font-size: 13px; font-weight: 600; cursor: pointer; transition: .15s;
+  }
+  .btn-green { background: var(--green-dim); color: var(--green); }
+  .btn-green:hover { background: #166534; }
+  .btn-blue { background: var(--blue-dim); color: var(--blue); }
+  .btn-blue:hover { background: #1e40af; }
+  .btn-ghost { background: var(--bg4); color: var(--text-dim); }
+  .btn-ghost:hover { color: var(--text); }
+
+  /* ── PROGRESS BAR ── */
+  .progress-bar-wrap { background: var(--bg4); border-radius: 4px; height: 4px; margin-bottom: 20px; }
+  .progress-bar { height: 4px; background: var(--green); border-radius: 4px; transition: .4s; }
+
+  /* ── LAST NIGHT SHEET ── */
+  .ln-row {
+    display: flex; gap: 8px; align-items: baseline;
+    padding: 6px 0; border-bottom: 1px solid var(--border);
+  }
+  .ln-num { color: var(--green); font-weight: 800; font-size: 14px; flex-shrink: 0; width: 24px; }
+  .ln-text { font-size: 13px; color: var(--text); }
+  .ln-highlight { color: var(--yellow); font-weight: 700; }
+
+  /* ── FORMULA GRID ── */
+  .formula-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;
+  }
+  .formula-tile {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px; text-align: center;
+  }
+  .formula-tile .name { font-size: 11px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; }
+  .formula-tile .formula { font-size: 20px; font-weight: 800; color: var(--yellow); margin: 6px 0; font-family: 'Courier New', monospace; }
+  .formula-tile .unit { font-size: 11px; color: var(--blue); }
+
+  /* ── COMPARISON ── */
+  .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .vs-col { background: var(--bg3); border-radius: 10px; padding: 16px; }
+  .vs-col h4 { text-align: center; margin-bottom: 10px; font-size: 14px; }
+  .vs-col ul { list-style: none; }
+  .vs-col ul li { font-size: 12px; color: var(--text); padding: 5px 0; border-bottom: 1px solid var(--border); }
+  .vs-col ul li:last-child { border: none; }
+  .vs-col ul li::before { content: '→ '; color: var(--green); }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 10px; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 18px; }
+  .tl-dot {
+    position: absolute; left: -24px; top: 4px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--green); border: 3px solid var(--bg);
+  }
+  .tl-label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+  .tl-content { font-size: 13px; color: var(--text); }
+
+  /* ── HAMBURGER MOBILE ── */
+  #hamburger {
+    display: none; position: fixed; top: 12px; left: 12px; z-index: 200;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 10px; cursor: pointer; font-size: 18px;
+  }
+  #overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 90;
+  }
+
+  @media (max-width: 768px) {
+    #sidebar { transform: translateX(-100%); }
+    #sidebar.open { transform: translateX(0); }
+    #main { margin-left: 0; }
+    #hamburger { display: block; }
+    #overlay.show { display: block; }
+    .content { padding: 20px 16px 50px; }
+    .vs-grid { grid-template-columns: 1fr; }
+    .formula-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .page.active .content { animation: fadeIn .3s ease; }
+
+  /* ── FILL BLANK ── */
+  .fill-q { background: var(--bg3); border-radius: 10px; padding: 14px 16px; margin: 8px 0; }
+  .fill-q p { font-size: 13px; color: var(--text); margin-bottom: 8px; }
+  .fill-q input {
+    background: var(--bg); border: 1px solid var(--border); color: var(--text);
+    border-radius: 6px; padding: 6px 12px; font-size: 13px; width: 160px;
+    outline: none; transition: .2s;
+  }
+  .fill-q input:focus { border-color: var(--blue); }
+  .fill-q input.correct { border-color: var(--green); background: #14532d22; }
+  .fill-q input.wrong { border-color: var(--red); background: #45000022; }
+  .fill-q .check-btn { margin-left: 8px; }
+  .fill-q .fb { font-size: 12px; margin-top: 6px; color: var(--text-dim); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+  .note-callout {
+    background: #1c2438; border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0; padding: 10px 14px; margin: 10px 0;
+    font-size: 13px; color: var(--text-dim);
+  }
+  .note-callout strong { color: var(--blue); }
+</style>
+</head>
+<body>
+
+<button id="hamburger" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- ── SIDEBAR ── -->
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="subject-tag">SSC CGL · Physics</div>
+    <h2>Motion &amp; Force</h2>
+    <p>Laws of Motion · Revision System</p>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Core Sections</div>
+    <button class="nav-btn active" onclick="goto('home')">
+      <span class="icon">🏠</span> Big Picture <span class="badge">Start</span>
+    </button>
+    <button class="nav-btn" onclick="goto('memory-palace')">
+      <span class="icon">🧠</span> Memory Palace
+    </button>
+    <button class="nav-btn" onclick="goto('scalar-vector')">
+      <span class="icon">📐</span> Scalar &amp; Vector
+    </button>
+    <button class="nav-btn" onclick="goto('distance-displacement')">
+      <span class="icon">📍</span> Distance &amp; Displacement
+    </button>
+    <button class="nav-btn" onclick="goto('speed-velocity')">
+      <span class="icon">⚡</span> Speed &amp; Velocity
+    </button>
+    <button class="nav-btn" onclick="goto('acceleration')">
+      <span class="icon">🚀</span> Acceleration
+    </button>
+    <button class="nav-btn" onclick="goto('types-motion')">
+      <span class="icon">🔄</span> Types of Motion
+    </button>
+    <button class="nav-btn" onclick="goto('equations')">
+      <span class="icon">📐</span> Equations of Motion
+    </button>
+    <button class="nav-btn" onclick="goto('force')">
+      <span class="icon">💥</span> Force &amp; Types
+    </button>
+    <button class="nav-btn" onclick="goto('newton-laws')">
+      <span class="icon">⚖️</span> Newton's 3 Laws
+    </button>
+    <button class="nav-btn" onclick="goto('momentum')">
+      <span class="icon">🎯</span> Momentum &amp; Impulse
+    </button>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Revision Layers</div>
+    <button class="nav-btn" onclick="goto('exam-traps')">
+      <span class="icon">⚠️</span> Exam Traps <span class="badge">!</span>
+    </button>
+    <button class="nav-btn" onclick="goto('active-recall')">
+      <span class="icon">❓</span> Active Recall Quiz
+    </button>
+    <button class="nav-btn" onclick="goto('rapid-fire')">
+      <span class="icon">🔥</span> Rapid Fire
+    </button>
+    <button class="nav-btn" onclick="goto('high-yield')">
+      <span class="icon">⭐</span> High-Yield Sheet
+    </button>
+    <button class="nav-btn" onclick="goto('last-night')">
+      <span class="icon">🌙</span> Last Night Sheet
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- MAIN CONTENT                                          -->
+<!-- ══════════════════════════════════════════════════════ -->
+<main id="main">
+
+  <!-- ── HOME ── -->
+  <div class="page active" id="page-home">
+    <div class="topbar">
+      <div class="topbar-title">Chapter Overview — <span>Motion &amp; Force</span></div>
+    </div>
+    <div class="content">
+      <div class="section-title">⚡ Motion, Force &amp; Laws</div>
+      <div class="section-sub">Your complete high-retention revision system for SSC CGL Physics</div>
+
+      <div class="card card-green" style="background: linear-gradient(135deg,#0d1f10,#1a2e1a);">
+        <h3>🎯 What This Chapter Is Really About</h3>
+        <p style="font-size:14px;line-height:1.8;color:var(--text);">
+          This chapter answers <strong style="color:var(--green)">one fundamental question</strong>: 
+          <em>How and why do things move?</em> — and what happens when we push or pull them.<br><br>
+          It moves from <strong style="color:var(--yellow)">measuring motion</strong> (distance, displacement, speed, velocity, acceleration) → 
+          to <strong style="color:var(--blue)">types of motion</strong> (uniform, circular, rectilinear) → 
+          to <strong style="color:var(--purple)">Newton's laws</strong> that govern all motion in the universe → 
+          to <strong style="color:var(--red)">momentum and impulse</strong> which are the consequences.
+        </p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0;">
+        <div class="card" style="text-align:center;cursor:pointer" onclick="goto('scalar-vector')">
+          <div style="font-size:28px">📐</div>
+          <div style="font-weight:700;color:var(--blue);margin-top:6px">Scalar vs Vector</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Foundation concept</div>
+        </div>
+        <div class="card" style="text-align:center;cursor:pointer" onclick="goto('equations')">
+          <div style="font-size:28px">📝</div>
+          <div style="font-weight:700;color:var(--yellow);margin-top:6px">3 Equations</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Most asked numericals</div>
+        </div>
+        <div class="card" style="text-align:center;cursor:pointer" onclick="goto('newton-laws')">
+          <div style="font-size:28px">⚖️</div>
+          <div style="font-weight:700;color:var(--green);margin-top:6px">Newton's Laws</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Theory powerhouse</div>
+        </div>
+        <div class="card" style="text-align:center;cursor:pointer" onclick="goto('exam-traps')">
+          <div style="font-size:28px">⚠️</div>
+          <div style="font-weight:700;color:var(--red);margin-top:6px">Exam Traps</div>
+          <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Don't lose marks here</div>
+        </div>
+      </div>
+
+      <div class="card card-yellow">
+        <h3>🔥 Must-Know Quick Facts</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+          <div class="pill"><span class="key">S</span> Speed = Scalar</div>
+          <div class="pill"><span class="key">V</span> Velocity = Vector</div>
+          <div class="pill"><span class="key">×5/18</span> km/h → m/s</div>
+          <div class="pill"><span class="key">×18/5</span> m/s → km/h</div>
+          <div class="pill"><span class="key">11.2</span> Escape Velocity km/s</div>
+          <div class="pill"><span class="key">p=mv</span> Linear Momentum</div>
+          <div class="pill"><span class="key">F=ma</span> Newton's 2nd Law</div>
+          <div class="pill"><span class="key">v²/r</span> Centripetal Acceleration</div>
+        </div>
+      </div>
+
+      <div class="card card-blue">
+        <h3>📊 Chapter at a Glance</h3>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Step 1</div><div class="tl-content"><strong>Quantities</strong> — Scalar (speed, distance, time) vs Vector (velocity, displacement, acceleration)</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Step 2</div><div class="tl-content"><strong>Types of Motion</strong> — Uniform, Non-uniform, Circular, Rectilinear, Free fall</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Step 3</div><div class="tl-content"><strong>Equations of Motion</strong> — 3 equations for horizontal; replace a→g, s→h for vertical</div></div>
+          <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Step 4</div><div class="tl-content"><strong>Force</strong> — Contact vs Non-contact; Conservative vs Non-conservative; Balanced vs Unbalanced</div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--yellow)"></div><div class="tl-label">Step 5</div><div class="tl-content"><strong>Newton's 3 Laws</strong> — Inertia → F=ma → Action-Reaction. Then Momentum &amp; Impulse.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MEMORY PALACE ── -->
+  <div class="page" id="page-memory-palace">
+    <div class="topbar"><div class="topbar-title">🧠 <span>Chapter Memory Palace</span></div></div>
+    <div class="content">
+      <div class="section-title">🧠 The Physics Train Journey</div>
+      <div class="section-sub">Walk through this train and remember the entire chapter</div>
+
+      <div class="memory-palace">
+        <h3>🚂 The UTSAV Express — A Train Ride Through Physics</h3>
+        <p style="font-size:12px;color:#94a3b8;margin-bottom:16px">Imagine you are boarding a train called "UTSAV Express" at a station. Each compartment holds one concept. Walk through it mentally.</p>
+
+        <div class="palace-stop">
+          <div class="num">🚉</div>
+          <div class="text"><strong>Platform (Scalar/Vector)</strong> — The platform has two lanes: a <em>SLOW lane</em> (no direction → Scalar: speed, distance, time) and a <em>FAST lane with arrows</em> (direction matters → Vector: velocity, displacement). Remember: <strong>S for Scalar = Speed; V for Vector = Velocity</strong></div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">1</div>
+          <div class="text"><strong>Compartment 1 — Distance vs Displacement</strong> — A boy runs around the entire train (20 laps = Distance). But his START and END point are the same, so Displacement = ZERO. <em>Picture a dog chasing its own tail — all that effort, zero displacement!</em></div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">2</div>
+          <div class="text"><strong>Compartment 2 — Speed &amp; Velocity</strong> — The speedometer on the train shows speed. But the train's GPS (with direction) shows velocity. Speed = distance/time (scalar). Velocity = displacement/time (vector). Unit = m/s for both. <em>Multiply by 5/18 to convert km/h → m/s.</em></div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">3</div>
+          <div class="text"><strong>Compartment 3 — Acceleration</strong> — The driver presses the accelerator = velocity changes. Rate of change of velocity = Acceleration. If he brakes = Negative acceleration = Deceleration. Unit = m/s². <em>Think: Pressing pedal = +a, Pressing brake = -a</em></div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">4</div>
+          <div class="text"><strong>Compartment 4 — Circular Carriage (Uniform Circular Motion)</strong> — A ceiling fan is spinning in this compartment. The fan blade moves at <em>constant SPEED</em> but its direction keeps changing → so velocity changes → acceleration exists → directed toward the center = <strong>Centripetal acceleration = v²/r</strong>. Force = mv²/r.</div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">5</div>
+          <div class="text"><strong>Compartment 5 — The UTSAV Equation Compartment</strong> — Three equations are written on the wall: (1) v = u + at, (2) s = ut + ½at², (3) v² - u² = 2as. UTSAV: U=initial velocity, T=time, S=distance, A=acceleration, V=final velocity. <em>For vertical: a→g, s→h</em></div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">6</div>
+          <div class="text"><strong>Compartment 6 — Force Room</strong> — Two people: one TOUCHING the wall (contact force: friction, spring, muscle) and one MAGNET floating (non-contact: gravity, magnetic, electrostatic). Conservative forces = non-contact + spring. Non-conservative = friction.</div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">7</div>
+          <div class="text"><strong>Compartment 7 — Newton's Throne Room</strong> — Newton sits on a throne with 3 laws written: Law 1 = "I won't move unless you force me" (Inertia). Law 2 = "Force = how hard you push × how heavy I am" (F=ma). Law 3 = "Whatever you do to me, I'll do back equally" (Action-Reaction).</div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">🏁</div>
+          <div class="text"><strong>Final Station — Momentum &amp; Impulse</strong> — A heavy truck (high momentum = mv) collides gently. But a quick SLAP (short time, large force = Impulse). Conservation of momentum: what you had before collision = what you have after. Rocket = 3rd law + momentum conservation.</div>
+        </div>
+      </div>
+
+      <div class="card card-green">
+        <h3>🔑 The UTSAV Code (Never Forget Equations)</h3>
+        <p style="font-size:13px;color:var(--text-dim);margin-bottom:10px">The teacher's brilliant mnemonic — every variable in one word:</p>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;text-align:center">
+          <div class="formula-tile"><div class="name">U</div><div class="formula" style="font-size:16px">u</div><div class="unit">Initial velocity</div></div>
+          <div class="formula-tile"><div class="name">T</div><div class="formula" style="font-size:16px">t</div><div class="unit">Time</div></div>
+          <div class="formula-tile"><div class="name">S</div><div class="formula" style="font-size:16px">s</div><div class="unit">Distance</div></div>
+          <div class="formula-tile"><div class="name">A</div><div class="formula" style="font-size:16px">a</div><div class="unit">Acceleration</div></div>
+          <div class="formula-tile"><div class="name">V</div><div class="formula" style="font-size:16px">v</div><div class="unit">Final velocity</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SCALAR & VECTOR ── -->
+  <div class="page" id="page-scalar-vector">
+    <div class="topbar"><div class="topbar-title">📐 <span>Scalar &amp; Vector Quantities</span></div></div>
+    <div class="content">
+      <div class="section-title">Scalar vs Vector</div>
+      <div class="section-sub"><span class="tag tag-fire">🔥 Must Know</span> Foundation of all physics questions</div>
+
+      <div class="vs-grid">
+        <div class="vs-col" style="border-top:3px solid var(--blue)">
+          <h4 style="color:var(--blue)">📏 SCALAR Quantities</h4>
+          <ul>
+            <li>Only <strong>magnitude</strong> — no direction</li>
+            <li><strong>S</strong>calar → <strong>S</strong>peed (S for S!)</li>
+            <li>Distance</li>
+            <li>Time</li>
+            <li>Mass</li>
+            <li>Energy, Work, Power</li>
+            <li>Temperature</li>
+          </ul>
+        </div>
+        <div class="vs-col" style="border-top:3px solid var(--green)">
+          <h4 style="color:var(--green)">🧭 VECTOR Quantities</h4>
+          <ul>
+            <li>Magnitude <strong>+ Direction</strong></li>
+            <li><strong>V</strong>ector → <strong>V</strong>elocity (V for V!)</li>
+            <li>Displacement</li>
+            <li>Force</li>
+            <li>Acceleration</li>
+            <li>Momentum</li>
+            <li>Weight</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card card-yellow" style="margin-top:16px">
+        <h3>🧠 Memory Hook: S–S–V–V Rule</h3>
+        <div style="font-size:22px;font-weight:900;color:var(--yellow);letter-spacing:4px;margin:8px 0">
+          S → S &nbsp;&nbsp; V → V
+        </div>
+        <p style="font-size:13px;color:var(--text)"><strong>S</strong>calar → <strong>S</strong>peed &nbsp;|&nbsp; <strong>V</strong>ector → <strong>V</strong>elocity</p>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:6px">
+          Time is scalar: "9 PM" — you never say "9 PM in the eastward direction!" Direction makes no sense for time. 
+          But velocity = "10 m/s NORTH" — direction is essential.
+        </p>
+      </div>
+
+      <div class="card card-red">
+        <h3>⚠️ The Classic Confusion</h3>
+        <table>
+          <tr><th>Scalar</th><th>Vector Pair</th><th>Key Difference</th></tr>
+          <tr><td>Distance</td><td>Displacement</td><td>Displacement = shortest path with direction</td></tr>
+          <tr><td>Speed</td><td>Velocity</td><td>Velocity needs direction; can be zero even if speed ≠ 0</td></tr>
+          <tr><td>Mass</td><td>Weight</td><td>Weight = mg (has direction — downward)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── DISTANCE & DISPLACEMENT ── -->
+  <div class="page" id="page-distance-displacement">
+    <div class="topbar"><div class="topbar-title">📍 <span>Distance &amp; Displacement</span></div></div>
+    <div class="content">
+      <div class="section-title">Distance vs Displacement</div>
+      <div class="section-sub"><span class="tag tag-fire">🔥 Must Know</span> Circular motion question is a favourite!</div>
+
+      <div class="vs-grid">
+        <div class="vs-col" style="border-top:3px solid var(--text-dim)">
+          <h4 style="color:var(--text-dim)">📏 Distance</h4>
+          <ul>
+            <li>Total path length covered</li>
+            <li>Scalar quantity</li>
+            <li>Always positive (≥ 0)</li>
+            <li>A→B→A = 20 km (if AB = 10 km)</li>
+          </ul>
+        </div>
+        <div class="vs-col" style="border-top:3px solid var(--green)">
+          <h4 style="color:var(--green)">📍 Displacement</h4>
+          <ul>
+            <li>Shortest distance from start to end point</li>
+            <li>Vector quantity</li>
+            <li>Can be zero, positive, or negative</li>
+            <li>A→B→A = <strong style="color:var(--red)">0</strong> (back at start!)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="memory-palace" style="margin-top:16px">
+        <h3>🎯 The Famous Circular Motion Trap Question</h3>
+        <p style="font-size:13px;color:var(--text);margin-bottom:12px">A child rides a bicycle in a circle of <strong>radius = 10 m</strong>. One complete rotation takes <strong>1 minute</strong>. What is displacement after <strong>150 seconds</strong>?</p>
+
+        <div class="palace-stop">
+          <div class="num">1</div>
+          <div class="text">150 sec ÷ 60 sec = 2.5 rotations. After 2 full rotations → displacement = 0. Remaining = 0.5 rotation = <strong>half circle</strong></div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">2</div>
+          <div class="text">After half circle, child is at the diametrically opposite point. Shortest distance between start &amp; that point = <strong>Diameter</strong></div>
+        </div>
+        <div class="palace-stop">
+          <div class="num">✅</div>
+          <div class="text"><strong>Displacement = Diameter = 2 × radius = 2 × 10 = <span style="color:var(--green);font-size:16px">20 meters</span></strong></div>
+        </div>
+
+        <div class="note-callout" style="margin-top:14px">
+          <strong>🧠 Rule:</strong> For ANY number of complete rotations → displacement = 0. Only the remainder matters. If remainder = half rotation → displacement = diameter (2r).
+        </div>
+      </div>
+
+      <div class="card card-yellow">
+        <h3>🔑 Key Rules to Remember</h3>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-content">n complete circles → Displacement = <strong style="color:var(--green)">0</strong></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--yellow)"></div><div class="tl-content">½ circle → Displacement = <strong style="color:var(--yellow)">Diameter (2r)</strong></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--blue)"></div><div class="tl-content">¼ circle → Displacement = <strong style="color:var(--blue)">r√2 (diagonal)</strong></div></div>
+          <div class="tl-item"><div class="tl-dot" style="background:var(--red)"></div><div class="tl-content">Distance is always the actual path traveled → <strong style="color:var(--red)">never zero</strong> if moving</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SPEED & VELOCITY ── -->
+  <div class="page" id="page-speed-velocity">
+    <div class="topbar"><div class="topbar-title">⚡ <span>Speed &amp; Velocity</span></div></div>
+    <div class="content">
+      <div class="section-title">Speed &amp; Velocity</div>
+      <div class="section-sub"><span class="tag tag-fire">🔥 Must Know</span> Unit conversion is frequently tested</div>
+
+      <div class="formula-grid" style="margin-bottom:16px">
+        <div class="formula-tile" style="border-top:2px solid var(--blue)">
+          <div class="name">Speed</div>
+          <div class="formula">d / t</div>
+          <div class="unit">Distance ÷ Time | Scalar | m/s</div>
+        </div>
+        <div class="formula-tile" style="border-top:2px solid var(--green)">
+          <div class="name">Velocity</div>
+          <div class="formula">s / t</div>
+          <div class="unit">Displacement ÷ Time | Vector | m/s</div>
+        </div>
+        <div class="formula-tile" style="border-top:2px solid var(--yellow)">
+          <div class="name">km/h → m/s</div>
+          <div class="formula">× 5/18</div>
+          <div class="unit">Example: 54 km/h = 15 m/s</div>
+        </div>
+        <div class="formula-tile" style="border-top:2px solid var(--purple)">
+          <div class="name">m/s → km/h</div>
+          <div class="formula">× 18/5</div>
+          <div class="unit">Reverse conversion</div>
+        </div>
+      </div>
+
+      <div class="card card-yellow">
+        <h3>⚙️ Conversion Trick</h3>
+        <div style="font-size:13px;color:var(--text);line-height:2">
+          54 km/h × (5/18) = <strong style="color:var(--yellow)">15 m/s</strong><br>
+          Why 5/18? → 1 km/h = 1000m/3600s = 5/18 m/s<br>
+          <em style="color:var(--text-dim)">Think: "Divide by 18 and multiply by 5" OR "Divide roughly by 3.6"</em>
+        </div>
+      </div>
+
+      <div class="card card-blue">
+        <h3>📊 Graph Rules — Examiner Loves These</h3>
+        <table>
+          <tr><th>Graph Type</th><th>Slope gives</th><th>Area gives</th></tr>
+          <tr><td><strong style="color:var(--green)">Distance–Time</strong></td><td>Speed</td><td>—</td></tr>
+          <tr><td><strong style="color:var(--yellow)">Velocity–Time</strong></td><td>Acceleration</td><td><strong style="color:var(--red)">Displacement ← Exam Trap!</strong></td></tr>
+        </table>
+        <div class="note-callout" style="margin-top:10px">
+          <strong>⚠️ Trap:</strong> Students often say area of v-t graph = velocity. <strong>NO!</strong> Area of v-t graph = Displacement.
+        </div>
+      </div>
+
+      <div class="card card-green">
+        <h3>🔄 Change in Velocity</h3>
+        <div class="eq-box">
+          <div class="eq-main">Δv = v_final − v_initial</div>
+          <div class="eq-desc">Change = Final minus Initial (always this order)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ACCELERATION ── -->
+  <div class="page" id="page-acceleration">
+    <div class="topbar"><div class="topbar-title">🚀 <span>Acceleration</span></div></div>
+    <div class="content">
+      <div class="section-title">Acceleration &amp; Deceleration</div>
+      <div class="section-sub"><span class="tag tag-star">⭐ Important</span> Core for numericals</div>
+
+      <div class="card card-green">
+        <h3>Definition</h3>
+        <p style="font-size:13px;color:var(--text)"><strong>Rate of change of velocity per unit time.</strong></p>
+        <div class="eq-box" style="margin-top:10px">
+          <div class="eq-main">a = Δv / t = (v − u) / t</div>
+          <div class="eq-desc">SI Unit: m/s² &nbsp;|&nbsp; Vector quantity</div>
+        </div>
+      </div>
+
+      <div class="vs-grid">
+        <div class="vs-col" style="border-top:3px solid var(--green)">
+          <h4 style="color:var(--green)">Positive Acceleration</h4>
+          <ul>
+            <li>Velocity increases with time</li>
+            <li>Pressing gas pedal</li>
+            <li>Speeding up</li>
+            <li>a is positive</li>
+          </ul>
+        </div>
+        <div class="vs-col" style="border-top:3px solid var(--red)">
+          <h4 style="color:var(--red)">Negative Acceleration (Deceleration / Retardation)</h4>
+          <ul>
+            <li>Velocity decreases with time</li>
+            <li>Pressing brakes</li>
+            <li>Slowing down</li>
+            <li>a is negative</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card card-purple" style="margin-top:14px">
+        <h3>🎯 Centripetal Acceleration (Circular Motion)</h3>
+        <div class="formula-grid">
+          <div class="formula-tile">
+            <div class="name">Centripetal Acceleration</div>
+            <div class="formula">v²/r</div>
+            <div class="unit">Directed toward center</div>
+          </div>
+          <div class="formula-tile">
+            <div class="name">Centripetal Force</div>
+            <div class="formula">mv²/r</div>
+            <div class="unit">= mass × centripetal acc</div>
+          </div>
+        </div>
+        <div class="note-callout" style="margin-top:10px">
+          <strong>Key Insight:</strong> In uniform circular motion, SPEED is constant but VELOCITY keeps changing (direction changes) → This change in velocity = acceleration toward center = centripetal acceleration.
+        </div>
+      </div>
+
+      <div class="card card-yellow">
+        <h3>🌍 Escape Velocity</h3>
+        <div class="eq-box">
+          <div class="eq-main">v_escape = 11.2 km/s</div>
+          <div class="eq-desc">Minimum speed to escape Earth's gravity | Never comes back to Earth</div>
+        </div>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:8px">🧠 Memory: "Eleven point two — escaping the Earth is no small feat!"</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TYPES OF MOTION ── -->
+  <div class="page" id="page-types-motion">
+    <div class="topbar"><div class="topbar-title">🔄 <span>Types of Motion</span></div></div>
+    <div class="content">
+      <div class="section-title">Types of Motion</div>
+      <div class="section-sub"><span class="tag tag-star">⭐ Important</span> Definitions are tested directly</div>
+
+      <table style="margin-bottom:16px">
+        <tr>
+          <th>Type</th><th>Definition</th><th>Example</th><th>Key Feature</th>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--green)">Uniform Motion</strong></td>
+          <td>Equal distance in equal time intervals</td>
+          <td>Train at constant speed</td>
+          <td>Constant speed; a = 0</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--yellow)">Non-Uniform Motion</strong></td>
+          <td>Unequal distance in equal time intervals</td>
+          <td>Car in city traffic</td>
+          <td>Speed changes; a ≠ 0</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--blue)">Uniform Circular Motion</strong></td>
+          <td>Constant speed along circular path</td>
+          <td>Fan blade, satellite</td>
+          <td>Speed constant; velocity changes</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--purple)">Rectilinear Motion</strong></td>
+          <td>Motion along a straight line</td>
+          <td>Falling apple, car on highway</td>
+          <td>Used with 3 equations of motion</td>
+        </tr>
+        <tr>
+          <td><strong style="color:var(--red)">Periodic Motion</strong></td>
+          <td>Repeats after fixed time interval</td>
+          <td>Pendulum, Earth's orbit</td>
+          <td>Time period is fixed</td>
+        </tr>
+      </table>
+
+      <div class="card card-green">
+        <h3>🎓 Uniform Motion Memory Hook</h3>
+        <p style="font-size:13px;color:var(--text)">Think of a <strong style="color:var(--green)">school uniform</strong> — everyone wearing the SAME uniform = covering the SAME distance every second. That's uniform motion!</p>
+      </div>
+
+      <div class="card card-blue">
+        <h3>🔄 Uniform Circular Motion — The Critical Distinction</h3>
+        <div style="background:var(--bg);border-radius:8px;padding:14px;margin-top:8px">
+          <div class="ln-row"><div class="ln-num">✅</div><div class="ln-text"><strong style="color:var(--green)">Speed</strong> = Constant (uniform)</div></div>
+          <div class="ln-row"><div class="ln-num">❌</div><div class="ln-text"><strong style="color:var(--red)">Velocity</strong> = NOT constant (direction changes every instant)</div></div>
+          <div class="ln-row"><div class="ln-num">⚡</div><div class="ln-text">Since velocity changes → Acceleration exists (centripetal)</div></div>
+          <div class="ln-row"><div class="ln-num">🎯</div><div class="ln-text">Acceleration + Force → directed <strong>toward center</strong></div></div>
+        </div>
+      </div>
+
+      <div class="card card-red">
+        <h3>🪂 Free Fall Facts</h3>
+        <div class="ln-row"><div class="ln-num">1</div><div class="ln-text"><strong>Initial velocity (u) = 0</strong> in free fall (object starts from rest)</div></div>
+        <div class="ln-row"><div class="ln-num">2</div><div class="ln-text">Acceleration = g (downward)</div></div>
+        <div class="ln-row"><div class="ln-num">3</div><div class="ln-text">If ball thrown UP: final velocity = 0 at highest point</div></div>
+        <div class="ln-row"><div class="ln-num">4</div><div class="ln-text">If ball thrown UP against gravity: use negative sign for g</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EQUATIONS OF MOTION ── -->
+  <div class="page" id="page-equations">
+    <div class="topbar"><div class="topbar-title">📝 <span>Equations of Motion (UTSAV)</span></div></div>
+    <div class="content">
+      <div class="section-title">3 Equations of Motion</div>
+      <div class="section-sub"><span class="tag tag-fire">🔥 Must Know</span> Direct numericals come from these — memorize cold!</div>
+
+      <div class="card" style="background:linear-gradient(135deg,#0d1f10,#1a2e1a);border:1px solid #22543d">
+        <h3 style="color:var(--yellow)">📐 The UTSAV System</h3>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin:10px 0">
+          <div class="pill"><span class="key">u</span> Initial velocity</div>
+          <div class="pill"><span class="key">v</span> Final velocity</div>
+          <div class="pill"><span class="key">a</span> Acceleration</div>
+          <div class="pill"><span class="key">t</span> Time</div>
+          <div class="pill"><span class="key">s</span> Distance</div>
+        </div>
+      </div>
+
+      <div class="formula-grid">
+        <div class="formula-tile" style="border-top:3px solid var(--green)">
+          <div class="name">Equation 1</div>
+          <div class="formula">v = u + at</div>
+          <div class="unit">Velocity–Time relationship | No 's'</div>
+        </div>
+        <div class="formula-tile" style="border-top:3px solid var(--blue)">
+          <div class="name">Equation 2</div>
+          <div class="formula">s = ut + ½at²</div>
+          <div class="unit">Distance–Time relationship | No 'v'</div>
+        </div>
+        <div class="formula-tile" style="border-top:3px solid var(--yellow)">
+          <div class="name">Equation 3</div>
+          <div class="formula">v²−u² = 2as</div>
+          <div class="unit">No Time variable</div>
+        </div>
+      </div>
+
+      <div class="card card-blue" style="margin-top:16px">
+        <h3>🌍 Vertical Motion Substitutions</h3>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;text-align:center">
+          <div>
+            <div style="color:var(--text-dim);font-size:12px;margin-bottom:6px">Horizontal</div>
+            <div class="eq-box"><div class="eq-main" style="font-size:14px">a (acceleration)</div></div>
+            <div class="eq-box"><div class="eq-main" style="font-size:14px">s (distance)</div></div>
+          </div>
+          <div style="font-size:24px;color:var(--green)">→</div>
+          <div>
+            <div style="color:var(--text-dim);font-size:12px;margin-bottom:6px">Vertical (replace with)</div>
+            <div class="eq-box" style="border-color:var(--yellow)"><div class="eq-main" style="font-size:14px;color:var(--green)">g (gravity)</div></div>
+            <div class="eq-box" style="border-color:var(--yellow)"><div class="eq-main" style="font-size:14px;color:var(--green)">h (height)</div></div>
+          </div>
+        </div>
+        <div style="margin-top:14px">
+          <div style="color:var(--text-dim);font-size:12px;margin-bottom:8px">Sign Convention:</div>
+          <div class="ln-row"><div class="ln-num">↓</div><div class="ln-text"><strong>Downward (with gravity):</strong> use <strong style="color:var(--green)">+g</strong> → v = u + gt</div></div>
+          <div class="ln-row"><div class="ln-num">↑</div><div class="ln-text"><strong>Upward (against gravity):</strong> use <strong style="color:var(--red)">−g</strong> → v = u − gt</div></div>
+        </div>
+      </div>
+
+      <div class="card card-yellow">
+        <h3>🎯 Special Cases</h3>
+        <table>
+          <tr><th>Situation</th><th>What is Zero</th><th>Use This</th></tr>
+          <tr><td>Free Fall (dropped)</td><td>u = 0</td><td>v = gt; h = ½gt²</td></tr>
+          <tr><td>Thrown Upward (at peak)</td><td>v = 0</td><td>0 = u − gt → t = u/g</td></tr>
+          <tr><td>Escape Earth</td><td>Never returns</td><td>v = 11.2 km/s</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FORCE ── -->
+  <div class="page" id="page-force">
+    <div class="topbar"><div class="topbar-title">💥 <span>Force &amp; Its Types</span></div></div>
+    <div class="content">
+      <div class="section-title">Force &amp; Its Classification</div>
+      <div class="section-sub"><span class="tag tag-star">⭐ Important</span> Classification tree is exam favourite</div>
+
+      <div class="card card-green">
+        <h3>Definition</h3>
+        <p style="font-size:13px;color:var(--text)">Force is that which can produce <strong>change in velocity</strong> or <strong>change in direction of motion</strong>.</p>
+        <div class="eq-box" style="margin-top:10px">
+          <div class="eq-main">SI Unit = Newton (N)</div>
+          <div class="eq-desc">F = ma &nbsp;|&nbsp; 1 Newton = 1 kg × 1 m/s²</div>
+        </div>
+      </div>
+
+      <h3 style="margin:20px 0 12px">🌳 Force Classification Tree</h3>
+
+      <div style="display:grid;gap:12px">
+        <div class="card card-blue">
+          <h3>1. Based on Contact</h3>
+          <div class="vs-grid">
+            <div class="vs-col">
+              <h4>Contact Forces</h4>
+              <ul>
+                <li>Objects must be touching</li>
+                <li>Frictional force</li>
+                <li>Spring force</li>
+                <li>Muscular force</li>
+                <li>Normal force</li>
+              </ul>
+            </div>
+            <div class="vs-col">
+              <h4 style="color:var(--purple)">Non-Contact Forces</h4>
+              <ul>
+                <li>Objects not touching</li>
+                <li>Gravitational force</li>
+                <li>Magnetic force</li>
+                <li>Electrostatic force</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-purple">
+          <h3>2. Based on Path Independence (Work Done)</h3>
+          <div class="vs-grid">
+            <div class="vs-col">
+              <h4>Conservative Forces</h4>
+              <ul>
+                <li>Work done independent of path</li>
+                <li>Work done = 0 in closed path</li>
+                <li>All non-contact forces</li>
+                <li><strong style="color:var(--yellow)">Exception: Spring force</strong> (contact but conservative!)</li>
+              </ul>
+            </div>
+            <div class="vs-col">
+              <h4 style="color:var(--red)">Non-Conservative Forces</h4>
+              <ul>
+                <li>Work done depends on path</li>
+                <li>Work done ≠ 0 in closed path</li>
+                <li>Frictional force</li>
+                <li>Air resistance</li>
+              </ul>
+            </div>
+          </div>
+          <div class="note-callout" style="margin-top:10px">
+            <strong>🧠 Memory:</strong> "All non-contact + Spring = Conservative. Friction = Non-conservative."<br>
+            <strong>Exception alert:</strong> Spring force is CONTACT but CONSERVATIVE!
+          </div>
+        </div>
+
+        <div class="card card-yellow">
+          <h3>3. Balanced vs Unbalanced</h3>
+          <div class="vs-grid">
+            <div class="vs-col">
+              <h4>Balanced Force</h4>
+              <ul>
+                <li>Net force = <strong>Zero</strong></li>
+                <li>Forces cancel each other</li>
+                <li>Object stays in same state (rest or constant velocity)</li>
+                <li>Example: Book on table</li>
+              </ul>
+            </div>
+            <div class="vs-col">
+              <h4 style="color:var(--red)">Unbalanced Force</h4>
+              <ul>
+                <li>Net force ≠ Zero</li>
+                <li>Forces don't cancel</li>
+                <li>Object accelerates or decelerates</li>
+                <li>30N − 10N = 20N net force</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── NEWTON'S LAWS ── -->
+  <div class="page" id="page-newton-laws">
+    <div class="topbar"><div class="topbar-title">⚖️ <span>Newton's 3 Laws of Motion</span></div></div>
+    <div class="content">
+      <div class="section-title">Newton's 3 Laws of Motion</div>
+      <div class="section-sub"><span class="tag tag-fire">🔥 Must Know</span> Every exam has at least 1-2 questions from here</div>
+
+      <!-- LAW 1 -->
+      <div class="card card-green">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="background:var(--green);color:var(--bg);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900">1</div>
+          <h3 style="margin:0">Law of Inertia</h3>
+        </div>
+        <div class="eq-box">
+          <div class="eq-main" style="font-size:14px">An object at rest stays at rest, an object in motion stays in motion — unless acted upon by an external force.</div>
+        </div>
+        <div style="margin-top:14px">
+          <h4>📌 Inertia = Resistance to change in state | Inertia ∝ Mass</h4>
+          <div style="margin-top:10px">
+            <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px">Types of Inertia:</div>
+            <div class="ln-row"><div class="ln-num">A</div><div class="ln-text"><strong>Inertia of Rest:</strong> Dry fruits fall when tree is shaken (fruits stay, tree moves). Passenger thrown backward when vehicle suddenly starts.</div></div>
+            <div class="ln-row"><div class="ln-num">B</div><div class="ln-text"><strong>Inertia of Motion:</strong> Passenger thrown forward when vehicle suddenly brakes. Coin flipped upward falls back in same place (bus/train).</div></div>
+          </div>
+          <div class="note-callout" style="margin-top:10px">
+            <strong>🧠 Hook:</strong> Bigger mass = Harder to stop truck vs cycle = Higher inertia. Truck has more inertia of rest AND motion!
+          </div>
+        </div>
+      </div>
+
+      <!-- LAW 2 -->
+      <div class="card card-blue">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="background:var(--blue);color:var(--bg);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900">2</div>
+          <h3 style="margin:0;color:var(--blue)">Law of Force &amp; Acceleration</h3>
+        </div>
+        <div class="eq-box">
+          <div class="eq-main">F = ma</div>
+          <div class="eq-desc">Force = Mass × Acceleration</div>
+        </div>
+        <div style="margin-top:14px">
+          <p style="font-size:13px;color:var(--text)">Acceleration is <strong>directly proportional to force</strong> and <strong>inversely proportional to mass</strong>.</p>
+          <div class="note-callout" style="margin-top:10px">
+            <strong>Derivation from Momentum:</strong><br>
+            F = Δp/t = m(v−u)/t = m×a<br>
+            <span style="color:var(--text-dim);font-size:12px">This is where the momentum formula comes from!</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAW 3 -->
+      <div class="card card-purple">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="background:var(--purple);color:var(--bg);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-weight:900">3</div>
+          <h3 style="margin:0;color:var(--purple)">Law of Action-Reaction</h3>
+        </div>
+        <div class="eq-box">
+          <div class="eq-main" style="font-size:14px">For every action, there is an equal and opposite reaction.</div>
+        </div>
+        <div style="margin-top:14px">
+          <table>
+            <tr><th>Situation</th><th>Action</th><th>Reaction</th></tr>
+            <tr><td>Rocket</td><td>Gases pushed downward</td><td>Rocket pushed upward</td></tr>
+            <tr><td>Gun fired</td><td>Bullet pushed forward</td><td>Gun recoils backward</td></tr>
+            <tr><td>Walking</td><td>Foot pushes ground back</td><td>Ground pushes you forward</td></tr>
+            <tr><td>Swimming</td><td>Hands push water back</td><td>Water pushes you forward</td></tr>
+          </table>
+          <div class="note-callout" style="margin-top:10px">
+            <strong>🧠 Hook:</strong> "Do good and you'll get good" — whatever you give, you receive equal and opposite!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MOMENTUM ── -->
+  <div class="page" id="page-momentum">
+    <div class="topbar"><div class="topbar-title">🎯 <span>Momentum &amp; Impulse</span></div></div>
+    <div class="content">
+      <div class="section-title">Momentum &amp; Impulse</div>
+      <div class="section-sub"><span class="tag tag-star">⭐ Important</span> Numericals based on conservation of momentum</div>
+
+      <div class="formula-grid">
+        <div class="formula-tile" style="border-top:3px solid var(--blue)">
+          <div class="name">Linear Momentum (p)</div>
+          <div class="formula">p = mv</div>
+          <div class="unit">kg·m/s | Vector</div>
+        </div>
+        <div class="formula-tile" style="border-top:3px solid var(--yellow)">
+          <div class="name">Force (from momentum)</div>
+          <div class="formula">F = Δp/t</div>
+          <div class="unit">Rate of change of momentum</div>
+        </div>
+        <div class="formula-tile" style="border-top:3px solid var(--purple)">
+          <div class="name">Impulse</div>
+          <div class="formula">J = F × t</div>
+          <div class="unit">Large force, very short time</div>
+        </div>
+        <div class="formula-tile" style="border-top:3px solid var(--green)">
+          <div class="name">Conservation</div>
+          <div class="formula">p₁ = p₂</div>
+          <div class="unit">Before = After collision</div>
+        </div>
+      </div>
+
+      <div class="card card-green" style="margin-top:16px">
+        <h3>🚀 Conservation of Momentum Law</h3>
+        <div class="eq-box">
+          <div class="eq-main">m₁u₁ + m₂u₂ = m₁v₁ + m₂v₂</div>
+          <div class="eq-desc">Total momentum before collision = Total momentum after collision (no external force)</div>
+        </div>
+        <div style="margin-top:12px">
+          <div class="ln-row"><div class="ln-num">📌</div><div class="ln-text"><strong>Sticking together (perfectly inelastic):</strong> m₁u₁ + m₂u₂ = (m₁+m₂)v — they share one final velocity</div></div>
+          <div class="ln-row"><div class="ln-num">🚂</div><div class="ln-text"><strong>Example:</strong> Girl (moving) jumps on stationary cart → combine masses, find common velocity using conservation</div></div>
+          <div class="ln-row"><div class="ln-num">🚀</div><div class="ln-text"><strong>Rocket:</strong> Works on conservation of momentum + Newton's 3rd law</div></div>
+        </div>
+      </div>
+
+      <div class="card card-yellow">
+        <h3>👋 Impulse — The "Slap" Concept</h3>
+        <p style="font-size:13px;color:var(--text)">Force applied for a <strong>very short time</strong> = Impulse.<br>
+        Like a slap — hand-to-cheek contact is just milliseconds, but the force is large.<br>
+        Impulse = F × t = Change in momentum (Δp)</p>
+        <div class="note-callout" style="margin-top:8px">
+          <strong>Why airbags save lives?</strong> They increase time of collision → reduces force (F = Δp/t, same Δp, more t = less F)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EXAM TRAPS ── -->
+  <div class="page" id="page-exam-traps">
+    <div class="topbar"><div class="topbar-title">⚠️ <span>Exam Traps — Don't Lose Marks Here!</span></div></div>
+    <div class="content">
+      <div class="section-title">⚠️ Exam Traps</div>
+      <div class="section-sub">These are the exact points where students lose marks. Study these separately before every exam.</div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 1: Uniform Circular Motion — Speed vs Velocity</strong><br>
+          Students say "velocity is constant in uniform circular motion." WRONG! <strong>Speed is constant, velocity is NOT</strong> (direction changes). Centripetal acceleration exists precisely because velocity changes.</div>
+      </div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 2: Circular Motion Displacement = Diameter, NOT radius</strong><br>
+          After half rotation, displacement = <strong>Diameter (2r)</strong>, not radius (r). Students confuse and write r.</div>
+      </div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 3: Area of Velocity-Time Graph</strong><br>
+          Students say area of v-t graph = velocity or speed. <strong>NO!</strong> Area of v-t graph = <strong>Displacement</strong>. Slope of v-t graph = acceleration.</div>
+      </div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 4: Spring Force is Conservative (not non-conservative)</strong><br>
+          Spring force is a CONTACT force, but it is <strong>CONSERVATIVE</strong> (exception!). Students assume all contact forces = non-conservative. Only friction is non-conservative in common forces.</div>
+      </div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 5: Free Fall — Initial Velocity</strong><br>
+          In free fall, <strong>u (initial velocity) = 0</strong>. Students use some other value. If thrown upward, at the highest point, <strong>v (final velocity) = 0</strong>.</div>
+      </div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 6: Displacement can be ZERO even if distance is not</strong><br>
+          Moving in a circle and returning to start → Distance = 2πr × n laps, but Displacement = 0. This confuses many.</div>
+      </div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 7: Escape Velocity = 11.2 km/s (not m/s, not km/h)</strong><br>
+          The unit matters. <strong>11.2 km/s</strong>. Watch the unit in MCQs — they may give 11.2 in wrong units as distractors.</div>
+      </div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 8: km/h to m/s Conversion Direction</strong><br>
+          To go from km/h → m/s: multiply by <strong>5/18</strong>. To go from m/s → km/h: multiply by <strong>18/5</strong>. Students often flip these.</div>
+      </div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 9: Momentum SI Unit = kg·m/s (not kg·m/s²)</strong><br>
+          kg·m/s² = Newton (unit of force). <strong>Momentum (p) = kg·m/s</strong>. Easy to confuse under pressure.</div>
+      </div>
+
+      <div class="trap-item">
+        <div class="trap-icon">🪤</div>
+        <div class="trap-text"><strong>Trap 10: Newton's 1st Law vs 3rd Law for Rockets</strong><br>
+          Rockets work on <strong>Newton's 3rd Law</strong> (Action-Reaction) AND conservation of momentum. Some students say 2nd law.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ACTIVE RECALL ── -->
+  <div class="page" id="page-active-recall">
+    <div class="topbar"><div class="topbar-title">❓ <span>Active Recall Quiz</span></div></div>
+    <div class="content">
+      <div class="section-title">Active Recall Quiz</div>
+      <div class="section-sub">Test yourself! Click options to check. Force retrieval before re-reading.</div>
+
+      <div class="quiz-q" id="q1">
+        <div class="q">Q1. In uniform circular motion, which quantity remains constant?</div>
+        <button class="quiz-opt" onclick="answer(this,'q1',false)">A) Velocity</button>
+        <button class="quiz-opt" onclick="answer(this,'q1',true)">B) Speed</button>
+        <button class="quiz-opt" onclick="answer(this,'q1',false)">C) Acceleration magnitude</button>
+        <button class="quiz-opt" onclick="answer(this,'q1',false)">D) Displacement</button>
+        <div class="quiz-exp" id="exp-q1">Speed remains constant. Velocity changes because direction changes continuously. Acceleration (centripetal) = v²/r, its direction keeps changing toward center, so only its magnitude is constant — but speed is the classic exam answer.</div>
+      </div>
+
+      <div class="quiz-q" id="q2">
+        <div class="q">Q2. A ball is thrown upward. At the highest point, which of the following is true?</div>
+        <button class="quiz-opt" onclick="answer(this,'q2',false)">A) Both velocity and acceleration are zero</button>
+        <button class="quiz-opt" onclick="answer(this,'q2',true)">B) Velocity is zero, acceleration = g (downward)</button>
+        <button class="quiz-opt" onclick="answer(this,'q2',false)">C) Velocity is maximum, acceleration is zero</button>
+        <button class="quiz-opt" onclick="answer(this,'q2',false)">D) Both are maximum</button>
+        <div class="quiz-exp" id="exp-q2">At the highest point, velocity = 0 (ball momentarily at rest). But gravity still acts, so acceleration = g = 9.8 m/s² downward. Gravity never switches off!</div>
+      </div>
+
+      <div class="quiz-q" id="q3">
+        <div class="q">Q3. The area under a velocity-time graph gives:</div>
+        <button class="quiz-opt" onclick="answer(this,'q3',false)">A) Speed</button>
+        <button class="quiz-opt" onclick="answer(this,'q3',false)">B) Acceleration</button>
+        <button class="quiz-opt" onclick="answer(this,'q3',true)">C) Displacement</button>
+        <button class="quiz-opt" onclick="answer(this,'q3',false)">D) Force</button>
+        <div class="quiz-exp" id="exp-q3">Area of v-t graph = Displacement. Slope of v-t graph = Acceleration. Slope of d-t (distance-time) graph = Speed. These three facts are all exam-tested.</div>
+      </div>
+
+      <div class="quiz-q" id="q4">
+        <div class="q">Q4. Which force is a contact force yet conservative in nature?</div>
+        <button class="quiz-opt" onclick="answer(this,'q4',false)">A) Frictional force</button>
+        <button class="quiz-opt" onclick="answer(this,'q4',true)">B) Spring force</button>
+        <button class="quiz-opt" onclick="answer(this,'q4',false)">C) Muscular force</button>
+        <button class="quiz-opt" onclick="answer(this,'q4',false)">D) Gravitational force</button>
+        <div class="quiz-exp" id="exp-q4">Spring force is a contact force (spring must touch the object) but it is CONSERVATIVE (work done is independent of path). This is the key exception. All non-contact forces (gravity, magnetic, electrostatic) are conservative too.</div>
+      </div>
+
+      <div class="quiz-q" id="q5">
+        <div class="q">Q5. The escape velocity from Earth's surface is:</div>
+        <button class="quiz-opt" onclick="answer(this,'q5',false)">A) 11.2 m/s</button>
+        <button class="quiz-opt" onclick="answer(this,'q5',false)">B) 11.2 km/h</button>
+        <button class="quiz-opt" onclick="answer(this,'q5',true)">C) 11.2 km/s</button>
+        <button class="quiz-opt" onclick="answer(this,'q5',false)">D) 112 km/s</button>
+        <div class="quiz-exp" id="exp-q5">Escape velocity = 11.2 km/s. The unit is km/s (kilometers per second) — not m/s or km/h. This is deliberately tested with wrong units as distractors!</div>
+      </div>
+
+      <hr class="divider">
+      <h3 style="margin-bottom:14px">📝 Fill in the Blanks</h3>
+
+      <div class="fill-q">
+        <p>The slope of a distance-time graph gives <strong>_______</strong></p>
+        <input type="text" id="fb1" placeholder="Type answer..." onkeydown="if(event.key==='Enter')checkFill('fb1','speed','Speed')">
+        <button class="btn btn-blue check-btn" onclick="checkFill('fb1','speed','Speed')">Check</button>
+        <div class="fb" id="fb1-fb"></div>
+      </div>
+
+      <div class="fill-q">
+        <p>To convert km/h to m/s, multiply by <strong>_______</strong></p>
+        <input type="text" id="fb2" placeholder="Type answer..." onkeydown="if(event.key==='Enter')checkFill('fb2','5/18','5/18')">
+        <button class="btn btn-blue check-btn" onclick="checkFill('fb2','5/18','5/18')">Check</button>
+        <div class="fb" id="fb2-fb"></div>
+      </div>
+
+      <div class="fill-q">
+        <p>The SI unit of momentum is <strong>_______</strong></p>
+        <input type="text" id="fb3" placeholder="Type answer..." onkeydown="if(event.key==='Enter')checkFill('fb3','kg m/s','kg·m/s')">
+        <button class="btn btn-blue check-btn" onclick="checkFill('fb3','kg m/s','kg·m/s')">Check</button>
+        <div class="fb" id="fb3-fb"></div>
+      </div>
+
+      <div class="fill-q">
+        <p>In free fall, the initial velocity u = <strong>_______</strong></p>
+        <input type="text" id="fb4" placeholder="Type answer..." onkeydown="if(event.key==='Enter')checkFill('fb4','0','Zero (0)')">
+        <button class="btn btn-blue check-btn" onclick="checkFill('fb4','0','Zero (0)')">Check</button>
+        <div class="fb" id="fb4-fb"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RAPID FIRE ── -->
+  <div class="page" id="page-rapid-fire">
+    <div class="topbar"><div class="topbar-title">🔥 <span>Rapid Fire Revision</span></div></div>
+    <div class="content">
+      <div class="section-title">🔥 Rapid Fire Round</div>
+      <div class="section-sub">Click card to reveal answer. Click Next for next question. Train your recall speed!</div>
+
+      <div style="text-align:center;margin-bottom:16px">
+        <span id="rf-counter" style="color:var(--text-dim);font-size:13px">Question 1 of 20</span>
+        <div class="progress-bar-wrap" style="margin-top:8px">
+          <div class="progress-bar" id="rf-progress" style="width:5%"></div>
+        </div>
+      </div>
+
+      <div class="rf-card" id="rf-card" onclick="revealRF()">
+        <div class="rf-q" id="rf-q">Loading...</div>
+        <div class="rf-a" id="rf-a"></div>
+        <div class="rf-hint" id="rf-hint">👆 Click to reveal answer</div>
+      </div>
+
+      <div class="rf-controls">
+        <button class="btn btn-ghost" onclick="prevRF()">← Prev</button>
+        <button class="btn btn-green" onclick="nextRF()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HIGH YIELD ── -->
+  <div class="page" id="page-high-yield">
+    <div class="topbar"><div class="topbar-title">⭐ <span>High-Yield Revision Notes</span></div></div>
+    <div class="content">
+      <div class="section-title">⭐ High-Yield Revision Sheet</div>
+      <div class="section-sub">Everything that regularly appears in SSC CGL. Revise this 2-3 days before exam.</div>
+
+      <div class="card card-green">
+        <h3>📐 Scalar vs Vector (High Frequency)</h3>
+        <table>
+          <tr><th>Scalar</th><th>Vector</th></tr>
+          <tr><td>Speed, Distance, Time</td><td>Velocity, Displacement, Force</td></tr>
+          <tr><td>Mass, Energy, Work</td><td>Acceleration, Momentum, Weight</td></tr>
+          <tr><td>Temperature, Power</td><td>Torque, Electric field</td></tr>
+        </table>
+      </div>
+
+      <div class="card card-blue">
+        <h3>📝 Key Formulas — Must Memorize</h3>
+        <table>
+          <tr><th>Concept</th><th>Formula</th><th>Unit</th></tr>
+          <tr><td>Speed</td><td>d/t</td><td>m/s (scalar)</td></tr>
+          <tr><td>Velocity</td><td>displacement/t</td><td>m/s (vector)</td></tr>
+          <tr><td>Acceleration</td><td>(v−u)/t</td><td>m/s²</td></tr>
+          <tr><td>Force</td><td>F = ma</td><td>Newton (N)</td></tr>
+          <tr><td>Momentum</td><td>p = mv</td><td>kg·m/s</td></tr>
+          <tr><td>Centripetal acc.</td><td>v²/r</td><td>m/s²</td></tr>
+          <tr><td>Centripetal force</td><td>mv²/r</td><td>N</td></tr>
+          <tr><td>km/h → m/s</td><td>× 5/18</td><td>—</td></tr>
+        </table>
+      </div>
+
+      <div class="card card-yellow">
+        <h3>🔑 Newton's Laws — One-Liners</h3>
+        <div class="ln-row"><div class="ln-num">1</div><div class="ln-text"><span class="ln-highlight">Inertia Law:</span> No external force → no change in state. Inertia ∝ mass.</div></div>
+        <div class="ln-row"><div class="ln-num">2</div><div class="ln-text"><span class="ln-highlight">F = ma:</span> a ∝ F (direct), a ∝ 1/m (inverse). Derived from momentum.</div></div>
+        <div class="ln-row"><div class="ln-num">3</div><div class="ln-text"><span class="ln-highlight">Action = Reaction:</span> Equal, opposite, simultaneous. Rocket, gun recoil.</div></div>
+      </div>
+
+      <div class="card card-purple">
+        <h3>🎯 Graph Rules</h3>
+        <div class="ln-row"><div class="ln-num">d-t</div><div class="ln-text">Slope → <span class="ln-highlight">Speed</span></div></div>
+        <div class="ln-row"><div class="ln-num">v-t</div><div class="ln-text">Slope → <span class="ln-highlight">Acceleration</span> | Area → <span class="ln-highlight">Displacement</span></div></div>
+      </div>
+
+      <div class="card card-red">
+        <h3>⚠️ Top 5 Exam Points</h3>
+        <div class="ln-row"><div class="ln-num">①</div><div class="ln-text">Uniform circular motion → Speed constant, NOT velocity</div></div>
+        <div class="ln-row"><div class="ln-num">②</div><div class="ln-text">Spring force = contact but conservative (exception!)</div></div>
+        <div class="ln-row"><div class="ln-text"><div class="ln-num">③</div>Escape velocity = 11.2 km/s (not m/s)</div></div>
+        <div class="ln-row"><div class="ln-num">④</div><div class="ln-text">Free fall → u = 0 | Thrown up at peak → v = 0</div></div>
+        <div class="ln-row"><div class="ln-num">⑤</div><div class="ln-text">Impulse = F × t = change in momentum | Unit = N·s = kg·m/s</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LAST NIGHT SHEET ── -->
+  <div class="page" id="page-last-night">
+    <div class="topbar"><div class="topbar-title">🌙 <span>Last Night Before Exam Sheet</span></div></div>
+    <div class="content">
+      <div class="section-title">🌙 Last Night Sheet</div>
+      <div class="section-sub">Read this once the night before. Read again in the exam hall waiting room. Nothing else.</div>
+
+      <div style="background:linear-gradient(135deg,#0a0a1a,#0f1830);border:1px solid #1e40af;border-radius:14px;padding:22px">
+        <h3 style="color:#93c5fd;margin-bottom:16px">⚡ 30 THINGS TO KNOW — MOTION &amp; FORCE</h3>
+
+        <div class="ln-row"><div class="ln-num">1</div><div class="ln-text"><span class="ln-highlight">S=Scalar=Speed</span>, V=Vector=Velocity (S for S, V for V)</div></div>
+        <div class="ln-row"><div class="ln-num">2</div><div class="ln-text">Distance = total path | Displacement = shortest (start to end)</div></div>
+        <div class="ln-row"><div class="ln-num">3</div><div class="ln-text">n complete circles → displacement = <span class="ln-highlight">0</span> | half circle → displacement = <span class="ln-highlight">diameter = 2r</span></div></div>
+        <div class="ln-row"><div class="ln-num">4</div><div class="ln-text">Speed = d/t (scalar) | Velocity = displacement/t (vector)</div></div>
+        <div class="ln-row"><div class="ln-num">5</div><div class="ln-text">km/h × <span class="ln-highlight">5/18</span> = m/s | m/s × <span class="ln-highlight">18/5</span> = km/h</div></div>
+        <div class="ln-row"><div class="ln-num">6</div><div class="ln-text">54 km/h = <span class="ln-highlight">15 m/s</span></div></div>
+        <div class="ln-row"><div class="ln-num">7</div><div class="ln-text">Slope of <span class="ln-highlight">d-t graph = speed</span></div></div>
+        <div class="ln-row"><div class="ln-num">8</div><div class="ln-text">Slope of <span class="ln-highlight">v-t graph = acceleration</span> | Area of v-t graph = <span class="ln-highlight">displacement</span></div></div>
+        <div class="ln-row"><div class="ln-num">9</div><div class="ln-text">Uniform motion = equal distance in equal time | Non-uniform = unequal</div></div>
+        <div class="ln-row"><div class="ln-num">10</div><div class="ln-text">Uniform circular motion → <span class="ln-highlight">speed constant</span>, velocity changes → centripetal acc. = v²/r</div></div>
+        <div class="ln-row"><div class="ln-num">11</div><div class="ln-text">UTSAV: u=init vel, t=time, s=dist, a=accel, v=final vel</div></div>
+        <div class="ln-row"><div class="ln-num">12</div><div class="ln-text">Eq 1: v = u+at | Eq 2: s = ut+½at² | Eq 3: v²−u² = 2as</div></div>
+        <div class="ln-row"><div class="ln-num">13</div><div class="ln-text">Vertical: replace <span class="ln-highlight">a→g, s→h</span>. Against gravity: use −g</div></div>
+        <div class="ln-row"><div class="ln-num">14</div><div class="ln-text">Free fall → <span class="ln-highlight">u = 0</span> | Thrown up at peak → <span class="ln-highlight">v = 0</span></div></div>
+        <div class="ln-row"><div class="ln-num">15</div><div class="ln-text">Escape velocity = <span class="ln-highlight">11.2 km/s</span></div></div>
+        <div class="ln-row"><div class="ln-num">16</div><div class="ln-text">Force SI unit = <span class="ln-highlight">Newton (N)</span></div></div>
+        <div class="ln-row"><div class="ln-num">17</div><div class="ln-text">Contact: friction, spring, muscle | Non-contact: gravity, magnetic, electrostatic</div></div>
+        <div class="ln-row"><div class="ln-num">18</div><div class="ln-text">Conservative: all non-contact + <span class="ln-highlight">spring (exception!)</span></div></div>
+        <div class="ln-row"><div class="ln-num">19</div><div class="ln-text">Non-conservative: <span class="ln-highlight">friction</span></div></div>
+        <div class="ln-row"><div class="ln-num">20</div><div class="ln-text">Newton 1: Inertia | <span class="ln-highlight">Inertia ∝ mass</span></div></div>
+        <div class="ln-row"><div class="ln-num">21</div><div class="ln-text">Inertia of rest: tree shaken→fruits fall | Inertia of motion: brakes→lean forward</div></div>
+        <div class="ln-row"><div class="ln-num">22</div><div class="ln-text">Newton 2: <span class="ln-highlight">F = ma</span> | a∝F, a∝1/m</div></div>
+        <div class="ln-row"><div class="ln-num">23</div><div class="ln-text">Newton 3: Action = Reaction (equal, opposite) | Rocket, gun recoil</div></div>
+        <div class="ln-row"><div class="ln-num">24</div><div class="ln-text">Momentum p = <span class="ln-highlight">mv</span> | Unit: <span class="ln-highlight">kg·m/s</span> | Vector</div></div>
+        <div class="ln-row"><div class="ln-num">25</div><div class="ln-text">F = Δp/t (rate of change of momentum)</div></div>
+        <div class="ln-row"><div class="ln-num">26</div><div class="ln-text">Conservation: m₁u₁+m₂u₂ = m₁v₁+m₂v₂</div></div>
+        <div class="ln-row"><div class="ln-num">27</div><div class="ln-text">Impulse = <span class="ln-highlight">F × t</span> = large force in very short time (slap!)</div></div>
+        <div class="ln-row"><div class="ln-num">28</div><div class="ln-text">Centripetal force = <span class="ln-highlight">mv²/r</span> | toward center</div></div>
+        <div class="ln-row"><div class="ln-num">29</div><div class="ln-text">Rectilinear motion = straight line | Periodic = repeating</div></div>
+        <div class="ln-row"><div class="ln-num">30</div><div class="ln-text">Rocket = Newton's 3rd Law + Conservation of Momentum</div></div>
+      </div>
+
+      <div style="text-align:center;margin-top:24px;padding:20px;background:var(--bg2);border-radius:12px;border:1px solid var(--border)">
+        <div style="font-size:28px">🎯</div>
+        <div style="font-size:16px;font-weight:700;color:var(--green);margin-top:8px">You've got this!</div>
+        <div style="font-size:13px;color:var(--text-dim);margin-top:4px">Walk into that exam hall knowing you've prepared smart. Every revision makes these facts stronger. Go get your rank.</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ── NAVIGATION ──
+const pages = ['home','memory-palace','scalar-vector','distance-displacement','speed-velocity','acceleration','types-motion','equations','force','newton-laws','momentum','exam-traps','active-recall','rapid-fire','high-yield','last-night'];
+
+function goto(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) {
+      b.classList.add('active');
+    }
+  });
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+  window.scrollTo(0,0);
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+// ── QUIZ ──
+function answer(btn, qid, isCorrect) {
+  const q = document.getElementById(qid);
+  if (q.querySelector('.correct') || q.querySelector('.wrong')) return; // already answered
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    q.querySelectorAll('.quiz-opt').forEach(b => {
+      if (b.getAttribute('onclick').includes('true')) b.classList.add('correct');
+    });
+  }
+  document.getElementById('exp-' + qid).classList.add('show');
+}
+
+// ── FILL IN BLANKS ──
+function checkFill(id, answer, display) {
+  const input = document.getElementById(id);
+  const fb = document.getElementById(id + '-fb');
+  const val = input.value.trim().toLowerCase().replace(/\s/g,'');
+  const ans = answer.toLowerCase().replace(/\s/g,'');
+  if (val === ans || val === ans.replace('·','') || val === '5÷18' || (id==='fb2' && val==='0.278')) {
+    input.classList.add('correct'); input.classList.remove('wrong');
+    fb.innerHTML = '✅ Correct! Answer: <strong style="color:var(--green)">' + display + '</strong>';
+  } else {
+    input.classList.add('wrong'); input.classList.remove('correct');
+    fb.innerHTML = '❌ Answer: <strong style="color:var(--green)">' + display + '</strong>';
+  }
+}
+
+// ── RAPID FIRE ──
+const rfQuestions = [
+  { q: "What does the 'S' in UTSAV stand for?", a: "S = Distance (in equations of motion)" },
+  { q: "Convert 54 km/h to m/s", a: "54 × 5/18 = 15 m/s" },
+  { q: "What is the SI unit of Force?", a: "Newton (N)" },
+  { q: "In uniform circular motion, what is constant?", a: "Speed (NOT velocity)" },
+  { q: "Escape velocity from Earth = ?", a: "11.2 km/s" },
+  { q: "Give Newton's First Law in one line", a: "An object at rest stays at rest, in motion stays in motion — unless external force acts." },
+  { q: "F = ?", a: "F = ma (mass × acceleration)" },
+  { q: "What does Newton's 3rd law say?", a: "Every action has an equal and opposite reaction." },
+  { q: "What is centripetal acceleration?", a: "v²/r, directed toward the center" },
+  { q: "Area under velocity-time graph = ?", a: "Displacement" },
+  { q: "Slope of distance-time graph = ?", a: "Speed" },
+  { q: "In free fall, initial velocity u = ?", a: "Zero (0)" },
+  { q: "When ball is thrown upward, at peak: v = ?", a: "Zero (0) — momentarily at rest" },
+  { q: "Spring force is what type: conservative or non-conservative?", a: "Conservative (exception — it's a contact force but conservative!)" },
+  { q: "Momentum formula and unit?", a: "p = mv | Unit: kg·m/s" },
+  { q: "What is impulse?", a: "Force applied for very short time: J = F × t = Δp" },
+  { q: "Displacement after 2 complete circles = ?", a: "Zero (0)" },
+  { q: "Slope of velocity-time graph = ?", a: "Acceleration" },
+  { q: "Conservation of momentum: m₁u₁ + m₂u₂ = ?", a: "m₁v₁ + m₂v₂ (sum of momenta before = after)" },
+  { q: "Which Newton's Law is responsible for rocket propulsion?", a: "Newton's 3rd Law (+ conservation of momentum)" },
+];
+let rfIdx = 0;
+let rfRevealed = false;
+
+function loadRF() {
+  const item = rfQuestions[rfIdx];
+  document.getElementById('rf-q').textContent = item.q;
+  const ans = document.getElementById('rf-a');
+  ans.textContent = item.a;
+  ans.classList.remove('show');
+  document.getElementById('rf-hint').textContent = '👆 Click to reveal answer';
+  document.getElementById('rf-counter').textContent = `Question ${rfIdx+1} of ${rfQuestions.length}`;
+  document.getElementById('rf-progress').style.width = ((rfIdx+1)/rfQuestions.length*100) + '%';
+  rfRevealed = false;
+}
+
+function revealRF() {
+  document.getElementById('rf-a').classList.add('show');
+  document.getElementById('rf-hint').textContent = '✅ Revealed! Click Next for more.';
+  rfRevealed = true;
+}
+
+function nextRF() { rfIdx = (rfIdx + 1) % rfQuestions.length; loadRF(); }
+function prevRF() { rfIdx = (rfIdx - 1 + rfQuestions.length) % rfQuestions.length; loadRF(); }
+
+loadRF();
+</script>
+</body>
+</html>

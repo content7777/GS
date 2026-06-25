@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>👁️ Human Eye & Light — SSC CGL Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0b0d14;
+    --bg2: #111520;
+    --bg3: #161b2e;
+    --card: #1a2035;
+    --card2: #1e2540;
+    --border: #2a3352;
+    --green: #39d98a;
+    --green-dim: #1a5c3a;
+    --blue: #4fc3f7;
+    --blue-dim: #1a3a52;
+    --amber: #ffd166;
+    --amber-dim: #4a3810;
+    --red: #ff6b6b;
+    --red-dim: #4a1a1a;
+    --purple: #b39ddb;
+    --purple-dim: #2d2052;
+    --text: #e8eaf2;
+    --text-dim: #8892b0;
+    --text-muted: #556080;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TOP NAV ── */
+  #topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  #topbar h1 { font-size: 15px; font-weight: 700; color: var(--green); white-space: nowrap; }
+  .nav-pills { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+  .nav-pill {
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-dim);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  .nav-pill:hover { border-color: var(--blue); color: var(--blue); }
+  .nav-pill.active { background: var(--green); border-color: var(--green); color: #000; font-weight: 700; }
+
+  /* ── MAIN AREA ── */
+  #main { flex: 1; overflow: hidden; position: relative; }
+  .page { display: none; height: 100%; overflow-y: auto; padding: 28px 32px; animation: fadeIn .3s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* scrollbar */
+  .page::-webkit-scrollbar { width: 6px; }
+  .page::-webkit-scrollbar-track { background: var(--bg2); }
+  .page::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── TYPOGRAPHY ── */
+  .page-title {
+    font-size: 26px; font-weight: 700; margin-bottom: 6px;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .page-sub { color: var(--text-dim); font-size: 13px; margin-bottom: 28px; }
+  h3 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-dim); margin-bottom: 14px; margin-top: 30px; }
+  h3:first-child { margin-top: 0; }
+
+  /* ── CARDS ── */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+  }
+  .card.green::before { background: var(--green); }
+  .card.blue::before { background: var(--blue); }
+  .card.amber::before { background: var(--amber); }
+  .card.red::before { background: var(--red); }
+  .card.purple::before { background: var(--purple); }
+  .card-title { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+  .card.green .card-title { color: var(--green); }
+  .card.blue .card-title { color: var(--blue); }
+  .card.amber .card-title { color: var(--amber); }
+  .card.red .card-title { color: var(--red); }
+  .card.purple .card-title { color: var(--purple); }
+  .card p, .card li { font-size: 13px; color: var(--text-dim); line-height: 1.65; }
+  .card ul { padding-left: 16px; }
+  .card li { margin-bottom: 4px; }
+  strong { color: var(--text); font-weight: 600; }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 10px; font-weight: 700; letter-spacing: .5px; margin-left: 6px; vertical-align: middle;
+  }
+  .tag-fire { background: rgba(255,100,100,.2); color: var(--red); border: 1px solid var(--red); }
+  .tag-star { background: rgba(255,209,102,.2); color: var(--amber); border: 1px solid var(--amber); }
+  .tag-plus { background: rgba(79,195,247,.2); color: var(--blue); border: 1px solid var(--blue); }
+
+  /* ── TABLE ── */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-bottom: 20px; }
+  .tbl th { background: var(--bg3); color: var(--green); font-weight: 700; padding: 10px 14px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .8px; }
+  .tbl td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:hover td { background: var(--card2); color: var(--text); }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: linear-gradient(135deg, rgba(255,107,107,.08), rgba(255,107,107,.03));
+    border: 1px solid rgba(255,107,107,.3);
+    border-radius: 12px; padding: 18px; margin-bottom: 14px;
+  }
+  .trap-title { font-size: 12px; font-weight: 700; color: var(--red); margin-bottom: 10px; letter-spacing: .5px; }
+  .trap-box p, .trap-box li { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .trap-box ul { padding-left: 16px; }
+
+  /* ── MEMORY PALACE ── */
+  .palace-room {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px 18px; margin-bottom: 10px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .palace-icon { font-size: 28px; flex-shrink: 0; }
+  .palace-text p { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .palace-text strong { color: var(--green); }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 18px; margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .quiz-q .q-text { font-size: 13px; font-weight: 600; margin-bottom: 0; }
+  .quiz-q .q-ans {
+    display: none; margin-top: 10px; padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--green); line-height: 1.6;
+  }
+  .quiz-q.open .q-ans { display: block; }
+  .quiz-q .q-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ── QUICK FACTS ── */
+  .fact-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 9px 14px; border-radius: 8px; margin-bottom: 6px;
+    background: var(--bg3); border-left: 3px solid var(--green);
+    font-size: 13px; color: var(--text-dim);
+  }
+  .fact-row.blue { border-left-color: var(--blue); }
+  .fact-row.amber { border-left-color: var(--amber); }
+  .fact-row strong { color: var(--text); }
+
+  /* ── SPECTRUM VISUAL ── */
+  .spectrum-bar {
+    height: 30px; border-radius: 8px;
+    background: linear-gradient(90deg, #8b00ff, #4b0082, #0000ff, #008000, #ffff00, #ff7f00, #ff0000);
+    margin: 10px 0;
+    display: flex; align-items: center; justify-content: space-around;
+    font-size: 10px; font-weight: 700; color: white; letter-spacing: .5px;
+    text-shadow: 0 0 4px rgba(0,0,0,0.8);
+  }
+  .em-spectrum {
+    display: flex; gap: 0; border-radius: 8px; overflow: hidden;
+    margin-bottom: 16px; font-size: 10px;
+  }
+  .em-seg {
+    flex: 1; padding: 8px 4px; text-align: center;
+    font-size: 9px; font-weight: 700; line-height: 1.4;
+  }
+
+  /* ── LAST NIGHT SHEET ── */
+  .bullet-row {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+    font-size: 13px;
+  }
+  .bullet-row .bicon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  .bullet-row span { color: var(--text-dim); line-height: 1.5; }
+
+  /* ── HERO (Landing) ── */
+  #home-page { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .hero-emoji { font-size: 80px; margin-bottom: 20px; animation: pulse 3s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  .hero-title { font-size: 36px; font-weight: 700; background: linear-gradient(90deg, var(--green), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+  .hero-sub { color: var(--text-dim); font-size: 15px; max-width: 520px; line-height: 1.6; margin-bottom: 32px; }
+  .hero-chips { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; }
+  .chip { padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: .2s; }
+  .chip.g { background: rgba(57,217,138,.1); border: 1px solid var(--green); color: var(--green); }
+  .chip.b { background: rgba(79,195,247,.1); border: 1px solid var(--blue); color: var(--blue); }
+  .chip.a { background: rgba(255,209,102,.1); border: 1px solid var(--amber); color: var(--amber); }
+  .chip:hover { transform: translateY(-2px); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .page { padding: 18px 16px; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .hero-title { font-size: 24px; }
+  }
+
+  /* mono font */
+  code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--bg3); padding: 2px 6px; border-radius: 4px; color: var(--amber); }
+
+  /* divider */
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* highlight box */
+  .hl-box {
+    border-radius: 10px; padding: 14px 18px; margin-bottom: 14px;
+    font-size: 13px; line-height: 1.65; color: var(--text-dim);
+  }
+  .hl-box.green { background: rgba(57,217,138,.06); border: 1px solid rgba(57,217,138,.25); }
+  .hl-box.blue { background: rgba(79,195,247,.06); border: 1px solid rgba(79,195,247,.25); }
+  .hl-box.amber { background: rgba(255,209,102,.06); border: 1px solid rgba(255,209,102,.25); }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div id="topbar">
+  <h1>👁️ EYE & LIGHT</h1>
+  <div class="nav-pills">
+    <button class="nav-pill active" onclick="go('home')">🏠 Home</button>
+    <button class="nav-pill" onclick="go('palace')">🧠 Memory Palace</button>
+    <button class="nav-pill" onclick="go('eye-structure')">🔬 Eye Structure</button>
+    <button class="nav-pill" onclick="go('eye-defects')">🩺 Eye Defects</button>
+    <button class="nav-pill" onclick="go('light-phenomena')">🌈 Light Phenomena</button>
+    <button class="nav-pill" onclick="go('em-spectrum')">📡 EM Spectrum</button>
+    <button class="nav-pill" onclick="go('traps')">⚠️ Exam Traps</button>
+    <button class="nav-pill" onclick="go('quiz')">❓ Quiz</button>
+    <button class="nav-pill" onclick="go('last-night')">🌙 Last Night</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+<!-- ══════════════════ HOME ══════════════════ -->
+<div id="home" class="page active">
+  <div class="hero-emoji">👁️</div>
+  <div class="hero-title">Human Eye & Light</div>
+  <div class="hero-sub">A complete high-retention revision system for SSC CGL. Each section is a separate "page" — optimised for 20–100 revision cycles before your exam.</div>
+  <div class="hero-chips">
+    <span class="chip g" onclick="go('eye-structure')">🔬 Eye Parts</span>
+    <span class="chip g" onclick="go('eye-defects')">🩺 Defects & Corrections</span>
+    <span class="chip b" onclick="go('light-phenomena')">🌈 Nature's Light Shows</span>
+    <span class="chip b" onclick="go('em-spectrum')">📡 EM Spectrum</span>
+    <span class="chip a" onclick="go('palace')">🧠 Memory Palace</span>
+    <span class="chip a" onclick="go('traps')">⚠️ Trap Zone</span>
+    <span class="chip g" onclick="go('quiz')">❓ Self-Test</span>
+    <span class="chip a" onclick="go('last-night')">🌙 Final Cheat Sheet</span>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 24px;max-width:500px;text-align:left;">
+    <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:10px;">LEGEND</div>
+    <div style="font-size:12px;color:var(--text-dim);line-height:1.9;">
+      <span style="color:var(--red)">🔥 Must Know</span> — Exam asked multiple times<br>
+      <span style="color:var(--amber)">⭐ Important</span> — High probability questions<br>
+      <span style="color:var(--blue)">➕ Good to Know</span> — Occasionally asked
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MEMORY PALACE ══════════════════ -->
+<div id="palace" class="page">
+  <div class="page-title">🧠 Chapter Memory Palace</div>
+  <div class="page-sub">Walk through a museum of light. Each room = one concept. Visit it mentally during exam.</div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🚪</div>
+    <div class="palace-text">
+      <strong>Museum Entrance — CORNEA</strong>
+      <p>You enter through a <strong>glass door (cornea)</strong> — it's the outermost transparent structure. As you push the door, it bends the light hitting your glasses → <strong>refraction</strong>. The guard at the door is also the one you donate when you "donate your eyes" — <em>you donate the cornea, not the whole eye.</em></p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🎨</div>
+    <div class="palace-text">
+      <strong>Lobby — IRIS (Colour Control Room)</strong>
+      <p>The lobby walls change colour based on how many people enter. <strong>Dark muscles = iris</strong>. The revolving door (pupil) widens or narrows based on light. The colour of the walls = the colour of your eye. <em>Aqueous humor fills the lobby — it also maintains eye pressure.</em></p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🔭</div>
+    <div class="palace-text">
+      <strong>Main Hall — LENS (Zoom Camera)</strong>
+      <p>A zoom camera sits in the center. It <strong>auto-adjusts</strong> when you look near vs far — controlled by <strong>ciliary muscles</strong>. When near: fat lens (high power). When far: thin lens (low power). This zoom ability = <strong>Power of Accommodation</strong>.</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🖼️</div>
+    <div class="palace-text">
+      <strong>Back Wall — RETINA (Screen)</strong>
+      <p>The back wall is a movie screen (retina). This is where the image is actually projected — <strong>inverted & real</strong>. The projector cable (optic nerve) sends it to the brain (projection room). Where the cable is plugged in = <strong>blind spot</strong> (no image forms there).</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🎭</div>
+    <div class="palace-text">
+      <strong>Staff Room — ROD & CONE CELLS</strong>
+      <p>Two types of staff: <strong>Rods (security in black uniform)</strong> = black & white vision, night vision. <strong>Cones (colourful artists)</strong> = colour vision. In colour blindness, the artists are absent — only security staff remain.</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🌊</div>
+    <div class="palace-text">
+      <strong>Swimming Pool — VITREOUS HUMOR</strong>
+      <p>Behind the lens is a fluid-filled pool (vitreous humor). The light travels through this water to reach the retina-screen at the back.</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🏔️</div>
+    <div class="palace-text">
+      <strong>Outside the Museum — PRISM MOUNTAIN</strong>
+      <p>White light enters a triangular mountain. It splits into 7 colours (VIBGYOR). Red is the lazy hiker (least deviation, longest wavelength). Violet is the speed-runner (most deviation, shortest wavelength).</p>
+    </div>
+  </div>
+
+  <div class="palace-room">
+    <div class="palace-icon">🌅</div>
+    <div class="palace-text">
+      <strong>City Skyline — ATMOSPHERIC PHENOMENA</strong>
+      <p>Blue sky = blue light scatters everywhere (Raman's gift). Red sunrise/sunset = only red survives the long journey (blue already scattered). Twinkling stars = refraction through multiple atmosphere layers. Mirage = TIR (Total Internal Reflection) in hot desert air.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ EYE STRUCTURE ══════════════════ -->
+<div id="eye-structure" class="page">
+  <div class="page-title">🔬 Structure of the Human Eye</div>
+  <div class="page-sub">Know every part, its function, and what examiners love to ask about it.</div>
+
+  <h3>Parts & Functions</h3>
+  <table class="tbl">
+    <tr><th>Part</th><th>Function</th><th>Exam Hook</th></tr>
+    <tr>
+      <td><strong style="color:var(--green)">Cornea</strong> 🔥</td>
+      <td>Outermost transparent layer. Causes <strong>refraction of light</strong> (first point of bending)</td>
+      <td>Eye donation = cornea donation. Outermost = cornea.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--blue)">Iris</strong> 🔥</td>
+      <td>Dark muscular structure. Controls <strong>size of pupil</strong> → controls amount of light entering. Determines <strong>eye colour</strong></td>
+      <td>Colour of eye determined by <em>iris</em> not retina.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--amber)">Pupil</strong> ⭐</td>
+      <td>The hole (opening) in the iris through which light enters. Controlled by iris.</td>
+      <td>Pupil = hole, Iris = the muscular ring controlling it.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--green)">Aqueous Humor</strong> ⭐</td>
+      <td>Fluid between cornea & lens. Nourishes cornea, <strong>maintains eye pressure</strong></td>
+      <td>Eye pressure → glaucoma connection.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--blue)">Lens</strong> 🔥</td>
+      <td><strong>Converging (biconvex) lens</strong>. Focuses light on retina. Changes shape via <em>ciliary muscles</em> for near/far vision.</td>
+      <td>Ciliary muscles control lens shape. Power of accommodation.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--amber)">Ciliary Muscles</strong> ⭐</td>
+      <td>Control the curvature of the lens. Contract → fat lens (near vision). Relax → thin lens (far vision).</td>
+      <td>Presbyopia = ciliary muscles lose flexibility.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--green)">Vitreous Humor</strong> ➕</td>
+      <td>Fluid behind the lens (main bulk of eye). Maintains eye shape.</td>
+      <td>Aqueous (front) vs Vitreous (back) — don't mix!</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--blue)">Retina</strong> 🔥</td>
+      <td>Light-sensitive screen at back. Contains <strong>rod cells</strong> (B&W, night) and <strong>cone cells</strong> (colour).</td>
+      <td>Image formed on retina. Inverted & real.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--amber)">Blind Spot</strong> 🔥</td>
+      <td>Where optic nerve connects to retina. <strong>No image formed here.</strong></td>
+      <td>Frequently asked as exception — no photoreceptors at blind spot.</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--purple)">Optic Nerve</strong> 🔥</td>
+      <td>Transmits image from retina to brain. Brain = actual 'seer'.</td>
+      <td>Damaged in glaucoma → irreversible blindness.</td>
+    </tr>
+  </table>
+
+  <div class="grid">
+    <div class="card green">
+      <div class="card-title">⚡ Power of Accommodation</div>
+      <ul>
+        <li>Eye lens can change its <strong>focal length</strong></li>
+        <li>Near object → ciliary muscles contract → lens becomes <strong>fat (more curved)</strong> → short focal length → more converging power</li>
+        <li>Far object → ciliary muscles relax → lens becomes <strong>thin</strong> → long focal length</li>
+        <li>Normal near point: <strong>25 cm</strong> (least distance of distinct vision)</li>
+        <li>Normal far point: <strong>Infinity</strong></li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🎨 Rod vs Cone Cells</div>
+      <ul>
+        <li><strong>Rod cells</strong> — Black & White vision, night vision (dim light)</li>
+        <li><strong>Cone cells</strong> — Colour vision, bright light vision</li>
+        <li>Colour blindness = cone cells absent/defective</li>
+        <li>Night blindness = rod cell issue (Vitamin A deficiency)</li>
+        <li>Memory: <strong>Rods = B&W TV (old), Cones = Coloured cone ice-cream 🍦</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="hl-box green">
+    <strong>🧠 MEMORY HOOK — Eye Journey:</strong> Light enters → <em>Cornea</em> bends it → through <em>Aqueous humor</em> → <em>Iris/Pupil</em> controls how much → <em>Lens</em> focuses it → through <em>Vitreous humor</em> → hits <em>Retina</em> → <em>Optic nerve</em> sends to <em>Brain</em> → YOU SEE!
+  </div>
+</div>
+
+<!-- ══════════════════ EYE DEFECTS ══════════════════ -->
+<div id="eye-defects" class="page">
+  <div class="page-title">🩺 Eye Defects & Corrections</div>
+  <div class="page-sub">Most exam questions come from this section. Master the table. Know the corrections cold.</div>
+
+  <h3>The 4 Big Defects</h3>
+  <table class="tbl">
+    <tr><th>Defect</th><th>Also Known As</th><th>Image Forms</th><th>See Clearly</th><th>Cannot See</th><th>Correction</th><th>Lens Power</th></tr>
+    <tr>
+      <td><strong style="color:var(--red)">Myopia</strong> 🔥</td>
+      <td>Near-sightedness</td>
+      <td><strong>In front of retina</strong></td>
+      <td>Nearby objects ✅</td>
+      <td>Distant objects ❌</td>
+      <td><strong>Concave lens</strong></td>
+      <td>Negative (–)</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--blue)">Hypermetropia</strong> 🔥</td>
+      <td>Far-sightedness</td>
+      <td><strong>Behind the retina</strong></td>
+      <td>Distant objects ✅</td>
+      <td>Nearby objects ❌</td>
+      <td><strong>Convex lens</strong></td>
+      <td>Positive (+)</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--amber)">Presbyopia</strong> ⭐</td>
+      <td>Old age sight</td>
+      <td>Both issues</td>
+      <td>Neither near nor far</td>
+      <td>Both ❌</td>
+      <td><strong>Bifocal lens</strong></td>
+      <td>Both + and –</td>
+    </tr>
+    <tr>
+      <td><strong style="color:var(--green)">Astigmatism</strong> ➕</td>
+      <td>—</td>
+      <td>Uneven focus</td>
+      <td>—</td>
+      <td>Clear vision at any distance</td>
+      <td><strong>Cylindrical lens</strong></td>
+      <td>—</td>
+    </tr>
+  </table>
+
+  <div class="grid">
+    <div class="card red">
+      <div class="card-title">🔴 Myopia — Near Sightedness</div>
+      <ul>
+        <li>Lens is <strong>too converging</strong> (too fat/thick)</li>
+        <li>Image forms <strong>before</strong> retina</li>
+        <li>Common in <strong>young people / children</strong></li>
+        <li>Fix: <strong>Concave (diverging) lens</strong> — it spreads light out first, then eye lens re-converges it onto retina</li>
+        <li>Memory: <strong>Myo = My near friend. Concave = Cave = digs inward = diverges</strong></li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🔵 Hypermetropia — Far Sightedness</div>
+      <ul>
+        <li>Lens has <strong>lost converging power</strong> (too thin)</li>
+        <li>Image forms <strong>behind</strong> retina</li>
+        <li>Common in <strong>old / aged people</strong></li>
+        <li>Fix: <strong>Convex (converging) lens</strong> — adds extra convergence</li>
+        <li>Memory: <strong>Hyper = can see far/hyper distances. Convex = like a bump/hump = converges</strong></li>
+      </ul>
+    </div>
+    <div class="card amber">
+      <div class="card-title">🟡 Presbyopia — Age-Related</div>
+      <ul>
+        <li>Ciliary muscles lose flexibility</li>
+        <li>Lens <strong>hardens</strong> — cannot accommodate for near OR far</li>
+        <li>Exclusively in <strong>aged/elderly people</strong></li>
+        <li>Fix: <strong>Bifocal lens</strong></li>
+        <li>Bifocal: <strong>Concave (top half) for far, Convex (bottom half) for near</strong></li>
+        <li>Memory: <strong>Presbyter = elder/priest. Old priest needs both lenses.</strong></li>
+      </ul>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🟣 Colour Blindness</div>
+      <ul>
+        <li><strong>Hereditary</strong> (genetic) disorder</li>
+        <li>Cone cells absent or defective</li>
+        <li>Cannot distinguish certain colours (usually red-green)</li>
+        <li>More common in <strong>males</strong></li>
+        <li>No correction possible</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Pressure-Related & Other Eye Diseases</h3>
+  <div class="grid">
+    <div class="card red">
+      <div class="card-title">🚨 Glaucoma — The Silent Thief</div>
+      <ul>
+        <li>Caused by <strong>increased intraocular (eye) pressure</strong></li>
+        <li>This damages the <strong>optic nerve</strong></li>
+        <li><strong>Irreversible</strong> — vision lost cannot be restored</li>
+        <li>Peripheral vision lost first, then central</li>
+        <li><strong>Hereditary</strong> in nature</li>
+        <li>Measured using <strong>Tonometer (Tonometry)</strong></li>
+        <li>Memory: <strong>Glaucoma = Glue + Coma. Eye glued shut by pressure. Coma = irreversible.</strong></li>
+      </ul>
+    </div>
+    <div class="card amber">
+      <div class="card-title">⚠️ Cataract vs Glaucoma — KEY TRAP</div>
+      <ul>
+        <li><strong>Cataract:</strong> Milky/cloudy layer on lens → <em>reversible</em> (surgery removes it)</li>
+        <li><strong>Glaucoma:</strong> Optic nerve damage due to pressure → <em>irreversible</em></li>
+        <li>Both can cause blindness but <strong>Cataract is fixable, Glaucoma is NOT</strong></li>
+        <li>Memory: <strong>Cat has 9 lives (reversible). Glue-coma is stuck forever (irreversible).</strong></li>
+      </ul>
+    </div>
+    <div class="card green">
+      <div class="card-title">🦠 Trachoma</div>
+      <ul>
+        <li>Caused by <strong>bacteria</strong> (Chlamydia trachomatis)</li>
+        <li>It is a <strong>bacterial infection</strong> of the eye</li>
+        <li>Leading cause of preventable blindness</li>
+        <li>Memory: <strong>TRACHoma = TRACk the bacteria</strong></li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <div class="card-title">📏 Intraocular Pressure</div>
+      <ul>
+        <li>Pressure of fluid inside the eye</li>
+        <li>Measured by: <strong>Tonometer / Tonometry</strong></li>
+        <li>High pressure → Glaucoma</li>
+        <li>Normal IOP: <strong>10–21 mmHg</strong></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ LIGHT PHENOMENA ══════════════════ -->
+<div id="light-phenomena" class="page">
+  <div class="page-title">🌈 Light Phenomena in Nature</div>
+  <div class="page-sub">Refraction = Position changes. Scattering = Colour changes. Learn this rule and half the questions are solved.</div>
+
+  <div class="hl-box amber">
+    <strong>🔑 MASTER KEY:</strong><br>
+    <strong>REFRACTION → Apparent Position changes</strong> (sunrise 2 min early, sunset 2 min late, twinkling stars)<br>
+    <strong>SCATTERING → Colour phenomena</strong> (blue sky, red sunrise/sunset)<br>
+    <em>When exam asks about colour → SCATTERING. When asks about position → REFRACTION.</em>
+  </div>
+
+  <h3>Dispersion & Prism</h3>
+  <div class="card green" style="margin-bottom:14px;">
+    <div class="card-title">🔺 Prism Dispersion — VIBGYOR</div>
+    <div class="spectrum-bar">
+      <span>V</span><span>I</span><span>B</span><span>G</span><span>Y</span><span>O</span><span>R</span>
+    </div>
+    <ul style="margin-top:10px;">
+      <li><strong>Violet</strong> = Highest deviation, Shortest wavelength, Highest frequency, Highest energy</li>
+      <li><strong>Red</strong> = Lowest deviation, Longest wavelength, Lowest frequency, Lowest energy</li>
+      <li>Rule: <strong>Higher wavelength → Lower deviation</strong></li>
+      <li>White light splits because each wavelength has different refractive index in glass</li>
+      <li><em>Wavelength ∝ 1/Frequency ∝ 1/Energy</em></li>
+    </ul>
+  </div>
+
+  <h3>Natural Phenomena</h3>
+  <div class="grid">
+    <div class="card blue">
+      <div class="card-title">🌈 Rainbow Formation 🔥</div>
+      <ul>
+        <li>Occurs when <strong>rain + sunshine</strong> together</li>
+        <li>Always forms <strong>opposite to the sun</strong></li>
+        <li>Process in each raindrop: <strong>Refraction → TIR → Refraction</strong> (2 refractions + 1 TIR)</li>
+        <li><strong>Primary rainbow:</strong> 1 TIR, brighter, VIBGYOR order (violet inside, red outside)</li>
+        <li><strong>Secondary rainbow:</strong> 2 TIR, fainter, <em>reversed order</em> (red inside, violet outside)</li>
+        <li>Cause: <strong>Dispersion of white light</strong></li>
+      </ul>
+    </div>
+    <div class="card amber">
+      <div class="card-title">⭐ Twinkling of Stars 🔥</div>
+      <ul>
+        <li>Stars twinkle because of <strong>atmospheric refraction</strong></li>
+        <li>Multiple atmosphere layers with different refractive indices</li>
+        <li>Star's apparent position keeps shifting → looks like twinkling</li>
+        <li><strong>Planets do NOT twinkle</strong> — they are closer, appear as disc (many points of light average out)</li>
+        <li>Memory: <strong>Stars are far, small points → refraction shifts them. Planets are big discs → stable.</strong></li>
+      </ul>
+    </div>
+    <div class="card green">
+      <div class="card-title">🌅 Early Sunrise / Late Sunset 🔥</div>
+      <ul>
+        <li>Due to <strong>atmospheric refraction</strong></li>
+        <li>Sun appears <strong>2 minutes BEFORE actual sunrise</strong></li>
+        <li>Sun remains visible <strong>2 minutes AFTER actual sunset</strong></li>
+        <li>We see sun's <em>apparent position</em>, not real position</li>
+        <li>Real sun is still below horizon but light bends around Earth's curve</li>
+        <li>Phenomenon: Refraction (position, not colour)</li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <div class="card-title">🌌 Blue Colour of Sky ⭐</div>
+      <ul>
+        <li>Due to <strong>scattering of light</strong> (Rayleigh scattering)</li>
+        <li>Blue light has <strong>shortest wavelength among visible</strong> → scatters most</li>
+        <li>The sky scatters blue in all directions → sky appears blue</li>
+        <li><strong>Actual colour of sky = BLACK</strong> (no atmosphere = no scattering)</li>
+        <li>Astronauts in space see black sky!</li>
+        <li>Memory: <strong>BLUE SKY = Blue Scatters copiously all around</strong></li>
+      </ul>
+    </div>
+    <div class="card red">
+      <div class="card-title">🌄 Red Colour at Sunrise & Sunset ⭐</div>
+      <ul>
+        <li>Due to <strong>scattering</strong></li>
+        <li>At sunrise/sunset, sunlight travels <strong>maximum distance</strong> through atmosphere</li>
+        <li>All blue (shorter wavelength) gets scattered away during the journey</li>
+        <li><strong>Only red remains</strong> — longest wavelength, least scattered, travels furthest</li>
+        <li>Rule: <strong>Longer wavelength → Less scattering → Travels further</strong></li>
+      </ul>
+    </div>
+    <div class="card purple">
+      <div class="card-title">🏜️ Mirage (Desert) 🔥</div>
+      <ul>
+        <li>Due to <strong>Total Internal Reflection (TIR)</strong></li>
+        <li>Hot air near ground = rarer medium. Cooler air above = denser medium.</li>
+        <li>Light from sky travels dense→rare, hits critical angle → TIR → reflects upward</li>
+        <li>Brain interprets upward-reflected sky as water pool on ground</li>
+        <li>Also: <strong>Optical fiber</strong> uses TIR</li>
+        <li>Memory: <strong>Mirage = TIR. "M" for Mirage, "T" for TIR... they never meet like desert water.</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Total Internal Reflection (TIR)</h3>
+  <div class="card green">
+    <div class="card-title">💡 TIR — Two Conditions Required 🔥</div>
+    <ul>
+      <li>1️⃣ Light must travel from <strong>denser → rarer medium</strong> (e.g., glass→air, water→air)</li>
+      <li>2️⃣ Angle of incidence must be <strong>greater than Critical Angle</strong></li>
+      <li>When both conditions met → light bounces back completely (100% reflection)</li>
+      <li><strong>Applications:</strong> Mirage (desert optical illusion), Optical fiber, Diamond sparkle</li>
+      <li>Memory: <strong>TIR = Dense to Rare + More than Critical. "Don't Reach More than Critical!"</strong></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════ EM SPECTRUM ══════════════════ -->
+<div id="em-spectrum" class="page">
+  <div class="page-title">📡 Electromagnetic Spectrum</div>
+  <div class="page-sub">Know the order, the trend, and the mnemonic. Examiners love order-based questions.</div>
+
+  <h3>The EM Spectrum — Order by Wavelength (High → Low)</h3>
+  <div class="em-spectrum">
+    <div class="em-seg" style="background:#3a1a5c;color:#d4a8ff;">Radio<br>Waves</div>
+    <div class="em-seg" style="background:#1a2a5c;color:#82b4ff;">Micro<br>Waves</div>
+    <div class="em-seg" style="background:#0d3a2e;color:#39d98a;">Infra<br>Red</div>
+    <div class="em-seg" style="background:linear-gradient(90deg,#8b00ff,#0000ff,#00aa00,#aaaa00,#ff8800,#ff0000);color:white;flex:2;">Visible Light</div>
+    <div class="em-seg" style="background:#2a1a00;color:#ffd166;">Ultra<br>Violet</div>
+    <div class="em-seg" style="background:#2a0d0d;color:#ff6b6b;">X-<br>Rays</div>
+    <div class="em-seg" style="background:#4a0d0d;color:#ff4444;">Gamma<br>Rays</div>
+  </div>
+
+  <div class="hl-box amber">
+    <strong>🔑 Mnemonic: "Rich Man In Victoria Uses Extra Gold Coins"</strong><br>
+    <code>Radio → Micro → Infrared → Visible → Ultraviolet → X-Ray → Gamma</code><br><br>
+    <strong>Left to Right (Radio → Gamma):</strong><br>
+    ✅ Wavelength: <strong>DECREASING</strong><br>
+    ✅ Frequency: <strong>INCREASING</strong><br>
+    ✅ Energy: <strong>INCREASING</strong>
+  </div>
+
+  <table class="tbl">
+    <tr><th>Wave Type</th><th>Wavelength</th><th>Frequency</th><th>Key Use / Fact</th></tr>
+    <tr><td><strong style="color:#d4a8ff">Radio Waves</strong></td><td>Longest</td><td>Lowest</td><td>AM/FM radio, TV broadcast</td></tr>
+    <tr><td><strong style="color:#82b4ff">Microwaves</strong></td><td>cm range</td><td>↑</td><td>Microwave oven, RADAR, satellite</td></tr>
+    <tr><td><strong style="color:#39d98a">Infrared</strong></td><td>700nm–1mm</td><td>↑</td><td>Heat, remote controls, night vision</td></tr>
+    <tr><td><strong style="color:white">Visible</strong></td><td>400–700 nm</td><td>↑</td><td>Human eye can detect this only</td></tr>
+    <tr><td><strong style="color:#ffd166">Ultraviolet</strong></td><td>&lt;400 nm</td><td>↑</td><td>Sunburn, sterilization, vitamin D</td></tr>
+    <tr><td><strong style="color:#ff6b6b">X-Rays</strong></td><td>0.01–10 nm</td><td>↑</td><td>Medical imaging, security scanners</td></tr>
+    <tr><td><strong style="color:#ff4444">Gamma Rays</strong></td><td>Shortest</td><td>Highest</td><td>Highest energy, nuclear decay, cancer treatment</td></tr>
+  </table>
+
+  <div class="grid-2">
+    <div class="card green">
+      <div class="card-title">🌈 Visible Light Range</div>
+      <ul>
+        <li>Wavelength: <strong>400 nm (violet) → 700 nm (red)</strong></li>
+        <li>Frequency: ~<strong>4×10¹⁴ Hz → 7.5×10¹⁴ Hz</strong></li>
+        <li>VIBGYOR = increasing wavelength from V to R</li>
+        <li>ROYGBIV = increasing frequency from R to V</li>
+      </ul>
+    </div>
+    <div class="card blue">
+      <div class="card-title">⚡ Energy Relationship</div>
+      <ul>
+        <li><strong>E = hf</strong> (Energy = Planck's constant × frequency)</li>
+        <li>E ∝ f (frequency) — direct proportion</li>
+        <li>E ∝ 1/λ (wavelength) — inverse proportion</li>
+        <li>Gamma rays = most energetic. Radio = least.</li>
+        <li>Violet > Red in energy (within visible)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ EXAM TRAPS ══════════════════ -->
+<div id="traps" class="page">
+  <div class="page-title">⚠️ Exam Traps & Confusions</div>
+  <div class="page-sub">These are the exact points where students lose marks. Study these more than anything else.</div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 1 — Myopia vs Hypermetropia Correction</div>
+    <p><strong>Students confuse:</strong> Which lens corrects which defect?</p><br>
+    <p>✅ <strong>Myopia (Near sight)</strong> = CONCAVE (–ve) lens. <em>Because the eye is over-converging, so we use a diverging lens to counteract.</em></p>
+    <p>✅ <strong>Hypermetropia (Far sight)</strong> = CONVEX (+ve) lens. <em>Because the eye under-converges, so we add a converging lens.</em></p>
+    <p><strong>Trick:</strong> Myopia → M looks like a Mountain, concave is hollow/valley. Hypermetropia → convex like a hump/hill.</p>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 2 — Cataract vs Glaucoma</div>
+    <ul>
+      <li><strong>Cataract:</strong> Milky deposit on LENS → Vision lost → REVERSIBLE by surgery</li>
+      <li><strong>Glaucoma:</strong> Increased EYE PRESSURE damages OPTIC NERVE → Vision lost → IRREVERSIBLE</li>
+      <li><em>Key word: Cataract = lens. Glaucoma = optic nerve.</em></li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 3 — Aqueous Humor vs Vitreous Humor</div>
+    <ul>
+      <li><strong>Aqueous Humor</strong> = Front of eye (between cornea and lens). Maintains <em>eye pressure</em>. Nourishes cornea.</li>
+      <li><strong>Vitreous Humor</strong> = Behind the lens (main bulk). Maintains <em>eye shape</em>.</li>
+      <li>Memory: <strong>AQUEous = front, like water at the forefront. VITReous = behind, like a vitriol/glass chamber.</strong></li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 4 — Iris vs Pupil</div>
+    <ul>
+      <li><strong>Iris</strong> = The coloured muscular ring. Controls pupil size. Determines eye colour.</li>
+      <li><strong>Pupil</strong> = The black hole/opening. Just a gap. Has no control of its own.</li>
+      <li>Exam may ask "What controls amount of light?" → Answer: <strong>Iris</strong> (by controlling pupil size)</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 5 — Blue Sky vs Red Sunrise (Both are Scattering, but WHY different?)</div>
+    <ul>
+      <li><strong>Blue Sky (noon):</strong> Sun is overhead → short path → blue scatters most → reaches your eyes → sky looks blue</li>
+      <li><strong>Red Sunrise/Sunset:</strong> Sun is at horizon → very long path → all blue scatters away → only red reaches eyes</li>
+      <li><em>Same mechanism (scattering) but different path length gives different colour!</em></li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 6 — Stars Twinkle but Planets Don't</div>
+    <ul>
+      <li>Stars are so far they appear as <strong>point sources</strong> → even tiny atmospheric shift changes apparent position → twinkle</li>
+      <li>Planets are closer, appear as <strong>disc (extended source)</strong> → average out → don't twinkle</li>
+      <li>Cause of twinkling: <strong>Atmospheric Refraction</strong> (not scattering, not TIR)</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 7 — Primary vs Secondary Rainbow</div>
+    <ul>
+      <li><strong>Primary:</strong> 1 TIR inside raindrop. Brighter. Red outside, Violet inside.</li>
+      <li><strong>Secondary:</strong> 2 TIR inside raindrop. Fainter. Violet outside, Red inside (REVERSED).</li>
+      <li>Statement: "Secondary rainbow has reversed colour order" → TRUE ✅</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 8 — Colour Blindness vs Night Blindness</div>
+    <ul>
+      <li><strong>Colour Blindness:</strong> Cone cells absent/defective. Hereditary. Cannot distinguish colours.</li>
+      <li><strong>Night Blindness (Nyctalopia):</strong> Rod cells affected. Caused by <strong>Vitamin A deficiency</strong>. Cannot see in dim light.</li>
+      <li><em>Colour = Cones. Night = Rods. Completely different cells!</em></li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 9 — TIR Direction (Dense to Rare, NOT Rare to Dense)</div>
+    <ul>
+      <li>TIR happens when light goes from <strong>DENSE medium to RARE medium</strong> (e.g., water/glass → air)</li>
+      <li>Students often reverse this. Light going from air→water does NOT produce TIR.</li>
+      <li>Condition: Dense→Rare + angle > Critical Angle = TIR</li>
+    </ul>
+  </div>
+
+  <div class="trap-box">
+    <div class="trap-title">🪤 TRAP 10 — Eye Donation = Cornea Donation</div>
+    <ul>
+      <li>When we say "eye donation," we donate the <strong>cornea</strong>, not the entire eyeball</li>
+      <li>Cornea is the outermost transparent part that can be transplanted</li>
+      <li>Cornea is also the first point of refraction in the eye</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════ QUIZ ══════════════════ -->
+<div id="quiz" class="page">
+  <div class="page-title">❓ Active Recall — Self Test</div>
+  <div class="page-sub">Click each question to reveal the answer. Cover the answer, answer in your head first!</div>
+
+  <h3>Eye Structure</h3>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">What is the outermost structure of the eye? What is its function?</div>
+    <div class="q-hint">👆 Click to reveal answer</div>
+    <div class="q-ans">🟢 <strong>Cornea.</strong> Functions: (1) First point of refraction of light in the eye. (2) The part donated in "eye donation."</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">What structure determines eye colour? What else does it control?</div>
+    <div class="q-ans">🟢 <strong>Iris.</strong> It determines eye colour AND controls the size of the pupil (which controls amount of light entering).</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">What is the Power of Accommodation? Which structure is responsible?</div>
+    <div class="q-ans">🟢 The ability of the eye lens to change its <strong>focal length</strong> (shape) to see near and far objects clearly. The <strong>ciliary muscles</strong> control this by changing lens curvature.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Where is the blind spot? Why can't we see there?</div>
+    <div class="q-ans">🟢 The blind spot is where the <strong>optic nerve connects to the retina</strong>. No rod or cone cells exist there, so no image is formed.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Rod cells are responsible for _____ vision. Cone cells are responsible for _____ vision.</div>
+    <div class="q-ans">🟢 Rod cells → <strong>Black & White / dim light</strong> vision. Cone cells → <strong>Colour / bright light</strong> vision.</div>
+  </div>
+
+  <h3>Eye Defects</h3>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">A person can see near objects but not far objects. What defect? What lens corrects it?</div>
+    <div class="q-ans">🟢 <strong>Myopia (Near-sightedness).</strong> Corrected by <strong>Concave lens (negative power).</strong> Image forms in FRONT of retina.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">A person can see far objects but not near objects. What defect? What lens corrects it?</div>
+    <div class="q-ans">🟢 <strong>Hypermetropia (Far-sightedness).</strong> Corrected by <strong>Convex lens (positive power).</strong> Image forms BEHIND retina.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Presbyopia is corrected by what type of lens? Why does this defect occur?</div>
+    <div class="q-ans">🟢 <strong>Bifocal lens</strong> (concave top for far, convex bottom for near). Cause: <strong>Ciliary muscles lose flexibility</strong> with age → lens hardens → cannot accommodate.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Glaucoma is caused by _____ which damages the _____. Is it reversible?</div>
+    <div class="q-ans">🟢 Caused by <strong>increased intraocular (eye) pressure</strong> which damages the <strong>optic nerve</strong>. It is <strong>IRREVERSIBLE</strong>. Peripheral vision is lost first.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">What instrument measures intraocular (eye) pressure?</div>
+    <div class="q-ans">🟢 <strong>Tonometer</strong> (process = Tonometry).</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Trachoma is caused by what type of organism?</div>
+    <div class="q-ans">🟢 <strong>Bacteria</strong> (Chlamydia trachomatis). It is a bacterial infection of the eye.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">In colour blindness, which type of cell is absent or defective?</div>
+    <div class="q-ans">🟢 <strong>Cone cells.</strong> Colour blindness is hereditary (genetic) in nature.</div>
+  </div>
+
+  <h3>Light Phenomena</h3>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">In VIBGYOR, which colour has highest deviation in a prism? Which has lowest?</div>
+    <div class="q-ans">🟢 <strong>Violet = Highest deviation</strong> (shortest wavelength). <strong>Red = Lowest deviation</strong> (longest wavelength). Rule: Higher wavelength → Lower deviation.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Rainbow always forms in which direction relative to the sun?</div>
+    <div class="q-ans">🟢 <strong>Opposite to the sun.</strong> (Sun is behind you, rainbow is in front.)</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">What is the process inside a raindrop that creates a primary rainbow?</div>
+    <div class="q-ans">🟢 <strong>Refraction → Total Internal Reflection (1 time) → Refraction</strong>. This causes dispersion of white light into 7 colours.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Why does the sky appear blue?</div>
+    <div class="q-ans">🟢 Due to <strong>scattering of light (Rayleigh scattering).</strong> Blue light has shortest wavelength and scatters most in all directions. This scattered blue light is what we see as the sky colour.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Why does the sun appear red during sunrise and sunset?</div>
+    <div class="q-ans">🟢 Due to <strong>scattering.</strong> Sunlight travels maximum distance through atmosphere at sunrise/sunset. All blue (short wavelength) scatters away. Only <strong>red (long wavelength, least scattered)</strong> reaches our eyes.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">The sun appears to rise 2 minutes before actual sunrise due to ___?</div>
+    <div class="q-ans">🟢 <strong>Atmospheric Refraction.</strong> We see the sun's apparent position, not actual. Sun is still below the horizon but its light bends around Earth reaching us early.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">What phenomenon causes mirage in deserts? What are the two conditions for it?</div>
+    <div class="q-ans">🟢 <strong>Total Internal Reflection (TIR).</strong> Conditions: (1) Light travels from denser → rarer medium. (2) Angle of incidence > Critical angle. Hot air near ground = rarer. Cool air above = denser. Sky light undergoes TIR and appears as "water."</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">Give the EM spectrum order from longest to shortest wavelength with the mnemonic.</div>
+    <div class="q-ans">🟢 <strong>"Rich Man In Victoria Uses Extra Gold Coins"</strong><br>Radio → Microwave → Infrared → Visible → Ultraviolet → X-Ray → Gamma<br>Left→Right: Wavelength ↓, Frequency ↑, Energy ↑</div>
+  </div>
+
+  <h3>Rapid Fire</h3>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">⚡ What fluid is found between the cornea and lens?</div>
+    <div class="q-ans">🟢 Aqueous Humor</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">⚡ Which rainbow is brighter — primary or secondary?</div>
+    <div class="q-ans">🟢 Primary rainbow (1 TIR, less energy loss)</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">⚡ True or False: Planets twinkle just like stars.</div>
+    <div class="q-ans">🟢 FALSE. Planets do NOT twinkle. Only stars twinkle (atmospheric refraction, point source).</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">⚡ Which defect affects both near and far vision? In which age group?</div>
+    <div class="q-ans">🟢 Presbyopia. Aged / elderly people.</div>
+  </div>
+  <div class="quiz-q" onclick="this.classList.toggle('open')">
+    <div class="q-text">⚡ Optical fibers work on which principle?</div>
+    <div class="q-ans">🟢 Total Internal Reflection (TIR)</div>
+  </div>
+</div>
+
+<!-- ══════════════════ LAST NIGHT ══════════════════ -->
+<div id="last-night" class="page">
+  <div class="page-title">🌙 Last-Night-Before-Exam Sheet</div>
+  <div class="page-sub">30 seconds per bullet. Read everything once. Sleep well. Trust the process.</div>
+
+  <h3>👁️ Eye Structure — 1-Line Facts</h3>
+  <div class="bullet-row"><div class="bicon">🟢</div><span><strong>Cornea</strong> = Outermost, causes refraction, donated in eye donation</span></div>
+  <div class="bullet-row"><div class="bicon">🟢</div><span><strong>Iris</strong> = Coloured muscular ring, controls pupil size, determines eye colour</span></div>
+  <div class="bullet-row"><div class="bicon">🟢</div><span><strong>Pupil</strong> = Hole in iris, controlled by iris, lets light in</span></div>
+  <div class="bullet-row"><div class="bicon">🟢</div><span><strong>Aqueous Humor</strong> = Fluid between cornea & lens, maintains eye pressure</span></div>
+  <div class="bullet-row"><div class="bicon">🟢</div><span><strong>Lens</strong> = Converging (biconvex), ciliary muscles change its shape</span></div>
+  <div class="bullet-row"><div class="bicon">🟢</div><span><strong>Retina</strong> = Screen at back, has rod cells (B&W) and cone cells (colour)</span></div>
+  <div class="bullet-row"><div class="bicon">🟢</div><span><strong>Blind Spot</strong> = Where optic nerve attaches, NO image formed here</span></div>
+  <div class="bullet-row"><div class="bicon">🟢</div><span><strong>Optic Nerve</strong> = Sends image to brain, damaged in glaucoma (irreversible)</span></div>
+
+  <div class="divider"></div>
+  <h3>🩺 Defects — Quick Reference</h3>
+  <div class="bullet-row"><div class="bicon">🔴</div><span><strong>Myopia</strong> = Near-sight, image BEFORE retina, fix = CONCAVE (–ve lens), young people</span></div>
+  <div class="bullet-row"><div class="bicon">🔵</div><span><strong>Hypermetropia</strong> = Far-sight, image BEHIND retina, fix = CONVEX (+ve lens), old people</span></div>
+  <div class="bullet-row"><div class="bicon">🟡</div><span><strong>Presbyopia</strong> = Both affected, hardened lens, fix = BIFOCAL, aged people</span></div>
+  <div class="bullet-row"><div class="bicon">🟣</div><span><strong>Colour Blindness</strong> = Hereditary, CONE CELLS absent</span></div>
+  <div class="bullet-row"><div class="bicon">🔴</div><span><strong>Glaucoma</strong> = Increased eye pressure → optic nerve damage → IRREVERSIBLE, hereditary</span></div>
+  <div class="bullet-row"><div class="bicon">🟡</div><span><strong>Cataract</strong> = Milky layer on lens → REVERSIBLE by surgery</span></div>
+  <div class="bullet-row"><div class="bicon">🦠</div><span><strong>Trachoma</strong> = Bacterial infection</span></div>
+  <div class="bullet-row"><div class="bicon">📏</div><span><strong>Tonometer</strong> = Measures intraocular (eye) pressure</span></div>
+
+  <div class="divider"></div>
+  <h3>🌈 Light Phenomena — Quick Reference</h3>
+  <div class="bullet-row"><div class="bicon">📐</div><span><strong>Prism</strong>: Violet = max deviation. Red = min deviation. Higher wavelength = lower deviation.</span></div>
+  <div class="bullet-row"><div class="bicon">🌈</div><span><strong>Rainbow</strong>: Opposite to sun. Refraction→TIR→Refraction. Primary=1 TIR (bright). Secondary=2 TIR (reversed, faint).</span></div>
+  <div class="bullet-row"><div class="bicon">⭐</div><span><strong>Twinkling</strong>: Stars only (not planets). Cause = Atmospheric Refraction.</span></div>
+  <div class="bullet-row"><div class="bicon">🌅</div><span><strong>Early Sunrise</strong>: 2 min early visible. Atmospheric Refraction. Apparent position ≠ real position.</span></div>
+  <div class="bullet-row"><div class="bicon">🔵</div><span><strong>Blue Sky</strong>: SCATTERING of blue light (shortest wavelength scatters most). Actual sky = BLACK.</span></div>
+  <div class="bullet-row"><div class="bicon">🔴</div><span><strong>Red Sunrise/Sunset</strong>: SCATTERING. Long path → all blue scattered → only red remains.</span></div>
+  <div class="bullet-row"><div class="bicon">🏜️</div><span><strong>Mirage</strong>: TOTAL INTERNAL REFLECTION. Dense→Rare + angle > critical angle.</span></div>
+  <div class="bullet-row"><div class="bicon">💡</div><span><strong>Optical Fiber</strong>: Also TIR.</span></div>
+
+  <div class="divider"></div>
+  <h3>📡 EM Spectrum</h3>
+  <div class="bullet-row"><div class="bicon">🧠</div><span><strong>"Rich Man In Victoria Uses Extra Gold Coins"</strong> = Radio, Micro, IR, Visible, UV, X-Ray, Gamma</span></div>
+  <div class="bullet-row"><div class="bicon">➡️</div><span>Left → Right: Wavelength ↓ | Frequency ↑ | Energy ↑</span></div>
+  <div class="bullet-row"><div class="bicon">👁️</div><span>Visible light: 400nm (violet) → 700nm (red)</span></div>
+
+  <div class="divider"></div>
+  <h3>⚠️ Last-Minute Traps to Remember</h3>
+  <div class="hl-box red" style="background:rgba(255,107,107,.07);border-color:rgba(255,107,107,.3);">
+    <div class="bullet-row" style="background:transparent;border:none;padding:4px 0;"><div class="bicon">❗</div><span>Cataract = REVERSIBLE | Glaucoma = IRREVERSIBLE</span></div>
+    <div class="bullet-row" style="background:transparent;border:none;padding:4px 0;"><div class="bicon">❗</div><span>Iris = colour of eye (NOT retina)</span></div>
+    <div class="bullet-row" style="background:transparent;border:none;padding:4px 0;"><div class="bicon">❗</div><span>Colour = SCATTERING | Position = REFRACTION</span></div>
+    <div class="bullet-row" style="background:transparent;border:none;padding:4px 0;"><div class="bicon">❗</div><span>Planets do NOT twinkle. Only Stars do.</span></div>
+    <div class="bullet-row" style="background:transparent;border:none;padding:4px 0;"><div class="bicon">❗</div><span>Secondary rainbow = reversed colour order + fainter</span></div>
+    <div class="bullet-row" style="background:transparent;border:none;padding:4px 0;"><div class="bicon">❗</div><span>TIR = Dense → Rare (NOT rare → dense)</span></div>
+    <div class="bullet-row" style="background:transparent;border:none;padding:4px 0;"><div class="bicon">❗</div><span>Eye donation = Cornea donation</span></div>
+    <div class="bullet-row" style="background:transparent;border:none;padding:4px 0;"><div class="bicon">❗</div><span>Colour blindness = Cone cells. Night blindness = Rod cells + Vit A deficiency.</span></div>
+  </div>
+
+  <div style="text-align:center;margin-top:30px;padding:20px;background:var(--card);border-radius:12px;border:1px solid var(--green);">
+    <div style="font-size:32px;margin-bottom:8px;">🏆</div>
+    <div style="color:var(--green);font-weight:700;font-size:16px;">You've got this. Sleep well tonight.</div>
+    <div style="color:var(--text-dim);font-size:13px;margin-top:6px;">Every fact in this chapter is now in your memory palace. Trust your preparation.</div>
+  </div>
+</div>
+
+</div><!-- end #main -->
+
+<script>
+  function go(id) {
+    // Hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+
+    // Show target page
+    const target = document.getElementById(id);
+    if (target) target.classList.add('active');
+
+    // Activate nav pill
+    const pills = document.querySelectorAll('.nav-pill');
+    pills.forEach(p => {
+      if (p.getAttribute('onclick') && p.getAttribute('onclick').includes("'" + id + "'")) {
+        p.classList.add('active');
+      }
+    });
+
+    // Scroll to top
+    if (target) target.scrollTop = 0;
+  }
+
+  // Home page chip clicks already handled by inline go() calls
+  // Home starts active by default
+</script>
+
+</body>
+</html>

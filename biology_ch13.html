@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology: Hormones & Plant Movement — SSC CGL Revision</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --bg2: #161b27;
+    --bg3: #1e2535;
+    --border: #2a3347;
+    --green: #4ade80;
+    --green-dim: #1a3a2a;
+    --blue: #60a5fa;
+    --blue-dim: #1a2a3a;
+    --yellow: #fbbf24;
+    --yellow-dim: #2d2510;
+    --red: #f87171;
+    --red-dim: #2d1a1a;
+    --purple: #c084fc;
+    --purple-dim: #2a1a3a;
+    --cyan: #22d3ee;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* NAV */
+  #app { display: flex; flex-direction: column; height: 100vh; }
+
+  header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    z-index: 100;
+  }
+  .logo-badge {
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    color: #000;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+  .header-title { font-size: 14px; color: var(--text-dim); font-weight: 500; }
+  .header-sub { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+
+  /* SIDEBAR + CONTENT */
+  .main-wrap { display: flex; flex: 1; overflow: hidden; }
+
+  aside {
+    width: 220px;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    flex-shrink: 0;
+    padding: 10px 0;
+  }
+  aside::-webkit-scrollbar { width: 4px; }
+  aside::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .nav-section-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    padding: 10px 16px 4px;
+    text-transform: uppercase;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    transition: all 0.15s;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .nav-item:hover { background: var(--bg3); color: var(--text); }
+  .nav-item.active {
+    border-left-color: var(--green);
+    background: var(--green-dim);
+    color: var(--green);
+  }
+  .nav-icon { font-size: 14px; width: 18px; text-align: center; }
+
+  /* CONTENT AREA */
+  #content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 32px;
+    background: var(--bg);
+  }
+  #content::-webkit-scrollbar { width: 6px; }
+  #content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .page { display: none; animation: fadeIn 0.2s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* TYPOGRAPHY */
+  h1 {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  h2 { font-size: 18px; font-weight: 700; color: var(--green); margin: 28px 0 14px; }
+  h3 { font-size: 14px; font-weight: 700; color: var(--blue); margin: 18px 0 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+  p { font-size: 14px; line-height: 1.7; color: var(--text-dim); margin-bottom: 10px; }
+  .subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+
+  /* CARDS */
+  .card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+  .card-green { border-color: var(--green); background: var(--green-dim); }
+  .card-blue { border-color: var(--blue); background: var(--blue-dim); }
+  .card-yellow { border-color: var(--yellow); background: var(--yellow-dim); }
+  .card-red { border-color: var(--red); background: var(--red-dim); }
+  .card-purple { border-color: var(--purple); background: var(--purple-dim); }
+
+  .card h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .card-green h4 { color: var(--green); }
+  .card-blue h4 { color: var(--blue); }
+  .card-yellow h4 { color: var(--yellow); }
+  .card-red h4 { color: var(--red); }
+  .card-purple h4 { color: var(--purple); }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 700px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  th {
+    background: var(--bg3);
+    color: var(--green);
+    padding: 9px 12px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-dim);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg3); }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 2px;
+  }
+  .tag-fire { background: #7f1d1d; color: #fca5a5; }
+  .tag-star { background: #1e3a5f; color: #93c5fd; }
+  .tag-plus { background: #1a2d1a; color: #86efac; }
+
+  /* MEMORY HOOK */
+  .hook-box {
+    background: linear-gradient(135deg, #1a1f35, #1f1a35);
+    border: 1px solid #4a3f70;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 12px 0;
+    position: relative;
+  }
+  .hook-box::before {
+    content: '🧠';
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 18px;
+  }
+  .hook-box p { color: #c4b5fd; font-style: italic; }
+  .hook-title { color: var(--purple); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+
+  /* TRAP BOX */
+  .trap-box {
+    background: var(--red-dim);
+    border: 1px solid var(--red);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 12px 0;
+  }
+  .trap-title { color: var(--red); font-weight: 800; font-size: 13px; margin-bottom: 8px; }
+
+  /* QUIZ */
+  .quiz-q {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 10px;
+  }
+  .quiz-q p { color: var(--text); font-weight: 600; font-size: 13px; margin-bottom: 10px; }
+  .quiz-options { display: flex; flex-direction: column; gap: 6px; }
+  .opt {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-dim);
+    transition: all 0.15s;
+  }
+  .opt:hover { border-color: var(--blue); color: var(--blue); }
+  .opt.correct { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+  .opt.wrong { background: var(--red-dim); border-color: var(--red); color: var(--red); }
+  .quiz-explain { display: none; margin-top: 8px; font-size: 12px; color: var(--yellow); background: var(--yellow-dim); border-radius: 6px; padding: 8px 10px; }
+  .quiz-explain.show { display: block; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 16px; }
+  .tl-dot {
+    position: absolute;
+    left: -20px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid var(--green);
+    background: var(--bg);
+  }
+  .tl-label { font-size: 11px; color: var(--green); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .tl-content { font-size: 13px; color: var(--text-dim); margin-top: 3px; }
+
+  /* PILL ROW */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .pill {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .pill-green { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+  .pill-blue { border-color: var(--blue); color: var(--blue); background: var(--blue-dim); }
+  .pill-red { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+
+  /* FLOW DIAGRAM */
+  .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+  .flow-box {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .flow-arrow { color: var(--text-muted); font-size: 16px; }
+
+  /* PROGRESS */
+  .progress-bar {
+    background: var(--bg3);
+    border-radius: 4px;
+    height: 4px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+
+  /* FILL BLANK */
+  .fill-blank {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .blank-input {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    color: var(--text);
+    font-size: 13px;
+    width: 120px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .blank-input:focus { border-color: var(--blue); }
+  .blank-input.right { border-color: var(--green); }
+  .blank-input.wrong-ans { border-color: var(--red); }
+  .check-btn {
+    background: var(--blue);
+    color: #000;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.15s;
+  }
+  .check-btn:hover { opacity: 0.85; }
+
+  /* PALACE */
+  .palace-room {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 14px;
+  }
+  .palace-icon { font-size: 28px; flex-shrink: 0; }
+  .palace-info h4 { font-size: 13px; font-weight: 700; color: var(--yellow); margin-bottom: 6px; }
+  .palace-info p { font-size: 13px; color: var(--text-dim); }
+
+  /* LAST NIGHT SHEET */
+  .ln-item {
+    display: flex;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .ln-num { color: var(--green); font-weight: 700; min-width: 22px; }
+
+  /* SCORE */
+  #quiz-score { font-size: 14px; color: var(--yellow); margin-top: 10px; font-weight: 700; }
+
+  /* SCROLLBAR for sidebar */
+  aside::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="logo-badge">SSC CGL</div>
+    <span class="header-title">Biology — Hormones &amp; Plant Movement</span>
+    <span class="header-sub" id="page-indicator">Page 1 of 12</span>
+  </header>
+  <div class="main-wrap">
+    <aside id="sidebar">
+      <div class="nav-section-label">Overview</div>
+      <div class="nav-item active" data-page="big-picture"><span class="nav-icon">🌐</span> Big Picture</div>
+      <div class="nav-item" data-page="palace"><span class="nav-icon">🏛️</span> Memory Palace</div>
+
+      <div class="nav-section-label">Core Notes</div>
+      <div class="nav-item" data-page="glands"><span class="nav-icon">🔬</span> Glands 101</div>
+      <div class="nav-item" data-page="human-hormones"><span class="nav-icon">🧬</span> Human Hormones</div>
+      <div class="nav-item" data-page="plant-hormones"><span class="nav-icon">🌿</span> Plant Hormones</div>
+      <div class="nav-item" data-page="plant-movement"><span class="nav-icon">🌱</span> Plant Movement</div>
+
+      <div class="nav-section-label">Memory & Strategy</div>
+      <div class="nav-item" data-page="hooks"><span class="nav-icon">🧠</span> Memory Hooks</div>
+      <div class="nav-item" data-page="traps"><span class="nav-icon">⚠️</span> Exam Traps</div>
+      <div class="nav-item" data-page="examiner"><span class="nav-icon">🎯</span> Examiner's Picks</div>
+
+      <div class="nav-section-label">Active Recall</div>
+      <div class="nav-item" data-page="quiz"><span class="nav-icon">❓</span> MCQ Quiz</div>
+      <div class="nav-item" data-page="fill"><span class="nav-icon">✏️</span> Fill in Blanks</div>
+
+      <div class="nav-section-label">Rapid Revision</div>
+      <div class="nav-item" data-page="high-yield"><span class="nav-icon">⭐</span> High-Yield Sheet</div>
+      <div class="nav-item" data-page="last-night"><span class="nav-icon">🌙</span> Last-Night Sheet</div>
+    </aside>
+
+    <div id="content">
+
+      <!-- PAGE: BIG PICTURE -->
+      <div class="page active" id="p-big-picture">
+        <h1>Hormones &amp; Plant Movement</h1>
+        <p class="subtitle">SSC CGL Biology | Complete Retention System | Last Lecture of Biology</p>
+
+        <div class="card card-green">
+          <h4>🌐 What This Chapter Is Really About</h4>
+          <p>The body and plants are like smart organizations. They need <strong style="color:var(--green)">managers (hormones)</strong> to send messages and coordinate work. This chapter maps out who the managers are, what they control, where they live, and what goes wrong when they fail. The second half covers how plants <em>move</em> — not randomly, but in response to signals.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card card-blue">
+            <h4>🏗️ Chapter Architecture</h4>
+            <div class="timeline">
+              <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Part 1</div><div class="tl-content">Endocrine vs Exocrine glands</div></div>
+              <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Part 2</div><div class="tl-content">Thyroid, Parathyroid, Thymus, Adrenal, Hypothalamus, Pituitary, Pineal</div></div>
+              <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Part 3</div><div class="tl-content">Pancreas — mixed gland, insulin vs glucagon</div></div>
+              <div class="tl-item"><div class="tl-dot"></div><div class="tl-label">Part 4</div><div class="tl-content">Plant hormones — Auxin, Gibberellin, Cytokinin, ABA, Ethylene</div></div>
+              <div class="tl-item"><div class="tl-dot" style="border-color:var(--blue)"></div><div class="tl-label">Part 5</div><div class="tl-content">Tropic vs Nastic movements</div></div>
+            </div>
+          </div>
+          <div class="card card-yellow">
+            <h4>⚡ Exam Snapshot</h4>
+            <p style="color:var(--text-dim)">Questions from this chapter appear in <strong style="color:var(--yellow)">almost every SSC exam</strong>. The most frequently tested facts:</p>
+            <ul style="font-size:13px; color:var(--text-dim); padding-left:18px; line-height:2">
+              <li>Largest endocrine gland → Thyroid</li>
+              <li>Master gland → Pituitary</li>
+              <li>Fight-or-flight hormone → Adrenaline</li>
+              <li>Insulin deficiency → Diabetes mellitus</li>
+              <li>Fruit ripening gas → Ethylene</li>
+              <li>Touch response plant → Mimosa / Venus flytrap</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4 style="color:var(--cyan)">💡 How To Use These Notes</h4>
+          <div class="pill-row">
+            <div class="pill pill-green">Day 1: Full read</div>
+            <div class="pill pill-blue">Day 2: Memory Palace</div>
+            <div class="pill">Day 3: Quiz yourself</div>
+            <div class="pill">Week 2: High-Yield only</div>
+            <div class="pill pill-red">Night before: Last-Night sheet</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: MEMORY PALACE -->
+      <div class="page" id="p-palace">
+        <h1>🏛️ Chapter Memory Palace</h1>
+        <p class="subtitle">Walk through this hospital in your mind. Each room = one gland.</p>
+
+        <div class="hook-box">
+          <div class="hook-title">The Hormone Hospital — Your Memory Story</div>
+          <p>You are a patient walking through a grand <strong>Hormone Hospital</strong>. As you enter each room, you meet the gland that lives there. It shows you its hormone, tells you what goes wrong when it fails, and sends you to the next room. Walk through this hospital every time you revise.</p>
+        </div>
+
+        <div class="palace-room">
+          <div class="palace-icon">🦋</div>
+          <div class="palace-info">
+            <h4>Room 1 — The Butterfly Room (Neck Corridor)</h4>
+            <p>A giant butterfly sits in the corridor of the hospital. This is the <strong>thyroid gland</strong> — butterfly-shaped, in your neck. It hands you a bottle labelled <em>Thyroxine</em> (metabolism fuel). If you drop it, you get <strong>goiter</strong>. If it runs out, <strong>hypothyroidism → cretinism</strong>. If too much spills, <strong>hyperthyroidism</strong>.</p>
+          </div>
+        </div>
+
+        <div class="palace-room">
+          <div class="palace-icon">🧂</div>
+          <div class="palace-info">
+            <h4>Room 2 — The Calcium Vault (Behind the Butterfly)</h4>
+            <p><strong>Parathyroid</strong> glands hide behind the butterfly. They guard a vault of calcium — making sure blood calcium is never too high or too low.</p>
+          </div>
+        </div>
+
+        <div class="palace-room">
+          <div class="palace-icon">🥋</div>
+          <div class="palace-info">
+            <h4>Room 3 — The Training Dojo (Behind the Sternum)</h4>
+            <p><strong>Thymus</strong> is a dojo behind the sternum bone, in front of the heart. Young WBCs (T-lymphocytes) come here to be trained. After puberty, the dojo shrinks.</p>
+          </div>
+        </div>
+
+        <div class="palace-room">
+          <div class="palace-icon">🎩</div>
+          <div class="palace-info">
+            <h4>Room 4 — The Hat Room (Kidneys Floor)</h4>
+            <p><strong>Adrenal glands</strong> sit like caps on top of both kidneys. When there's danger or excitement, they throw out the <em>fight-or-flight</em> hormone — <strong>adrenaline</strong>. They also release <strong>cortisol</strong> (stress). Deficiency = Addison's disease.</p>
+          </div>
+        </div>
+
+        <div class="palace-room">
+          <div class="palace-icon">🧠</div>
+          <div class="palace-info">
+            <h4>Room 5 — The Brain HQ (Top Floor)</h4>
+            <p><strong>Hypothalamus</strong> is the CEO — makes hormones but doesn't release them. It sends them downstairs to <strong>Pituitary</strong> (the secretary/master gland) which releases everything. Pituitary has two wings: <em>anterior</em> (makes its own: Growth Hormone + Prolactin) and <em>posterior</em> (releases hypothalamus orders: ADH + Oxytocin).</p>
+          </div>
+        </div>
+
+        <div class="palace-room">
+          <div class="palace-icon">🍃</div>
+          <div class="palace-info">
+            <h4>Room 6 — The Pea Garden (Corner of Brain)</h4>
+            <p><strong>Pineal gland</strong> — tiny as a pea, sits in the brain. It manages your sleep clock by releasing <strong>melatonin</strong>. No melatonin = broken sleep.</p>
+          </div>
+        </div>
+
+        <div class="palace-room">
+          <div class="palace-icon">🍬</div>
+          <div class="palace-info">
+            <h4>Room 7 — The Sugar Factory (Abdomen)</h4>
+            <p><strong>Pancreas</strong> is a mixed gland. Its alpha cells make <strong>glucagon</strong> (glycogen → glucose = glycogenolysis). Beta cells make <strong>insulin</strong> (glucose → glycogen = glycogenesis). Insulin shortage = <strong>Diabetes mellitus</strong>.</p>
+          </div>
+        </div>
+
+        <div class="palace-room">
+          <div class="palace-icon">🌿</div>
+          <div class="palace-info">
+            <h4>Room 8 — The Garden Wing (Plant Section)</h4>
+            <p>5 hormones in the garden: <strong>Auxin</strong> (tip, bends toward light), <strong>Gibberellin</strong> (germination + elongation), <strong>Cytokinin</strong> (cell division), <strong>ABA</strong> (stress, kills growth), <strong>Ethylene</strong> (ripens fruit — same gas used in metal welding!).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: GLANDS -->
+      <div class="page" id="p-glands">
+        <h1>🔬 Glands 101</h1>
+        <p class="subtitle">The foundation — understand this and everything else makes sense.</p>
+
+        <h2>The Great Split: Endocrine vs Exocrine</h2>
+        <div class="grid-2">
+          <div class="card card-green">
+            <h4>🟢 Endocrine Glands</h4>
+            <ul style="font-size:13px; color:var(--text-dim); padding-left:16px; line-height:2">
+              <li>Release <strong style="color:var(--green)">Hormones</strong></li>
+              <li>Released <strong style="color:var(--green)">directly into blood</strong></li>
+              <li>No duct needed → <strong style="color:var(--green)">Ductless glands</strong></li>
+              <li>Examples: Thyroid, Pituitary, Adrenal</li>
+            </ul>
+          </div>
+          <div class="card card-blue">
+            <h4>🔵 Exocrine Glands</h4>
+            <ul style="font-size:13px; color:var(--text-dim); padding-left:16px; line-height:2">
+              <li>Release <strong style="color:var(--blue)">Enzymes</strong></li>
+              <li>Released <strong style="color:var(--blue)">through ducts</strong></li>
+              <li>Have ducts → NOT ductless</li>
+              <li>Largest overall gland = <strong style="color:var(--blue)">Liver</strong> (exocrine)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card card-yellow">
+          <h4>🌟 Mixed Gland — Pancreas</h4>
+          <p>Does both! Acts as endocrine (releases insulin, glucagon into blood) AND as exocrine (releases pancreatic juice through duct). <span class="tag tag-fire">🔥 Must Know</span></p>
+        </div>
+
+        <h2>Size Rankings <span class="tag tag-fire">🔥 Exam Favourite</span></h2>
+        <table>
+          <tr><th>Rank</th><th>Gland</th><th>Type</th><th>Note</th></tr>
+          <tr><td>Largest overall</td><td>Liver</td><td>Exocrine</td><td>Largest gland in body</td></tr>
+          <tr><td>2nd</td><td>Pancreas</td><td>Mixed</td><td>After liver</td></tr>
+          <tr><td>Largest endocrine</td><td>Thyroid</td><td>Endocrine</td><td>Butterfly-shaped, neck</td></tr>
+          <tr><td>Smallest</td><td>Pineal</td><td>Endocrine</td><td>Pea-sized, brain</td></tr>
+        </table>
+
+        <div class="hook-box">
+          <div class="hook-title">Memory Hook: Duct or No Duct?</div>
+          <p><strong>Endo</strong>crine = <strong>In</strong>to blood directly. Think: endocrine goes <em>inside</em> without any middle-man (no duct). Exocrine = has e<strong>x</strong>tra equipment (a duct).</p>
+        </div>
+      </div>
+
+      <!-- PAGE: HUMAN HORMONES -->
+      <div class="page" id="p-human-hormones">
+        <h1>🧬 Human Hormones</h1>
+        <p class="subtitle">7 major endocrine glands — every fact you need.</p>
+
+        <h2>1. Thyroid Gland <span class="tag tag-fire">🔥 Must Know</span></h2>
+        <div class="grid-2">
+          <div class="card">
+            <h4 style="color:var(--cyan)">Location & Shape</h4>
+            <p>Neck region | Butterfly-shaped | Largest endocrine gland</p>
+          </div>
+          <div class="card">
+            <h4 style="color:var(--cyan)">Hormone</h4>
+            <p><strong>Thyroxine</strong> — increases metabolism. Needs <strong>Iodine</strong> to be synthesised.</p>
+          </div>
+        </div>
+        <table>
+          <tr><th>Condition</th><th>Cause</th><th>Disease</th></tr>
+          <tr><td>Iodine deficiency</td><td>Can't make thyroxine</td><td>Goiter</td></tr>
+          <tr><td>Thyroxine deficiency</td><td>Hypothyroidism</td><td>Cretinism (children)</td></tr>
+          <tr><td>Excess thyroxine</td><td>Hyperthyroidism</td><td>High metabolism, weight loss</td></tr>
+        </table>
+
+        <h2>2. Parathyroid <span class="tag tag-star">⭐ Important</span></h2>
+        <div class="card">
+          <h4 style="color:var(--cyan)">Function</h4>
+          <p>Regulates <strong>calcium levels</strong> in blood — maintains the balance (not too much, not too little). Located behind the thyroid.</p>
+        </div>
+
+        <h2>3. Thymus <span class="tag tag-star">⭐ Important</span></h2>
+        <div class="card">
+          <h4 style="color:var(--cyan)">Location & Function</h4>
+          <p>Located behind the <strong>sternum</strong>, in front of the heart. Trains <strong>T-lymphocytes (T-cells)</strong> — a type of WBC crucial for immunity.</p>
+        </div>
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP: Thyroid vs Thymus</div>
+          <p style="font-size:13px; color:var(--text-dim)"><strong>Thyroid</strong> → neck, thyroxine, metabolism<br><strong>Thymus</strong> → sternum/chest, trains T-cells, immunity. Students mix these up constantly!</p>
+        </div>
+
+        <h2>4. Adrenal Gland <span class="tag tag-fire">🔥 Must Know</span></h2>
+        <div class="card card-yellow">
+          <h4>Location: Cap on top of each kidney</h4>
+          <div class="pill-row">
+            <div class="pill pill-green">Adrenaline → Fight or Flight hormone</div>
+            <div class="pill pill-blue">Cortisol → Stress hormone</div>
+            <div class="pill pill-red">Cortisol deficiency → Addison's disease</div>
+          </div>
+          <p style="margin-top:10px; font-size:13px">Adrenaline release increases: Blood pressure, Heart rate, Metabolism. Triggered by fear, excitement, danger.</p>
+        </div>
+
+        <h2>5. Hypothalamus + Pituitary <span class="tag tag-fire">🔥 Must Know</span></h2>
+        <div class="card card-blue">
+          <h4>The CEO + Secretary Pair</h4>
+          <div class="flow">
+            <div class="flow-box" style="border-color:var(--purple); color:var(--purple)">Hypothalamus<br><small>Makes hormones</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box" style="border-color:var(--blue); color:var(--blue)">Pituitary<br><small>Releases them</small></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box">Body<br><small>Effect</small></div>
+          </div>
+        </div>
+
+        <table>
+          <tr><th>Pituitary Part</th><th>Hormone</th><th>Function</th><th>Disease</th></tr>
+          <tr><td>Anterior (own)</td><td>Growth Hormone (Somatotropin)</td><td>Body growth</td><td>Deficiency=Dwarfism; Excess=Gigantism; Parts grow=Acromegaly</td></tr>
+          <tr><td>Anterior (own)</td><td>Prolactin</td><td>Milk formation</td><td>—</td></tr>
+          <tr><td>Posterior (from Hypothalamus)</td><td>ADH (Vasopressin)</td><td>Water reabsorption</td><td>Deficiency=Diabetes Insipidus</td></tr>
+          <tr><td>Posterior (from Hypothalamus)</td><td>Oxytocin</td><td>Milk secretion + uterus lining thickening during pregnancy</td><td>—</td></tr>
+        </table>
+
+        <div class="card card-green">
+          <h4>🏆 Pituitary = Master Gland</h4>
+          <p>Called master gland because it controls when other glands release their hormones. It is itself pea-sized and sits in the brain.</p>
+        </div>
+
+        <h2>6. Pineal Gland <span class="tag tag-star">⭐ Important</span></h2>
+        <div class="card">
+          <h4 style="color:var(--cyan)">The Sleep Clock</h4>
+          <p>Pea-sized. Located in brain. Releases <strong>Melatonin</strong> → controls <strong>Circadian Rhythm</strong> (sleep-wake cycle).</p>
+        </div>
+
+        <h2>7. Pancreas (Mixed) <span class="tag tag-fire">🔥 Must Know</span></h2>
+        <table>
+          <tr><th>Cell</th><th>Hormone</th><th>Process Name</th><th>What it does</th></tr>
+          <tr><td>Beta cells</td><td><strong>Insulin</strong></td><td>Glycogenesis</td><td>Glucose → Glycogen (stores sugar)</td></tr>
+          <tr><td>Alpha cells</td><td><strong>Glucagon</strong></td><td>Glycogenolysis</td><td>Glycogen → Glucose (releases sugar)</td></tr>
+        </table>
+        <div class="trap-box">
+          <div class="trap-title">⚠ Diabetes Mellitus vs Diabetes Insipidus</div>
+          <p style="font-size:13px; color:var(--text-dim)">
+            <strong>Diabetes MELLITUS</strong> = Insulin deficiency → excess glucose in blood → pancreas/beta cells<br>
+            <strong>Diabetes INSIPIDUS</strong> = ADH (Vasopressin) deficiency → can't reabsorb water → pituitary/hypothalamus<br>
+            <em>Mellitus = mel (honey/sweet) → sugar problem. Insipidus = water problem.</em>
+          </p>
+        </div>
+
+        <h2>Bonus: Other Important Hormones <span class="tag tag-plus">➕ Good to Know</span></h2>
+        <table>
+          <tr><th>Source</th><th>Hormone</th><th>Function</th></tr>
+          <tr><td>Stomach</td><td>Ghrelin</td><td>"Hunger hormone" — stimulates appetite</td></tr>
+          <tr><td>Heart (atrial wall)</td><td>ANF (Atrial Natriuretic Factor)</td><td>Blood pressure regulation</td></tr>
+        </table>
+      </div>
+
+      <!-- PAGE: PLANT HORMONES -->
+      <div class="page" id="p-plant-hormones">
+        <h1>🌿 Plant Hormones</h1>
+        <p class="subtitle">5 hormones — growth, stress, and ripening.</p>
+
+        <div class="card card-green">
+          <h4>The 5 Plant Hormones at a Glance</h4>
+          <div class="pill-row">
+            <div class="pill pill-green">Auxin</div>
+            <div class="pill pill-green">Gibberellin</div>
+            <div class="pill pill-blue">Cytokinin</div>
+            <div class="pill pill-red">Abscisic Acid (ABA)</div>
+            <div class="pill" style="border-color:var(--yellow); color:var(--yellow); background:var(--yellow-dim)">Ethylene</div>
+          </div>
+        </div>
+
+        <table>
+          <tr><th>Hormone</th><th>Location</th><th>Role</th><th>Key Fact</th><th>Tag</th></tr>
+          <tr>
+            <td><strong style="color:var(--green)">Auxin</strong></td>
+            <td>Tip of stem</td>
+            <td>Growth hormone — stem elongation, bends plant toward light</td>
+            <td>Runs AWAY from sunlight → all auxin collects on dark side → dark side grows more → plant bends toward sun</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--green)">Gibberellin</strong></td>
+            <td>Growing parts</td>
+            <td>Germination, flowering, stem elongation</td>
+            <td>G→Gibberellin, G→Germination (same letter trick)</td>
+            <td><span class="tag tag-star">⭐</span></td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--blue)">Cytokinin</strong></td>
+            <td>Roots/shoots</td>
+            <td>Cell division — Cyto=cell, Kinin=division</td>
+            <td>Name itself tells the function</td>
+            <td><span class="tag tag-star">⭐</span></td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--red)">ABA</strong><br>(Abscisic Acid)</td>
+            <td>Leaves</td>
+            <td>Stress hormone — INHIBITS growth, causes leaf fall, closes stomata</td>
+            <td>Opposite of growth hormones — it's a brake</td>
+            <td><span class="tag tag-star">⭐</span></td>
+          </tr>
+          <tr>
+            <td><strong style="color:var(--yellow)">Ethylene</strong></td>
+            <td>Ripening fruit</td>
+            <td>Fruit ripening — gaseous hormone</td>
+            <td>Also called acetylene — used in metal welding. Used artificially to ripen fruits in storage.</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+        </table>
+
+        <div class="hook-box">
+          <div class="hook-title">Memory Hook: Plant Hormone Story</div>
+          <p>A plant is like a company. <strong>Auxin</strong> (the tip manager) tells the team which way to grow. <strong>Gibberellin</strong> is the growth consultant who starts new projects (germination). <strong>Cytokinin</strong> is HR — keeps hiring new cells. <strong>ABA</strong> is the crisis manager — when there's stress (drought), he says "Stop everything, close the doors (stomata)!" And <strong>Ethylene</strong> is the retirement notice — when the fruit is ready, it signals "We are done here, time to ripen and fall."</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP: Auxin is NOT the hormone that makes plant grow toward light directly</div>
+          <p style="font-size:13px; color:var(--text-dim)">Auxin actually MOVES AWAY from light. It collects on the shaded side. That side grows MORE. So the plant bends TOWARD the light. The examiner will try to trick you by saying "Auxin moves toward light" — that is FALSE.</p>
+        </div>
+      </div>
+
+      <!-- PAGE: PLANT MOVEMENT -->
+      <div class="page" id="p-plant-movement">
+        <h1>🌱 Plant Movement</h1>
+        <p class="subtitle">Tropic (with growth) vs Nastic (without growth)</p>
+
+        <div class="grid-2">
+          <div class="card card-green">
+            <h4>🌱 Tropic Movements (Growth-based)</h4>
+            <p>Movement that <strong>involves growth</strong>. The plant physically grows toward or away from a stimulus. Permanent change in direction.</p>
+          </div>
+          <div class="card card-blue">
+            <h4>🌀 Nastic Movements (Non-growth)</h4>
+            <p>Movement that does <strong>NOT involve growth</strong>. Plant moves in response to stimulus but doesn't grow. Reversible.</p>
+          </div>
+        </div>
+
+        <h2>Tropic Movements</h2>
+        <table>
+          <tr><th>Type</th><th>Stimulus</th><th>Positive (toward)</th><th>Negative (away)</th></tr>
+          <tr>
+            <td><strong>Phototropism</strong></td>
+            <td>Light (Photo)</td>
+            <td>Stem (grows toward sun)</td>
+            <td>Root (grows away from sun)</td>
+          </tr>
+          <tr>
+            <td><strong>Hydrotropism</strong></td>
+            <td>Water (Hydro)</td>
+            <td>Root (grows toward water)</td>
+            <td>Shoot (grows away from water)</td>
+          </tr>
+          <tr>
+            <td><strong>Geotropism</strong></td>
+            <td>Gravity (Geo)</td>
+            <td>Root (grows with gravity = downward)</td>
+            <td>Shoot (grows against gravity = upward)</td>
+          </tr>
+          <tr>
+            <td><strong>Chemotropism</strong></td>
+            <td>Chemical</td>
+            <td>Pollen tube grows toward ovule (positive chemotropism)</td>
+            <td>Away from chemicals</td>
+          </tr>
+        </table>
+
+        <div class="hook-box">
+          <div class="hook-title">Memory Hook: Roots vs Shoots Rule</div>
+          <p><strong>Roots are ALWAYS positive</strong> for things underground (water ✅, gravity ✅) and <strong>NEGATIVE for light</strong>. Shoots are the OPPOSITE. Roots want water and gravity. Shoots want light and freedom from gravity. Simple as that.</p>
+        </div>
+
+        <h2>How Phototropism Works (Auxin Mechanism)</h2>
+        <div class="card card-yellow">
+          <h4>Step-by-Step: Why plants bend toward light</h4>
+          <div class="flow" style="flex-direction:column; align-items:flex-start;">
+            <div style="display:flex; align-items:center; gap:8px;"><div class="flow-box">Sunlight hits one side of stem</div></div>
+            <div style="margin-left:20px; color:var(--text-muted); font-size:13px">↓</div>
+            <div style="display:flex; align-items:center; gap:8px;"><div class="flow-box">Auxin moves AWAY from light → collects on shaded side</div></div>
+            <div style="margin-left:20px; color:var(--text-muted); font-size:13px">↓</div>
+            <div style="display:flex; align-items:center; gap:8px;"><div class="flow-box">More auxin on shaded side → MORE growth on that side</div></div>
+            <div style="margin-left:20px; color:var(--text-muted); font-size:13px">↓</div>
+            <div style="display:flex; align-items:center; gap:8px;"><div class="flow-box" style="border-color:var(--green); color:var(--green)">Plant BENDS toward light (toward sun)</div></div>
+          </div>
+        </div>
+
+        <h2>Nastic Movements</h2>
+        <table>
+          <tr><th>Type</th><th>Stimulus</th><th>Example</th><th>Growth?</th></tr>
+          <tr>
+            <td><strong>Photonastic</strong></td>
+            <td>Light</td>
+            <td>Sunflower tracking the sun daily</td>
+            <td>❌ No growth</td>
+          </tr>
+          <tr>
+            <td><strong>Thigmonastic</strong></td>
+            <td>Touch (Thigmo = touch)</td>
+            <td>Mimosa pudica (touch-me-not) wilts on touch; Venus flytrap closes on insect</td>
+            <td>❌ No growth</td>
+          </tr>
+        </table>
+
+        <div class="card card-blue">
+          <h4>🪤 Venus Flytrap — Carnivorous Plant</h4>
+          <p>An insect lands on its leaves → leaves snap shut → plant digests the insect. This is <strong>thigmonastic movement</strong>. The plant is carnivorous (meat-eating). No growth occurs — just mechanical movement.</p>
+        </div>
+
+        <div class="card card-purple">
+          <h4>🌻 Sunflower's Daily Movement</h4>
+          <p>Sunflower follows the sun across the sky during the day. This is <strong>photonastic</strong> movement — NOT phototropism because there is no growth involved, just daily reversible movement.</p>
+        </div>
+      </div>
+
+      <!-- PAGE: MEMORY HOOKS -->
+      <div class="page" id="p-hooks">
+        <h1>🧠 Smart Memory Hooks</h1>
+        <p class="subtitle">Vivid associations designed to survive forgetting for 6+ months.</p>
+
+        <div class="hook-box">
+          <div class="hook-title">Hook 1: Endocrine vs Exocrine</div>
+          <p><strong>EN</strong>docrine → <strong>EN</strong>ters blood (ductless, no middleman). <strong>EX</strong>ocrine → <strong>EX</strong>its through a duct (like an exit door). Enzyme comes out the door. Hormone jumps straight into the river (bloodstream).</p>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-title">Hook 2: Thyroid — The Butterfly That Eats Iodine</div>
+          <p>Imagine a butterfly sitting in your throat eating iodine salt. When it eats enough, it makes thyroxine. No iodine → starving butterfly → GOITER (the butterfly swells up). Too little thyroxine → CRETINISM (baby butterfly, stunted). Too much → HYPERTHYROIDISM (butterfly on caffeine).</p>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-title">Hook 3: Adrenal — The Cap on the Kidney</div>
+          <p>Picture two kidneys wearing police caps. Whenever there's an emergency (police situation), the cap releases ADRENALINE. Your heart races, you breathe fast — FIGHT or FLIGHT. The cap also has a stress alarm (CORTISOL). If the alarm breaks → Addison's disease.</p>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-title">Hook 4: Pituitary — The Master Butler</div>
+          <p>The Hypothalamus is the king who makes orders (hormones) but never delivers them himself. The Pituitary is his butler who runs through the blood delivering everything. The butler also has his own gifts (GH, Prolactin) in his FRONT pocket (anterior). The hypothalamus's royal orders go in the BACK pocket (posterior) — ADH and Oxytocin.</p>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-title">Hook 5: Insulin vs Glucagon — The Seesaw</div>
+          <p>Imagine a seesaw labelled SUGAR. INSULIN pushes sugar DOWN (glucose → glycogen, stored). GLUCAGON lifts sugar UP (glycogen → glucose, released). If INSULIN is missing → sugar stays HIGH → DIABETES MELLITUS. If GLUCAGON is missing → sugar crashes too low.</p>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-title">Hook 6: Gigantism vs Acromegaly vs Dwarfism</div>
+          <p>Think of growth hormone as a water tap. TOO LITTLE before growth = DWARFISM (the whole body is small — tap was closed early). TOO MUCH before adulthood = GIGANTISM (the whole body is huge — tap was open too long). TOO MUCH after adulthood = ACROMEGALY (only hands, feet, jaw grow — the tap opens late, only parts that can still grow, respond). Remember: Khali (the wrestler) has acromegaly.</p>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-title">Hook 7: Ethylene — The Ripening Gas That Welds</div>
+          <p>Ethylene (also called acetylene) is used in WELDING torches to melt metal. The same gas ripens fruits. Imagine a welder holding a banana — he accidentally ripens all the fruit in the shop. This double role (fruit ripening + welding) is a classic exam link.</p>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-title">Hook 8: Mimosa & Venus Flytrap — Touch Moves</div>
+          <p>MIMOSA (touch-me-not): Imagine someone super shy — the moment you touch them, they collapse and close up. VENUS FLYTRAP: Imagine a Venus goddess trap — she lures insects with beauty, then SNAP! Eats them. Both move on touch (thigmonastic) but NEVER grow from it.</p>
+        </div>
+
+        <div class="hook-box">
+          <div class="hook-title">Hook 9: Glycogenesis vs Glycogenolysis</div>
+          <p><strong>Genesis</strong> = creation/beginning (Bible: Genesis = book of creation). GLYCO-GENESIS = creating glycogen from glucose (building up, storing). <strong>Lysis</strong> = breaking/dissolving (like electrolysis = breaking by electricity). GLYCOGENO-LYSIS = breaking glycogen down to glucose.</p>
+        </div>
+      </div>
+
+      <!-- PAGE: EXAM TRAPS -->
+      <div class="page" id="p-traps">
+        <h1>⚠️ Exam Traps</h1>
+        <p class="subtitle">The exact confusions that cost students marks every year.</p>
+
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP 1: Thyroid vs Thymus</div>
+          <table>
+            <tr><th>Thyroid</th><th>Thymus</th></tr>
+            <tr><td>Neck region</td><td>Behind sternum (chest)</td></tr>
+            <tr><td>Butterfly shaped</td><td>Behind sternum, in front of heart</td></tr>
+            <tr><td>Releases Thyroxine</td><td>Trains T-lymphocytes</td></tr>
+            <tr><td>Controls metabolism</td><td>Controls immunity</td></tr>
+            <tr><td>Largest endocrine gland</td><td>Shrinks after puberty</td></tr>
+          </table>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP 2: Diabetes Mellitus vs Diabetes Insipidus</div>
+          <table>
+            <tr><th>Diabetes Mellitus</th><th>Diabetes Insipidus</th></tr>
+            <tr><td>Insulin deficiency</td><td>ADH (Vasopressin) deficiency</td></tr>
+            <tr><td>Pancreas / Beta cells</td><td>Pituitary (posterior)</td></tr>
+            <tr><td>Excess glucose in blood</td><td>Can't reabsorb water → excess urine</td></tr>
+            <tr><td>"Sweet" diabetes (mel = honey)</td><td>"Water" diabetes</td></tr>
+          </table>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP 3: Gigantism vs Acromegaly vs Dwarfism</div>
+          <table>
+            <tr><th>Condition</th><th>Cause</th><th>Effect</th></tr>
+            <tr><td>Dwarfism</td><td>GH deficiency</td><td>Whole body small</td></tr>
+            <tr><td>Gigantism</td><td>GH excess (before growth plates close)</td><td>Whole body abnormally large</td></tr>
+            <tr><td>Acromegaly</td><td>GH excess (after adulthood)</td><td>Only hands, feet, jaw enlarge</td></tr>
+          </table>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP 4: Auxin Direction (MOST COMMON TRICK)</div>
+          <p style="font-size:13px; color:var(--text-dim); margin-top:6px">
+            <strong>Wrong thinking:</strong> "Auxin moves toward light, so the side with more auxin grows more, so plant bends toward light."<br><br>
+            <strong>Correct:</strong> Auxin moves AWAY from light. It concentrates on the SHADED side. That side grows taller. Plant bends TOWARD light. Auxin itself flees from light, but its effect bends the plant toward light.
+          </p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP 5: Phototropism vs Photonasty</div>
+          <table>
+            <tr><th>Phototropism</th><th>Photonasty</th></tr>
+            <tr><td>INVOLVES growth</td><td>Does NOT involve growth</td></tr>
+            <tr><td>Permanent direction change</td><td>Reversible, daily</td></tr>
+            <tr><td>Stem growing toward light permanently</td><td>Sunflower tracking sun each day</td></tr>
+          </table>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP 6: Prolactin vs Oxytocin</div>
+          <table>
+            <tr><th>Prolactin</th><th>Oxytocin</th></tr>
+            <tr><td>FORMATION of milk</td><td>SECRETION (release) of milk</td></tr>
+            <tr><td>Anterior pituitary (own hormone)</td><td>Posterior pituitary (from hypothalamus)</td></tr>
+            <tr><td>Also thickens uterus lining during pregnancy</td><td>Also thickens uterus during pregnancy</td></tr>
+          </table>
+          <p style="font-size:12px; color:var(--text-muted); margin-top:6px">Pro = pro-duce → Prolactin produces milk. Oxytocin = exit → lets milk out.</p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP 7: Largest Gland Confusion</div>
+          <p style="font-size:13px; color:var(--text-dim); margin-top:6px">
+            <strong>Largest gland overall = LIVER</strong> (exocrine)<br>
+            <strong>Largest ENDOCRINE gland = THYROID</strong><br>
+            Examiner will say "largest endocrine" → answer is thyroid, NOT liver. Or say "largest gland" → answer is liver.
+          </p>
+        </div>
+
+        <div class="trap-box">
+          <div class="trap-title">⚠ TRAP 8: Insulin released by which cell?</div>
+          <p style="font-size:13px; color:var(--text-dim); margin-top:6px">
+            <strong>Alpha cells → Glucagon</strong> (A for Alpha, A for anti-insulin, raises sugar)<br>
+            <strong>Beta cells → Insulin</strong> (B for Beta, B for blood sugar lowering)<br>
+            Students often flip these. Alpha = Glucagon. Beta = Insulin.
+          </p>
+        </div>
+      </div>
+
+      <!-- PAGE: EXAMINER'S PICKS -->
+      <div class="page" id="p-examiner">
+        <h1>🎯 Examiner's Favourite Questions</h1>
+        <p class="subtitle">These are the angles from which this topic gets attacked in SSC CGL.</p>
+
+        <h2>High Probability Direct Questions</h2>
+        <table>
+          <tr><th>Question Pattern</th><th>Expected Answer</th></tr>
+          <tr><td>Which is the largest endocrine gland?</td><td>Thyroid</td></tr>
+          <tr><td>Which is the master gland?</td><td>Pituitary</td></tr>
+          <tr><td>Fight or flight hormone is called?</td><td>Adrenaline (Adrenal hormone)</td></tr>
+          <tr><td>Which hormone regulates sleep cycle?</td><td>Melatonin (Pineal gland)</td></tr>
+          <tr><td>Deficiency of insulin causes?</td><td>Diabetes Mellitus</td></tr>
+          <tr><td>Deficiency of ADH causes?</td><td>Diabetes Insipidus</td></tr>
+          <tr><td>Growth hormone is also called?</td><td>Somatotropin</td></tr>
+          <tr><td>Which hormone ripens fruits?</td><td>Ethylene</td></tr>
+          <tr><td>Hunger hormone is called?</td><td>Ghrelin</td></tr>
+          <tr><td>Touch-me-not plant demonstrates?</td><td>Thigmonastic movement</td></tr>
+          <tr><td>Iodine deficiency causes?</td><td>Goiter</td></tr>
+          <tr><td>Which hormone converts glycogen to glucose?</td><td>Glucagon</td></tr>
+          <tr><td>Which cells secrete insulin?</td><td>Beta cells (Islets of Langerhans)</td></tr>
+          <tr><td>Where is thymus located?</td><td>Behind sternum, in front of heart</td></tr>
+          <tr><td>What does Cytokinin do?</td><td>Cell division</td></tr>
+        </table>
+
+        <h2>Statement-Based / True-False Type</h2>
+        <div class="card card-yellow">
+          <h4>Tricky Statements Examiners Love</h4>
+          <ul style="font-size:13px; color:var(--text-dim); padding-left:16px; line-height:2.2">
+            <li>❌ "Auxin moves toward sunlight" → FALSE (moves away from light)</li>
+            <li>❌ "Thymus is located in the neck" → FALSE (it's behind the sternum)</li>
+            <li>❌ "Liver is an endocrine gland" → FALSE (it's exocrine)</li>
+            <li>❌ "Glucagon converts glucose to glycogen" → FALSE (that's insulin)</li>
+            <li>✅ "Pituitary controls other endocrine glands" → TRUE (master gland)</li>
+            <li>✅ "Ethylene is a gaseous plant hormone" → TRUE</li>
+            <li>✅ "Pancreas is a mixed gland" → TRUE</li>
+          </ul>
+        </div>
+
+        <h2>Match-the-Following Combos</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h4 style="color:var(--cyan)">Gland → Hormone</h4>
+            <ul style="font-size:13px; color:var(--text-dim); padding-left:16px; line-height:2">
+              <li>Thyroid → Thyroxine</li>
+              <li>Adrenal → Adrenaline, Cortisol</li>
+              <li>Pineal → Melatonin</li>
+              <li>Pituitary (anterior) → GH, Prolactin</li>
+              <li>Pituitary (posterior) → ADH, Oxytocin</li>
+              <li>Beta cells → Insulin</li>
+              <li>Alpha cells → Glucagon</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4 style="color:var(--cyan)">Disease → Cause</h4>
+            <ul style="font-size:13px; color:var(--text-dim); padding-left:16px; line-height:2">
+              <li>Goiter → Iodine deficiency</li>
+              <li>Cretinism → Thyroxine deficiency</li>
+              <li>Dwarfism → GH deficiency</li>
+              <li>Gigantism → GH excess (youth)</li>
+              <li>Acromegaly → GH excess (adult)</li>
+              <li>Diabetes Mellitus → Insulin deficiency</li>
+              <li>Diabetes Insipidus → ADH deficiency</li>
+              <li>Addison's Disease → Cortisol deficiency</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2>Assertion-Reason Possibilities</h2>
+        <div class="card card-blue">
+          <h4>Common Assertion-Reason Pairs</h4>
+          <ul style="font-size:13px; color:var(--text-dim); padding-left:16px; line-height:2.2">
+            <li><strong>A:</strong> Plants bend toward light. <strong>R:</strong> Auxin concentrates on the shaded side causing more growth. → Both true, R explains A ✅</li>
+            <li><strong>A:</strong> Pituitary is master gland. <strong>R:</strong> It produces all hormones in the body. → A true, R false ❌ (R is wrong — not all hormones)</li>
+            <li><strong>A:</strong> Ethylene ripens fruit. <strong>R:</strong> Ethylene is a gaseous hormone. → Both true, R explains A ✅</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PAGE: QUIZ -->
+      <div class="page" id="p-quiz">
+        <h1>❓ MCQ Active Recall Quiz</h1>
+        <p class="subtitle">Test yourself. Select an answer — get instant feedback.</p>
+        <div id="quiz-score"></div>
+
+        <div class="quiz-q" id="q1">
+          <p>1. Which is the largest endocrine gland in the human body?</p>
+          <div class="quiz-options">
+            <div class="opt" onclick="answer(this,'q1','b')">A. Liver</div>
+            <div class="opt" data-correct onclick="answer(this,'q1','b')">B. Thyroid</div>
+            <div class="opt" onclick="answer(this,'q1','b')">C. Pituitary</div>
+            <div class="opt" onclick="answer(this,'q1','b')">D. Pancreas</div>
+          </div>
+          <div class="quiz-explain">✅ Thyroid is the largest ENDOCRINE gland (butterfly-shaped, neck). Liver is the largest gland overall but it's EXOCRINE.</div>
+        </div>
+
+        <div class="quiz-q" id="q2">
+          <p>2. Auxin hormone in plants moves _______ when sunlight falls on one side.</p>
+          <div class="quiz-options">
+            <div class="opt" onclick="answer(this,'q2','c')">A. Toward the light</div>
+            <div class="opt" onclick="answer(this,'q2','c')">B. Upward through the xylem</div>
+            <div class="opt" data-correct onclick="answer(this,'q2','c')">C. Away from light (to shaded side)</div>
+            <div class="opt" onclick="answer(this,'q2','c')">D. Toward the roots</div>
+          </div>
+          <div class="quiz-explain">✅ Auxin moves AWAY from light. The shaded side gets more auxin → grows faster → plant bends toward light. This is the classic trap!</div>
+        </div>
+
+        <div class="quiz-q" id="q3">
+          <p>3. Deficiency of which hormone causes Diabetes Insipidus?</p>
+          <div class="quiz-options">
+            <div class="opt" onclick="answer(this,'q3','b')">A. Insulin</div>
+            <div class="opt" data-correct onclick="answer(this,'q3','b')">B. ADH (Vasopressin)</div>
+            <div class="opt" onclick="answer(this,'q3','b')">C. Glucagon</div>
+            <div class="opt" onclick="answer(this,'q3','b')">D. Thyroxine</div>
+          </div>
+          <div class="quiz-explain">✅ ADH = Anti-Diuretic Hormone = Vasopressin. It helps reabsorb water. Deficiency = can't retain water = Diabetes Insipidus. NOT insulin (that causes Diabetes Mellitus).</div>
+        </div>
+
+        <div class="quiz-q" id="q4">
+          <p>4. Which cells in the pancreas secrete Glucagon?</p>
+          <div class="quiz-options">
+            <div class="opt" data-correct onclick="answer(this,'q4','a')">A. Alpha cells</div>
+            <div class="opt" onclick="answer(this,'q4','a')">B. Beta cells</div>
+            <div class="opt" onclick="answer(this,'q4','a')">C. Delta cells</div>
+            <div class="opt" onclick="answer(this,'q4','a')">D. Gamma cells</div>
+          </div>
+          <div class="quiz-explain">✅ Alpha → Glucagon (glycogen to glucose). Beta → Insulin (glucose to glycogen). Remember: Alpha comes BEFORE Beta alphabetically, just as Glucagon is the first responder to LOW sugar.</div>
+        </div>
+
+        <div class="quiz-q" id="q5">
+          <p>5. Melatonin hormone is secreted by which gland?</p>
+          <div class="quiz-options">
+            <div class="opt" onclick="answer(this,'q5','d')">A. Pituitary</div>
+            <div class="opt" onclick="answer(this,'q5','d')">B. Thyroid</div>
+            <div class="opt" onclick="answer(this,'q5','d')">C. Adrenal</div>
+            <div class="opt" data-correct onclick="answer(this,'q5','d')">D. Pineal</div>
+          </div>
+          <div class="quiz-explain">✅ Pineal gland → Melatonin → regulates Circadian Rhythm (sleep-wake cycle). Pineal is pea-sized in the brain.</div>
+        </div>
+
+        <div class="quiz-q" id="q6">
+          <p>6. Venus Flytrap's leaf-closing action is an example of:</p>
+          <div class="quiz-options">
+            <div class="opt" onclick="answer(this,'q6','c')">A. Photonastic movement</div>
+            <div class="opt" onclick="answer(this,'q6','c')">B. Geotropism</div>
+            <div class="opt" data-correct onclick="answer(this,'q6','c')">C. Thigmonastic movement</div>
+            <div class="opt" onclick="answer(this,'q6','c')">D. Chemotropism</div>
+          </div>
+          <div class="quiz-explain">✅ Thigmonastic = movement due to touch. "Thigmo" = touch in Greek. Venus flytrap and Mimosa pudica both show thigmonastic movement. No growth involved.</div>
+        </div>
+
+        <div class="quiz-q" id="q7">
+          <p>7. Which plant hormone is also known as the "stress hormone" and inhibits growth?</p>
+          <div class="quiz-options">
+            <div class="opt" onclick="answer(this,'q7','b')">A. Auxin</div>
+            <div class="opt" data-correct onclick="answer(this,'q7','b')">B. Abscisic Acid (ABA)</div>
+            <div class="opt" onclick="answer(this,'q7','b')">C. Cytokinin</div>
+            <div class="opt" onclick="answer(this,'q7','b')">D. Gibberellin</div>
+          </div>
+          <div class="quiz-explain">✅ Abscisic Acid (ABA) is the stress/growth inhibitor hormone. It closes stomata during drought and causes leaf fall. All others are GROWTH hormones.</div>
+        </div>
+
+        <div class="quiz-q" id="q8">
+          <p>8. Ghrelin hormone is released by which organ and is famous for:</p>
+          <div class="quiz-options">
+            <div class="opt" onclick="answer(this,'q8','a')">A. Stomach — Hunger hormone</div>
+            <div class="opt" onclick="answer(this,'q8','a')">B. Liver — Digestion hormone</div>
+            <div class="opt" onclick="answer(this,'q8','a')">C. Kidney — Water hormone</div>
+            <div class="opt" onclick="answer(this,'q8','a')">D. Pancreas — Sugar hormone</div>
+          </div>
+          <div class="quiz-explain">✅ Ghrelin is released by the STOMACH and is the HUNGER hormone. People with higher ghrelin levels feel hungrier. Classic MCQ trap: "which hormone makes you feel hungry?"</div>
+        </div>
+
+        <div class="quiz-q" id="q9">
+          <p>9. Pollen tube growing toward an ovule in a flower is an example of:</p>
+          <div class="quiz-options">
+            <div class="opt" onclick="answer(this,'q9','c')">A. Positive geotropism</div>
+            <div class="opt" onclick="answer(this,'q9','c')">B. Negative phototropism</div>
+            <div class="opt" data-correct onclick="answer(this,'q9','c')">C. Positive chemotropism</div>
+            <div class="opt" onclick="answer(this,'q9','c')">D. Thigmonastic movement</div>
+          </div>
+          <div class="quiz-explain">✅ The ovule releases chemicals. The pollen tube grows TOWARD those chemicals = Positive Chemotropism. This is a favourite unique question that few students know.</div>
+        </div>
+
+        <div class="quiz-q" id="q10">
+          <p>10. Ethylene hormone in plants is unique because:</p>
+          <div class="quiz-options">
+            <div class="opt" onclick="answer(this,'q10','b')">A. It is secreted only in roots</div>
+            <div class="opt" data-correct onclick="answer(this,'q10','b')">B. It is a gaseous hormone and ripens fruits</div>
+            <div class="opt" onclick="answer(this,'q10','b')">C. It promotes cell division</div>
+            <div class="opt" onclick="answer(this,'q10','b')">D. It is found only in aquatic plants</div>
+          </div>
+          <div class="quiz-explain">✅ Ethylene is the only GASEOUS plant hormone. It ripens fruits. Also called acetylene — used in welding! This dual chemistry-biology link is a high-value exam fact.</div>
+        </div>
+      </div>
+
+      <!-- PAGE: FILL IN BLANKS -->
+      <div class="page" id="p-fill">
+        <h1>✏️ Fill in the Blanks</h1>
+        <p class="subtitle">Type your answer and check. Train your recall, not recognition.</p>
+
+        <div class="fill-blank">
+          1. The ________ gland is called the master gland of the body.
+          <br><input class="blank-input" id="f1" placeholder="Type answer..." data-ans="pituitary"> 
+          <button class="check-btn" onclick="checkBlank('f1')">Check</button>
+          <div id="f1-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="fill-blank">
+          2. Iodine is needed for the synthesis of ________ hormone.
+          <br><input class="blank-input" id="f2" placeholder="Type answer..." data-ans="thyroxine">
+          <button class="check-btn" onclick="checkBlank('f2')">Check</button>
+          <div id="f2-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="fill-blank">
+          3. Adrenaline hormone is released by ________ gland located on top of kidneys.
+          <br><input class="blank-input" id="f3" placeholder="Type answer..." data-ans="adrenal">
+          <button class="check-btn" onclick="checkBlank('f3')">Check</button>
+          <div id="f3-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="fill-blank">
+          4. The process of converting glycogen back to glucose is called ________.
+          <br><input class="blank-input" id="f4" placeholder="Type answer..." data-ans="glycogenolysis">
+          <button class="check-btn" onclick="checkBlank('f4')">Check</button>
+          <div id="f4-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="fill-blank">
+          5. The plant hormone that promotes cell division is ________.
+          <br><input class="blank-input" id="f5" placeholder="Type answer..." data-ans="cytokinin">
+          <button class="check-btn" onclick="checkBlank('f5')">Check</button>
+          <div id="f5-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="fill-blank">
+          6. Sunflower tracking the sun daily without growing is an example of ________ movement.
+          <br><input class="blank-input" id="f6" placeholder="Type answer..." data-ans="photonastic">
+          <button class="check-btn" onclick="checkBlank('f6')">Check</button>
+          <div id="f6-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="fill-blank">
+          7. Deficiency of growth hormone in children leads to ________.
+          <br><input class="blank-input" id="f7" placeholder="Type answer..." data-ans="dwarfism">
+          <button class="check-btn" onclick="checkBlank('f7')">Check</button>
+          <div id="f7-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="fill-blank">
+          8. ________ cells in pancreas secrete insulin.
+          <br><input class="blank-input" id="f8" placeholder="Type answer..." data-ans="beta">
+          <button class="check-btn" onclick="checkBlank('f8')">Check</button>
+          <div id="f8-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="fill-blank">
+          9. The plant hormone that inhibits growth and acts as a stress hormone is ________.
+          <br><input class="blank-input" id="f9" placeholder="Type answer..." data-ans="abscisic acid">
+          <button class="check-btn" onclick="checkBlank('f9')">Check</button>
+          <div id="f9-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+
+        <div class="fill-blank">
+          10. The thymus gland is located behind the ________, in front of the heart.
+          <br><input class="blank-input" id="f10" placeholder="Type answer..." data-ans="sternum">
+          <button class="check-btn" onclick="checkBlank('f10')">Check</button>
+          <div id="f10-fb" style="font-size:12px; margin-top:6px; display:none;"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: HIGH YIELD -->
+      <div class="page" id="p-high-yield">
+        <h1>⭐ High-Yield Revision Sheet</h1>
+        <p class="subtitle">30–40 minute revision. Everything that matters, nothing extra.</p>
+
+        <h2>Glands at a Glance</h2>
+        <table>
+          <tr><th>Gland</th><th>Location</th><th>Hormone(s)</th><th>Key Disease</th></tr>
+          <tr><td><strong>Thyroid</strong> 🔥</td><td>Neck, butterfly-shaped</td><td>Thyroxine</td><td>Goiter (iodine↓), Cretinism (thyroxine↓), Hyperthyroidism (thyroxine↑)</td></tr>
+          <tr><td><strong>Parathyroid</strong></td><td>Behind thyroid</td><td>Parathormone</td><td>Calcium imbalance</td></tr>
+          <tr><td><strong>Thymus</strong></td><td>Behind sternum, front of heart</td><td>—</td><td>Trains T-cells (immunity)</td></tr>
+          <tr><td><strong>Adrenal</strong> 🔥</td><td>Cap on kidneys</td><td>Adrenaline, Cortisol</td><td>Addison's (cortisol↓)</td></tr>
+          <tr><td><strong>Pituitary</strong> 🔥</td><td>Brain (master gland)</td><td>GH, Prolactin, ADH, Oxytocin</td><td>Dwarfism/Gigantism/Acromegaly (GH), D. Insipidus (ADH↓)</td></tr>
+          <tr><td><strong>Pineal</strong></td><td>Brain, pea-sized</td><td>Melatonin</td><td>Sleep disorders</td></tr>
+          <tr><td><strong>Pancreas</strong> 🔥</td><td>Abdomen (mixed)</td><td>Insulin (β), Glucagon (α)</td><td>Diabetes Mellitus (insulin↓)</td></tr>
+        </table>
+
+        <h2>Plant Hormones at a Glance</h2>
+        <table>
+          <tr><th>Hormone</th><th>Type</th><th>Function</th><th>Exam Point</th></tr>
+          <tr><td>Auxin 🔥</td><td>Growth</td><td>Stem elongation, phototropism</td><td>Moves AWAY from light</td></tr>
+          <tr><td>Gibberellin ⭐</td><td>Growth</td><td>Germination, elongation, flowering</td><td>G→Gibberellin, G→Germination</td></tr>
+          <tr><td>Cytokinin ⭐</td><td>Growth</td><td>Cell division</td><td>Name = function</td></tr>
+          <tr><td>ABA ⭐</td><td>Inhibitor</td><td>Stress response, closes stomata, leaf fall</td><td>The only inhibitor hormone</td></tr>
+          <tr><td>Ethylene 🔥</td><td>Gas</td><td>Fruit ripening</td><td>Gaseous; also used in metal welding</td></tr>
+        </table>
+
+        <h2>Plant Movements at a Glance</h2>
+        <table>
+          <tr><th>Movement</th><th>Stimulus</th><th>Root</th><th>Shoot</th><th>Growth?</th></tr>
+          <tr><td>Phototropism</td><td>Light</td><td>Negative</td><td>Positive</td><td>✅ Yes</td></tr>
+          <tr><td>Hydrotropism</td><td>Water</td><td>Positive</td><td>Negative</td><td>✅ Yes</td></tr>
+          <tr><td>Geotropism</td><td>Gravity</td><td>Positive</td><td>Negative</td><td>✅ Yes</td></tr>
+          <tr><td>Chemotropism</td><td>Chemical</td><td>—</td><td>Pollen tube +ve</td><td>✅ Yes</td></tr>
+          <tr><td>Photonasty</td><td>Light</td><td colspan="2">Sunflower daily tracking</td><td>❌ No</td></tr>
+          <tr><td>Thigmonasty</td><td>Touch</td><td colspan="2">Mimosa, Venus flytrap</td><td>❌ No</td></tr>
+        </table>
+
+        <h2>Critical Pairs to Never Confuse 🔥</h2>
+        <div class="grid-2">
+          <div class="card card-red">
+            <h4>Diabetes Mellitus ≠ Diabetes Insipidus</h4>
+            <p style="font-size:12px">Mellitus = Insulin ↓ (pancreas/beta cells)<br>Insipidus = ADH ↓ (pituitary posterior)</p>
+          </div>
+          <div class="card card-red">
+            <h4>Thyroid ≠ Thymus</h4>
+            <p style="font-size:12px">Thyroid = neck, thyroxine, metabolism<br>Thymus = chest, trains T-cells, immunity</p>
+          </div>
+          <div class="card card-red">
+            <h4>Gigantism ≠ Acromegaly</h4>
+            <p style="font-size:12px">Gigantism = GH excess in youth (whole body)<br>Acromegaly = GH excess in adult (body parts)</p>
+          </div>
+          <div class="card card-red">
+            <h4>Alpha ≠ Beta cells</h4>
+            <p style="font-size:12px">Alpha → Glucagon (raises blood sugar)<br>Beta → Insulin (lowers blood sugar)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: LAST NIGHT -->
+      <div class="page" id="p-last-night">
+        <h1>🌙 Last-Night-Before-Exam Sheet</h1>
+        <p class="subtitle">Read this once. Sleep. Walk into the exam with confidence.</p>
+
+        <div class="card card-green" style="margin-bottom:20px;">
+          <h4>⚡ 5-Minute Final Recall</h4>
+          <p>Read each point. Close your eyes. Recall it. Move on.</p>
+        </div>
+
+        <div class="ln-item"><div class="ln-num">1</div><div>Endocrine = ductless, releases hormones into blood. Exocrine = uses ducts, releases enzymes.</div></div>
+        <div class="ln-item"><div class="ln-num">2</div><div>Largest gland = <strong style="color:var(--green)">Liver</strong> (exocrine). Largest ENDOCRINE = <strong style="color:var(--green)">Thyroid</strong> (butterfly, neck).</div></div>
+        <div class="ln-item"><div class="ln-num">3</div><div>Thyroid → Thyroxine (metabolism). Needs Iodine. Deficiency → Goiter → Cretinism.</div></div>
+        <div class="ln-item"><div class="ln-num">4</div><div>Thymus → Behind sternum, front of heart → Trains T-lymphocytes (immunity). NOT thyroid.</div></div>
+        <div class="ln-item"><div class="ln-num">5</div><div>Adrenal (on kidneys) → Adrenaline (fight/flight) + Cortisol (stress). Cortisol deficiency = Addison's.</div></div>
+        <div class="ln-item"><div class="ln-num">6</div><div>Hypothalamus = CEO (makes hormones). Pituitary = Master Gland (releases them).</div></div>
+        <div class="ln-item"><div class="ln-num">7</div><div>Anterior pituitary (own) → GH (Somatotropin) + Prolactin. Posterior (from hypothalamus) → ADH + Oxytocin.</div></div>
+        <div class="ln-item"><div class="ln-num">8</div><div>GH: Deficiency = Dwarfism. Excess youth = Gigantism. Excess adult = Acromegaly (Khali).</div></div>
+        <div class="ln-item"><div class="ln-num">9</div><div>ADH deficiency = Diabetes INSIPIDUS. Insulin deficiency = Diabetes MELLITUS.</div></div>
+        <div class="ln-item"><div class="ln-num">10</div><div>Pineal → Melatonin → Circadian rhythm (sleep cycle).</div></div>
+        <div class="ln-item"><div class="ln-num">11</div><div>Pancreas is MIXED. Alpha cells → Glucagon (glycogen → glucose = glycogenolysis). Beta cells → Insulin (glucose → glycogen = glycogenesis).</div></div>
+        <div class="ln-item"><div class="ln-num">12</div><div>Ghrelin = hunger hormone (stomach). ANF = heart (atrial wall).</div></div>
+        <div class="ln-item"><div class="ln-num">13</div><div>Plant hormones: Auxin (tip, growth), Gibberellin (germination), Cytokinin (cell division), ABA (stress/inhibitor), Ethylene (fruit ripening, gaseous).</div></div>
+        <div class="ln-item"><div class="ln-num">14</div><div>Auxin moves AWAY from light → shaded side grows more → plant bends TOWARD light.</div></div>
+        <div class="ln-item"><div class="ln-num">15</div><div>Tropic movements = WITH growth (photo, hydro, geo, chemo). Roots = positive for gravity/water; negative for light. Shoots = opposite.</div></div>
+        <div class="ln-item"><div class="ln-num">16</div><div>Nastic movements = WITHOUT growth. Photonastic = sunflower. Thigmonastic = Mimosa + Venus flytrap (touch).</div></div>
+        <div class="ln-item"><div class="ln-num">17</div><div>Ethylene = also called acetylene = used in metal welding = artificially ripens fruits.</div></div>
+        <div class="ln-item"><div class="ln-num">18</div><div>Prolactin = FORMS milk (anterior pituitary, own hormone). Oxytocin = SECRETES milk (posterior pituitary, from hypothalamus).</div></div>
+
+        <div class="card card-yellow" style="margin-top:24px;">
+          <h4>🌙 Sleep well. You've got this.</h4>
+          <p>The notes are in your memory. Trust the system. Walk in confidently. ✨</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // Navigation
+  const navItems = document.querySelectorAll('.nav-item');
+  const pages = document.querySelectorAll('.page');
+  const indicator = document.getElementById('page-indicator');
+  const totalPages = navItems.length;
+  let currentIdx = 0;
+
+  navItems.forEach((item, idx) => {
+    item.addEventListener('click', () => {
+      navItems.forEach(n => n.classList.remove('active'));
+      pages.forEach(p => p.classList.remove('active'));
+      item.classList.add('active');
+      const pageId = 'p-' + item.dataset.page;
+      document.getElementById(pageId).classList.add('active');
+      document.getElementById('content').scrollTop = 0;
+      currentIdx = idx;
+      indicator.textContent = `Page ${idx + 1} of ${totalPages}`;
+    });
+  });
+
+  // Quiz Logic
+  let scores = { correct: 0, answered: 0 };
+
+  function answer(el, qid, correct) {
+    const q = document.getElementById(qid);
+    if (q.dataset.answered) return;
+    q.dataset.answered = '1';
+    scores.answered++;
+
+    const opts = q.querySelectorAll('.opt');
+    const correctOpt = q.querySelector('.opt[data-correct]');
+    const explain = q.querySelector('.quiz-explain');
+
+    opts.forEach(o => o.style.pointerEvents = 'none');
+
+    if (el === correctOpt) {
+      el.classList.add('correct');
+      scores.correct++;
+    } else {
+      el.classList.add('wrong');
+      correctOpt.classList.add('correct');
+    }
+    explain.classList.add('show');
+    updateScore();
+  }
+
+  function updateScore() {
+    const el = document.getElementById('quiz-score');
+    el.textContent = `Score: ${scores.correct} / ${scores.answered} correct`;
+  }
+
+  // Fill in Blanks Logic
+  function checkBlank(id) {
+    const input = document.getElementById(id);
+    const fb = document.getElementById(id + '-fb');
+    const userAns = input.value.trim().toLowerCase();
+    const correct = input.dataset.ans.toLowerCase();
+
+    // Accept partial match for long answers
+    const isCorrect = userAns === correct || correct.includes(userAns) && userAns.length > 3;
+
+    input.classList.remove('right', 'wrong-ans');
+    if (isCorrect) {
+      input.classList.add('right');
+      fb.style.display = 'block';
+      fb.style.color = 'var(--green)';
+      fb.textContent = '✅ Correct! Answer: ' + input.dataset.ans;
+    } else {
+      input.classList.add('wrong-ans');
+      fb.style.display = 'block';
+      fb.style.color = 'var(--red)';
+      fb.textContent = '❌ Answer: ' + input.dataset.ans;
+    }
+  }
+
+  // Allow Enter key for fill blanks
+  document.querySelectorAll('.blank-input').forEach(inp => {
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkBlank(inp.id);
+    });
+  });
+</script>
+</body>
+</html>

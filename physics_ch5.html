@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sound Waves — SSC CGL Revision Station</title>
+<style>
+  :root{
+    --bg: #0d1016;
+    --bg-raised: #141925;
+    --bg-card: #161c29;
+    --border: #232b3d;
+    --text: #eef1f5;
+    --text-dim: #9aa5b8;
+    --text-faint: #5f6b80;
+    --green: #5eead4;
+    --green-dim: rgba(94,234,212,0.12);
+    --blue: #7dd3fc;
+    --blue-dim: rgba(125,211,252,0.12);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.1);
+    --red: #fb7185;
+    --red-dim: rgba(251,113,133,0.1);
+    --purple: #c4b5fd;
+    --mono: 'SF Mono', 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
+    --sans: -apple-system, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif;
+    --display: 'Segoe UI Semibold', -apple-system, Inter, Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html,body{ height:100%; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.55;
+    overflow: hidden;
+  }
+  ::selection{ background: var(--green-dim); color: var(--green); }
+  ::-webkit-scrollbar{ width: 9px; height: 9px; }
+  ::-webkit-scrollbar-track{ background: transparent; }
+  ::-webkit-scrollbar-thumb{ background: #2a3346; border-radius: 6px; }
+  ::-webkit-scrollbar-thumb:hover{ background: #374159; }
+
+  a{ color: inherit; }
+  button{ font-family: inherit; cursor: pointer; }
+
+  /* ============ APP SHELL ============ */
+  .app{
+    display: grid;
+    grid-template-columns: 268px 1fr;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* ============ SIDEBAR ============ */
+  .sidebar{
+    background: linear-gradient(180deg, #10131c, #0c0f16);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+  }
+  .sidebar-head{
+    padding: 22px 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .brand-tag{
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .brand-title{
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+  .brand-sub{
+    font-size: 11.5px;
+    color: var(--text-faint);
+    margin-top: 4px;
+  }
+
+  .nav-scale{
+    display:flex;
+    gap: 3px;
+    padding: 12px 20px 8px;
+  }
+  .scale-dot{
+    flex:1;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--border);
+  }
+  .scale-dot.done{ background: var(--green); }
+
+  nav.sidenav{
+    flex: 1;
+    padding: 6px 12px 20px;
+  }
+  .nav-group-label{
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    padding: 16px 12px 6px;
+    font-weight: 700;
+  }
+  .nav-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background .15s, color .15s, border-color .15s;
+    user-select: none;
+  }
+  .nav-item:hover{
+    background: var(--bg-card);
+    color: var(--text);
+  }
+  .nav-item.active{
+    background: var(--green-dim);
+    color: var(--green);
+    border-color: rgba(94,234,212,0.25);
+    font-weight: 600;
+  }
+  .nav-ico{
+    width: 16px;
+    flex-shrink:0;
+    text-align:center;
+    font-size: 13px;
+    opacity: 0.9;
+  }
+  .sidebar-foot{
+    padding: 14px 20px 18px;
+    border-top: 1px solid var(--border);
+    font-size: 10.5px;
+    color: var(--text-faint);
+    line-height: 1.6;
+  }
+  .pulse-dot{
+    display:inline-block;
+    width:6px; height:6px;
+    border-radius:50%;
+    background: var(--green);
+    margin-right: 6px;
+    box-shadow: 0 0 0 0 rgba(94,234,212,0.5);
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow: 0 0 0 0 rgba(94,234,212,0.45); }
+    70%{ box-shadow: 0 0 0 6px rgba(94,234,212,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(94,234,212,0); }
+  }
+
+  /* ============ MAIN ============ */
+  main{
+    height: 100vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  .topbar{
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background: rgba(13,16,22,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 36px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+  }
+  .topbar-crumb{
+    font-size: 12px;
+    color: var(--text-faint);
+    letter-spacing: 0.04em;
+  }
+  .topbar-crumb b{ color: var(--text-dim); font-weight:600; }
+  .topbar-nav-btns{ display:flex; gap:8px; }
+  .tbtn{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 12px;
+    padding: 7px 13px;
+    border-radius: 7px;
+    display:flex; align-items:center; gap:6px;
+    transition: border-color .15s, color .15s;
+  }
+  .tbtn:hover{ border-color: var(--green); color: var(--green); }
+  .tbtn:disabled{ opacity: 0.35; cursor: default; }
+  .tbtn:disabled:hover{ border-color: var(--border); color: var(--text-dim); }
+
+  .page{
+    display:none;
+    padding: 40px 48px 90px;
+    max-width: 980px;
+    margin: 0 auto;
+    animation: fadein .35s ease;
+  }
+  .page.active{ display:block; }
+  @keyframes fadein{ from{opacity:0; transform: translateY(6px);} to{opacity:1; transform:none;} }
+
+  .page-eyebrow{
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .page-title{
+    font-size: 32px;
+    font-weight: 750;
+    letter-spacing: -0.015em;
+    margin-bottom: 10px;
+  }
+  .page-title .accent{ color: var(--green); }
+  .page-dek{
+    font-size: 15px;
+    color: var(--text-dim);
+    max-width: 640px;
+    margin-bottom: 30px;
+  }
+
+  /* ============ REUSABLE BLOCKS ============ */
+  .card{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 18px;
+  }
+  .card h3{
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .card p{ color: var(--text-dim); font-size: 14px; }
+  .card ul, .card ol{ color: var(--text-dim); font-size: 14px; padding-left: 20px; margin-top: 8px;}
+  .card li{ margin-bottom: 6px; }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:4px;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
+  }
+  .tag-must{ background: var(--red-dim); color: var(--red); }
+  .tag-imp{ background: var(--amber-dim); color: var(--amber); }
+  .tag-good{ background: var(--blue-dim); color: var(--blue); }
+  .tag-trap{ background: var(--red-dim); color: var(--red); }
+
+  .grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 720px){ .grid-2, .grid-3{ grid-template-columns: 1fr; } }
+
+  table{ width:100%; border-collapse: collapse; font-size: 13.5px; margin-top: 10px;}
+  th, td{ text-align:left; padding: 9px 12px; border-bottom: 1px solid var(--border); }
+  th{ color: var(--green); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-weight:700;}
+  td{ color: var(--text-dim); }
+  tr:last-child td{ border-bottom:none; }
+  td b, td.hl{ color: var(--text); font-family: var(--mono); }
+
+  .divider{ height:1px; background: var(--border); margin: 26px 0; border:none; }
+
+  .callout{
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 16px 0;
+    border: 1px solid;
+    font-size: 13.5px;
+  }
+  .callout-trap{ background: var(--red-dim); border-color: rgba(251,113,133,0.3); }
+  .callout-trap .callout-head{ color: var(--red); }
+  .callout-hook{ background: var(--green-dim); border-color: rgba(94,234,212,0.25); }
+  .callout-hook .callout-head{ color: var(--green); }
+  .callout-exam{ background: var(--blue-dim); border-color: rgba(125,211,252,0.25); }
+  .callout-exam .callout-head{ color: var(--blue); }
+  .callout-head{ font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; display:flex; align-items:center; gap:6px;}
+  .callout p, .callout li{ color: var(--text-dim); }
+  .callout ul{ padding-left: 18px; margin-top: 6px; }
+
+  .stat-pill{
+    display:inline-block;
+    font-family: var(--mono);
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    color: var(--blue);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 12.5px;
+  }
+
+  /* ============ HOME / WAVE HERO ============ */
+  .hero{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    text-align:center;
+    padding: 30px 0 10px;
+  }
+  .hero-eyebrow{
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .hero h1{
+    font-size: 44px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .hero h1 span{ color: var(--green); }
+  .hero p.lead{
+    color: var(--text-dim);
+    font-size: 15.5px;
+    max-width: 560px;
+    margin-bottom: 28px;
+  }
+  .wave-stage{
+    width: 100%;
+    max-width: 700px;
+    height: 160px;
+    margin-bottom: 10px;
+  }
+  .wave-controls{
+    display:flex; gap: 22px; align-items:center; margin-bottom: 36px; color: var(--text-faint); font-size: 12px;
+  }
+  .wave-controls b{ color: var(--text); font-family: var(--mono); font-weight: 600;}
+
+  .home-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    width: 100%;
+    margin-top: 4px;
+  }
+  @media (max-width: 720px){ .home-grid{ grid-template-columns: 1fr 1fr; } }
+  .home-card{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 16px;
+    text-align: left;
+    transition: transform .15s, border-color .15s;
+  }
+  .home-card:hover{ border-color: var(--green); transform: translateY(-2px); }
+  .home-card .num{ font-family: var(--mono); color: var(--text-faint); font-size: 11px; }
+  .home-card h4{ font-size: 13.5px; margin: 6px 0 4px; font-weight: 700; }
+  .home-card p{ font-size: 12px; color: var(--text-faint); }
+
+  /* ============ MEMORY PALACE ============ */
+  .palace-map{
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 22px;
+  }
+  .palace-room{
+    display:flex; gap:16px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .palace-room:last-child{ border-bottom: none; }
+  .palace-icon{
+    width: 42px; height:42px; border-radius: 10px;
+    background: var(--green-dim);
+    display:flex; align-items:center; justify-content:center;
+    font-size: 19px; flex-shrink:0;
+  }
+  .palace-room h4{ font-size: 14.5px; margin-bottom: 4px; }
+  .palace-room p{ font-size: 13.5px; color: var(--text-dim); }
+  .palace-room .station-tag{ font-family: var(--mono); font-size: 11px; color: var(--green); margin-bottom: 3px; display:block;}
+
+  /* ============ ACTIVE RECALL ============ */
+  .qa-card{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+  .qa-q{
+    padding: 14px 18px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    gap: 12px;
+  }
+  .qa-q:hover{ background: rgba(255,255,255,0.02); }
+  .qa-q .chev{ color: var(--text-faint); transition: transform .2s; flex-shrink:0; font-size:11px;}
+  .qa-card.open .qa-q .chev{ transform: rotate(90deg); color: var(--green); }
+  .qa-a{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .25s ease;
+    font-size: 13.5px;
+    color: var(--green);
+    background: rgba(94,234,212,0.04);
+  }
+  .qa-card.open .qa-a{ max-height: 400px; }
+  .qa-a-inner{ padding: 0 18px 16px; }
+
+  .blank-card{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    margin-bottom: 8px;
+    color: var(--text-dim);
+  }
+  .blank-card .fill{
+    border-bottom: 2px dotted var(--text-faint);
+    color: transparent;
+    transition: color .15s;
+    cursor: pointer;
+    padding: 0 2px;
+  }
+  .blank-card .fill.show{ color: var(--blue); border-bottom-color: var(--blue); }
+
+  /* ============ ULTRA FAST / 30 SEC / LAST NIGHT ============ */
+  .speed-sheet{
+    background: linear-gradient(135deg, #161c29, #11151f);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 26px 28px;
+  }
+  .speed-sheet h3{ color: var(--green); font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  .speed-row{
+    display:flex; justify-content: space-between; gap: 16px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .speed-row:last-child{ border-bottom: none; }
+  .speed-row .k{ color: var(--text-dim); }
+  .speed-row .v{ color: var(--text); font-family: var(--mono); font-weight: 600; text-align:right; }
+
+  .lastnight-block{
+    border-left: 3px solid var(--green);
+    padding-left: 16px;
+    margin-bottom: 18px;
+  }
+  .lastnight-block h4{ font-size: 13.5px; color: var(--green); margin-bottom: 6px; }
+  .lastnight-block p{ font-size: 13.5px; color: var(--text-dim); }
+
+  .pill-row{ display:flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;}
+  .pill{
+    font-family: var(--mono);
+    font-size: 12px;
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    padding: 5px 10px;
+    border-radius: 7px;
+    color: var(--blue);
+  }
+
+  .footer-nav{
+    display:flex; justify-content: space-between; margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--border);
+  }
+  .big-nav-btn{
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 13px;
+    color: var(--text-dim);
+    display:flex; align-items:center; gap:8px;
+    transition: border-color .15s, color .15s;
+  }
+  .big-nav-btn:hover{ border-color: var(--green); color: var(--green); }
+
+  code.inline{
+    font-family: var(--mono);
+    background: var(--bg-raised);
+    padding: 1px 6px;
+    border-radius: 5px;
+    color: var(--blue);
+    font-size: 0.92em;
+  }
+
+  /* mobile */
+  @media (max-width: 880px){
+    .app{ grid-template-columns: 1fr; }
+    .sidebar{
+      position: fixed; left:0; top:0; bottom:0; width: 250px;
+      transform: translateX(-100%);
+      transition: transform .25s ease;
+      z-index: 50;
+    }
+    .sidebar.open{ transform: translateX(0); }
+    .menu-btn{ display:flex !important; }
+    .page{ padding: 30px 20px 80px; }
+    .topbar{ padding: 12px 16px; }
+    .hero h1{ font-size: 30px; }
+    .grid-2, .grid-3, .home-grid{ grid-template-columns: 1fr; }
+  }
+  .menu-btn{ display:none; background:none; border:none; color:var(--text); font-size:20px; }
+  .overlay{ display:none; }
+  .overlay.show{ display:block; position:fixed; inset:0; background: rgba(0,0,0,0.5); z-index:40; }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="brand-tag">SSC CGL · Physics</div>
+      <div class="brand-title">🔊 Sound Waves</div>
+      <div class="brand-sub">Revision Station · FRB 2.0</div>
+    </div>
+    <div class="nav-scale" id="navScale"></div>
+
+    <nav class="sidenav" id="sidenav">
+      <div class="nav-group-label">Orientation</div>
+      <div class="nav-item" data-page="home"><span class="nav-ico">🏠</span>Home Base</div>
+      <div class="nav-item" data-page="bigpicture"><span class="nav-ico">🧭</span>Big Picture</div>
+      <div class="nav-item" data-page="palace"><span class="nav-ico">🏰</span>Memory Palace</div>
+
+      <div class="nav-group-label">Core Notes</div>
+      <div class="nav-item" data-page="wavetypes"><span class="nav-ico">🌊</span>Wave Types</div>
+      <div class="nav-item" data-page="speed"><span class="nav-ico">⚡</span>Speed of Sound</div>
+      <div class="nav-item" data-page="echo"><span class="nav-ico">🏔️</span>Echo &amp; Reverberation</div>
+      <div class="nav-item" data-page="characteristics"><span class="nav-ico">📈</span>Wave Characteristics</div>
+      <div class="nav-item" data-page="ranges"><span class="nav-ico">🦇</span>Sound Ranges &amp; Animals</div>
+      <div class="nav-item" data-page="mach"><span class="nav-ico">🚀</span>Mach Numbers</div>
+      <div class="nav-item" data-page="applications"><span class="nav-ico">🏥</span>Ultrasound &amp; SONAR</div>
+
+      <div class="nav-group-label">Exam Warfare</div>
+      <div class="nav-item" data-page="traps"><span class="nav-ico">⚠️</span>Exam Traps</div>
+      <div class="nav-item" data-page="examiner"><span class="nav-ico">🎯</span>Examiner's Mind</div>
+      <div class="nav-item" data-page="recall"><span class="nav-ico">❓</span>Active Recall</div>
+
+      <div class="nav-group-label">Speed Layers</div>
+      <div class="nav-item" data-page="highyield"><span class="nav-ico">⭐</span>High-Yield Sheet</div>
+      <div class="nav-item" data-page="ultrafast"><span class="nav-ico">🔥</span>Ultra-Fast Sheet</div>
+      <div class="nav-item" data-page="thirtysec"><span class="nav-ico">⏱️</span>30-Second Sheet</div>
+      <div class="nav-item" data-page="lastnight"><span class="nav-ico">🌙</span>Last Night Before Exam</div>
+    </nav>
+
+    <div class="sidebar-foot">
+      <span class="pulse-dot"></span>System ready · 16 stations<br>
+      Built for 20–100 revisions
+    </div>
+  </aside>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ============ MAIN ============ -->
+  <main id="main">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div class="topbar-crumb">Sound Waves / <b id="crumbLabel">Home Base</b></div>
+      </div>
+      <div class="topbar-nav-btns">
+        <button class="tbtn" id="prevBtn">← Prev</button>
+        <button class="tbtn" id="nextBtn">Next →</button>
+      </div>
+    </div>
+
+    <!-- PAGE: HOME -->
+    <section class="page active" data-page="home">
+      <div class="hero">
+        <div class="hero-eyebrow">Frequency · Amplitude · Wavelength</div>
+        <h1>Sound is just a wave<br><span>knocking on your eardrum.</span></h1>
+        <p class="lead">A complete memory system for one of SSC CGL's most predictable physics topics. Built to survive 100 revisions, not just one read-through.</p>
+
+        <svg class="wave-stage" id="waveSVG" viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="80" x2="700" y2="80" stroke="#232b3d" stroke-width="1"/>
+          <path id="wavePath" d="" stroke="#5eead4" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <g id="particleDots"></g>
+        </svg>
+        <div class="wave-controls">
+          <span>λ Wavelength: <b id="lamVal">140px</b></span>
+          <span>f Frequency: <b id="freqVal">1x</b></span>
+          <span>Amplitude: <b id="ampVal">40px</b></span>
+        </div>
+
+        <div class="home-grid">
+          <div class="home-card" data-goto="wavetypes"><div class="num">01</div><h4>Wave Types</h4><p>Mechanical vs non-mechanical, longitudinal vs transverse</p></div>
+          <div class="home-card" data-goto="speed"><div class="num">02</div><h4>Speed of Sound</h4><p>Medium-wise speeds, temperature effect</p></div>
+          <div class="home-card" data-goto="echo"><div class="num">03</div><h4>Echo &amp; Reverb</h4><p>17.2m rule, repeated reflection</p></div>
+          <div class="home-card" data-goto="characteristics"><div class="num">04</div><h4>Characteristics</h4><p>Amplitude→loudness, Frequency→pitch</p></div>
+          <div class="home-card" data-goto="ranges"><div class="num">05</div><h4>Sound Ranges</h4><p>Infrasonic, audible, ultrasonic + animals</p></div>
+          <div class="home-card" data-goto="mach"><div class="num">06</div><h4>Mach Numbers</h4><p>Subsonic to hypersonic classification</p></div>
+          <div class="home-card" data-goto="applications"><div class="num">07</div><h4>Ultrasound &amp; SONAR</h4><p>Medical uses, navigation, detection</p></div>
+          <div class="home-card" data-goto="traps"><div class="num">⚠</div><h4>Exam Traps</h4><p>Where SSC CGL toppers still lose marks</p></div>
+          <div class="home-card" data-goto="lastnight"><div class="num">🌙</div><h4>Last Night Sheet</h4><p>The only page you need at 11pm before exam</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: BIG PICTURE -->
+    <section class="page" data-page="bigpicture">
+      <div class="page-eyebrow">Orientation</div>
+      <h1 class="page-title">The <span class="accent">Big Picture</span></h1>
+      <p class="page-dek">What this chapter is actually about, before you drown in definitions.</p>
+
+      <div class="card">
+        <h3>🧭 One-sentence summary</h3>
+        <p>Sound is a <b style="color:var(--text)">mechanical, longitudinal wave</b> — it needs a medium, and it travels by pushing particles back and forth (compression → rarefaction), unlike light, which is non-mechanical and transverse and needs no medium at all.</p>
+      </div>
+
+      <div class="card">
+        <h3>🗺️ The chapter's skeleton</h3>
+        <p>Every SSC question on this chapter hangs off one of these five branches:</p>
+        <ol>
+          <li><b style="color:var(--text)">Nature of the wave</b> — mechanical/non-mechanical, longitudinal/transverse</li>
+          <li><b style="color:var(--text)">Speed of sound</b> — how medium and temperature change it</li>
+          <li><b style="color:var(--text)">Reflection of sound</b> — echo and reverberation</li>
+          <li><b style="color:var(--text)">Wave characteristics</b> — amplitude, frequency, wavelength and what each controls</li>
+          <li><b style="color:var(--text)">Ranges and applications</b> — infrasonic/ultrasonic animals, Mach numbers, SONAR, ultrasound</li>
+        </ol>
+      </div>
+
+      <div class="callout callout-hook">
+        <div class="callout-head">🧠 Why this chapter is "free marks"</div>
+        <p>Unlike organic chemistry or modern history, sound waves has almost no ambiguity — every fact is a fixed number or a fixed direction (up/down vs back/forth). If you nail the traps section, this becomes one of the highest accuracy-per-minute topics in your whole syllabus.</p>
+      </div>
+    </section>
+
+    <!-- PAGE: MEMORY PALACE -->
+    <section class="page" data-page="palace">
+      <div class="page-eyebrow">Retention Framework</div>
+      <h1 class="page-title">The <span class="accent">Sound Lab</span> Memory Palace</h1>
+      <p class="page-dek">Walk through this lab in your head during the exam. Each room holds one cluster of facts.</p>
+
+      <div class="palace-map">
+        <div class="palace-room">
+          <div class="palace-icon">🚪</div>
+          <div>
+            <span class="station-tag">ROOM 1 — The Entrance Corridor</span>
+            <h4>Two doors: Mechanical vs Non-Mechanical</h4>
+            <p>You walk into a lab with two doors. The left door is stuck — you need someone (a medium) to push it open for you. That's <b style="color:var(--text)">mechanical</b> (sound). The right door is automatic, glides open with no help — <b style="color:var(--text)">non-mechanical</b> (light/EM waves). Sound is the needy one; light is independent.</p>
+          </div>
+        </div>
+        <div class="palace-room">
+          <div class="palace-icon">↔️</div>
+          <div>
+            <span class="station-tag">ROOM 2 — The Slinky Corridor</span>
+            <h4>Longitudinal vs Transverse</h4>
+            <p>You see a long spring (slinky) on the floor. Push it straight ahead — it bunches and stretches <b style="color:var(--text)">back-and-forth, in the same line you pushed</b> — that's sound, longitudinal. On the wall is a skipping rope someone shakes <b style="color:var(--text)">up-and-down</b> while it travels sideways — that's light, transverse.</p>
+          </div>
+        </div>
+        <div class="palace-room">
+          <div class="palace-icon">🏃</div>
+          <div>
+            <span class="station-tag">ROOM 3 — The Speed Track</span>
+            <h4>Solid &gt; Liquid &gt; Gas, and the Aluminium podium</h4>
+            <p>A racetrack with three runners: Solid (fastest, dense crowd to pass the push along), Liquid (medium), Gas (slowest, particles too spread out). On the solid podium: Aluminium on the gold step, Nickel silver, Steel bronze. Remember the steel runner's bib number: <b style="color:var(--text)">6420</b>. Heat lamps over the track make every runner speed up — temperature ↑ → speed ↑.</p>
+          </div>
+        </div>
+        <div class="palace-room">
+          <div class="palace-icon">🏔️</div>
+          <div>
+            <span class="station-tag">ROOM 4 — The Mountain Canyon</span>
+            <h4>Echo vs Reverberation</h4>
+            <p>You shout "Radha!" across a canyon. If the far wall is at least <b style="color:var(--text)">17.2 m</b> away, you hear one crisp "Radha!" bounce back — that's <b style="color:var(--text)">echo</b>. But in a small closed hall, the sound bounces wall-to-wall too fast to separate — "Radha-dha-dha-dha" — that's <b style="color:var(--text)">reverberation</b>: repeated reflection, not a single clean echo.</p>
+          </div>
+        </div>
+        <div class="palace-room">
+          <div class="palace-icon">🎤</div>
+          <div>
+            <span class="station-tag">ROOM 5 — The Recording Studio</span>
+            <h4>Amplitude (loudness) vs Frequency (pitch)</h4>
+            <p>Two control knobs on a mixing desk. The <b style="color:var(--text)">VOLUME knob = amplitude</b>, turning it up makes the wave taller, the sound louder (a lion's roar — big amplitude). The <b style="color:var(--text)">PITCH knob = frequency</b>, vibrations per second (a mosquito's whine — high frequency, a girl's voice is higher-pitched than a man's). Unit of loudness sits on a little screen: <b style="color:var(--text)">decibel</b>; unit of frequency: <b style="color:var(--text)">Hertz</b>.</p>
+          </div>
+        </div>
+        <div class="palace-room">
+          <div class="palace-icon">📏</div>
+          <div>
+            <span class="station-tag">ROOM 6 — The Measuring Wall</span>
+            <h4>Wavelength</h4>
+            <p>A measuring tape on the studio wall stretches from one crest to the next — the full length of <b style="color:var(--text)">one</b> complete wave cycle. Symbol <b style="color:var(--text)">λ</b> (lambda), unit <b style="color:var(--text)">metre</b>.</p>
+          </div>
+        </div>
+        <div class="palace-room">
+          <div class="palace-icon">🦇</div>
+          <div>
+            <span class="station-tag">ROOM 7 — The Animal Enclosure</span>
+            <h4>Infrasonic vs Ultrasonic creatures</h4>
+            <p>A zoo hallway split in two. Left enclosure: elephants, hippos, rhinos and whales — big, slow, low-pitched groaners → <b style="color:var(--text)">infrasonic</b> (below 20 Hz). Right enclosure: bats, dolphins, whales (again — whales are dual-citizens of both enclosures) → <b style="color:var(--text)">ultrasonic</b> (above 20,000 Hz). The "audible visitors' corridor" in between is humans: 20 Hz–20 kHz.</p>
+          </div>
+        </div>
+        <div class="palace-room">
+          <div class="palace-icon">🚀</div>
+          <div>
+            <span class="station-tag">ROOM 8 — The Hangar (Mach Runway)</span>
+            <h4>Subsonic → Hypersonic</h4>
+            <p>A runway with speed-marker flags: Mach &lt;1 = slow taxiing plane (<b style="color:var(--text)">subsonic</b>), Mach =1 = the exact moment it breaks the barrier (<b style="color:var(--text)">transonic</b>), Mach 1–5 = the jet roaring off (<b style="color:var(--text)">supersonic</b>), Mach &gt;5 = a rocket leaving the runway entirely (<b style="color:var(--text)">hypersonic</b>).</p>
+          </div>
+        </div>
+        <div class="palace-room">
+          <div class="palace-icon">🏥</div>
+          <div>
+            <span class="station-tag">ROOM 9 — The Hospital Wing &amp; The Harbour</span>
+            <h4>Ultrasound and SONAR</h4>
+            <p>Down the corridor: a hospital room where a doctor uses high-penetration <b style="color:var(--text)">ultrasound</b> to check kidney stones and monitor a growing fetus. Out the back door: a harbour where a ship pings <b style="color:var(--text)">SONAR</b> — Sound Navigation And Ranging — into the water; an echo means an obstacle, silence means clear water.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-hook">
+        <div class="callout-head">🧠 How to use this palace</div>
+        <p>Before the exam, mentally walk Room 1 → Room 9 in under 90 seconds. If any room feels foggy, that's exactly the section to re-read — don't re-read the whole chapter blindly.</p>
+      </div>
+    </section>
+
+    <!-- PAGE: WAVE TYPES -->
+    <section class="page" data-page="wavetypes">
+      <div class="page-eyebrow">Core Notes · 01</div>
+      <h1 class="page-title">Wave <span class="accent">Types</span></h1>
+      <p class="page-dek">Every wave question on SSC traces back to these two splits.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>⚙️ Mechanical Waves <span class="tag tag-must">Must Know</span></h3>
+          <p>Need a <b style="color:var(--text)">medium</b> to travel — cannot move through vacuum.</p>
+          <p style="margin-top:8px;"><b style="color:var(--text)">Example:</b> Sound wave</p>
+        </div>
+        <div class="card">
+          <h3>🌐 Non-Mechanical Waves <span class="tag tag-must">Must Know</span></h3>
+          <p>Need <b style="color:var(--text)">no medium</b> — can travel through vacuum (space).</p>
+          <p style="margin-top:8px;"><b style="color:var(--text)">Example:</b> Electromagnetic waves (light wave)</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>↔️ Longitudinal Wave <span class="tag tag-must">Must Know</span></h3>
+          <p>Particles of the medium vibrate <b style="color:var(--text)">back and forth, parallel to</b> the direction the wave is travelling.</p>
+          <p style="margin-top:8px;"><b style="color:var(--text)">Example:</b> Sound wave</p>
+          <p style="margin-top:8px;">Creates regions of <b style="color:var(--text)">compression</b> (particles bunched close) and <b style="color:var(--text)">rarefaction</b> (particles spread apart).</p>
+        </div>
+        <div class="card">
+          <h3>↕️ Transverse Wave <span class="tag tag-must">Must Know</span></h3>
+          <p>Particles of the medium vibrate <b style="color:var(--text)">up and down, perpendicular to</b> the direction the wave is travelling.</p>
+          <p style="margin-top:8px;"><b style="color:var(--text)">Example:</b> Light wave</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📊 Quick Comparison Table</h3>
+        <table>
+          <tr><th>Property</th><th>Sound Wave</th><th>Light Wave</th></tr>
+          <tr><td>Category</td><td>Mechanical</td><td>Non-mechanical</td></tr>
+          <tr><td>Vibration type</td><td>Longitudinal</td><td>Transverse</td></tr>
+          <tr><td>Needs medium?</td><td>Yes</td><td>No</td></tr>
+          <tr><td>Speed (approx.)</td><td>~330–346 m/s (air)</td><td><span class="hl">3×10⁸ m/s</span></td></tr>
+        </table>
+      </div>
+
+      <div class="callout callout-trap">
+        <div class="callout-head">⚠ Exam Trap</div>
+        <p>Students confuse "needs a medium" with "is longitudinal." These are <b>two separate classifications</b> running in parallel — a wave's medium-dependence (mechanical/non-mechanical) is independent of its vibration direction (longitudinal/transverse). Sound happens to be both mechanical AND longitudinal; that's a coincidence of this example, not a rule.</p>
+      </div>
+    </section>
+
+    <!-- PAGE: SPEED OF SOUND -->
+    <section class="page" data-page="speed">
+      <div class="page-eyebrow">Core Notes · 02</div>
+      <h1 class="page-title">Speed of <span class="accent">Sound</span></h1>
+      <p class="page-dek">Medium changes everything. Temperature tweaks it further.</p>
+
+      <div class="card">
+        <h3>🏆 Speed ranking by state of matter <span class="tag tag-must">Must Know</span></h3>
+        <p>Solids &gt; Liquids &gt; Gases — because particles are packed tightest in solids, so vibrations transfer fastest.</p>
+        <div class="pill-row">
+          <span class="pill">Solid: fastest</span>
+          <span class="pill">Liquid: medium</span>
+          <span class="pill">Gas: slowest</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📌 Key reference values</h3>
+        <table>
+          <tr><th>Medium</th><th>Speed</th><th>Notes</th></tr>
+          <tr><td>Light (any medium/vacuum)</td><td class="hl">3 × 10⁸ m/s</td><td>Constant — doesn't depend on medium</td></tr>
+          <tr><td>Sound in Air</td><td class="hl">~330–346 m/s</td><td>Varies with temperature</td></tr>
+          <tr><td>Steel</td><td class="hl">6420 m/s</td><td>Anchor value — memorise this one</td></tr>
+          <tr><td>Nickel</td><td class="hl">5960 m/s</td><td>Less than steel</td></tr>
+          <tr><td>Aluminium</td><td class="hl">highest among the three</td><td>More than both steel and nickel</td></tr>
+        </table>
+      </div>
+
+      <div class="callout callout-hook">
+        <div class="callout-head">🧠 Memory Hook — The Speed Podium</div>
+        <p>Picture a 3-step podium after a race. <b>Aluminium</b> stands tallest on the gold step (fastest of the three), <b>Steel</b> takes silver with bib number <b>6420</b>, and <b>Nickel</b> takes bronze just behind steel at <b>5960</b>. You don't need to memorise every solid — just this podium order: Aluminium &gt; Steel &gt; Nickel.</p>
+      </div>
+
+      <div class="card">
+        <h3>🌡️ Effect of temperature <span class="tag tag-must">Must Know</span></h3>
+        <p>As temperature <b style="color:var(--text)">increases</b>, the speed of sound <b style="color:var(--text)">increases</b> (direct relationship). This is why air at a higher temperature shows a higher value (e.g., 346 m/s) compared to the standard ~330 m/s reference.</p>
+      </div>
+
+      <div class="card">
+        <h3>🧪 Methanol vs Ethanol — the "smart strategy" trick</h3>
+        <p>You can't memorise every single medium's speed value, so SSC often tests <b style="color:var(--text)">relative position</b> instead of exact numbers. Know which liquid sits above/below another rather than the precise figure.</p>
+        <div class="pill-row">
+          <span class="pill">Methanol = Wood Spirit</span>
+          <span class="pill">Ethanol = Denatured Alcohol (when mixed with methanol)</span>
+        </div>
+        <p style="margin-top:10px;">Ethanol is the alcohol found in drinkable beverages. Adding methanol or colouring agents to ethanol makes it unfit for drinking — this mixture is called <b style="color:var(--text)">denatured alcohol</b>.</p>
+      </div>
+
+      <div class="callout callout-trap">
+        <div class="callout-head">⚠ Exam Trap</div>
+        <ul>
+          <li>Don't confuse <b>methanol (wood spirit)</b> with <b>ethanol (drinking alcohol)</b> — they're commonly swapped in MCQ options.</li>
+          <li>Speed of <b>light</b> is constant (3×10⁸ m/s) — speed of <b>sound</b> is NOT constant, it changes with medium and temperature. A question testing "constant speed" almost always means light, not sound.</li>
+          <li>Remember the elimination strategy: if you only recall 2–3 reference values (say steel and air), you can still eliminate wrong options by reasoning relative position (e.g., "if steel is this fast, aluminium must be faster, so this low option is wrong").</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PAGE: ECHO & REVERBERATION -->
+    <section class="page" data-page="echo">
+      <div class="page-eyebrow">Core Notes · 03</div>
+      <h1 class="page-title">Echo &amp; <span class="accent">Reverberation</span></h1>
+      <p class="page-dek">The most commonly confused pair in this entire chapter.</p>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>🔁 Echo <span class="tag tag-must">Must Know</span></h3>
+          <p>Echo is simply <b style="color:var(--text)">reflection of sound</b> — just as light reflects off a mirror, sound reflects off a hard surface.</p>
+          <p style="margin-top:8px;">For a <b style="color:var(--text)">distinct/clear echo</b>, the minimum distance between the source and the reflecting surface must be <span class="stat-pill">17.2 metres</span>.</p>
+        </div>
+        <div class="card">
+          <h3>🔂 Reverberation <span class="tag tag-must">Must Know</span></h3>
+          <p>Reverberation is the <b style="color:var(--text)">repeated reflection</b> of sound — the sound bounces multiple times before dying out (e.g., "Radha-dha-dha-dha" in a closed hall).</p>
+          <p style="margin-top:8px;">Classic example: shouting in hilly/mountainous terrain where sound bounces between multiple surfaces.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-trap">
+        <div class="callout-head">⚠ Exam Trap — The #1 Confusion in this Chapter</div>
+        <p>Many students think "a closed hall causing muddled sound" IS reverberation by definition of location. <b>Wrong.</b> Reverberation isn't defined by "closed hall vs open hall" — it's defined purely as <b>repeated reflection of sound</b>, regardless of setting. A closed hall is just a common place where you'd observe it, and hilly terrain is another. Don't anchor the definition to the location; anchor it to the repeated-bounce mechanism.</p>
+      </div>
+
+      <div class="card">
+        <h3>🔗 Concept Connection</h3>
+        <p><b style="color:var(--text)">CONCEPT → APPLICATION:</b> The same reflection principle that creates echo is exploited intentionally in SONAR (see Applications page) — sound is sent out deliberately so its reflection (or lack of it) reveals obstacles underwater.</p>
+      </div>
+    </section>
+
+    <!-- PAGE: CHARACTERISTICS -->
+    <section class="page" data-page="characteristics">
+      <div class="page-eyebrow">Core Notes · 04</div>
+      <h1 class="page-title">Wave <span class="accent">Characteristics</span></h1>
+      <p class="page-dek">Three properties. Three completely different jobs. Never mix them up.</p>
+
+      <svg class="wave-stage" id="waveSVG2" viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg" style="margin: 0 0 24px;">
+        <line x1="0" y1="80" x2="700" y2="80" stroke="#232b3d" stroke-width="1"/>
+        <path d="M0,80 Q35,20 70,80 T140,80 T210,80 T280,80 T350,80 T420,80 T490,80 T560,80 T630,80 T700,80" stroke="#7dd3fc" stroke-width="2.5" fill="none"/>
+        <text x="35" y="14" fill="#9aa5b8" font-size="11" font-family="monospace">crest</text>
+        <text x="100" y="148" fill="#9aa5b8" font-size="11" font-family="monospace">trough</text>
+        <line x1="0" y1="80" x2="140" y2="80" stroke="#5eead4" stroke-width="1.5" stroke-dasharray="3,3"/>
+        <text x="40" y="100" fill="#5eead4" font-size="11" font-family="monospace">1 wavelength (λ)</text>
+      </svg>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>📢 Amplitude <span class="tag tag-must">Must</span></h3>
+          <p>Height of the crest/depth of the trough.</p>
+          <p style="margin-top:8px;"><b style="color:var(--text)">Determines:</b> Loudness</p>
+          <p style="margin-top:8px;"><b style="color:var(--text)">Unit:</b> Decibel (dB)</p>
+        </div>
+        <div class="card">
+          <h3>🎵 Frequency <span class="tag tag-must">Must</span></h3>
+          <p>Number of vibrations (complete waves) per second.</p>
+          <p style="margin-top:8px;"><b style="color:var(--text)">Determines:</b> Pitch</p>
+          <p style="margin-top:8px;"><b style="color:var(--text)">Unit:</b> Hertz (Hz) = 1/second</p>
+        </div>
+        <div class="card">
+          <h3>📏 Wavelength (λ) <span class="tag tag-imp">Important</span></h3>
+          <p>Distance to complete one full wave cycle (crest to crest).</p>
+          <p style="margin-top:8px;"><b style="color:var(--text)">Unit:</b> Metre</p>
+        </div>
+      </div>
+
+      <div class="callout callout-hook">
+        <div class="callout-head">🧠 Memory Hook — Mixing Desk Knobs</div>
+        <p><b>Volume knob = Amplitude → Loudness.</b> Turn it up, sound gets louder, wave gets taller. <b>Pitch knob = Frequency → Pitch.</b> Turn it up, voice gets shriller/sharper, more vibrations packed into the same second.</p>
+      </div>
+
+      <div class="card">
+        <h3>🔗 Concept Connections (Cause → Effect)</h3>
+        <ul>
+          <li>Frequency <b>inversely proportional</b> to time period (Frequency = 1/Time)</li>
+          <li>More vibrations in the same time window → higher frequency → higher pitch</li>
+          <li>Boy roaring loudly → high <b>amplitude</b> (not necessarily high frequency)</li>
+          <li>Girl's voice / mosquito's whine → high <b>frequency</b> (thinner, sharper sound)</li>
+          <li>Lion's roar / boy's voice → comparatively higher <b>amplitude</b>, lower frequency than girls/mosquitoes</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🧩 Unit-naming pattern (don't memorise blind — see the pattern)</h3>
+        <p>SI units are often named after scientists when the underlying formula simplifies to a "rate":</p>
+        <table>
+          <tr><th>Quantity</th><th>Formula reduces to</th><th>Named unit</th></tr>
+          <tr><td>Power</td><td>Joule / second</td><td>Watt</td></tr>
+          <tr><td>Frequency</td><td>1 / second</td><td>Hertz</td></tr>
+        </table>
+      </div>
+
+      <div class="callout callout-trap">
+        <div class="callout-head">⚠ Exam Trap</div>
+        <ul>
+          <li><b>Loudness ≠ Pitch.</b> A loud sound is not necessarily high-pitched, and a high-pitched sound is not necessarily loud. These map to different wave properties entirely (amplitude vs frequency).</li>
+          <li>The wave's graphical zig-zag shape (crest/trough) is a <b>representation</b>, not literal up-down particle motion — remember, sound particles actually move back-and-forth (longitudinal), the graph just plots that motion visually over distance/time.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PAGE: RANGES -->
+    <section class="page" data-page="ranges">
+      <div class="page-eyebrow">Core Notes · 05</div>
+      <h1 class="page-title">Sound Ranges &amp; <span class="accent">Animals</span></h1>
+      <p class="page-dek">A high-frequency favorite for "which animal hears what" questions.</p>
+
+      <div class="card">
+        <h3>📊 The Three Zones</h3>
+        <table>
+          <tr><th>Zone</th><th>Frequency Range</th></tr>
+          <tr><td>Infrasonic</td><td class="hl">&lt; 20 Hz</td></tr>
+          <tr><td>Audible (human range)</td><td class="hl">20 Hz – 20,000 Hz (20 kHz)</td></tr>
+          <tr><td>Ultrasonic</td><td class="hl">&gt; 20,000 Hz</td></tr>
+        </table>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3>🐘 Infrasonic Animals <span class="tag tag-must">Must Know</span></h3>
+          <ul>
+            <li>Elephants</li>
+            <li>Hippopotamus</li>
+            <li>Rhinoceros</li>
+            <li>Whales (also hear ultrasonic — dual range)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>🦇 Ultrasonic Animals <span class="tag tag-must">Must Know</span></h3>
+          <ul>
+            <li>Bats</li>
+            <li>Dolphins</li>
+            <li>Whales (also hear infrasonic — dual range)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout callout-hook">
+        <div class="callout-head">🧠 Memory Hook — Zoo Enclosure</div>
+        <p>"Big, heavy, ground-shaking animals hear ground-shaking (low/infra) sounds: <b>e</b>lephant, <b>h</b>ippo, <b>r</b>hino — picture them stomping in slow motion, too heavy for high-pitched anything. The sleek echo-locating swimmers/flyers (bats, dolphins) live in the fast, high-pitched ultrasonic lane. Whales are the one animal with a foot in both enclosures.</p>
+      </div>
+
+      <div class="callout callout-trap">
+        <div class="callout-head">⚠ Exam Trap</div>
+        <ul>
+          <li><b>Whales hear BOTH</b> infrasonic and ultrasonic — a common trick is to list whales only under one category to test if you know they're an exception.</li>
+          <li>Frequency boundary is <b>20 Hz to 20,000 Hz</b> — note 20,000 Hz = 20 kHz; questions sometimes phrase the upper limit in kHz to test unit conversion.</li>
+          <li>Don't confuse "infrasonic/ultrasonic" (frequency-based classification, used for animal hearing) with "subsonic/supersonic" (Mach-based classification, used for object/aircraft speed) — see the Mach Numbers page. These are two entirely different scales tested in the same chapter.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PAGE: MACH -->
+    <section class="page" data-page="mach">
+      <div class="page-eyebrow">Core Notes · 06</div>
+      <h1 class="page-title"><span class="accent">Mach</span> Numbers</h1>
+      <p class="page-dek">Speed of an object relative to the speed of sound in that medium.</p>
+
+      <div class="card">
+        <h3>🧮 Definition <span class="tag tag-must">Must Know</span></h3>
+        <p>Mach number = Speed of the body ÷ Speed of sound in that medium. Used for aircraft and other very fast-moving objects.</p>
+      </div>
+
+      <div class="card">
+        <h3>🚀 The Four Zones</h3>
+        <table>
+          <tr><th>Zone</th><th>Mach Range</th></tr>
+          <tr><td>Subsonic</td><td class="hl">&lt; 1</td></tr>
+          <tr><td>Transonic</td><td class="hl">= 1</td></tr>
+          <tr><td>Supersonic</td><td class="hl">&gt; 1 and ≤ 5</td></tr>
+          <tr><td>Hypersonic</td><td class="hl">&gt; 5</td></tr>
+        </table>
+        <p style="margin-top:10px;">A typical commercial/general aircraft usually flies below Mach 5 (supersonic range, not hypersonic).</p>
+      </div>
+
+      <div class="callout callout-hook">
+        <div class="callout-head">🧠 Memory Hook — The Runway</div>
+        <p>Think of a runway with flags planted at Mach 1 and Mach 5. Before Mach 1 flag = taxiing slowly (<b>sub</b>sonic, "sub" = below). Exactly at the Mach 1 flag = breaking through (<b>trans</b>onic, "trans" = crossing over). Between the two flags = full power flight (<b>super</b>sonic). Past the second flag, it's basically left the runway and atmosphere logic = (<b>hyper</b>sonic, "hyper" = extreme).</p>
+      </div>
+
+      <div class="callout callout-trap">
+        <div class="callout-head">⚠ Exam Trap</div>
+        <p>Don't confuse this Mach-based scale (object speed vs sound speed) with the infrasonic/ultrasonic scale (frequency in Hz, used for hearing range). Two completely different axes — one measures <b>speed</b>, the other measures <b>frequency</b> — but both use sound as the reference and both appear in the same chapter, which is exactly why SSC loves to mix them in the same question set.</p>
+      </div>
+    </section>
+
+    <!-- PAGE: APPLICATIONS -->
+    <section class="page" data-page="applications">
+      <div class="page-eyebrow">Core Notes · 07</div>
+      <h1 class="page-title">Ultrasound &amp; <span class="accent">SONAR</span></h1>
+      <p class="page-dek">Real-world applications — frequently tested as one-liners.</p>
+
+      <div class="card">
+        <h3>🏥 Ultrasound <span class="tag tag-must">Must Know</span></h3>
+        <p>Uses ultrasonic waves (high frequency, &gt;20 kHz) which have <b style="color:var(--text)">high penetrating power</b>.</p>
+        <ul>
+          <li>Monitoring growth and development of a fetus during pregnancy</li>
+          <li>Detecting kidney stones, gall bladder stones (calcium oxalate deposits)</li>
+          <li>General internal diagnostic imaging</li>
+        </ul>
+      </div>
+
+      <div class="callout callout-exam">
+        <div class="callout-head">📌 Real-world note (ethics/awareness point, not heavily exam-tested but contextually mentioned)</div>
+        <p>Using ultrasound for sex determination of a fetus is illegal/banned in India — this is a socially important fact occasionally referenced in awareness-based questions, though the core science point examiners test is the medical/diagnostic use itself.</p>
+      </div>
+
+      <div class="card">
+        <h3>🚢 SONAR <span class="tag tag-must">Must Know</span></h3>
+        <p><b style="color:var(--text)">SONAR = SOund Navigation And Ranging.</b></p>
+        <p style="margin-top:8px;">A device/technique used to <b style="color:var(--text)">detect and locate objects underwater</b> using sound waves — the waves are sent out, and if they hit an obstacle, they reflect back and get detected. If there's no obstacle, no reflection is received.</p>
+      </div>
+
+      <div class="card">
+        <h3>🔗 Concept Connection</h3>
+        <p><b style="color:var(--text)">PRINCIPLE → APPLICATION:</b> SONAR's "send sound → check for reflection" mechanism is the exact same reflection principle behind echo — just engineered deliberately for detection instead of happening naturally off a canyon wall.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎻 How is sound produced?</h3>
+        <p>Sound is produced by <b style="color:var(--text)">vibration</b> (e.g., a vibrating tuning fork creates alternating compression and rarefaction in the surrounding medium).</p>
+      </div>
+    </section>
+
+    <!-- PAGE: TRAPS -->
+    <section class="page" data-page="traps">
+      <div class="page-eyebrow">Exam Warfare</div>
+      <h1 class="page-title">⚠ Exam <span class="accent">Traps</span></h1>
+      <p class="page-dek">Everything in this list is something real students get wrong — collected in one place.</p>
+
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 1 — Echo vs Reverberation</div>
+        <p>Reverberation is NOT defined by "closed hall." It is repeated reflection of sound — full stop. A closed hall is just a common setting, not the definition.</p>
+      </div>
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 2 — Mechanical/Non-mechanical vs Longitudinal/Transverse</div>
+        <p>These are two separate, independent classification axes. Don't assume one implies the other — sound being both mechanical and longitudinal is specific to sound, not a universal rule linking the two categories.</p>
+      </div>
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 3 — Amplitude vs Frequency</div>
+        <p>Amplitude → Loudness. Frequency → Pitch. A loud sound isn't automatically high-pitched. A high-pitched sound isn't automatically loud. They are independent dials.</p>
+      </div>
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 4 — Speed of light vs speed of sound</div>
+        <p>Speed of light is constant (3×10⁸ m/s) in vacuum/any medium for practical exam purposes. Speed of sound is NOT constant — it changes with the medium (solid/liquid/gas) and with temperature.</p>
+      </div>
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 5 — Methanol vs Ethanol</div>
+        <p>Methanol = wood spirit (toxic, industrial). Ethanol = the drinkable alcohol; when methanol or colouring agents are added to ethanol, it becomes denatured alcohol (undrinkable). Easy to swap these names under exam pressure.</p>
+      </div>
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 6 — Whales belong to BOTH infrasonic and ultrasonic lists</div>
+        <p>Most animals fall into exactly one category. Whales are the exception that appears in both the infrasonic list and the ultrasonic list — a favourite "exception" trap.</p>
+      </div>
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 7 — Infrasonic/Ultrasonic (Hz-based) vs Subsonic/Supersonic (Mach-based)</div>
+        <p>Both scales involve "sound" and both have a "below normal range" / "above normal range" structure, but one measures frequency (Hz) for hearing, the other measures relative speed (Mach number) for moving objects like aircraft. Don't let the parallel structure make you mix up which scale a question is actually asking about.</p>
+      </div>
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 8 — Aluminium, Steel, Nickel speed ordering</div>
+        <p>Aluminium &gt; Steel &gt; Nickel in speed of sound. Steel's number (6420 m/s) is commonly memorised; remember aluminium sits even higher, and nickel sits between the two (5960 m/s).</p>
+      </div>
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 9 — Wave graph isn't literal particle motion</div>
+        <p>The crest-trough zig-zag diagram is a graphical representation of compression/rarefaction over distance — it does NOT mean sound particles physically move up and down. Sound is longitudinal; particles actually move back and forth, parallel to the wave's direction.</p>
+      </div>
+      <div class="callout callout-trap">
+        <div class="callout-head">Trap 10 — 17.2 metres is for echo, not reverberation</div>
+        <p>The minimum distance rule (17.2 m between source and reflecting surface) is specifically the condition for hearing a distinct/clear echo. Reverberation occurs precisely because that minimum distance ISN'T met (sound bounces too fast to register as separate echoes).</p>
+      </div>
+    </section>
+
+    <!-- PAGE: EXAMINER -->
+    <section class="page" data-page="examiner">
+      <div class="page-eyebrow">Exam Warfare</div>
+      <h1 class="page-title">The <span class="accent">Examiner's</span> Mind</h1>
+      <p class="page-dek">How this chapter is most likely to be attacked in the actual exam.</p>
+
+      <div class="card">
+        <h3>🎯 High Probability Direct-Fact Questions</h3>
+        <ul>
+          <li>"SONAR stands for ____" (full form)</li>
+          <li>"Speed of sound is highest in: (a) solid (b) liquid (c) gas (d) vacuum"</li>
+          <li>"Unit of frequency is ____" / "Unit of loudness is ____"</li>
+          <li>"The audible range for humans lies between ____ Hz and ____ Hz"</li>
+          <li>"Minimum distance required to hear a distinct echo is ____ metres"</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Statement-Based Questions (True/False or "Which is correct")</h3>
+        <ul>
+          <li>"Statement: Sound waves are transverse waves." → False (they're longitudinal)</li>
+          <li>"Statement: Speed of sound increases with increase in temperature." → True</li>
+          <li>"Statement: Whales can hear only infrasonic sound." → False (both)</li>
+          <li>"Statement: Reverberation occurs only in closed halls." → False (defined by repeated reflection, not location)</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Match-the-Following Possibilities</h3>
+        <table>
+          <tr><th>Column A</th><th>Column B</th></tr>
+          <tr><td>Amplitude</td><td>Loudness</td></tr>
+          <tr><td>Frequency</td><td>Pitch</td></tr>
+          <tr><td>Bats, Dolphins</td><td>Ultrasonic</td></tr>
+          <tr><td>Elephants, Rhinos</td><td>Infrasonic</td></tr>
+          <tr><td>SONAR</td><td>Underwater detection</td></tr>
+          <tr><td>Ultrasound</td><td>Medical diagnosis</td></tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Chronology / Ordering Questions</h3>
+        <p>Arrange in increasing order of speed of sound: Air, Water, Steel, Aluminium → <b style="color:var(--text)">Air &lt; Water &lt; Steel &lt; Aluminium</b></p>
+        <p style="margin-top:8px;">Arrange in increasing order of Mach number zone: Subsonic, Transonic, Supersonic, Hypersonic (fixed order by definition).</p>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Assertion-Reason Possibilities</h3>
+        <p><b style="color:var(--text)">Assertion:</b> Light can travel through vacuum but sound cannot.<br><b style="color:var(--text)">Reason:</b> Sound is a mechanical wave and requires a medium; light is a non-mechanical (electromagnetic) wave and does not.<br>→ Both true, Reason correctly explains Assertion.</p>
+      </div>
+
+      <div class="card">
+        <h3>🎯 Frequently Misread Facts</h3>
+        <ul>
+          <li>Reading "20 Hz to 20 kHz" as "20 Hz to 20 Hz" or missing the kilo- prefix conversion</li>
+          <li>Reading Mach "≤5" as "&lt;5" for supersonic upper boundary</li>
+          <li>Mixing up which unit belongs to which quantity (decibel vs Hertz)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PAGE: ACTIVE RECALL -->
+    <section class="page" data-page="recall">
+      <div class="page-eyebrow">Exam Warfare</div>
+      <h1 class="page-title">Active <span class="accent">Recall</span></h1>
+      <p class="page-dek">Don't just read — retrieve. Click each question to reveal the answer only after you've tried.</p>
+
+      <div class="card">
+        <h3>❓ Self-Test Questions</h3>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">Why can sound not travel through a vacuum, but light can? <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">Sound is a mechanical wave and needs a medium with particles to propagate; light is a non-mechanical (electromagnetic) wave and needs no medium.</div></div>
+        </div>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">What determines loudness, and what is its unit? <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">Amplitude determines loudness. Its unit is the decibel (dB).</div></div>
+        </div>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">What determines pitch, and what is its unit? <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">Frequency determines pitch. Its unit is the Hertz (Hz).</div></div>
+        </div>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">What is the minimum distance needed to hear a distinct echo? <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">17.2 metres between the source and the reflecting surface.</div></div>
+        </div>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">Which two animals are known to hear BOTH infrasonic and ultrasonic ranges? <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">Whales (mentioned for both ranges).</div></div>
+        </div>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">What does SONAR stand for? <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">SOund Navigation And Ranging.</div></div>
+        </div>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">Rank Aluminium, Steel, and Nickel by speed of sound (highest to lowest). <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">Aluminium &gt; Steel (6420 m/s) &gt; Nickel (5960 m/s).</div></div>
+        </div>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">What's the difference between reverberation and a single closed-hall echo bounce? <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">Reverberation is repeated reflection of sound (multiple bounces, like "Radha-dha-dha"). It's not defined by the hall being closed — it's defined by the repeated-bounce mechanism itself, which can also happen in open hilly terrain.</div></div>
+        </div>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">What is the Mach number range for "hypersonic"? <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">Greater than Mach 5.</div></div>
+        </div>
+        <div class="qa-card" onclick="toggleQA(this)">
+          <div class="qa-q">Name two medical uses of ultrasound. <span class="chev">▶</span></div>
+          <div class="qa-a"><div class="qa-a-inner">Monitoring fetal growth/development, and detecting kidney/gall bladder stones.</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>❓ Fill in the Blanks <span style="color:var(--text-faint); font-size:11px; font-weight:400;">(click the dotted blank to reveal)</span></h3>
+        <div class="blank-card">The audible range for humans is <span class="fill" onclick="event.stopPropagation(); this.classList.toggle('show')">20 Hz to 20,000 Hz</span>.</div>
+        <div class="blank-card">Sound waves are <span class="fill" onclick="event.stopPropagation(); this.classList.toggle('show')">longitudinal</span> waves, while light waves are <span class="fill" onclick="event.stopPropagation(); this.classList.toggle('show')">transverse</span> waves.</div>
+        <div class="blank-card">Speed of sound in steel is approximately <span class="fill" onclick="event.stopPropagation(); this.classList.toggle('show')">6420 m/s</span>.</div>
+        <div class="blank-card">Methanol is commonly known as <span class="fill" onclick="event.stopPropagation(); this.classList.toggle('show')">wood spirit</span>.</div>
+        <div class="blank-card">A Mach number greater than 1 but less than or equal to 5 is called <span class="fill" onclick="event.stopPropagation(); this.classList.toggle('show')">supersonic</span>.</div>
+        <div class="blank-card">SI unit of wavelength is the <span class="fill" onclick="event.stopPropagation(); this.classList.toggle('show')">metre</span>.</div>
+      </div>
+
+      <div class="card">
+        <h3>❓ Rapid-Fire Reverse Questions</h3>
+        <ul>
+          <li>"Hertz" is the unit of ____ → <i>(answer: frequency)</i></li>
+          <li>"Decibel" is the unit of ____ → <i>(answer: loudness)</i></li>
+          <li>An animal hearing below 20 Hz is using ____ sound → <i>(answer: infrasonic)</i></li>
+          <li>A device using sound to find submarines is called ____ → <i>(answer: SONAR)</i></li>
+          <li>The number 17.2 (metres) relates to ____ → <i>(answer: minimum distance for a distinct echo)</i></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PAGE: HIGH YIELD -->
+    <section class="page" data-page="highyield">
+      <div class="page-eyebrow">Speed Layer · 1</div>
+      <h1 class="page-title">High-Yield <span class="accent">Revision Notes</span></h1>
+      <p class="page-dek">For your 2nd–10th revision — shorter than the full notes, still complete on facts.</p>
+
+      <div class="card">
+        <h3>🔥 Must Know</h3>
+        <ul>
+          <li>Sound = mechanical + longitudinal. Light = non-mechanical + transverse.</li>
+          <li>Speed: Solid &gt; Liquid &gt; Gas. Speed of sound ↑ as temperature ↑.</li>
+          <li>Speed of light = 3×10⁸ m/s (constant). Speed of sound in air ≈ 330–346 m/s.</li>
+          <li>Amplitude → Loudness (unit: decibel). Frequency → Pitch (unit: Hertz).</li>
+          <li>Wavelength (λ) = distance of one complete wave; unit metre.</li>
+          <li>Audible range: 20 Hz – 20,000 Hz. Below = infrasonic. Above = ultrasonic.</li>
+          <li>Distinct echo needs ≥17.2 m gap. Reverberation = repeated reflection (any setting).</li>
+          <li>Mach: &lt;1 subsonic, =1 transonic, &gt;1–5 supersonic, &gt;5 hypersonic.</li>
+          <li>SONAR = SOund Navigation And Ranging — underwater object detection.</li>
+          <li>Ultrasound (medical): fetal monitoring, kidney/gall bladder stone detection.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>⭐ Important</h3>
+        <ul>
+          <li>Aluminium &gt; Steel (6420 m/s) &gt; Nickel (5960 m/s) in speed of sound.</li>
+          <li>Infrasonic animals: elephant, hippo, rhino, whale.</li>
+          <li>Ultrasonic animals: bat, dolphin, whale (whale = both).</li>
+          <li>Methanol = wood spirit; Ethanol + methanol/colour = denatured alcohol.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>➕ Good to Know</h3>
+        <ul>
+          <li>Frequency = 1/Time (inverse relationship).</li>
+          <li>Unit pattern: Joule/sec = Watt; 1/sec = Hertz.</li>
+          <li>Sound is produced by vibration (e.g., tuning fork).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PAGE: ULTRA FAST -->
+    <section class="page" data-page="ultrafast">
+      <div class="page-eyebrow">Speed Layer · 2</div>
+      <h1 class="page-title">Ultra-Fast <span class="accent">Revision Sheet</span></h1>
+      <p class="page-dek">For your 10th–50th revision — pure facts, zero explanation.</p>
+
+      <div class="speed-sheet">
+        <h3>Core Facts</h3>
+        <div class="speed-row"><span class="k">Sound wave type</span><span class="v">Mechanical, Longitudinal</span></div>
+        <div class="speed-row"><span class="k">Light wave type</span><span class="v">Non-mechanical, Transverse</span></div>
+        <div class="speed-row"><span class="k">Speed of light</span><span class="v">3×10⁸ m/s</span></div>
+        <div class="speed-row"><span class="k">Speed of sound (air)</span><span class="v">~330–346 m/s</span></div>
+        <div class="speed-row"><span class="k">Speed of sound (steel)</span><span class="v">6420 m/s</span></div>
+        <div class="speed-row"><span class="k">Speed of sound (nickel)</span><span class="v">5960 m/s</span></div>
+        <div class="speed-row"><span class="k">Speed order (solids)</span><span class="v">Al &gt; Steel &gt; Nickel</span></div>
+        <div class="speed-row"><span class="k">Temp ↑ → Speed of sound</span><span class="v">↑</span></div>
+        <div class="speed-row"><span class="k">Amplitude →</span><span class="v">Loudness (dB)</span></div>
+        <div class="speed-row"><span class="k">Frequency →</span><span class="v">Pitch (Hz)</span></div>
+        <div class="speed-row"><span class="k">Wavelength unit</span><span class="v">Metre (λ)</span></div>
+        <div class="speed-row"><span class="k">Audible range</span><span class="v">20 Hz – 20 kHz</span></div>
+        <div class="speed-row"><span class="k">Infrasonic</span><span class="v">&lt; 20 Hz</span></div>
+        <div class="speed-row"><span class="k">Ultrasonic</span><span class="v">&gt; 20,000 Hz</span></div>
+        <div class="speed-row"><span class="k">Infra animals</span><span class="v">Elephant, Hippo, Rhino, Whale</span></div>
+        <div class="speed-row"><span class="k">Ultra animals</span><span class="v">Bat, Dolphin, Whale</span></div>
+        <div class="speed-row"><span class="k">Distinct echo distance</span><span class="v">≥ 17.2 m</span></div>
+        <div class="speed-row"><span class="k">Reverberation</span><span class="v">Repeated reflection</span></div>
+        <div class="speed-row"><span class="k">Subsonic</span><span class="v">Mach &lt; 1</span></div>
+        <div class="speed-row"><span class="k">Transonic</span><span class="v">Mach = 1</span></div>
+        <div class="speed-row"><span class="k">Supersonic</span><span class="v">Mach &gt; 1 to 5</span></div>
+        <div class="speed-row"><span class="k">Hypersonic</span><span class="v">Mach &gt; 5</span></div>
+        <div class="speed-row"><span class="k">SONAR full form</span><span class="v">SOund NAvigation And Ranging</span></div>
+        <div class="speed-row"><span class="k">Methanol</span><span class="v">Wood spirit</span></div>
+        <div class="speed-row"><span class="k">Ethanol + methanol/colour</span><span class="v">Denatured alcohol</span></div>
+      </div>
+    </section>
+
+    <!-- PAGE: 30 SECOND -->
+    <section class="page" data-page="thirtysec">
+      <div class="page-eyebrow">Speed Layer · 3</div>
+      <h1 class="page-title">30-Second <span class="accent">Revision Sheet</span></h1>
+      <p class="page-dek">For when you have literally 30 seconds. Read top to bottom once.</p>
+
+      <div class="speed-sheet">
+        <h3>The Absolute Core</h3>
+        <div class="speed-row"><span class="k">Sound</span><span class="v">Mechanical · Longitudinal</span></div>
+        <div class="speed-row"><span class="k">Speed</span><span class="v">Solid &gt; Liquid &gt; Gas · Temp ↑ → Speed ↑</span></div>
+        <div class="speed-row"><span class="k">Amplitude / Frequency</span><span class="v">Loudness(dB) / Pitch(Hz)</span></div>
+        <div class="speed-row"><span class="k">Audible</span><span class="v">20 Hz – 20 kHz</span></div>
+        <div class="speed-row"><span class="k">Echo</span><span class="v">≥17.2 m, single clear reflection</span></div>
+        <div class="speed-row"><span class="k">Reverb</span><span class="v">repeated reflection (any setting)</span></div>
+        <div class="speed-row"><span class="k">Mach order</span><span class="v">sub&lt;1 = trans &lt;5 super &gt;5 hyper</span></div>
+        <div class="speed-row"><span class="k">SONAR</span><span class="v">underwater detection via sound</span></div>
+        <div class="speed-row"><span class="k">Ultrasound</span><span class="v">fetus monitoring, stone detection</span></div>
+      </div>
+
+      <div class="callout callout-hook" style="margin-top:20px;">
+        <div class="callout-head">🧠 If you remember ONE thing</div>
+        <p>Amplitude = how LOUD. Frequency = how HIGH-PITCHED. Everything else in this chapter is detail around that one split.</p>
+      </div>
+    </section>
+
+    <!-- PAGE: LAST NIGHT -->
+    <section class="page" data-page="lastnight">
+      <div class="page-eyebrow">Speed Layer · 4 — Final</div>
+      <h1 class="page-title">🌙 Last Night Before <span class="accent">Exam</span></h1>
+      <p class="page-dek">Read this once, close your eyes, walk the memory palace, sleep well.</p>
+
+      <div class="lastnight-block">
+        <h4>1. The Two-Door Entrance</h4>
+        <p>Mechanical needs a medium (sound). Non-mechanical doesn't (light/EM).</p>
+      </div>
+      <div class="lastnight-block">
+        <h4>2. The Slinky</h4>
+        <p>Sound = back-and-forth (longitudinal). Light = up-down (transverse).</p>
+      </div>
+      <div class="lastnight-block">
+        <h4>3. The Podium</h4>
+        <p>Aluminium &gt; Steel (6420) &gt; Nickel (5960). Solid &gt; Liquid &gt; Gas. Hotter = faster.</p>
+      </div>
+      <div class="lastnight-block">
+        <h4>4. The Canyon</h4>
+        <p>Echo needs 17.2 m+ for ONE clean bounce. Reverberation = MANY bounces, repeated reflection — not about open/closed hall.</p>
+      </div>
+      <div class="lastnight-block">
+        <h4>5. The Mixing Desk</h4>
+        <p>Amplitude knob = loudness (decibel). Frequency knob = pitch (Hertz).</p>
+      </div>
+      <div class="lastnight-block">
+        <h4>6. The Zoo</h4>
+        <p>Below 20 Hz = infrasonic (elephant, hippo, rhino, whale). 20Hz–20kHz = us. Above 20kHz = ultrasonic (bat, dolphin, whale). Whale = both.</p>
+      </div>
+      <div class="lastnight-block">
+        <h4>7. The Runway</h4>
+        <p>Mach &lt;1 sub, =1 trans, 1–5 super, &gt;5 hyper.</p>
+      </div>
+      <div class="lastnight-block">
+        <h4>8. The Hospital &amp; Harbour</h4>
+        <p>Ultrasound = fetal scan, stone detection. SONAR = SOund Navigation And Ranging, underwater detection.</p>
+      </div>
+
+      <div class="callout callout-trap" style="margin-top: 24px;">
+        <div class="callout-head">⚠ Final Trap Check Before You Sleep</div>
+        <ul>
+          <li>Reverberation ≠ "closed hall" — it's repeated reflection.</li>
+          <li>Loud ≠ high-pitched. Amplitude ≠ Frequency.</li>
+          <li>Speed of light is constant. Speed of sound is NOT.</li>
+          <li>Whale appears in BOTH infrasonic and ultrasonic lists.</li>
+          <li>Methanol = wood spirit ≠ ethanol = drinking alcohol.</li>
+        </ul>
+      </div>
+
+      <div class="callout callout-hook">
+        <div class="callout-head">You've got this.</div>
+        <p>Every fact in this chapter is fixed and predictable — no ambiguity, no judgment calls. Walk the Sound Lab once in your head tomorrow morning, and these marks are yours.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // ============ NAVIGATION ============
+  const pageOrder = ['home','bigpicture','palace','wavetypes','speed','echo','characteristics','ranges','mach','applications','traps','examiner','recall','highyield','ultrafast','thirtysec','lastnight'];
+  const pageLabels = {
+    home:'Home Base', bigpicture:'Big Picture', palace:'Memory Palace', wavetypes:'Wave Types',
+    speed:'Speed of Sound', echo:'Echo & Reverberation', characteristics:'Wave Characteristics',
+    ranges:'Sound Ranges & Animals', mach:'Mach Numbers', applications:'Ultrasound & SONAR',
+    traps:'Exam Traps', examiner:"Examiner's Mind", recall:'Active Recall',
+    highyield:'High-Yield Sheet', ultrafast:'Ultra-Fast Sheet', thirtysec:'30-Second Sheet', lastnight:'Last Night Before Exam'
+  };
+
+  let currentIndex = 0;
+
+  function buildScale(){
+    const scale = document.getElementById('navScale');
+    scale.innerHTML = '';
+    pageOrder.forEach((p,i)=>{
+      const d = document.createElement('div');
+      d.className = 'scale-dot';
+      d.dataset.idx = i;
+      scale.appendChild(d);
+    });
+  }
+
+  function updateScale(){
+    document.querySelectorAll('.scale-dot').forEach((d,i)=>{
+      d.classList.toggle('done', i <= currentIndex);
+    });
+  }
+
+  function goToPage(pageId, push=true){
+    const idx = pageOrder.indexOf(pageId);
+    if(idx === -1) return;
+    currentIndex = idx;
+
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelector(`.page[data-page="${pageId}"]`).classList.add('active');
+
+    document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+    const navItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+    if(navItem) navItem.classList.add('active');
+
+    document.getElementById('crumbLabel').textContent = pageLabels[pageId];
+    document.getElementById('main').scrollTop = 0;
+    updateScale();
+    updateNavButtons();
+    closeSidebarMobile();
+  }
+
+  function updateNavButtons(){
+    document.getElementById('prevBtn').disabled = currentIndex === 0;
+    document.getElementById('nextBtn').disabled = currentIndex === pageOrder.length - 1;
+  }
+
+  document.querySelectorAll('.nav-item').forEach(item=>{
+    item.addEventListener('click', ()=> goToPage(item.dataset.page));
+  });
+  document.querySelectorAll('.home-card').forEach(card=>{
+    card.addEventListener('click', ()=> goToPage(card.dataset.goto));
+  });
+  document.getElementById('prevBtn').addEventListener('click', ()=>{
+    if(currentIndex > 0) goToPage(pageOrder[currentIndex-1]);
+  });
+  document.getElementById('nextBtn').addEventListener('click', ()=>{
+    if(currentIndex < pageOrder.length-1) goToPage(pageOrder[currentIndex+1]);
+  });
+
+  // mobile sidebar
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  document.getElementById('menuBtn').addEventListener('click', ()=>{
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+  });
+  overlay.addEventListener('click', closeSidebarMobile);
+  function closeSidebarMobile(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+  }
+
+  // keyboard nav
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'ArrowRight' && currentIndex < pageOrder.length-1) goToPage(pageOrder[currentIndex+1]);
+    if(e.key === 'ArrowLeft' && currentIndex > 0) goToPage(pageOrder[currentIndex-1]);
+  });
+
+  buildScale();
+  updateScale();
+  updateNavButtons();
+
+  // ============ ACTIVE RECALL TOGGLE ============
+  function toggleQA(el){
+    el.classList.toggle('open');
+  }
+
+  // ============ ANIMATED WAVE (Home hero) ============
+  (function(){
+    const path = document.getElementById('wavePath');
+    if(!path) return;
+    let t = 0;
+    const width = 700, midY = 80, amp = 36, wavelength = 140;
+
+    function buildPath(phase){
+      let d = `M0,${midY}`;
+      const step = 4;
+      for(let x=0; x<=width; x+=step){
+        const y = midY + amp * Math.sin((2*Math.PI*(x+phase))/wavelength);
+        d += ` L${x},${y.toFixed(1)}`;
+      }
+      return d;
+    }
+
+    function animate(){
+      t += 1.6;
+      path.setAttribute('d', buildPath(t));
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+</script>
+
+</body>
+</html>

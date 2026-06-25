@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnetic Effect of Electric Current — Revision System</title>
+<style>
+  :root{
+    --bg:#0d0f14;
+    --bg-panel:#12151d;
+    --bg-elevated:#1a1f2c;
+    --bg-card:#171b26;
+    --border:#252b3b;
+    --green:#8fe3b0;
+    --green-dim:#5fae84;
+    --blue:#7ec8f2;
+    --blue-dim:#5a93b8;
+    --amber:#f3b562;
+    --red:#f08a8a;
+    --text:#e8ebf2;
+    --text-muted:#8e96ac;
+    --text-faint:#5c6378;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Segoe UI","Inter",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+    height:100vh;
+  }
+  .app{
+    display:flex;
+    height:100vh;
+    width:100vw;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    width:272px;
+    flex-shrink:0;
+    background:var(--bg-panel);
+    border-right:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    padding:22px 14px;
+    overflow-y:auto;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:0 8px 18px 8px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:14px;
+  }
+  .brand-mark{
+    width:34px;height:34px;border-radius:9px;
+    background:linear-gradient(135deg,var(--green),var(--blue));
+    display:flex;align-items:center;justify-content:center;
+    font-size:17px;flex-shrink:0;
+  }
+  .brand-text{display:flex;flex-direction:column;line-height:1.15;}
+  .brand-text .t1{font-size:13px;font-weight:700;letter-spacing:.3px;color:var(--text);}
+  .brand-text .t2{font-size:11px;color:var(--text-muted);}
+
+  .nav-group{margin-bottom:6px;}
+  .nav-group-label{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:1.3px;
+    color:var(--text-faint);
+    padding:14px 10px 6px 10px;
+    font-weight:700;
+  }
+  .nav-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:transparent;
+    border:none;
+    color:var(--text-muted);
+    text-align:left;
+    padding:9px 10px;
+    border-radius:9px;
+    font-size:13.3px;
+    cursor:pointer;
+    transition:background .15s,color .15s;
+    line-height:1.3;
+  }
+  .nav-btn .ic{font-size:15px;width:18px;text-align:center;flex-shrink:0;}
+  .nav-btn:hover{background:var(--bg-elevated);color:var(--text);}
+  .nav-btn.active{
+    background:rgba(143,227,176,0.10);
+    color:var(--green);
+    font-weight:600;
+  }
+  .nav-btn.active .ic{filter:drop-shadow(0 0 4px rgba(143,227,176,.5));}
+
+  .progress-wrap{margin-top:auto;padding:14px 10px 4px;border-top:1px solid var(--border);}
+  .progress-label{font-size:10.5px;color:var(--text-faint);margin-bottom:6px;letter-spacing:.5px;text-transform:uppercase;}
+  .progress-track{height:5px;border-radius:4px;background:var(--bg-elevated);overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--blue));transition:width .25s;}
+  .progress-pages{font-size:11px;color:var(--text-muted);margin-top:6px;}
+
+  /* ---------- MAIN ---------- */
+  .main{
+    flex:1;
+    overflow-y:auto;
+    position:relative;
+  }
+  .main-inner{
+    max-width:880px;
+    margin:0 auto;
+    padding:40px 36px 90px;
+  }
+  .topbar{
+    display:none;
+    align-items:center;
+    gap:12px;
+    padding:12px 14px;
+    background:var(--bg-panel);
+    border-bottom:1px solid var(--border);
+    position:sticky;top:0;z-index:20;
+  }
+  .hamburger{
+    width:34px;height:34px;border-radius:8px;border:1px solid var(--border);
+    background:var(--bg-elevated);color:var(--text);font-size:16px;cursor:pointer;
+  }
+  .topbar .tb-title{font-size:13.5px;font-weight:700;color:var(--text);}
+
+  .page{display:none;animation:fadeIn .35s ease;}
+  .page.show{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11px;letter-spacing:1.6px;text-transform:uppercase;
+    color:var(--blue);font-weight:700;margin-bottom:10px;
+  }
+  h1.page-title{
+    font-size:30px;margin:0 0 8px;font-weight:800;letter-spacing:-.3px;
+    background:linear-gradient(90deg,var(--text),var(--text) 60%, var(--green));
+    background-clip:text;-webkit-background-clip:text;color:var(--text);
+  }
+  .page-sub{color:var(--text-muted);font-size:14.5px;margin:0 0 28px;max-width:640px;line-height:1.55;}
+
+  h2.sec-title{
+    font-size:17px;color:var(--green);margin:34px 0 12px;font-weight:700;
+    display:flex;align-items:center;gap:8px;
+  }
+  h3.sub-title{font-size:15px;color:var(--blue);margin:20px 0 8px;font-weight:700;}
+
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    margin-bottom:14px;
+  }
+  .card p{margin:6px 0;font-size:14px;line-height:1.65;color:var(--text);}
+  .card ul, .card ol{margin:8px 0 4px;padding-left:20px;}
+  .card li{margin-bottom:7px;font-size:14px;line-height:1.6;}
+  .muted{color:var(--text-muted);}
+
+  .tag{
+    display:inline-flex;align-items:center;gap:4px;
+    font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;
+    margin-right:6px;letter-spacing:.2px;
+  }
+  .tag-must{background:rgba(240,138,138,.13);color:var(--red);}
+  .tag-imp{background:rgba(126,200,242,.13);color:var(--blue);}
+  .tag-good{background:rgba(143,227,176,.13);color:var(--green);}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:760px){.grid2{grid-template-columns:1fr;}}
+
+  .hook-card{
+    border-left:3px solid var(--green);
+    background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--green);
+    border-radius:10px;padding:14px 16px;margin-bottom:12px;
+  }
+  .hook-card .hk-fact{font-size:12.5px;color:var(--blue);font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;}
+  .hook-card p{margin:4px 0;font-size:14px;line-height:1.6;}
+
+  .trap{
+    background:linear-gradient(180deg,rgba(243,181,98,.07),rgba(243,181,98,.02));
+    border:1px solid rgba(243,181,98,.35);
+    border-radius:12px;padding:14px 18px;margin-bottom:14px;
+  }
+  .trap .tr-head{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--amber);font-size:13.5px;margin-bottom:6px;}
+  .trap p{margin:4px 0;font-size:13.7px;line-height:1.6;color:var(--text);}
+  .trap .vs{color:var(--text-muted);font-style:italic;}
+
+  table.bridge{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px;}
+  table.bridge th,table.bridge td{border:1px solid var(--border);padding:8px 10px;text-align:left;}
+  table.bridge th{background:var(--bg-elevated);color:var(--blue);font-size:12px;text-transform:uppercase;letter-spacing:.3px;}
+  table.bridge tr:nth-child(even) td{background:rgba(255,255,255,.015);}
+
+  .qa{
+    border:1px solid var(--border);border-radius:10px;margin-bottom:10px;overflow:hidden;background:var(--bg-card);
+  }
+  .qa summary{
+    list-style:none;cursor:pointer;padding:13px 16px;font-size:14px;font-weight:600;
+    display:flex;justify-content:space-between;gap:10px;color:var(--text);
+  }
+  .qa summary::-webkit-details-marker{display:none;}
+  .qa summary::after{content:"+";color:var(--green);font-weight:800;font-size:17px;}
+  .qa[open] summary::after{content:"–";}
+  .qa .qa-body{padding:0 16px 15px;font-size:13.7px;color:var(--text-muted);line-height:1.6;border-top:1px dashed var(--border);}
+  .qa .qa-body strong{color:var(--green);}
+
+  .pill-list{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;}
+  .pill{
+    background:var(--bg-elevated);border:1px solid var(--border);border-radius:20px;
+    padding:6px 13px;font-size:13px;color:var(--text);
+  }
+
+  .blank{
+    border-bottom:2px dotted var(--blue);color:transparent;
+    padding:0 4px;user-select:none;
+  }
+  .reveal-btn{
+    background:none;border:1px solid var(--green-dim);color:var(--green);
+    padding:3px 10px;border-radius:14px;font-size:11.5px;cursor:pointer;margin-left:8px;
+  }
+  .reveal-btn:hover{background:rgba(143,227,176,.1);}
+  .answer{display:none;color:var(--blue);font-weight:600;}
+  .answer.show{display:inline;}
+
+  .fast-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  @media (max-width:700px){.fast-grid{grid-template-columns:1fr;}}
+  .fast-item{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:10px;
+    padding:11px 14px;font-size:13.3px;line-height:1.5;
+  }
+  .fast-item b{color:var(--green);}
+
+  .lastnight{
+    background:radial-gradient(circle at top left, rgba(126,200,242,.08), transparent 60%),var(--bg-card);
+    border:1px solid var(--border);border-radius:16px;padding:22px;
+  }
+  .lastnight h4{margin:18px 0 6px;color:var(--amber);font-size:14px;}
+  .lastnight ul{padding-left:18px;margin:4px 0;}
+  .lastnight li{font-size:13.7px;margin-bottom:6px;line-height:1.55;}
+
+  .nav-footer{
+    display:flex;justify-content:space-between;margin-top:42px;gap:10px;
+  }
+  .nav-arrow{
+    background:var(--bg-card);border:1px solid var(--border);color:var(--text);
+    padding:10px 16px;border-radius:10px;cursor:pointer;font-size:13px;display:flex;align-items:center;gap:8px;
+    transition:border-color .15s;
+  }
+  .nav-arrow:hover{border-color:var(--green-dim);color:var(--green);}
+  .nav-arrow:disabled{opacity:0;pointer-events:none;}
+
+  /* hero SVG */
+  .hero-wrap{
+    display:flex;justify-content:center;align-items:center;
+    background:radial-gradient(circle at 50% 35%, rgba(126,200,242,.10), transparent 65%);
+    border-radius:18px;border:1px solid var(--border);padding:18px;margin-bottom:26px;
+  }
+  .palace-step{
+    display:flex;gap:16px;margin-bottom:18px;align-items:flex-start;
+  }
+  .palace-num{
+    flex-shrink:0;width:34px;height:34px;border-radius:50%;
+    background:var(--bg-elevated);border:1px solid var(--green-dim);
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--green);
+  }
+  .palace-step p{margin:0;font-size:14px;line-height:1.65;}
+  .palace-step .room-title{color:var(--blue);font-weight:700;font-size:14.5px;display:block;margin-bottom:3px;}
+
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:#272d3d;border-radius:6px;}
+  ::-webkit-scrollbar-thumb:hover{background:#323a4d;}
+
+  @media (max-width:900px){
+    .sidebar{position:fixed;left:0;top:0;height:100vh;z-index:50;transform:translateX(-100%);transition:transform .25s;box-shadow:10px 0 30px rgba(0,0,0,.5);}
+    .sidebar.open{transform:translateX(0);}
+    .topbar{display:flex;}
+    .main-inner{padding:24px 18px 80px;}
+    h1.page-title{font-size:24px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">🧲</div>
+      <div class="brand-text">
+        <div class="t1">FRB 2.0 · Physics</div>
+        <div class="t2">Magnetic Effect of Current</div>
+      </div>
+    </div>
+
+    <div id="navContainer"></div>
+
+    <div class="progress-wrap">
+      <div class="progress-label">Revision Progress</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-pages" id="progressPages">Page 1 of 12</div>
+    </div>
+  </aside>
+
+  <main class="main" id="main">
+    <div class="topbar">
+      <button class="hamburger" id="hamburgerBtn">☰</button>
+      <div class="tb-title" id="tbTitle">Big Picture</div>
+    </div>
+    <div class="main-inner" id="mainInner"></div>
+  </main>
+
+</div>
+
+<script>
+/* ============================================================
+   DATA: every "page" of the revision system
+   ============================================================ */
+const PAGES = [
+{group:"Learn", id:"big-picture", icon:"🧭", title:"Big Picture", sub:"What this chapter is really about — the one idea everything else hangs on.",
+ body:`
+  <div class="hero-wrap">
+    <svg width="320" height="170" viewBox="0 0 320 170" xmlns="http://www.w3.org/2000/svg">
+      <line x1="40" y1="85" x2="280" y2="85" stroke="var(--blue)" stroke-width="3" id="wire"/>
+      <polygon points="270,78 285,85 270,92" fill="var(--blue)"/>
+      <g id="rings">
+        <ellipse cx="160" cy="85" rx="26" ry="50" fill="none" stroke="var(--green)" stroke-width="1.6" opacity="0.85"/>
+        <ellipse cx="160" cy="85" rx="46" ry="68" fill="none" stroke="var(--green)" stroke-width="1.2" opacity="0.5"/>
+        <ellipse cx="160" cy="85" rx="66" ry="84" fill="none" stroke="var(--green)" stroke-width="1" opacity="0.28"/>
+      </g>
+      <circle cx="160" cy="20" r="11" fill="var(--bg-elevated)" stroke="var(--text-muted)" stroke-width="1"/>
+      <line x1="160" y1="20" x2="166" y2="11" stroke="var(--green)" stroke-width="2" id="needle"/>
+      <text x="160" y="160" text-anchor="middle" fill="#8e96ac" font-size="11" font-family="sans-serif">current → circular magnetic field (Oersted, 1820)</text>
+      <animateTransform xlink:href="#needle" attributeName="transform" type="rotate" values="0 160 20; 35 160 20; 0 160 20; -20 160 20; 0 160 20" dur="4s" repeatCount="indefinite"/>
+    </svg>
+  </div>
+
+  <h2 class="sec-title">🎯 The one idea</h2>
+  <div class="card">
+    <p><b>Electricity and magnetism are two sides of one coin.</b> This entire chapter is built on just <b>two discoveries</b> running in opposite directions:</p>
+    <ul>
+      <li><b>Current → Magnetic field</b> — Hans Christian Oersted (1820). A wire carrying current creates a circular magnetic field around itself. This is the <b>"motor effect"</b> family: straight wire, loop, solenoid, electromagnet, electric motor.</li>
+      <li><b>Magnetic field → Current</b> — Michael Faraday (1831). A <i>changing</i> magnetic field through a coil pushes electrons and induces a current. This is the <b>"generator effect"</b> family: electromagnetic induction, Fleming's right-hand rule, electric generator.</li>
+    </ul>
+    <p class="muted">Almost every question in this chapter is really just asking: "which of these two directions are we talking about, and which rule/hand applies?"</p>
+  </div>
+
+  <h2 class="sec-title">📐 Why SSC loves this chapter</h2>
+  <div class="card">
+    <ul>
+      <li>Short, rule-based, and <b>very matching-friendly</b> (scientist ↔ year ↔ discovery ↔ rule ↔ hand).</li>
+      <li>Plenty of "inversely / directly proportional" one-liners — perfect for one-mark direct questions.</li>
+      <li>Two hand rules that look similar but answer opposite questions — the examiner's favourite trap.</li>
+      <li>Carries forward from the Electricity chapter (Joule's heating effect, galvanometer vs ammeter, Kirchhoff's laws, Wheatstone bridge).</li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">🗺️ How the chapter is organised here</h2>
+  <div class="card">
+    <p>Walk through the <b>Memory Palace</b> once to get the story straight → study the <b>Complete Revision Notes</b> → lock facts with <b>Memory Hooks</b> → see how facts connect → learn the <b>Exam Traps</b> → test yourself with <b>Examiner's Questions</b> and <b>Active Recall</b> → then use the four speed sheets (High-Yield → Ultra-Fast → 30-Second → Last Night) for every revision after the first one.</p>
+  </div>
+ `},
+
+{group:"Learn", id:"memory-palace", icon:"🏛️", title:"Chapter Memory Palace", sub:"Walk through Oersted's Workshop — five rooms, one story, the whole chapter.",
+ body:`
+  <div class="card" style="border-left:3px solid var(--blue);">
+    <p><b>Set the scene:</b> You are visiting <b>"Oersted's Workshop"</b>, an old brick building with five connected rooms. You enter from the street where a scientist is fiddling with a wire and a compass. Walk room to room — each room only ever shows you what its name promises.</p>
+  </div>
+
+  <div class="palace-step">
+    <div class="palace-num">1</div>
+    <p><span class="room-title">🚪 The Entrance — Oersted's Desk (1820)</span>
+    A wire is connected to a battery on a desk. Right next to it sits a small <b>compass</b>. The moment current flows, the compass needle <b>swings</b>. Oersted didn't plan this — he just noticed it during a lecture. Lock it in: <b>current near a compass = the needle moves</b>. This is the doorway fact of the entire chapter.</p>
+  </div>
+
+  <div class="palace-step">
+    <div class="palace-num">2</div>
+    <p><span class="room-title">🌀 Room 1 — The Straight-Wire Corridor</span>
+    A single long wire runs across the ceiling of this corridor. As you walk under it, you feel rings of force wrapping around it like smoke rings around a cigarette — these are <b>circular magnetic field lines</b>. On the wall is a giant <b>cork-screw / right-hand thumb</b> poster: point your thumb the way current flows, your curled fingers show the field's direction. Walk further from the wire and the rings get fainter (field <b>∝ 1/distance</b>); turn up the current dial on the wall and the rings glow brighter (field <b>∝ current</b>).</p>
+  </div>
+
+  <div class="palace-step">
+    <div class="palace-num">3</div>
+    <p><span class="room-title">⭕ Room 2 — The Loop Gallery</span>
+    Here the wire has been bent into circles and hung like hula-hoops on the wall. One hoop = one ring of field. Hang a second hoop next to it and the field doubles; hang <b>n</b> hoops and the field becomes <b>n times</b> stronger. At the dead centre of each hoop, the field lines run <b>parallel and uniform</b> — calm and identical everywhere you measure.</p>
+  </div>
+
+  <div class="palace-step">
+    <div class="palace-num">4</div>
+    <p><span class="room-title">🧵 Room 3 — The Solenoid Workshop</span>
+    This room is a giant <b>spring/slinky</b> made of tightly wound copper wire — a <b>solenoid</b>. Step inside the spring: the field here is <b>maximum and perfectly uniform</b>, like standing in a calm wind tunnel. Step outside the spring: dead calm, <b>practically zero</b>. There's a soft iron rod lying on a table — slide it inside the spring and it instantly behaves like a <b>temporary bar magnet</b>; pull it out and the magnetism vanishes (it only borrows magnetism while current flows — that's an <b>electromagnet</b>). Flip the current switch on the wall and the whole field flips direction too.</p>
+  </div>
+
+  <div class="palace-step">
+    <div class="palace-num">5</div>
+    <p><span class="room-title">🧱 Room 4 — The Bar-Magnet Hall</span>
+    A huge bar magnet stands here with arrows of light flowing out of its <b>North</b> face, arcing through the air, and diving back into its <b>South</b> face — then continuing inside the magnet back to North, making a <b>closed loop</b>. The arrows never cross each other anywhere in the hall (if two arrows crossed, the field at that point would point in two directions at once — impossible, since field is a vector).</p>
+  </div>
+
+  <div class="palace-step">
+    <div class="palace-num">6</div>
+    <p><span class="room-title">⚡ Room 5 — Faraday's Induction Chamber (1831)</span>
+    A coil of wire hangs from the ceiling connected to a galvanometer. You pick up a bar magnet and <b>plunge it towards the coil</b> — the galvanometer needle jumps. Hold the magnet still inside the coil — needle goes back to zero (no <i>change</i>, no current). Pull the magnet back out — needle jumps again, the other way. On the chamber's far wall are two mannequin hands: a <b>right hand</b> labelled "GENERATOR — thumb shows motion, first finger shows field, middle finger shows the induced current" and a <b>left hand</b> labelled "MOTOR — thumb shows force/thrust, first finger shows field, middle finger shows current you supply." Next to them, a working <b>electric motor</b> (electrical energy → mechanical) and a working <b>generator</b> (mechanical energy → electrical) hum quietly, proving the room's whole point.</p>
+  </div>
+
+  <div class="palace-step">
+    <div class="palace-num">7</div>
+    <p><span class="room-title">🔌 Exit Corridor — Kirchhoff's Office & the Wheatstone Bridge</span>
+    On your way out, you pass an accountant's office. A sign on the door reads <b>"Junction Rule"</b>: every rupee (current) that enters a junction must leave it — nothing is lost. A second sign reads <b>"Loop Rule"</b>: go all the way around any closed loop of the circuit and your total gain/loss of voltage is exactly zero — you're back where you started. Finally, you see an old <b>weighing-scale-like bridge</b> with four resistors P, Q, R, S balanced on it — the <b>Wheatstone Bridge</b> — used to weigh out an unknown resistance once the bridge is balanced (P/Q = R/S).</p>
+  </div>
+
+  <div class="card" style="margin-top:10px;border-left:3px solid var(--green);">
+    <p><b>To recall the whole chapter</b>, just walk back through the workshop in your head: Entrance (Oersted's compass) → Straight-wire corridor (thumb rule) → Loop Gallery (n turns) → Solenoid Workshop (max inside, zero outside, soft iron rod) → Bar-Magnet Hall (N→S, closed loops) → Induction Chamber (Faraday, two hands) → Kirchhoff's Office & Wheatstone Bridge.</p>
+  </div>
+ `},
+
+{group:"Learn", id:"core-notes", icon:"📘", title:"Complete Revision Notes", sub:"Every fact from the lecture, organised and connected. Nothing left out.",
+ body:`
+  <h2 class="sec-title">1️⃣ Oersted's Discovery & Galvanometer vs Ammeter <span class="tag tag-must">Must Know</span></h2>
+  <div class="card">
+    <ul>
+      <li><b>Hans Christian Oersted</b> discovered the magnetic effect of electric current in <b>1820</b>, while doing an experiment, when he noticed a <b>deflection in a galvanometer</b> placed near a current-carrying wire.</li>
+      <li><b>Galvanometer:</b> measures <i>magnitude + direction</i> of current, but only <b>small</b> magnitudes.</li>
+      <li><b>Ammeter:</b> measures only <i>magnitude</i> of current, but can measure <b>larger</b> magnitudes.</li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">2️⃣ Magnetic Field of a Straight Current-Carrying Conductor <span class="tag tag-must">Must Know</span></h2>
+  <div class="card">
+    <ul>
+      <li>The magnetic field around a straight current-carrying wire is always <b>circular</b>.</li>
+      <li><b>Direction</b> is found by the <b>Right-Hand Thumb Rule</b> (also called <b>Maxwell's Cork-Screw Rule</b>): point the thumb in the direction of current flow; the curled fingers show the direction of the magnetic field.</li>
+      <li><b>Field strength vs distance:</b> the farther a point is from the conductor, the <b>weaker</b> the magnetic field → field is <b>inversely proportional to distance</b>.</li>
+      <li><b>Field strength vs current:</b> increasing the current increases the field; decreasing the current decreases the field → field is <b>directly proportional to current</b>.</li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">3️⃣ Magnetic Field of a Circular Loop <span class="tag tag-imp">Important</span></h2>
+  <div class="card">
+    <ul>
+      <li>Every small section of a circular loop behaves like a straight current-carrying conductor, so circular field lines form around each section.</li>
+      <li><b>Number of turns ∝ magnetic field</b>: 1 loop gives one "set" of field lines, 2 loops double it, 3 loops triple it. For <b>n turns</b>, the field becomes <b>n times</b> stronger.</li>
+      <li>Field still decreases with distance and increases with current, exactly as for a straight wire.</li>
+      <li>At the <b>centre</b> of the loop, the field lines are <b>parallel and uniform</b> (the same magnitude everywhere at the centre).</li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">4️⃣ Solenoid <span class="tag tag-must">Must Know</span></h2>
+  <div class="card">
+    <p>A <b>solenoid</b> is a coil made by winding a copper wire into many turns (called "solenoid" — in Hindi too, called solenoid).</p>
+    <ul>
+      <li>Field is <b>maximum inside</b> the solenoid.</li>
+      <li>Field inside is <b>uniform</b> (same value everywhere inside).</li>
+      <li>A current-carrying solenoid behaves like a <b>bar magnet</b>.</li>
+      <li>If the <b>direction of current is reversed</b>, the <b>direction of the magnetic field is also reversed</b>.</li>
+      <li>Field lines <b>outside</b> the solenoid are very weak — considered <b>practically zero</b>.</li>
+      <li>If a <b>soft iron rod</b> is placed inside the solenoid, it behaves like a <b>temporary bar magnet</b> (an <b>electromagnet</b>) — remove the rod (or stop the current) and the magnetism disappears.</li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">5️⃣ Magnetic Field Lines of a Bar Magnet <span class="tag tag-imp">Important</span></h2>
+  <div class="card">
+    <ul>
+      <li>Field lines <b>emerge from the North pole</b> and <b>enter the South pole</b> (outside the magnet) — this is a <b>convention</b>, not a law written anywhere; it is simply the agreed direction.</li>
+      <li>Field lines always form <b>closed loops</b> — they are never open.</li>
+      <li>Field lines <b>never intersect</b> each other. If two lines crossed, that point would have two directions of magnetic field at once — impossible, because <b>magnetic field is a vector quantity</b> (it can only have one direction at one point).</li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">6️⃣ Electromagnetic Induction <span class="tag tag-must">Must Know</span></h2>
+  <div class="card">
+    <ul>
+      <li>Discovered by <b>Michael Faraday</b> in <b>1831</b>.</li>
+      <li><b>Principle:</b> a <i>changing</i> magnetic field through a coil generates an electric current.</li>
+      <li>The <b>relative motion</b> between a magnet and a coil is what generates the current — push the magnet towards the coil, the galvanometer deflects; hold it still inside, the field stops changing and the current becomes zero (neutral); move it back and forth and the deflection repeats.</li>
+      <li>This phenomenon is called <b>electromagnetic induction</b>.</li>
+      <li>The direction of the induced current is found using <b>Fleming's Right-Hand Rule</b>: hold the thumb, first finger, and middle finger of the right hand mutually perpendicular (90° to each other) — <b>thumb → direction of motion</b> of the conductor/magnet, <b>first finger → direction of the magnetic field</b>, <b>middle finger → direction of the induced current</b>.</li>
+      <li>This is the principle behind the <b>electric generator</b>, which converts <b>mechanical energy → electrical energy</b>.</li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">7️⃣ Force on a Current-Carrying Conductor in a Magnetic Field (Motor Effect) <span class="tag tag-must">Must Know</span></h2>
+  <div class="card">
+    <ul>
+      <li>This is the <b>reverse situation</b> of induction: here, a magnetic field already exists, AND a conductor already carries a current (we are not generating the current — it's already flowing).</li>
+      <li>A current-carrying conductor itself produces its own magnetic field (from point 2). This field <b>interacts</b> with the external magnetic field already present, and a <b>force</b> is exerted on the conductor.</li>
+      <li>The direction of this force is found using <b>Fleming's Left-Hand Rule</b>: first finger → direction of the magnetic <b>field</b>, middle finger → direction of <b>current</b> in the conductor, thumb → direction of the <b>force/motion</b> experienced by the conductor.</li>
+      <li>This is the principle behind the <b>electric motor</b>, which converts <b>electrical energy → mechanical energy</b>.</li>
+      <li><b>Force is maximum</b> when the angle between the conductor and the magnetic field is <b>90°</b>.</li>
+      <li><b>Force is zero (minimum)</b> when the conductor is placed <b>parallel or anti-parallel</b> to the magnetic field (i.e., along the same line as the field).</li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">8️⃣ Generator vs Motor — the Golden Rule <span class="tag tag-must">Must Know</span></h2>
+  <div class="card">
+    <p><b>Generator → Fleming's Right-Hand Rule</b> (mechanical energy → electrical energy).<br>
+    <b>Motor → Fleming's Left-Hand Rule</b> (electrical energy → mechanical energy).</p>
+    <p class="muted">A current-carrying coil with many turns behaves like a solenoid; if it has a soft-iron core, it behaves like a temporary magnet — same facts as Room 3 of the memory palace, just applied to motors/generators too.</p>
+  </div>
+
+  <h2 class="sec-title">9️⃣ Kirchhoff's Laws <span class="tag tag-imp">Important</span></h2>
+  <div class="card">
+    <h3 class="sub-title">Kirchhoff's First Law — Junction Rule (Current Law)</h3>
+    <p>The sum of currents <b>entering</b> a junction equals the sum of currents <b>leaving</b> that junction. Also called the <b>charge conservation rule</b>.</p>
+    <p class="muted">Worked example from the lecture: if 5 A and 8 A enter a junction, the current leaving (I) must be <b>13 A</b> (5 + 8 = 13), since whatever comes in must go out.</p>
+    <h3 class="sub-title">Kirchhoff's Second Law — Voltage Law (Loop Rule)</h3>
+    <p>The sum of all <b>voltage drops</b> and <b>voltage rises</b> around any <b>closed loop</b> in a circuit is <b>zero</b>.</p>
+  </div>
+
+  <h2 class="sec-title">🔟 Wheatstone Bridge <span class="tag tag-imp">Important</span></h2>
+  <div class="card">
+    <p>The <b>Wheatstone Bridge</b> is an electrical circuit made of <b>four resistors</b> (commonly labelled P, Q, R, S) connected with a battery providing a potential difference, used to find an <b>unknown electrical resistance</b> easily.</p>
+    <p><b>Balanced condition:</b></p>
+    <table class="bridge">
+      <tr><th>Condition</th><th>Formula</th></tr>
+      <tr><td>Bridge is balanced</td><td><b>P / Q = R / S</b></td></tr>
+    </table>
+    <p class="muted">Once the bridge is balanced across its two "legs," the unknown resistance can be calculated directly from this ratio.</p>
+  </div>
+ `},
+
+{group:"Remember", id:"memory-hooks", icon:"🪝", title:"Smart Memory Hooks", sub:"One vivid image per cluster of facts — built to survive months, not days.",
+ body:`
+  <div class="hook-card">
+    <div class="hk-fact">Oersted, 1820 — galvanometer deflects</div>
+    <p><b>Mental movie:</b> A scientist mid-lecture accidentally leaves a compass next to a live wire. The needle suddenly <b>swings</b> for no reason he planned — pure accident, pure discovery. "Oersted's Oops" in 1820. Whenever you see "1820," picture that swinging needle next to the wire.</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Right-Hand Thumb Rule / Cork-Screw Rule</div>
+    <p><b>Mental movie:</b> Imagine screwing a bottle cap with your right hand — thumb pushes forward (current direction), fingers naturally curl around (field direction). It's the same twisting motion every time you open a jar — the field always "screws" around the wire.</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Field ∝ Current, Field ∝ 1/Distance</div>
+    <p><b>Mental movie:</b> Picture a campfire. Turn up the flame (current) → you feel more heat (field). Walk away from the fire (distance) → you feel less heat. Current is a "booster," distance is a "fader."</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">n turns → n times the field</div>
+    <p><b>Mental movie:</b> Each loop of wire is like one extra layer of a blanket. One blanket = some warmth; stack 3 blankets, you get 3× the warmth. Stack n blankets (n turns), you get n× the field.</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Solenoid: max & uniform inside, ~zero outside</div>
+    <p><b>Mental movie:</b> A solenoid is a <b>slinky toy</b>. Inside the tightly wound slinky coils, everything is packed and identical (max & uniform). The moment you step outside the slinky's coils, there's nothing there (practically zero).</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Soft iron rod = Temporary Magnet</div>
+    <p><b>Mental movie:</b> Think of a <b>temporary tattoo</b> — looks real and works perfectly while it's on (current flowing through the solenoid), but the moment you peel it off (remove current/rod), it's completely gone. No lasting magnetism.</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Bar magnet field lines: N → S, closed loops, never cross</div>
+    <p><b>Mental movie:</b> Water fountain jets — water shoots out from the top (North), arcs through the air, lands back in the south-side pool, and recirculates back up through the pump inside (closed loop). Two fountain jets in the same fountain never physically pass through each other.</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Faraday, 1831 — Electromagnetic Induction</div>
+    <p><b>Mental movie:</b> A diver (bar magnet) <b>cannonballs into a swimming pool</b> (the coil). Big splash = current flows. If the diver just floats still in the water, no splash = no current. Only the <b>change</b> (the dive, the motion) creates the splash.</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Generator (Right Hand) vs Motor (Left Hand)</div>
+    <p><b>Mnemonic — "G before M, R before L":</b> Generator comes alphabetically before Motor, just like Right comes before Left in your two physical hands when you hold them out, right then left. Say it as: <b>"Generator → Right, Motor → Left."</b> Rhymes, and it's the single most tested line in this chapter.</p>
+    <p><b>FBI trick for both hands:</b> point first finger, second (middle) finger and thuMb mutually perpendicular: <b>F</b>irst finger = field, <b>s</b>e<b>C</b>ond/middle finger = current, thu<b>M</b>b = motion/force. (For the <i>generator's right hand</i>, the middle finger gives the <i>induced</i> current; for the <i>motor's left hand</i>, the middle finger is the current <i>you already supplied</i>, and the thumb gives you the force.)</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Force max at 90°, zero when parallel</div>
+    <p><b>Mental movie:</b> A swimmer pushing straight across a river current (90°) gets pushed sideways hardest. A swimmer swimming exactly along the current's direction (parallel) feels no sideways push at all.</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Kirchhoff's Junction Rule</div>
+    <p><b>Mental movie:</b> A toll plaza junction — every car that enters from the highways must exit through the toll booths. Cars in = cars out, always, no car vanishes.</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Kirchhoff's Voltage Rule</div>
+    <p><b>Mental movie:</b> You walk a complete loop around your colony and return to your own gate. Net displacement = zero, no matter how many turns you took. Net voltage change around any closed loop is also zero.</p>
+  </div>
+
+  <div class="hook-card">
+    <div class="hk-fact">Wheatstone Bridge: P/Q = R/S</div>
+    <p><b>Mental movie:</b> An old-fashioned <b>see-saw weighing scale</b> with four sacks of grain (P, Q, R, S) — the bridge is "balanced" exactly like a see-saw at rest, and from that balance you can weigh (calculate) the one sack whose weight (resistance) you don't know.</p>
+  </div>
+ `},
+
+{group:"Remember", id:"connections", icon:"🔗", title:"Concept Connections", sub:"Nothing in this chapter sits alone — here's the mental network.",
+ body:`
+  <div class="card">
+    <h3 class="sub-title">DISCOVERY → IMPACT</h3>
+    <ul>
+      <li><b>Oersted's discovery (current → circular field)</b> → makes possible electromagnets, solenoids, and ultimately the <b>electric motor</b>.</li>
+      <li><b>Faraday's discovery (changing field → current)</b> → makes possible the <b>electric generator</b>, the basis of almost all large-scale electricity generation.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 class="sub-title">FEATURE → EXCEPTION / NUANCE</h3>
+    <ul>
+      <li>Field lines around a bar magnet go North → South <i>outside</i> the magnet, but this is only a <b>convention</b> — not an absolute physical law written down anywhere.</li>
+      <li>Solenoid field is maximum & uniform <i>inside</i>, but drops to <b>practically zero</b> the instant you step outside.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 class="sub-title">CAUSE → EFFECT chain across the whole chapter</h3>
+    <ol>
+      <li>Current flows through a wire →</li>
+      <li>A circular magnetic field appears around it (Oersted) →</li>
+      <li>More turns (loop → solenoid) concentrate and strengthen this field n times →</li>
+      <li>A soft iron core inside the solenoid temporarily becomes magnetised → electromagnet →</li>
+      <li>This electromagnet's field, when placed in ANOTHER external magnetic field, experiences a <b>force</b> (Fleming's Left-Hand Rule) → <b>motor</b> (electrical → mechanical) →</li>
+      <li>Conversely, moving a magnet near a coil <b>changes</b> the flux through it → induces a current (Faraday, Fleming's Right-Hand Rule) → <b>generator</b> (mechanical → electrical) →</li>
+      <li>The current produced/used in all of the above still obeys <b>Kirchhoff's Laws</b> at every junction and loop →</li>
+      <li>Unknown resistances anywhere in such a circuit can be measured using a <b>Wheatstone Bridge</b>.</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h3 class="sub-title">CONCEPT → APPLICATION</h3>
+    <ul>
+      <li>Soft iron core + solenoid → electric bells, relays, electromagnetic cranes (temporary magnetism switched on/off with current).</li>
+      <li>Fleming's Left-Hand Rule → electric motors (fans, washing machines).</li>
+      <li>Fleming's Right-Hand Rule → electric generators / dynamos (power plants).</li>
+      <li>Wheatstone Bridge → measuring unknown resistances in labs and instruments (e.g., strain gauges).</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 class="sub-title">PROBLEM → SOLUTION (carried over from Electricity chapter)</h3>
+    <ul>
+      <li>Need to measure very small currents with direction? → Use a <b>galvanometer</b>, not an ammeter.</li>
+      <li>Need an unknown resistance value? → Build a <b>Wheatstone Bridge</b> and balance it.</li>
+      <li>Need to find current at a complicated junction or loop? → Apply <b>Kirchhoff's First/Second Law</b>.</li>
+    </ul>
+  </div>
+ `},
+
+{group:"Remember", id:"exam-traps", icon:"⚠️", title:"Exam Traps", sub:"What toppers get right and everyone else mixes up. Read this slowly.",
+ body:`
+  <div class="trap">
+    <div class="tr-head">⚠️ Galvanometer <span class="vs">vs</span> Ammeter</div>
+    <p>Galvanometer → magnitude <b>+ direction</b>, only <b>small</b> currents. Ammeter → <b>only magnitude</b>, but <b>large</b> currents. Examiners love swapping "small" and "large" between the two in statement questions.</p>
+  </div>
+
+  <div class="trap">
+    <div class="tr-head">⚠️ Oersted (1820) <span class="vs">vs</span> Faraday (1831)</div>
+    <p>Oersted discovered the <b>magnetic effect of current</b> (current → field). Faraday discovered <b>electromagnetic induction</b> (field → current) — the exact reverse, 11 years later. Don't swap the years or the direction of cause-and-effect.</p>
+  </div>
+
+  <div class="trap">
+    <div class="tr-head">⚠️ Right-Hand Thumb Rule (Cork-Screw Rule) <span class="vs">vs</span> Fleming's Right-Hand Rule</div>
+    <p>Both use the <b>right hand</b>, but they answer completely different questions! The Thumb/Cork-Screw rule tells you the <b>field direction around a current-carrying wire</b> (Oersted's situation). Fleming's Right-Hand Rule tells you the <b>direction of induced current in a generator</b> (Faraday's situation). Same hand, totally different job.</p>
+  </div>
+
+  <div class="trap">
+    <div class="tr-head">⚠️ Fleming's Left-Hand Rule <span class="vs">vs</span> Fleming's Right-Hand Rule</div>
+    <p>This is THE most common SSC trap in this whole chapter. <b>Generator → Right hand.</b> <b>Motor → Left hand.</b> Remember: "Right" generates, "Left" lifts/moves (motor effect = motion/force).</p>
+  </div>
+
+  <div class="trap">
+    <div class="tr-head">⚠️ Maximum force angle <span class="vs">vs</span> Zero force angle</div>
+    <p>Force is <b>maximum at 90°</b> between conductor and field; force is <b>zero when parallel or anti-parallel</b> (0° or 180°) — not at 90°! Students sometimes flip these two.</p>
+  </div>
+
+  <div class="trap">
+    <div class="tr-head">⚠️ Solenoid field: Inside <span class="vs">vs</span> Outside</div>
+    <p>Inside → <b>maximum and uniform</b>. Outside → <b>practically zero</b>, NOT just "weaker." This near-zero outside field is frequently tested as a true/false statement.</p>
+  </div>
+
+  <div class="trap">
+    <div class="tr-head">⚠️ Soft Iron Rod (temporary magnet) <span class="vs">vs</span> Permanent Magnet</div>
+    <p>A soft iron rod inside a solenoid is magnetised only <b>while current flows</b> — remove current (or the rod), magnetism is gone. A permanent (steel) magnet keeps its magnetism without any current. Don't call the solenoid+soft-iron combination a "permanent magnet."</p>
+  </div>
+
+  <div class="trap">
+    <div class="tr-head">⚠️ "Field lines emerge from North" — convention, not law</div>
+    <p>This North→South direction outside the magnet is a <b>convention</b> — the lecture explicitly stresses this is not written anywhere as an absolute rule, just an agreed direction. A tricky assertion-reason question could test whether you know it's a convention.</p>
+  </div>
+
+  <div class="trap">
+    <div class="tr-head">⚠️ Kirchhoff's First Law (Current/Junction) <span class="vs">vs</span> Second Law (Voltage/Loop)</div>
+    <p>First law = <b>charge conservation</b> at a <b>junction</b> (currents in = currents out). Second law = sum of voltage drops & rises around a <b>closed loop</b> = zero. Don't mix up "junction" with "loop," or "current" with "voltage," when the question names only "Kirchhoff's Law" without specifying which.</p>
+  </div>
+
+  <div class="trap">
+    <div class="tr-head">⚠️ Wheatstone Bridge ratio order: P/Q = R/S</div>
+    <p>Make sure you match the resistor arrangement correctly before plugging into the ratio — a flipped ratio (Q/P = S/R is fine since it's equivalent, but mixing P with S incorrectly is not) is a classic calculation trap in numerical questions.</p>
+  </div>
+ `},
+
+{group:"Test", id:"examiner-questions", icon:"🎯", title:"Examiner's Favourite Questions", sub:"How an examiner is likely to attack this chapter — click to reveal each answer.",
+ body:`
+  <details class="qa">
+    <summary>Match the Following: Scientist ↔ Discovery ↔ Year</summary>
+    <div class="qa-body">
+      <p>A) Hans Christian Oersted &nbsp; B) Michael Faraday &nbsp; C) James P. Joule (from Electricity chapter)</p>
+      <p>1) Heating effect of current &nbsp; 2) Magnetic effect of current, 1820 &nbsp; 3) Electromagnetic induction, 1831</p>
+      <p><strong>Answer:</strong> A–2 (Oersted, magnetic effect, 1820), B–3 (Faraday, induction, 1831), C–1 (Joule, heating effect).</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Statement-Based: Which statement(s) about a solenoid is/are correct?</summary>
+    <div class="qa-body">
+      <p>I. Field is maximum at the centre, inside the solenoid.<br>II. Field outside the solenoid is uniform and strong.<br>III. Reversing current direction reverses field direction.</p>
+      <p><strong>Answer:</strong> I and III are correct; II is wrong — field outside is practically zero, not uniform & strong.</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Assertion–Reason: Soft iron rod in a solenoid</summary>
+    <div class="qa-body">
+      <p>Assertion (A): A soft iron rod placed inside a current-carrying solenoid behaves like a magnet.<br>Reason (R): Soft iron retains its magnetism permanently once magnetised.</p>
+      <p><strong>Answer:</strong> A is true, R is false — soft iron becomes only a <i>temporary</i> magnet; it loses magnetism once the current stops. So A is true but R does not correctly explain A (in fact R is false on its own).</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Chronology: Arrange in order of discovery</summary>
+    <div class="qa-body">
+      <p>(i) Electromagnetic Induction (ii) Magnetic effect of current (iii) Heating effect of current</p>
+      <p><strong>Answer:</strong> Order depends on your syllabus's Joule's law date, but within this chapter: (ii) Oersted 1820 happens before (i) Faraday 1831.</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Direct Fact: Which rule gives the direction of force on a current-carrying conductor in a magnetic field?</summary>
+    <div class="qa-body">
+      <p><strong>Answer:</strong> Fleming's Left-Hand Rule (this is the motor effect).</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Direct Fact: Which rule gives the direction of induced current in a generator?</summary>
+    <div class="qa-body">
+      <p><strong>Answer:</strong> Fleming's Right-Hand Rule.</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Confusing-Facts MCQ: Magnetic field around a straight wire is ___ proportional to distance and ___ proportional to current.</summary>
+    <div class="qa-body">
+      <p><strong>Answer:</strong> Inversely proportional to distance; directly proportional to current.</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Numerical: Kirchhoff's Junction Rule</summary>
+    <div class="qa-body">
+      <p>If currents of 5 A and 8 A enter a junction, and only one wire leaves carrying current I, find I.</p>
+      <p><strong>Answer:</strong> I = 5 + 8 = 13 A (current in = current out).</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Numerical: Wheatstone Bridge</summary>
+    <div class="qa-body">
+      <p>A Wheatstone bridge is balanced with P = 4Ω, Q = 2Ω, R = 6Ω. Find S.</p>
+      <p><strong>Answer:</strong> P/Q = R/S → 4/2 = 6/S → S = (6×2)/4 = 3Ω.</p>
+    </div>
+  </details>
+
+  <details class="qa">
+    <summary>Assertion–Reason: Field lines of a bar magnet</summary>
+    <div class="qa-body">
+      <p>Assertion (A): Magnetic field lines never intersect each other.<br>Reason (R): Magnetic field is a vector quantity, and at any given point it can have only one direction.</p>
+      <p><strong>Answer:</strong> Both A and R are true, and R correctly explains A.</p>
+    </div>
+  </details>
+ `},
+
+{group:"Test", id:"active-recall", icon:"❓", title:"Active Recall Section", sub:"Don't just read — retrieve. Click each blank/button to test yourself before peeking.",
+ body:`
+  <h2 class="sec-title">Fill in the Blanks</h2>
+  <div class="card">
+    <p>1. The magnetic effect of current was discovered by ____ in ____.
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+      <span class="answer">Hans Christian Oersted, 1820</span></p>
+    <p>2. Electromagnetic induction was discovered by ____ in ____.
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+      <span class="answer">Michael Faraday, 1831</span></p>
+    <p>3. Magnetic field around a straight wire is found using the ____ rule.
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+      <span class="answer">Right-Hand Thumb Rule (Maxwell's Cork-Screw Rule)</span></p>
+    <p>4. A generator works on Fleming's ____-Hand Rule; a motor works on Fleming's ____-Hand Rule.
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+      <span class="answer">Right; Left</span></p>
+    <p>5. Force on a current-carrying conductor is maximum when the angle between conductor and field is ____.
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+      <span class="answer">90°</span></p>
+    <p>6. Field outside a solenoid is considered ____.
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+      <span class="answer">practically zero</span></p>
+    <p>7. Kirchhoff's First Law is also called the ____ rule; Kirchhoff's Second Law is also called the ____ rule.
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+      <span class="answer">Junction rule; Voltage (Loop) rule</span></p>
+    <p>8. In a balanced Wheatstone bridge, P/Q = ____.
+      <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button>
+      <span class="answer">R/S</span></p>
+  </div>
+
+  <h2 class="sec-title">One-Liner Recall Questions</h2>
+  <div class="card">
+    <ul>
+      <li>What did Oersted notice that led to his discovery? <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button><span class="answer">A deflection in the galvanometer near a current-carrying wire.</span></li>
+      <li>What shape is the magnetic field around a straight wire? <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button><span class="answer">Circular.</span></li>
+      <li>What happens to field strength as you move away from the wire? <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button><span class="answer">It decreases (inversely proportional to distance).</span></li>
+      <li>What does a solenoid behave like? <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button><span class="answer">A bar magnet.</span></li>
+      <li>What converts mechanical energy to electrical energy? <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button><span class="answer">A generator (Fleming's right-hand rule).</span></li>
+      <li>What converts electrical energy to mechanical energy? <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal</button><span class="answer">A motor (Fleming's left-hand rule).</span></li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">Reverse Questions (answer given — you supply the question)</h2>
+  <div class="card">
+    <ul>
+      <li><b>Answer:</b> "1820" <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal Question</button><span class="answer">In which year did Oersted discover the magnetic effect of current?</span></li>
+      <li><b>Answer:</b> "Practically zero" <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal Question</button><span class="answer">What is the magnetic field strength outside a solenoid?</span></li>
+      <li><b>Answer:</b> "P/Q = R/S" <button class="reveal-btn" onclick="this.nextElementSibling.classList.toggle('show')">Reveal Question</button><span class="answer">What is the balance condition of a Wheatstone bridge?</span></li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">Rapid-Fire Revision Questions</h2>
+  <div class="card">
+    <div class="pill-list">
+      <span class="pill">Discoverer of magnetic effect?</span>
+      <span class="pill">Discoverer of induction?</span>
+      <span class="pill">Rule for field direction (straight wire)?</span>
+      <span class="pill">Rule for force on conductor?</span>
+      <span class="pill">Rule for induced current?</span>
+      <span class="pill">Field inside solenoid?</span>
+      <span class="pill">Field outside solenoid?</span>
+      <span class="pill">Soft iron rod role?</span>
+      <span class="pill">Bar magnet field direction (outside)?</span>
+      <span class="pill">Force angle for max force?</span>
+      <span class="pill">Kirchhoff's 1st law name?</span>
+      <span class="pill">Kirchhoff's 2nd law name?</span>
+      <span class="pill">Wheatstone bridge resistor count?</span>
+    </div>
+    <p class="muted">Say the answer out loud for each pill before moving to the next page — don't write, just retrieve from memory.</p>
+  </div>
+ `},
+
+{group:"Revise Fast", id:"high-yield", icon:"⭐", title:"High-Yield Revision Notes", sub:"The compressed version — everything important, nothing extra.",
+ body:`
+  <div class="grid2">
+    <div class="card">
+      <h3 class="sub-title">Discoveries</h3>
+      <ul>
+        <li>🔥 Oersted — magnetic effect of current — 1820</li>
+        <li>🔥 Faraday — electromagnetic induction — 1831</li>
+        <li>➕ Joule — heating effect (previous chapter)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="sub-title">Meters</h3>
+      <ul>
+        <li>⭐ Galvanometer: magnitude + direction, small current</li>
+        <li>⭐ Ammeter: magnitude only, large current</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="sub-title">Straight Wire & Loop</h3>
+      <ul>
+        <li>🔥 Field is circular; direction via Right-Hand Thumb / Cork-Screw Rule</li>
+        <li>🔥 B ∝ I (current), B ∝ 1/d (distance)</li>
+        <li>⭐ n turns → field becomes n times</li>
+        <li>➕ Centre of loop: parallel & uniform field</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="sub-title">Solenoid</h3>
+      <ul>
+        <li>🔥 Max & uniform field inside; ~zero outside</li>
+        <li>🔥 Behaves like a bar magnet</li>
+        <li>⭐ Reverse current → reverse field direction</li>
+        <li>⭐ Soft iron rod inside → temporary magnet (electromagnet)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="sub-title">Bar Magnet Field Lines</h3>
+      <ul>
+        <li>🔥 N → S outside (convention only)</li>
+        <li>🔥 Always closed loops; never open</li>
+        <li>🔥 Never intersect (field is a vector)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="sub-title">Induction & Motor Effect</h3>
+      <ul>
+        <li>🔥 Induction needs relative motion / changing field</li>
+        <li>🔥 Generator → Fleming's Right-Hand Rule (mech → elec)</li>
+        <li>🔥 Motor → Fleming's Left-Hand Rule (elec → mech)</li>
+        <li>⭐ Force max at 90°; force zero at parallel/anti-parallel</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="sub-title">Kirchhoff's Laws</h3>
+      <ul>
+        <li>🔥 1st Law (Junction): ΣI in = ΣI out</li>
+        <li>🔥 2nd Law (Voltage/Loop): Σ(drops+rises) around closed loop = 0</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="sub-title">Wheatstone Bridge</h3>
+      <ul>
+        <li>🔥 4 resistors P, Q, R, S</li>
+        <li>🔥 Balanced: P/Q = R/S</li>
+        <li>➕ Used to find unknown resistance</li>
+      </ul>
+    </div>
+  </div>
+ `},
+
+{group:"Revise Fast", id:"ultra-fast", icon:"⚡", title:"Ultra-Fast Revision Sheet", sub:"Keywords and formulas only. Scan this in under two minutes.",
+ body:`
+  <div class="fast-grid">
+    <div class="fast-item"><b>Oersted</b> → 1820 → current→field</div>
+    <div class="fast-item"><b>Faraday</b> → 1831 → field→current</div>
+    <div class="fast-item"><b>Galvanometer</b> → mag+dir, small</div>
+    <div class="fast-item"><b>Ammeter</b> → mag only, large</div>
+    <div class="fast-item"><b>Straight wire field</b> → circular</div>
+    <div class="fast-item"><b>Direction rule</b> → Right-Hand Thumb / Cork-Screw</div>
+    <div class="fast-item"><b>B ∝ I</b>, <b>B ∝ 1/d</b></div>
+    <div class="fast-item"><b>n turns</b> → field × n</div>
+    <div class="fast-item"><b>Solenoid inside</b> → max, uniform</div>
+    <div class="fast-item"><b>Solenoid outside</b> → ~zero</div>
+    <div class="fast-item"><b>Soft iron + solenoid</b> → temporary magnet</div>
+    <div class="fast-item"><b>Reverse current</b> → reverse field</div>
+    <div class="fast-item"><b>Bar magnet lines</b> → N→S, closed, never cross</div>
+    <div class="fast-item"><b>Generator</b> → Fleming Right Hand</div>
+    <div class="fast-item"><b>Motor</b> → Fleming Left Hand</div>
+    <div class="fast-item"><b>Force max</b> → 90°</div>
+    <div class="fast-item"><b>Force zero</b> → parallel/anti-parallel</div>
+    <div class="fast-item"><b>Kirchhoff 1</b> → Junction, ΣIin=ΣIout</div>
+    <div class="fast-item"><b>Kirchhoff 2</b> → Loop, ΣV=0</div>
+    <div class="fast-item"><b>Wheatstone bridge</b> → P/Q = R/S</div>
+  </div>
+ `},
+
+{group:"Revise Fast", id:"thirty-second", icon:"⏱️", title:"30-Second Revision Sheet", sub:"If you only have 30 seconds, read exactly this.",
+ body:`
+  <div class="card" style="font-size:15px;line-height:1.9;">
+    <p>🔥 <b>Oersted 1820</b>: current → circular field. <b>Faraday 1831</b>: changing field → current.</p>
+    <p>🔥 Straight wire: <b>Right-Hand Thumb Rule</b>; field ∝ I, ∝ 1/d.</p>
+    <p>🔥 Solenoid: <b>max & uniform inside, ~zero outside</b>; soft iron → temporary magnet.</p>
+    <p>🔥 Bar magnet lines: <b>N → S outside, closed loops, never cross</b>.</p>
+    <p>🔥 <b>Generator → Right hand. Motor → Left hand.</b> Force max at 90°, zero when parallel.</p>
+    <p>🔥 Kirchhoff: <b>Junction</b> (current in=out) & <b>Loop</b> (ΣV=0).</p>
+    <p>🔥 Wheatstone Bridge: <b>P/Q = R/S</b>.</p>
+  </div>
+ `},
+
+{group:"Revise Fast", id:"last-night", icon:"🌙", title:"Last-Night-Before-Exam Sheet", sub:"The absolute final scan before you walk into the exam hall.",
+ body:`
+  <div class="lastnight">
+    <p style="color:var(--text-muted);margin-top:0;">Read top to bottom, once. That's it.</p>
+
+    <h4>Names & Years</h4>
+    <ul>
+      <li>Oersted — 1820 — magnetic effect of current</li>
+      <li>Faraday — 1831 — electromagnetic induction</li>
+    </ul>
+
+    <h4>The Two Hands (biggest trap)</h4>
+    <ul>
+      <li><b>Generator → Fleming's RIGHT hand</b> (mech → elec)</li>
+      <li><b>Motor → Fleming's LEFT hand</b> (elec → mech)</li>
+    </ul>
+
+    <h4>Proportionality one-liners</h4>
+    <ul>
+      <li>Field ∝ current (direct)</li>
+      <li>Field ∝ 1/distance (inverse)</li>
+      <li>Field ∝ number of turns (n times)</li>
+    </ul>
+
+    <h4>Solenoid in one line</h4>
+    <ul>
+      <li>Inside: max + uniform. Outside: ~zero. Soft iron core = temporary magnet only.</li>
+    </ul>
+
+    <h4>Bar magnet field lines in one line</h4>
+    <ul>
+      <li>N → S outside (convention), always closed loops, never intersect.</li>
+    </ul>
+
+    <h4>Force rule</h4>
+    <ul>
+      <li>Max force at 90°. Zero force when parallel/anti-parallel.</li>
+    </ul>
+
+    <h4>Kirchhoff + Wheatstone in one line each</h4>
+    <ul>
+      <li>Junction Rule: current in = current out.</li>
+      <li>Loop Rule: total voltage around a closed loop = 0.</li>
+      <li>Wheatstone Bridge: P/Q = R/S (4 resistors, find unknown resistance).</li>
+    </ul>
+
+    <h4 style="color:var(--green);">Galvanometer vs Ammeter</h4>
+    <ul>
+      <li>Galvanometer: magnitude + direction, small currents only.</li>
+      <li>Ammeter: magnitude only, large currents.</li>
+    </ul>
+
+    <p style="margin-top:18px;color:var(--blue);font-weight:600;">Breathe. You already know this chapter. Walk through Oersted's Workshop one last time in your head, then go write the paper.</p>
+  </div>
+ `},
+];
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const navContainer = document.getElementById('navContainer');
+const mainInner = document.getElementById('mainInner');
+const progressFill = document.getElementById('progressFill');
+const progressPages = document.getElementById('progressPages');
+const tbTitle = document.getElementById('tbTitle');
+
+let groups = [];
+PAGES.forEach(p=>{ if(!groups.includes(p.group)) groups.push(p.group); });
+
+groups.forEach(g=>{
+  const label = document.createElement('div');
+  label.className = 'nav-group-label';
+  label.textContent = g;
+  navContainer.appendChild(label);
+  PAGES.filter(p=>p.group===g).forEach(p=>{
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn';
+    btn.id = 'nav-'+p.id;
+    btn.innerHTML = `<span class="ic">${p.icon}</span><span>${p.title}</span>`;
+    btn.onclick = ()=>showPage(p.id);
+    navContainer.appendChild(btn);
+  });
+});
+
+PAGES.forEach((p,idx)=>{
+  const div = document.createElement('div');
+  div.className = 'page';
+  div.id = 'page-'+p.id;
+  div.innerHTML = `
+    <span class="eyebrow">${p.group} · ${idx+1} / ${PAGES.length}</span>
+    <h1 class="page-title">${p.title}</h1>
+    <p class="page-sub">${p.sub}</p>
+    ${p.body}
+    <div class="nav-footer">
+      <button class="nav-arrow" id="prevBtn-${p.id}">← Previous</button>
+      <button class="nav-arrow" id="nextBtn-${p.id}">Next →</button>
+    </div>
+  `;
+  mainInner.appendChild(div);
+});
+
+function showPage(id){
+  const idx = PAGES.findIndex(p=>p.id===id);
+  if(idx===-1) return;
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('show'));
+  document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('show');
+  document.getElementById('nav-'+id).classList.add('active');
+  tbTitle.textContent = PAGES[idx].title;
+  progressFill.style.width = ((idx+1)/PAGES.length*100)+'%';
+  progressPages.textContent = `Page ${idx+1} of ${PAGES.length}`;
+
+  const prevBtn = document.getElementById('prevBtn-'+id);
+  const nextBtn = document.getElementById('nextBtn-'+id);
+  if(prevBtn){
+    if(idx>0){ prevBtn.disabled=false; prevBtn.onclick=()=>showPage(PAGES[idx-1].id); }
+    else { prevBtn.disabled=true; }
+  }
+  if(nextBtn){
+    if(idx<PAGES.length-1){ nextBtn.disabled=false; nextBtn.textContent='Next: '+PAGES[idx+1].title+' →'; nextBtn.onclick=()=>showPage(PAGES[idx+1].id); }
+    else { nextBtn.textContent='🎉 Finish'; nextBtn.onclick=()=>showPage(PAGES[0].id); }
+  }
+  document.getElementById('main').scrollTop = 0;
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+document.getElementById('hamburgerBtn').onclick = ()=>{
+  document.getElementById('sidebar').classList.toggle('open');
+};
+
+document.addEventListener('keydown', (e)=>{
+  const activeIdx = PAGES.findIndex(p=>document.getElementById('page-'+p.id).classList.contains('show'));
+  if(activeIdx===-1) return;
+  if(e.key==='ArrowRight' && activeIdx<PAGES.length-1) showPage(PAGES[activeIdx+1].id);
+  if(e.key==='ArrowLeft' && activeIdx>0) showPage(PAGES[activeIdx-1].id);
+});
+
+showPage(PAGES[0].id);
+</script>
+</body>
+</html>

@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gravitation &amp; Work-Energy | SSC CGL Memory System</title>
+<style>
+  :root{
+    --bg: #0f1117;
+    --bg-raised: #161922;
+    --bg-card: #1a1e29;
+    --border: #2a2f3d;
+    --green: #7ee0a8;
+    --green-dim: #4f8d6c;
+    --blue: #7ec8f5;
+    --blue-dim: #4f7a99;
+    --text: #e8eaed;
+    --text-dim: #9aa3b2;
+    --text-faint: #6b7384;
+    --amber: #f2c572;
+    --red: #f29b9b;
+    --purple: #c9a8f0;
+    --radius: 14px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    --mono: "SF Mono", "JetBrains Mono", Consolas, monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: radial-gradient(circle at 15% 0%, #131725 0%, var(--bg) 45%) ;
+    color: var(--text);
+    font-family: var(--sans);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  /* subtle starfield texture for gravitation theme */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.18) 0, transparent 60%),
+      radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.14) 0, transparent 60%),
+      radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.12) 0, transparent 60%),
+      radial-gradient(1px 1px at 30% 85%, rgba(255,255,255,0.16) 0, transparent 60%),
+      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.10) 0, transparent 60%),
+      radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.14) 0, transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  a{color:var(--blue);}
+
+  /* ===== APP SHELL ===== */
+  #app{
+    display:flex;
+    min-height:100vh;
+    position:relative;
+    z-index:1;
+  }
+
+  /* ===== SIDEBAR ===== */
+  #sidebar{
+    width:280px;
+    flex-shrink:0;
+    background: var(--bg-raised);
+    border-right:1px solid var(--border);
+    padding:22px 16px 16px;
+    position:fixed;
+    top:0; left:0; bottom:0;
+    overflow-y:auto;
+    z-index:30;
+    transition: transform 0.3s ease;
+  }
+  #sidebar::-webkit-scrollbar{width:6px;}
+  #sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    padding:4px 8px 18px;
+    border-bottom:1px solid var(--border);
+    margin-bottom:14px;
+  }
+  .brand-orbit{
+    width:30px;height:30px;border-radius:50%;
+    border:2px solid var(--green);
+    position:relative;
+    flex-shrink:0;
+    box-shadow: 0 0 14px rgba(126,224,168,0.35);
+  }
+  .brand-orbit::after{
+    content:"";
+    position:absolute; top:50%; left:50%;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--blue);
+    transform: translate(-50%,-50%) translateX(13px);
+    box-shadow: 0 0 8px var(--blue);
+  }
+  .brand-text{font-family:var(--serif);font-size:15px;line-height:1.25;color:var(--text);}
+  .brand-text span{display:block;font-size:10.5px;letter-spacing:0.12em;color:var(--text-faint);font-family:var(--sans);text-transform:uppercase;margin-top:2px;}
+
+  .nav-group{margin-bottom:4px;}
+  .nav-group-label{
+    font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--text-faint); padding:14px 10px 6px; font-weight:600;
+  }
+  .nav-item{
+    display:flex; align-items:center; gap:10px;
+    width:100%; text-align:left;
+    background:none; border:none; cursor:pointer;
+    color:var(--text-dim);
+    padding:9px 10px; border-radius:9px;
+    font-size:13.5px;
+    font-family:var(--sans);
+    transition: background 0.15s, color 0.15s;
+    line-height:1.3;
+  }
+  .nav-item:hover{ background: rgba(126,200,245,0.08); color:var(--text); }
+  .nav-item.active{
+    background: rgba(126,224,168,0.12);
+    color: var(--green);
+    font-weight:600;
+  }
+  .nav-item .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--border); flex-shrink:0;
+    transition: background 0.15s;
+  }
+  .nav-item.active .dot{ background:var(--green); box-shadow:0 0 6px var(--green);}
+  .nav-item .ic{width:16px; text-align:center; flex-shrink:0; font-size:13px;}
+
+  #sidebar-footer{
+    margin-top:18px; padding:12px 10px;
+    border-top:1px solid var(--border);
+    font-size:11px; color:var(--text-faint); line-height:1.5;
+  }
+
+  /* mobile toggle */
+  #menu-toggle{
+    display:none;
+    position:fixed; top:14px; left:14px; z-index:40;
+    background:var(--bg-card); border:1px solid var(--border);
+    color:var(--text); border-radius:9px;
+    width:40px;height:40px; align-items:center; justify-content:center;
+    font-size:18px; cursor:pointer;
+  }
+  #sidebar-scrim{
+    display:none;
+    position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:25;
+  }
+
+  /* ===== MAIN ===== */
+  #main{
+    margin-left:280px;
+    flex:1;
+    min-width:0;
+    padding:36px 44px 80px;
+    max-width:980px;
+  }
+
+  .page{ display:none; animation: fadein 0.35s ease; }
+  .page.active{ display:block; }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .page-eyebrow{
+    font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--blue); font-weight:600; margin-bottom:8px;
+  }
+  .page-title{
+    font-family:var(--serif);
+    font-size:34px; line-height:1.18;
+    margin:0 0 6px;
+    color:var(--text);
+  }
+  .page-title em{ color:var(--green); font-style:normal; }
+  .page-sub{
+    color:var(--text-dim); font-size:15px; line-height:1.6;
+    margin:0 0 30px; max-width:680px;
+  }
+
+  h2.section-h{
+    font-family:var(--serif); font-size:22px; color:var(--text);
+    margin:38px 0 14px; padding-top:10px; border-top:1px solid var(--border);
+  }
+  h2.section-h:first-of-type{ border-top:none; margin-top:0; padding-top:0; }
+  h3.sub-h{
+    font-family:var(--serif); font-size:17px; color:var(--blue);
+    margin:22px 0 10px;
+  }
+
+  p{ line-height:1.7; color:var(--text); font-size:14.5px; }
+  .lead{ font-size:15.5px; color:var(--text-dim); }
+
+  /* ===== CARDS ===== */
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:18px 20px;
+    margin:14px 0;
+  }
+  .card-tight{ padding:14px 16px; }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:11px; font-weight:700; letter-spacing:0.03em;
+    padding:3px 9px; border-radius:20px;
+    margin:0 6px 6px 0;
+  }
+  .tag-must{ background:rgba(242,155,155,0.14); color:var(--red); }
+  .tag-imp{ background:rgba(242,197,114,0.14); color:var(--amber); }
+  .tag-good{ background:rgba(126,200,245,0.14); color:var(--blue); }
+  .tag-trap{ background:rgba(242,155,155,0.18); color:var(--red); }
+
+  ul, ol{ padding-left:22px; line-height:1.75; color:var(--text); font-size:14.5px; }
+  li{ margin-bottom:6px; }
+  ul.tight li, ol.tight li{ margin-bottom:3px; }
+
+  strong{ color:var(--green); font-weight:600; }
+  .blue-strong{ color:var(--blue); font-weight:600; }
+  code, .formula{
+    font-family:var(--mono); background:rgba(126,200,245,0.1);
+    color:var(--blue); padding:2px 7px; border-radius:6px; font-size:13.5px;
+  }
+  .formula-big{
+    display:block; text-align:center; font-family:var(--mono);
+    font-size:20px; color:var(--green); background:rgba(126,224,168,0.08);
+    border:1px solid rgba(126,224,168,0.25); border-radius:10px;
+    padding:14px; margin:14px 0;
+  }
+  .formula-big small{ display:block; font-size:11.5px; color:var(--text-faint); margin-top:6px; font-family:var(--sans); letter-spacing:0.03em;}
+
+  table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px; }
+  th,td{ padding:9px 12px; border-bottom:1px solid var(--border); text-align:left; }
+  th{ color:var(--blue); font-weight:600; font-size:12px; letter-spacing:0.04em; text-transform:uppercase; }
+  tr:last-child td{ border-bottom:none; }
+  td.num{ font-family:var(--mono); color:var(--green); }
+
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
+  @media (max-width:760px){ .grid-2,.grid-3{ grid-template-columns:1fr; } }
+
+  .callout{
+    border-left:3px solid var(--green); background:rgba(126,224,168,0.06);
+    border-radius:0 10px 10px 0; padding:12px 16px; margin:14px 0;
+  }
+  .callout-trap{ border-left-color:var(--red); background:rgba(242,155,155,0.07); }
+  .callout-blue{ border-left-color:var(--blue); background:rgba(126,200,245,0.06); }
+  .callout-title{ font-weight:700; font-size:13px; margin-bottom:4px; display:block; }
+  .callout-trap .callout-title{ color:var(--red); }
+  .callout .callout-title{ color:var(--green); }
+  .callout-blue .callout-title{ color:var(--blue); }
+
+  /* palace map */
+  .palace-map{
+    display:flex; flex-direction:column; gap:0; margin:18px 0;
+  }
+  .palace-stop{
+    display:grid; grid-template-columns:46px 1fr; gap:14px;
+    position:relative; padding-bottom:26px;
+  }
+  .palace-stop:last-child{ padding-bottom:0; }
+  .palace-stop::before{
+    content:""; position:absolute; left:22px; top:46px; bottom:0;
+    width:2px; background:linear-gradient(var(--green-dim), var(--border));
+  }
+  .palace-stop:last-child::before{ display:none; }
+  .palace-num{
+    width:46px;height:46px;border-radius:50%;
+    background:var(--bg-card); border:2px solid var(--green);
+    display:flex; align-items:center; justify-content:center;
+    font-size:19px; flex-shrink:0; z-index:2;
+  }
+  .palace-body h4{ margin:4px 0 4px; color:var(--text); font-size:15px; font-family:var(--serif); }
+  .palace-body p{ margin:0; font-size:13.5px; color:var(--text-dim); }
+  .palace-body .recall{ color:var(--amber); font-size:12.5px; margin-top:4px; }
+
+  /* recall / flashcard */
+  .flip-card{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);
+    padding:16px 18px; margin:10px 0; cursor:pointer; transition:border-color 0.15s;
+  }
+  .flip-card:hover{ border-color: var(--blue-dim); }
+  .flip-q{ color:var(--blue); font-weight:600; font-size:14px; }
+  .flip-a{ color:var(--green); font-size:14px; margin-top:10px; padding-top:10px; border-top:1px dashed var(--border); display:none; }
+  .flip-card.open .flip-a{ display:block; }
+  .flip-hint{ font-size:11px; color:var(--text-faint); margin-top:6px; }
+
+  .blank{ border-bottom:2px dotted var(--text-faint); padding:0 4px; color:transparent; user-select:none; }
+  .blank.revealed{ color:var(--green); border-bottom-color:var(--green); }
+  .fib-row{ margin-bottom:10px; }
+  .reveal-btn{
+    background:rgba(126,200,245,0.1); border:1px solid var(--blue-dim); color:var(--blue);
+    font-size:11.5px; padding:4px 10px; border-radius:7px; cursor:pointer; margin-left:8px;
+  }
+  .reveal-btn:hover{ background:rgba(126,200,245,0.18); }
+
+  /* nav footer buttons */
+  .page-nav{
+    display:flex; justify-content:space-between; margin-top:50px;
+    padding-top:20px; border-top:1px solid var(--border);
+  }
+  .pnav-btn{
+    background:var(--bg-card); border:1px solid var(--border); color:var(--text-dim);
+    padding:10px 16px; border-radius:10px; font-size:13px; cursor:pointer;
+    display:flex; align-items:center; gap:8px; font-family:var(--sans);
+    transition: all 0.15s;
+  }
+  .pnav-btn:hover{ border-color:var(--green-dim); color:var(--green); }
+  .pnav-btn.disabled{ opacity:0.3; pointer-events:none; }
+
+  .pill-row{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 18px; }
+  .ultra-pill{
+    background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
+    padding:10px 14px; font-size:13.5px; flex:1 1 220px;
+  }
+  .ultra-pill b{ color:var(--green); }
+
+  .last-night-box{
+    background: linear-gradient(155deg, rgba(126,224,168,0.08), rgba(126,200,245,0.05));
+    border:1px solid var(--green-dim); border-radius:var(--radius);
+    padding:22px 24px;
+  }
+  .last-night-box h4{ color:var(--green); margin-top:0; font-family:var(--serif); font-size:16px; }
+
+  ::-webkit-scrollbar{ width:8px; height:8px; }
+  ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
+
+  @media (max-width:900px){
+    #sidebar{ transform:translateX(-100%); }
+    #sidebar.open{ transform:translateX(0); box-shadow:0 0 40px rgba(0,0,0,0.6); }
+    #sidebar-scrim.show{ display:block; }
+    #main{ margin-left:0; padding:70px 20px 60px; }
+    #menu-toggle{ display:flex; }
+    .page-title{ font-size:27px; }
+    .grid-3{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="Toggle menu">☰</button>
+<div id="sidebar-scrim"></div>
+
+<div id="app">
+  <nav id="sidebar"></nav>
+  <main id="main"></main>
+</div>
+
+<script>
+/* ============================================================
+   NAVIGATION + PAGE DATA
+   ============================================================ */
+const NAV = [
+  { group: "Start Here", items: [
+    { id: "overview", icon: "🌌", label: "Big Picture" },
+    { id: "palace", icon: "🧠", label: "Memory Palace" },
+  ]},
+  { group: "Complete Notes", items: [
+    { id: "gravitation", icon: "🪐", label: "Gravitation Laws" },
+    { id: "mass-weight", icon: "⚖️", label: "Mass, Weight & Density" },
+    { id: "kepler", icon: "☀️", label: "Kepler's Laws" },
+    { id: "archimedes", icon: "🛳️", label: "Archimedes & Floatation" },
+    { id: "gvariation", icon: "🌍", label: "Variation of g" },
+    { id: "work", icon: "📦", label: "Work Done" },
+    { id: "thrust", icon: "📐", label: "Thrust & Pressure" },
+    { id: "power", icon: "⚡", label: "Power" },
+    { id: "energy", icon: "🔋", label: "Energy & Conservation" },
+    { id: "freefall", icon: "🍎", label: "Free Fall Case Study" },
+    { id: "conversions", icon: "🔁", label: "Energy Conversions" },
+    { id: "gases", icon: "💡", label: "Noble Gases in Bulbs" },
+    { id: "fluids", icon: "🌊", label: "Bernoulli & Pascal" },
+  ]},
+  { group: "Exam Warfare", items: [
+    { id: "traps", icon: "⚠️", label: "Exam Traps" },
+    { id: "examiner", icon: "🎯", label: "Examiner's Favourites" },
+    { id: "recall", icon: "❓", label: "Active Recall" },
+  ]},
+  { group: "Revision Layers", items: [
+    { id: "highyield", icon: "⭐", label: "High-Yield Sheet" },
+    { id: "ultrafast", icon: "🚀", label: "Ultra-Fast Sheet" },
+    { id: "thirtysec", icon: "⏱️", label: "30-Second Sheet" },
+    { id: "lastnight", icon: "🌙", label: "Last Night Sheet" },
+  ]},
+];
+
+const PAGE_ORDER = NAV.flatMap(g => g.items.map(i => i.id));
+
+function buildSidebar(){
+  const sb = document.getElementById('sidebar');
+  let html = `<div class="brand">
+    <div class="brand-orbit"></div>
+    <div class="brand-text">Gravitation &amp; Work-Energy<span>SSC CGL Memory System</span></div>
+  </div>`;
+  NAV.forEach(group => {
+    html += `<div class="nav-group"><div class="nav-group-label">${group.group}</div>`;
+    group.items.forEach(item => {
+      html += `<button class="nav-item" data-page="${item.id}" onclick="goTo('${item.id}')">
+        <span class="dot"></span><span class="ic">${item.icon}</span><span>${item.label}</span>
+      </button>`;
+    });
+    html += `</div>`;
+  });
+  html += `<div id="sidebar-footer">Revise this system 20–100 times. Each pass should take less time than the last. Tap any flashcard to flip it.</div>`;
+  sb.innerHTML = html;
+}
+
+function goTo(id){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const target = document.getElementById('page-' + id);
+  if(target) target.classList.add('active');
+  const navBtn = document.querySelector(`.nav-item[data-page="${id}"]`);
+  if(navBtn) navBtn.classList.add('active');
+  window.scrollTo(0,0);
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-scrim').classList.remove('show');
+  location.hash = id;
+}
+
+function pageNav(currentId){
+  const idx = PAGE_ORDER.indexOf(currentId);
+  const prev = idx > 0 ? PAGE_ORDER[idx-1] : null;
+  const next = idx < PAGE_ORDER.length-1 ? PAGE_ORDER[idx+1] : null;
+  return `<div class="page-nav">
+    ${prev ? `<button class="pnav-btn" onclick="goTo('${prev}')">← Previous</button>` : `<span></span>`}
+    ${next ? `<button class="pnav-btn" onclick="goTo('${next}')">Next →</button>` : `<span></span>`}
+  </div>`;
+}
+
+function flip(el){ el.classList.toggle('open'); }
+function reveal(id){
+  const el = document.getElementById(id);
+  el.classList.add('revealed');
+}
+function revealAll(container){
+  document.querySelectorAll('#'+container+' .blank').forEach(b => b.classList.add('revealed'));
+}
+
+document.getElementById('menu-toggle').onclick = () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-scrim').classList.toggle('show');
+};
+document.getElementById('sidebar-scrim').onclick = () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-scrim').classList.remove('show');
+};
+</script>
+
+<div id="page-overview" class="page">
+  <div class="page-eyebrow">Big Picture</div>
+  <h1 class="page-title">Why this chapter exists, in <em>one breath</em></h1>
+  <p class="page-sub">Everything here is one idea wearing different costumes: <strong>things pull on each other, and pulling can do work.</strong> Gravitation is the universe's favourite kind of pulling. Work &amp; Energy is the accounting system for what pulling (or pushing) accomplishes.</p>
+
+  <div class="card">
+    <h3 class="sub-h" style="margin-top:0;">The chapter in 4 dominoes</h3>
+    <div class="palace-map">
+      <div class="palace-stop">
+        <div class="palace-num">1</div>
+        <div class="palace-body">
+          <h4>Gravitation</h4>
+          <p>Every mass pulls every other mass. This pull is <strong>weight</strong>. Weight changes with location; mass never does.</p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="palace-num">2</div>
+        <div class="palace-body">
+          <h4>Fluids feel gravity too</h4>
+          <p>Because gravity pulls fluids down, fluids push back up on anything inside them — that's <strong>Archimedes' buoyancy</strong>, and it's why ships float and nails sink.</p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="palace-num">3</div>
+        <div class="palace-body">
+          <h4>Pulling = potential to do Work</h4>
+          <p>If gravity pulls something through a distance, <strong>work is done</strong>. Work is just "force successfully causing displacement."</p>
+        </div>
+      </div>
+      <div class="palace-stop">
+        <div class="palace-num">4</div>
+        <div class="palace-body">
+          <h4>Energy is the ledger</h4>
+          <p>Work done = energy transferred. Energy never disappears — it only changes costume (potential ↔ kinetic ↔ electrical ↔ sound ↔ heat). This is the <strong>Law of Conservation of Energy</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-blue">
+    <span class="callout-title">💡 How to use this system</span>
+    Don't read this top to bottom once. Visit <strong>Memory Palace</strong> first to load the story. Then read <strong>Complete Notes</strong> section by section (each is its own "page" in the sidebar). In the final weeks, live only in <strong>Revision Layers</strong> — High-Yield → Ultra-Fast → 30-Second → Last Night.
+  </div>
+
+  <h2 class="section-h">What SSC CGL actually tests from this chapter</h2>
+  <div class="grid-2">
+    <div class="card card-tight">
+      <strong>Direct formula plugs</strong>
+      <p style="margin:6px 0 0;">g variation, KE-momentum relation, power conversions (HP → W), Pascal's law applications.</p>
+    </div>
+    <div class="card card-tight">
+      <strong>Conceptual traps</strong>
+      <p style="margin:6px 0 0;">Mass vs weight, work = zero situations, coolie problem, ship vs nail floating.</p>
+    </div>
+    <div class="card card-tight">
+      <strong>Cross-chapter links</strong>
+      <p style="margin:6px 0 0;">Noble gases (Chemistry) inside bulb questions, uranium fission producing krypton/barium.</p>
+    </div>
+    <div class="card card-tight">
+      <strong>One famous PYQ</strong>
+      <p style="margin:6px 0 0;">CGL Mains 2023 asked the free-fall energy distribution at top/mid/bottom — appears later as its own case study page.</p>
+    </div>
+  </div>
+
+  <div class="page-nav">
+    <span></span>
+    <button class="pnav-btn" onclick="goTo('palace')">Next →</button>
+  </div>
+</div>
+
+<div id="page-palace" class="page">
+  <div class="page-eyebrow">Chapter Memory Palace</div>
+  <h1 class="page-title">The <em>Space Station → Ocean → Workshop</em> Journey</h1>
+  <p class="page-sub">Walk this journey in your head before every revision. Each location is a fact-cluster. If you forget a fact, ask "where in the journey was I standing?" — the location will hand the fact back to you.</p>
+
+  <div class="card">
+    <p class="lead" style="margin-top:0;">Picture yourself as an astronaut-cum-physics-inspector doing one tour: you start <strong>in orbit</strong>, fall <strong>down to Earth</strong>, walk into the <strong>ocean</strong>, dry off in a <strong>workshop</strong>, and end the day in a <strong>glowing room full of gas bulbs</strong>. Six stops. Six fact-clusters.</p>
+  </div>
+
+  <div class="palace-map" style="margin-top:24px;">
+    <div class="palace-stop">
+      <div class="palace-num">🪐</div>
+      <div class="palace-body">
+        <h4>Stop 1 — Orbit Control Room (Gravitation + Kepler)</h4>
+        <p>You float in space holding two objects of different mass. They drift toward each other — <strong>Newton's Universal Law</strong>: F ∝ m₁m₂/r². The constant <strong>G = 6.67×10⁻¹¹</strong> was nailed down by <strong>Cavendish in 1798</strong> (note: "100 cubic meters" in the transcript is a mis-transcription of "Cavendish" — lock in the correct name). Through the window you watch a planet trace an <strong>ellipse</strong> around the Sun sitting at one <strong>focus</strong> — that's Kepler's <strong>Law of Orbits (1609)</strong>. A radar sweep shows the planet covering <strong>equal areas in equal times</strong> — <strong>Law of Areas</strong>. A flight computer beeps: T² ∝ a³ — <strong>Law of Periods</strong>.</p>
+          <p class="recall">🔑 Recall trigger: "floating + ellipse + radar sweep + beeping computer" = Newton's law + Kepler's 3 laws.</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">⚖️</div>
+      <div class="palace-body">
+        <h4>Stop 2 — The Re-Entry Capsule (Mass vs Weight, g-variation)</h4>
+        <p>You re-enter Earth's atmosphere. Your <strong>mass</strong> hasn't changed one gram since launch — but your body suddenly feels <strong>heavier</strong> because <strong>weight = mg</strong> and g just jumped up. You land near a <strong>pole</strong> (not the equator) — poles are closer to Earth's center because Earth bulges at the equator (geoid shape), so <strong>g is higher at poles, lower at equator, and lower at altitude</strong>. A note on your capsule wall reminds you: on the <strong>Moon, g is 1/6th</strong>, so your weight is 1/6th too, but your mass is identical.</p>
+        <p class="recall">🔑 Recall trigger: "landing capsule, feeling heavier, pole vs equator sign" = mass-weight + g variation cluster.</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">🌊</div>
+      <div class="palace-body">
+        <h4>Stop 3 — The Harbour (Archimedes, Floatation, Fluids)</h4>
+        <p>You walk to a harbour. A <strong>spring balance</strong> shows a stone weighing 7 N in air, then only 3 N underwater — the missing <strong>4 N is the buoyant force</strong>, equal to the weight of water displaced. Nearby, a <strong>ship</strong> floats easily (large displaced volume → large buoyancy spread over a big hull) while a dropped <strong>nail sinks</strong> instantly (tiny displaced volume, can't support its own weight). A worker tells you a ship sailing from <strong>sea → river</strong> sinks slightly lower (river water is less salty/dense, less buoyant force). An <strong>ice cube melts</strong> in a glass and the water level <strong>doesn't change</strong> — what it displaced as ice equals the space it fills as water.</p>
+        <p class="recall">🔑 Recall trigger: "harbour, spring balance, ship vs nail, ice cube" = the entire Archimedes cluster.</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">📦</div>
+      <div class="palace-body">
+        <h4>Stop 4 — The Loading Dock (Work, Thrust, Pressure)</h4>
+        <p>At the dock, you push a heavy crate that <strong>doesn't move</strong> — physics says <strong>zero work</strong> despite your sweat. A <strong>coolie</strong> walks past carrying a load on his head — force is vertical (mg), motion is horizontal, angle = 90°, so gravity does <strong>zero work</strong> on the load too. A worker <strong>hammers a nail perpendicular</strong> to a block — that perpendicular push is <strong>thrust</strong>. You notice footprints: standing (small area, you sink deep — <strong>high pressure</strong>) vs lying down (large area, shallow sink — <strong>low pressure</strong>), because pressure = thrust/area.</p>
+        <p class="recall">🔑 Recall trigger: "dock, immovable crate, coolie, hammer, footprints in sand" = work/thrust/pressure cluster.</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">⚡</div>
+      <div class="palace-body">
+        <h4>Stop 5 — The Engine Room (Power, Energy, Conservation)</h4>
+        <p>The dock's crane engine display reads power in <strong>watts</strong> (J/s) and also in <strong>horsepower (746 W)</strong>. You drop a 10 kg wrench from 10 m — it carries <strong>1000 J of potential energy</strong> that converts smoothly into kinetic energy as it falls, total energy constant throughout — the <strong>Law of Conservation of Energy</strong>. A stretched bow nearby stores <strong>potential energy</strong> that becomes the arrow's <strong>kinetic energy</strong> on release.</p>
+        <p class="recall">🔑 Recall trigger: "engine room display, falling wrench, stretched bow" = power + energy + conservation cluster.</p>
+      </div>
+    </div>
+    <div class="palace-stop">
+      <div class="palace-num">💡</div>
+      <div class="palace-body">
+        <h4>Stop 6 — The Bulb Storage Room (Energy Conversions + Noble Gases)</h4>
+        <p>The final room is lined with devices: a <strong>dynamo/generator</strong> (mechanical→electrical), a <strong>motor</strong> (electrical→mechanical, the reverse), a <strong>microphone</strong> (sound→electrical) and a <strong>loudspeaker</strong> right next to it doing the reverse (electrical→sound). In the centre, a <strong>bulb</strong> glows — <strong>tungsten (W) filament</strong> inside <strong>argon gas</strong>, converting electrical energy into light + heat. A poster on the wall lists the noble gas family with <strong>William Ramsay's</strong> name attached to neon, argon, krypton, xenon, radon (only helium breaks the pattern — discovered by Janssen &amp; Lockyer).</p>
+        <p class="recall">🔑 Recall trigger: "bulb room with paired machines on the walls" = all energy conversion pairs + noble gas discoverers.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="callout-title">🧠 Memory technique</span>
+    Close your eyes and walk Orbit → Capsule → Harbour → Dock → Engine Room → Bulb Room. If you can narrate the journey in 90 seconds, you have just recalled the entire chapter's skeleton.
+  </div>
+
+  <div class="page-nav">
+    <button class="pnav-btn" onclick="goTo('overview')">← Previous</button>
+    <button class="pnav-btn" onclick="goTo('gravitation')">Next →</button>
+  </div>
+</div>
+
+<!-- PAGE_CONTENT_INJECTION_POINT -->
+
+<script>
+buildSidebar();
+const startId = (location.hash || '#overview').replace('#','');
+goTo(PAGE_ORDER.includes(startId) ? startId : 'overview');
+</script>
+
+</body>
+</html>

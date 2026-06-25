@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Electricity — SSC CGL Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg: #0b0e1a;
+    --bg2: #111520;
+    --bg3: #161b2e;
+    --card: #1a2035;
+    --card2: #1f2744;
+    --green: #4ade80;
+    --green-dim: #22c55e44;
+    --blue: #60a5fa;
+    --blue-dim: #3b82f644;
+    --yellow: #fbbf24;
+    --yellow-dim: #f59e0b33;
+    --red: #f87171;
+    --red-dim: #ef444433;
+    --purple: #c084fc;
+    --purple-dim: #a855f733;
+    --cyan: #22d3ee;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-faint: #475569;
+    --border: #1e2d4a;
+    --border2: #2a3a5a;
+    --glow-green: 0 0 20px #4ade8044;
+    --glow-blue: 0 0 20px #60a5fa44;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: #0b0e1acc;
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0;
+    height: 52px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  #nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    flex-shrink: 0;
+    padding: 0 16px;
+    height: 52px;
+    background: none;
+    border: none;
+    color: var(--text-dim);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { color: var(--text); background: var(--bg3); }
+  .nav-btn.active { color: var(--green); border-bottom-color: var(--green); }
+
+  /* ── PAGES ── */
+  .page { display: none; padding: 72px 0 48px; min-height: 100vh; }
+  .page.active { display: block; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+  /* ── HERO / PAGE HEADER ── */
+  .page-hero {
+    padding: 32px 0 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .page-hero .eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+    color: var(--green); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .page-hero h1 {
+    font-size: clamp(24px, 5vw, 40px);
+    font-weight: 700; line-height: 1.15;
+    background: linear-gradient(135deg, #fff 40%, #60a5fa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .page-hero p {
+    margin-top: 10px; color: var(--text-dim); font-size: 14px; line-height: 1.6;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .card.green { border-color: #4ade8033; background: linear-gradient(135deg, #0f2a1a, var(--card)); }
+  .card.blue  { border-color: #60a5fa33; background: linear-gradient(135deg, #0f1e2e, var(--card)); }
+  .card.yellow{ border-color: #fbbf2433; background: linear-gradient(135deg, #1e1800, var(--card)); }
+  .card.red   { border-color: #f8717133; background: linear-gradient(135deg, #1e0f0f, var(--card)); }
+  .card.purple{ border-color: #c084fc33; background: linear-gradient(135deg, #1a0f2e, var(--card)); }
+
+  .card-title {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title.green { color: var(--green); }
+  .card-title.blue  { color: var(--blue); }
+  .card-title.yellow{ color: var(--yellow); }
+  .card-title.red   { color: var(--red); }
+  .card-title.purple{ color: var(--purple); }
+
+  /* ── FORMULA BOX ── */
+  .formula {
+    background: #0b0e1a;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--cyan);
+    margin: 10px 0;
+    text-align: center;
+    box-shadow: inset 0 1px 0 #ffffff08;
+  }
+
+  /* ── FACT ROW ── */
+  .fact-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px; line-height: 1.5;
+  }
+  .fact-row:last-child { border-bottom: none; }
+  .fact-tag {
+    flex-shrink: 0;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    padding: 2px 6px; border-radius: 4px;
+    text-transform: uppercase; margin-top: 2px;
+  }
+  .tag-fire { background: #ff6b3533; color: #ff8c5a; }
+  .tag-star { background: #fbbf2433; color: var(--yellow); }
+  .tag-plus { background: #22d3ee22; color: var(--cyan); }
+
+  /* ── HOOK BOX ── */
+  .hook-box {
+    background: var(--bg);
+    border-left: 3px solid var(--purple);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 16px;
+    margin: 12px 0;
+    font-size: 14px; line-height: 1.7;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+  .hook-box strong { color: var(--purple); font-style: normal; }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: #1e0f0f;
+    border: 1px solid #f8717133;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 10px 0;
+  }
+  .trap-box .trap-head {
+    color: var(--red); font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .trap-box p { font-size: 13px; line-height: 1.6; color: #fca5a5; }
+
+  /* ── QA CARDS ── */
+  .qa-item {
+    background: var(--card2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .qa-item:hover { border-color: var(--blue); }
+  .qa-item.open { border-color: var(--green); }
+  .qa-q { font-size: 14px; font-weight: 500; display: flex; gap: 10px; align-items: flex-start; }
+  .qa-q .num { color: var(--blue); flex-shrink: 0; font-family: 'JetBrains Mono', monospace; }
+  .qa-a {
+    display: none; margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-size: 14px; line-height: 1.6; color: var(--green);
+  }
+  .qa-item.open .qa-a { display: block; }
+  .qa-hint { font-size: 11px; color: var(--text-faint); margin-top: 6px; }
+
+  /* ── FILL BLANKS ── */
+  .fill-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 14px; line-height: 1.7;
+  }
+  .blank {
+    display: inline-block;
+    border-bottom: 2px solid var(--blue);
+    min-width: 80px; padding: 0 6px;
+    color: transparent;
+    cursor: pointer;
+    transition: color 0.3s;
+    font-weight: 600;
+  }
+  .blank.revealed { color: var(--green); }
+
+  /* ── COMPARISON TABLE ── */
+  .compare-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+  }
+  .compare-table th {
+    background: var(--bg3);
+    padding: 10px 14px;
+    text-align: left;
+    color: var(--blue);
+    font-weight: 600;
+    border-bottom: 2px solid var(--border2);
+  }
+  .compare-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+  .compare-table tr:hover td { background: #ffffff05; }
+
+  /* ── CONNECTION MAP ── */
+  .connection {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 0; font-size: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .connection:last-child { border-bottom: none; }
+  .conn-arrow {
+    color: var(--yellow);
+    font-size: 18px; flex-shrink: 0;
+  }
+  .conn-cause { color: var(--text-dim); flex: 1; }
+  .conn-effect { color: var(--green); flex: 1; }
+
+  /* ── ULTRA FAST SHEET ── */
+  .ultra-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .ultra-chip {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .ultra-chip .uc-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+    color: var(--cyan); text-transform: uppercase; margin-bottom: 6px;
+  }
+
+  /* ── PALACE ── */
+  .palace-stop {
+    display: flex; gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .palace-stop:last-child { border-bottom: none; }
+  .palace-icon {
+    font-size: 28px; flex-shrink: 0; width: 44px; text-align: center;
+  }
+  .palace-desc { font-size: 14px; line-height: 1.6; }
+  .palace-desc strong { color: var(--blue); }
+  .palace-desc em { color: var(--purple); font-style: normal; }
+
+  /* ── 30 SEC SHEET ── */
+  .flash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  @media(max-width: 500px){ .flash-grid { grid-template-columns: 1fr; } }
+  .flash-card {
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .flash-card .fk { color: var(--text-faint); font-size: 10px; margin-bottom: 2px; }
+  .flash-card .fv { color: var(--green); font-weight: 600; font-size: 13px; }
+
+  /* ── LAST NIGHT SHEET ── */
+  .ln-block {
+    background: var(--bg);
+    border: 1px solid var(--green);
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+    box-shadow: 0 0 24px #4ade8022;
+  }
+  .ln-block h3 {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 10px;
+  }
+  .ln-block ul { list-style: none; }
+  .ln-block li {
+    padding: 5px 0;
+    font-size: 13px; line-height: 1.5;
+    border-bottom: 1px solid #1e2d4a;
+    color: var(--text);
+  }
+  .ln-block li:last-child { border-bottom: none; }
+  .ln-block li::before { content: "▸ "; color: var(--green); }
+
+  /* ── BADGES ── */
+  .badge {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    padding: 2px 8px; border-radius: 20px;
+    text-transform: uppercase; margin-right: 4px;
+  }
+  .badge-fire { background: #ff6b3533; color: #ff8c5a; border: 1px solid #ff6b3555; }
+  .badge-star { background: #fbbf2433; color: var(--yellow); border: 1px solid #fbbf2455; }
+  .badge-plus { background: #22d3ee22; color: var(--cyan); border: 1px solid #22d3ee33; }
+
+  /* ── PROGRESS NAV ── */
+  .page-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-prev, .nav-next {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 13px; font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .nav-prev:hover, .nav-next:hover { border-color: var(--green); color: var(--green); }
+
+  /* ── HOME PAGE ── */
+  .home-hero {
+    text-align: center; padding: 60px 20px 40px;
+  }
+  .home-bolt { font-size: 72px; line-height: 1; margin-bottom: 16px; }
+  .home-title {
+    font-size: clamp(28px, 6vw, 48px); font-weight: 700; line-height: 1.15;
+    background: linear-gradient(135deg, #4ade80, #60a5fa, #c084fc);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 12px;
+  }
+  .home-sub { font-size: 14px; color: var(--text-dim); max-width: 480px; margin: 0 auto 36px; line-height: 1.6; }
+
+  .chapter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    max-width: 860px; margin: 0 auto 40px; padding: 0 20px;
+  }
+  .chapter-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .chapter-card:hover {
+    border-color: var(--green);
+    box-shadow: var(--glow-green);
+    transform: translateY(-2px);
+  }
+  .chapter-card .cc-icon { font-size: 28px; margin-bottom: 10px; }
+  .chapter-card .cc-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .chapter-card .cc-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+  .chapter-card .cc-num { font-size: 10px; color: var(--text-faint); margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+  /* ── MISC ── */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+  .h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 20px 0 10px; }
+  .p { font-size: 14px; line-height: 1.7; color: var(--text-dim); margin-bottom: 12px; }
+  .highlight { color: var(--yellow); font-weight: 600; }
+  .hl-green { color: var(--green); font-weight: 600; }
+  .hl-blue  { color: var(--blue); font-weight: 600; }
+  .hl-red   { color: var(--red); font-weight: 600; }
+  .hl-purple{ color: var(--purple); font-weight: 600; }
+  hr.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── RAPID FIRE ── */
+  .rf-q {
+    padding: 8px 14px;
+    background: var(--bg3);
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    display: flex; gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .rf-q:hover { background: var(--card2); }
+  .rf-q .rf-num { color: var(--yellow); font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+  .rf-q .rf-ans { display: none; color: var(--green); margin-top: 4px; font-weight: 600; }
+  .rf-q.open .rf-ans { display: block; }
+
+  /* ── WIRE COLORS ── */
+  .wire-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; border-radius: 8px; margin-bottom: 8px;
+  }
+  .wire-swatch {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid #ffffff22; flex-shrink: 0;
+  }
+  .wire-info { font-size: 14px; }
+  .wire-info strong { font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="nav">
+  <button class="nav-btn active" onclick="goTo('home')">🏠 Home</button>
+  <button class="nav-btn" onclick="goTo('big-picture')">🌐 Big Picture</button>
+  <button class="nav-btn" onclick="goTo('palace')">🧠 Memory Palace</button>
+  <button class="nav-btn" onclick="goTo('notes')">📖 Full Notes</button>
+  <button class="nav-btn" onclick="goTo('hooks')">🪝 Memory Hooks</button>
+  <button class="nav-btn" onclick="goTo('connections')">🔗 Connections</button>
+  <button class="nav-btn" onclick="goTo('traps')">⚠️ Traps</button>
+  <button class="nav-btn" onclick="goTo('examiner')">🎯 Examiner's Q</button>
+  <button class="nav-btn" onclick="goTo('recall')">❓ Active Recall</button>
+  <button class="nav-btn" onclick="goTo('high-yield')">⭐ High-Yield</button>
+  <button class="nav-btn" onclick="goTo('ultra-fast')">⚡ Ultra-Fast</button>
+  <button class="nav-btn" onclick="goTo('thirty-sec')">⏱️ 30-Second</button>
+  <button class="nav-btn" onclick="goTo('last-night')">🌙 Last Night</button>
+</nav>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: HOME -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+  <div class="home-hero">
+    <div class="home-bolt">⚡</div>
+    <div class="home-title">Electricity</div>
+    <p class="home-sub">A complete high-retention revision system for SSC CGL. 13 sections, memory hooks, traps, active recall, and last-night sheets — all in one place.</p>
+  </div>
+
+  <div class="chapter-grid">
+    <div class="chapter-card" onclick="goTo('big-picture')">
+      <div class="cc-icon">🌐</div>
+      <div class="cc-title">Big Picture</div>
+      <div class="cc-desc">What this chapter is really about and why it matters</div>
+      <div class="cc-num">SECTION 01</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('palace')">
+      <div class="cc-icon">🧠</div>
+      <div class="cc-title">Memory Palace</div>
+      <div class="cc-desc">Walk through a power station and remember everything</div>
+      <div class="cc-num">SECTION 02</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('notes')">
+      <div class="cc-icon">📖</div>
+      <div class="cc-title">Complete Notes</div>
+      <div class="cc-desc">Every fact, formula, definition, and concept</div>
+      <div class="cc-num">SECTION 03</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('hooks')">
+      <div class="cc-icon">🪝</div>
+      <div class="cc-title">Memory Hooks</div>
+      <div class="cc-desc">Visual stories that make facts stick for 6 months</div>
+      <div class="cc-num">SECTION 04</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('connections')">
+      <div class="cc-icon">🔗</div>
+      <div class="cc-title">Concept Connections</div>
+      <div class="cc-desc">Cause → Effect maps that reveal the full picture</div>
+      <div class="cc-num">SECTION 05</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('traps')">
+      <div class="cc-icon">⚠️</div>
+      <div class="cc-title">Exam Traps</div>
+      <div class="cc-desc">Classic confusions that trip up 90% of students</div>
+      <div class="cc-num">SECTION 06</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('examiner')">
+      <div class="cc-icon">🎯</div>
+      <div class="cc-title">Examiner's Questions</div>
+      <div class="cc-desc">How SSC will actually attack this topic</div>
+      <div class="cc-num">SECTION 07</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('recall')">
+      <div class="cc-icon">❓</div>
+      <div class="cc-title">Active Recall</div>
+      <div class="cc-desc">Self-test questions, fill-in-blanks, rapid fire</div>
+      <div class="cc-num">SECTION 08</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('high-yield')">
+      <div class="cc-icon">⭐</div>
+      <div class="cc-title">High-Yield Sheet</div>
+      <div class="cc-desc">The 20% that gives you 80% of marks</div>
+      <div class="cc-num">SECTION 09</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('ultra-fast')">
+      <div class="cc-icon">⚡</div>
+      <div class="cc-title">Ultra-Fast Sheet</div>
+      <div class="cc-desc">5-minute revision before any exam</div>
+      <div class="cc-num">SECTION 10</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('thirty-sec')">
+      <div class="cc-icon">⏱️</div>
+      <div class="cc-title">30-Second Sheet</div>
+      <div class="cc-desc">The absolute must-know in one glance</div>
+      <div class="cc-num">SECTION 11</div>
+    </div>
+    <div class="chapter-card" onclick="goTo('last-night')">
+      <div class="cc-icon">🌙</div>
+      <div class="cc-title">Last Night Sheet</div>
+      <div class="cc-desc">Read this the night before the exam</div>
+      <div class="cc-num">SECTION 12</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: BIG PICTURE -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-big-picture">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 01 · Big Picture</div>
+      <h1>What This Chapter Is Really About</h1>
+      <p>The mental model that makes everything else easy to remember.</p>
+    </div>
+
+    <div class="card green">
+      <div class="card-title green">🎯 The One-Line Summary</div>
+      <p class="p" style="color:var(--text);font-size:15px;font-weight:500;">
+        Electricity = <span class="hl-green">electrons moving through wires</span>. Everything in this chapter is just about <em>how fast</em> they move, <em>how hard</em> it is to push them, and <em>what happens</em> when they collide with stuff.
+      </p>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title blue">🗺️ The Mental Map</div>
+      <div class="connection"><span class="conn-cause">You need electrons to flow</span><span class="conn-arrow">→</span><span class="conn-effect">Battery creates a Potential Difference (PD)</span></div>
+      <div class="connection"><span class="conn-cause">Electrons flow per unit time</span><span class="conn-arrow">→</span><span class="conn-effect">This is Electric Current (I = Q/T)</span></div>
+      <div class="connection"><span class="conn-cause">Something opposes their flow</span><span class="conn-arrow">→</span><span class="conn-effect">That opposition is Resistance (R)</span></div>
+      <div class="connection"><span class="conn-cause">Resistance × Current = Voltage</span><span class="conn-arrow">→</span><span class="conn-effect">Ohm's Law: V = IR</span></div>
+      <div class="connection"><span class="conn-cause">Moving electrons collide → heat</span><span class="conn-arrow">→</span><span class="conn-effect">Joule's Heating Effect → heaters, bulbs, fuses</span></div>
+      <div class="connection"><span class="conn-cause">Power × Time</span><span class="conn-arrow">→</span><span class="conn-effect">Energy consumed = your electricity bill</span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title purple">🧩 Why Exams Love This Chapter</div>
+      <p class="p">SSC CGL regularly asks about: units of measurement, formulas, who discovered what, materials used in devices (heater, bulb, fuse), the heating effect, and commercial units. These are <strong>formula + application</strong> questions — not just definitions.</p>
+    </div>
+
+    <div class="card yellow">
+      <div class="card-title yellow">📊 Topic Weight</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥 HOT</span><span>Ohm's Law (formula + year + who gave it)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥 HOT</span><span>Heating Effect — who gave it, applications (nichrome, tungsten, fuse)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥 HOT</span><span>Units: Ampere, Volt, Ohm, Siemens, Coulomb, Kilowatt-hour</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐ IMP</span><span>Commercial unit: 1 kWh = 3.6 × 10⁶ J</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐ IMP</span><span>Wire colour codes (live, neutral, earth)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-plus">➕ GTK</span><span>Resistivity vs Resistance; Alloys vs metals</span></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('home')">← Home</button>
+      <button class="nav-next" onclick="goTo('palace')">Memory Palace →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: MEMORY PALACE -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-palace">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 02 · Memory Palace</div>
+      <h1>Walk Through the Power Station</h1>
+      <p>Close your eyes and take this mental tour. Every room = one concept. Walk through it before the exam.</p>
+    </div>
+
+    <div class="card blue" style="margin-bottom:24px;">
+      <div class="card-title blue">🏭 The Setting</div>
+      <p class="p">Imagine you're visiting a <strong>giant power station</strong>. You enter through the main gate and walk room by room. Each room teaches you one concept in electricity.</p>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-icon">🚪</div>
+      <div class="palace-desc">
+        <strong>Room 1 — The Entrance Gate (Electric Current)</strong><br>
+        At the gate, thousands of tiny blue balls (electrons) are <em>rushing through a turnstile</em>. The guard counts: "How many balls per second?" That count = <strong>Electric Current (I = Q/T)</strong>. The measuring device at the gate is an <strong>Ammeter</strong>. Unit: <strong>Ampere</strong>. Each ball carries a charge of <strong>1.6 × 10⁻¹⁹ Coulomb</strong>.
+      </div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-icon">🏔️</div>
+      <div class="palace-desc">
+        <strong>Room 2 — The Hill Room (Potential Difference)</strong><br>
+        The balls need a hill to roll down — otherwise they sit still. A <em>battery</em> is the hill-maker. The height of the hill = <strong>Potential Difference (V = W/Q)</strong>. A <strong>Voltmeter</strong> measures the height. Unit: <strong>Volt</strong>. No hill → no current.
+      </div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-icon">🚧</div>
+      <div class="palace-desc">
+        <strong>Room 3 — The Obstacle Course (Resistance)</strong><br>
+        The balls run through a long obstacle course. Four things make it harder: <em>Longer path</em> (length↑ → R↑), <em>Narrower path</em> (area↓ → R↑), <em>More heat</em> (temp↑ → R↑), <em>Rougher material</em> (nature of conductor). Opposition = <strong>Resistance (R)</strong>. Its opposite: <strong>Conductance (Siemens)</strong>.
+      </div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-icon">🧲</div>
+      <div class="palace-desc">
+        <strong>Room 4 — The Material Lab (Resistivity)</strong><br>
+        A scientist in a lab coats shows that <em>every material has a fingerprint</em> — its <strong>Resistivity (ρ)</strong>. The formula on the wall: <strong>R = ρL/A</strong>. Unit: <strong>Ohm·meter</strong>. The fingerprint never changes (same material = same ρ, regardless of length/area). Key insight on the blackboard: <em>"Alloys always have HIGHER resistivity than their pure component metals."</em>
+      </div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-icon">👨‍🔬</div>
+      <div class="palace-desc">
+        <strong>Room 5 — Ohm's Portrait Gallery (Ohm's Law)</strong><br>
+        A giant portrait of <strong>George Simon Ohm</strong> hangs on the wall. The year below: <strong>1827</strong>. His law in lights: <strong>V = IR</strong>. Current is directly proportional to Voltage (when temperature and physical conditions remain constant).
+      </div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-icon">🔥</div>
+      <div class="palace-desc">
+        <strong>Room 6 — The Kitchen (Heating Effect)</strong><br>
+        James Joule is cooking here. When balls crash through obstacles, they generate <em>heat</em>. Formula on the stove: <strong>H = I²RT</strong>. Three appliances on the shelf: a <em>heater</em> with <strong>Nichrome</strong> coils (Ni + Cr), a <em>bulb</em> with <strong>Tungsten</strong> filament (high melting point), a <em>fuse</em> with a <strong>low melting point alloy</strong> (breaks on excess current → saves appliances).
+      </div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-icon">💡</div>
+      <div class="palace-desc">
+        <strong>Room 7 — The Power Room (Electric Power)</strong><br>
+        Formula on the power panel: <strong>P = VI</strong>. Also <strong>P = W/T</strong>. Heat = Power × Time = <strong>I²RT</strong>. In India: supply is <strong>220V, 50 Hz</strong>. 1 commercial unit on the billing screen = <strong>1 kWh = 3.6 × 10⁶ J</strong>.
+      </div>
+    </div>
+
+    <div class="palace-stop">
+      <div class="palace-icon">🚦</div>
+      <div class="palace-desc">
+        <strong>Room 8 — The Traffic Signal (Wire Colour Codes)</strong><br>
+        Three coloured lights at the exit: <strong style="color:#ff4444;">RED = Live wire</strong>, <strong style="color:#888;">BLACK = Neutral wire</strong>, <strong style="color:#4ade80;">GREEN (or Yellow) = Earth/Ground</strong>. India domestic supply: 220V, 50Hz.
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('big-picture')">← Big Picture</button>
+      <button class="nav-next" onclick="goTo('notes')">Full Notes →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: COMPLETE NOTES -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-notes">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 03 · Complete Revision Notes</div>
+      <h1>Every Fact. Every Formula. Every Concept.</h1>
+    </div>
+
+    <!-- ELECTRIC CURRENT -->
+    <div class="card green">
+      <div class="card-title green">⚡ 1. Electric Current</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Definition:</strong> Flow of electric charge (electrons) per unit time.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Formula:</strong> I = Q / T &nbsp;(Current = Charge / Time)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>SI Unit:</strong> Ampere (A)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Measured by:</strong> Ammeter</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Charge (q):</strong> Two types — Positive (+) and Negative (−)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Like charges:</strong> Repel each other | <strong>Opposite charges:</strong> Attract each other</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>SI Unit of Charge:</strong> Coulomb (C)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Charge on 1 electron:</strong> 1.6 × 10⁻¹⁹ Coulomb</span></div>
+      <div class="formula">I = Q / T &nbsp;&nbsp;|&nbsp;&nbsp; [Ampere = Coulomb / Second]</div>
+    </div>
+
+    <!-- POTENTIAL DIFFERENCE -->
+    <div class="card blue">
+      <div class="card-title blue">🔋 2. Potential Difference (Voltage)</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Definition:</strong> Amount of work done in moving a unit positive charge from one point to another in an electric field.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Formula:</strong> V = W / Q &nbsp;(Voltage = Work Done / Charge)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>SI Unit:</strong> Volt (V)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Measured by:</strong> Voltmeter</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Purpose:</strong> Potential difference drives electrons through a conductor. No PD → no current (like a flat road → water doesn't flow).</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Role of Battery:</strong> Battery creates the potential difference. You pay for this energy to the electricity board.</span></div>
+      <div class="formula">V = W / Q &nbsp;&nbsp;|&nbsp;&nbsp; [Volt = Joule / Coulomb]</div>
+    </div>
+
+    <!-- RESISTANCE -->
+    <div class="card yellow">
+      <div class="card-title yellow">🚧 3. Resistance</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Definition:</strong> The property of a conductor to oppose/resist the flow of electric current (electrons) through it.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>SI Unit:</strong> Ohm (Ω)</span></div>
+      <div class="h3">Factors Affecting Resistance:</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Length (L):</strong> R ∝ L &nbsp;→ Longer wire = More resistance</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Area (A):</strong> R ∝ 1/A &nbsp;→ Wider wire = Less resistance (electrons spread out, less collision)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Temperature:</strong> Higher temp = More resistance (electrons collide more when heated)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Nature of Material:</strong> Determines resistivity (ρ)</span></div>
+      <div class="h3">Conductance:</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Definition:</strong> Opposite of resistance; ability of conductor to allow current flow</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>SI Unit:</strong> Siemens (also written as mho or Ω⁻¹)</span></div>
+    </div>
+
+    <!-- RESISTIVITY -->
+    <div class="card purple">
+      <div class="card-title purple">🧬 4. Resistivity (Specific Resistance)</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Formula:</strong> R = ρL/A &nbsp;→ ρ = RA/L</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>SI Unit:</strong> Ohm·meter (Ω·m)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Key Property:</strong> Resistivity is FIXED for a given material. It does NOT change with length or area — only with nature of material & temperature.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Alloys Rule:</strong> Alloys have GREATER resistivity than their constituent (component) metals.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Example:</strong> Constantan (Cu + Ni) has MORE resistivity than pure Copper or pure Nickel alone.</span></div>
+      <div class="formula">R = ρL / A &nbsp;&nbsp;→&nbsp;&nbsp; ρ (rho) = specific resistance</div>
+      <div class="hook-box"><strong>Resistance vs Resistivity:</strong> Resistance = how hard the SPECIFIC wire resists. Resistivity = the material's INHERENT resistance identity. Change the wire length → resistance changes; resistivity stays same.</div>
+    </div>
+
+    <!-- SERIES AND PARALLEL -->
+    <div class="card green">
+      <div class="card-title green">🔌 5. Series & Parallel Circuits</div>
+      <div class="h3">Series Connection:</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>No break</strong> in circuit. Same current flows through all resistors.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Formula:</strong> R_total = R₁ + R₂ + R₃ + ...</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span>Total resistance is ALWAYS greater than any individual resistor.</span></div>
+      <div class="h3">Parallel Connection:</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Current splits</strong> at junction. Voltage is same across all branches.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Formula:</strong> 1/R_total = 1/R₁ + 1/R₂ + 1/R₃ + ...</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span>Total resistance is ALWAYS less than the smallest individual resistor.</span></div>
+      <div class="formula">Series: R = R₁ + R₂ + R₃ &nbsp;&nbsp;|&nbsp;&nbsp; Parallel: 1/R = 1/R₁ + 1/R₂</div>
+    </div>
+
+    <!-- OHM'S LAW -->
+    <div class="card blue">
+      <div class="card-title blue">⚖️ 6. Ohm's Law</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Statement:</strong> Current flowing in a conductor is directly proportional to the voltage across it, provided temperature and physical conditions remain constant.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Formula:</strong> V = IR &nbsp;(Voltage = Current × Resistance)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Who gave it:</strong> George Simon Ohm</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>When:</strong> 1827</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span>Condition: Temperature must remain constant for Ohm's Law to hold.</span></div>
+      <div class="formula">V = I × R &nbsp;&nbsp;|&nbsp;&nbsp; I = V/R &nbsp;&nbsp;|&nbsp;&nbsp; R = V/I</div>
+    </div>
+
+    <!-- ELECTRIC POWER & HEATING -->
+    <div class="card red">
+      <div class="card-title red">🔥 7. Electric Power & Heating Effect</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Power formula:</strong> P = VI &nbsp;=&nbsp; I²R &nbsp;=&nbsp; V²/R</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Also:</strong> P = Work Done / Time</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Heat generated (Joule's Law):</strong> H = I²RT</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Who discovered Heating Effect:</strong> James Prescott Joule</span></div>
+      <div class="formula">P = VI &nbsp;&nbsp;|&nbsp;&nbsp; H = I²RT &nbsp;&nbsp;|&nbsp;&nbsp; Work = Power × Time</div>
+      <div class="h3">Applications of Heating Effect:</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Electric Heater:</strong> Coils made of <span class="hl-red">Nichrome</span> (Nickel + Chromium) — high resistance, heats up easily</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Electric Bulb:</strong> Filament made of <span class="hl-yellow">Tungsten</span> — very high melting point so it glows without melting</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>Electric Fuse:</strong> Made of <span class="hl-blue">low melting point alloy</span> — melts when excess current flows → breaks circuit → saves appliances</span></div>
+    </div>
+
+    <!-- MATERIALS -->
+    <div class="card purple">
+      <div class="card-title purple">🧱 8. Types of Materials</div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Conductor:</strong> Allows electricity to flow freely. Example: metals (copper, silver)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Insulator:</strong> Does NOT allow electricity to flow. Example: rubber, wood, glass</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span><strong>Semiconductor:</strong> Allows less than conductor, more than insulator. Example: Silicon, Germanium. Used in: transistors, diodes, chips.</span></div>
+    </div>
+
+    <!-- COMMERCIAL UNIT -->
+    <div class="card yellow">
+      <div class="card-title yellow">💡 9. Commercial Unit of Electricity</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>1 Unit = 1 Kilowatt-hour (kWh)</strong></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>1 kWh = 3.6 × 10⁶ Joules</strong></span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span>Derivation: 1000 W × 3600 s = 3,600,000 J = 3.6 × 10⁶ J</span></div>
+      <div class="h3">Numerical Formula:</div>
+      <p class="p">Units consumed = (Power in kW) × (Time in hours) × (Days)</p>
+      <p class="p"><em>Example: 50W bulb, 2 hr/day, 30 days → 0.05 kW × 2 × 30 = 3 kWh = 3 units</em></p>
+    </div>
+
+    <!-- WIRE COLOUR CODES -->
+    <div class="card green">
+      <div class="card-title green">🔌 10. Indian Electrical Standards & Wire Colours</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span><strong>India supply:</strong> 220 Volt, 50 Hz (AC)</span></div>
+      <div style="margin-top:12px;">
+        <div class="wire-row" style="background:#ff000015;border:1px solid #ff000033;margin-bottom:8px;">
+          <div class="wire-swatch" style="background:#ff4444;"></div>
+          <div class="wire-info"><strong style="color:#ff6666;">RED</strong> = Live Wire (carries current) &nbsp;<span class="fact-tag tag-fire">🔥</span></div>
+        </div>
+        <div class="wire-row" style="background:#33333315;border:1px solid #33333333;margin-bottom:8px;">
+          <div class="wire-swatch" style="background:#555;"></div>
+          <div class="wire-info"><strong style="color:#aaa;">BLACK</strong> = Neutral Wire &nbsp;<span class="fact-tag tag-star">⭐</span></div>
+        </div>
+        <div class="wire-row" style="background:#00ff0015;border:1px solid #00ff0033;">
+          <div class="wire-swatch" style="background:#4ade80;"></div>
+          <div class="wire-info"><strong style="color:#4ade80;">GREEN (or Yellow)</strong> = Earth/Ground Wire &nbsp;<span class="fact-tag tag-star">⭐</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('palace')">← Memory Palace</button>
+      <button class="nav-next" onclick="goTo('hooks')">Memory Hooks →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: MEMORY HOOKS -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-hooks">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 04 · Smart Memory Hooks</div>
+      <h1>Stories That Stick for 6 Months</h1>
+      <p>Each hook is a mini-movie. Play it in your head once. You won't forget it.</p>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title purple">🎬 Hook 1: The Running Crowd (Current)</div>
+      <p class="p">Imagine a packed stadium. When the match ends, thousands of people (electrons) rush out through the exit turnstile (wire). The number of people crossing per second = <strong>Electric Current</strong>. The security guard counting them = <strong>Ammeter</strong>. Each person's ID card has charge written on it: <strong>1.6 × 10⁻¹⁹ C</strong>.</p>
+      <div class="hook-box"><strong>Recall trigger:</strong> "Stadium exits" → current, ammeter, I = Q/T, 1.6 × 10⁻¹⁹</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title blue">🎬 Hook 2: The Water Slide (Potential Difference)</div>
+      <p class="p">Water sits flat in a pool — it doesn't flow. Now tilt the pool. Water rushes down the slope. The <em>steepness</em> of the slope is your <strong>Potential Difference (Voltage)</strong>. A battery is the machine that tilts the pool. The Voltmeter is the angle gauge measuring steepness. The more work you do to tilt it, the higher the voltage: <strong>V = W/Q</strong>.</p>
+      <div class="hook-box"><strong>Recall trigger:</strong> "Tilted water slide" → PD, battery, V = W/Q, Voltmeter, Volt</div>
+    </div>
+
+    <div class="card yellow">
+      <div class="card-title yellow">🎬 Hook 3: The Traffic Jam (Resistance)</div>
+      <p class="p">Electrons are cars. A long narrow road = high resistance. A wide highway = low resistance. Traffic in summer heat = high temperature → more erratic driving → more resistance. The road material (asphalt quality) = nature of material. Opposite of resistance is free-flowing traffic: <strong>Conductance (Siemens)</strong>.</p>
+      <div class="hook-box"><strong>Recall trigger:</strong> "Traffic jam" → R ∝ L, R ∝ 1/A, temp↑ = R↑, Siemens = free flow</div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title green">🎬 Hook 4: George's Invoice (Ohm's Law, 1827)</div>
+      <p class="p">George Simon Ohm is a plumber. He sends you a bill in <strong>1827</strong>. The bill says: "Water pressure (V) = Flow rate (I) × Pipe resistance (R). Sign: <strong>V = IR</strong>." Condition printed on the bill: "Only valid if temperature doesn't change."</p>
+      <div class="hook-box"><strong>Recall trigger:</strong> "Plumber's bill 1827" → George Simon Ohm, V = IR, temperature constant</div>
+    </div>
+
+    <div class="card red">
+      <div class="card-title red">🎬 Hook 5: James's Kitchen (Heating Effect)</div>
+      <p class="p"><strong>James Prescott Joule</strong> is a chef. He discovered that when electricity runs through his kitchen appliances, they all get hot. He writes on the oven: <strong>H = I²RT</strong>. Three appliances on the counter: the <em>heater</em> says "NICHROME" (Ni + Cr) on the dial, the <em>bulb</em> says "TUNGSTEN — won't melt even at 3400°C", and the <em>fuse</em> is a chocolate wire that melts to save the kitchen.</p>
+      <div class="hook-box"><strong>Recall trigger:</strong> "James's kitchen" → H=I²RT, Nichrome=heater, Tungsten=bulb, Low-melt=fuse</div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title blue">🎬 Hook 6: The Electric Bill (kWh)</div>
+      <p class="p">Your electricity bill arrives. 1 unit = <strong>1 kWh</strong>. You ask, "How many joules is that?" The bill shows the calculation: 1000 watts × 3600 seconds = <strong>3.6 × 10⁶ Joules</strong>. Your 50W fan that ran 2 hours/day for 30 days cost you exactly <strong>3 units</strong>.</p>
+      <div class="hook-box"><strong>Recall trigger:</strong> "Monthly bill" → 1 kWh, 3.6×10⁶ J, Units = kW × hours × days</div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title purple">🎬 Hook 7: Traffic Lights at Your House (Wire Colours)</div>
+      <p class="p">Think of your house's wiring as a <strong>traffic signal</strong>: 🔴 <em>RED = STOP (Live — dangerous, carries current)</em>, ⚫ <em>BLACK = NEUTRAL (safe return path)</em>, 🟢 <em>GREEN = GO SAFE (Earth — your safety net)</em>. India runs this at <strong>220V, 50Hz</strong>.</p>
+      <div class="hook-box"><strong>Recall trigger:</strong> "Traffic light at home" → Red=Live, Black=Neutral, Green=Earth, 220V 50Hz</div>
+    </div>
+
+    <div class="card yellow">
+      <div class="card-title yellow">🎬 Hook 8: The Alloy Restaurant (Resistivity)</div>
+      <p class="p">Pure metals (copper, nickel) are ingredients. An alloy (like Constantan = Cu + Ni) is a mixed dish. The chef warns: <em>"Mixed dishes are always harder to serve — they resist more."</em> Resistivity of alloy > resistivity of its pure metals. Resistivity unit: <strong>Ohm·meter</strong>.</p>
+      <div class="hook-box"><strong>Recall trigger:</strong> "Mixed dish harder to serve" → Alloy ρ > component metals; ρ unit = Ω·m</div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('notes')">← Full Notes</button>
+      <button class="nav-next" onclick="goTo('connections')">Connections →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: CONNECTIONS -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-connections">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 05 · Concept Connections</div>
+      <h1>The Web of Electricity</h1>
+      <p>Nothing in this chapter is isolated. Every concept triggers another. Learn the links, not just the facts.</p>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title blue">⚡ Cause → Effect Chain</div>
+      <div class="connection"><span class="conn-cause">Battery creates Potential Difference</span><span class="conn-arrow">→</span><span class="conn-effect">Electrons start flowing (Current)</span></div>
+      <div class="connection"><span class="conn-cause">Electrons flow through material</span><span class="conn-arrow">→</span><span class="conn-effect">Material resists them (Resistance)</span></div>
+      <div class="connection"><span class="conn-cause">More Voltage, same Resistance</span><span class="conn-arrow">→</span><span class="conn-effect">More Current (Ohm's Law: I = V/R)</span></div>
+      <div class="connection"><span class="conn-cause">Electrons collide with atoms</span><span class="conn-arrow">→</span><span class="conn-effect">Heat is generated (Heating Effect)</span></div>
+      <div class="connection"><span class="conn-cause">More current through heater coil</span><span class="conn-arrow">→</span><span class="conn-effect">More heat → Nichrome glows red</span></div>
+      <div class="connection"><span class="conn-cause">Tungsten filament heated by current</span><span class="conn-arrow">→</span><span class="conn-effect">Glows white → Light is produced</span></div>
+      <div class="connection"><span class="conn-cause">Excess current through fuse</span><span class="conn-arrow">→</span><span class="conn-effect">Fuse melts → Circuit breaks → Appliance saved</span></div>
+      <div class="connection"><span class="conn-cause">Power × Time</span><span class="conn-arrow">→</span><span class="conn-effect">Energy consumed → Your electricity bill</span></div>
+    </div>
+
+    <div class="card yellow">
+      <div class="card-title yellow">🔄 Feature → Exception (or Contrast)</div>
+      <div class="connection"><span class="conn-cause">Resistance depends on L and A</span><span class="conn-arrow">≠</span><span class="conn-effect">Resistivity does NOT depend on L or A</span></div>
+      <div class="connection"><span class="conn-cause">Bulb filament: HIGH melting point needed</span><span class="conn-arrow">↔</span><span class="conn-effect">Fuse: LOW melting point needed</span></div>
+      <div class="connection"><span class="conn-cause">Series: same current, different voltage</span><span class="conn-arrow">↔</span><span class="conn-effect">Parallel: same voltage, different current</span></div>
+      <div class="connection"><span class="conn-cause">Pure metal resistivity</span><span class="conn-arrow">&lt;</span><span class="conn-effect">Alloy of same metals (always higher)</span></div>
+      <div class="connection"><span class="conn-cause">Conductor allows current freely</span><span class="conn-arrow">↔</span><span class="conn-effect">Insulator blocks current completely</span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title green">📐 Formula Family Tree</div>
+      <div style="font-size:13px;line-height:2;font-family:'JetBrains Mono',monospace;color:var(--text-dim);">
+        <div>I = Q/T &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Definition of current</div>
+        <div>V = W/Q &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Definition of voltage</div>
+        <div>V = IR &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Ohm's Law (derived: R = V/I)</div>
+        <div>R = ρL/A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Resistivity formula</div>
+        <div>P = VI = I²R &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Power (substitute V = IR)</div>
+        <div>H = VIt = I²RT &nbsp;&nbsp;&nbsp;← Heat = Power × Time</div>
+        <div>1 kWh = 3.6×10⁶ J &nbsp;← Commercial unit</div>
+      </div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title purple">🔗 Discovery → Discoverer Connections</div>
+      <div class="connection"><span class="conn-cause">Ohm's Law (V = IR, 1827)</span><span class="conn-arrow">→</span><span class="conn-effect">George Simon Ohm</span></div>
+      <div class="connection"><span class="conn-cause">Heating Effect (H = I²RT)</span><span class="conn-arrow">→</span><span class="conn-effect">James Prescott Joule</span></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('hooks')">← Memory Hooks</button>
+      <button class="nav-next" onclick="goTo('traps')">Exam Traps →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: TRAPS -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-traps">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 06 · Exam Traps</div>
+      <h1>⚠️ What 90% of Students Get Wrong</h1>
+      <p>Every trap below has appeared in a competitive exam. Read. Memorise. Never fall.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 1: Ammeter vs Voltmeter</div>
+      <p><strong>Ammeter</strong> measures Current (A) — connected in <em>series</em>.<br>
+      <strong>Voltmeter</strong> measures Voltage (V) — connected in <em>parallel</em>.<br>
+      Exam trick: "What instrument measures potential difference?" → Voltmeter (NOT Ammeter).</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 2: Resistance vs Resistivity</div>
+      <p><strong>Resistance</strong> changes with length and area of cross-section.<br>
+      <strong>Resistivity</strong> (ρ) does NOT change with length or area. It's a material property.<br>
+      Exam trick: "If wire is doubled in length, resistivity ___?" → UNCHANGED. Only resistance doubles.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 3: Siemens vs Ohm</div>
+      <p><strong>Siemens</strong> = unit of Conductance (or Conductivity) — NOT Resistance.<br>
+      <strong>Ohm (Ω)</strong> = unit of Resistance.<br>
+      Mho and Ω⁻¹ are also units of conductance — NOT resistivity. Resistivity unit = <strong>Ohm·meter (Ω·m)</strong>.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 4: Bulb Filament vs Fuse Wire</div>
+      <p><strong>Bulb filament (Tungsten):</strong> HIGH melting point — needed so it doesn't melt when glowing.<br>
+      <strong>Fuse wire:</strong> LOW melting point — intentionally melts to break circuit during overload.<br>
+      Exam trick: Both use the heating effect, but for OPPOSITE melting point requirements.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 5: Nichrome Composition</div>
+      <p><strong>Nichrome = Nickel + Chromium</strong> (NOT Nickel + Copper).<br>
+      <strong>Constantan = Copper + Nickel</strong>.<br>
+      Exam may swap the compositions. Know both!</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 6: Alloy Resistivity Rule</div>
+      <p>Alloys have <strong>GREATER</strong> resistivity than their individual component metals.<br>
+      Students assume alloys are "better conductors" — NO. They're actually worse conductors (higher resistivity).<br>
+      That's why Nichrome (an alloy) heats up so well in heaters.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 7: kWh vs Joule</div>
+      <p>1 kWh = <strong>3.6 × 10⁶ Joules</strong> (NOT 3.6 × 10³ or 10⁴).<br>
+      Derivation to remember: 1000 W × 3600 s = 3,600,000 J = 3.6 × 10⁶ J.<br>
+      Exam may give a large joule value and ask to convert to units.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 8: Who Gave What</div>
+      <p><strong>Ohm's Law → George Simon Ohm (1827)</strong><br>
+      <strong>Heating Effect → James Prescott Joule</strong><br>
+      Exam trap: "Who gave the law relating current and voltage?" → Ohm (NOT Joule). Joule is for heating!</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 9: Wire Colour Code (India)</div>
+      <p>RED = Live (dangerous) | BLACK = Neutral | GREEN/YELLOW = Earth<br>
+      Some international standards differ. Exam always refers to <strong>Indian standard (BIS)</strong> unless specified.<br>
+      In some new standards (IEC): Brown = Live, Blue = Neutral, Green/Yellow = Earth.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-head">⚠️ Trap 10: Series vs Parallel — Total Resistance</div>
+      <p>Series: R_total is ALWAYS greater than any individual R.<br>
+      Parallel: R_total is ALWAYS less than the smallest individual R.<br>
+      Exam classic: "Two 6Ω resistors in parallel = ?" → Answer: 3Ω (NOT 12Ω, NOT 6Ω).</p>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('connections')">← Connections</button>
+      <button class="nav-next" onclick="goTo('examiner')">Examiner's Q →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: EXAMINER'S QUESTIONS -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-examiner">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 07 · Examiner's Favourite Questions</div>
+      <h1>🎯 How SSC Will Attack This Topic</h1>
+      <p>These are the exact question patterns that appear. Practice the <em>format</em>, not just the facts.</p>
+    </div>
+
+    <div class="card red">
+      <div class="card-title red">🔥 High Probability Direct Questions</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>The SI unit of electric current is ___? → <span class="hl-green">Ampere</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>Electric current is measured by which instrument? → <span class="hl-green">Ammeter</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>Ohm's Law was given by whom? In which year? → <span class="hl-green">George Simon Ohm, 1827</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>The heating effect of electric current was given by? → <span class="hl-green">James Prescott Joule</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>The coil of an electric heater is made of? → <span class="hl-green">Nichrome (Ni + Cr)</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>The filament of a bulb is made of? → <span class="hl-green">Tungsten</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>1 kilowatt-hour is equal to how many joules? → <span class="hl-green">3.6 × 10⁶ J</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>The unit of conductance is? → <span class="hl-green">Siemens (Mho, Ω⁻¹)</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>The colour of live wire in India is? → <span class="hl-green">Red</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">Q</span><span>The colour of earth wire in India is? → <span class="hl-green">Green (or Yellow)</span></span></div>
+    </div>
+
+    <div class="card yellow">
+      <div class="card-title yellow">⭐ Statement-Based Questions</div>
+      <div class="fact-row"><span class="fact-tag tag-star">S</span><span>"Resistivity of a conductor depends on its length." → <span class="hl-red">FALSE</span> — Resistivity is independent of length.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">S</span><span>"The filament of an electric fuse should have a high melting point." → <span class="hl-red">FALSE</span> — It needs a LOW melting point.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">S</span><span>"Alloys have less resistivity than their component metals." → <span class="hl-red">FALSE</span> — Alloys have MORE resistivity.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">S</span><span>"Ohm's law holds when temperature changes." → <span class="hl-red">FALSE</span> — Only valid at constant temperature.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">S</span><span>"In a series circuit, voltage across each resistor is the same." → <span class="hl-red">FALSE</span> — In series, CURRENT is same; in PARALLEL, voltage is same.</span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title blue">🔵 Match the Following Possibilities</div>
+      <table class="compare-table">
+        <tr><th>Column A</th><th>Column B</th></tr>
+        <tr><td>Ohm's Law</td><td>George Simon Ohm / 1827</td></tr>
+        <tr><td>Heating Effect</td><td>James Prescott Joule</td></tr>
+        <tr><td>Electric Heater Coil</td><td>Nichrome</td></tr>
+        <tr><td>Bulb Filament</td><td>Tungsten</td></tr>
+        <tr><td>Fuse Wire</td><td>Low melting point alloy</td></tr>
+        <tr><td>Conductance</td><td>Siemens</td></tr>
+        <tr><td>Resistance</td><td>Ohm (Ω)</td></tr>
+        <tr><td>Current</td><td>Ampere / Ammeter</td></tr>
+        <tr><td>Voltage</td><td>Volt / Voltmeter</td></tr>
+        <tr><td>Commercial unit</td><td>1 kWh = 3.6 × 10⁶ J</td></tr>
+      </table>
+    </div>
+
+    <div class="card green">
+      <div class="card-title green">🟢 Assertion-Reason Type Predictions</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">AR</span><span><strong>A:</strong> Tungsten is used in bulb filaments. <strong>R:</strong> It has a very high melting point. → <span class="hl-green">Both true, R is correct explanation.</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">AR</span><span><strong>A:</strong> Fuse wire melts during overload. <strong>R:</strong> It has a low melting point. → <span class="hl-green">Both true, R is correct explanation.</span></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">AR</span><span><strong>A:</strong> Resistivity of alloy > resistivity of component metals. <strong>R:</strong> Alloys are made by mixing. → <span class="hl-yellow">A is true, R is a partial reason (not complete explanation).</span></span></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('traps')">← Exam Traps</button>
+      <button class="nav-next" onclick="goTo('recall')">Active Recall →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: ACTIVE RECALL -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-recall">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 08 · Active Recall</div>
+      <h1>❓ Force Your Brain to Retrieve</h1>
+      <p>Click any question to reveal the answer. Don't peek until you've tried to recall!</p>
+    </div>
+
+    <div class="card blue" style="margin-bottom:24px;">
+      <div class="card-title blue">🧠 Self-Test: Click to Reveal Answers</div>
+      <p class="p" style="margin:0;font-size:12px;">Tap a question → think for 3 seconds → tap again to see the answer.</p>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q01</span><span>What is the formula for Electric Current? What is its SI unit? What instrument measures it?</span></div>
+      <div class="qa-a">I = Q/T &nbsp;|&nbsp; SI Unit: Ampere (A) &nbsp;|&nbsp; Measured by: Ammeter</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q02</span><span>What is the charge on one electron in Coulombs?</span></div>
+      <div class="qa-a">1.6 × 10⁻¹⁹ Coulombs</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q03</span><span>Define Potential Difference. Give its formula, unit, and measuring instrument.</span></div>
+      <div class="qa-a">Work done to move a unit positive charge between two points. V = W/Q | Volt | Voltmeter</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q04</span><span>Name the four factors that affect Resistance.</span></div>
+      <div class="qa-a">1. Length (R ∝ L) &nbsp; 2. Area of cross-section (R ∝ 1/A) &nbsp; 3. Temperature (↑temp = ↑R) &nbsp; 4. Nature of material</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q05</span><span>What is Resistivity? What does it NOT depend on? What is its SI unit?</span></div>
+      <div class="qa-a">Specific resistance of a material (R = ρL/A). Does NOT depend on length or area. SI Unit: Ohm·meter (Ω·m)</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q06</span><span>State Ohm's Law. Who gave it? In which year?</span></div>
+      <div class="qa-a">Current is directly proportional to voltage when temperature is constant. V = IR. George Simon Ohm. 1827.</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q07</span><span>Who discovered the Heating Effect of Electric Current? What is its formula?</span></div>
+      <div class="qa-a">James Prescott Joule. H = I²RT</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q08</span><span>What is Nichrome? What is it used for? What is it made of?</span></div>
+      <div class="qa-a">An alloy of Nickel + Chromium. Used in electric heater coils. High resistance + high melting point.</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q09</span><span>What is the filament of an electric bulb made of? Why?</span></div>
+      <div class="qa-a">Tungsten. Because it has a very high melting point (~3422°C) — so it glows without melting.</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q10</span><span>Why does a fuse wire have a low melting point?</span></div>
+      <div class="qa-a">When excess current flows, the heating effect melts it → circuit breaks → electrical appliances are protected from damage.</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q11</span><span>What is 1 Kilowatt-hour equal to in Joules?</span></div>
+      <div class="qa-a">3.6 × 10⁶ Joules (= 1000 W × 3600 s)</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q12</span><span>What are the colours of Live, Neutral, and Earth wires in India?</span></div>
+      <div class="qa-a">Live = RED | Neutral = BLACK | Earth = GREEN (or Yellow)</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q13</span><span>Compare: Alloy resistivity vs. component metal resistivity. Give an example.</span></div>
+      <div class="qa-a">Alloy resistivity is GREATER. Example: Constantan (Cu + Ni) has higher resistivity than pure Cu or Ni.</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <div class="qa-item" onclick="this.classList.toggle('open')">
+      <div class="qa-q"><span class="num">Q14</span><span>India's domestic electricity supply: what voltage and frequency?</span></div>
+      <div class="qa-a">220 Volt, 50 Hz (AC supply)</div>
+      <div class="qa-hint">👆 Tap to reveal</div>
+    </div>
+
+    <hr class="divider">
+    <div class="h3">📝 Fill in the Blanks (click blank to reveal)</div>
+    <p class="p" style="font-size:12px;">Click the underlined blank to reveal the hidden answer.</p>
+
+    <div class="fill-item">1. The SI unit of electric charge is <span class="blank" onclick="this.classList.toggle('revealed')">Coulomb</span>.</div>
+    <div class="fill-item">2. Electric current is measured using <span class="blank" onclick="this.classList.toggle('revealed')">Ammeter</span>.</div>
+    <div class="fill-item">3. V = IR is known as <span class="blank" onclick="this.classList.toggle('revealed')">Ohm's Law</span>, given by <span class="blank" onclick="this.classList.toggle('revealed')">George Simon Ohm</span> in <span class="blank" onclick="this.classList.toggle('revealed')">1827</span>.</div>
+    <div class="fill-item">4. The heating effect of electric current: H = <span class="blank" onclick="this.classList.toggle('revealed')">I²RT</span>, discovered by <span class="blank" onclick="this.classList.toggle('revealed')">James Prescott Joule</span>.</div>
+    <div class="fill-item">5. Electric heater coils are made of <span class="blank" onclick="this.classList.toggle('revealed')">Nichrome</span> (an alloy of <span class="blank" onclick="this.classList.toggle('revealed')">Nickel and Chromium</span>).</div>
+    <div class="fill-item">6. Bulb filaments are made of <span class="blank" onclick="this.classList.toggle('revealed')">Tungsten</span> because of its <span class="blank" onclick="this.classList.toggle('revealed')">high melting point</span>.</div>
+    <div class="fill-item">7. 1 kWh = <span class="blank" onclick="this.classList.toggle('revealed')">3.6 × 10⁶</span> Joules.</div>
+    <div class="fill-item">8. The unit of conductance is <span class="blank" onclick="this.classList.toggle('revealed')">Siemens</span>.</div>
+    <div class="fill-item">9. Live wire colour in India = <span class="blank" onclick="this.classList.toggle('revealed')">Red</span>. Earth wire = <span class="blank" onclick="this.classList.toggle('revealed')">Green</span>.</div>
+
+    <hr class="divider">
+    <div class="h3">⚡ Rapid Fire (click to reveal)</div>
+
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">01</span>
+      <div><div>Resistivity unit?</div><div class="rf-ans">Ohm·meter (Ω·m)</div></div>
+    </div>
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">02</span>
+      <div><div>Constantan = ?</div><div class="rf-ans">Copper + Nickel</div></div>
+    </div>
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">03</span>
+      <div><div>Formula for power?</div><div class="rf-ans">P = VI = I²R = V²/R</div></div>
+    </div>
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">04</span>
+      <div><div>Series resistance formula?</div><div class="rf-ans">R = R₁ + R₂ + R₃</div></div>
+    </div>
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">05</span>
+      <div><div>Parallel resistance formula?</div><div class="rf-ans">1/R = 1/R₁ + 1/R₂ + 1/R₃</div></div>
+    </div>
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">06</span>
+      <div><div>Neutral wire colour in India?</div><div class="rf-ans">Black</div></div>
+    </div>
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">07</span>
+      <div><div>Semiconductor examples?</div><div class="rf-ans">Silicon, Germanium</div></div>
+    </div>
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">08</span>
+      <div><div>Does resistivity change with length?</div><div class="rf-ans">NO — resistivity is independent of length and area</div></div>
+    </div>
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">09</span>
+      <div><div>1 kW = ? Watts</div><div class="rf-ans">1000 Watts</div></div>
+    </div>
+    <div class="rf-q" onclick="this.classList.toggle('open')">
+      <span class="rf-num">10</span>
+      <div><div>Why does temp rise increase resistance?</div><div class="rf-ans">Electrons vibrate more → more collisions → more opposition to flow</div></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('examiner')">← Examiner's Q</button>
+      <button class="nav-next" onclick="goTo('high-yield')">High-Yield →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: HIGH YIELD -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-high-yield">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 09 · High-Yield Revision Notes</div>
+      <h1>⭐ The 20% That Gets You 80% of Marks</h1>
+      <p>If time is short, these are the only facts you must know perfectly.</p>
+    </div>
+
+    <div class="card red">
+      <div class="card-title red">🔥 Formulas (Must Know Every Single One)</div>
+      <div class="formula">I = Q/T &nbsp;&nbsp; V = W/Q &nbsp;&nbsp; V = IR &nbsp;&nbsp; R = ρL/A</div>
+      <div class="formula">P = VI = I²R &nbsp;&nbsp; H = I²RT &nbsp;&nbsp; Units = kW × Hours</div>
+      <div class="formula">1 kWh = 3.6 × 10⁶ J &nbsp;&nbsp; 1 e⁻ = 1.6 × 10⁻¹⁹ C</div>
+    </div>
+
+    <div class="card yellow">
+      <div class="card-title yellow">🔥 Discoverers & Years</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Ohm's Law → <strong>George Simon Ohm, 1827</strong></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Heating Effect → <strong>James Prescott Joule</strong></span></div>
+    </div>
+
+    <div class="card blue">
+      <div class="card-title blue">🔥 Materials in Devices</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Electric heater coil → <strong>Nichrome</strong> (Ni + Cr)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Bulb filament → <strong>Tungsten</strong> (high melting point)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Fuse wire → <strong>Low melting point alloy</strong></span></div>
+    </div>
+
+    <div class="card green">
+      <div class="card-title green">🔥 Units (One-Shot Reference)</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Current → <strong>Ampere</strong> (Ammeter)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Voltage → <strong>Volt</strong> (Voltmeter)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Resistance → <strong>Ohm (Ω)</strong></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Conductance → <strong>Siemens</strong> (= Mho = Ω⁻¹)</span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Charge → <strong>Coulomb</strong></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Resistivity → <strong>Ohm·meter (Ω·m)</strong></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Commercial unit → <strong>1 kWh = 3.6 × 10⁶ J</strong></span></div>
+    </div>
+
+    <div class="card purple">
+      <div class="card-title purple">🔥 Wire Colour Codes & Supply</div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>Live = <strong style="color:#ff6666;">RED</strong> &nbsp;|&nbsp; Neutral = <strong style="color:#aaa;">BLACK</strong> &nbsp;|&nbsp; Earth = <strong style="color:#4ade80;">GREEN/YELLOW</strong></span></div>
+      <div class="fact-row"><span class="fact-tag tag-fire">🔥</span><span>India supply: <strong>220V, 50 Hz</strong></span></div>
+    </div>
+
+    <div class="card yellow">
+      <div class="card-title yellow">⭐ Key Rules to Remember</div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span>Resistivity does NOT change with L or A — it's a material constant.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span>Alloys have GREATER resistivity than component metals.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span>Series: R increases. Parallel: R decreases.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span>Ohm's Law condition: temperature must remain constant.</span></div>
+      <div class="fact-row"><span class="fact-tag tag-star">⭐</span><span>Fuse = LOW melt | Bulb = HIGH melt. (Opposite logic!)</span></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('recall')">← Active Recall</button>
+      <button class="nav-next" onclick="goTo('ultra-fast')">Ultra-Fast →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: ULTRA-FAST -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-ultra-fast">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 10 · Ultra-Fast Revision Sheet</div>
+      <h1>⚡ 5-Minute Pre-Exam Refresh</h1>
+      <p>Scan this before any test. Hits all critical points in 5 minutes.</p>
+    </div>
+
+    <div class="ultra-grid">
+      <div class="ultra-chip">
+        <div class="uc-label">⚡ Current</div>
+        I = Q/T | Ampere | Ammeter<br>
+        Electron charge = 1.6 × 10⁻¹⁹ C
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🔋 Voltage (PD)</div>
+        V = W/Q | Volt | Voltmeter<br>
+        Battery creates PD
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🚧 Resistance</div>
+        R ∝ L | R ∝ 1/A<br>
+        Temp↑ → R↑ | Unit: Ohm (Ω)
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🧬 Resistivity</div>
+        R = ρL/A | Unit: Ω·m<br>
+        Fixed per material (not L, not A)
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">⚖️ Ohm's Law</div>
+        V = IR | George Simon Ohm<br>
+        Year: 1827 | Condition: const. temp
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🔥 Heating Effect</div>
+        H = I²RT | James Prescott Joule<br>
+        Heater=Nichrome | Bulb=Tungsten
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">⚡ Power</div>
+        P = VI = I²R = V²/R<br>
+        Unit: Watt
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">💡 Conductance</div>
+        Opposite of resistance<br>
+        Unit: Siemens = Mho = Ω⁻¹
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🏭 Alloys Rule</div>
+        Alloy ρ > component metals<br>
+        Constantan = Cu + Ni
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🔌 Series</div>
+        R_total = R₁+R₂+R₃<br>
+        Same current, voltage splits
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">⚡ Parallel</div>
+        1/R = 1/R₁+1/R₂+1/R₃<br>
+        Same voltage, current splits
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">💰 Commercial Unit</div>
+        1 unit = 1 kWh<br>
+        1 kWh = 3.6 × 10⁶ J
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🚦 Wire Colours (India)</div>
+        🔴 Red = Live<br>
+        ⚫ Black = Neutral<br>
+        🟢 Green = Earth
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🏠 India Supply</div>
+        220 Volt, 50 Hz (AC)<br>
+        Appliances rated at 220V
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🔮 Semiconductors</div>
+        Between conductor + insulator<br>
+        Examples: Silicon, Germanium
+      </div>
+      <div class="ultra-chip">
+        <div class="uc-label">🧯 Fuse Rule</div>
+        LOW melting point (breaks easily)<br>
+        Tungsten = HIGH (won't break)
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('high-yield')">← High-Yield</button>
+      <button class="nav-next" onclick="goTo('thirty-sec')">30-Second Sheet →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: 30 SECOND -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-thirty-sec">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 11 · 30-Second Revision Sheet</div>
+      <h1>⏱️ Everything in One Flash</h1>
+      <p>Read this in 30 seconds. The absolute minimum before entering the exam hall.</p>
+    </div>
+
+    <div class="flash-grid">
+      <div class="flash-card"><div class="fk">I (Current)</div><div class="fv">Q/T | Ampere | Ammeter</div></div>
+      <div class="flash-card"><div class="fk">V (Voltage)</div><div class="fv">W/Q | Volt | Voltmeter</div></div>
+      <div class="flash-card"><div class="fk">Ohm's Law</div><div class="fv">V=IR | Ohm | 1827</div></div>
+      <div class="flash-card"><div class="fk">Resistance</div><div class="fv">ρ=Ω·m | Siemens=conductance</div></div>
+      <div class="flash-card"><div class="fk">Heater coil</div><div class="fv">NICHROME (Ni+Cr)</div></div>
+      <div class="flash-card"><div class="fk">Bulb filament</div><div class="fv">TUNGSTEN (high melt)</div></div>
+      <div class="flash-card"><div class="fk">Fuse wire</div><div class="fv">LOW melting point alloy</div></div>
+      <div class="flash-card"><div class="fk">Heating Effect</div><div class="fv">H=I²RT | James Joule</div></div>
+      <div class="flash-card"><div class="fk">1 kWh</div><div class="fv">3.6×10⁶ J = 1 unit</div></div>
+      <div class="flash-card"><div class="fk">India supply</div><div class="fv">220V, 50 Hz</div></div>
+      <div class="flash-card"><div class="fk">Wire: RED</div><div class="fv">LIVE (dangerous)</div></div>
+      <div class="flash-card"><div class="fk">Wire: BLACK</div><div class="fv">NEUTRAL</div></div>
+      <div class="flash-card"><div class="fk">Wire: GREEN</div><div class="fv">EARTH/GROUND</div></div>
+      <div class="flash-card"><div class="fk">Alloy ρ</div><div class="fv">GREATER than metals</div></div>
+      <div class="flash-card"><div class="fk">Series</div><div class="fv">R = R₁+R₂ | same I</div></div>
+      <div class="flash-card"><div class="fk">Parallel</div><div class="fv">1/R=1/R₁+1/R₂ | same V</div></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('ultra-fast')">← Ultra-Fast</button>
+      <button class="nav-next" onclick="goTo('last-night')">Last Night Sheet →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- PAGE: LAST NIGHT -->
+<!-- ══════════════════════════════════════════ -->
+<div class="page" id="page-last-night">
+  <div class="container">
+    <div class="page-hero">
+      <div class="eyebrow">Section 12 · Last-Night-Before-Exam Sheet</div>
+      <h1>🌙 Read This Tonight. Ace It Tomorrow.</h1>
+      <p>Only the highest-probability facts. Nothing extra. Read slowly once and sleep well.</p>
+    </div>
+
+    <div class="ln-block">
+      <h3>⚡ The 4 Core Formulas</h3>
+      <ul>
+        <li>I = Q/T → Current = Charge ÷ Time</li>
+        <li>V = W/Q → Voltage = Work done ÷ Charge</li>
+        <li>V = IR → Ohm's Law (George Simon Ohm, 1827)</li>
+        <li>H = I²RT → Heating Effect (James Prescott Joule)</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h3>🔥 The 3 Devices & Their Materials</h3>
+      <ul>
+        <li>HEATER COIL → Nichrome (Nickel + Chromium)</li>
+        <li>BULB FILAMENT → Tungsten (very HIGH melting point)</li>
+        <li>FUSE WIRE → LOW melting point alloy (breaks to protect)</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h3>📊 The Must-Know Units</h3>
+      <ul>
+        <li>Current = Ampere | Measured by Ammeter</li>
+        <li>Voltage = Volt | Measured by Voltmeter</li>
+        <li>Resistance = Ohm (Ω)</li>
+        <li>Conductance = Siemens (= Mho = Ω⁻¹)</li>
+        <li>Resistivity = Ohm·meter (Ω·m)</li>
+        <li>Commercial unit = 1 kWh = 3.6 × 10⁶ J</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h3>🚦 Wire Colours & Supply</h3>
+      <ul>
+        <li>Live = RED | Neutral = BLACK | Earth = GREEN</li>
+        <li>India: 220 Volt, 50 Hz supply</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h3>⚠️ 3 Traps They WILL Set Tomorrow</h3>
+      <ul>
+        <li>Resistivity does NOT change with length or area → it's fixed per material</li>
+        <li>Alloys have GREATER resistivity than component metals</li>
+        <li>Fuse = LOW melt ≠ Bulb = HIGH melt (don't mix these up!)</li>
+      </ul>
+    </div>
+
+    <div class="ln-block">
+      <h3>🧠 Memory Trigger Phrases</h3>
+      <ul>
+        <li>"GEORGE gave OHM's in 1827" → V = IR</li>
+        <li>"JAMES heated the kitchen" → H = I²RT</li>
+        <li>"Ni + Cr = Nichrome → heater" → not bulb, not fuse</li>
+        <li>"Red is dangerous (Live)" → like a stop light</li>
+        <li>"1 unit on your bill = 3.6 million joules"</li>
+      </ul>
+    </div>
+
+    <div style="text-align:center;padding:32px 0 16px;">
+      <div style="font-size:32px;margin-bottom:8px;">🌙</div>
+      <div style="font-size:14px;color:var(--text-dim);line-height:1.7;">
+        You've got this. Sleep well.<br>
+        <span style="color:var(--green);font-weight:600;">Every formula you've revised is already in your brain.</span>
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-prev" onclick="goTo('thirty-sec')">← 30-Second Sheet</button>
+      <button class="nav-next" onclick="goTo('home')">🏠 Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const pages = {
+    'home': 'page-home',
+    'big-picture': 'page-big-picture',
+    'palace': 'page-palace',
+    'notes': 'page-notes',
+    'hooks': 'page-hooks',
+    'connections': 'page-connections',
+    'traps': 'page-traps',
+    'examiner': 'page-examiner',
+    'recall': 'page-recall',
+    'high-yield': 'page-high-yield',
+    'ultra-fast': 'page-ultra-fast',
+    'thirty-sec': 'page-thirty-sec',
+    'last-night': 'page-last-night'
+  };
+
+  function goTo(key) {
+    // hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // show target
+    document.getElementById(pages[key]).classList.add('active');
+    // update nav
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    // find matching button
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + key + "'")) {
+        b.classList.add('active');
+      }
+    });
+    // scroll to top
+    window.scrollTo(0, 0);
+    // scroll nav button into view
+    const activeBtn = document.querySelector('.nav-btn.active');
+    if (activeBtn) activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }
+</script>
+</body>
+</html>

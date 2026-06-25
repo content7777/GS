@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reflection &amp; Refraction — SSC CGL Memory System</title>
+<style>
+:root{
+  --bg: #0f1117;
+  --bg-soft: #151821;
+  --bg-card: #1a1e29;
+  --bg-card-hover: #1f2433;
+  --border: #262b3a;
+  --text: #e8eaf0;
+  --text-dim: #a6acc0;
+  --text-faint: #6b7280;
+  --green: #7ee3a8;
+  --green-dim: #4f8a68;
+  --green-glow: rgba(126,227,168,0.15);
+  --blue: #7ec8f0;
+  --blue-dim: #4a7a99;
+  --blue-glow: rgba(126,200,240,0.15);
+  --amber: #f0c674;
+  --red: #f08a8a;
+  --purple: #c8a0f0;
+  --radius: 14px;
+  --serif: "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+  --mono: "SF Mono", "Cascadia Code", Consolas, monospace;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* subtle ambient background texture */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background:
+    radial-gradient(circle at 15% 10%, var(--green-glow), transparent 40%),
+    radial-gradient(circle at 85% 90%, var(--blue-glow), transparent 40%);
+  pointer-events:none;
+  z-index:0;
+}
+
+#app{ position:relative; z-index:1; display:flex; min-height:100vh; }
+
+/* ============ SIDEBAR ============ */
+#sidebar{
+  width: 280px;
+  flex-shrink:0;
+  background: var(--bg-soft);
+  border-right: 1px solid var(--border);
+  height: 100vh;
+  position: sticky;
+  top:0;
+  overflow-y:auto;
+  padding: 22px 14px 30px;
+  scrollbar-width: thin;
+}
+#sidebar::-webkit-scrollbar{ width:6px; }
+#sidebar::-webkit-scrollbar-thumb{ background: var(--border); border-radius:4px; }
+
+.brand{
+  padding: 4px 12px 18px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.brand .eyebrow{
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  font-weight: 600;
+}
+.brand h1{
+  font-family: var(--serif);
+  font-size: 19px;
+  margin: 6px 0 2px;
+  color: var(--text);
+  line-height:1.3;
+}
+.brand .sub{
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.nav-group{ margin-bottom: 4px; }
+.nav-group-label{
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 14px 12px 6px;
+  font-weight: 600;
+}
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  cursor:pointer;
+  font-size: 13.5px;
+  color: var(--text-dim);
+  transition: background .15s, color .15s;
+  user-select:none;
+  border:1px solid transparent;
+}
+.nav-item:hover{ background: var(--bg-card); color: var(--text); }
+.nav-item.active{
+  background: linear-gradient(90deg, var(--green-glow), transparent);
+  color: var(--green);
+  border-color: var(--green-dim);
+  font-weight:600;
+}
+.nav-item .ico{ font-size:14px; width:18px; text-align:center; flex-shrink:0; }
+.nav-item .progress-dot{
+  width:6px; height:6px; border-radius:50%;
+  background: var(--border);
+  margin-left:auto;
+  flex-shrink:0;
+  transition: background .2s;
+}
+.nav-item.visited .progress-dot{ background: var(--green); }
+
+#progress-track{
+  margin: 16px 12px 4px;
+  height: 5px;
+  background: var(--bg-card);
+  border-radius: 4px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+#progress-fill{
+  height:100%;
+  background: linear-gradient(90deg, var(--blue), var(--green));
+  width:0%;
+  transition: width .3s ease;
+}
+#progress-label{
+  font-size: 10.5px;
+  color: var(--text-faint);
+  padding: 4px 12px 10px;
+}
+
+/* ============ MAIN ============ */
+#main{
+  flex:1;
+  min-width:0;
+  height:100vh;
+  overflow-y:auto;
+  scroll-behavior:smooth;
+}
+.topbar{
+  position: sticky;
+  top:0;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding: 14px 28px;
+  background: rgba(15,17,23,0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+#hamburger{
+  display:none;
+  background:none; border:none; color:var(--text);
+  font-size:20px; cursor:pointer; padding:4px 8px;
+}
+.crumb{ font-size:12.5px; color: var(--text-faint); }
+.crumb b{ color: var(--blue); font-weight:600; }
+.topbar-actions{ display:flex; gap:8px; }
+.tb-btn{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 6px 13px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  cursor:pointer;
+  transition: all .15s;
+}
+.tb-btn:hover{ border-color: var(--green-dim); color: var(--green); }
+
+.page{
+  display:none;
+  padding: 36px 44px 90px;
+  max-width: 920px;
+  margin: 0 auto;
+  animation: fadeIn .35s ease;
+}
+.page.active{ display:block; }
+@keyframes fadeIn{ from{opacity:0; transform: translateY(6px);} to{opacity:1; transform: translateY(0);} }
+
+.page-header{ margin-bottom: 28px; }
+.page-eyebrow{
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.page-title{
+  font-family: var(--serif);
+  font-size: 32px;
+  margin: 0 0 8px;
+  color: var(--text);
+  line-height:1.2;
+}
+.page-desc{ color: var(--text-dim); font-size: 14.5px; max-width: 640px; }
+
+/* ===== reusable content blocks ===== */
+.card{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 18px;
+}
+.card h3{
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: var(--text);
+  display:flex; align-items:center; gap:8px;
+}
+.card p{ margin: 8px 0; color: var(--text-dim); font-size: 14px; }
+.card ul, .card ol{ margin: 8px 0 8px 4px; padding-left: 18px; color: var(--text-dim); font-size:14px;}
+.card li{ margin-bottom: 6px; }
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-right:6px;
+  letter-spacing:0.02em;
+}
+.tag-must{ background: rgba(240,138,138,0.15); color: var(--red); border:1px solid rgba(240,138,138,0.35); }
+.tag-imp{ background: rgba(240,198,116,0.15); color: var(--amber); border:1px solid rgba(240,198,116,0.35); }
+.tag-good{ background: rgba(126,200,240,0.15); color: var(--blue); border:1px solid rgba(126,200,240,0.35); }
+
+.trap-box{
+  background: linear-gradient(135deg, rgba(240,138,138,0.08), rgba(240,138,138,0.02));
+  border: 1px solid rgba(240,138,138,0.3);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 14px;
+}
+.trap-box .trap-title{ color: var(--red); font-weight:700; font-size:14px; margin-bottom:8px; display:flex; gap:8px; align-items:center;}
+.trap-box p, .trap-box li{ color: var(--text-dim); font-size:13.5px; }
+
+.hook-box{
+  background: linear-gradient(135deg, rgba(126,227,168,0.08), rgba(126,200,240,0.04));
+  border: 1px solid var(--green-dim);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom:14px;
+}
+.hook-box .hook-title{ color: var(--green); font-weight:700; font-size:14px; margin-bottom:8px; display:flex;gap:8px;align-items:center;}
+
+.palace-step{
+  display:flex;
+  gap:16px;
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.palace-step:last-child{ border-bottom:none; }
+.palace-num{
+  flex-shrink:0;
+  width: 34px; height:34px;
+  border-radius:50%;
+  background: var(--bg-soft);
+  border:1px solid var(--blue-dim);
+  color: var(--blue);
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:13px;
+}
+.palace-content h4{ margin:0 0 4px; font-size:14.5px; color:var(--text);}
+.palace-content p{ margin:0; font-size:13.5px; color:var(--text-dim);}
+
+table.data-table{
+  width:100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  margin: 10px 0;
+}
+table.data-table th{
+  text-align:left;
+  color: var(--text-faint);
+  font-weight:600;
+  font-size:11.5px;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+table.data-table td{
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-dim);
+}
+table.data-table tr:last-child td{ border-bottom:none; }
+table.data-table tr:hover td{ background: var(--bg-card-hover); }
+table.data-table td.hl{ color: var(--green); font-weight:600; }
+table.data-table td.hl-blue{ color: var(--blue); font-weight:600; }
+
+.formula{
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--blue);
+  margin: 10px 0;
+  display:inline-block;
+}
+
+.flip-card{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  cursor:pointer;
+  transition: border-color .2s;
+  position:relative;
+}
+.flip-card:hover{ border-color: var(--blue-dim); }
+.flip-card .q{ font-size:14px; color:var(--text); font-weight:600; }
+.flip-card .a{
+  font-size: 13.5px;
+  color: var(--green);
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  display:none;
+}
+.flip-card.open .a{ display:block; }
+.flip-card .hint{ font-size:11px; color:var(--text-faint); margin-top:6px; }
+
+.fill-blank input{
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--green);
+  padding: 3px 8px;
+  font-size: 13.5px;
+  width: 110px;
+  font-family: var(--mono);
+}
+.fill-blank input:focus{ outline:none; border-color: var(--blue); }
+.check-btn{
+  background: var(--green-dim);
+  color: #06140c;
+  border:none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight:600;
+  cursor:pointer;
+  margin-top: 14px;
+}
+.check-btn:hover{ filter: brightness(1.1); }
+.result-msg{ font-size:13px; margin-top:10px; font-weight:600; }
+
+.diagram-box{
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin: 14px 0;
+  text-align:center;
+}
+.diagram-box svg{ max-width:100%; }
+.diagram-cap{ font-size:12px; color:var(--text-faint); margin-top:8px; }
+
+.pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin: 10px 0; }
+.pill{
+  background: var(--bg-soft);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding: 5px 14px;
+  font-size:12.5px;
+  color: var(--text-dim);
+}
+.pill.g{ border-color: var(--green-dim); color: var(--green); }
+.pill.b{ border-color: var(--blue-dim); color: var(--blue); }
+
+.layer-section{ margin-bottom: 30px; }
+.layer-section h2{
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+  display:flex; align-items:center; gap:10px;
+}
+
+.ufast-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
+  gap: 14px;
+}
+.ufast-card{
+  background: var(--bg-card);
+  border:1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.ufast-card h4{ margin:0 0 8px; font-size:13.5px; color:var(--blue);}
+.ufast-card div{ font-size:13px; color:var(--text-dim); }
+
+.lastnight{
+  background: linear-gradient(160deg, rgba(126,227,168,0.06), rgba(15,17,23,0));
+  border: 1px solid var(--green-dim);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.lastnight h2{ color: var(--green); font-family: var(--serif); margin-top:0;}
+.lastnight .flash{
+  font-size: 14.5px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.lastnight .flash:last-child{ border-bottom:none; }
+.lastnight .flash b{ color: var(--amber); }
+
+#prevnext{
+  display:flex;
+  justify-content:space-between;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.nav-btn{
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor:pointer;
+  font-size: 13.5px;
+  transition: all .15s;
+  max-width: 45%;
+}
+.nav-btn:hover{ border-color: var(--green-dim); }
+.nav-btn .lbl{ font-size:10.5px; color:var(--text-faint); display:block; margin-bottom:3px; text-transform:uppercase; letter-spacing:0.05em;}
+.nav-btn.disabled{ opacity:0.3; pointer-events:none; }
+
+mark.km{ background: rgba(126,227,168,0.2); color: var(--green); padding:1px 5px; border-radius:4px; }
+mark.bm{ background: rgba(126,200,240,0.2); color: var(--blue); padding:1px 5px; border-radius:4px; }
+
+/* mobile */
+@media (max-width: 860px){
+  #hamburger{ display:block; }
+  #sidebar{
+    position: fixed;
+    left: -300px;
+    z-index: 50;
+    transition: left .25s ease;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.4);
+  }
+  #sidebar.open{ left:0; }
+  .page{ padding: 26px 18px 70px; }
+  .page-title{ font-size: 25px; }
+  #overlay{
+    display:none;
+    position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:40;
+  }
+  #overlay.show{ display:block; }
+}
+</style>
+</head>
+<body>
+<div id="overlay" onclick="closeSidebar()"></div>
+<div id="app">
+  <!-- SIDEBAR -->
+  <aside id="sidebar"></aside>
+
+  <!-- MAIN -->
+  <main id="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button id="hamburger" onclick="toggleSidebar()">☰</button>
+        <div class="crumb">Physics — <b id="crumbText">Big Picture</b></div>
+      </div>
+      <div class="topbar-actions">
+        <button class="tb-btn" onclick="markVisitedAndGo(-1)">← Prev</button>
+        <button class="tb-btn" onclick="markVisitedAndGo(1)">Next →</button>
+      </div>
+    </div>
+    <div id="pages-root"></div>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   PAGE DEFINITIONS — each page rendered into #pages-root
+   ============================================================ */
+const PAGES = [];
+function addPage(id, group, navLabel, icon, color, html){
+  PAGES.push({id, group, navLabel, icon, color, html});
+}
+const DESIRED_ORDER = [
+  "big-picture","memory-palace",
+  "reflection-laws","plane-mirror","spherical-basics","concave-image","convex-image","mirror-formula","refraction-laws","glass-slab","lenses",
+  "memory-hooks","concept-connections","exam-traps","examiner-questions","active-recall",
+  "high-yield","ultra-fast","thirty-sec","last-night"
+];
+function reorderPages(){
+  PAGES.sort((a,b)=> DESIRED_ORDER.indexOf(a.id) - DESIRED_ORDER.indexOf(b.id));
+}
+
+/* ============ 3. NATURE OF LIGHT + REFLECTION LAWS ============ */
+addPage("reflection-laws","Complete Notes","Light & Reflection Laws","📐","var(--blue)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--blue)">COMPLETE REVISION NOTES · 1</div>
+  <h1 class="page-title">Nature of Light & Laws of Reflection</h1>
+  <p class="page-desc">The foundation everything else is built on.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Nature of Light</h3>
+<ul>
+<li>Light is a form of <b>energy</b> with <mark class="bm">dual nature</mark> — it behaves as both a <b>particle</b> and a <b>wave</b>. This hypothesis was proposed by <b style="color:var(--green)">Albert Einstein</b>.</li>
+<li>Light is a <b>transverse wave</b>: its particles vibrate <b>perpendicular</b> to the direction of propagation.</li>
+<li>Because it's transverse, light: (a) can travel through <b>vacuum</b>, (b) can be <b>polarized</b>.</li>
+<li>Contrast: <b>Sound</b> is longitudinal — needs a medium, cannot travel in vacuum, cannot be polarized.</li>
+<li>Speed of light in air/vacuum = <span class="formula" style="font-size:14px;padding:6px 10px;">3 × 10⁸ m/s</span>. Speed of sound ≈ 343 m/s. This is why during lightning, you <b>see first, hear later</b>.</li>
+</ul>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> What is Reflection?</h3>
+<p>Reflection occurs when a light ray strikes a surface and <b>bounces back into the same medium</b> instead of penetrating it.</p>
+</div>
+
+<div class="card">
+<h3>📏 The Two Laws of Reflection</h3>
+<ol>
+<li><b>Law 1:</b> Angle of incidence = Angle of reflection (both measured from the <b>normal</b> — the perpendicular line drawn at the point of striking).</li>
+<li><b>Law 2:</b> The incident ray, the reflected ray, and the normal — <b>all three lie in the same plane.</b></li>
+</ol>
+</div>
+
+<div class="diagram-box">
+<svg viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg">
+<line x1="20" y1="170" x2="400" y2="170" stroke="#a6acc0" stroke-width="2"/>
+<line x1="210" y1="170" x2="210" y2="30" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="4,4"/>
+<text x="216" y="35" fill="#6b7280" font-size="12" font-family="sans-serif">Normal</text>
+<line x1="80" y1="50" x2="210" y2="170" stroke="#7ec8f0" stroke-width="2.5"/>
+<polygon points="210,170 196,150 200,162" fill="#7ec8f0"/>
+<text x="70" y="40" fill="#7ec8f0" font-size="12" font-family="sans-serif">Incident ray (i)</text>
+<line x1="210" y1="170" x2="340" y2="50" stroke="#7ee3a8" stroke-width="2.5"/>
+<polygon points="340,50 320,58 330,64" fill="#7ee3a8"/>
+<text x="300" y="40" fill="#7ee3a8" font-size="12" font-family="sans-serif">Reflected ray (r)</text>
+<path d="M 195 155 A 25 25 0 0 1 210 145" fill="none" stroke="#a6acc0" stroke-width="1.5"/>
+<text x="178" y="148" fill="#a6acc0" font-size="11" font-family="sans-serif">i</text>
+<path d="M 225 145 A 25 25 0 0 1 240 155" fill="none" stroke="#a6acc0" stroke-width="1.5"/>
+<text x="232" y="148" fill="#a6acc0" font-size="11" font-family="sans-serif">r</text>
+<rect x="20" y="170" width="380" height="6" fill="#262b3a"/>
+</svg>
+<div class="diagram-cap">∠i = ∠r, and incident ray, reflected ray, normal lie in the same plane</div>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠️ EXAM TRAP</div>
+<p>Students often confuse "angle of incidence" with the angle measured from the <b>surface</b>. It is always measured from the <b>NORMAL</b> (perpendicular), never from the reflecting surface itself.</p>
+</div>
+`);
+
+/* ============ 4. PLANE MIRROR ============ */
+addPage("plane-mirror","Complete Notes","Plane Mirror","🪞","var(--blue)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--blue)">COMPLETE REVISION NOTES · 2</div>
+  <h1 class="page-title">Plane Mirror</h1>
+  <p class="page-desc">The simplest case — and the one that defines virtual/real and erect/inverted forever.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Properties</h3>
+<table class="data-table">
+<tr><th>Property</th><th>Value</th></tr>
+<tr><td>Power</td><td class="hl">Zero</td></tr>
+<tr><td>Focal length</td><td class="hl">Infinity</td></tr>
+<tr><td>Object distance from mirror</td><td>Equal to image distance</td></tr>
+<tr><td>Object size</td><td>Equal to image size</td></tr>
+<tr><td>Image location</td><td>Behind the mirror</td></tr>
+<tr><td>Image type</td><td class="hl-blue">Virtual + Erect</td></tr>
+</table>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🔑 THE GOLDEN RULE OF THIS ENTIRE CHAPTER</div>
+<p style="font-size:15px;color:var(--text)"><b>If the image forms BEHIND the mirror → it is VIRTUAL → it is automatically ERECT (straight).</b></p>
+<p style="font-size:15px;color:var(--text)"><b>If the image forms IN FRONT of (on the same side as the object for mirrors) → it is REAL → it is automatically INVERTED (upside down).</b></p>
+<p>There is <b>no exception</b> to this pairing for mirrors: virtual ⟺ erect, and real ⟺ inverted always travel together. (Note: this pairing logic flips in <i>which side</i> counts as "real" for lenses — covered later — but virtual⟺erect and real⟺inverted still always hold.)</p>
+</div>
+
+<div class="card">
+<h3>↔️ Lateral Inversion</h3>
+<p>When you look into a plane mirror, your <b>left hand appears as your right hand</b> and vice versa. This left-right flip is called <b>lateral inversion</b>.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠️ EXAM TRAP</div>
+<p>Don't confuse lateral inversion (left-right flip) with the image being "upside down." A plane mirror image is NOT upside down — it's erect, just laterally flipped. These are two completely different properties tested separately.</p>
+</div>
+`);
+addPage("big-picture","Orientation","Big Picture","🔭","var(--blue)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--blue)">ORIENTATION</div>
+  <h1 class="page-title">The Big Picture</h1>
+  <p class="page-desc">What this chapter is actually about — read this before anything else, every single revision.</p>
+</div>
+
+<div class="card">
+<h3>🎯 What is this chapter really testing?</h3>
+<p>Light hits a surface. Two things can happen to it: it can <b style="color:var(--green)">bounce back</b> (reflection) or it can <b style="color:var(--blue)">bend and pass through</b> (refraction). That's it. The entire chapter — mirrors, lenses, glass slabs, refractive index — is just different costumes worn by these two ideas.</p>
+<p>SSC CGL loves this chapter because it's <b>rule-based</b>: a handful of fixed laws (angle in = angle out, Snell's law, sign conventions) generate dozens of question variations. Once the rules are wired into memory, every question becomes pattern-matching.</p>
+</div>
+
+<div class="card">
+<h3>🗺️ The Skeleton of the Chapter</h3>
+<table class="data-table">
+<tr><th>Block</th><th>What it covers</th><th>Why it matters for exam</th></tr>
+<tr><td class="hl">Nature of Light</td><td>Transverse wave, dual nature (Einstein)</td><td>1 direct fact-recall question almost guaranteed</td></tr>
+<tr><td class="hl">Reflection Laws</td><td>2 laws — angle equality + coplanarity</td><td>Foundation for all mirror questions</td></tr>
+<tr><td class="hl">Plane Mirror</td><td>Image = same size, same distance, virtual, erect, lateral inversion</td><td>Easy 1-mark sitters</td></tr>
+<tr><td class="hl-blue">Spherical Mirrors</td><td>Concave & convex — image formation in 6 object positions</td><td>Heaviest weightage — ray diagram logic tested via statements</td></tr>
+<tr><td class="hl-blue">Mirror Formula & Sign Convention</td><td>Cartesian system, 1/v+1/u=1/f, magnification</td><td>Numerical-based questions</td></tr>
+<tr><td class="hl">Refraction Laws</td><td>Snell's Law, refractive index</td><td>Conceptual + numerical</td></tr>
+<tr><td class="hl">Glass Slab</td><td>Lateral displacement, bending direction</td><td>Diagram-based questions</td></tr>
+<tr><td class="hl-blue">Lenses</td><td>Convex/concave lens via mirror analogy</td><td>"Same as mirror, but flipped" trap zone</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🧩 The One Sentence That Holds Everything Together</h3>
+<div class="formula" style="display:block;font-size:14px;line-height:1.7;">
+"Concave mirror behaves exactly like a convex lens, and convex mirror behaves exactly like a concave lens — <span style="color:var(--amber)">except sign convention, which always follows the SHAPE (concave = negative, convex = positive), never the mirror/lens identity.</span>"
+</div>
+<p>This single sentence eliminates 70% of the confusion in this chapter. Read it twice. You'll meet it again in the Memory Palace.</p>
+</div>
+`);
+
+/* ============ 2. MEMORY PALACE ============ */
+addPage("memory-palace","Orientation","Memory Palace","🏛️","var(--green)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--green)">RETENTION FRAMEWORK</div>
+  <h1 class="page-title">🧠 The Optics Mansion</h1>
+  <p class="page-desc">Walk through this mansion in your head during the last 10 minutes before the exam. Every room = one concept block.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🏠 The Setting</div>
+<p>You are entering an old mansion called <b>"The House of Bouncing & Bending Light."</b> At the gate stands <b>Einstein</b>, holding two masks — one says PARTICLE, one says WAVE. He flips between them, grinning. This is your reminder: <b>dual nature of light, proposed by Einstein.</b></p>
+</div>
+
+<div class="palace-step">
+<div class="palace-num">1</div>
+<div class="palace-content">
+<h4>🚪 The Front Hall — Two Mirrors on the Wall</h4>
+<p>You enter and see a perfectly <b>FLAT mirror</b> — boring, lazy, does nothing. It has a tag: <b>Power = 0, Focal length = ∞</b>. Whatever you place in front of it appears identical and the same distance behind the glass — twin-like, virtual, erect. You also notice your left hand becomes your right hand in this mirror (lateral inversion) — that's why the mansion's clock on the mirror-wall reads backward.</p>
+</div>
+</div>
+
+<div class="palace-step">
+<div class="palace-num">2</div>
+<div class="palace-content">
+<h4>🍽️ The Curved Dining Hall — Two Carved Bowls</h4>
+<p>Deeper in, you find two giant bowls carved from one imaginary sphere. One bowl has its <b>shiny polished side facing OUT</b> (curving outward toward you) — this is the <b>convex mirror</b>, used in your car's side mirror and ATM security camera. The other bowl is polished <b>INSIDE</b>, curving inward like a cave — the <b>concave mirror</b>, the shaving mirror, the dentist's tool, the torch's reflector, the solar furnace.</p>
+<p style="color:var(--amber)">Remember: "cave" curls inward toward you — concave is the magnifier of things close to you.</p>
+</div>
+</div>
+
+<div class="palace-step">
+<div class="palace-num">3</div>
+<div class="palace-content">
+<h4>🎯 The Bowling Lane — Pole, Centre, Focus</h4>
+<p>Down the centre of the concave bowl room runs a bowling lane (the <b>principal axis</b>). Where the lane touches the bowl is the <b>Pole (P)</b>. Walk further down the lane to the centre of the imaginary sphere — that's the <b>Centre of Curvature (C)</b>. Exactly halfway between P and C, there's a glowing marker — the <b>Focus (F)</b>. Remember: <b>C = 2F</b>, the centre is always twice as far as the focus.</p>
+</div>
+</div>
+
+<div class="palace-step">
+<div class="palace-num">4</div>
+<div class="palace-content">
+<h4>🚶 The Receding Corridor — The Object Walks In</h4>
+<p>Picture a tiny man walking down the bowling lane <b>toward</b> the concave bowl, starting from far away (infinity) and ending right next to the bowl (pole). As HE walks IN, his reflection (image) walks <b>OUT</b> — away from the bowl, getting bigger, until right at the focus point his reflection vanishes into infinity and flips into a ghost (virtual, erect, magnified) standing behind him instead of in the bowl.</p>
+<p style="color:var(--green)">Mental rule: object approaches mirror → image retreats away from mirror, growing — until the man crosses focus, at which point the image becomes a ghost (virtual).</p>
+</div>
+</div>
+
+<div class="palace-step">
+<div class="palace-num">5</div>
+<div class="palace-content">
+<h4>🪞 The Convex Mirror Closet — Always the Same Trick</h4>
+<p>Step into the small closet with the convex bowl (shiny-side-out). No matter where you stand — far or near — you always see a <b>small, upright ghost of yourself</b> trapped just behind the glass, never in front of it. This closet has only one trick, performed twice: virtual, erect, diminished. Always.</p>
+</div>
+</div>
+
+<div class="palace-step">
+<div class="palace-num">6</div>
+<div class="palace-content">
+<h4>🧮 The Accountant's Office — Cartesian Sign Ledger</h4>
+<p>An old accountant sits at a desk with a ledger split into a left (negative) and right (positive) column. He has one unbendable rule chalked on the wall: <b>"Object always sits on my LEFT (negative)."</b> Above his head hang two labelled lanterns: <b>"CONCAVE = negative"</b> (dim, cave-like) and <b>"CONVEX = positive"</b> (bright, bulging-out). He uses the formula carved into his desk: <span class="formula" style="font-size:13px;padding:6px 10px;">1/v + 1/u = 1/f</span></p>
+</div>
+</div>
+
+<div class="palace-step">
+<div class="palace-num">7</div>
+<div class="palace-content">
+<h4>🌫️ The Glass Conservatory — Bending Light</h4>
+<p>You walk into a glass-walled greenhouse. A beam of sunlight enters at an angle — as it crosses from air (rare) into glass (dense), it <b>bends toward the wall</b> (toward the normal) and slows down. When it exits the far glass wall back into air, it bends <b>away from the wall</b> (away from normal) and speeds up again — emerging parallel to how it entered, just shifted sideways. This sideways shift is the <b>lateral displacement</b> mark on the conservatory floor.</p>
+<p style="color:var(--amber)">Rare→Denser: bends TOWARD normal, slows down. Denser→Rarer: bends AWAY from normal, speeds up.</p>
+</div>
+</div>
+
+<div class="palace-step">
+<div class="palace-num">8</div>
+<div class="palace-content">
+<h4>💎 The Refractive Index Vault — Four Treasures</h4>
+<p>In a vault you find labelled gems in increasing density: a feather (Air = 1.00), an ice cube (1.3), a water droplet (1.33), and then the four you MUST memorise sitting on velvet cushions: <b>Benzene (1.5)</b>, <b>Crown Glass (1.52)</b>, <b>Canada Balsam (1.53)</b>, and the dazzling <b>Diamond (2.42)</b> on the highest pedestal, lit brightest because it's the most-asked gem in the exam.</p>
+</div>
+</div>
+
+<div class="palace-step">
+<div class="palace-num">9</div>
+<div class="palace-content">
+<h4>🔄 The Mirror-Lens Twin Room — The Final Trick</h4>
+<p>The last room has a strange optical illusion: a concave mirror and a convex lens stand side-by-side, performing the <b>exact same shadow-puppet show</b> (identical image-position behaviour). Next to them, a convex mirror and a concave lens mirror each other's moves too. But a sign on the wall warns in red ink: <b>"Their SIGNS don't swap — only shape decides sign. Concave (mirror OR lens) = negative focal length. Convex (mirror OR lens) = positive focal length."</b> This is the room where most students trip on their way out — don't be one of them.</p>
+</div>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🚪 Exit</div>
+<p>You leave the mansion through a door shaped like a lens — convex side bulging out converges your view to a point (used for hypermetropia/long-sightedness correction), concave side caves in and spreads your view out (used for myopia/short-sightedness correction).</p>
+</div>
+`);
+
+/* ============ 5. SPHERICAL MIRRORS BASICS ============ */
+addPage("spherical-basics","Complete Notes","Spherical Mirrors — Basics","🔵","var(--blue)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--blue)">COMPLETE REVISION NOTES · 3</div>
+  <h1 class="page-title">Spherical Mirrors — Setup</h1>
+  <p class="page-desc">Before image formation, get the anatomy of the mirror locked in.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Origin of the Two Mirrors</h3>
+<p>Imagine one big imaginary sphere. Carve out a small curved piece. Now you decide which side to polish:</p>
+<table class="data-table">
+<tr><th>Mirror</th><th>Reflecting surface</th><th>Real-life examples</th></tr>
+<tr><td class="hl-blue">Convex Mirror</td><td>Curved <b>outward</b> (bulging toward you)</td><td>Vehicle rear-view mirrors, ATM security mirrors, street light reflectors, sunglasses</td></tr>
+<tr><td class="hl">Concave Mirror</td><td>Curved <b>inward</b> (caves toward you)</td><td>Shaving mirror, dentist's mirror, torch reflector, solar furnace</td></tr>
+</table>
+<p style="color:var(--amber)">⚠ The question usually won't say "inner/outer" — it'll describe the reflecting surface as "curved outward" (convex) or "curved inward" (concave). Translate the phrasing immediately.</p>
+</div>
+
+<div class="card">
+<h3>📍 Key Points on the Mirror</h3>
+<ul>
+<li><b>Principal Axis</b> — the imaginary straight line through the centre of the mirror.</li>
+<li><b>Pole (P)</b> — the point where the principal axis cuts the mirror surface.</li>
+<li><b>Centre of Curvature (C)</b> — the centre of the imaginary sphere the mirror was carved from.</li>
+<li><b>Focus (F)</b> — exactly halfway between Pole and Centre of Curvature.</li>
+</ul>
+<div class="formula">C = 2F &nbsp;&nbsp;|&nbsp;&nbsp; F = C / 2</div>
+</div>
+
+<div class="diagram-box">
+<svg viewBox="0 0 460 160" xmlns="http://www.w3.org/2000/svg">
+<line x1="20" y1="80" x2="440" y2="80" stroke="#a6acc0" stroke-width="1.5" stroke-dasharray="3,3"/>
+<text x="380" y="95" fill="#6b7280" font-size="11" font-family="sans-serif">Principal Axis</text>
+<path d="M 60 30 Q 30 80 60 130" fill="none" stroke="#7ec8f0" stroke-width="3"/>
+<circle cx="60" cy="80" r="3" fill="#e8eaf0"/>
+<text x="40" y="148" fill="#7ec8f0" font-size="12" font-family="sans-serif">P (Pole)</text>
+<circle cx="240" cy="80" r="4" fill="#7ee3a8"/>
+<text x="220" y="100" fill="#7ee3a8" font-size="12" font-family="sans-serif">F (Focus)</text>
+<circle cx="420" cy="80" r="4" fill="#f0c674"/>
+<text x="395" y="100" fill="#f0c674" font-size="12" font-family="sans-serif">C (Centre)</text>
+</svg>
+<div class="diagram-cap">Pole → Focus → Centre of Curvature, with F exactly halfway between P and C</div>
+</div>
+`);
+
+/* ============ 6. CONCAVE MIRROR — IMAGE FORMATION ============ */
+addPage("concave-image","Complete Notes","Concave Mirror — Image Formation","🌗","var(--blue)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--blue)">COMPLETE REVISION NOTES · 4</div>
+  <h1 class="page-title">Image Formation — Concave Mirror</h1>
+  <p class="page-desc">6 object positions, one clean pattern. This table is the single most exam-relevant table in the chapter.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🔑 THE PATTERN (memorise the logic, not just the table)</div>
+<p>As the object walks <b>IN</b> toward the mirror (from infinity down to the pole), the image walks <b>OUT</b> (away from the mirror), and keeps growing — until the object crosses the focus, at which point the image "escapes" to infinity and reappears as a virtual, erect, magnified ghost behind the mirror.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> The Complete Table</h3>
+<table class="data-table">
+<tr><th>Object Position</th><th>Image Position</th><th>Nature</th><th>Size</th></tr>
+<tr><td>At Infinity</td><td class="hl-blue">At Focus (F)</td><td>Real, Inverted</td><td>Highly diminished (point-sized)</td></tr>
+<tr><td>Beyond C (beyond 2F)</td><td class="hl-blue">Between F and C</td><td>Real, Inverted</td><td>Diminished</td></tr>
+<tr><td>At C (Centre of Curvature)</td><td class="hl-blue">At C</td><td>Real, Inverted</td><td>Same size</td></tr>
+<tr><td>Between C and F</td><td class="hl-blue">Beyond C</td><td>Real, Inverted</td><td>Enlarged</td></tr>
+<tr><td>At Focus (F)</td><td class="hl-blue">At Infinity</td><td>Real, Inverted</td><td>Highly enlarged</td></tr>
+<tr><td style="color:var(--amber)">Between Pole and Focus</td><td style="color:var(--amber)">Behind the mirror</td><td style="color:var(--amber)">★ Virtual, Erect (EXCEPTION)</td><td style="color:var(--amber)">Enlarged</td></tr>
+</table>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠️ EXAM TRAP — THE ONE EXCEPTION</div>
+<p>In <b>5 out of 6</b> cases for a concave mirror, the image is <b>real and inverted</b>. The single exception is when the object sits <b>between Pole and Focus</b> — here the image flips to <b>virtual, erect, and magnified</b> (this is exactly how a shaving mirror works — you stand closer than the focal length, so you see a magnified upright face).</p>
+</div>
+
+<div class="card">
+<h3>🎯 Examiner's Favourite Angle</h3>
+<p>"A mirror forms a real, inverted image. Which mirror can it NOT be?" → Answer: <b>Convex mirror</b> (it never forms real/inverted images — see next page). It COULD be concave (5 of its 6 cases are real/inverted).</p>
+<p>"A mirror forms a virtual, erect image. Can you say for certain it's convex?" → <b>No</b> — it could also be a concave mirror with the object between P and F.</p>
+</div>
+`);
+
+/* ============ 7. CONVEX MIRROR — IMAGE FORMATION ============ */
+addPage("convex-image","Complete Notes","Convex Mirror — Image Formation","🌖","var(--blue)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--blue)">COMPLETE REVISION NOTES · 5</div>
+  <h1 class="page-title">Image Formation — Convex Mirror</h1>
+  <p class="page-desc">Only 2 cases to remember — and they never break the pattern.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> The Complete Table</h3>
+<table class="data-table">
+<tr><th>Object Position</th><th>Image Position</th><th>Nature</th><th>Size</th></tr>
+<tr><td>At Infinity</td><td class="hl-blue">At Focus (behind mirror)</td><td>Virtual, Erect</td><td>Highly diminished</td></tr>
+<tr><td>Between Infinity and Pole</td><td class="hl-blue">Between Pole and Focus (behind mirror)</td><td>Virtual, Erect</td><td>Diminished</td></tr>
+</table>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🔑 THE GOLDEN CONCLUSION OF THIS CHAPTER</div>
+<p style="font-size:14.5px;"><b>Convex mirror = ZERO cases of real/inverted images.</b> Every single image is virtual, erect, and diminished — never enlarged, never same-size, never real.</p>
+<p style="font-size:14.5px;"><b>Concave mirror = mostly real/inverted, with exactly ONE virtual/erect exception (object between P & F).</b></p>
+</div>
+
+<div class="card">
+<h3>🔌 Uses (high-frequency MCQ source)</h3>
+<table class="data-table">
+<tr><th>Mirror</th><th>Nature</th><th>Uses</th></tr>
+<tr><td class="hl">Concave</td><td>Magnifying mirror</td><td>Shaving mirror, dentist's mirror, torch/headlight reflector, solar furnace</td></tr>
+<tr><td class="hl-blue">Convex</td><td>Diminishing mirror (wide field of view)</td><td>Vehicle rear-view/side mirrors, ATM security mirrors, sunglasses, street-light reflectors</td></tr>
+</table>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠️ EXAM TRAP</div>
+<p>Don't say convex mirror "magnifies." It's the opposite — it <b>diminishes</b> the image but gives a <b>wider field of view</b>, which is exactly why it's used in vehicles (you see more road, smaller).</p>
+</div>
+`);
+
+/* ============ 8. MIRROR FORMULA & SIGN CONVENTION ============ */
+addPage("mirror-formula","Complete Notes","Mirror Formula & Sign Rules","➗","var(--green)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--green)">COMPLETE REVISION NOTES · 6</div>
+  <h1 class="page-title">Mirror Formula & Cartesian Sign Convention</h1>
+  <p class="page-desc">The numerical-solving toolkit. Get the signs right and the rest is arithmetic.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> The Mirror Formula</h3>
+<div class="formula" style="font-size:18px;">1/v + 1/u = 1/f</div>
+<p>where <b>v</b> = image distance, <b>u</b> = object distance, <b>f</b> = focal length.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Cartesian Sign Convention Rules</h3>
+<table class="data-table">
+<tr><th>Quantity</th><th>Rule</th></tr>
+<tr><td><b>u (object distance)</b></td><td class="hl">ALWAYS negative — object is always placed in front of the mirror, i.e. on the negative x-axis.</td></tr>
+<tr><td><b>f (focal length) — Concave</b></td><td class="hl">ALWAYS negative — "the cave is negative"</td></tr>
+<tr><td><b>f (focal length) — Convex</b></td><td class="hl-blue">ALWAYS positive</td></tr>
+<tr><td><b>v (image distance)</b></td><td>Depends on the calculation — <b>positive</b> = formed behind mirror (virtual, erect); <b>negative</b> = formed in front of mirror (real, inverted)</td></tr>
+</table>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🔑 MEMORY HOOK: "The Cave is Always Negative"</div>
+<p>Whisper this to yourself in the exam: <b>"Cave = Cold = Negative. Convex = bulges out = Positive."</b> This applies identically whether it's a mirror or (later) a lens.</p>
+</div>
+
+<div class="card">
+<h3>📐 Magnification Formula</h3>
+<div class="formula" style="font-size:16px;">m = Height of image / Height of object = −v/u</div>
+<p>Work out v's sign first (from the image's known nature: virtual → v positive; real → v negative), then plug into the formula. u is always negative, so you're really just tracking one sign at a time.</p>
+</div>
+
+<div class="card">
+<h3>⚙️ Worked Logic — Reverse Direction</h3>
+<p>If a question gives you a <b>convex mirror</b> and asks about image nature: you already know convex mirrors ONLY give virtual + erect images, so <b>v must be positive</b> — no calculation needed to know the sign, only to know the magnitude.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠️ EXAM TRAP</div>
+<p>Students sometimes think "positive v = real" out of habit from coordinate geometry. For MIRRORS: <b>positive v = virtual</b> (behind the mirror). This flips for lenses — see the Lens page. Keep mirror-rules and lens-rules in separate mental drawers.</p>
+</div>
+`);
+
+/* ============ 9. REFRACTION LAWS & REFRACTIVE INDEX ============ */
+addPage("refraction-laws","Complete Notes","Refraction & Snell's Law","🌊","var(--green)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--green)">COMPLETE REVISION NOTES · 7</div>
+  <h1 class="page-title">Refraction of Light</h1>
+  <p class="page-desc">When light doesn't bounce back, but pushes through into a new medium.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> What is Refraction?</h3>
+<p>Refraction is the bending of light as it <b>passes from one medium into another</b> (it does NOT bounce back — that's reflection). The direction and amount of bending depends on whether light moves from a <b>rarer</b> (less dense) medium to a <b>denser</b> (more dense) one, or vice versa.</p>
+</div>
+
+<div class="card">
+<h3>↔️ The Bending Rules</h3>
+<table class="data-table">
+<tr><th>Direction of Travel</th><th>Bends</th><th>Speed</th></tr>
+<tr><td>Rarer → Denser</td><td class="hl">Toward the Normal</td><td class="hl">Decreases</td></tr>
+<tr><td>Denser → Rarer</td><td class="hl-blue">Away from the Normal</td><td class="hl-blue">Increases</td></tr>
+</table>
+<p style="color:var(--text-faint);font-size:13px;">Examples of rarer→denser order: air (rarest) → water → ordinary glass → diamond (densest of these).</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Laws of Refraction</h3>
+<ol>
+<li><b>Law 1 (same as reflection's 2nd law):</b> The incident ray, the refracted ray, and the normal all lie in the same plane.</li>
+<li><b>Law 2 — Snell's Law:</b> The ratio of sin(angle of incidence) to sin(angle of refraction) is a <b>constant</b> for a given pair of media. This constant is called the <b>refractive index</b>.</li>
+</ol>
+<div class="formula">sin(i) / sin(r) = constant = Refractive Index (Snell's Law)</div>
+</div>
+
+<div class="card">
+<h3>📏 Refractive Index Formula</h3>
+<div class="formula" style="font-size:15px;">n = Speed of light in air/vacuum ÷ Speed of light in the given medium</div>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Refractive Index Values (with respect to air)</h3>
+<table class="data-table">
+<tr><th>Medium</th><th>Refractive Index</th><th>Priority</th></tr>
+<tr><td>Air</td><td>1.00</td><td><span class="tag tag-good">Good to Know</span></td></tr>
+<tr><td>Ice</td><td>1.3</td><td><span class="tag tag-good">Good to Know</span></td></tr>
+<tr><td>Water</td><td>1.33</td><td><span class="tag tag-good">Good to Know</span></td></tr>
+<tr><td>Alcohol</td><td>1.36</td><td><span class="tag tag-good">Good to Know</span></td></tr>
+<tr><td class="hl">Benzene</td><td class="hl">1.5</td><td><span class="tag tag-must">Must Know</span></td></tr>
+<tr><td class="hl">Crown Glass</td><td class="hl">1.52</td><td><span class="tag tag-must">Must Know</span></td></tr>
+<tr><td class="hl">Canada Balsam</td><td class="hl">1.53</td><td><span class="tag tag-must">Must Know</span></td></tr>
+<tr><td class="hl" style="color:var(--amber)">Diamond</td><td class="hl" style="color:var(--amber)">2.42</td><td><span class="tag tag-must">Must Know · Most Asked</span></td></tr>
+</table>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🔑 MEMORY HOOK: The Climbing Staircase</div>
+<p>Benzene (1.50) → Crown Glass (1.52) → Canada Balsam (1.53) climb up in tiny, easy 0.01–0.02 steps — like a staircase with shallow steps. Memorize just <b>Benzene = 1.5</b> firmly, and the next two practically follow themselves (+0.02, +0.01). Then <b>Diamond jumps way up to 2.42</b> — the staircase suddenly becomes a cliff. That jump IS the memory hook: diamond doesn't belong on the staircase, it's in its own league, and that's exactly why it's the most-asked value.</p>
+</div>
+
+<div class="card">
+<h3>⚡ Connected Fact: Why You See Lightning Before You Hear Thunder</h3>
+<p>Speed of light = 3 × 10⁸ m/s. Speed of sound ≈ 343 m/s. Light is drastically faster, so during a storm you <b>see the flash first, hear the thunder later</b> — same event, different arrival times due to speed difference.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠️ EXAM TRAP</div>
+<p>Don't confuse the <b>law of reflection's two laws</b> with the <b>law of refraction's two laws</b> — they share an identical "same plane" rule but differ in the second law (angle equality for reflection vs. constant sine ratio for refraction).</p>
+</div>
+`);
+
+/* ============ 10. GLASS SLAB ============ */
+addPage("glass-slab","Complete Notes","Refraction Through Glass Slab","🪟","var(--green)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--green)">COMPLETE REVISION NOTES · 8</div>
+  <h1 class="page-title">Refraction Through a Glass Slab</h1>
+  <p class="page-desc">Two refractions in a row — entering and exiting — that cancel each other's bend but not the shift.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Step by Step</h3>
+<ol>
+<li>Incident ray travels in <b>air</b>, hits the glass slab. Air → Glass = rarer → denser, so it <b>bends toward the normal</b> (drawn at the entry point) and slows down.</li>
+<li>Inside the glass, the ray travels straight until it reaches the far side.</li>
+<li>At the far side, it goes from <b>glass → air</b> = denser → rarer, so it <b>bends away from the normal</b> (drawn at the exit point) and speeds back up.</li>
+<li>The ray that comes out (<b>emergent ray</b>) is <b>parallel</b> to the original incident ray, but <b>shifted sideways</b>. This sideways shift is called <b>lateral displacement</b>.</li>
+</ol>
+</div>
+
+<div class="diagram-box">
+<svg viewBox="0 0 460 200" xmlns="http://www.w3.org/2000/svg">
+<rect x="150" y="20" width="160" height="160" fill="#1a1e29" stroke="#262b3a" stroke-width="1.5"/>
+<text x="195" y="100" fill="#6b7280" font-size="13" font-family="sans-serif">GLASS</text>
+<line x1="20" y1="60" x2="150" y2="90" stroke="#7ec8f0" stroke-width="2.5"/>
+<polygon points="150,90 134,84 140,94" fill="#7ec8f0"/>
+<text x="25" y="50" fill="#7ec8f0" font-size="11" font-family="sans-serif">Incident ray</text>
+<line x1="150" y1="90" x2="150" y2="40" stroke="#6b7280" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="150" y1="90" x2="310" y2="130" stroke="#7ee3a8" stroke-width="2.5"/>
+<line x1="310" y1="130" x2="310" y2="80" stroke="#6b7280" stroke-width="1" stroke-dasharray="3,3"/>
+<line x1="310" y1="130" x2="440" y2="160" stroke="#f0c674" stroke-width="2.5"/>
+<polygon points="440,160 424,156 428,166" fill="#f0c674"/>
+<text x="350" y="178" fill="#f0c674" font-size="11" font-family="sans-serif">Emergent ray</text>
+</svg>
+<div class="diagram-cap">Bends toward normal entering glass, away from normal exiting — emergent ray parallel to incident, shifted (lateral displacement)</div>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🔑 MEMORY HOOK</div>
+<p>Picture pushing a shopping trolley from a smooth tile floor (air) onto thick carpet (glass) at an angle — the wheel that hits the carpet first slows down and the trolley swerves <b>toward</b> the carpet boundary's perpendicular. When it rolls back off the carpet onto tiles, the wheel speeds up again and it swerves <b>away</b> — but because both swerves are mirror images of each other, the trolley ends up moving in its <b>original direction</b>, just shifted sideways from its original path.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-imp">IMPORTANT</span> The 90° Special Case</h3>
+<p>If the angle of incidence is <b>exactly 90°</b> to the surface (i.e., the ray hits perpendicular / straight-on), it passes through <b>without any bending at all</b> — straight through, no refraction, no lateral displacement.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠️ EXAM TRAP</div>
+<p>"Without refraction" at 90° incidence does NOT mean light doesn't slow down inside the glass — it still changes speed. It just doesn't <b>change direction</b>, because there's no bending when the ray is perpendicular to the surface.</p>
+</div>
+`);
+
+/* ============ 11. LENSES ============ */
+addPage("lenses","Complete Notes","Lenses — The Mirror-Lens Analogy","🔮","var(--green)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--green)">COMPLETE REVISION NOTES · 9</div>
+  <h1 class="page-title">Convex & Concave Lenses</h1>
+  <p class="page-desc">Everything you already know about mirrors, recycled — with one critical twist.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🔑 THE MASTER EQUIVALENCE</div>
+<p style="font-size:15px;"><b>Concave Mirror ⟺ Convex Lens</b> (identical image-formation behaviour across all 6 object positions)</p>
+<p style="font-size:15px;"><b>Convex Mirror ⟺ Concave Lens</b> (identical image-formation behaviour across both object positions)</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Shape Identification</h3>
+<table class="data-table">
+<tr><th>Lens</th><th>Shape</th><th>Nature</th><th>Used for</th></tr>
+<tr><td class="hl">Convex Lens</td><td>Thick in the middle, thin at the edges</td><td>Converging</td><td>Hypermetropia (long-sightedness)</td></tr>
+<tr><td class="hl-blue">Concave Lens</td><td>Thin in the middle, thick at the edges</td><td>Diverging</td><td>Myopia (short-sightedness)</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>📊 Convex Lens — Image Formation (= Concave Mirror's table)</h3>
+<table class="data-table">
+<tr><th>Object Position</th><th>Image Position</th><th>Nature</th><th>Size</th></tr>
+<tr><td>At Infinity</td><td>At Focus (F)</td><td>Real, Inverted</td><td>Highly diminished</td></tr>
+<tr><td>Beyond 2F</td><td>Between F and 2F</td><td>Real, Inverted</td><td>Diminished</td></tr>
+<tr><td>At 2F</td><td>At 2F</td><td>Real, Inverted</td><td>Same size</td></tr>
+<tr><td>Between F and 2F</td><td>Beyond 2F</td><td>Real, Inverted</td><td>Enlarged</td></tr>
+<tr><td>At Focus (F)</td><td>At Infinity</td><td>Real, Inverted</td><td>Highly enlarged</td></tr>
+<tr><td style="color:var(--amber)">Between O and F</td><td style="color:var(--amber)">Same side as object</td><td style="color:var(--amber)">★ Virtual, Erect (EXCEPTION)</td><td style="color:var(--amber)">Enlarged</td></tr>
+</table>
+<p style="font-size:13px;color:var(--text-faint)">Note: "O" (optical centre) plays the same structural role here as "P" (pole) does for mirrors.</p>
+</div>
+
+<div class="card">
+<h3>📊 Concave Lens — Image Formation (= Convex Mirror's table)</h3>
+<table class="data-table">
+<tr><th>Object Position</th><th>Image Position</th><th>Nature</th><th>Size</th></tr>
+<tr><td>At Infinity</td><td>At Focus</td><td>Virtual, Erect</td><td>Highly diminished</td></tr>
+<tr><td>Between Infinity and O</td><td>Between O and F</td><td>Virtual, Erect</td><td>Diminished</td></tr>
+</table>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠️ EXAM TRAP #1 — THE BIGGEST ONE IN THIS CHAPTER</div>
+<p>Students assume: "concave mirror's f was negative, so by the equivalence, convex lens's f must be positive." <b>WRONG.</b> Sign convention follows <b>SHAPE</b>, never the mirror/lens identity:</p>
+<ul>
+<li><b>Concave</b> (mirror OR lens) → focal length is <b>always negative</b></li>
+<li><b>Convex</b> (mirror OR lens) → focal length is <b>always positive</b></li>
+</ul>
+<p>So a convex lens has a <b>positive</b> f (matching its own shape) even though it behaves like a concave mirror (which has negative f).</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠️ EXAM TRAP #2 — "Real" Flips Sides</div>
+<p>For mirrors: image on the <b>same side as the object</b> = real. For lenses: image on the <b>opposite side</b> of the lens from the object = real. This is because light actually passes through a lens but bounces off a mirror.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Lens Formula & Magnification</h3>
+<div class="formula" style="font-size:16px;">1/v − 1/u = 1/f &nbsp; (note the MINUS, vs. PLUS for mirrors)</div>
+<div class="formula" style="font-size:16px;">m = Height of image / Height of object = +v/u &nbsp; (note: NO minus sign, vs. mirror's −v/u)</div>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Sign Convention Flip for v</h3>
+<table class="data-table">
+<tr><th>v is positive</th><th>Mirror</th><th>Lens</th></tr>
+<tr><td>Meaning</td><td class="hl-blue">Virtual</td><td class="hl">Real</td></tr>
+</table>
+<p style="color:var(--amber)">This is the ONLY thing that flips between mirror and lens Cartesian systems. Everything else (u always negative, concave=negative f, convex=positive f) stays identical.</p>
+</div>
+
+<div class="card">
+<h3><span class="tag tag-must">MUST KNOW</span> Power of a Lens</h3>
+<div class="formula">P = 1 / f (f in metres)</div>
+<p>SI unit: <b>Diopter (D)</b>, also called metre-inverse (m⁻¹). This is NOT the same "power" as electrical power (watts) or horsepower — it's the lens's light-bending capacity.</p>
+<ul>
+<li>Concave lens → negative focal length → <b>negative power</b></li>
+<li>Convex lens → positive focal length → <b>positive power</b></li>
+<li>Combination of lenses: <b>P = P₁ + P₂ + P₃ + ...</b> (simple addition, signs included)</li>
+</ul>
+</div>
+`);
+
+/* ============ 12. SMART MEMORY HOOKS (consolidated) ============ */
+addPage("memory-hooks","Retention Tools","Smart Memory Hooks","💡","var(--green)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--green)">RETENTION TOOLS</div>
+  <h1 class="page-title">💡 Smart Memory Hooks — All in One Place</h1>
+  <p class="page-desc">Every hook from across the chapter, gathered for rapid-fire review.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">1️⃣ Dual Nature → Einstein's Two Masks</div>
+<p>Einstein holding a PARTICLE mask in one hand, a WAVE mask in the other, flipping between them — that's light's dual nature, his hypothesis.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">2️⃣ Virtual=Erect, Real=Inverted → The Unbreakable Couple</div>
+<p>They're a couple that's NEVER seen apart: Virtual always holds hands with Erect. Real always holds hands with Inverted. No divorce, no exceptions, ever — for mirrors.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">3️⃣ Concave vs Convex → Cave vs Bulge</div>
+<p>"con<b>CAVE</b>" sounds like CAVE — it curves INWARD, like you're stepping into a cave. CON<b>VEX</b> bulges out, like a flexed muscle (con-VEX-ed bicep).</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">4️⃣ C = 2F → The Halfway Sibling</div>
+<p>Focus is the younger sibling living exactly halfway down the road to the Centre of Curvature's house. C is twice as far as F, always.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">5️⃣ Object Walks In → Image Walks Out</div>
+<p>Object and image are on a seesaw — as the object moves toward the mirror, the image moves away from it (and grows), until the seesaw flips entirely at the focus.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">6️⃣ Concave Mirror Uses → "SDTS" People Who Need Magnification</div>
+<p><b>S</b>having mirror, <b>D</b>entist's mirror, <b>T</b>orch reflector, <b>S</b>olar furnace — all need to concentrate/magnify, so all use concave.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">7️⃣ Convex Mirror Uses → "Wide-Eyed Safety"</div>
+<p>Vehicles, ATMs, street lights, sunglasses — all need a WIDE field of view for safety/security, so all use convex (diminishes image, widens view).</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">8️⃣ Cartesian Signs → The Accountant's Ledger</div>
+<p>"Object always sits on my LEFT (negative)." Two lanterns: "CONCAVE=negative" and "CONVEX=positive" — shape decides sign, never identity.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">9️⃣ Rarer→Denser bends TOWARD normal → Trolley on Carpet</div>
+<p>Pushing a trolley from tile (air) onto carpet (glass) at an angle — it swerves toward the perpendicular line and slows. Reverse happens coming off the carpet.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">🔟 Refractive Index Staircase → Climb then Cliff</div>
+<p>Benzene (1.50) → Crown Glass (1.52) → Canada Balsam (1.53): tiny staircase steps. Then Diamond (2.42) is a sudden cliff — it doesn't belong on the staircase, which is exactly why it's memorable and most-asked.</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">1️⃣1️⃣ Mirror-Lens Equivalence → Twin Room with a Warning Sign</div>
+<p>Concave mirror and convex lens do an identical shadow-puppet show. Convex mirror and concave lens do another identical show. But a red sign warns: "Signs follow SHAPE, not identity."</p>
+</div>
+
+<div class="hook-box">
+<div class="hook-title">1️⃣2️⃣ Lens v-sign flip → The One Different Country</div>
+<p>Everything about lens sign convention is identical to mirrors (object negative, concave negative, convex positive) — except v's meaning, which flips. It's like visiting a country where everything is the same except they drive on the other side of the road.</p>
+</div>
+`);
+
+/* ============ 13. CONCEPT CONNECTIONS ============ */
+addPage("concept-connections","Retention Tools","Concept Connections","🔗","var(--blue)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--blue)">RETENTION TOOLS</div>
+  <h1 class="page-title">🔗 Concept Connections — The Mental Network</h1>
+  <p class="page-desc">No fact stands alone. Here's how everything links to everything else.</p>
+</div>
+
+<div class="card">
+<h3>CONCEPT → APPLICATION</h3>
+<table class="data-table">
+<tr><th>Concept</th><th>Real-world Application</th></tr>
+<tr><td>Concave mirror magnifies close objects</td><td>Shaving mirrors, dentist's mirrors</td></tr>
+<tr><td>Convex mirror diminishes + widens field of view</td><td>Vehicle mirrors, ATM security, street lights</td></tr>
+<tr><td>Convex lens converges light</td><td>Corrects hypermetropia (long-sightedness)</td></tr>
+<tr><td>Concave lens diverges light</td><td>Corrects myopia (short-sightedness)</td></tr>
+<tr><td>Light's speed >> sound's speed</td><td>See lightning before hearing thunder</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>FEATURE → EXCEPTION</h3>
+<table class="data-table">
+<tr><th>General Rule</th><th>Exception</th></tr>
+<tr><td>Concave mirror → real, inverted image</td><td>Object between P and F → virtual, erect (magnified)</td></tr>
+<tr><td>For mirrors: real image forms on same side as object</td><td>For lenses: real image forms on the OPPOSITE side</td></tr>
+<tr><td>v positive = virtual (mirror)</td><td>v positive = real (lens)</td></tr>
+<tr><td>Refraction bends light</td><td>At 90° incidence, no bending occurs at all</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>CAUSE → EFFECT</h3>
+<table class="data-table">
+<tr><th>Cause</th><th>Effect</th></tr>
+<tr><td>Light enters a denser medium</td><td>Bends toward normal, slows down</td></tr>
+<tr><td>Light enters a rarer medium</td><td>Bends away from normal, speeds up</td></tr>
+<tr><td>Object moves from infinity toward concave mirror's pole</td><td>Image moves away from mirror, growing, until it escapes to infinity at focus</td></tr>
+<tr><td>Two refractions in a glass slab (entry + exit)</td><td>Net direction unchanged, but ray is laterally displaced</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>DISCOVERY → IMPACT</h3>
+<table class="data-table">
+<tr><th>Discovery</th><th>Impact</th></tr>
+<tr><td>Einstein's dual nature hypothesis</td><td>Explains why light shows both particle-like and wave-like behaviour</td></tr>
+<tr><td>Snell's discovery of the constant sine ratio</td><td>Gives us refractive index — a fixed, measurable property of any medium pair</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>FACT → RELATED FACT (the big equivalence web)</h3>
+<p style="font-size:14px;">Concave Mirror's image-formation logic = Convex Lens's image-formation logic. Convex Mirror's logic = Concave Lens's logic. BUT sign convention for f always follows shape (concave=neg, convex=pos) regardless of mirror/lens identity. AND the meaning of positive-v flips between mirror (virtual) and lens (real).</p>
+</div>
+`);
+
+/* ============ 14. EXAM TRAPS (consolidated) ============ */
+addPage("exam-traps","Retention Tools","⚠ Exam Traps","⚠️","var(--red)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--red)">RETENTION TOOLS</div>
+  <h1 class="page-title">⚠️ Exam Traps — All Confusions in One Place</h1>
+  <p class="page-desc">Everything students get wrong, gathered for a final sweep before the exam.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 1 — Angle measured from where?</div>
+<p>Angle of incidence/reflection/refraction is ALWAYS measured from the <b>NORMAL</b>, never from the surface itself.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 2 — Lateral inversion ≠ inverted image</div>
+<p>Lateral inversion is a LEFT-RIGHT flip (seen in plane mirrors). "Inverted" means UPSIDE-DOWN. A plane mirror image is laterally inverted but still erect (not upside down) — these are two separate properties.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 3 — Inner/outer vs curved inward/outward phrasing</div>
+<p>Questions describe mirrors as having a reflecting surface "curved outward" (= convex) or "curved inward" (= concave) — NOT as "inner surface" or "outer surface." Translate the phrasing correctly.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 4 — The ONE exception in concave mirror</div>
+<p>5 of 6 concave mirror cases give real+inverted images. The exception (object between P and F) gives virtual+erect+magnified. Forgetting this exception is the #1 mistake in this chapter.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 5 — Convex mirror has ZERO real/inverted cases</div>
+<p>Unlike concave, convex mirror NEVER produces a real or inverted image, in any object position. If a question says "real, inverted image," it can never be a convex mirror.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 6 — Sign convention follows SHAPE, not mirror/lens identity</div>
+<p>The biggest trap in the chapter. Concave mirror's f is negative — this does NOT mean convex lens's f is positive "because it's the opposite mirror." Convex lens's f is positive because it is <b>convex</b>, full stop. Shape decides sign; mirror/lens identity decides image-position behaviour. These are two completely separate rules.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 7 — "Real" sits on different sides for mirrors vs lenses</div>
+<p>Mirror: real image forms on the <b>same side</b> as the object (light bounces back). Lens: real image forms on the <b>opposite side</b> of the object (light passes through). Same word "real," different geometry.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 8 — Positive v means different things for mirror vs lens</div>
+<p>Mirror: v positive = virtual. Lens: v positive = real. This is the ONLY sign-convention rule that flips between the two systems — everything else (u always negative, concave f negative, convex f positive) stays the same.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 9 — Magnification formula sign differs too</div>
+<p>Mirror: m = −v/u (minus sign present). Lens: m = +v/u (no minus sign). Mixing these up flips your final answer's sign.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 10 — Refractive index values that sit close together</div>
+<p>Benzene (1.50), Crown Glass (1.52), Canada Balsam (1.53) are easy to swap in memory because they're so close. Anchor Benzene first, then add 0.02 then 0.01.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 11 — Mirror formula sign vs Lens formula sign</div>
+<p>Mirror formula: 1/v + 1/u = 1/f (PLUS). Lens formula: 1/v − 1/u = 1/f (MINUS). Don't transplant one formula's operator into the other.</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 12 — 90° incidence still changes speed</div>
+<p>At 90° incidence on a glass slab, there's no bending (no direction change) — but the light still slows down inside the glass and speeds up on exit. "No refraction" here means "no bending," not "no speed change."</p>
+</div>
+
+<div class="trap-box">
+<div class="trap-title">⚠ TRAP 13 — Power unit "Diopter" vs other "power" units</div>
+<p>Lens power's unit is Diopter (D) / m⁻¹. Don't confuse with electrical power (Watt) or horsepower — completely different physical quantities sharing the English word "power."</p>
+</div>
+`);
+
+/* ============ 15. EXAMINER'S FAVOURITE QUESTIONS ============ */
+addPage("examiner-questions","Retention Tools","Examiner's Favourite Questions","🎯","var(--amber)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--amber)">RETENTION TOOLS</div>
+  <h1 class="page-title">🎯 How an Examiner Will Attack This Chapter</h1>
+  <p class="page-desc">Question patterns to recognise instantly, before you even finish reading them.</p>
+</div>
+
+<div class="card">
+<h3>🎯 High Probability Direct-Fact Questions</h3>
+<ul>
+<li>Who proposed the dual nature of light? <i>(Einstein)</i></li>
+<li>What is the refractive index of diamond? <i>(2.42)</i></li>
+<li>What is the SI unit of power of a lens? <i>(Diopter)</i></li>
+<li>What is the focal length and power of a plane mirror? <i>(∞ and 0)</i></li>
+<li>What is C = 2F also written as? <i>(2F is sometimes used in place of C)</i></li>
+</ul>
+</div>
+
+<div class="card">
+<h3>🎯 Statement-Based Questions</h3>
+<p>Format: "Statement I: ... Statement II: ... Which is/are correct?"</p>
+<ul>
+<li>Statement I: A convex mirror always forms a virtual image. Statement II: A concave mirror always forms a real image. <i>(I is true, II is false — concave has the P-F exception)</i></li>
+<li>Statement I: Light bends toward the normal going from rarer to denser medium. Statement II: Speed of light increases going from rarer to denser medium. <i>(I is true, II is false — speed decreases)</i></li>
+</ul>
+</div>
+
+<div class="card">
+<h3>🎯 Match-the-Following Possibilities</h3>
+<table class="data-table">
+<tr><th>Column A</th><th>Column B</th></tr>
+<tr><td>Shaving mirror</td><td>Concave</td></tr>
+<tr><td>Vehicle rear-view mirror</td><td>Convex</td></tr>
+<tr><td>Myopia correction</td><td>Concave lens</td></tr>
+<tr><td>Hypermetropia correction</td><td>Convex lens</td></tr>
+<tr><td>Diamond refractive index</td><td>2.42</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>🎯 Assertion–Reason Possibilities</h3>
+<p><b>Assertion:</b> A convex lens behaves like a concave mirror in image formation. <b>Reason:</b> Both have the same sign convention for focal length.</p>
+<p style="color:var(--green)">→ Assertion is TRUE, Reason is FALSE (sign convention follows shape, not the mirror-lens equivalence) — classic trap format.</p>
+</div>
+
+<div class="card">
+<h3>🎯 Confusing/Frequently Misread Facts</h3>
+<ul>
+<li>"Curved outward" vs "curved inward" — easy to misread under time pressure.</li>
+<li>Benzene/Crown Glass/Canada Balsam values, being so close (1.50/1.52/1.53), are often swapped in MCQ options deliberately.</li>
+<li>Mirror formula (+) vs Lens formula (−) — examiners design options that test whether you transplant the wrong sign.</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>🎯 Chronology / Sequence-Type Question</h3>
+<p>"Arrange in order of increasing refractive index: Water, Diamond, Air, Crown Glass" → <b>Air (1.00) < Water (1.33) < Crown Glass (1.52) < Diamond (2.42)</b></p>
+</div>
+`);
+
+/* ============ 16. ACTIVE RECALL ============ */
+addPage("active-recall","Retention Tools","Active Recall","❓","var(--purple)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--purple)">RETENTION TOOLS</div>
+  <h1 class="page-title">❓ Active Recall — Test Yourself</h1>
+  <p class="page-desc">Click any card to flip and reveal the answer. Don't peek before you try to recall it yourself.</p>
+</div>
+
+<div class="card">
+<h3>🔁 Rapid-Fire Flip Cards</h3>
+<div id="flip-container"></div>
+</div>
+
+<div class="card">
+<h3>✏️ Fill in the Blanks</h3>
+<div id="fill-container"></div>
+<button class="check-btn" onclick="checkFillBlanks()">Check My Answers</button>
+<div id="fill-result" class="result-msg"></div>
+</div>
+
+<div class="card">
+<h3>🔄 Reverse Questions (Given the answer, what's the question?)</h3>
+<div class="flip-card" onclick="this.classList.toggle('open')">
+<div class="q">Q: The image is virtual, erect, and diminished, regardless of object distance. Which mirror am I?</div>
+<div class="a">A: Convex Mirror</div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('open')">
+<div class="q">Q: My focal length is negative even though I'm a lens, not a mirror. What shape am I?</div>
+<div class="a">A: Concave (concave lens — sign follows shape, not mirror/lens identity)</div>
+</div>
+<div class="flip-card" onclick="this.classList.toggle('open')">
+<div class="q">Q: I'm the only object-position case in a concave mirror that gives a virtual image. Where am I placed?</div>
+<div class="a">A: Between the Pole and the Focus</div>
+</div>
+</div>
+`);
+
+/* ============ 17. HIGH-YIELD REVISION NOTES (Layer 2) ============ */
+addPage("high-yield","Revision Layers","High-Yield Notes","⭐","var(--amber)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--amber)">LAYER 2 · HIGH-YIELD REVISION</div>
+  <h1 class="page-title">⭐ High-Yield Revision Notes</h1>
+  <p class="page-desc">Shorter than Complete Notes. Use this for your 2nd–10th revisions.</p>
+</div>
+
+<div class="layer-section">
+<h2>📐 Reflection</h2>
+<ul>
+<li>∠i = ∠r; incident, reflected ray & normal — same plane.</li>
+<li>Plane mirror: P=0, f=∞, virtual, erect, same size & distance. Lateral inversion = L↔R flip.</li>
+<li><b>Virtual ⟺ Erect | Real ⟺ Inverted</b> — unbreakable pair, no exceptions (mirrors).</li>
+</ul>
+</div>
+
+<div class="layer-section">
+<h2>🔵 Spherical Mirrors</h2>
+<ul>
+<li>Convex = curved outward (reflecting surface) | Concave = curved inward.</li>
+<li>C = 2F. Pole→Focus→Centre of Curvature, in that order along principal axis.</li>
+<li><b>Concave (6 cases):</b> ∞→F, beyond C→F-C, at C→C, C-F→beyond C, F→∞ — ALL real+inverted, sizes go: tiny→small→same→big→huge. EXCEPTION: P-F → virtual, erect, enlarged.</li>
+<li><b>Convex (2 cases):</b> ∞→F(behind), ∞-to-P→P-F(behind) — both virtual, erect, diminished. NEVER real/inverted.</li>
+<li>Uses: Concave = magnify (shaving, dentist, torch, solar). Convex = wide view (vehicles, ATM, sunglasses, street lights).</li>
+</ul>
+</div>
+
+<div class="layer-section">
+<h2>➗ Mirror Formula</h2>
+<ul>
+<li>1/v + 1/u = 1/f. u always negative. Concave f negative, Convex f positive.</li>
+<li>v positive = virtual (behind mirror). v negative = real (in front).</li>
+<li>m = −v/u</li>
+</ul>
+</div>
+
+<div class="layer-section">
+<h2>🌊 Refraction</h2>
+<ul>
+<li>Rarer→Denser: bends toward normal, slows down. Denser→Rarer: bends away, speeds up.</li>
+<li>Snell's Law: sin i / sin r = constant = refractive index.</li>
+<li>n = speed in air ÷ speed in medium.</li>
+<li>Must-know n values: Benzene 1.5, Crown Glass 1.52, Canada Balsam 1.53, Diamond 2.42.</li>
+<li>Glass slab: bends toward normal entering, away exiting → emergent ray parallel but laterally displaced. At 90° incidence: no bending at all.</li>
+</ul>
+</div>
+
+<div class="layer-section">
+<h2>🔮 Lenses</h2>
+<ul>
+<li>Concave Mirror ⟺ Convex Lens. Convex Mirror ⟺ Concave Lens (image-position behaviour only).</li>
+<li>Sign convention follows SHAPE not identity: Concave (mirror/lens) = f negative. Convex (mirror/lens) = f positive.</li>
+<li>For lenses: real image = opposite side of object (vs. same side for mirrors).</li>
+<li>v positive = REAL for lens (flips from mirror's virtual meaning).</li>
+<li>Lens formula: 1/v − 1/u = 1/f (minus). m = +v/u (no minus).</li>
+<li>Convex lens = converging, treats hypermetropia. Concave lens = diverging, treats myopia.</li>
+<li>Power P = 1/f, unit Diopter. Convex = +P, Concave = −P. Combine: P = P₁+P₂+...</li>
+</ul>
+</div>
+`);
+
+/* ============ 18. ULTRA-FAST REVISION SHEET (Layer 3) ============ */
+addPage("ultra-fast","Revision Layers","Ultra-Fast Sheet","⚡","var(--blue)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--blue)">LAYER 3 · ULTRA-FAST REVISION</div>
+  <h1 class="page-title">⚡ Ultra-Fast Revision Sheet</h1>
+  <p class="page-desc">For revisions 10–20. Pure trigger-words — each should unlock the full memory.</p>
+</div>
+
+<div class="ufast-grid">
+<div class="ufast-card"><h4>Dual nature</h4><div>Einstein, particle + wave</div></div>
+<div class="ufast-card"><h4>Reflection laws</h4><div>∠i=∠r; same plane</div></div>
+<div class="ufast-card"><h4>Plane mirror</h4><div>P=0, f=∞, virtual erect same-size</div></div>
+<div class="ufast-card"><h4>Virtual/Real pair</h4><div>Virtual=Erect | Real=Inverted</div></div>
+<div class="ufast-card"><h4>Concave shape</h4><div>Curved inward = cave</div></div>
+<div class="ufast-card"><h4>Convex shape</h4><div>Curved outward = bulge</div></div>
+<div class="ufast-card"><h4>C and F</h4><div>C = 2F</div></div>
+<div class="ufast-card"><h4>Concave 6 cases</h4><div>All real-inverted EXCEPT P-F (virtual erect)</div></div>
+<div class="ufast-card"><h4>Convex 2 cases</h4><div>Always virtual, erect, diminished</div></div>
+<div class="ufast-card"><h4>Concave uses</h4><div>Shaving, dentist, torch, solar</div></div>
+<div class="ufast-card"><h4>Convex uses</h4><div>Vehicle mirror, ATM, sunglasses, street light</div></div>
+<div class="ufast-card"><h4>Mirror formula</h4><div>1/v+1/u=1/f, u neg, concave f neg, convex f pos</div></div>
+<div class="ufast-card"><h4>v sign (mirror)</h4><div>+v = virtual</div></div>
+<div class="ufast-card"><h4>Magnification (mirror)</h4><div>m = −v/u</div></div>
+<div class="ufast-card"><h4>Refraction bending</h4><div>Rarer→Denser: toward normal, slow. Reverse: away, fast</div></div>
+<div class="ufast-card"><h4>Snell's Law</h4><div>sin i/sin r = n (constant)</div></div>
+<div class="ufast-card"><h4>n formula</h4><div>speed in air ÷ speed in medium</div></div>
+<div class="ufast-card"><h4>Must-know n</h4><div>Benzene 1.5, Crown 1.52, Balsam 1.53, Diamond 2.42</div></div>
+<div class="ufast-card"><h4>Glass slab</h4><div>Lateral displacement; 90° = no bend</div></div>
+<div class="ufast-card"><h4>Mirror-lens equivalence</h4><div>Concave mirror=Convex lens; Convex mirror=Concave lens</div></div>
+<div class="ufast-card"><h4>Sign rule (universal)</h4><div>Concave=f neg, Convex=f pos — shape decides, always</div></div>
+<div class="ufast-card"><h4>Real image side</h4><div>Mirror: same side. Lens: opposite side</div></div>
+<div class="ufast-card"><h4>v sign (lens)</h4><div>+v = REAL (flips from mirror)</div></div>
+<div class="ufast-card"><h4>Lens formula</h4><div>1/v−1/u=1/f; m=+v/u</div></div>
+<div class="ufast-card"><h4>Lens uses</h4><div>Convex=hypermetropia, Concave=myopia</div></div>
+<div class="ufast-card"><h4>Power</h4><div>P=1/f, Diopter, P₁+P₂+...</div></div>
+</div>
+`);
+
+/* ============ 19. 30-SECOND REVISION SHEET (Layer 4) ============ */
+addPage("thirty-sec","Revision Layers","30-Second Sheet","⏱️","var(--green)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--green)">LAYER 4 · 30-SECOND REVISION</div>
+  <h1 class="page-title">⏱️ 30-Second Revision Sheet</h1>
+  <p class="page-desc">If you only have 30 seconds. The bare skeleton.</p>
+</div>
+
+<div class="card">
+<div class="pill-row">
+<span class="pill g">Virtual=Erect, Real=Inverted</span>
+<span class="pill b">Concave curves IN, Convex curves OUT</span>
+<span class="pill g">C=2F</span>
+<span class="pill b">Concave mirror: real-inverted EXCEPT P-F zone</span>
+<span class="pill g">Convex mirror: always virtual-erect-diminished</span>
+<span class="pill b">1/v+1/u=1/f (mirror)</span>
+<span class="pill g">u always neg; concave f neg; convex f pos</span>
+<span class="pill b">+v = virtual (mirror) | +v = real (lens)</span>
+<span class="pill g">Rarer→Denser: bend toward normal, slow down</span>
+<span class="pill b">sin i/sin r = refractive index (Snell's Law)</span>
+<span class="pill g">Benzene 1.5 · Crown 1.52 · Balsam 1.53 · Diamond 2.42</span>
+<span class="pill b">Concave mirror = Convex lens (behaviour)</span>
+<span class="pill g">Convex mirror = Concave lens (behaviour)</span>
+<span class="pill b">Lens: 1/v−1/u=1/f, m=+v/u</span>
+<span class="pill g">Convex lens→hypermetropia, Concave lens→myopia</span>
+<span class="pill b">P=1/f, unit Diopter</span>
+</div>
+</div>
+`);
+
+/* ============ 20. LAST-NIGHT-BEFORE-EXAM SHEET (Layer 5) ============ */
+addPage("last-night","Revision Layers","Last Night Before Exam","🌙","var(--green)",`
+<div class="page-header">
+  <div class="page-eyebrow" style="color:var(--green)">LAYER 5 · FINAL SWEEP</div>
+  <h1 class="page-title">🌙 Last-Night-Before-Exam Sheet</h1>
+  <p class="page-desc">Read this once, slowly, right before you sleep. That's it.</p>
+</div>
+
+<div class="lastnight">
+<h2>The Five Things That Decide Most Questions</h2>
+<div class="flash">1. <b>Virtual is always Erect. Real is always Inverted.</b> No exceptions, for mirrors.</div>
+<div class="flash">2. <b>Concave mirror has ONE exception</b> (object between Pole and Focus → virtual, erect, magnified). Every other position → real, inverted.</div>
+<div class="flash">3. <b>Convex mirror has ZERO exceptions</b> — always virtual, erect, diminished.</div>
+<div class="flash">4. <b>Sign convention follows SHAPE, never mirror/lens identity.</b> Concave (mirror or lens) = negative f. Convex (mirror or lens) = positive f.</div>
+<div class="flash">5. <b>The one flip between mirror and lens systems:</b> +v means virtual for a mirror, but real for a lens. Everything else stays the same.</div>
+</div>
+
+<div class="lastnight" style="margin-top:18px;">
+<h2>Four Numbers Worth Their Own Marks</h2>
+<div class="flash"><b>1.5</b> — Benzene</div>
+<div class="flash"><b>1.52</b> — Crown Glass</div>
+<div class="flash"><b>1.53</b> — Canada Balsam</div>
+<div class="flash"><b>2.42</b> — Diamond (the most-asked single number in this chapter)</div>
+</div>
+
+<div class="lastnight" style="margin-top:18px;">
+<h2>One Equivalence to Whisper to Yourself</h2>
+<div class="flash">Concave Mirror behaves like Convex Lens. Convex Mirror behaves like Concave Lens. <b>But their signs don't swap — only shape decides sign.</b></div>
+</div>
+
+<div class="lastnight" style="margin-top:18px;">
+<h2>Sleep well. You've got this.</h2>
+<div class="flash">Walk through the Optics Mansion one more time in your head if you want — front hall, curved dining hall, bowling lane, receding corridor, convex closet, accountant's office, glass conservatory, refractive index vault, twin room, lens-shaped exit. That's the whole chapter.</div>
+</div>
+`);
+
+/* ============================================================
+   DATA FOR ACTIVE RECALL WIDGETS
+   ============================================================ */
+const FLIP_CARDS = [
+  {q:"What are the two laws of reflection?", a:"1) ∠incidence = ∠reflection. 2) Incident ray, reflected ray, and normal all lie in the same plane."},
+  {q:"Plane mirror: focal length and power?", a:"Focal length = infinity, Power = zero."},
+  {q:"If an image is virtual, what else must be true about it (for a mirror)?", a:"It must be erect (straight) — virtual and erect always pair together."},
+  {q:"Convex mirror's reflecting surface curves which way?", a:"Outward (bulges toward the object)."},
+  {q:"What is exactly halfway between the Pole and the Centre of Curvature?", a:"The Focus (F). Also: C = 2F."},
+  {q:"In a concave mirror, which single object position gives a virtual image?", a:"Between the Pole and the Focus (P–F)."},
+  {q:"Does a convex mirror ever form a real image?", a:"Never. It only ever forms virtual, erect, diminished images."},
+  {q:"Mirror formula?", a:"1/v + 1/u = 1/f"},
+  {q:"In mirror sign convention, what is u always?", a:"Negative (object is always placed in front of/negative x-axis)."},
+  {q:"What's the magnification formula for mirrors?", a:"m = −v/u"},
+  {q:"Light goes from rarer to denser medium — what happens to its path and speed?", a:"Bends toward the normal; speed decreases."},
+  {q:"What is Snell's Law?", a:"sin(angle of incidence) / sin(angle of refraction) = constant = refractive index."},
+  {q:"Refractive index of Diamond?", a:"2.42 — the most frequently asked value in this topic."},
+  {q:"What is lateral displacement?", a:"The sideways shift between the incident ray and the emergent ray after passing through a glass slab."},
+  {q:"What happens at exactly 90° angle of incidence on a glass slab?", a:"The ray passes straight through without any bending (no refraction in direction, though speed still changes inside)."},
+  {q:"Concave mirror is equivalent to which lens (in image-formation behaviour)?", a:"Convex lens."},
+  {q:"Is the focal length of a convex lens positive or negative?", a:"Positive — because it's convex. (NOT because concave mirror's f was negative — sign follows shape, not identity.)"},
+  {q:"For a lens, where does a real image form relative to the object?", a:"On the opposite side of the lens from the object (unlike mirrors, where real images form on the same side)."},
+  {q:"Lens formula and magnification formula?", a:"1/v − 1/u = 1/f (minus). m = +v/u (no minus sign)."},
+  {q:"Which lens treats myopia, and which treats hypermetropia?", a:"Concave lens → myopia (diverging). Convex lens → hypermetropia (converging)."},
+  {q:"SI unit of power of a lens?", a:"Diopter (D), equivalent to metre-inverse (m⁻¹)."},
+];
+
+const FILL_BLANKS = [
+  {text:"The dual nature of light was proposed by ___.", answer:"einstein"},
+  {text:"In reflection, angle of incidence equals angle of ___.", answer:"reflection"},
+  {text:"A plane mirror's power is ___ and focal length is ___.", answer:"zero"},
+  {text:"If an image is real, it must be ___ (upside-down or straight?).", answer:"inverted"},
+  {text:"The reflecting surface of a convex mirror is curved ___.", answer:"outward"},
+  {text:"C = ___ × F.", answer:"2"},
+  {text:"For a concave mirror, the object placed between Pole and Focus gives a ___ image (virtual/real).", answer:"virtual"},
+  {text:"A convex mirror always gives a(n) ___ image (real/virtual).", answer:"virtual"},
+  {text:"Mirror formula: 1/v + 1/u = 1/___.", answer:"f"},
+  {text:"In mirror sign convention, u is always ___ (positive/negative).", answer:"negative"},
+  {text:"When light goes from a rarer to a denser medium, it bends ___ the normal.", answer:"toward"},
+  {text:"Refractive index of diamond is ___.", answer:"2.42"},
+  {text:"The sideways shift of light through a glass slab is called lateral ___.", answer:"displacement"},
+  {text:"A concave mirror behaves the same (in image formation) as a ___ lens.", answer:"convex"},
+  {text:"The focal length of any concave shape (mirror or lens) is always ___.", answer:"negative"},
+  {text:"For a lens, positive v means the image is ___ (real/virtual).", answer:"real"},
+  {text:"Lens formula: 1/v − 1/u = 1/___.", answer:"f"},
+  {text:"Convex lens corrects ___ (myopia/hypermetropia).", answer:"hypermetropia"},
+  {text:"SI unit of power of a lens is the ___.", answer:"diopter"},
+];
+
+/* ============================================================
+   APP RENDERING LOGIC
+   ============================================================ */
+const visited = new Set();
+let currentIndex = 0;
+
+function renderSidebar(){
+  const groups = [];
+  PAGES.forEach(p=>{
+    if(!groups.includes(p.group)) groups.push(p.group);
+  });
+  let html = `
+    <div class="brand">
+      <div class="eyebrow">SSC CGL · Physics</div>
+      <h1>Reflection &amp; Refraction</h1>
+      <div class="sub">High-Retention Revision System</div>
+    </div>
+    <div id="progress-track"><div id="progress-fill"></div></div>
+    <div id="progress-label">0 / ${PAGES.length} sections visited</div>
+  `;
+  groups.forEach(g=>{
+    html += `<div class="nav-group"><div class="nav-group-label">${g}</div>`;
+    PAGES.forEach((p, idx)=>{
+      if(p.group !== g) return;
+      html += `<div class="nav-item" id="nav-${p.id}" onclick="goToPage(${idx})">
+        <span class="ico">${p.icon}</span>
+        <span>${p.navLabel}</span>
+        <span class="progress-dot"></span>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+  document.getElementById('sidebar').innerHTML = html;
+}
+
+function renderPages(){
+  let html = '';
+  PAGES.forEach((p, idx)=>{
+    html += `<div class="page" id="page-${p.id}" data-idx="${idx}">${p.html}
+      <div id="prevnext"></div>
+    </div>`;
+  });
+  document.getElementById('pages-root').innerHTML = html;
+
+  // populate active recall widgets if present
+  const flipContainer = document.getElementById('flip-container');
+  if(flipContainer){
+    flipContainer.innerHTML = FLIP_CARDS.map(c=>`
+      <div class="flip-card" onclick="this.classList.toggle('open')">
+        <div class="q">Q: ${c.q}</div>
+        <div class="a">A: ${c.a}</div>
+        <div class="hint">Click to flip</div>
+      </div>
+    `).join('');
+  }
+  const fillContainer = document.getElementById('fill-container');
+  if(fillContainer){
+    fillContainer.innerHTML = FILL_BLANKS.map((f,i)=>{
+      const parts = f.text.split('___');
+      return `<div class="fill-blank" style="margin-bottom:10px;font-size:14px;color:var(--text-dim);">
+        ${i+1}. ${parts[0]}<input type="text" id="blank-${i}" autocomplete="off">${parts[1]||''}
+      </div>`;
+    }).join('');
+  }
+}
+
+function checkFillBlanks(){
+  let correct = 0;
+  FILL_BLANKS.forEach((f,i)=>{
+    const input = document.getElementById('blank-'+i);
+    const val = (input.value||'').trim().toLowerCase();
+    const ans = f.answer.toLowerCase();
+    if(val === ans || (ans==='f' && val==='f') ){
+      input.style.borderColor = 'var(--green)';
+      input.style.color = 'var(--green)';
+      correct++;
+    } else if(val.length>0){
+      input.style.borderColor = 'var(--red)';
+      input.style.color = 'var(--red)';
+    }
+  });
+  const resultEl = document.getElementById('fill-result');
+  resultEl.style.color = correct === FILL_BLANKS.length ? 'var(--green)' : 'var(--amber)';
+  resultEl.textContent = `You got ${correct} / ${FILL_BLANKS.length} correct.`;
+}
+
+function updateProgress(){
+  const pct = Math.round((visited.size / PAGES.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-label').textContent = `${visited.size} / ${PAGES.length} sections visited`;
+}
+
+function goToPage(idx){
+  if(idx < 0 || idx >= PAGES.length) return;
+  currentIndex = idx;
+  const target = PAGES[idx];
+
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+target.id).classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  const navEl = document.getElementById('nav-'+target.id);
+  if(navEl){ navEl.classList.add('active'); navEl.classList.add('visited'); navEl.scrollIntoView({block:'nearest'}); }
+
+  visited.add(target.id);
+  updateProgress();
+
+  document.getElementById('crumbText').textContent = target.navLabel;
+
+  // prev/next buttons
+  const prevDisabled = idx === 0 ? 'disabled' : '';
+  const nextDisabled = idx === PAGES.length-1 ? 'disabled' : '';
+  const prevPage = PAGES[idx-1];
+  const nextPage = PAGES[idx+1];
+  const pnHtml = `
+    <button class="nav-btn ${idx===0?'disabled':''}" onclick="goToPage(${idx-1})">
+      <span class="lbl">← Previous</span>${prevPage ? prevPage.navLabel : ''}
+    </button>
+    <button class="nav-btn ${idx===PAGES.length-1?'disabled':''}" onclick="goToPage(${idx+1})">
+      <span class="lbl">Next →</span>${nextPage ? nextPage.navLabel : ''}
+    </button>
+  `;
+  document.getElementById('page-'+target.id).querySelector('#prevnext').innerHTML = pnHtml;
+
+  document.getElementById('main').scrollTo({top:0, behavior:'instant'});
+  closeSidebar();
+}
+
+function markVisitedAndGo(direction){
+  goToPage(currentIndex + direction);
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+/* INIT */
+reorderPages();
+renderSidebar();
+renderPages();
+goToPage(0);
+</script>
+</body>
+</html>

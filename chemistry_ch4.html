@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemical Reactions — SSC CGL Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --bg: #0b0e14;
+    --bg2: #111520;
+    --bg3: #161b27;
+    --card: #1a2033;
+    --card2: #1f2840;
+    --border: #2a3450;
+    --green: #4ade80;
+    --green-dim: #1a3d2a;
+    --blue: #60a5fa;
+    --blue-dim: #1a2a3d;
+    --yellow: #fbbf24;
+    --yellow-dim: #3d2e0a;
+    --red: #f87171;
+    --red-dim: #3d1a1a;
+    --purple: #a78bfa;
+    --purple-dim: #2a1a3d;
+    --cyan: #22d3ee;
+    --text: #e2e8f0;
+    --text-dim: #94a3b8;
+    --text-muted: #64748b;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── NAV ── */
+  #nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(11,14,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  #nav .logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green);
+    letter-spacing: 1px;
+  }
+  #nav .logo span { color: var(--text-muted); }
+  #nav-tabs {
+    display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
+    max-width: calc(100vw - 220px);
+  }
+  #nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    color: var(--text-muted);
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    background: none;
+  }
+  .nav-tab:hover { color: var(--text); background: var(--card); }
+  .nav-tab.active {
+    color: var(--green);
+    background: var(--green-dim);
+    border-color: rgba(74,222,128,0.3);
+  }
+  #progress-bar {
+    position: fixed; top: 56px; left: 0; height: 2px;
+    background: linear-gradient(90deg, var(--green), var(--blue));
+    transition: width 0.4s ease;
+    z-index: 99;
+  }
+
+  /* ── PAGES ── */
+  .page {
+    display: none;
+    position: fixed; top: 58px; left: 0; right: 0; bottom: 0;
+    overflow-y: auto;
+    padding: 32px 24px 60px;
+  }
+  .page.active { display: block; }
+  .page-inner { max-width: 900px; margin: 0 auto; }
+
+  /* ── TYPOGRAPHY ── */
+  .page-title {
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .page-sub {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+    font-family: var(--mono);
+  }
+  h2 { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--blue); }
+  h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--green); }
+  p { line-height: 1.7; color: var(--text-dim); font-size: 15px; margin-bottom: 12px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card-green { border-color: rgba(74,222,128,0.25); background: var(--green-dim); }
+  .card-blue { border-color: rgba(96,165,250,0.25); background: var(--blue-dim); }
+  .card-yellow { border-color: rgba(251,191,36,0.25); background: var(--yellow-dim); }
+  .card-red { border-color: rgba(248,113,113,0.3); background: var(--red-dim); }
+  .card-purple { border-color: rgba(167,139,250,0.25); background: var(--purple-dim); }
+
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--mono);
+    margin-bottom: 10px;
+  }
+  .tag-fire { background: rgba(251,191,36,0.15); color: var(--yellow); border: 1px solid rgba(251,191,36,0.3); }
+  .tag-star { background: rgba(96,165,250,0.15); color: var(--blue); border: 1px solid rgba(96,165,250,0.3); }
+  .tag-plus { background: rgba(167,139,250,0.15); color: var(--purple); border: 1px solid rgba(167,139,250,0.3); }
+  .tag-trap { background: rgba(248,113,113,0.15); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+  .tag-hook { background: rgba(34,211,238,0.15); color: var(--cyan); border: 1px solid rgba(34,211,238,0.3); }
+
+  /* ── GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media(max-width:700px) { .grid2,.grid3 { grid-template-columns: 1fr; } }
+
+  /* ── REACTION BOXES ── */
+  .rxn {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    color: var(--cyan);
+    overflow-x: auto;
+    line-height: 1.6;
+  }
+  .rxn .comment { color: var(--text-muted); }
+
+  /* ── COMPARISON TABLE ── */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+  th {
+    background: var(--bg3);
+    color: var(--text);
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border);
+  }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
+  tr:hover td { background: var(--card); }
+  .td-green { color: var(--green); font-weight: 600; }
+  .td-red { color: var(--red); }
+  .td-blue { color: var(--blue); }
+
+  /* ── MEMORY PALACE ── */
+  .palace-stop {
+    display: flex; gap: 14px; align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .palace-num {
+    min-width: 36px; height: 36px;
+    background: var(--green-dim);
+    border: 1px solid rgba(74,222,128,0.4);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--green);
+    flex-shrink: 0;
+  }
+  .palace-content h3 { margin-bottom: 4px; color: var(--text); font-size: 14px; }
+  .palace-content p { font-size: 13px; margin: 0; }
+
+  /* ── REACTIVITY SERIES ── */
+  .series-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 14px;
+    border-left: 3px solid;
+    margin-bottom: 4px;
+    border-radius: 0 8px 8px 0;
+    background: var(--bg3);
+    font-size: 13px;
+  }
+  .series-name { font-weight: 700; font-family: var(--mono); min-width: 60px; }
+  .series-word { color: var(--text-muted); font-size: 12px; }
+  .series-note { margin-left: auto; font-size: 11px; font-family: var(--mono); }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .quiz-q .q-text { font-weight: 500; margin-bottom: 10px; font-size: 14px; color: var(--text); }
+  .quiz-opt {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    margin: 5px 0;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.18s;
+    color: var(--text-dim);
+  }
+  .quiz-opt:hover { border-color: var(--blue); color: var(--text); background: var(--blue-dim); }
+  .quiz-opt.correct { border-color: var(--green); background: var(--green-dim); color: var(--green); }
+  .quiz-opt.wrong { border-color: var(--red); background: var(--red-dim); color: var(--red); }
+  .quiz-opt.show-correct { border-color: var(--green); background: var(--green-dim); color: var(--green); }
+  .quiz-explain {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--bg);
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text-dim);
+    border-left: 3px solid var(--green);
+  }
+
+  /* ── FLASH CARDS ── */
+  .flashcard-wrap { perspective: 1000px; height: 180px; cursor: pointer; margin-bottom: 16px; }
+  .flashcard { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.5s; }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .fc-front, .fc-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    text-align: center;
+  }
+  .fc-front {
+    background: var(--card2);
+    border: 1px solid var(--border);
+    flex-direction: column; gap: 8px;
+  }
+  .fc-front .fc-hint { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+  .fc-front .fc-q { font-size: 16px; font-weight: 600; color: var(--text); }
+  .fc-back {
+    background: var(--green-dim);
+    border: 1px solid rgba(74,222,128,0.35);
+    transform: rotateY(180deg);
+    flex-direction: column; gap: 6px;
+  }
+  .fc-back .fc-a { font-size: 15px; font-weight: 600; color: var(--green); }
+  .fc-back .fc-detail { font-size: 12px; color: var(--text-dim); }
+
+  /* ── QUICK SHEET ── */
+  .qs-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .qs-key { min-width: 140px; font-weight: 600; color: var(--blue); }
+  .qs-val { color: var(--text-dim); flex: 1; }
+
+  /* ── BADGE ROW ── */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--mono);
+  }
+
+  /* ── EXAM TRAP ── */
+  .trap {
+    background: var(--red-dim);
+    border: 1px solid rgba(248,113,113,0.35);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  .trap .trap-title { color: var(--red); font-weight: 700; margin-bottom: 4px; font-size: 13px; }
+  .trap .trap-body { color: var(--text-dim); }
+
+  /* ── SCROLL HINT ── */
+  .scroll-fade {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(transparent, var(--bg));
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  /* ── HOOK BOX ── */
+  .hook-box {
+    background: linear-gradient(135deg, #0f1d2e, #1a2033);
+    border: 1px solid rgba(34,211,238,0.3);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hook-box::before {
+    content: '🧠';
+    position: absolute;
+    top: 14px; right: 16px;
+    font-size: 24px;
+    opacity: 0.4;
+  }
+  .hook-box .hook-title { color: var(--cyan); font-weight: 700; font-size: 13px; margin-bottom: 6px; font-family: var(--mono); }
+  .hook-box .hook-body { color: var(--text-dim); font-size: 14px; line-height: 1.6; }
+
+  /* ── NIGHT SHEET ── */
+  .night-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .night-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    margin-top: 6px; flex-shrink: 0;
+  }
+  .night-text { font-size: 14px; color: var(--text-dim); line-height: 1.5; }
+  .night-text strong { color: var(--text); }
+
+  /* ── PAGE TRANSITIONS ── */
+  .page { animation: none; }
+  .page.active { animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  /* ── PREV NEXT ── */
+  .page-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .pn-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--text-dim);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: var(--sans);
+    transition: all 0.2s;
+  }
+  .pn-btn:hover { border-color: var(--green); color: var(--green); }
+  .pn-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .pn-center { font-family: var(--mono); font-size: 12px; color: var(--text-muted); }
+
+  /* ── CONNECTON ARROW ── */
+  .conn-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .conn-from { color: var(--blue); font-weight: 600; }
+  .conn-arrow { color: var(--text-muted); font-family: var(--mono); }
+  .conn-to { color: var(--text-dim); }
+  .conn-to strong { color: var(--green); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="logo">⚗️ CHEM <span>// SSC-CGL</span></div>
+  <div id="nav-tabs"></div>
+</nav>
+<div id="progress-bar" style="width:0%"></div>
+<div class="scroll-fade"></div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 0 · BIG PICTURE
+══════════════════════════════════════════════════ -->
+<div class="page active" id="p0">
+<div class="page-inner">
+  <div class="page-title">⚗️ Chemical Reactions</div>
+  <div class="page-sub">SSC CGL • High-Retention Revision System • FRB 2.0</div>
+
+  <div class="card card-blue">
+    <div class="tag tag-star">BIG PICTURE</div>
+    <p>This chapter is about <strong style="color:var(--blue)">HOW matter changes</strong>. Every reaction is either building up (combination), breaking down (decomposition), or swapping (displacement). Layer on top: is heat going IN or OUT? Add oxidation/reduction rules. That's the whole chapter.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="tag tag-fire">🔥 Must Know</div>
+      <ul style="font-size:14px;color:var(--text-dim);line-height:2;padding-left:18px">
+        <li>Physical vs Chemical Change</li>
+        <li>Combination Reaction + Examples</li>
+        <li>Decomposition Reaction + Examples</li>
+        <li>Displacement Reaction + Reactivity Series</li>
+        <li>Double Displacement / Ion Exchange</li>
+        <li>Oxidation & Reduction (OIL RIG)</li>
+        <li>Rancidity & Corrosion</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="tag tag-plus">➕ Also Covered</div>
+      <ul style="font-size:14px;color:var(--text-dim);line-height:2;padding-left:18px">
+        <li>Exothermic vs Endothermic</li>
+        <li>Combustion as Combination</li>
+        <li>Electrolysis of Water</li>
+        <li>Photography (AgCl/AgBr)</li>
+        <li>Aqua Regia</li>
+        <li>Order of Reaction (0, 1st, 2nd, 3rd)</li>
+        <li>Rusting vs Corrosion</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-title">CHAPTER IN ONE SENTENCE</div>
+    <div class="hook-body">Matter can change <strong style="color:var(--cyan)">physically</strong> (reversible, same substance) or <strong style="color:var(--green)">chemically</strong> (irreversible, new substance) — and every chemical reaction is classified by <em>what's happening to reactants</em> and <em>whether heat is absorbed or released</em>.</div>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" disabled>← Prev</button>
+    <div class="pn-center">Page 1 of 10</div>
+    <button class="pn-btn" onclick="goPage(1)">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 1 · MEMORY PALACE
+══════════════════════════════════════════════════ -->
+<div class="page" id="p1">
+<div class="page-inner">
+  <div class="page-title">🏛️ Chapter Memory Palace</div>
+  <div class="page-sub">Walk through a CHEMISTRY MUSEUM — each room = one reaction type</div>
+
+  <div class="card card-purple" style="margin-bottom:20px">
+    <div class="hook-title" style="color:var(--purple);font-family:var(--mono);font-weight:700;margin-bottom:8px;">THE STORY</div>
+    <p style="font-size:14px">You enter a grand Chemistry Museum. Each hall has a neon sign. Walk through it every time you revise.</p>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">🚪</div>
+    <div class="palace-content">
+      <h3>Entrance Gate — Physical vs Chemical</h3>
+      <p>Two doors. Left door (reversible, labeled "ICE → WATER → ICE") = Physical. Right door (locked, "ASHES STAY ASHES") = Chemical. The candle at reception burns: <strong style="color:var(--yellow)">both doors open simultaneously</strong> — wax melts (physical) and flame burns wick (chemical).</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">🟢</div>
+    <div class="palace-content">
+      <h3>Hall 1 — Combination Room (things JOIN)</h3>
+      <p>A painter is furiously mixing <strong style="color:var(--green)">lime + water → steaming bowl</strong> (exothermic!). The steam rises and CO₂ from air sneaks in → white limestone wall appears. Sign: "Two become One. Heat Released."</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">🔴</div>
+    <div class="palace-content">
+      <h3>Hall 2 — Decomposition Room (things BREAK)</h3>
+      <p>A scientist points a flame at a flask of lead nitrate — <strong style="color:var(--red)">brown smoke fills the room</strong>. On the wall: electrolysis tank where bubbles rise (H₂ at cathode, O₂ at anode). A photo camera flashes — silver chloride darkens on the film. Heat needed everywhere here.</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">🔵</div>
+    <div class="palace-content">
+      <h3>Hall 3 — Displacement Corridor (Katrina's Car Show)</h3>
+      <p>Katrina walks in asking for "Kar Alto Zen Ferrari" but walks out with "Silver Audi." Iron nail drops into blue copper sulphate — nail turns copper-coloured, solution turns <strong style="color:var(--green)">green</strong>. Reactivity ladder on the wall.</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">🟡</div>
+    <div class="palace-content">
+      <h3>Hall 4 — Double Displacement Lab (Ion Swap)</h3>
+      <p>Two scientists throw their name badges at each other mid-air — they swap. <strong style="color:var(--yellow)">White, yellow, and milky precipitates</strong> form in beakers. Sign: "Also called Ion Exchange Room."</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">⚡</div>
+    <div class="palace-content">
+      <h3>Hall 5 — Redox Arena</h3>
+      <p><strong style="color:var(--cyan)">OIL RIG banner on ceiling.</strong> Copper goes in → copper oxide out (oxidised). Hydrogen steals oxygen → water forms (reduced). Chips packet on table, filled with nitrogen gas to stop the oil going rancid. Iron pillar at corner: reddish-brown rust. Copper statue: green coating.</p>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">📊</div>
+    <div class="palace-content">
+      <h3>Exit Room — Order of Reaction</h3>
+      <p>A meter on the wall: dial at 0 (rate doesn't care about concentration), dial at 1 (rate = concentration), dial at 2 (rate = concentration²). Simple speedometer of reactions.</p>
+    </div>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" onclick="goPage(0)">← Prev</button>
+    <div class="pn-center">Page 2 of 10</div>
+    <button class="pn-btn" onclick="goPage(2)">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 2 · COMPLETE REVISION NOTES
+══════════════════════════════════════════════════ -->
+<div class="page" id="p2">
+<div class="page-inner">
+  <div class="page-title">📋 Complete Revision Notes</div>
+  <div class="page-sub">Every fact from the lecture — zero information lost</div>
+
+  <!-- Physical vs Chemical -->
+  <div class="card" style="margin-bottom:18px">
+    <div class="tag tag-fire">🔥 Must Know</div>
+    <h2>1. Physical vs Chemical Change</h2>
+    <table>
+      <tr><th>Aspect</th><th>Physical Change</th><th>Chemical Change</th></tr>
+      <tr><td>New product?</td><td class="td-blue">No</td><td class="td-green">Yes</td></tr>
+      <tr><td>Reversible?</td><td class="td-green">Yes</td><td class="td-red">No (irreversible)</td></tr>
+      <tr><td>Matter type</td><td class="td-blue">Same substance</td><td class="td-green">New substance formed</td></tr>
+      <tr><td>Examples</td><td>Ice melting, chopping wood</td><td>Wood burning, rusting, rotting fruit, digestion</td></tr>
+    </table>
+    <div class="card card-yellow" style="margin-top:12px">
+      <span class="tag tag-fire">⭐ Special Case</span>
+      <strong>Burning of Candle = BOTH physical + chemical</strong><br>
+      <span style="font-size:13px;color:var(--text-dim)">Wax melts & solidifies again → <em>Physical</em> | Wax vaporises near flame & wick burns irreversibly → <em>Chemical</em></span>
+    </div>
+  </div>
+
+  <!-- Exo vs Endo -->
+  <div class="card">
+    <div class="tag tag-star">⭐ Important</div>
+    <h2>2. Exothermic vs Endothermic</h2>
+    <div class="grid2">
+      <div class="card card-green">
+        <h3>Exothermic</h3>
+        <p style="font-size:13px">Heat is <strong style="color:var(--green)">released</strong> to surroundings.<br>Examples: Combustion, most combination reactions, lime + water</p>
+      </div>
+      <div class="card card-blue">
+        <h3>Endothermic</h3>
+        <p style="font-size:13px">Heat is <strong style="color:var(--blue)">absorbed</strong> from surroundings.<br>Examples: Most decomposition reactions, electrolysis</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Combination -->
+  <div class="card">
+    <div class="tag tag-fire">🔥 Must Know</div>
+    <h2>3. Combination Reaction</h2>
+    <p style="font-size:13px">Multiple reactants → single product. Mostly <strong style="color:var(--yellow)">exothermic</strong>.</p>
+    <div class="rxn">CaO + H₂O → Ca(OH)₂ + Heat <span class="comment">// Quick lime + water → Slaked lime [EXOTHERMIC]</span><br>Ca(OH)₂ + CO₂ → CaCO₃ + H₂O <span class="comment">// Lime water + CO₂ → Calcium Carbonate [milky white]</span></div>
+    <div class="badge-row">
+      <div class="badge" style="background:var(--blue-dim);color:var(--blue)">CaCO₃ = Limestone</div>
+      <div class="badge" style="background:var(--blue-dim);color:var(--blue)">= Marble</div>
+      <div class="badge" style="background:var(--blue-dim);color:var(--blue)">= Chalk</div>
+      <div class="badge" style="background:var(--blue-dim);color:var(--blue)">= Calcite</div>
+    </div>
+    <p style="font-size:13px;color:var(--yellow)">🎯 CO₂ turns lime water milky → forms CaCO₃</p>
+    <div class="rxn">CH₄ + 2O₂ → CO₂ + 2H₂O + Heat <span class="comment">// Combustion = type of Combination [Exothermic]</span></div>
+    <p style="font-size:13px">Combustion = burning of anything in presence of O₂. It is a <strong style="color:var(--green)">combination reaction</strong> and <strong style="color:var(--yellow)">exothermic</strong>.</p>
+    <div class="rxn">2Mg + O₂ → 2MgO + Blinding White Light <span class="comment">// Burning Mg ribbon → intense white light</span></div>
+  </div>
+
+  <!-- Decomposition -->
+  <div class="card">
+    <div class="tag tag-fire">🔥 Must Know</div>
+    <h2>4. Decomposition Reaction</h2>
+    <p style="font-size:13px">Single reactant → multiple products. Mostly <strong style="color:var(--blue)">endothermic</strong>. Opposite of combination.</p>
+    <div class="rxn">2Pb(NO₃)₂ → 2PbO + 4NO₂ + O₂ <span class="comment">// Lead Nitrate → BROWN FUMES (NO₂)</span><br>CaCO₃ → CaO + CO₂ <span class="comment">// Limestone → Quick Lime [used in cement industry]</span><br>2AgCl → 2Ag + Cl₂ [sunlight] <span class="comment">// Silver Chloride → used in B&W Photography</span><br>2H₂O → 2H₂ + O₂ [electricity] <span class="comment">// Electrolysis of water</span></div>
+    <div class="card card-yellow" style="margin-top:8px">
+      <strong style="color:var(--yellow)">Electrolysis of Water</strong><br>
+      <span style="font-size:13px;color:var(--text-dim)">Cathode (−) → H₂ (Hydrogen) | Anode (+) → O₂ (Oxygen)</span>
+    </div>
+  </div>
+
+  <!-- Displacement -->
+  <div class="card">
+    <div class="tag tag-fire">🔥 Must Know</div>
+    <h2>5. Displacement Reaction</h2>
+    <p style="font-size:13px">More reactive metal displaces less reactive metal from its salt solution.</p>
+    <div class="rxn">Fe + CuSO₄ → FeSO₄ + Cu <span class="comment">// Iron displaces Copper (Fe more reactive)</span><br><span class="comment">// Cu + FeSO₄ → NO REACTION (Cu less reactive than Fe)</span></div>
+    <p style="font-size:13px;color:var(--yellow)">🎯 CuSO₄ = BLUE → FeSO₄ = GREEN (colour change is asked in exams!)</p>
+
+    <h3 style="margin-top:14px">⚡ Reactivity Series — "Katrina Asked for Car Alto Zen Ferrari But Got Silver Audi"</h3>
+    <div class="series-item" style="border-color:#f87171"><span class="series-name" style="color:#f87171">K</span><span class="series-word">Katrina</span><span class="series-note" style="color:var(--red)">Cold Water ⚡</span></div>
+    <div class="series-item" style="border-color:#f87171"><span class="series-name" style="color:#f87171">Na</span><span class="series-word">Asked</span><span class="series-note" style="color:var(--red)">Cold Water ⚡</span></div>
+    <div class="series-item" style="border-color:var(--yellow)"><span class="series-name" style="color:var(--yellow)">Ca</span><span class="series-word">for Car</span><span class="series-note" style="color:var(--yellow)">Warm Water</span></div>
+    <div class="series-item" style="border-color:var(--yellow)"><span class="series-name" style="color:var(--yellow)">Mg</span><span class="series-word">—</span><span class="series-note" style="color:var(--yellow)">Warm Water</span></div>
+    <div class="series-item" style="border-color:var(--blue)"><span class="series-name" style="color:var(--blue)">Al</span><span class="series-word">Alto</span><span class="series-note" style="color:var(--blue)">Steam/Hot Water</span></div>
+    <div class="series-item" style="border-color:var(--blue)"><span class="series-name" style="color:var(--blue)">Zn</span><span class="series-word">Zen</span><span class="series-note" style="color:var(--blue)">Steam/Hot Water</span></div>
+    <div class="series-item" style="border-color:var(--blue)"><span class="series-name" style="color:var(--blue)">Fe</span><span class="series-word">Ferrari</span><span class="series-note" style="color:var(--blue)">Steam/Hot Water</span></div>
+    <div class="series-item" style="border-color:var(--text-muted)"><span class="series-name" style="color:var(--text-muted)">H</span><span class="series-word">[H₂]</span><span class="series-note">↑ Above = displaces H₂ from acid</span></div>
+    <div class="series-item" style="border-color:var(--green)"><span class="series-name" style="color:var(--green)">Ag</span><span class="series-word">Silver</span><span class="series-note" style="color:var(--green)">Inert</span></div>
+    <div class="series-item" style="border-color:var(--green)"><span class="series-name" style="color:var(--green)">Au</span><span class="series-word">Audi</span><span class="series-note" style="color:var(--green)">Aqua Regia only</span></div>
+
+    <div class="rxn" style="margin-top:12px">Aqua Regia = 3 HCl + 1 HNO₃ <span class="comment">// Only this dissolves Gold (Au)</span></div>
+  </div>
+
+  <!-- Double Displacement -->
+  <div class="card">
+    <div class="tag tag-star">⭐ Important</div>
+    <h2>6. Double Displacement Reaction</h2>
+    <p style="font-size:13px">Two compounds swap ions with each other. Also called <strong style="color:var(--cyan)">Ion Exchange Reaction</strong>. Produces a precipitate.</p>
+    <div class="rxn">Na₂SO₄ + BaCl₂ → BaSO₄↓ + 2NaCl <span class="comment">// White ppt of Barium Sulphate</span><br>Pb(NO₃)₂ + 2KI → PbI₂↓ + 2KNO₃ <span class="comment">// Yellow ppt of Lead Iodide</span></div>
+    <div class="badge-row" style="margin-top:8px">
+      <div class="badge" style="background:var(--bg3);color:var(--text)">BaSO₄ → White ppt</div>
+      <div class="badge" style="background:var(--bg3);color:var(--yellow)">PbI₂ → Yellow ppt</div>
+    </div>
+  </div>
+
+  <!-- Oxidation Reduction -->
+  <div class="card">
+    <div class="tag tag-fire">🔥 Must Know</div>
+    <h2>7. Oxidation & Reduction (REDOX)</h2>
+    <div class="grid2">
+      <div class="card card-red">
+        <h3>Oxidation</h3>
+        <p style="font-size:13px">Addition of O₂ <em>or</em> Loss of Electrons<br><strong style="color:var(--red)">OIL → Oxidation Is Loss</strong></p>
+      </div>
+      <div class="card card-green">
+        <h3>Reduction</h3>
+        <p style="font-size:13px">Removal of O₂ <em>or</em> Gain of Electrons<br><strong style="color:var(--green)">RIG → Reduction Is Gain</strong></p>
+      </div>
+    </div>
+    <div class="rxn">CuO + H₂ → Cu + H₂O<br><span class="comment">// CuO loses O → CuO is REDUCED → CuO is OXIDISING AGENT</span><br><span class="comment">// H₂ gains O → H₂ is OXIDISED → H₂ is REDUCING AGENT</span></div>
+    <div class="card card-yellow" style="margin-top:10px">
+      <strong style="color:var(--yellow)">Key Rule:</strong> <span style="font-size:13px;color:var(--text-dim)">The substance that <u>gets oxidised</u> = <strong>Reducing Agent (Reductant)</strong> | The substance that <u>gets reduced</u> = <strong>Oxidising Agent (Oxidant)</strong></span>
+    </div>
+  </div>
+
+  <!-- Rancidity & Corrosion -->
+  <div class="card">
+    <div class="tag tag-fire">🔥 Must Know</div>
+    <h2>8. Rancidity & Corrosion</h2>
+    <table>
+      <tr><th>Concept</th><th>What it is</th><th>Type of reaction</th><th>Example</th></tr>
+      <tr><td>Rancidity</td><td>Oxidation of fats & oils → bad smell/taste</td><td class="td-red">Oxidation</td><td>Stale chips/butter</td></tr>
+      <tr><td>Corrosion</td><td>Formation of layer on metal surface</td><td class="td-red">Oxidation</td><td>All metals</td></tr>
+      <tr><td>Rusting</td><td>Corrosion specific to IRON</td><td class="td-red">Oxidation</td><td>Iron oxide (reddish-brown)</td></tr>
+      <tr><td>Copper corrosion</td><td>Green layer on copper</td><td class="td-red">Oxidation</td><td>Copper carbonate (green)</td></tr>
+    </table>
+    <div class="rxn">Chips packets are filled with N₂ gas → prevents O₂ contact → prevents rancidity</div>
+  </div>
+
+  <!-- Order of Reaction -->
+  <div class="card">
+    <div class="tag tag-plus">➕ Good to Know</div>
+    <h2>9. Order of Reaction</h2>
+    <table>
+      <tr><th>Order</th><th>Rate depends on…</th><th>Example form</th></tr>
+      <tr><td class="td-blue">Zero</td><td>Independent of concentration</td><td>Rate = k</td></tr>
+      <tr><td class="td-green">First</td><td>Directly proportional to [A]¹</td><td>Rate = k[A]</td></tr>
+      <tr><td class="td-yellow">Second</td><td>[A]² OR [A][B]</td><td>Rate = k[A]²</td></tr>
+      <tr><td class="td-red">Third</td><td>[A]³ OR [A]²[B] OR [A][B][C]</td><td>Rate = k[A]³</td></tr>
+    </table>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" onclick="goPage(1)">← Prev</button>
+    <div class="pn-center">Page 3 of 10</div>
+    <button class="pn-btn" onclick="goPage(3)">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 3 · MEMORY HOOKS
+══════════════════════════════════════════════════ -->
+<div class="page" id="p3">
+<div class="page-inner">
+  <div class="page-title">🧠 Smart Memory Hooks</div>
+  <div class="page-sub">Sticky images, stories & mnemonics built for long-term recall</div>
+
+  <div class="hook-box">
+    <div class="hook-title">HOOK 1 — PHYSICAL vs CHEMICAL (The Door Story)</div>
+    <div class="hook-body">Imagine two revolving doors. The <strong style="color:var(--blue)">LEFT door spins back</strong> (reversible = physical). The <strong style="color:var(--red)">RIGHT door has a ONE-WAY lock</strong> (irreversible = chemical). A candle on the reception desk uses BOTH doors at once — wax melts through the left (physical), flame chars through the right (chemical).</div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-title">HOOK 2 — EXO vs ENDO (The Oven Rule)</div>
+    <div class="hook-body"><strong style="color:var(--green)">EXO</strong> = heat EXITs = like an oven releasing heat to kitchen. <strong style="color:var(--blue)">ENDO</strong> = heat ENTERs = like a fridge absorbing heat from inside. Combination = oven. Decomposition = fridge.</div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-title">HOOK 3 — COMBINATION (The Painter)</div>
+    <div class="hook-body">Picture a painter with a white bucket. He dumps quicklime (CaO) into water — the bucket STEAMS and SIZZLES (heat released = exothermic!). Then he slaps it on the wall. CO₂ from air creeps in and the wall turns solid white limestone. <em>Two reactants always merge into ONE product.</em></div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-title">HOOK 4 — DECOMPOSITION (The Brown Cloud)</div>
+    <div class="hook-body">A scientist heats lead nitrate — suddenly a cloud of <strong style="color:#c0854a">BROWN SMOKE</strong> fills the lab (NO₂). Remember: any time you see "brown fumes" in a question → NO₂ → Lead Nitrate decomposition. <br>Electrolysis: imagine two electrodes — the <strong style="color:var(--red)">anode is POSITIVE (+) so Oxygen (negative atoms) goes there</strong>, and <strong style="color:var(--blue)">cathode is NEGATIVE (−) so Hydrogen (positive ions) goes there</strong>.</div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-title">HOOK 5 — REACTIVITY SERIES (Katrina's Car Story)</div>
+    <div class="hook-body">
+      <strong style="color:var(--cyan)">K Na Ca Mg Al Zn Fe [H] Ag Au</strong><br><br>
+      "<strong>K</strong>atrina <strong>N</strong>a(<em>asked</em>) <strong>Ca</strong>r (<em>for</em>) <strong>Ca</strong>r <strong>A</strong>lto <strong>Z</strong>en <strong>F</strong>errari, <strong>B</strong>ut <strong>G</strong>ot <strong>S</strong>ilver <strong>Au</strong>di"<br><br>
+      K & Na react with <strong style="color:var(--red)">cold water</strong> (so reactive they explode!)<br>
+      Ca, Mg → <strong style="color:var(--yellow)">warm water</strong><br>
+      Al, Zn, Fe → <strong style="color:var(--blue)">steam/hot water</strong><br>
+      Ag, Au → almost nothing. Au needs <strong style="color:var(--purple)">Aqua Regia (3HCl + 1HNO₃)</strong>
+    </div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-title">HOOK 6 — OIL RIG for Oxidation/Reduction</div>
+    <div class="hook-body">
+      <strong style="color:var(--red)">O</strong>xidation <strong style="color:var(--red)">I</strong>s <strong style="color:var(--red)">L</strong>oss (of electrons)<br>
+      <strong style="color:var(--green)">R</strong>eduction <strong style="color:var(--green)">I</strong>s <strong style="color:var(--green)">G</strong>ain (of electrons)<br><br>
+      Visual: An OIL RIG at sea. The rig is on FIRE (oxidation). The sea is calm (reduction = gaining stability). Fire = loss of electrons. Sea = gain.
+    </div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-title">HOOK 7 — RANCIDITY (The Chips Packet)</div>
+    <div class="hook-body">Why does your chips bag feel puffy? It's full of <strong style="color:var(--cyan)">NITROGEN gas</strong>. If oxygen were inside, it would attack the fat/oil → oxidation → rancidity (stale smell). Nitrogen is inert = bodyguard. Every time you open a chips packet, remember: <strong>Rancidity = Oxidation of fats</strong>.</div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-title">HOOK 8 — CORROSION Colours</div>
+    <div class="hook-body">
+      🔴 IRON rusts → <strong style="color:#c0854a">Reddish-brown</strong> (iron oxide)<br>
+      🟢 COPPER corrodes → <strong style="color:var(--green)">Green</strong> (copper carbonate)<br>
+      Memory image: A <strong style="color:#c0854a">reddish-brown old Indian taxi</strong> (iron/rust) and a <strong style="color:var(--green)">green Statue of Liberty</strong> (copper/patina).
+    </div>
+  </div>
+
+  <div class="hook-box">
+    <div class="hook-title">HOOK 9 — DOUBLE DISPLACEMENT (The Badge Swap)</div>
+    <div class="hook-body">Two people walk into a room. They rip off each other's name badges and wear the other's. That's ion exchange! The precipitate that falls = the badge that hit the floor. Remember: BaSO₄ (white), PbI₂ (yellow).</div>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" onclick="goPage(2)">← Prev</button>
+    <div class="pn-center">Page 4 of 10</div>
+    <button class="pn-btn" onclick="goPage(4)">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 4 · CONCEPT CONNECTIONS
+══════════════════════════════════════════════════ -->
+<div class="page" id="p4">
+<div class="page-inner">
+  <div class="page-title">🔗 Concept Connections</div>
+  <div class="page-sub">No fact lives in isolation — see the full web</div>
+
+  <div class="card">
+    <h2>Reaction Type Hierarchy</h2>
+    <div class="rxn" style="font-size:12px;line-height:1.9">
+ALL CHEMICAL REACTIONS
+├── By Energy
+│   ├── Exothermic (heat out) → Combination, Combustion, most displacement
+│   └── Endothermic (heat in) → Decomposition, electrolysis
+└── By Type
+    ├── Combination → A + B → AB [Exo mostly]
+    │   └── Combustion is a SUBTYPE of combination
+    ├── Decomposition → AB → A + B [Endo mostly]
+    ├── Displacement → A + BC → AC + B [depends on reactivity]
+    ├── Double Displacement → AB + CD → AD + CB [ion exchange, ppt formed]
+    └── Redox → Oxidation + Reduction happen SIMULTANEOUSLY
+        ├── Rancidity → oxidation of fats (subtype)
+        └── Corrosion → oxidation of metal (subtype)
+            └── Rusting → corrosion of IRON specifically
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Cause → Effect Chains</h2>
+    <div class="conn-row"><span class="conn-from">CaO + H₂O</span><span class="conn-arrow">→</span><span class="conn-to">Ca(OH)₂ → reacts with CO₂ in air → <strong>CaCO₃ (limestone wall)</strong></span></div>
+    <div class="conn-row"><span class="conn-from">More reactive metal</span><span class="conn-arrow">→</span><span class="conn-to">Can <strong>displace less reactive</strong> metal from salt solution</span></div>
+    <div class="conn-row"><span class="conn-from">Oxygen reaches fats</span><span class="conn-arrow">→</span><span class="conn-to">Oxidation → <strong>Rancidity</strong> → N₂ gas filled to prevent it</span></div>
+    <div class="conn-row"><span class="conn-from">Oxygen + Iron + Moisture</span><span class="conn-arrow">→</span><span class="conn-to"><strong>Rusting</strong> (a type of corrosion, a type of oxidation)</span></div>
+    <div class="conn-row"><span class="conn-from">AgCl + Sunlight</span><span class="conn-arrow">→</span><span class="conn-to">Ag + Cl₂ → <strong>Black & White Photography</strong></span></div>
+    <div class="conn-row"><span class="conn-from">Electrolysis of H₂O</span><span class="conn-arrow">→</span><span class="conn-to">H₂ at cathode (−) | O₂ at anode (+) → <strong>Decomposition reaction</strong></span></div>
+    <div class="conn-row"><span class="conn-from">Aqua Regia</span><span class="conn-arrow">→</span><span class="conn-to">3HCl + 1HNO₃ → <strong>Only dissolves Gold</strong></span></div>
+  </div>
+
+  <div class="card">
+    <h2>Feature → Exception Map</h2>
+    <div class="conn-row"><span class="conn-from">Combination = Exo</span><span class="conn-arrow">→</span><span class="conn-to"><strong>Mostly</strong>, not always. Combustion always is.</span></div>
+    <div class="conn-row"><span class="conn-from">Decomposition = Endo</span><span class="conn-arrow">→</span><span class="conn-to"><strong>Mostly</strong>, not always.</span></div>
+    <div class="conn-row"><span class="conn-from">Rusting = Corrosion</span><span class="conn-arrow">→</span><span class="conn-to">But corrosion ≠ rusting (corrosion is broader — all metals)</span></div>
+    <div class="conn-row"><span class="conn-from">Rancidity</span><span class="conn-arrow">→</span><span class="conn-to">It IS an oxidation reaction, NOT a separate type</span></div>
+    <div class="conn-row"><span class="conn-from">Combustion</span><span class="conn-arrow">→</span><span class="conn-to">It IS a combination reaction — not a separate category</span></div>
+  </div>
+
+  <div class="card">
+    <h2>Reducing Agent vs Oxidising Agent Logic</h2>
+    <div class="card card-red" style="margin-bottom:10px">
+      <p style="font-size:13px">Substance that <strong>GETS OXIDISED</strong> → called <strong style="color:var(--yellow)">REDUCING AGENT</strong> (it helps the other substance get reduced)</p>
+    </div>
+    <div class="card card-green">
+      <p style="font-size:13px">Substance that <strong>GETS REDUCED</strong> → called <strong style="color:var(--red)">OXIDISING AGENT</strong> (it helps the other substance get oxidised)</p>
+    </div>
+    <div class="rxn">In CuO + H₂ → Cu + H₂O:<br>CuO gets reduced → CuO is OXIDISING AGENT<br>H₂ gets oxidised → H₂ is REDUCING AGENT</div>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" onclick="goPage(3)">← Prev</button>
+    <div class="pn-center">Page 5 of 10</div>
+    <button class="pn-btn" onclick="goPage(5)">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 5 · EXAM TRAPS
+══════════════════════════════════════════════════ -->
+<div class="page" id="p5">
+<div class="page-inner">
+  <div class="page-title">⚠️ Exam Traps</div>
+  <div class="page-sub">What toppers know that average students get wrong</div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 1 — Rusting vs Corrosion</div>
+    <div class="trap-body">Students write "rusting = corrosion." WRONG. <strong>Rusting is a TYPE of corrosion</strong> that occurs only in <strong>IRON</strong>. Corrosion is the broader term (all metals). Copper corrodes but does NOT rust.</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 2 — Reducing Agent GETS Oxidised (counter-intuitive!)</div>
+    <div class="trap-body">Students think "reducing agent = gets reduced." WRONG. The reducing agent is the substance that causes reduction in something else — and it itself gets OXIDISED. H₂ is the reducing agent in the CuO + H₂ reaction but H₂ itself is oxidised.</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 3 — Cathode vs Anode in Electrolysis</div>
+    <div class="trap-body">Cathode = NEGATIVE terminal → Hydrogen collects here. Anode = POSITIVE terminal → Oxygen collects here. Students often reverse this. Memory: "A for Anode, A for Air (O₂)."</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 4 — Combination ≠ Always Exothermic</div>
+    <div class="trap-body">The exam may say "all combination reactions are exothermic — True/False." Answer: FALSE. <strong>Most</strong> are exothermic, NOT all. Same applies to decomposition being endothermic.</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 5 — What Turns Lime Water Milky?</div>
+    <div class="trap-body">Answer is CO₂. Lime water = Ca(OH)₂ solution. CO₂ + Ca(OH)₂ → CaCO₃ (white/milky precipitate). Students confuse lime water with lime (CaO) or slaked lime Ca(OH)₂ in solid form.</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 6 — Candle Burning is BOTH Physical and Chemical</div>
+    <div class="trap-body">Wax melting = physical (reversible). Wax vapour burning + wick burning = chemical (irreversible). If asked "what type of change is candle burning?" — answer is BOTH.</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 7 — Names of CaCO₃</div>
+    <div class="trap-body">CaCO₃ is called Limestone AND Marble AND Chalk AND Calcite — all the same compound! Exam may try to confuse by listing these as separate substances.</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 8 — Brown Fumes = NO₂ specifically</div>
+    <div class="trap-body">"Which gas produces brown fumes?" → Always NO₂ (Nitrogen Dioxide). Formed in decomposition of Lead Nitrate. Do not confuse with Cl₂ (yellow-green) or SO₂ (colourless).</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 9 — Aqua Regia Composition</div>
+    <div class="trap-body">Aqua Regia = 3 parts HCl + 1 part HNO₃ (NOT the other way around). Students often flip the ratio. 3:1 = Concentrated HCl : Concentrated HNO₃.</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 10 — Rancidity is Oxidation (not a separate type)</div>
+    <div class="trap-body">Rancidity is NOT listed as a separate reaction type. It is classified as an OXIDATION REACTION. Same for corrosion. If asked "what type of reaction is rancidity?" → Oxidation.</div>
+  </div>
+
+  <div class="trap">
+    <div class="trap-title">TRAP 11 — Photography uses Silver CHLORIDE or BROMIDE</div>
+    <div class="trap-body">Black & White photography uses BOTH AgCl and AgBr (silver chloride and silver bromide) — both decompose in sunlight. The exam may try one or the other to confuse.</div>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" onclick="goPage(4)">← Prev</button>
+    <div class="pn-center">Page 6 of 10</div>
+    <button class="pn-btn" onclick="goPage(6)">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 6 · EXAMINER'S FAVOURITE QUESTIONS
+══════════════════════════════════════════════════ -->
+<div class="page" id="p6">
+<div class="page-inner">
+  <div class="page-title">🎯 Examiner's Favourites</div>
+  <div class="page-sub">High-probability questions — the examiner's playbook</div>
+
+  <div class="card card-yellow">
+    <div class="tag tag-fire">🔥 HIGH PROBABILITY</div>
+    <h2>Direct Questions</h2>
+    <div class="qs-item"><div class="qs-key">Q: CO₂ + lime water →</div><div class="qs-val">Milky / White ppt of CaCO₃</div></div>
+    <div class="qs-item"><div class="qs-key">Q: Brown fumes come from</div><div class="qs-val">NO₂ (decomposition of lead nitrate)</div></div>
+    <div class="qs-item"><div class="qs-key">Q: B&W Photography uses</div><div class="qs-val">AgCl / AgBr decomposed by sunlight</div></div>
+    <div class="qs-item"><div class="qs-key">Q: Aqua Regia composition</div><div class="qs-val">3HCl + 1HNO₃ (dissolves gold)</div></div>
+    <div class="qs-item"><div class="qs-key">Q: Chips packets filled with</div><div class="qs-val">N₂ gas (prevents rancidity)</div></div>
+    <div class="qs-item"><div class="qs-key">Q: Copper turns green due to</div><div class="qs-val">Copper carbonate (oxidation/corrosion)</div></div>
+    <div class="qs-item"><div class="qs-key">Q: Iron turns reddish-brown</div><div class="qs-val">Iron oxide (rusting = type of corrosion)</div></div>
+    <div class="qs-item"><div class="qs-key">Q: H₂ at which electrode?</div><div class="qs-val">Cathode (negative terminal)</div></div>
+    <div class="qs-item"><div class="qs-key">Q: O₂ at which electrode?</div><div class="qs-val">Anode (positive terminal)</div></div>
+  </div>
+
+  <div class="card card-blue" style="margin-top:14px">
+    <div class="tag tag-star">⭐ Tricky Statement Types</div>
+    <h2>True/False Statements (Classic SSC Style)</h2>
+    <div class="qs-item"><div class="qs-key">All combination reactions are exothermic</div><div class="qs-val" style="color:var(--red)">❌ FALSE — Most are, not all</div></div>
+    <div class="qs-item"><div class="qs-key">Rusting and corrosion are the same</div><div class="qs-val" style="color:var(--red)">❌ FALSE — Rusting is a type of corrosion</div></div>
+    <div class="qs-item"><div class="qs-key">Reducing agent is the one that gets reduced</div><div class="qs-val" style="color:var(--red)">❌ FALSE — Reducing agent gets OXIDISED</div></div>
+    <div class="qs-item"><div class="qs-key">Candle burning is only a chemical change</div><div class="qs-val" style="color:var(--red)">❌ FALSE — It is both physical and chemical</div></div>
+    <div class="qs-item"><div class="qs-key">Double displacement = ion exchange</div><div class="qs-val" style="color:var(--green)">✅ TRUE</div></div>
+    <div class="qs-item"><div class="qs-key">Rancidity is an oxidation reaction</div><div class="qs-val" style="color:var(--green)">✅ TRUE</div></div>
+    <div class="qs-item"><div class="qs-key">Combustion is a type of combination</div><div class="qs-val" style="color:var(--green)">✅ TRUE</div></div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div class="tag tag-hook">Match the Following Possibilities</div>
+    <h2>Reaction → Category Match</h2>
+    <table>
+      <tr><th>Reaction</th><th>Type</th><th>Exo/Endo</th></tr>
+      <tr><td>CaO + H₂O → Ca(OH)₂</td><td class="td-green">Combination</td><td class="td-yellow">Exothermic</td></tr>
+      <tr><td>Fe + CuSO₄ → FeSO₄ + Cu</td><td class="td-green">Displacement</td><td>—</td></tr>
+      <tr><td>CaCO₃ → CaO + CO₂</td><td class="td-blue">Decomposition</td><td class="td-blue">Endothermic</td></tr>
+      <tr><td>AgCl → Ag + Cl₂ (sunlight)</td><td class="td-blue">Decomposition</td><td class="td-blue">Endothermic</td></tr>
+      <tr><td>Na₂SO₄ + BaCl₂ → BaSO₄ + NaCl</td><td class="td-green">Double Disp.</td><td>—</td></tr>
+      <tr><td>CH₄ + O₂ → CO₂ + H₂O</td><td class="td-yellow">Combustion/Comb.</td><td class="td-yellow">Exothermic</td></tr>
+      <tr><td>2H₂O → 2H₂ + O₂ (electrolysis)</td><td class="td-blue">Decomposition</td><td class="td-blue">Endothermic</td></tr>
+    </table>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" onclick="goPage(5)">← Prev</button>
+    <div class="pn-center">Page 7 of 10</div>
+    <button class="pn-btn" onclick="goPage(7)">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 7 · ACTIVE RECALL
+══════════════════════════════════════════════════ -->
+<div class="page" id="p7">
+<div class="page-inner">
+  <div class="page-title">❓ Active Recall</div>
+  <div class="page-sub">Click options to test yourself — tap a card to flip it</div>
+
+  <!-- Flash Cards -->
+  <h2 style="margin-bottom:14px">Flash Cards (Click to flip)</h2>
+  <div class="grid2">
+    <div class="flashcard-wrap" onclick="this.querySelector('.flashcard').classList.toggle('flipped')">
+      <div class="flashcard">
+        <div class="fc-front"><div class="fc-hint">REACTION TYPE</div><div class="fc-q">What gas turns lime water milky?</div></div>
+        <div class="fc-back"><div class="fc-a">CO₂ (Carbon Dioxide)</div><div class="fc-detail">Ca(OH)₂ + CO₂ → CaCO₃↓ + H₂O</div></div>
+      </div>
+    </div>
+    <div class="flashcard-wrap" onclick="this.querySelector('.flashcard').classList.toggle('flipped')">
+      <div class="flashcard">
+        <div class="fc-front"><div class="fc-hint">COLOUR CHANGE</div><div class="fc-q">CuSO₄ is blue. What colour is FeSO₄?</div></div>
+        <div class="fc-back"><div class="fc-a">Green</div><div class="fc-detail">Iron + copper sulphate → iron sulphate (green) + copper</div></div>
+      </div>
+    </div>
+    <div class="flashcard-wrap" onclick="this.querySelector('.flashcard').classList.toggle('flipped')">
+      <div class="flashcard">
+        <div class="fc-front"><div class="fc-hint">ELECTROLYSIS</div><div class="fc-q">Where does H₂ go in electrolysis of water?</div></div>
+        <div class="fc-back"><div class="fc-a">Cathode (negative terminal)</div><div class="fc-detail">O₂ goes to Anode (+). Mnemonic: "A for Anode, A for Air"</div></div>
+      </div>
+    </div>
+    <div class="flashcard-wrap" onclick="this.querySelector('.flashcard').classList.toggle('flipped')">
+      <div class="flashcard">
+        <div class="fc-front"><div class="fc-hint">CHEMISTRY</div><div class="fc-q">Why is N₂ filled in chips packets?</div></div>
+        <div class="fc-back"><div class="fc-a">To prevent Rancidity</div><div class="fc-detail">N₂ is inert → prevents O₂ contact → stops oxidation of fats</div></div>
+      </div>
+    </div>
+    <div class="flashcard-wrap" onclick="this.querySelector('.flashcard').classList.toggle('flipped')">
+      <div class="flashcard">
+        <div class="fc-front"><div class="fc-hint">NAMES</div><div class="fc-q">Give 4 other names for CaCO₃</div></div>
+        <div class="fc-back"><div class="fc-a">Limestone, Marble, Chalk, Calcite</div><div class="fc-detail">All the same compound — CaCO₃</div></div>
+      </div>
+    </div>
+    <div class="flashcard-wrap" onclick="this.querySelector('.flashcard').classList.toggle('flipped')">
+      <div class="flashcard">
+        <div class="fc-front"><div class="fc-hint">COMPOSITION</div><div class="fc-q">What is Aqua Regia?</div></div>
+        <div class="fc-back"><div class="fc-a">3 HCl + 1 HNO₃</div><div class="fc-detail">The only solution that dissolves Gold (Au)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ Quiz -->
+  <h2 style="margin-top:28px;margin-bottom:14px">Quick MCQ Quiz</h2>
+
+  <div class="quiz-q" id="q1">
+    <div class="q-text">Q1. Which of the following is an endothermic reaction?</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q1',false)">A) Burning of magnesium ribbon</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q1',false)">B) Lime + Water reaction</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q1',true)">C) Electrolysis of water</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q1',false)">D) Combustion of methane</div>
+    <div class="quiz-explain">Electrolysis of water requires electrical energy (heat absorbed = endothermic). All others release heat (exothermic).</div>
+  </div>
+
+  <div class="quiz-q" id="q2">
+    <div class="q-text">Q2. Iron reacts with copper sulphate solution. What is the role of iron?</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q2',false)">A) Oxidising agent</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q2',true)">B) More reactive metal displacing copper</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q2',false)">C) Iron undergoes reduction</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q2',false)">D) Iron is a catalyst here</div>
+    <div class="quiz-explain">Fe is more reactive than Cu. It displaces Cu from CuSO₄ solution. Fe + CuSO₄ → FeSO₄ + Cu. Blue → Green colour change.</div>
+  </div>
+
+  <div class="quiz-q" id="q3">
+    <div class="q-text">Q3. Brown fumes produced during decomposition of lead nitrate are due to:</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q3',false)">A) SO₂</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q3',false)">B) Cl₂</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q3',true)">C) NO₂</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q3',false)">D) CO₂</div>
+    <div class="quiz-explain">2Pb(NO₃)₂ → 2PbO + 4NO₂ + O₂. Nitrogen Dioxide (NO₂) = brown fumes. Classic exam question!</div>
+  </div>
+
+  <div class="quiz-q" id="q4">
+    <div class="q-text">Q4. In the reaction CuO + H₂ → Cu + H₂O, which substance is the reducing agent?</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q4',false)">A) CuO</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q4',true)">B) H₂</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q4',false)">C) Cu</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q4',false)">D) H₂O</div>
+    <div class="quiz-explain">H₂ gets oxidised (gains oxygen) → it is the reducing agent. CuO gets reduced (loses oxygen) → it is the oxidising agent. OIL RIG!</div>
+  </div>
+
+  <div class="quiz-q" id="q5">
+    <div class="q-text">Q5. Rusting of iron is a type of:</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q5',false)">A) Combination reaction only</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q5',false)">B) Decomposition reaction</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q5',true)">C) Oxidation → Corrosion → Rusting (all three apply)</div>
+    <div class="quiz-opt" onclick="checkAns(this,'q5',false)">D) Displacement reaction</div>
+    <div class="quiz-explain">Rusting IS a type of corrosion. Corrosion IS a type of oxidation. So rusting falls under all three. Rusting specifically happens only in IRON.</div>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" onclick="goPage(6)">← Prev</button>
+    <div class="pn-center">Page 8 of 10</div>
+    <button class="pn-btn" onclick="goPage(8)">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 8 · HIGH-YIELD + ULTRA-FAST
+══════════════════════════════════════════════════ -->
+<div class="page" id="p8">
+<div class="page-inner">
+  <div class="page-title">⚡ High-Yield + Ultra-Fast Sheet</div>
+  <div class="page-sub">Layers 2 & 3 — read this after you know the basics</div>
+
+  <div class="card card-green">
+    <div class="tag tag-fire">LAYER 2 — HIGH-YIELD REVISION</div>
+    <h2>The 20 Most Testable Facts</h2>
+    <div class="qs-item"><div class="qs-key">1. Physical change</div><div class="qs-val">Reversible, no new substance, form changes only</div></div>
+    <div class="qs-item"><div class="qs-key">2. Chemical change</div><div class="qs-val">Irreversible, new substance formed</div></div>
+    <div class="qs-item"><div class="qs-key">3. Candle burning</div><div class="qs-val">BOTH physical (wax melts) + chemical (flame burns wick)</div></div>
+    <div class="qs-item"><div class="qs-key">4. Combination</div><div class="qs-val">A+B→AB | mostly exothermic</div></div>
+    <div class="qs-item"><div class="qs-key">5. CO₂ + lime water</div><div class="qs-val">→ Milky (CaCO₃)</div></div>
+    <div class="qs-item"><div class="qs-key">6. CaCO₃ also =</div><div class="qs-val">Limestone, Marble, Chalk, Calcite</div></div>
+    <div class="qs-item"><div class="qs-key">7. Combustion</div><div class="qs-val">Subtype of combination; always exothermic</div></div>
+    <div class="qs-item"><div class="qs-key">8. Decomposition</div><div class="qs-val">AB→A+B | mostly endothermic</div></div>
+    <div class="qs-item"><div class="qs-key">9. Brown fumes</div><div class="qs-val">NO₂ from lead nitrate decomposition</div></div>
+    <div class="qs-item"><div class="qs-key">10. Photography</div><div class="qs-val">AgCl/AgBr decomposes in sunlight → Black & White photo</div></div>
+    <div class="qs-item"><div class="qs-key">11. Electrolysis</div><div class="qs-val">H₂ → Cathode (−); O₂ → Anode (+)</div></div>
+    <div class="qs-item"><div class="qs-key">12. Reactivity series</div><div class="qs-val">K Na Ca Mg Al Zn Fe [H] Ag Au — "Katrina..."</div></div>
+    <div class="qs-item"><div class="qs-key">13. Aqua Regia</div><div class="qs-val">3HCl + 1HNO₃ → dissolves Au</div></div>
+    <div class="qs-item"><div class="qs-key">14. CuSO₄ → FeSO₄</div><div class="qs-val">Blue → Green (Fe displaces Cu)</div></div>
+    <div class="qs-item"><div class="qs-key">15. Double displacement</div><div class="qs-val">= Ion Exchange Reaction; forms precipitate</div></div>
+    <div class="qs-item"><div class="qs-key">16. OIL RIG</div><div class="qs-val">Oxidation=Loss; Reduction=Gain (electrons)</div></div>
+    <div class="qs-item"><div class="qs-key">17. Rancidity</div><div class="qs-val">= Oxidation of fats; N₂ in chips prevents it</div></div>
+    <div class="qs-item"><div class="qs-key">18. Corrosion</div><div class="qs-val">= Oxidation; Rusting = corrosion of iron (reddish-brown)</div></div>
+    <div class="qs-item"><div class="qs-key">19. Copper corrosion</div><div class="qs-val">Green layer = Copper carbonate</div></div>
+    <div class="qs-item"><div class="qs-key">20. Reducing agent</div><div class="qs-val">Gets OXIDISED (not reduced — trap!)</div></div>
+  </div>
+
+  <div class="card card-blue" style="margin-top:18px">
+    <div class="tag tag-star">LAYER 3 — ULTRA-FAST SHEET</div>
+    <h2>30 Words or Less Per Topic</h2>
+    <div class="badge-row">
+      <div class="badge" style="background:var(--green-dim);color:var(--green)">Physical = Reversible</div>
+      <div class="badge" style="background:var(--red-dim);color:var(--red)">Chemical = Irreversible</div>
+      <div class="badge" style="background:var(--yellow-dim);color:var(--yellow)">Candle = Both</div>
+    </div>
+    <div class="badge-row">
+      <div class="badge" style="background:var(--yellow-dim);color:var(--yellow)">Combination → Exo</div>
+      <div class="badge" style="background:var(--blue-dim);color:var(--blue)">Decomposition → Endo</div>
+      <div class="badge" style="background:var(--purple-dim);color:var(--purple)">Combustion ⊂ Combination</div>
+    </div>
+    <div class="badge-row">
+      <div class="badge" style="background:var(--bg3);color:var(--cyan)">CO₂ = milky lime water</div>
+      <div class="badge" style="background:var(--bg3);color:var(--cyan)">Brown fumes = NO₂</div>
+      <div class="badge" style="background:var(--bg3);color:var(--cyan)">Photography = AgCl/AgBr</div>
+    </div>
+    <div class="badge-row">
+      <div class="badge" style="background:var(--bg3);color:var(--text)">Cathode = H₂</div>
+      <div class="badge" style="background:var(--bg3);color:var(--text)">Anode = O₂</div>
+      <div class="badge" style="background:var(--bg3);color:var(--text)">Aqua Regia = 3HCl+1HNO₃</div>
+    </div>
+    <div class="badge-row">
+      <div class="badge" style="background:var(--red-dim);color:var(--red)">OIL = Oxidation Is Loss</div>
+      <div class="badge" style="background:var(--green-dim);color:var(--green)">RIG = Reduction Is Gain</div>
+    </div>
+    <div class="badge-row">
+      <div class="badge" style="background:var(--green-dim);color:var(--green)">Rancidity = Oxid. of fats</div>
+      <div class="badge" style="background:var(--yellow-dim);color:var(--yellow)">N₂ in chips</div>
+      <div class="badge" style="background:var(--red-dim);color:var(--red)">Rust ⊂ Corrosion ⊂ Oxid.</div>
+    </div>
+    <div class="badge-row">
+      <div class="badge" style="background:var(--bg3);color:var(--cyan)">Reducing agent = gets oxidised</div>
+      <div class="badge" style="background:var(--bg3);color:var(--cyan)">Oxidising agent = gets reduced</div>
+    </div>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" onclick="goPage(7)">← Prev</button>
+    <div class="pn-center">Page 9 of 10</div>
+    <button class="pn-btn" onclick="goPage(9)">Next →</button>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     PAGE 9 · 30-SEC + LAST NIGHT SHEET
+══════════════════════════════════════════════════ -->
+<div class="page" id="p9">
+<div class="page-inner">
+  <div class="page-title">🌙 Last Night Sheet</div>
+  <div class="page-sub">Layers 4 & 5 — read this the night before the exam</div>
+
+  <div class="card" style="border-color:rgba(251,191,36,0.4);background:linear-gradient(135deg,#1a1800,#1a2033)">
+    <div class="tag tag-fire">LAYER 4 — 30 SECOND SHEET</div>
+    <h2 style="color:var(--yellow)">Everything in 30 Seconds</h2>
+    <div style="font-family:var(--mono);font-size:13px;line-height:2.2;color:var(--text-dim)">
+      <span style="color:var(--green)">Physical</span>=reversible | <span style="color:var(--red)">Chemical</span>=irreversible | <span style="color:var(--yellow)">Candle</span>=both<br>
+      <span style="color:var(--green)">Combination</span>=A+B→AB [Exo] | <span style="color:var(--blue)">Decompo</span>=AB→A+B [Endo]<br>
+      <span style="color:var(--cyan)">CO₂+lime→milky</span> | <span style="color:var(--red)">Brown fumes=NO₂</span> | <span style="color:var(--purple)">Photo=AgCl/AgBr</span><br>
+      <span style="color:var(--yellow)">Electrolysis: H₂@Cathode(−) O₂@Anode(+)</span><br>
+      <span style="color:var(--green)">Reactivity: K Na Ca Mg Al Zn Fe [H] Ag Au</span><br>
+      <span style="color:var(--cyan)">Aqua Regia: 3HCl+1HNO₃ (dissolves Au)</span><br>
+      <span style="color:var(--red)">OIL RIG</span> | <span style="color:var(--yellow)">Reducing agent=gets Oxidised (TRAP!)</span><br>
+      <span style="color:var(--green)">Rancidity=oxidation of fats → N₂ in chips</span><br>
+      <span style="color:var(--red)">Rusting⊂Corrosion⊂Oxidation | Fe=rusty brown | Cu=green</span>
+    </div>
+  </div>
+
+  <div class="card card-purple" style="margin-top:18px">
+    <div class="tag tag-hook">LAYER 5 — LAST NIGHT BEFORE EXAM</div>
+    <h2 style="color:var(--purple)">The 12 Things You MUST Sleep On</h2>
+
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>Candle burns = BOTH</strong> (wax melts = physical; flame+wick = chemical)</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>CO₂ turns lime water milky</strong> → CaCO₃ (= Limestone = Marble = Chalk = Calcite)</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>Brown fumes = NO₂</strong> from lead nitrate decomposition</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>Electrolysis:</strong> H₂ at Cathode (−), O₂ at Anode (+)</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>Aqua Regia = 3HCl + 1HNO₃</strong> — only substance dissolving gold</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>CuSO₄ = blue → FeSO₄ = green</strong> (displacement, Fe more reactive)</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>OIL RIG</strong> — Oxidation Is Loss | Reduction Is Gain (electrons)</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>Reducing agent GETS OXIDISED</strong> (not reduced — classic trap!)</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>Rancidity = oxidation of fats</strong> → N₂ gas in chips packets prevents it</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>Rusting ⊂ Corrosion ⊂ Oxidation</strong> — Fe = reddish-brown | Cu = green</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>Combination = mostly Exo; Decomposition = mostly Endo</strong> (not always!)</div>
+    </div>
+    <div class="night-item">
+      <div class="night-dot"></div>
+      <div class="night-text"><strong>Double displacement = Ion Exchange</strong> — BaSO₄ (white ppt), PbI₂ (yellow ppt)</div>
+    </div>
+
+    <div class="card card-green" style="margin-top:18px">
+      <strong style="color:var(--green)">🧠 Memory Phrases for Exam Hall</strong><br>
+      <span style="font-size:13px;color:var(--text-dim);line-height:2;display:block;margin-top:6px">
+        "Katrina Asked Car Alto Zen Ferrari But Got Silver Audi" = K Na Ca Mg Al Zn Fe [H] Ag Au<br>
+        "OIL RIG" = Oxidation Is Loss | Reduction Is Gain<br>
+        "A for Anode, A for Air (O₂)" = Anode = positive = oxygen in electrolysis<br>
+        "Chips = N₂ = No Rancidity" = prevents fat oxidation
+      </span>
+    </div>
+  </div>
+
+  <div class="page-nav">
+    <button class="pn-btn" onclick="goPage(8)">← Prev</button>
+    <div class="pn-center">Page 10 of 10</div>
+    <button class="pn-btn" disabled>→ Done ✓</button>
+  </div>
+</div>
+</div>
+
+<script>
+const PAGES = [
+  { id: 'p0', label: '🏠 Overview' },
+  { id: 'p1', label: '🏛️ Memory Palace' },
+  { id: 'p2', label: '📋 Full Notes' },
+  { id: 'p3', label: '🧠 Memory Hooks' },
+  { id: 'p4', label: '🔗 Connections' },
+  { id: 'p5', label: '⚠️ Exam Traps' },
+  { id: 'p6', label: '🎯 Examiner\'s Qs' },
+  { id: 'p7', label: '❓ Active Recall' },
+  { id: 'p8', label: '⚡ High-Yield' },
+  { id: 'p9', label: '🌙 Last Night' },
+];
+
+let current = 0;
+const tabs = document.getElementById('nav-tabs');
+const bar = document.getElementById('progress-bar');
+
+// Build tabs
+PAGES.forEach((p, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'nav-tab' + (i === 0 ? ' active' : '');
+  btn.textContent = p.label;
+  btn.onclick = () => goPage(i);
+  tabs.appendChild(btn);
+});
+
+function goPage(idx) {
+  document.getElementById(PAGES[current].id).classList.remove('active');
+  document.querySelectorAll('.nav-tab')[current].classList.remove('active');
+  current = idx;
+  document.getElementById(PAGES[current].id).classList.add('active');
+  document.querySelectorAll('.nav-tab')[current].classList.add('active');
+  document.querySelectorAll('.nav-tab')[current].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  bar.style.width = ((current / (PAGES.length - 1)) * 100) + '%';
+  // scroll page to top
+  document.getElementById(PAGES[current].id).scrollTop = 0;
+}
+
+// Quiz logic
+function checkAns(el, qid, correct) {
+  const container = document.getElementById(qid);
+  if (container.dataset.answered) return;
+  container.dataset.answered = 'true';
+  const opts = container.querySelectorAll('.quiz-opt');
+  opts.forEach(o => {
+    o.style.pointerEvents = 'none';
+    if (o === el) {
+      o.classList.add(correct ? 'correct' : 'wrong');
+    }
+    if (!correct && o.onclick.toString().includes('true')) {
+      o.classList.add('show-correct');
+    }
+  });
+  container.querySelector('.quiz-explain').style.display = 'block';
+}
+</script>
+</body>
+</html>

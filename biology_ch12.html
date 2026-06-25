@@ -1,0 +1,1956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology: Diseases & Pathogens | SSC CGL Revision</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@700&display=swap');
+
+  :root {
+    --bg: #0a0d14;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --surface3: #1e2d40;
+    --green: #4ade80;
+    --green-dim: #22c55e44;
+    --blue: #60a5fa;
+    --blue-dim: #3b82f644;
+    --amber: #fbbf24;
+    --amber-dim: #f59e0b33;
+    --rose: #f87171;
+    --rose-dim: #ef444433;
+    --purple: #a78bfa;
+    --purple-dim: #8b5cf633;
+    --cyan: #22d3ee;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --border: #1e293b;
+    --border-bright: #334155;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  .app { display: flex; height: 100vh; overflow: hidden; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+    z-index: 100;
+  }
+
+  .sidebar-brand {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-brand .label {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .sidebar-brand h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .nav-section {
+    padding: 10px 10px 4px;
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    margin: 2px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--text-muted);
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .nav-item:hover { background: var(--surface2); color: var(--text); }
+  .nav-item.active {
+    background: var(--surface3);
+    color: var(--green);
+    border-color: var(--green-dim);
+  }
+  .nav-item .icon { font-size: 15px; width: 20px; text-align: center; flex-shrink: 0; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topbar-title { font-size: 14px; font-weight: 600; color: var(--text); }
+  .topbar-subtitle { font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+  .progress-bar-wrap { flex: 1; max-width: 200px; }
+  .progress-bar-track { height: 4px; background: var(--border); border-radius: 2px; }
+  .progress-bar-fill { height: 4px; background: var(--green); border-radius: 2px; transition: width 0.4s; }
+
+  /* ── PAGE ── */
+  .page { display: none; padding: 28px 36px 60px; max-width: 900px; width: 100%; }
+  .page.active { display: block; }
+
+  /* ── HEADINGS ── */
+  .page-hero {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-hero .eyebrow {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    line-height: 1.2;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .page-hero p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 620px;
+  }
+
+  h2.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 14px;
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  h2.section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  h3.sub-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue);
+    margin-bottom: 10px;
+    margin-top: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .card-green { border-left: 3px solid var(--green); }
+  .card-blue { border-left: 3px solid var(--blue); }
+  .card-amber { border-left: 3px solid var(--amber); }
+  .card-rose { border-left: 3px solid var(--rose); }
+  .card-purple { border-left: 3px solid var(--purple); }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin: 2px 3px 2px 0;
+    font-weight: 600;
+  }
+  .tag-fire { background: #7c2d12; color: var(--amber); }
+  .tag-star { background: #1e3a5f; color: var(--blue); }
+  .tag-plus { background: #14532d; color: var(--green); }
+  .tag-trap { background: #450a0a; color: var(--rose); }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; margin-bottom: 16px; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: var(--surface2); }
+  thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  tbody tr { border-top: 1px solid var(--border); }
+  tbody tr:hover { background: var(--surface2); }
+  tbody td { padding: 10px 14px; color: var(--text); vertical-align: top; line-height: 1.5; }
+  .td-green { color: var(--green); font-weight: 600; }
+  .td-blue { color: var(--blue); }
+  .td-amber { color: var(--amber); }
+  .td-rose { color: var(--rose); }
+
+  /* ── MEMORY HOOK ── */
+  .memory-hook {
+    background: linear-gradient(135deg, #0f2027, #203a43);
+    border: 1px solid #2dd4bf44;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .memory-hook::before {
+    content: '🧠';
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 28px;
+    opacity: 0.15;
+  }
+  .memory-hook .hook-label {
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #2dd4bf;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .memory-hook p { font-size: 13.5px; color: var(--text); line-height: 1.7; }
+  .memory-hook strong { color: #2dd4bf; }
+
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: #1c0a0a;
+    border: 1px solid var(--rose-dim);
+    border-left: 3px solid var(--rose);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .trap-box .trap-label {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .trap-box p, .trap-box li { font-size: 13px; color: #fca5a5; line-height: 1.6; }
+  .trap-box ul { padding-left: 18px; }
+  .trap-box li { margin-bottom: 5px; }
+
+  /* ── RECALL ── */
+  .recall-item {
+    background: var(--surface2);
+    border: 1px solid var(--border-bright);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .recall-item:hover { border-color: var(--blue-dim); }
+  .recall-q { font-size: 13.5px; color: var(--text); font-weight: 500; margin-bottom: 4px; }
+  .recall-q::before { content: '❓ '; }
+  .recall-a {
+    font-size: 13px;
+    color: var(--green);
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+    display: none;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .recall-a.show { display: block; }
+  .recall-hint { font-size: 11px; color: var(--text-dim); }
+
+  /* ── PALACE ── */
+  .palace-room {
+    background: var(--surface2);
+    border: 1px solid var(--border-bright);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .palace-icon { font-size: 26px; flex-shrink: 0; }
+  .palace-room-name { font-size: 11px; color: var(--amber); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; font-weight: 700; }
+  .palace-room-text { font-size: 13px; color: var(--text); line-height: 1.6; }
+  .palace-room-text strong { color: var(--cyan); }
+
+  /* ── BADGE PILLS ── */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 2px;
+  }
+  .pill-green { background: #14532d55; border: 1px solid var(--green); color: var(--green); }
+  .pill-blue { background: #1e3a5f55; border: 1px solid var(--blue); color: var(--blue); }
+  .pill-amber { background: #78350f55; border: 1px solid var(--amber); color: var(--amber); }
+  .pill-rose { background: #450a0a55; border: 1px solid var(--rose); color: var(--rose); }
+
+  /* ── FLASH CARD ── */
+  .flashcard-wrap { perspective: 1000px; margin-bottom: 20px; }
+  .flashcard {
+    width: 100%;
+    min-height: 120px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+    cursor: pointer;
+    border-radius: 14px;
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    min-height: 120px;
+    backface-visibility: hidden;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .flashcard-front {
+    background: linear-gradient(135deg, var(--surface2), var(--surface3));
+    border: 1px solid var(--border-bright);
+  }
+  .flashcard-back {
+    background: linear-gradient(135deg, #0d2b1f, #1a4731);
+    border: 1px solid var(--green);
+    transform: rotateY(180deg);
+  }
+  .flashcard-front p { font-size: 14px; font-weight: 600; color: var(--text); }
+  .flashcard-back p { font-size: 14px; font-weight: 700; color: var(--green); }
+  .flashcard-hint { font-size: 10px; color: var(--text-dim); margin-top: 8px; font-family: 'JetBrains Mono', monospace; }
+
+  /* ── FAST REVISION ── */
+  .fast-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .fast-item:last-child { border-bottom: none; }
+  .fast-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-top: 6px; flex-shrink: 0; }
+  .fast-key { color: var(--amber); font-family: 'JetBrains Mono', monospace; font-size: 12px; min-width: 120px; flex-shrink: 0; }
+  .fast-val { color: var(--text); }
+
+  /* ── MOBILE MENU ── */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 4px 8px;
+  }
+  .overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 90;
+  }
+
+  @media (max-width: 720px) {
+    .sidebar { position: fixed; left: 0; top: 0; bottom: 0; transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .menu-toggle { display: block; }
+    .overlay.open { display: block; }
+    .page { padding: 18px 16px 60px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .topbar { padding: 10px 16px; }
+    .page-hero h1 { font-size: 22px; }
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 3px; }
+
+  /* ── HIGHLIGHT ── */
+  .hl-green { color: var(--green); font-weight: 600; }
+  .hl-blue { color: var(--blue); font-weight: 600; }
+  .hl-amber { color: var(--amber); font-weight: 600; }
+  .hl-rose { color: var(--rose); font-weight: 600; }
+  .hl-purple { color: var(--purple); font-weight: 600; }
+  .hl-cyan { color: var(--cyan); font-weight: 600; }
+
+  p { font-size: 13.5px; line-height: 1.7; color: var(--text); margin-bottom: 8px; }
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { font-size: 13.5px; line-height: 1.7; color: var(--text); margin-bottom: 4px; }
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--surface2);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--cyan);
+  }
+
+  /* Last night sheet */
+  .ln-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .ln-box {
+    background: var(--surface2);
+    border: 1px solid var(--border-bright);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .ln-box .ln-head {
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--amber);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .ln-box li { font-size: 12px; margin-bottom: 3px; color: var(--text-muted); }
+  .ln-box li strong { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="label">SSC CGL · Biology</div>
+    <h2>Diseases &amp; Pathogens</h2>
+  </div>
+
+  <div class="nav-section">Overview</div>
+  <div class="nav-item active" data-page="overview"><span class="icon">🏛️</span>Big Picture</div>
+  <div class="nav-item" data-page="palace"><span class="icon">🧠</span>Memory Palace</div>
+
+  <div class="nav-section">Complete Notes</div>
+  <div class="nav-item" data-page="classification"><span class="icon">📋</span>Disease Classification</div>
+  <div class="nav-item" data-page="virus"><span class="icon">🦠</span>Viral Diseases</div>
+  <div class="nav-item" data-page="bacteria"><span class="icon">🧫</span>Bacterial Diseases</div>
+  <div class="nav-item" data-page="protozoa"><span class="icon">🔬</span>Protozoa &amp; Fungi</div>
+  <div class="nav-item" data-page="genetic"><span class="icon">🧬</span>Genetic Disorders</div>
+  <div class="nav-item" data-page="plant"><span class="icon">🌿</span>Plant Diseases</div>
+
+  <div class="nav-section">Exam Prep</div>
+  <div class="nav-item" data-page="hooks"><span class="icon">💡</span>Memory Hooks</div>
+  <div class="nav-item" data-page="traps"><span class="icon">⚠️</span>Exam Traps</div>
+  <div class="nav-item" data-page="examiner"><span class="icon">🎯</span>Examiner's Favourites</div>
+  <div class="nav-item" data-page="recall"><span class="icon">❓</span>Active Recall</div>
+
+  <div class="nav-section">Revision Layers</div>
+  <div class="nav-item" data-page="highyield"><span class="icon">⭐</span>High-Yield Sheet</div>
+  <div class="nav-item" data-page="ultrafast"><span class="icon">⚡</span>Ultra-Fast Sheet</div>
+  <div class="nav-item" data-page="last30"><span class="icon">⏱️</span>30-Second Sheet</div>
+  <div class="nav-item" data-page="lastnight"><span class="icon">🌙</span>Last Night Sheet</div>
+</nav>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <button class="menu-toggle" id="menuToggle">☰</button>
+    <div>
+      <div class="topbar-title" id="topbarTitle">Big Picture</div>
+      <div class="topbar-subtitle">Biology · Diseases &amp; Pathogens</div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div style="font-size:10px;color:var(--text-dim);text-align:right;margin-bottom:4px;" id="pageCounter">1 / 14</div>
+      <div class="progress-bar-track"><div class="progress-bar-fill" id="progressFill" style="width:7%"></div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 1: OVERVIEW
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page active" id="page-overview">
+    <div class="page-hero">
+      <div class="eyebrow">Chapter 01 · Biology</div>
+      <h1>Diseases &amp; Pathogens</h1>
+      <p>Everything you need to know about pathogens, disease transmission, genetic disorders, and plant diseases — packaged for maximum retention inside the exam hall.</p>
+    </div>
+
+    <h2 class="section-title">🏛️ Big Picture</h2>
+    <div class="card card-green">
+      <p><span class="hl-green">This chapter is about WHO causes disease and HOW it spreads.</span> Four main agents — <strong>Viruses, Bacteria, Protozoa, Fungi</strong> — each attack the body differently, spread via different routes, and require different treatments.</p>
+      <p style="margin-top:10px;">On top of that, some diseases come from within — our own faulty <strong>genes and chromosomes</strong> (genetic disorders). And a small bonus: diseases in <strong>plants</strong>.</p>
+    </div>
+
+    <h2 class="section-title">🗺️ Chapter Map</h2>
+    <div class="grid-2">
+      <div class="card" style="border-color:var(--blue-dim)">
+        <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:10px;">4 PATHOGEN TYPES</div>
+        <div><span class="pill pill-blue">🦠 Virus</span><span class="pill pill-green">🧫 Bacteria</span></div>
+        <div style="margin-top:6px;"><span class="pill pill-amber">🔬 Protozoa</span><span class="pill pill-rose">🍄 Fungi</span></div>
+      </div>
+      <div class="card" style="border-color:var(--amber-dim)">
+        <div style="font-size:13px;font-weight:700;color:var(--amber);margin-bottom:10px;">3 DISEASE AXES</div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Duration</span><span class="fast-val">Acute vs Chronic</span></div></div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Spread</span><span class="fast-val">Communicable vs Non-communicable</span></div></div>
+        <div class="fast-item" style="border:none"><div class="fast-dot"></div><div><span class="fast-key">Scope</span><span class="fast-val">Endemic → Epidemic → Pandemic</span></div></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">🎯 Priority Tags Used</h2>
+    <div class="card">
+      <span class="tag tag-fire">🔥 MUST KNOW</span> — Asked in almost every exam<br><br>
+      <span class="tag tag-star">⭐ IMPORTANT</span> — High probability questions<br><br>
+      <span class="tag tag-plus">➕ GOOD TO KNOW</span> — Occasional questions
+    </div>
+
+    <h2 class="section-title">💊 Treatment Summary</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Pathogen</th><th>Treatment</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td class="td-blue">Virus</td><td>Antivirals / Vaccines</td><td style="color:var(--rose);">Antibiotics DON'T work — no cell wall!</td></tr>
+          <tr><td class="td-green">Bacteria</td><td><span class="hl-green">Antibiotics</span></td><td>1st antibiotic: Penicillin (Fleming)</td></tr>
+          <tr><td class="td-amber">Protozoa</td><td>Antiprotozoal drugs</td><td>e.g., Quinine for malaria</td></tr>
+          <tr><td class="td-rose">Fungi</td><td>Antifungals</td><td>Ironically, Penicillin comes FROM fungus!</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 2: MEMORY PALACE
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-palace">
+    <div class="page-hero">
+      <div class="eyebrow">Retention Framework</div>
+      <h1>🧠 The Hospital Memory Palace</h1>
+      <p>Walk through this hospital in your mind and every disease will stick. Each room = one pathogen family. Each room has its own smell, colour, feel.</p>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">How to use this palace</div>
+      <p>Close your eyes. Walk through the hospital. In each room, <strong>feel the scene</strong> — don't just read it. Each bizarre image is a memory anchor that will fire during the exam.</p>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">🚪</div>
+      <div>
+        <div class="palace-room-name">Entrance Gate — Disease Types</div>
+        <div class="palace-room-text">The hospital gate has two doors: <strong>FAST door</strong> (Acute — cold, flu, pass quickly) and <strong>SLOW door</strong> (Chronic — diabetes, TB, you're stuck here). The gate guard checks: did you catch it from someone? <strong>YES → Communicable Ward</strong> | <strong>NO → Non-Communicable Ward</strong>. Outside the hospital, a map shows 3 zones: a <strong>tiny village</strong> (Endemic), a <strong>large city on fire</strong> (Epidemic), and the <strong>whole globe blazing</strong> (Pandemic).</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">💉</div>
+      <div>
+        <div class="palace-room-name">Virus Ward — Blue Room (no pills work here!)</div>
+        <div class="palace-room-text">The door says: <strong>"No Antibiotics Allowed."</strong> A nurse throws antibiotics in the bin — viruses have NO cell wall. The room smells of liver (Hepatitis A/B/C on the wall). A yellow man stands in the corner — that's <strong>Jaundice/Yellow Fever</strong>. A fat lady near his ear is crying — that's <strong>Mumps (parotid gland)</strong>. A rash-covered chicken is wearing a smallpox mask — <strong>Varicella Zoster vs Variola</strong>. A rhino is sneezing — <strong>Rhinovirus = Common Cold</strong>. A dog is barking madly — <strong>Rabies (Lyssavirus)</strong>. A mosquito (female Aedes) fans herself with a Dengue sign. HIV man looks immune-less and sad.</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">🧫</div>
+      <div>
+        <div class="palace-room-name">Bacteria Ward — Green Room (antibiotics work!)</div>
+        <div class="palace-room-text">Alexander Fleming walks in holding PENICILLIN — made from <strong>Penicillium fungus</strong>. On the wall: a BLACK plague rat (Yersinia pestis = Black Death), a BLUE cholera tap dripping blue water (Vibrio = Blue Death), a WHITE TB cloud (Mycobacterium TB = White Plague). A typhoid Salmon is swimming in a typhoid lake (<strong>Salmonella typhi</strong>). A teenager squeezes acne caused by <strong>Staphylococcus</strong>. Syphilis and Gonorrhea stand near the STD gate.</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">🦟</div>
+      <div>
+        <div class="palace-room-name">Protozoa Corner — 3 Mosquito Nets</div>
+        <div class="palace-room-text">Three nets: <strong>1) Malaria net</strong> — female Anopheles mosquito, Plasmodium protozoa, Quinine from Cinchona bark treats it. <strong>2) Sleeping Sickness net</strong> — a sleeping person, Tsetse fly carrier, Trypanosoma protozoa. <strong>3) Kalaazar net</strong> — Sandfly carrier, Leishmania protozoa, huge spleen shown. Remember: <strong>"So Ja, So Mother"</strong> — Sleeping sickness = Tsetse fly; Kalaazar = Sand fly.</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">🍄</div>
+      <div>
+        <div class="palace-room-name">Fungus Room — BARSA Shelf</div>
+        <div class="palace-room-text">A cricket trophy labelled <strong>BARSA</strong> sits on the shelf: <strong>B</strong>aldness, <strong>A</strong>thlete's foot, <strong>R</strong>ingworm, <strong>S</strong>cabies, <strong>A</strong>sthma. All caused by fungi. Ironically, the first antibiotic (Penicillin) also came from a fungus — so fungi give both disease AND cure!</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">🧬</div>
+      <div>
+        <div class="palace-room-name">Genetics Lab — The Chromosome Shelf</div>
+        <div class="palace-room-text">Two shelves: <strong>Autosome shelf (22 pairs)</strong> — Down syndrome box (Trisomy 21), Albinism, Thalassemia, Sickle cell. <strong>Sex chromosome shelf (1 pair)</strong> — Turner syndrome (only 45 chromosomes, XO = missing X), Klinefelter syndrome (XXY = extra X in male). Hemophilia label is on the X chromosome — bleeds only in males mostly. A copper jar is labelled Wilson Disease, a mercury flask = Mad Hatter, a cadmium tin = Itai-itai, a nitrate bottle = Blue Baby.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 3: CLASSIFICATION
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-classification">
+    <div class="page-hero">
+      <div class="eyebrow">Section 01</div>
+      <h1>Disease Classification</h1>
+      <p>Before diving into diseases, know how to classify them. Examiners love definition-based and compare-contrast questions here.</p>
+    </div>
+
+    <h2 class="section-title">⏱️ By Duration</h2>
+    <div class="grid-2">
+      <div class="card card-blue">
+        <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px;">ACUTE <span class="tag tag-fire">🔥 MUST KNOW</span></div>
+        <p>Short duration — days to ~2 weeks</p>
+        <ul>
+          <li>Cold, Flu, Cough, Fever</li>
+          <li>Passes quickly, symptoms intense but brief</li>
+        </ul>
+      </div>
+      <div class="card card-amber">
+        <div style="font-size:13px;font-weight:700;color:var(--amber);margin-bottom:8px;">CHRONIC <span class="tag tag-fire">🔥 MUST KNOW</span></div>
+        <p>Long duration — months to years</p>
+        <ul>
+          <li>Diabetes, Arthritis, TB, Elephantiasis</li>
+          <li>Persists, manages rather than cures easily</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-title">🤧 By Transmission</h2>
+    <div class="grid-2">
+      <div class="card card-rose">
+        <div style="font-size:13px;font-weight:700;color:var(--rose);margin-bottom:8px;">COMMUNICABLE</div>
+        <p>Spreads person to person</p>
+        <ul>
+          <li>AIDS, Cold, Chicken Pox, Covid</li>
+          <li>Via contact, air, blood, body fluids</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px;">NON-COMMUNICABLE</div>
+        <p>Does NOT spread by contact</p>
+        <ul>
+          <li>Diabetes, Arthritis, Glaucoma</li>
+          <li>Genetic, lifestyle, or environmental causes</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-title">🌍 By Geographic Spread</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Definition</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-green"><strong>ENDEMIC</strong></td>
+            <td>Constantly present in a region; relatively low/stable spread</td>
+            <td>Ebola in parts of Africa</td>
+          </tr>
+          <tr>
+            <td class="td-amber"><strong>EPIDEMIC</strong></td>
+            <td>Sudden large increase across a large population / region</td>
+            <td>Early stage of Covid in China</td>
+          </tr>
+          <tr>
+            <td class="td-rose"><strong>PANDEMIC</strong></td>
+            <td>Sudden increase across multiple countries, continents, or the whole world</td>
+            <td>Covid-19 globally (2020–22)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Memory Hook — Scope of Spread</div>
+      <p>Think of a <strong>forest fire</strong>: Endemic = a small campfire in one village (always there, small). Epidemic = fire spreads to the whole forest (big jump). Pandemic = fire jumps oceans and burns <strong>all forests on Earth</strong> (everywhere).</p>
+    </div>
+
+    <h2 class="section-title">🐾 Zoonotic Diseases</h2>
+    <div class="card card-purple">
+      <p><span class="hl-purple">Zoonotic diseases</span> = transferred from animals to humans.</p>
+      <ul>
+        <li>Rabies — from dog bite</li>
+        <li>Anthrax — from animals</li>
+        <li>Bird Flu — from birds</li>
+        <li>Swine Flu — from pigs</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 4: VIRAL DISEASES
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-virus">
+    <div class="page-hero">
+      <div class="eyebrow">Section 02</div>
+      <h1>🦠 Viral Diseases</h1>
+      <p>Viruses have NO cell wall → antibiotics are useless. Treated by antivirals and prevented by vaccines.</p>
+    </div>
+
+    <div class="card card-blue">
+      <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:10px;">VIRUS — Key Properties</div>
+      <ul>
+        <li>Genetic material: <span class="hl-green">DNA or RNA</span></li>
+        <li>RNA virus = <span class="hl-amber">Retrovirus</span> (e.g., HIV)</li>
+        <li>Protein envelope = <span class="hl-blue">Capsid</span></li>
+        <li>Non-living outside host; living inside host</li>
+        <li><span class="hl-rose">Antibiotics DO NOT work</span> (no cell wall to attack)</li>
+        <li>First antibiotic: <span class="hl-green">Penicillin</span> from <em>Penicillium</em> fungus, discovered by <span class="hl-amber">Alexander Fleming</span></li>
+      </ul>
+    </div>
+
+    <h2 class="section-title">🦠 Viral Disease Master Table</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Disease</th><th>Virus/Causative Agent</th><th>Organ/System</th><th>Key Facts</th><th>Priority</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-blue">Hepatitis A</td>
+            <td>Hepatitis A virus</td>
+            <td>Liver</td>
+            <td>Food/water borne; India's vaccine = <strong>Hevesh</strong></td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Hepatitis B</td>
+            <td>Hepatitis B virus</td>
+            <td>Liver</td>
+            <td>Sexual contact</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Hepatitis C</td>
+            <td>Hepatitis C virus</td>
+            <td>Liver</td>
+            <td>Infected blood</td>
+            <td><span class="tag tag-star">⭐</span></td>
+          </tr>
+          <tr>
+            <td class="td-amber">Jaundice / Yellow Fever</td>
+            <td>Zidis (Hepatitis-related)</td>
+            <td>Liver</td>
+            <td>Eyes/skin become yellow; also called Yellow Fever</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Mumps</td>
+            <td>Mumps virus</td>
+            <td>Parotid gland (near ear)</td>
+            <td>Salivary gland infection; swelling near ear</td>
+            <td><span class="tag tag-star">⭐</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Influenza (Flu)</td>
+            <td>Influenza virus</td>
+            <td>Respiratory</td>
+            <td>"Evil influence of stars"; Swine flu = H1N1; Bird flu = H5N1</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Common Cold</td>
+            <td><strong>Rhinovirus</strong></td>
+            <td>Upper respiratory</td>
+            <td>Rhino = Nose. Very frequently asked!</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Polio</td>
+            <td>Poliovirus (Enterovirus, RNA)</td>
+            <td>Nervous system</td>
+            <td>Eradicated from India (2023 announcement). IPV vaccine = Jonas Salk; OPV = Albert Sabin</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Cervical Cancer</td>
+            <td>HPV (Human Papilloma Virus)</td>
+            <td>Cervix (uterus-vagina link)</td>
+            <td>Detected by Smear test / Pap smear</td>
+            <td><span class="tag tag-star">⭐</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Chicken Pox</td>
+            <td><strong>Varicella Zoster</strong> virus</td>
+            <td>Skin</td>
+            <td>Different virus from Smallpox!</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Smallpox</td>
+            <td><strong>Variola</strong> virus</td>
+            <td>Skin</td>
+            <td>Vaccine by <strong>Edward Jenner</strong>; Eradicated in India: <strong>1977</strong></td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Dengue</td>
+            <td>Flavivirus (Flaviviridae family)</td>
+            <td>Blood/systemic</td>
+            <td>Carrier: <strong>female Aedes aegypti</strong> mosquito</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-blue">Rabies</td>
+            <td><strong>Lyssavirus</strong></td>
+            <td>Nervous system</td>
+            <td>Dog bite; patient acts mad, barks; fatal if untreated; Zoonotic</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+          <tr>
+            <td class="td-rose">AIDS</td>
+            <td><strong>HIV</strong> (Human Immunodeficiency Virus) — Retrovirus</td>
+            <td>Immune system</td>
+            <td>STD; test = ELISA; AIDS Day = Dec 1; transmission: blood, sex, mother-to-baby</td>
+            <td><span class="tag tag-fire">🔥</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">🦟 Carrier Comparison</h2>
+    <div class="grid-2">
+      <div class="card card-rose">
+        <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:8px;">FEMALE AEDES AEGYPTI 🦟</div>
+        <ul>
+          <li>Dengue (Flavivirus)</li>
+          <li>Chikungunya (also Aedes aegypti)</li>
+        </ul>
+      </div>
+      <div class="card card-blue">
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:8px;">FEMALE ANOPHELES 🦟</div>
+        <ul>
+          <li>Malaria (Plasmodium — Protozoa, not virus!)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-title">💉 Polio Vaccine Detail</h2>
+    <div class="grid-2">
+      <div class="card card-green">
+        <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:6px;">IPV — Inactivated Polio Vaccine</div>
+        <p>Created by <span class="hl-green">Jonas Salk</span></p>
+        <p style="color:var(--text-dim);font-size:12px;">Injected; killed/inactivated virus</p>
+      </div>
+      <div class="card card-blue">
+        <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:6px;">OPV — Oral Polio Vaccine</div>
+        <p>Created by <span class="hl-blue">Albert Sabin</span></p>
+        <p style="color:var(--text-dim);font-size:12px;">Oral drops; live attenuated virus</p>
+      </div>
+    </div>
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Exam Trap — Salk vs Sabin</div>
+      <p>Exam asks about polio vaccine inventor → Answer is <strong>Jonas Salk</strong> (IPV). But oral drops used in India = Sabin's OPV. Don't confuse them!</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 5: BACTERIAL DISEASES
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-bacteria">
+    <div class="page-hero">
+      <div class="eyebrow">Section 03</div>
+      <h1>🧫 Bacterial Diseases</h1>
+      <p>Bacteria are prokaryotes with a cell wall (peptidoglycan). Antibiotics work by blocking cell wall formation.</p>
+    </div>
+
+    <div class="card card-green">
+      <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px;">BACTERIA — Key Properties</div>
+      <ul>
+        <li>Prokaryotes, unicellular, living entities</li>
+        <li>Genetic material called <span class="hl-amber">Genophore</span></li>
+        <li>Can be parasitic or saprophytic</li>
+        <li>Cell wall made of <span class="hl-blue">Peptidoglycan</span></li>
+        <li>Treated with <span class="hl-green">Antibiotics</span></li>
+      </ul>
+    </div>
+
+    <h2 class="section-title">🔬 Bacterial Shapes</h2>
+    <div class="grid-3">
+      <div class="card" style="text-align:center">
+        <div style="font-size:28px;margin-bottom:8px;">⚫</div>
+        <div style="font-weight:700;color:var(--blue);">COCCI</div>
+        <div style="font-size:12px;color:var(--text-muted);">Spherical shape</div>
+        <div style="font-size:11px;color:var(--green);margin-top:4px;">e.g. Streptococcus</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:28px;margin-bottom:8px;">➖</div>
+        <div style="font-weight:700;color:var(--amber);">BACILLUS</div>
+        <div style="font-size:12px;color:var(--text-muted);">Rod-like shape</div>
+        <div style="font-size:11px;color:var(--green);margin-top:4px;">e.g. Mycobacterium</div>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:28px;margin-bottom:8px;">〰️</div>
+        <div style="font-weight:700;color:var(--rose);">SPIRILLA</div>
+        <div style="font-size:12px;color:var(--text-muted);">Spiral shape</div>
+        <div style="font-size:11px;color:var(--green);margin-top:4px;">e.g. Helicobacter</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">🔴🟣 Gram Staining</h2>
+    <div class="grid-2">
+      <div class="card" style="border-color:var(--purple)">
+        <div style="font-size:13px;font-weight:700;color:var(--purple);margin-bottom:8px;">GRAM POSITIVE (Purple)</div>
+        <ul>
+          <li>Thick peptidoglycan cell wall</li>
+          <li>More susceptible to antibiotics</li>
+          <li>Show <strong>purple</strong> colour in staining</li>
+          <li>Examples: <span class="hl-green">Streptococcus, Salmonella, Staphylococcus</span></li>
+        </ul>
+      </div>
+      <div class="card" style="border-color:var(--rose)">
+        <div style="font-size:13px;font-weight:700;color:var(--rose);margin-bottom:8px;">GRAM NEGATIVE (Pink/Red)</div>
+        <ul>
+          <li>Thin peptidoglycan cell wall</li>
+          <li>More resistant to antibiotics</li>
+          <li>Show <strong>pink/red</strong> colour in staining</li>
+          <li>Examples: <span class="hl-rose">E. coli (Escherichia coli)</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 class="section-title">🧫 Bacterial Disease Master Table</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Disease</th><th>Bacterium</th><th>System</th><th>Key Facts</th><th>Priority</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="td-rose">Plague</td><td><strong>Yersinia pestis</strong></td><td>Systemic</td><td>Causes <strong>Black Death</strong></td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-blue">Leprosy</td><td><strong>Mycobacterium leprae</strong></td><td>Skin</td><td>Also called <strong>Hansen's Disease</strong> / Kushth Rog</td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-blue">Cholera</td><td><strong>Vibrio cholerae</strong></td><td>GI tract</td><td>Waterborne; causes <strong>Blue Death</strong></td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-green">Tuberculosis (TB)</td><td><strong>Mycobacterium tuberculosis</strong></td><td>Lungs</td><td><strong>White Plague</strong>; vaccine = BCG (Bacillus Calmette-Guérin)</td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-blue">Bronchitis / Whooping cough</td><td><strong>Bordetella pertussis</strong></td><td>Bronchioles</td><td>Affects bronchioles specifically</td><td><span class="tag tag-star">⭐</span></td></tr>
+          <tr><td class="td-blue">Pneumonia</td><td><strong>Streptococcus pneumoniae</strong></td><td>Lungs/alveoli</td><td>Gram positive; Streptococcus = spherical shape</td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-blue">Diarrhea</td><td><strong>E. coli</strong></td><td>GI tract</td><td>Gram negative; causes diarrhea</td><td><span class="tag tag-star">⭐</span></td></tr>
+          <tr><td class="td-blue">Peptic Ulcer</td><td><strong>Helicobacter pylori</strong></td><td>Stomach</td><td>Ulcers in stomach lining</td><td><span class="tag tag-star">⭐</span></td></tr>
+          <tr><td class="td-blue">Diphtheria</td><td><strong>Corynebacterium diphtheriae</strong></td><td>Throat/respiratory</td><td>Membrane formation in throat</td><td><span class="tag tag-star">⭐</span></td></tr>
+          <tr><td class="td-rose">Typhoid</td><td><strong>Salmonella typhi</strong></td><td>GI tract/systemic</td><td><strong>Widal test</strong> for detection; Gram positive</td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-blue">Acne</td><td><strong>Staphylococcus</strong></td><td>Skin</td><td>Common skin infection</td><td><span class="tag tag-plus">➕</span></td></tr>
+          <tr><td class="td-rose">Tetanus</td><td><strong>Clostridium tetani</strong></td><td>Nervous system</td><td>Affects nervous system; stiff muscles</td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-rose">Gonorrhea</td><td><strong>Neisseria gonorrhoeae</strong></td><td>Reproductive organs</td><td>STD — bacterial STD (not viral)</td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-rose">Syphilis</td><td><strong>Treponema pallidum</strong></td><td>Reproductive organs</td><td>STD — bacterial STD (not viral)</td><td><span class="tag tag-fire">🔥</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">💀 The Death Colour Code</h2>
+    <div class="grid-3">
+      <div class="card" style="text-align:center;background:#1c0a0a">
+        <div style="font-size:32px">⬛</div>
+        <div style="color:var(--text-muted);font-size:12px;font-family:'JetBrains Mono',monospace;">BLACK DEATH</div>
+        <div style="color:var(--rose);font-weight:700;">Plague</div>
+        <div style="font-size:11px;color:var(--text-dim);">Yersinia pestis</div>
+      </div>
+      <div class="card" style="text-align:center;background:#0a1020">
+        <div style="font-size:32px">🔵</div>
+        <div style="color:var(--text-muted);font-size:12px;font-family:'JetBrains Mono',monospace;">BLUE DEATH</div>
+        <div style="color:var(--blue);font-weight:700;">Cholera</div>
+        <div style="font-size:11px;color:var(--text-dim);">Vibrio cholerae</div>
+      </div>
+      <div class="card" style="text-align:center;background:#f0f0f010">
+        <div style="font-size:32px">⬜</div>
+        <div style="color:var(--text-muted);font-size:12px;font-family:'JetBrains Mono',monospace;">WHITE PLAGUE</div>
+        <div style="color:var(--text);font-weight:700;">TB</div>
+        <div style="font-size:11px;color:var(--text-dim);">Mycobacterium TB</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">🧫 Nervous System Attackers</h2>
+    <div class="card card-rose">
+      <p>These diseases attack the <span class="hl-rose">nervous system</span> — most dangerous category:</p>
+      <ul>
+        <li><strong>Rabies</strong> — Lyssavirus (viral)</li>
+        <li><strong>Tetanus</strong> — Clostridium tetani (bacterial)</li>
+        <li><strong>Polio</strong> — Poliovirus (viral)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 6: PROTOZOA & FUNGI
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-protozoa">
+    <div class="page-hero">
+      <div class="eyebrow">Section 04</div>
+      <h1>🔬 Protozoa &amp; Fungi Diseases</h1>
+      <p>Three key protozoal diseases and the BARSA trick for fungi. Small section, high exam value.</p>
+    </div>
+
+    <h2 class="section-title">🦟 Protozoa Diseases</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Disease</th><th>Protozoa</th><th>Carrier</th><th>Reproduction</th><th>Key Fact</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="td-rose"><strong>Malaria</strong></td>
+            <td><strong>Plasmodium</strong></td>
+            <td><span class="hl-green">Female Anopheles</span> mosquito</td>
+            <td>Multiple fission</td>
+            <td>Treatment: <strong>Quinine</strong> from <em>Cinchona</em> bark; Detection: Vivax test; Malaria Day: <strong>25 April</strong></td>
+          </tr>
+          <tr>
+            <td class="td-amber"><strong>Sleeping Sickness</strong></td>
+            <td><strong>Trypanosoma</strong></td>
+            <td><span class="hl-amber">Tsetse fly</span></td>
+            <td>Binary fission</td>
+            <td>Patient falls asleep uncontrollably; Africa</td>
+          </tr>
+          <tr>
+            <td class="td-blue"><strong>Kala-azar</strong></td>
+            <td><strong>Leishmania</strong></td>
+            <td><span class="hl-blue">Sand fly</span></td>
+            <td>Binary fission</td>
+            <td>Spleen gets enlarged; abdominal swelling</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Memory Hook — Carrier Confusion Solver</div>
+      <p><strong>"So Ja" → Sleeping Sickness → Tsetse fly</strong><br>
+      <strong>"So Ma" → Sand fly → Kala-azar (Leishmania)</strong><br><br>
+      Dengue + Chikungunya = Same carrier: <strong>female Aedes aegypti</strong> 🦟<br>
+      Malaria = <strong>female Anopheles</strong> 🦟 (different mosquito!)</p>
+    </div>
+
+    <h2 class="section-title">🔬 Binary Fission Nuance</h2>
+    <div class="card card-blue">
+      <ul>
+        <li><strong>Amoeba</strong>: binary fission along <span class="hl-green">any plane</span></li>
+        <li><strong>Leishmania</strong>: binary fission along <span class="hl-amber">only ONE fixed plane</span></li>
+        <li><strong>Plasmodium</strong>: multiple fission (not binary fission!)</li>
+      </ul>
+    </div>
+
+    <h2 class="section-title">🍄 Fungal Diseases — BARSA</h2>
+    <div class="memory-hook">
+      <div class="hook-label">Memory Hook — BARSA (Cricket Trophy)</div>
+      <p>Imagine a cricket trophy labelled <strong>BARSA</strong> — all fungal diseases:<br><br>
+      <strong>B</strong> — Baldness (Alopecia)<br>
+      <strong>A</strong> — Athlete's foot<br>
+      <strong>R</strong> — Ringworm<br>
+      <strong>S</strong> — Scabies / Skin infections<br>
+      <strong>A</strong> — Asthma (fungal form)<br><br>
+      Bonus: <strong>Penicillin</strong> (first antibiotic) is also made from Penicillium <em>fungus</em>. So fungi both cause AND cure!</p>
+    </div>
+
+    <h2 class="section-title">☠️ Poisoning Diseases</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Disease</th><th>Caused by</th><th>Memory Hook</th></tr></thead>
+        <tbody>
+          <tr><td class="td-rose">Wilson Disease</td><td>Copper (Cu) deposition</td><td>Copper kettle = Wilson's</td></tr>
+          <tr><td class="td-amber">Mad Hatter Disease</td><td>Mercury (Hg) poisoning</td><td>Hatter = Mercury (old hat makers used mercury)</td></tr>
+          <tr><td class="td-blue">Itai-Itai Disease</td><td>Cadmium (Cd) poisoning</td><td>"Itai" = painful (Japanese) — Cadmium = bones hurt</td></tr>
+          <tr><td class="td-green">Blue Baby Syndrome</td><td>Nitrate in water (NO₃)</td><td>Nitrogen = Blue = Baby turns blue (lacks oxygen)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 7: GENETIC DISORDERS
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-genetic">
+    <div class="page-hero">
+      <div class="eyebrow">Section 05</div>
+      <h1>🧬 Genetic Disorders</h1>
+      <p>Disorders arising from faulty genes or chromosomes — not from external pathogens. Key for SSC CGL!</p>
+    </div>
+
+    <div class="card card-purple">
+      <div style="font-size:13px;font-weight:700;color:var(--purple);margin-bottom:10px;">Foundation Knowledge</div>
+      <ul>
+        <li><strong>Total chromosomes</strong>: 23 pairs (46 total)</li>
+        <li><strong>Autosomes</strong>: 22 pairs (not related to sex)</li>
+        <li><strong>Sex chromosomes</strong>: 1 pair — XX (female) or XY (male)</li>
+        <li><strong>Gene</strong>: Functional segment of DNA (double helix)</li>
+        <li><strong>Alleles</strong>: Different variants of same gene</li>
+        <li><strong>Mendelian Disorders</strong>: Problem in <em>genes</em> (not chromosome number)</li>
+        <li>Mitosis → uncontrolled = <span class="hl-rose">Cancer</span></li>
+        <li>Meiosis → uncontrolled = <span class="hl-amber">Genetic Disorders</span></li>
+        <li>Gregor Mendel = Father of Genetics (pea plant experiments)</li>
+      </ul>
+    </div>
+
+    <h2 class="section-title">🧬 Chromosomal Disorders</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Disorder</th><th>Chromosome Involved</th><th>Condition</th><th>Features</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="td-rose"><strong>Down Syndrome</strong></td>
+            <td>Autosome #21</td>
+            <td><strong>Trisomy 21</strong> (extra copy)</td>
+            <td>Small head, intellectual disability</td>
+          </tr>
+          <tr>
+            <td class="td-blue"><strong>Turner Syndrome</strong></td>
+            <td>Sex chromosome (X)</td>
+            <td>45 chromosomes — XO (missing X)</td>
+            <td>Only in females; reduced female traits</td>
+          </tr>
+          <tr>
+            <td class="td-amber"><strong>Klinefelter Syndrome</strong></td>
+            <td>Sex chromosome</td>
+            <td>47 chromosomes — XXY (extra X in male)</td>
+            <td>Male with some female characteristics</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">🧬 Mendelian / Gene Disorders</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Disorder</th><th>Key Fact</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td class="td-blue">Hemophilia</td><td>Blood doesn't clot; recessive gene on X chromosome; affects <strong>males more</strong></td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-blue">Albinism</td><td>Absence of melanin (skin pigment); autosomal</td><td><span class="tag tag-star">⭐</span></td></tr>
+          <tr><td class="td-blue">Thalassemia</td><td>Less hemoglobin production → Anemia; blood disorder</td><td><span class="tag tag-fire">🔥</span></td></tr>
+          <tr><td class="td-blue">Sickle Cell Anemia</td><td>Abnormal hemoglobin; RBCs sickle-shaped</td><td><span class="tag tag-star">⭐</span></td></tr>
+          <tr><td class="td-blue">Color Blindness</td><td>Cannot distinguish red/green; X-linked; males more affected</td><td><span class="tag tag-fire">🔥</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Memory Hook — Sex-Linked Disorders</div>
+      <p>The three that link to <strong>X chromosome</strong>: <strong>H-T-C</strong> = <strong>H</strong>emophilia, <strong>T</strong>urner syndrome (missing X), <strong>C</strong>olor blindness. All three affect males more (because males only have ONE X — if it's faulty, no backup).</p>
+    </div>
+
+    <h2 class="section-title">🧬 Mendel's 3 Laws</h2>
+    <div class="grid-3">
+      <div class="card card-green">
+        <div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px;">LAW 1</div>
+        <div style="font-weight:700;">Dominance</div>
+        <div style="font-size:12px;color:var(--text-muted);">One trait masks the other</div>
+      </div>
+      <div class="card card-blue">
+        <div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:6px;">LAW 2</div>
+        <div style="font-weight:700;">Segregation</div>
+        <div style="font-size:12px;color:var(--text-muted);">Alleles separate during gamete formation</div>
+      </div>
+      <div class="card card-amber">
+        <div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:6px;">LAW 3</div>
+        <div style="font-weight:700;">Independent Assortment</div>
+        <div style="font-size:12px;color:var(--text-muted);">Different traits inherited independently</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 8: PLANT DISEASES
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-plant">
+    <div class="page-hero">
+      <div class="eyebrow">Section 06</div>
+      <h1>🌿 Plant Diseases</h1>
+      <p>Low probability section but some specific ones appear. Know the agent type — viral, bacterial, or fungal.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Disease</th><th>Plant/Crop</th><th>Causative Agent</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td class="td-blue">Citrus Canker</td><td>Citrus fruits</td><td><span class="hl-rose">Bacteria</span></td><td><span class="tag tag-star">⭐</span></td></tr>
+          <tr><td class="td-blue">Wheat Rust</td><td>Wheat</td><td><span class="hl-amber">Fungus</span></td><td><span class="tag tag-star">⭐</span></td></tr>
+          <tr><td class="td-blue">Yellow Forest Mosaic</td><td>Tobacco</td><td><span class="hl-blue">Virus</span></td><td><span class="tag tag-star">⭐</span></td></tr>
+          <tr><td class="td-blue">Aster Yellow</td><td>Aster plants</td><td><span class="hl-rose">Bacteria</span></td><td><span class="tag tag-plus">➕</span></td></tr>
+          <tr><td class="td-blue">Crown Gall</td><td>Various plants</td><td><span class="hl-rose">Bacteria</span></td><td><span class="tag tag-plus">➕</span></td></tr>
+          <tr><td class="td-blue">Ergot</td><td>Millet/cereals</td><td><span class="hl-amber">Fungus</span></td><td><span class="tag tag-plus">➕</span></td></tr>
+          <tr><td class="td-blue">Snow Mold</td><td>Various crops</td><td><span class="hl-amber">Fungus</span></td><td><span class="tag tag-plus">➕</span></td></tr>
+          <tr><td class="td-blue">Black Knot</td><td>Trees</td><td><span class="hl-amber">Fungus</span></td><td><span class="tag tag-plus">➕</span></td></tr>
+          <tr><td class="td-blue">Blight</td><td>Various crops</td><td>Fungus / Bacteria</td><td><span class="tag tag-plus">➕</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Memory Hook — Plant Disease Agent</div>
+      <p><strong>VIRUS</strong> = Tobacco Mosaic (Yellow Forest Mosaic)<br>
+      <strong>BACTERIA</strong> = Citrus Canker, Aster Yellow, Crown Gall<br>
+      <strong>FUNGUS</strong> = Wheat Rust, Ergot, Snow Mold, Black Knot, Blight<br><br>
+      Trick: Most plant diseases = <strong>Fungal</strong>. Virus = tobacco. Bacteria = canker + gall.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 9: MEMORY HOOKS
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-hooks">
+    <div class="page-hero">
+      <div class="eyebrow">Retention System</div>
+      <h1>💡 Smart Memory Hooks</h1>
+      <p>These are the core images and stories that make this chapter impossible to forget.</p>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Hook 1 — The Death Colour Rainbow</div>
+      <p><strong>Black Death</strong> = Plague (Yersinia pestis) — imagine a black rat running<br>
+      <strong>Blue Death</strong> = Cholera (Vibrio) — blue tap water = contaminated<br>
+      <strong>White Plague</strong> = TB (Mycobacterium TB) — white clouds in lungs<br>
+      <strong>Yellow Fever</strong> = Jaundice — yellow eyes, yellow skin</p>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Hook 2 — Mycobacterium Twins</div>
+      <p>Two diseases, one family: <strong>Mycobacterium tuberculosis</strong> → TB (lungs) and <strong>Mycobacterium leprae</strong> → Leprosy/Hansen's disease (skin). Remember: <em>Myco brothers — one attacks lungs, one attacks skin.</em></p>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Hook 3 — The Vaccine Hall of Fame</div>
+      <p>• <strong>Edward Jenner</strong> → Smallpox (first ever vaccine, 1796)<br>
+      • <strong>Jonas Salk</strong> → Polio IPV (inject = Salk)<br>
+      • <strong>Albert Sabin</strong> → Polio OPV (oral = Sabin)<br>
+      • <strong>Alexander Fleming</strong> → Penicillin (antibiotic from fungus, 1928)</p>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Hook 4 — The Mosquito Sisters</div>
+      <p>Two mosquito sisters cause disease:<br>
+      <strong>Sister Anopheles</strong> (female, wears a malaria badge) → carries Plasmodium → Malaria<br>
+      <strong>Sister Aedes</strong> (female, wears a tiger stripe) → carries Flavivirus → Dengue, also Chikungunya<br>
+      <em>Memory: Anopheles = Ancient disease (Malaria). Aedes = A modern striker (Dengue).</em></p>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Hook 5 — ELISA and AIDS Day</div>
+      <p>AIDS → HIV → Retrovirus (RNA). Test = <strong>ELISA</strong> (Enzyme Linked ImmunoSorbent Assay). World AIDS Day = <strong>December 1</strong>. Memory: "December 1 — Don't be Number 1 to spread it."</p>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Hook 6 — Hepatitis ABC Rule</div>
+      <p><strong>A</strong> = food (A for Aloo — you eat it) → Hepatitis A<br>
+      <strong>B</strong> = body contact/sex (B for Bodily) → Hepatitis B<br>
+      <strong>C</strong> = contaminated blood (C for Cut/Blood) → Hepatitis C<br>
+      India's own vaccine for Hep A = <strong>Hevesh</strong></p>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Hook 7 — Chromosome Numbers</div>
+      <p>Normal human = <strong>46 chromosomes</strong> (23 pairs)<br>
+      Turner syndrome = <strong>45</strong> (45, X — missing one X)<br>
+      Klinefelter = <strong>47</strong> (XXY — one extra X in male)<br>
+      Down syndrome = still <strong>47</strong> (trisomy 21 — extra autosome #21)<br>
+      Memory: Turner = <em>fewer</em>. Klinefelter = <em>more</em>. Down = <em>more on 21</em>.</p>
+    </div>
+
+    <div class="memory-hook">
+      <div class="hook-label">Hook 8 — STD Summary</div>
+      <p>STDs from <strong>bacteria</strong>: <strong>Gonorrhea + Syphilis</strong> (both reproductive organs)<br>
+      STDs from <strong>virus</strong>: <strong>AIDS/HIV + Cervical Cancer/HPV + Hepatitis B</strong><br>
+      Memory: "Bacteria gave 2 STDs. Virus gave 3."</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 10: EXAM TRAPS
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-traps">
+    <div class="page-hero">
+      <div class="eyebrow">Danger Zone</div>
+      <h1>⚠️ Exam Traps &amp; Common Confusions</h1>
+      <p>These are exactly the places where students lose marks. Memorise each trap individually.</p>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 1 — Varicella vs Variola</div>
+      <ul>
+        <li><strong>Varicella Zoster</strong> = Chicken Pox</li>
+        <li><strong>Variola</strong> = Smallpox</li>
+        <li>Edward Jenner discovered SMALLPOX vaccine (not chicken pox)</li>
+        <li>Eradicated in India: Smallpox in <strong>1977</strong> (not chicken pox)</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 2 — Virus Cannot Be Treated With Antibiotics</div>
+      <ul>
+        <li>Antibiotics only work on BACTERIA (they block cell wall formation)</li>
+        <li>Viruses have NO cell wall → antibiotics are useless against them</li>
+        <li>Exam may say "antibiotic treats common cold" → FALSE</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 3 — Malaria vs Dengue Carrier</div>
+      <ul>
+        <li><strong>Malaria</strong> → Female <strong>Anopheles</strong> mosquito</li>
+        <li><strong>Dengue + Chikungunya</strong> → Female <strong>Aedes aegypti</strong></li>
+        <li>Both are female mosquitoes, different species!</li>
+        <li>Malaria = Protozoa (Plasmodium). Dengue = Virus (Flavivirus)</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 4 — Salk vs Sabin (Polio)</div>
+      <ul>
+        <li><strong>Jonas Salk</strong> → IPV (Inactivated Polio Vaccine — INJECTED)</li>
+        <li><strong>Albert Sabin</strong> → OPV (Oral Polio Vaccine — DROPS in mouth)</li>
+        <li>India eradicated polio — announced 2023</li>
+        <li>Exam usually asks for Salk (IPV)</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 5 — Gram Positive vs Negative Colour</div>
+      <ul>
+        <li><strong>Gram Positive</strong> → PURPLE/Violet colour (thick wall)</li>
+        <li><strong>Gram Negative</strong> → PINK/RED colour (thin wall)</li>
+        <li>Students reverse these in exam stress!</li>
+        <li>Memory: Positive = Pretty Purple. Negative = Not purple = Pink.</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 6 — Gonorrhea is Bacterial, NOT Viral</div>
+      <ul>
+        <li>Gonorrhea = Bacterial STD (Neisseria gonorrhoeae)</li>
+        <li>Syphilis = Bacterial STD (Treponema pallidum)</li>
+        <li>AIDS = Viral STD (HIV)</li>
+        <li>Don't confuse: all three are STDs but different agents!</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 7 — Turner vs Klinefelter</div>
+      <ul>
+        <li><strong>Turner syndrome</strong>: Only in FEMALES (XO, 45 chromosomes)</li>
+        <li><strong>Klinefelter syndrome</strong>: Only in MALES (XXY, 47 chromosomes)</li>
+        <li>Turner = LESS (missing X). Klinefelter = MORE (extra X)</li>
+        <li>Down syndrome (Trisomy 21) ≠ sex chromosome disorder</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 8 — Leprosy's Other Name</div>
+      <ul>
+        <li>Leprosy = <strong>Hansen's Disease</strong> = Kushth Rog</li>
+        <li>Caused by Mycobacterium <strong>leprae</strong></li>
+        <li>Don't confuse Mycobacterium leprae (skin/leprosy) with Mycobacterium tuberculosis (lungs/TB)</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 9 — Common Cold Virus</div>
+      <ul>
+        <li>Common Cold = <strong>Rhinovirus</strong> (not Influenza virus!)</li>
+        <li>Influenza virus causes FLU (which is more severe)</li>
+        <li>Cold ≠ Flu in biology (different viruses!)</li>
+      </ul>
+    </div>
+
+    <div class="trap-box">
+      <div class="trap-label">⚠️ Trap 10 — Thalassemia vs Sickle Cell</div>
+      <ul>
+        <li>Both are blood disorders with abnormal hemoglobin</li>
+        <li><strong>Thalassemia</strong> = body produces LESS hemoglobin → anemia</li>
+        <li><strong>Sickle Cell</strong> = ABNORMAL hemoglobin → sickle-shaped RBCs</li>
+        <li>Both are Mendelian (genetic) disorders</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 11: EXAMINER'S FAVOURITES
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-examiner">
+    <div class="page-hero">
+      <div class="eyebrow">Exam Intelligence</div>
+      <h1>🎯 Examiner's Favourite Questions</h1>
+      <p>Based on previous SSC CGL patterns. These topics appear most frequently.</p>
+    </div>
+
+    <h2 class="section-title">🎯 High Probability Questions</h2>
+    <div class="card card-rose">
+      <ul>
+        <li>Which virus causes <strong>Common Cold</strong>? → Rhinovirus</li>
+        <li>Carrier of <strong>Dengue fever</strong>? → Female Aedes aegypti</li>
+        <li>Who discovered the <strong>Smallpox vaccine</strong>? → Edward Jenner</li>
+        <li>AIDS is caused by <strong>HIV</strong> — what type? → Retrovirus (RNA virus)</li>
+        <li>What is the test for AIDS? → ELISA</li>
+        <li>Polio vaccine (IPV) was invented by? → Jonas Salk</li>
+        <li>Treatment for Malaria? → Quinine (from Cinchona bark)</li>
+        <li><strong>BCG vaccine</strong> is for? → Tuberculosis (TB)</li>
+        <li>First antibiotic discovered? → Penicillin by Alexander Fleming</li>
+        <li>Leprosy is also known as? → Hansen's Disease</li>
+      </ul>
+    </div>
+
+    <h2 class="section-title">🎯 Statement-Based / True-False Type</h2>
+    <div class="card card-blue">
+      <ul>
+        <li>"Antibiotics are effective against viral infections" → <span class="hl-rose">FALSE</span></li>
+        <li>"Dengue is caused by female Anopheles mosquito" → <span class="hl-rose">FALSE</span> (it's Aedes)</li>
+        <li>"Smallpox was eradicated from India in 1977" → <span class="hl-green">TRUE</span></li>
+        <li>"Hemophilia affects females more than males" → <span class="hl-rose">FALSE</span> (affects males more)</li>
+        <li>"Turner syndrome is characterised by XXY" → <span class="hl-rose">FALSE</span> (XXY = Klinefelter; Turner = XO)</li>
+        <li>"HIV is a retrovirus with RNA genetic material" → <span class="hl-green">TRUE</span></li>
+        <li>"Malaria is caused by Plasmodium virus" → <span class="hl-rose">FALSE</span> (Plasmodium is a protozoa)</li>
+      </ul>
+    </div>
+
+    <h2 class="section-title">🎯 Match-the-Following Favourites</h2>
+    <div class="grid-2">
+      <div class="card">
+        <div style="font-size:12px;color:var(--amber);font-family:'JetBrains Mono',monospace;margin-bottom:8px;">DISEASE → CAUSATIVE AGENT</div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Plague</span><span class="fast-val">Yersinia pestis</span></div></div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Typhoid</span><span class="fast-val">Salmonella typhi</span></div></div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Rabies</span><span class="fast-val">Lyssavirus</span></div></div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Dengue</span><span class="fast-val">Flavivirus</span></div></div>
+        <div class="fast-item" style="border:none"><div class="fast-dot"></div><div><span class="fast-key">Malaria</span><span class="fast-val">Plasmodium</span></div></div>
+      </div>
+      <div class="card">
+        <div style="font-size:12px;color:var(--amber);font-family:'JetBrains Mono',monospace;margin-bottom:8px;">DISEASE → COLOUR NAME</div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Plague</span><span class="fast-val">Black Death</span></div></div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Cholera</span><span class="fast-val">Blue Death</span></div></div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">TB</span><span class="fast-val">White Plague</span></div></div>
+        <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Jaundice</span><span class="fast-val">Yellow Fever</span></div></div>
+        <div class="fast-item" style="border:none"><div class="fast-dot"></div><div><span class="fast-key">Leprosy</span><span class="fast-val">Hansen's Disease</span></div></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">🎯 Assertion-Reason Type</h2>
+    <div class="card card-amber">
+      <p><strong>A:</strong> Viral diseases cannot be treated with antibiotics.<br>
+      <strong>R:</strong> Antibiotics inhibit cell wall formation, but viruses have no cell wall.<br>
+      <strong>Answer:</strong> Both A and R are true, and R is the correct explanation of A. ✅</p>
+    </div>
+    <div class="card card-amber">
+      <p><strong>A:</strong> Hemophilia is more common in males than females.<br>
+      <strong>R:</strong> The gene for hemophilia is on the X chromosome. Males have only one X.<br>
+      <strong>Answer:</strong> Both A and R are true, and R is the correct explanation of A. ✅</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 12: ACTIVE RECALL
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-recall">
+    <div class="page-hero">
+      <div class="eyebrow">Active Recall Training</div>
+      <h1>❓ Test Your Memory</h1>
+      <p>Click each question to reveal the answer. Don't peek — try to recall first!</p>
+    </div>
+
+    <h2 class="section-title">🃏 Flash Cards (Click to Flip)</h2>
+
+    <div id="flashcard-container">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span style="font-size:12px;color:var(--text-dim);font-family:'JetBrains Mono',monospace;" id="fc-counter">Card 1 of 10</span>
+        <div style="display:flex;gap:8px">
+          <button onclick="prevCard()" style="background:var(--surface2);border:1px solid var(--border-bright);color:var(--text);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:12px;">← Prev</button>
+          <button onclick="nextCard()" style="background:var(--green-dim);border:1px solid var(--green);color:var(--green);padding:6px 14px;border-radius:8px;cursor:pointer;font-size:12px;">Next →</button>
+        </div>
+      </div>
+      <div class="flashcard-wrap">
+        <div class="flashcard" id="flashcard" onclick="this.classList.toggle('flipped')">
+          <div class="flashcard-front">
+            <p id="fc-q">What virus causes Common Cold?</p>
+            <div class="flashcard-hint">Click to reveal answer</div>
+          </div>
+          <div class="flashcard-back">
+            <p id="fc-a">Rhinovirus</p>
+            <div class="flashcard-hint">Click to flip back</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-title">❓ Click-to-Reveal Questions</h2>
+
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">Which mosquito carries Dengue fever?</div>
+      <div class="recall-hint">Think: Aedes or Anopheles?</div>
+      <div class="recall-a">Female Aedes aegypti mosquito (Flavivirus)</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">What does BCG stand for and what disease does it prevent?</div>
+      <div class="recall-a">BCG = Bacillus Calmette-Guérin → prevents Tuberculosis (TB)</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">Name the test used to diagnose Typhoid.</div>
+      <div class="recall-a">Widal Test (Salmonella typhi is the bacterium)</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">What causes Mad Hatter Disease?</div>
+      <div class="recall-a">Mercury (Hg) poisoning</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">Which disease is caused by Yersinia pestis and what was it called historically?</div>
+      <div class="recall-a">Plague — called "Black Death"</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">Turner syndrome — how many chromosomes and what's missing?</div>
+      <div class="recall-a">45 chromosomes (XO) — one X chromosome is missing; only in females</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">What is the ELISA test used for?</div>
+      <div class="recall-a">ELISA = Enzyme Linked ImmunoSorbent Assay → used to detect HIV/AIDS</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">Which two sexually transmitted diseases are caused by bacteria (not virus)?</div>
+      <div class="recall-a">Gonorrhea (Neisseria gonorrhoeae) and Syphilis (Treponema pallidum)</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">Fill in the blank: Quinine is derived from the bark of _____ tree.</div>
+      <div class="recall-a">Cinchona tree — used to treat Malaria</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">What colour does a Gram Negative bacterium show in Gram staining?</div>
+      <div class="recall-a">Pink / Red colour (thin peptidoglycan wall; more antibiotic resistant)</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">Name all three diseases where the nervous system is directly affected.</div>
+      <div class="recall-a">Rabies (Lyssavirus), Tetanus (Clostridium tetani), Polio (Poliovirus)</div>
+    </div>
+    <div class="recall-item" onclick="toggleRecall(this)">
+      <div class="recall-q">Klinefelter syndrome: which chromosomes and what chromosome count?</div>
+      <div class="recall-a">47 chromosomes — XXY (extra X in a male person)</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 13: HIGH-YIELD
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-highyield">
+    <div class="page-hero">
+      <div class="eyebrow">Revision Layer 2</div>
+      <h1>⭐ High-Yield Revision Notes</h1>
+      <p>The most testable facts from this chapter. Revise this when you have 15–20 minutes.</p>
+    </div>
+
+    <h3 class="sub-title">VIRAL DISEASES — HIGH YIELD</h3>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Common Cold</span><span class="fast-val">Rhinovirus 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Smallpox</span><span class="fast-val">Variola virus; Vaccine by Edward Jenner; Eradicated 1977 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Chicken Pox</span><span class="fast-val">Varicella Zoster virus (≠ Variola!) 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Dengue</span><span class="fast-val">Flavivirus + Female Aedes aegypti 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">AIDS</span><span class="fast-val">HIV (retrovirus) → ELISA test; AIDS Day = Dec 1 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Polio</span><span class="fast-val">Poliovirus (RNA/enterovirus); Salk = IPV; Sabin = OPV; Eradicated 2023 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Rabies</span><span class="fast-val">Lyssavirus; nervous system; zoonotic 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Flu</span><span class="fast-val">Influenza; Swine flu H1N1; Bird flu H5N1 🔥</span></div></div>
+
+    <h3 class="sub-title">BACTERIAL DISEASES — HIGH YIELD</h3>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Plague</span><span class="fast-val">Yersinia pestis → Black Death 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Cholera</span><span class="fast-val">Vibrio cholerae → Blue Death; waterborne 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">TB</span><span class="fast-val">Mycobacterium tuberculosis → White Plague; BCG vaccine 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Leprosy</span><span class="fast-val">Mycobacterium leprae → Hansen's Disease 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Typhoid</span><span class="fast-val">Salmonella typhi → Widal test 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Tetanus</span><span class="fast-val">Clostridium tetani → nervous system 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Penicillin</span><span class="fast-val">From Penicillium fungus; discovered by Alexander Fleming 🔥</span></div></div>
+
+    <h3 class="sub-title">PROTOZOA — HIGH YIELD</h3>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Malaria</span><span class="fast-val">Plasmodium + Female Anopheles; Quinine from Cinchona; Malaria Day April 25 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Sleeping Sickness</span><span class="fast-val">Trypanosoma + Tsetse fly 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Kala-azar</span><span class="fast-val">Leishmania + Sand fly; spleen enlarged 🔥</span></div></div>
+
+    <h3 class="sub-title">GENETIC DISORDERS — HIGH YIELD</h3>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Down Syndrome</span><span class="fast-val">Trisomy 21; 47 chromosomes 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Turner Syndrome</span><span class="fast-val">XO; 45 chromosomes; female only 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Klinefelter</span><span class="fast-val">XXY; 47 chromosomes; male only 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Hemophilia</span><span class="fast-val">X-linked recessive; blood doesn't clot; males more affected 🔥</span></div></div>
+    <div class="fast-item"><div class="fast-dot"></div><div><span class="fast-key">Thalassemia</span><span class="fast-val">Less hemoglobin → anemia 🔥</span></div></div>
+    <div class="fast-item" style="border:none"><div class="fast-dot"></div><div><span class="fast-key">Wilson Disease</span><span class="fast-val">Copper (Cu) deposition; Mad Hatter = Mercury; Itai-Itai = Cadmium 🔥</span></div></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 14: ULTRA FAST
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-ultrafast">
+    <div class="page-hero">
+      <div class="eyebrow">Revision Layer 3</div>
+      <h1>⚡ Ultra-Fast Revision Sheet</h1>
+      <p>5-minute revision. Scan all key pairs rapidly. Use this a day before exam.</p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <h3 class="sub-title" style="margin-top:0">DISEASE ↔ AGENT</h3>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--rose)"></div><span class="fast-key">Common Cold</span><span class="fast-val">Rhinovirus</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--rose)"></div><span class="fast-key">Dengue</span><span class="fast-val">Flavivirus</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--rose)"></div><span class="fast-key">AIDS</span><span class="fast-val">HIV (retrovirus)</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--rose)"></div><span class="fast-key">Rabies</span><span class="fast-val">Lyssavirus</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--rose)"></div><span class="fast-key">Smallpox</span><span class="fast-val">Variola</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--rose)"></div><span class="fast-key">Chicken Pox</span><span class="fast-val">Varicella Zoster</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--green)"></div><span class="fast-key">Plague</span><span class="fast-val">Yersinia pestis</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--green)"></div><span class="fast-key">TB</span><span class="fast-val">Mycobacterium TB</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--green)"></div><span class="fast-key">Leprosy</span><span class="fast-val">Mycobacterium leprae</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--green)"></div><span class="fast-key">Cholera</span><span class="fast-val">Vibrio cholerae</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--green)"></div><span class="fast-key">Typhoid</span><span class="fast-val">Salmonella typhi</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--green)"></div><span class="fast-key">Tetanus</span><span class="fast-val">Clostridium tetani</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--amber)"></div><span class="fast-key">Malaria</span><span class="fast-val">Plasmodium</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--amber)"></div><span class="fast-key">Kala-azar</span><span class="fast-val">Leishmania</span></div>
+        <div class="fast-item" style="border:none"><div class="fast-dot" style="background:var(--amber)"></div><span class="fast-key">Sleeping Sickness</span><span class="fast-val">Trypanosoma</span></div>
+      </div>
+      <div>
+        <h3 class="sub-title" style="margin-top:0">KEY FACTS RAPID FIRE</h3>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">1st Antibiotic</span><span class="fast-val">Penicillin (Fleming)</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Smallpox vaccine</span><span class="fast-val">Edward Jenner</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">IPV (Polio)</span><span class="fast-val">Jonas Salk</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">OPV (Polio)</span><span class="fast-val">Albert Sabin</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Smallpox eradicated</span><span class="fast-val">India 1977</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">AIDS test</span><span class="fast-val">ELISA</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">AIDS Day</span><span class="fast-val">December 1</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Typhoid test</span><span class="fast-val">Widal test</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Malaria Day</span><span class="fast-val">April 25</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Malaria treatment</span><span class="fast-val">Quinine (Cinchona bark)</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Down syndrome</span><span class="fast-val">Trisomy 21 (47 chr)</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Turner</span><span class="fast-val">XO (45 chr, female)</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Klinefelter</span><span class="fast-val">XXY (47 chr, male)</span></div>
+        <div class="fast-item"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Wilson Disease</span><span class="fast-val">Copper deposition</span></div>
+        <div class="fast-item" style="border:none"><div class="fast-dot" style="background:var(--blue)"></div><span class="fast-key">Blue Baby Syndrome</span><span class="fast-val">Nitrate poisoning</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 15: 30-SECOND SHEET
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-last30">
+    <div class="page-hero">
+      <div class="eyebrow">Revision Layer 4</div>
+      <h1>⏱️ 30-Second Revision Sheet</h1>
+      <p>The absolute core — if you only have 30 seconds before entering the exam hall.</p>
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg,#0d1f0d,#1a3a1a);border-color:var(--green)">
+      <div style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--green);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;">🔥 THE ABSOLUTE MUST-KNOWS</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12.5px;line-height:1.8;">
+        <div>• Cold = <strong>Rhinovirus</strong></div>
+        <div>• Dengue = <strong>Aedes aegypti</strong></div>
+        <div>• Malaria = <strong>Anopheles + Plasmodium</strong></div>
+        <div>• Plague = <strong>Black Death</strong></div>
+        <div>• Cholera = <strong>Blue Death</strong></div>
+        <div>• TB = <strong>White Plague + BCG</strong></div>
+        <div>• AIDS = <strong>HIV + ELISA + Dec 1</strong></div>
+        <div>• Smallpox vaccine = <strong>Jenner (1977)</strong></div>
+        <div>• IPV = <strong>Salk</strong>; OPV = <strong>Sabin</strong></div>
+        <div>• Penicillin = <strong>Fleming</strong></div>
+        <div>• Down = <strong>Trisomy 21</strong></div>
+        <div>• Turner = <strong>XO</strong>; Klinefelter = <strong>XXY</strong></div>
+        <div>• Typhoid test = <strong>Widal</strong></div>
+        <div>• Quinine from <strong>Cinchona bark</strong></div>
+        <div>• Leprosy = <strong>Hansen's Disease</strong></div>
+        <div>• Antibiotics ≠ viral disease</div>
+      </div>
+    </div>
+
+    <div class="trap-box" style="margin-top:16px">
+      <div class="trap-label">⚠️ Quick Traps Recap</div>
+      <ul>
+        <li>Chicken Pox ≠ Smallpox (different viruses: Varicella Zoster vs Variola)</li>
+        <li>Dengue = Aedes; Malaria = Anopheles (students always mix these!)</li>
+        <li>Gonorrhea + Syphilis = bacterial STDs (NOT viral)</li>
+        <li>Gram +ve = Purple; Gram −ve = Pink</li>
+        <li>Hemophilia affects MALES more (X-linked)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PAGE 16: LAST NIGHT SHEET
+  ═══════════════════════════════════════════════════════ -->
+  <div class="page" id="page-lastnight">
+    <div class="page-hero">
+      <div class="eyebrow">Revision Layer 5</div>
+      <h1>🌙 Last Night Before Exam Sheet</h1>
+      <p>Tonight: just scan these boxes. Trust your memory. Sleep well. You've got this. 💪</p>
+    </div>
+
+    <div class="ln-grid">
+      <div class="ln-box">
+        <div class="ln-head">🦠 Viruses</div>
+        <ul>
+          <li><strong>Cold</strong> → Rhinovirus</li>
+          <li><strong>Dengue</strong> → Flavivirus + Aedes ♀</li>
+          <li><strong>Malaria</strong> → Plasmodium + Anopheles ♀</li>
+          <li><strong>AIDS</strong> → HIV (retrovirus)</li>
+          <li><strong>Rabies</strong> → Lyssavirus</li>
+          <li><strong>Smallpox</strong> → Variola; Jenner; 1977</li>
+          <li><strong>Chicken Pox</strong> → Varicella Zoster</li>
+          <li><strong>Flu</strong> → Influenza; H1N1; H5N1</li>
+          <li><strong>Polio</strong> → Salk (IPV); Sabin (OPV)</li>
+        </ul>
+      </div>
+      <div class="ln-box">
+        <div class="ln-head">🧫 Bacteria</div>
+        <ul>
+          <li><strong>Plague</strong> → Yersinia pestis (Black)</li>
+          <li><strong>Cholera</strong> → Vibrio (Blue)</li>
+          <li><strong>TB</strong> → Mycobacterium TB (White)</li>
+          <li><strong>Leprosy</strong> → Mycobacterium leprae (Hansen's)</li>
+          <li><strong>Typhoid</strong> → Salmonella (Widal test)</li>
+          <li><strong>Tetanus</strong> → Clostridium tetani</li>
+          <li><strong>Pneumonia</strong> → Streptococcus</li>
+          <li><strong>Gonorrhea + Syphilis</strong> → bacterial STDs</li>
+          <li><strong>Penicillin</strong> → Fleming (1928)</li>
+        </ul>
+      </div>
+      <div class="ln-box">
+        <div class="ln-head">🔬 Protozoa</div>
+        <ul>
+          <li><strong>Malaria</strong> → Plasmodium + Anopheles</li>
+          <li><strong>Sleeping Sickness</strong> → Trypanosoma + Tsetse</li>
+          <li><strong>Kala-azar</strong> → Leishmania + Sandfly</li>
+          <li>Treatment: Quinine (Cinchona)</li>
+          <li>Malaria Day: April 25</li>
+        </ul>
+        <div class="ln-head" style="margin-top:12px">🍄 Fungi (BARSA)</div>
+        <ul>
+          <li>Baldness, Athlete's foot, Ringworm, Scabies, Asthma</li>
+        </ul>
+      </div>
+      <div class="ln-box">
+        <div class="ln-head">🧬 Genetic</div>
+        <ul>
+          <li><strong>Down Syndrome</strong> → Trisomy 21</li>
+          <li><strong>Turner</strong> → XO (45 chr, ♀)</li>
+          <li><strong>Klinefelter</strong> → XXY (47 chr, ♂)</li>
+          <li><strong>Hemophilia</strong> → X-linked; males more</li>
+          <li><strong>Thalassemia</strong> → low Hb → anemia</li>
+          <li><strong>Wilson</strong> → Copper</li>
+          <li><strong>Mad Hatter</strong> → Mercury</li>
+          <li><strong>Itai-Itai</strong> → Cadmium</li>
+          <li><strong>Blue Baby</strong> → Nitrate</li>
+        </ul>
+      </div>
+      <div class="ln-box">
+        <div class="ln-head">⚠️ Must-Not-Confuse</div>
+        <ul>
+          <li>Varicella Zoster ≠ Variola</li>
+          <li>Aedes (dengue) ≠ Anopheles (malaria)</li>
+          <li>Gram+ = Purple; Gram− = Pink</li>
+          <li>Gonorrhea = bacterial (not viral)</li>
+          <li>Antibiotics = no use on viruses</li>
+          <li>Turner = fewer (45); Klinefelter = more (47)</li>
+        </ul>
+      </div>
+      <div class="ln-box">
+        <div class="ln-head">🎯 Inventor Roll</div>
+        <ul>
+          <li><strong>Fleming</strong> → Penicillin</li>
+          <li><strong>Edward Jenner</strong> → Smallpox vaccine</li>
+          <li><strong>Jonas Salk</strong> → Polio IPV</li>
+          <li><strong>Albert Sabin</strong> → Polio OPV</li>
+          <li><strong>Gregor Mendel</strong> → Father of Genetics</li>
+          <li><strong>ELISA</strong> → AIDS diagnosis</li>
+          <li><strong>Widal test</strong> → Typhoid</li>
+          <li><strong>Hevesh vaccine</strong> → Hepatitis A (India)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;text-align:center;padding:20px;background:linear-gradient(135deg,#0d1f0d,#1a3a1a);border-radius:14px;border:1px solid var(--green)">
+      <div style="font-size:22px;margin-bottom:8px;">💚</div>
+      <div style="font-size:15px;font-weight:700;color:var(--green);">You are ready. Close this. Sleep.</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:6px;">Your brain consolidates memory during sleep. Rest is not laziness — it's revision.</div>
+    </div>
+  </div>
+
+</div><!-- end main -->
+</div><!-- end app -->
+
+<script>
+// ── FLASHCARD DATA ──
+const cards = [
+  { q: "What virus causes Common Cold?", a: "Rhinovirus" },
+  { q: "Which disease is caused by Yersinia pestis?", a: "Plague — also called Black Death" },
+  { q: "Name the carrier mosquito of Dengue fever.", a: "Female Aedes aegypti" },
+  { q: "Who discovered the Smallpox vaccine?", a: "Edward Jenner (Smallpox eradicated in India: 1977)" },
+  { q: "What does ELISA stand for? What is it used for?", a: "Enzyme Linked ImmunoSorbent Assay → Detects HIV/AIDS" },
+  { q: "Which bacterium causes TB and what is its alternate name?", a: "Mycobacterium tuberculosis → TB is called White Plague" },
+  { q: "Malaria treatment drug comes from which plant?", a: "Quinine from the bark of the Cinchona tree" },
+  { q: "Down syndrome = Trisomy of chromosome number ___?", a: "Trisomy 21 (47 total chromosomes)" },
+  { q: "Turner syndrome — how many chromosomes and what's the formula?", a: "45 chromosomes — XO (missing one X; females only)" },
+  { q: "Who created the IPV polio vaccine vs the OPV?", a: "IPV = Jonas Salk (injected) | OPV = Albert Sabin (oral drops)" },
+];
+
+let currentCard = 0;
+
+function updateCard() {
+  const card = document.getElementById('flashcard');
+  card.classList.remove('flipped');
+  document.getElementById('fc-q').textContent = cards[currentCard].q;
+  document.getElementById('fc-a').textContent = cards[currentCard].a;
+  document.getElementById('fc-counter').textContent = `Card ${currentCard + 1} of ${cards.length}`;
+  setTimeout(() => {}, 50);
+}
+
+function nextCard() {
+  currentCard = (currentCard + 1) % cards.length;
+  updateCard();
+}
+
+function prevCard() {
+  currentCard = (currentCard - 1 + cards.length) % cards.length;
+  updateCard();
+}
+
+// ── RECALL TOGGLE ──
+function toggleRecall(el) {
+  const ans = el.querySelector('.recall-a');
+  ans.classList.toggle('show');
+}
+
+// ── NAVIGATION ──
+const pages = [
+  'overview','palace','classification','virus','bacteria',
+  'protozoa','genetic','plant','hooks','traps',
+  'examiner','recall','highyield','ultrafast','last30','lastnight'
+];
+
+const pageTitles = {
+  overview: 'Big Picture',
+  palace: 'Memory Palace',
+  classification: 'Disease Classification',
+  virus: 'Viral Diseases',
+  bacteria: 'Bacterial Diseases',
+  protozoa: 'Protozoa & Fungi',
+  genetic: 'Genetic Disorders',
+  plant: 'Plant Diseases',
+  hooks: 'Memory Hooks',
+  traps: 'Exam Traps',
+  examiner: "Examiner's Favourites",
+  recall: 'Active Recall',
+  highyield: 'High-Yield Sheet',
+  ultrafast: 'Ultra-Fast Sheet',
+  last30: '30-Second Sheet',
+  lastnight: 'Last Night Sheet',
+};
+
+function navigateTo(pageId) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  // Show target
+  const page = document.getElementById('page-' + pageId);
+  if (page) page.classList.add('active');
+
+  const navItem = document.querySelector(`.nav-item[data-page="${pageId}"]`);
+  if (navItem) navItem.classList.add('active');
+
+  // Update topbar
+  document.getElementById('topbarTitle').textContent = pageTitles[pageId] || pageId;
+
+  // Update progress
+  const idx = pages.indexOf(pageId);
+  const pct = Math.round(((idx + 1) / pages.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('pageCounter').textContent = `${idx + 1} / ${pages.length}`;
+
+  // Scroll to top
+  document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+// Attach nav listeners
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const page = item.getAttribute('data-page');
+    if (page) navigateTo(page);
+  });
+});
+
+// Mobile menu
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+});
+document.getElementById('overlay').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') {
+    const currentPage = document.querySelector('.page.active');
+    if (currentPage) {
+      const id = currentPage.id.replace('page-', '');
+      const idx = pages.indexOf(id);
+      if (idx < pages.length - 1) navigateTo(pages[idx + 1]);
+    }
+  } else if (e.key === 'ArrowLeft') {
+    const currentPage = document.querySelector('.page.active');
+    if (currentPage) {
+      const id = currentPage.id.replace('page-', '');
+      const idx = pages.indexOf(id);
+      if (idx > 0) navigateTo(pages[idx - 1]);
+    }
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metals & Non-Metals | SSC CGL Revision System</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface2: #1c2333;
+    --border: #30363d;
+    --green: #3fb950;
+    --green-dim: #238636;
+    --blue: #58a6ff;
+    --blue-dim: #1f6feb;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+    --red: #f85149;
+    --yellow: #e3b341;
+    --text: #e6edf3;
+    --text-dim: #8b949e;
+    --text-muted: #484f58;
+    --fire: #ff7b54;
+    --star: #f0c040;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── LAYOUT ── */
+  #app { display: flex; height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  #sidebar {
+    width: 260px;
+    min-width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: width 0.3s;
+  }
+  #sidebar.collapsed { width: 52px; min-width: 52px; }
+
+  .sidebar-header {
+    padding: 16px 14px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sidebar-logo {
+    width: 28px; height: 28px; min-width: 28px;
+    background: linear-gradient(135deg, var(--green), var(--blue));
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: #000;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .sidebar-title {
+    font-size: 11px; font-weight: 600; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    white-space: nowrap; overflow: hidden;
+  }
+  #sidebar.collapsed .sidebar-title,
+  #sidebar.collapsed .nav-label { display: none; }
+
+  .sidebar-nav { flex: 1; overflow-y: auto; padding: 8px 6px; }
+  .sidebar-nav::-webkit-scrollbar { width: 4px; }
+  .sidebar-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .nav-section-label {
+    font-size: 9px; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 10px 8px 4px;
+  }
+  #sidebar.collapsed .nav-section-label { display: none; }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+    white-space: nowrap;
+    position: relative;
+  }
+  .nav-item:hover { background: var(--surface2); }
+  .nav-item.active { background: rgba(63,185,80,0.12); }
+  .nav-item.active .nav-icon { color: var(--green); }
+  .nav-item.active .nav-label { color: var(--green); font-weight: 600; }
+
+  .nav-icon { font-size: 16px; min-width: 20px; text-align: center; }
+  .nav-label { font-size: 12px; color: var(--text-dim); overflow: hidden; text-overflow: ellipsis; }
+
+  /* ── MAIN ── */
+  #main {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+  }
+  #main::-webkit-scrollbar { width: 6px; }
+  #main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── TOPBAR ── */
+  #topbar {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    height: 52px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  #toggle-sidebar {
+    background: none; border: none; color: var(--text-dim);
+    cursor: pointer; font-size: 18px; padding: 4px 6px;
+    border-radius: 4px; transition: color 0.15s;
+  }
+  #toggle-sidebar:hover { color: var(--text); }
+
+  .breadcrumb { font-size: 12px; color: var(--text-dim); }
+  .breadcrumb span { color: var(--text); font-weight: 500; }
+
+  .progress-bar-wrap {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .progress-track {
+    width: 120px; height: 4px;
+    background: var(--border); border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--green);
+    border-radius: 2px; transition: width 0.4s;
+  }
+  .progress-text { font-size: 11px; color: var(--text-dim); font-family: 'JetBrains Mono'; }
+
+  /* ── PAGES ── */
+  .page { display: none; padding: 32px 36px 64px; max-width: 860px; }
+  .page.active { display: block; animation: fadein 0.25s ease; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ── TYPOGRAPHY ── */
+  .page-eyebrow {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--green);
+    margin-bottom: 10px; font-family: 'JetBrains Mono';
+  }
+  h1.page-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px; font-weight: 700; line-height: 1.2;
+    margin-bottom: 8px; color: var(--text);
+  }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: var(--text); margin: 28px 0 14px; }
+  h3 { font-size: 14px; font-weight: 600; color: var(--blue); margin: 20px 0 10px; }
+  p { font-size: 14px; line-height: 1.75; color: var(--text-dim); margin-bottom: 12px; }
+  .page-sub { font-size: 14px; color: var(--text-dim); margin-bottom: 28px; line-height: 1.6; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-size: 12px; font-weight: 600; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: var(--surface2); }
+  th { padding: 10px 14px; text-align: left; font-weight: 600; color: var(--text-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+  td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .yes { color: var(--green); font-weight: 600; }
+  .no { color: var(--red); }
+  .exc { color: var(--yellow); font-size: 12px; }
+
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    font-size: 10px; font-weight: 600; padding: 2px 8px;
+    border-radius: 4px; font-family: 'JetBrains Mono';
+    margin-right: 4px; margin-bottom: 4px;
+  }
+  .tag-fire { background: rgba(255,123,84,0.15); color: var(--fire); border: 1px solid rgba(255,123,84,0.3); }
+  .tag-star { background: rgba(240,192,64,0.12); color: var(--star); border: 1px solid rgba(240,192,64,0.3); }
+  .tag-plus { background: rgba(88,166,255,0.1); color: var(--blue); border: 1px solid rgba(88,166,255,0.25); }
+  .tag-trap { background: rgba(248,81,73,0.12); color: var(--red); border: 1px solid rgba(248,81,73,0.3); }
+
+  /* ── ALERT BOXES ── */
+  .alert {
+    border-radius: 8px; padding: 14px 16px;
+    margin-bottom: 14px; border-left: 3px solid;
+    font-size: 13px; line-height: 1.65;
+  }
+  .alert-trap { border-color: var(--red); background: rgba(248,81,73,0.06); color: var(--text-dim); }
+  .alert-hook { border-color: var(--purple); background: rgba(188,140,255,0.06); color: var(--text-dim); }
+  .alert-exam { border-color: var(--yellow); background: rgba(227,179,65,0.06); color: var(--text-dim); }
+  .alert-tip  { border-color: var(--green); background: rgba(63,185,80,0.06); color: var(--text-dim); }
+  .alert-info { border-color: var(--blue); background: rgba(88,166,255,0.06); color: var(--text-dim); }
+
+  .alert strong { color: var(--text); }
+
+  /* ── MEMORY PALACE ── */
+  .palace-room {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  .palace-icon { font-size: 28px; min-width: 40px; text-align: center; }
+  .palace-content { flex: 1; }
+  .palace-room-name { font-size: 12px; font-weight: 700; color: var(--blue); margin-bottom: 4px; }
+  .palace-fact { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 14px;
+  }
+  .quiz-question { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 14px; }
+  .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+  .quiz-opt {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 10px 14px;
+    cursor: pointer; font-size: 13px; color: var(--text-dim);
+    transition: all 0.15s;
+  }
+  .quiz-opt:hover { border-color: var(--blue); color: var(--text); }
+  .quiz-opt.correct { border-color: var(--green); background: rgba(63,185,80,0.1); color: var(--green); }
+  .quiz-opt.wrong { border-color: var(--red); background: rgba(248,81,73,0.1); color: var(--red); }
+  .quiz-explain {
+    display: none; margin-top: 12px; padding: 12px 14px;
+    background: rgba(63,185,80,0.06); border-radius: 6px;
+    font-size: 12px; color: var(--text-dim); line-height: 1.6;
+    border-left: 3px solid var(--green);
+  }
+  .quiz-explain.show { display: block; }
+
+  /* ── FILL IN THE BLANK ── */
+  .blank-q { margin-bottom: 16px; }
+  .blank-q p { color: var(--text); font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+  .blank-input {
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 14px;
+    color: var(--text); font-size: 13px; font-family: 'Inter';
+    width: 220px; outline: none; transition: border 0.15s;
+  }
+  .blank-input:focus { border-color: var(--blue); }
+  .blank-input.correct { border-color: var(--green); background: rgba(63,185,80,0.06); }
+  .blank-input.wrong { border-color: var(--red); background: rgba(248,81,73,0.06); }
+  .check-btn {
+    margin-left: 10px; background: var(--green-dim); border: none;
+    color: #fff; font-size: 12px; font-weight: 600; padding: 8px 14px;
+    border-radius: 6px; cursor: pointer; transition: background 0.15s;
+  }
+  .check-btn:hover { background: var(--green); }
+
+  /* ── ALLOYS TABLE ── */
+  .alloy-row { display: flex; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .alloy-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 18px; flex: 1; min-width: 170px;
+  }
+  .alloy-name { font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+  .alloy-comp { font-size: 12px; color: var(--text-dim); }
+  .alloy-comp span { color: var(--orange); font-weight: 600; }
+
+  /* ── REACTIVITY SERIES ── */
+  .react-series { list-style: none; }
+  .react-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 7px 14px;
+    border-left: 3px solid var(--border);
+    margin-bottom: 2px;
+    font-size: 13px;
+    transition: background 0.1s;
+  }
+  .react-item:hover { background: var(--surface2); border-radius: 0 6px 6px 0; }
+  .react-item.high { border-color: var(--red); }
+  .react-item.med  { border-color: var(--orange); }
+  .react-item.low  { border-color: var(--blue); }
+  .react-elem { font-weight: 700; min-width: 100px; font-family: 'JetBrains Mono'; }
+  .react-note { color: var(--text-dim); font-size: 12px; }
+
+  /* ── RAPID FIRE ── */
+  .rf-q { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+  .rf-num { font-family: 'JetBrains Mono'; color: var(--text-muted); font-size: 11px; min-width: 24px; }
+  .rf-text { font-size: 13px; color: var(--text-dim); flex: 1; }
+  .rf-ans-btn {
+    background: none; border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 11px; padding: 3px 10px;
+    border-radius: 4px; cursor: pointer; transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .rf-ans-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .rf-ans {
+    display: none; font-size: 12px; color: var(--green);
+    font-weight: 600; padding: 4px 10px 0;
+    font-family: 'JetBrains Mono';
+  }
+  .rf-ans.show { display: block; }
+
+  /* ── ULTRA FAST ── */
+  .uf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .uf-item {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 12px 14px;
+    font-size: 12px;
+  }
+  .uf-k { font-weight: 700; color: var(--text); margin-bottom: 3px; font-size: 11px; }
+  .uf-v { color: var(--text-dim); }
+
+  /* ── 30-SEC SHEET ── */
+  .thirty-row { display: flex; gap: 8px; align-items: baseline; margin-bottom: 8px; }
+  .thirty-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 5px; }
+  .thirty-text { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+
+  /* ── NIGHT BEFORE ── */
+  .nb-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 10px 14px; background: var(--surface);
+    border-radius: 6px; margin-bottom: 6px;
+    border-left: 2px solid var(--yellow);
+  }
+  .nb-num { font-family: 'JetBrains Mono'; color: var(--yellow); font-weight: 700; font-size: 12px; min-width: 24px; }
+  .nb-text { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+  .nb-text strong { color: var(--text); }
+
+  /* ── MNEMONIC BOX ── */
+  .mnemonic {
+    background: linear-gradient(135deg, rgba(188,140,255,0.08), rgba(88,166,255,0.06));
+    border: 1px solid rgba(188,140,255,0.25);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 16px;
+  }
+  .mnemonic-label { font-size: 10px; font-weight: 700; color: var(--purple); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .mnemonic-text { font-size: 14px; color: var(--text); line-height: 1.7; }
+  .mnemonic-sub { font-size: 12px; color: var(--text-dim); margin-top: 6px; line-height: 1.6; }
+
+  /* ── EXTRACTION FLOW ── */
+  .flow-step {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 12px 16px; border-radius: 8px;
+    background: var(--surface); border: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+  .flow-badge {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0;
+  }
+  .flow-badge.high { background: rgba(248,81,73,0.2); color: var(--red); }
+  .flow-badge.med  { background: rgba(240,136,62,0.2); color: var(--orange); }
+  .flow-badge.low  { background: rgba(88,166,255,0.2); color: var(--blue); }
+  .flow-content { font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+  .flow-content strong { color: var(--text); }
+
+  /* ── NAV BUTTONS ── */
+  .page-nav {
+    display: flex; gap: 10px; margin-top: 40px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .nav-btn {
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-dim); font-size: 12px; font-weight: 500;
+    padding: 9px 16px; border-radius: 6px;
+    cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .nav-btn:hover { border-color: var(--blue); color: var(--text); }
+  .nav-btn.primary { background: var(--green-dim); border-color: var(--green-dim); color: #fff; }
+  .nav-btn.primary:hover { background: var(--green); border-color: var(--green); }
+  .ml-auto { margin-left: auto; }
+
+  /* ── HERO ── */
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 24px 0; }
+  .hero-stat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 16px; text-align: center;
+  }
+  .hero-stat-num { font-family: 'Space Grotesk'; font-size: 28px; font-weight: 700; color: var(--green); }
+  .hero-stat-label { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+
+  /* ── SCROLL HINT ── */
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    #sidebar { width: 52px; min-width: 52px; }
+    #sidebar .sidebar-title, #sidebar .nav-label, #sidebar .nav-section-label { display: none; }
+    .page { padding: 20px 16px 48px; }
+    .hero-grid { grid-template-columns: 1fr 1fr; }
+    .uf-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">M</div>
+    <div class="sidebar-title">Metals & Non-Metals</div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section-label">Foundation</div>
+    <div class="nav-item active" data-page="home" onclick="goto('home',this)">
+      <span class="nav-icon">🏠</span><span class="nav-label">Home</span>
+    </div>
+    <div class="nav-item" data-page="bigpicture" onclick="goto('bigpicture',this)">
+      <span class="nav-icon">🔭</span><span class="nav-label">Big Picture</span>
+    </div>
+    <div class="nav-item" data-page="palace" onclick="goto('palace',this)">
+      <span class="nav-icon">🏛️</span><span class="nav-label">Memory Palace</span>
+    </div>
+
+    <div class="nav-section-label">Core Content</div>
+    <div class="nav-item" data-page="physical" onclick="goto('physical',this)">
+      <span class="nav-icon">⚗️</span><span class="nav-label">Physical Properties</span>
+    </div>
+    <div class="nav-item" data-page="chemical" onclick="goto('chemical',this)">
+      <span class="nav-icon">🧪</span><span class="nav-label">Chemical Properties</span>
+    </div>
+    <div class="nav-item" data-page="reactivity" onclick="goto('reactivity',this)">
+      <span class="nav-icon">⚡</span><span class="nav-label">Reactivity Series</span>
+    </div>
+    <div class="nav-item" data-page="alloys" onclick="goto('alloys',this)">
+      <span class="nav-icon">🔩</span><span class="nav-label">Alloys</span>
+    </div>
+    <div class="nav-item" data-page="ores" onclick="goto('ores',this)">
+      <span class="nav-icon">⛏️</span><span class="nav-label">Ores & Extraction</span>
+    </div>
+    <div class="nav-item" data-page="corrosion" onclick="goto('corrosion',this)">
+      <span class="nav-icon">🛡️</span><span class="nav-label">Corrosion & Protection</span>
+    </div>
+
+    <div class="nav-section-label">Exam Prep</div>
+    <div class="nav-item" data-page="traps" onclick="goto('traps',this)">
+      <span class="nav-icon">⚠️</span><span class="nav-label">Exam Traps</span>
+    </div>
+    <div class="nav-item" data-page="examq" onclick="goto('examq',this)">
+      <span class="nav-icon">🎯</span><span class="nav-label">Examiner's Favourites</span>
+    </div>
+    <div class="nav-item" data-page="quiz" onclick="goto('quiz',this)">
+      <span class="nav-icon">❓</span><span class="nav-label">Active Recall Quiz</span>
+    </div>
+
+    <div class="nav-section-label">Rapid Revision</div>
+    <div class="nav-item" data-page="highyield" onclick="goto('highyield',this)">
+      <span class="nav-icon">⭐</span><span class="nav-label">High-Yield Notes</span>
+    </div>
+    <div class="nav-item" data-page="ultrafast" onclick="goto('ultrafast',this)">
+      <span class="nav-icon">⚡</span><span class="nav-label">Ultra-Fast Sheet</span>
+    </div>
+    <div class="nav-item" data-page="thirty" onclick="goto('thirty',this)">
+      <span class="nav-icon">⏱️</span><span class="nav-label">30-Second Sheet</span>
+    </div>
+    <div class="nav-item" data-page="nightbefore" onclick="goto('nightbefore',this)">
+      <span class="nav-icon">🌙</span><span class="nav-label">Night Before Exam</span>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+  <div id="topbar">
+    <button id="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+    <div class="breadcrumb">Chemistry › <span id="breadcrumb-text">Home</span></div>
+    <div class="progress-bar-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:6%"></div></div>
+      <div class="progress-text" id="progress-text">1/16</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: HOME ═══════════════ -->
+  <div id="page-home" class="page active">
+    <div class="page-eyebrow">SSC CGL · Chemistry · Chapter</div>
+    <h1 class="page-title">Metals &amp; Non-Metals</h1>
+    <p class="page-sub">Your complete high-retention revision system. Every fact from the lecture. Every trap the examiner loves. Built to survive 100 revisions.</p>
+
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hero-stat-num">16</div><div class="hero-stat-label">Pages of content</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">40+</div><div class="hero-stat-label">Exam-ready facts</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">5</div><div class="hero-stat-label">Revision layers</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📖 How to Use This System</div>
+      <p style="margin:0;font-size:13px;line-height:1.8;color:var(--text-dim)">
+        <strong style="color:var(--text)">First 5 revisions:</strong> Work through every page top to bottom.<br>
+        <strong style="color:var(--text)">Revisions 6–20:</strong> Use High-Yield Notes + Active Recall Quiz.<br>
+        <strong style="color:var(--text)">Revisions 21–50:</strong> Ultra-Fast Sheet → Exam Traps.<br>
+        <strong style="color:var(--text)">Exam week:</strong> 30-Second Sheet + Night Before Sheet.<br>
+        <strong style="color:var(--text)">Every time:</strong> Hit the quiz. Force your brain to retrieve.
+      </p>
+    </div>
+
+    <h2>Priority Map</h2>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div class="alert alert-tip" style="flex:1;min-width:200px"><strong>🔥 Must Know</strong><br>Physical property table, Exceptions (Hg/Br/I/Diamond), MASH formula, Thermite reaction, Alloys (Brass/Bronze/Solder), Electrolytic refining</div>
+      <div class="alert alert-exam" style="flex:1;min-width:200px"><strong>⭐ Important</strong><br>Reactivity series, Metal/Non-metal oxides, Ores list, Galvanisation vs Anodising, Metalloids list, Gold ductility fact</div>
+      <div class="alert alert-info" style="flex:1;min-width:200px"><strong>➕ Good to Know</strong><br>Rutherford's gold foil experiment link, Monazite sand location, Saltpetre chemistry, Amphoteric oxides mnemonic</div>
+    </div>
+    <div class="page-nav">
+      <button class="nav-btn primary ml-auto" onclick="goto('bigpicture', document.querySelector('[data-page=bigpicture]'))">Start Learning →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: BIG PICTURE ═══════════════ -->
+  <div id="page-bigpicture" class="page">
+    <div class="page-eyebrow">Layer 0 · Understanding</div>
+    <h1 class="page-title">Big Picture</h1>
+    <p class="page-sub">Before memorising facts, understand the architecture of the chapter.</p>
+
+    <div class="card">
+      <div class="card-title">What This Chapter Is Really About</div>
+      <p>Nature sorted elements into two armies: <strong style="color:var(--green)">Metals</strong> and <strong style="color:var(--red)">Non-Metals</strong>. Each army has a distinct personality — in how they look, how they behave physically, how they react chemically, and how they interact with each other.</p>
+      <p>Your job as an SSC candidate: learn the <em>rules</em> of each army, then remember the <em>traitors</em> — the exceptions that love to appear in MCQs.</p>
+    </div>
+
+    <h2>The 3-Act Structure of the Chapter</h2>
+    <div class="flow-step">
+      <div class="flow-badge high">1</div>
+      <div class="flow-content"><strong>Act 1 — Properties:</strong> Physical (state, lustre, hardness, malleability, ductility, melting point, density, brittleness, sonority, conductivity) + Chemical (reactions with O₂, water, acid, other metal salts).</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-badge med">2</div>
+      <div class="flow-content"><strong>Act 2 — Alloys & Ores:</strong> Mixtures of metals (alloys) and how metals exist in nature (ores/gangue) and how we extract them.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-badge low">3</div>
+      <div class="flow-content"><strong>Act 3 — Protection:</strong> Corrosion, galvanisation, anodising — keeping metals alive longer.</div>
+    </div>
+
+    <div class="alert alert-tip">
+      <strong>The Golden Thread:</strong> Almost every property has an exception. SSC <em>lives</em> in the exceptions. Know the rule + know its exception = double the marks.
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('home',document.querySelector('[data-page=home]'))">← Home</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('palace',document.querySelector('[data-page=palace]'))">Memory Palace →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: MEMORY PALACE ═══════════════ -->
+  <div id="page-palace" class="page">
+    <div class="page-eyebrow">Layer 1 · Retention Architecture</div>
+    <h1 class="page-title">Chapter Memory Palace</h1>
+    <p class="page-sub">Walk through a science museum. Each room is a property. Each exhibit is an exception. Visit once, remember forever.</p>
+
+    <div class="mnemonic">
+      <div class="mnemonic-label">🏛 The Museum Story</div>
+      <div class="mnemonic-text">You enter the <strong>Museum of Elements</strong>. The guard at the gate tells you: "Most metals are solid, well-dressed, shiny, hard, and responsive. But watch out — we have some <em>troublemakers</em> on every floor."</div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">🌡️</div>
+      <div class="palace-content">
+        <div class="palace-room-name">Room 1 — The State Room (Physical State)</div>
+        <div class="palace-fact">A silver guard stands firm (metals = solid). But there's a <strong style="color:var(--yellow)">mercury puddle on the floor</strong> — mercury is liquid! On a shelf sits gallium chocolate (melts in your palm above room temp) and a jar of caesium butter. Bromine is the only <strong style="color:var(--red)">liquid non-metal</strong> — a red-brown puddle near the non-metal side.</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">✨</div>
+      <div class="palace-content">
+        <div class="palace-room-name">Room 2 — The Hall of Mirrors (Lustre)</div>
+        <div class="palace-fact">All metal mirrors shine — except one mirror made of <strong style="color:var(--yellow)">lead (shisha)</strong> — it's dull and foggy. On the non-metal side, everything is dull plastic — except one <strong style="color:var(--purple)">shiny iodine crystal</strong> glittering like a gem.</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">💎</div>
+      <div class="palace-content">
+        <div class="palace-room-name">Room 3 — The Strength Arena (Hardness & Brittleness)</div>
+        <div class="palace-fact">Hard metal warriors everywhere. But <strong style="color:var(--yellow)">Na and K can be cut with a butter knife</strong> — they're lounging on a couch. Zinc wears armour but it shatters if poked (brittle metal). In the non-metal corner: a squishy crowd, except <strong style="color:var(--blue)">Diamond</strong> — the bouncer, hardest substance known.</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">🔨</div>
+      <div class="palace-content">
+        <div class="palace-room-name">Room 4 — The Forge (Malleability & Ductility)</div>
+        <div class="palace-fact">Blacksmiths beat iron into sheets = malleable. Jewellers pull <strong style="color:var(--yellow)">1g of gold into 2 km of wire</strong> = most ductile. Mercury can't be beaten (it's liquid). Zinc explodes into pieces when hit. Non-metals: completely non-malleable, non-ductile (no exceptions). Rutherford used a 1000-atom-thick gold sheet for his famous experiment — because gold is SO malleable.</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">🔊</div>
+      <div class="palace-content">
+        <div class="palace-room-name">Room 5 — The Bell Tower (Sonority)</div>
+        <div class="palace-fact">Metals ring like school bells: TAN TAN TAN. Non-metals go KHAK KHAK (dull thud). <strong style="color:var(--yellow)">Lead and Mercury</strong> are also bad conductors (poor conductors of heat & electricity). Graphite — a non-metal — is the <strong style="color:var(--green)">only non-metal that conducts electricity</strong>.</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">⚡</div>
+      <div class="palace-content">
+        <div class="palace-room-name">Room 6 — The Reactor Lab (Chemical Properties)</div>
+        <div class="palace-fact">Metal + O₂ → Basic oxide. Non-Metal + O₂ → Acidic oxide. Remember: <strong style="color:var(--blue)">MASH</strong> = Metal + Acid → Salt + Hydrogen. Thermite reaction: Al + Fe₂O₃ → Al₂O₃ + Fe + heat (welding railway tracks). <strong style="color:var(--yellow)">Janabe Ali</strong> are amphoteric oxides (react with both acid & base).</div>
+      </div>
+    </div>
+
+    <div class="palace-room">
+      <div class="palace-icon">🏺</div>
+      <div class="palace-content">
+        <div class="palace-room-name">Room 7 — The Gift Shop (Alloys)</div>
+        <div class="palace-fact"><strong>Brass</strong> = Cu + Zn (sounds like brassy yellow, like a trumpet). <strong>Bronze</strong> = Cu + Sn (B for Bronze, B for Bell-metal too). <strong>Solder</strong> = Sn + Pb (used to SOLDer electronics). <strong>Bell metal</strong> = Cu + Sn (same as bronze, different ratio — temple bells).</div>
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('bigpicture',document.querySelector('[data-page=bigpicture]'))">← Big Picture</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('physical',document.querySelector('[data-page=physical]'))">Physical Properties →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: PHYSICAL PROPERTIES ═══════════════ -->
+  <div id="page-physical" class="page">
+    <div class="page-eyebrow">Layer 1 · Complete Notes</div>
+    <h1 class="page-title">Physical Properties</h1>
+    <p class="page-sub">The master table every SSC topper has memorised cold — including every exception.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Property</th>
+            <th>Metals</th>
+            <th>Exceptions (Metal)</th>
+            <th>Non-Metals</th>
+            <th>Exceptions (Non-Metal)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Physical State</strong></td>
+            <td class="yes">Solid</td>
+            <td class="exc">Hg = liquid; Ga & Cs = melt just above room temp; Na/K = soft solid</td>
+            <td>Solid / Gas</td>
+            <td class="exc">Bromine (Br₂) = liquid</td>
+          </tr>
+          <tr>
+            <td><strong>Lustre</strong></td>
+            <td class="yes">Shiny</td>
+            <td class="exc">Lead (shisha) = dull/no lustre</td>
+            <td class="no">No lustre</td>
+            <td class="exc">Iodine = lustrous; Diamond, Graphite = slight lustre</td>
+          </tr>
+          <tr>
+            <td><strong>Hardness</strong></td>
+            <td class="yes">Hard</td>
+            <td class="exc">Na, K = cut with knife; Zn = brittle; Hg = liquid; Ga, Cs = very low MP</td>
+            <td class="no">Soft</td>
+            <td class="exc">Diamond = hardest natural substance known</td>
+          </tr>
+          <tr>
+            <td><strong>Malleability</strong></td>
+            <td class="yes">Malleable ✓</td>
+            <td class="exc">Hg = liquid (N/A); Zn = brittle, non-malleable</td>
+            <td class="no">Non-malleable</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Ductility</strong></td>
+            <td class="yes">Ductile ✓</td>
+            <td class="exc">Na/K (too soft); Zn (brittle); Hg (liquid)</td>
+            <td class="no">Non-ductile</td>
+            <td>— (no exceptions)</td>
+          </tr>
+          <tr>
+            <td><strong>Melting/Boiling Pt.</strong></td>
+            <td class="yes">High</td>
+            <td class="exc">Hg, Ga, Cs = very low</td>
+            <td class="no">Low</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Density</strong></td>
+            <td class="yes">High</td>
+            <td class="exc">Na, K = float on water (low density)</td>
+            <td class="no">Low</td>
+            <td class="exc">Diamond = very high density</td>
+          </tr>
+          <tr>
+            <td><strong>Brittleness</strong></td>
+            <td class="no">Not brittle</td>
+            <td class="exc">Zinc = brittle metal</td>
+            <td class="yes">Brittle</td>
+            <td class="exc">Gases can't be brittle (N/A)</td>
+          </tr>
+          <tr>
+            <td><strong>Sonority</strong></td>
+            <td class="yes">Sonorous</td>
+            <td>—</td>
+            <td class="no">Non-sonorous</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Conductivity</strong></td>
+            <td class="yes">Good conductor</td>
+            <td class="exc">Lead & Mercury = poor conductors</td>
+            <td class="no">Poor conductor</td>
+            <td class="exc">Graphite = conducts electricity</td>
+          </tr>
+          <tr>
+            <td><strong>Ion Formation</strong></td>
+            <td>Cations (+)</td>
+            <td>—</td>
+            <td>Anions (−)</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Gold Ductility — The Star Fact 🔥</h2>
+    <div class="alert alert-tip">
+      <strong>1 gram of gold → 2 km of wire.</strong> Gold is one of the most ductile and malleable metals. This is WHY Rutherford chose a gold foil (1000 atoms thick) for his alpha particle scattering experiment.
+    </div>
+
+    <h2>Metalloids — The Fence-Sitters</h2>
+    <p>Elements that have <em>some</em> metal + <em>some</em> non-metal properties. They are <em>semiconductors</em>.</p>
+    <div class="mnemonic">
+      <div class="mnemonic-label">Memory Hook — Metalloid List</div>
+      <div class="mnemonic-text"><strong>"B Si Ge As Sb Te Po"</strong></div>
+      <div class="mnemonic-sub">Boron, Silicon, Germanium, Arsenic, Antimony, Tellurium, Polonium<br>Think: <em>"Bobby Silicon Gently Ate Several Tasty Popsicles"</em></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('palace',document.querySelector('[data-page=palace]'))">← Memory Palace</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('chemical',document.querySelector('[data-page=chemical]'))">Chemical Properties →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: CHEMICAL PROPERTIES ═══════════════ -->
+  <div id="page-chemical" class="page">
+    <div class="page-eyebrow">Layer 1 · Complete Notes</div>
+    <h1 class="page-title">Chemical Properties</h1>
+
+    <h2>Reaction with Oxygen</h2>
+    <div class="card">
+      <div class="card-title">The Two Oxide Rules</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <div class="alert alert-tip" style="flex:1;min-width:180px;margin-bottom:0"><strong>Metal + O₂ → Metal Oxide</strong><br>Metal oxide = <strong>BASIC</strong> in nature.<br>Most are insoluble in water.<br>⚡ Exception: Na₂O & K₂O dissolve in water.</div>
+        <div class="alert alert-trap" style="flex:1;min-width:180px;margin-bottom:0"><strong>Non-Metal + O₂ → Non-Metal Oxide</strong><br>Non-metal oxide = <strong>ACIDIC</strong> in nature.</div>
+      </div>
+    </div>
+
+    <h2>Amphoteric Oxides <span class="tag tag-fire">🔥 Must Know</span></h2>
+    <div class="mnemonic">
+      <div class="mnemonic-label">🎵 Mnemonic — Amphoteric Oxides</div>
+      <div class="mnemonic-text">"Jana Janabe Ali" → <strong>Zn, Al, Pb, Sn</strong></div>
+      <div class="mnemonic-sub">Zinc (Zn) · Aluminium (Al) · Lead (Pb) · Tin (Sn)<br>These oxides react with <em>both</em> acids AND bases. Acid + Basic nature = Amphoteric.</div>
+    </div>
+
+    <h2>Reaction with Water</h2>
+    <div class="card">
+      <div class="card-title">Metal + Water</div>
+      <p style="margin:0;font-size:13px;color:var(--text-dim)">
+        Metal + Water → Metal Oxide + Hydrogen (H₂)<br>
+        <strong style="color:var(--yellow)">Always exothermic.</strong> Heat is released.<br>
+        Na and K react violently with cold water (highly exothermic, slight explosion, floats).
+      </p>
+    </div>
+
+    <h2>MASH Formula <span class="tag tag-fire">🔥 Must Know</span></h2>
+    <div class="mnemonic">
+      <div class="mnemonic-label">🥊 Memory Hook</div>
+      <div class="mnemonic-text"><strong>M·A → S·H</strong><br><em>Metal + Acid → Salt + Hydrogen</em></div>
+      <div class="mnemonic-sub">Picture someone doing "MASH" — Metal + Acid = mashing potatoes → Salt & Steam (Hydrogen) come out.</div>
+    </div>
+
+    <h2>Displacement Reaction</h2>
+    <div class="alert alert-info">
+      A more reactive metal displaces a less reactive metal from its salt solution.<br><br>
+      <strong>Example:</strong> Cu + AgNO₃ → Cu(NO₃)₂ + Ag<br>
+      Copper (higher in reactivity series) kicks Silver out and takes the nitrate.<br><br>
+      <em>Also called: Double Displacement / Ion Exchange Reaction</em>
+    </div>
+
+    <h2>Thermite Reaction <span class="tag tag-fire">🔥 Must Know</span></h2>
+    <div class="card">
+      <div class="card-title">Fe₂O₃ + 2Al → Al₂O₃ + 2Fe + Heat</div>
+      <p style="font-size:13px;color:var(--text-dim);margin:0">
+        <strong style="color:var(--text)">What happens:</strong> Aluminium reduces iron oxide to molten iron. Extreme heat produced.<br>
+        <strong style="color:var(--text)">Use:</strong> Welding/joining railway tracks.<br>
+        <strong style="color:var(--text)">Redox logic:</strong> Al gets oxidised (Al = reducing agent) → Fe gets reduced (Fe₂O₃ = oxidising agent).<br>
+        <strong style="color:var(--yellow)">Memory:</strong> "Al joins Rail-tracks by stealing oxygen from Iron."
+      </p>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('physical',document.querySelector('[data-page=physical]'))">← Physical Properties</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('reactivity',document.querySelector('[data-page=reactivity]'))">Reactivity Series →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: REACTIVITY SERIES ═══════════════ -->
+  <div id="page-reactivity" class="page">
+    <div class="page-eyebrow">Layer 1 · Complete Notes</div>
+    <h1 class="page-title">Reactivity Series</h1>
+    <p class="page-sub">From most reactive (top) to least reactive (bottom). More reactive = higher in series = can displace those below.</p>
+
+    <ul class="react-series">
+      <li class="react-item high"><span class="react-elem">K · Na · Ca · Mg</span><span class="react-note">Reacts with cold water violently. Highly exothermic. Na/K float & may explode.</span></li>
+      <li class="react-item high"><span class="react-elem">Al · Zn · Fe</span><span class="react-note">Reacts with steam/warm water. Moderate reactivity.</span></li>
+      <li class="react-item med"><span class="react-elem">Ni · Sn · Pb</span><span class="react-note">Reacts with dilute acids. Does not react with water.</span></li>
+      <li class="react-item med"><span class="react-elem">H (hydrogen)</span><span class="react-note">Reference point</span></li>
+      <li class="react-item low"><span class="react-elem">Cu · Hg · Ag</span><span class="react-note">Does not react with water/dilute acids. Silver tarnishes with sulphur → black coating (Ag₂S).</span></li>
+      <li class="react-item low"><span class="react-elem">Au · Pt</span><span class="react-note">Least reactive. Needs Aqua Regia (HNO₃+HCl mix) to dissolve. Never tarnishes. Used in jewellery.</span></li>
+    </ul>
+
+    <div class="alert alert-exam">
+      <strong>⭐ Corrosion patterns to remember:</strong><br>
+      • Iron → rust = Iron oxide (Fe₂O₃) — reddish-brown<br>
+      • Copper → green layer of <strong>Copper Carbonate</strong><br>
+      • Silver → black coating of <strong>Silver Sulphide (Ag₂S)</strong> from sulphur in air
+    </div>
+
+    <div class="mnemonic">
+      <div class="mnemonic-label">Memory Story — Series Order</div>
+      <div class="mnemonic-text"><strong>"Please Stop Calling Me A Zebra For Nothing Cute Has Sunburn After Proving Gold"</strong></div>
+      <div class="mnemonic-sub">K · Na · Ca · Mg · Al · Zn · Fe · Ni · Sn · Pb · H · Cu · Hg · Ag · Pt · Au</div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('chemical',document.querySelector('[data-page=chemical]'))">← Chemical Properties</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('alloys',document.querySelector('[data-page=alloys]'))">Alloys →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: ALLOYS ═══════════════ -->
+  <div id="page-alloys" class="page">
+    <div class="page-eyebrow">Layer 1 · Complete Notes</div>
+    <h1 class="page-title">Alloys <span class="tag tag-fire">🔥</span></h1>
+    <p class="page-sub">An alloy is a homogeneous mixture of two or more metals (or a metal + non-metal). Properties are better than pure metals.</p>
+
+    <div class="alloy-row">
+      <div class="alloy-card">
+        <div class="alloy-name">🎺 Brass</div>
+        <div class="alloy-comp"><span>Copper (Cu)</span> + <span>Zinc (Zn)</span></div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:6px">Hook: "Brass band plays a brassy ZINC-y tune"</div>
+      </div>
+      <div class="alloy-card">
+        <div class="alloy-name">🗿 Bronze</div>
+        <div class="alloy-comp"><span>Copper (Cu)</span> + <span>Tin (Sn)</span></div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:6px">Hook: "Bronze age statues were Cu+Sn = BronZe has no Z for Zinc"</div>
+      </div>
+    </div>
+    <div class="alloy-row">
+      <div class="alloy-card">
+        <div class="alloy-name">🔧 Solder</div>
+        <div class="alloy-comp"><span>Tin (Sn)</span> + <span>Lead (Pb)</span></div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:6px">Hook: "SOLDer electronics with Sn+Pb — SOLDer = SOLD items"</div>
+      </div>
+      <div class="alloy-card">
+        <div class="alloy-name">🔔 Bell Metal</div>
+        <div class="alloy-comp"><span>Copper (Cu)</span> + <span>Tin (Sn)</span></div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:6px">Same elements as Bronze, different ratio. Used in temple bells.</div>
+      </div>
+    </div>
+
+    <div class="alert alert-trap">
+      <strong>⚠ Trap:</strong> Brass vs Bronze — both contain Copper, but Brass has Zinc and Bronze has Tin. Examiners swap these!<br>
+      <strong>Fix:</strong> "BRaSS = Brass → R·A·S·S → Zinc (Z) rhymes with nothing but remember Brass has Z for Zinc."
+    </div>
+
+    <h2>Quick Recall Table</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Alloy</th><th>Component 1</th><th>Component 2</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Brass</td><td>Cu</td><td>Zn</td><td>Musical instruments, taps</td></tr>
+          <tr><td>Bronze</td><td>Cu</td><td>Sn</td><td>Statues, medals</td></tr>
+          <tr><td>Solder</td><td>Sn</td><td>Pb</td><td>Electrical joints</td></tr>
+          <tr><td>Bell Metal</td><td>Cu</td><td>Sn</td><td>Bells</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('reactivity',document.querySelector('[data-page=reactivity]'))">← Reactivity Series</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('ores',document.querySelector('[data-page=ores]'))">Ores & Extraction →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: ORES & EXTRACTION ═══════════════ -->
+  <div id="page-ores" class="page">
+    <div class="page-eyebrow">Layer 1 · Complete Notes</div>
+    <h1 class="page-title">Ores &amp; Extraction</h1>
+
+    <div class="alert alert-info">
+      <strong>Key Terms:</strong> Ore = Rock containing metal + impurities. Gangue = The impurities that must be removed. Mineral = Natural substance containing metal but may not be economically viable to extract.
+    </div>
+
+    <h2>Important Ores Table <span class="tag tag-fire">🔥</span></h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metal</th><th>Ore Name(s)</th><th>Formula</th><th>Memory Hook</th></tr></thead>
+        <tbody>
+          <tr><td>Aluminium</td><td>Bauxite, Cryolite</td><td>Al₂O₃, Na₃AlF₆</td><td>Odisha (olive ridley turtles, Mahanadi)</td></tr>
+          <tr><td>Iron</td><td>Magnetite, Haematite, Limonite, Siderite</td><td>Fe₃O₄, Fe₂O₃</td><td>"Magic Hazel Lemon Soda" → Mag, Haem, Lim, Sid</td></tr>
+          <tr><td>Zinc</td><td>Zinc blende, Sphalerite, Calamine, Zincite</td><td>ZnS, ZnCO₃, ZnO</td><td>Zinc's "SpaCaZ" combo</td></tr>
+          <tr><td>Mercury</td><td>Cinnabar</td><td>HgS</td><td>Cinnabar = Cinema = Hg in red costume</td></tr>
+          <tr><td>Thorium</td><td>Monazite Sand</td><td>—</td><td>Monazite on <strong>Kerala & Tamil Nadu coast</strong></td></tr>
+          <tr><td>Sodium</td><td>Rock salt, Bex, Chilé saltpetre</td><td>NaCl, NaNO₃</td><td>—</td></tr>
+          <tr><td>Potassium</td><td>Saltpetre</td><td>KNO₃</td><td>Saltpetre = K-Nito (nitrate)</td></tr>
+          <tr><td>Lead</td><td>Galena</td><td>PbS</td><td>Galena = "G" for Lead's gangster ore</td></tr>
+          <tr><td>Magnesium</td><td>Epsom Salt</td><td>MgSO₄·7H₂O</td><td>Epsom salts from spa = Mg relaxes muscles</td></tr>
+          <tr><td>Tin</td><td>Cassiterite</td><td>SnO₂</td><td>Cassiterite = "Cassette" tin</td></tr>
+          <tr><td>Uranium</td><td>Pitchblende</td><td>UO₂</td><td>Pitch black = radioactive uranium</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert alert-exam">
+      <strong>⭐ NaNO₃ vs NaNO₂ — Classic Trap:</strong><br>
+      Sodium Nitrate (NaNO₃) = used as an <strong>explosive</strong><br>
+      Sodium Nitrite (NaNO₂) = used as a <strong>food preservative</strong><br>
+      Sodium Benzoate = also a food preservative<br>
+      <em>One letter difference, completely different use — favourite SSC trap!</em>
+    </div>
+
+    <h2>Metal Extraction Flowchart <span class="tag tag-fire">🔥</span></h2>
+
+    <div class="flow-step">
+      <div class="flow-badge high">HIGH</div>
+      <div class="flow-content"><strong>Highly Reactive Metals (K, Na, Ca, Mg, Al):</strong><br>Extract by <strong>Electrolysis</strong> of molten ore → pure metal directly.</div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-badge med">MED</div>
+      <div class="flow-content">
+        <strong>Medium Reactivity (Zn, Fe, Ni, Sn, Pb):</strong><br>
+        • If ore is <strong>Carbonate</strong> → <strong>Calcination</strong> (absence of O₂) → Metal Oxide → Reduction → Metal<br>
+        • If ore is <strong>Sulphide</strong> → <strong>Roasting</strong> (excess air/O₂) → Metal Oxide → Reduction → Metal<br>
+        Both give Metal Oxide first, then reduce with Carbon.
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="flow-badge low">LOW</div>
+      <div class="flow-content"><strong>Low Reactivity (Cu, Hg, Ag, Au):</strong><br>Ore is usually sulphide → <strong>Roasting</strong> → direct metal (no reduction needed). Then refine.</div>
+    </div>
+
+    <h2>Electrolytic Refining <span class="tag tag-fire">🔥</span></h2>
+    <div class="card">
+      <div class="card-title">3-Component System</div>
+      <div class="table-wrap" style="margin:0;border:none">
+        <table>
+          <thead><tr><th>Component</th><th>What it is</th></tr></thead>
+          <tbody>
+            <tr><td><strong style="color:var(--red)">Anode (+)</strong></td><td>Made of <strong>impure metal</strong> (dissolves, impurities fall as anode mud)</td></tr>
+            <tr><td><strong style="color:var(--blue)">Cathode (−)</strong></td><td>Made of <strong>pure metal</strong> (pure metal deposits here)</td></tr>
+            <tr><td><strong style="color:var(--green)">Electrolyte</strong></td><td>Salt solution of that metal (e.g., CuSO₄ for copper refining)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('alloys',document.querySelector('[data-page=alloys]'))">← Alloys</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('corrosion',document.querySelector('[data-page=corrosion]'))">Corrosion →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: CORROSION ═══════════════ -->
+  <div id="page-corrosion" class="page">
+    <div class="page-eyebrow">Layer 1 · Complete Notes</div>
+    <h1 class="page-title">Corrosion &amp; Protection</h1>
+
+    <h2>Corrosion Types</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metal</th><th>Product</th><th>Color</th><th>Name</th></tr></thead>
+        <tbody>
+          <tr><td>Iron (Fe)</td><td>Iron Oxide (Fe₂O₃)</td><td>Reddish-brown</td><td>Rusting</td></tr>
+          <tr><td>Copper (Cu)</td><td>Copper Carbonate</td><td>Green</td><td>Corrosion / Patina</td></tr>
+          <tr><td>Silver (Ag)</td><td>Silver Sulphide (Ag₂S)</td><td>Black</td><td>Tarnishing</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Prevention Method 1: Galvanisation <span class="tag tag-fire">🔥</span></h2>
+    <div class="card">
+      <div class="card-title">Zinc Coating on Iron</div>
+      <p style="font-size:13px;color:var(--text-dim);margin:0">
+        Coating iron/steel with a layer of <strong style="color:var(--text)">Zinc</strong> to prevent rusting.<br>
+        Done by dipping iron in molten zinc or electroplating.<br>
+        <em>Manual process — no specialised equipment needed.</em><br>
+        <strong style="color:var(--yellow)">Hook:</strong> "Galvanise = Galvanized Iron roof = Zinc shield on iron"
+      </p>
+    </div>
+
+    <h2>Prevention Method 2: Anodising <span class="tag tag-fire">🔥</span></h2>
+    <div class="card">
+      <div class="card-title">Electrolytic Protection of Aluminium</div>
+      <p style="font-size:13px;color:var(--text-dim);margin:0">
+        <strong style="color:var(--text)">Process:</strong> Electrolysis of aluminium in dilute H₂SO₄.<br>
+        <strong style="color:var(--red)">Anode (+):</strong> Aluminium piece placed here. <strong>Oxygen gas released at anode.</strong><br>
+        <strong style="color:var(--blue)">Cathode (−):</strong> <strong>Hydrogen gas released at cathode.</strong><br>
+        <strong style="color:var(--green)">Result:</strong> Thick aluminium oxide layer forms on Al surface → protects from corrosion.
+      </p>
+    </div>
+
+    <div class="alert alert-trap">
+      <strong>⚠ Trap — Galvanisation vs Anodising:</strong><br>
+      Galvanisation = Iron + Zinc coating = simple physical/chemical process<br>
+      Anodising = Aluminium + electrolytic process = anode is Al, O₂ at anode, H₂ at cathode<br>
+      <em>Examiners love asking "which gas at which electrode" — O₂ at anode, H₂ at cathode.</em>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('ores',document.querySelector('[data-page=ores]'))">← Ores</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('traps',document.querySelector('[data-page=traps]'))">Exam Traps →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: EXAM TRAPS ═══════════════ -->
+  <div id="page-traps" class="page">
+    <div class="page-eyebrow">⚠ Critical · Danger Zone</div>
+    <h1 class="page-title">Exam Traps</h1>
+    <p class="page-sub">These are the points where average students lose marks. Tread carefully.</p>
+
+    <div class="alert alert-trap"><strong>Trap 1: Brass vs Bronze</strong><br>Brass = Cu + <strong>Zn</strong>. Bronze = Cu + <strong>Sn</strong>. Both contain copper. Examiners swap Zn and Sn.</div>
+    <div class="alert alert-trap"><strong>Trap 2: NaNO₃ vs NaNO₂</strong><br>NaNO₃ (Sodium Nitrate) = explosive. NaNO₂ (Sodium Nitrite) = food preservative. One letter change. Huge difference in use.</div>
+    <div class="alert alert-trap"><strong>Trap 3: Anode is IMPURE, Cathode is PURE</strong><br>In electrolytic refining, students mix these up. Pure metal deposits at cathode (−). Impure metal dissolves from anode (+).</div>
+    <div class="alert alert-trap"><strong>Trap 4: Metal oxide = Basic, Non-metal oxide = Acidic</strong><br>Confusing acid-base with metals/non-metals. Remember: METAL = BASE = CATION. NON-METAL = ACID = ANION.</div>
+    <div class="alert alert-trap"><strong>Trap 5: Calcination vs Roasting</strong><br>Calcination = absence of O₂ (used for carbonates). Roasting = excess/presence of O₂ (used for sulphides).</div>
+    <div class="alert alert-trap"><strong>Trap 6: Anodising — O₂ at ANODE, H₂ at CATHODE</strong><br>Students write H₂ at anode. No. O₂ is always at anode, H₂ at cathode in water-based electrolysis.</div>
+    <div class="alert alert-trap"><strong>Trap 7: Diamond vs Graphite</strong><br>Diamond = hardest natural substance, non-conductor, high density. Graphite = soft, conducts electricity. Both are carbon (allotropes) but opposite properties.</div>
+    <div class="alert alert-trap"><strong>Trap 8: Galvanisation vs Anodising</strong><br>Galvanisation is for IRON (zinc coating). Anodising is for ALUMINIUM (electrolytic). Common confusion in matching questions.</div>
+    <div class="alert alert-trap"><strong>Trap 9: Zinc is a METAL but BRITTLE</strong><br>Only metal exception for brittleness. Also exception for malleability (it's not malleable). Examiners ask this as a trap — "which metal is brittle?"</div>
+    <div class="alert alert-trap"><strong>Trap 10: Lead — No Lustre (Dull Metal)</strong><br>Lead is a metal but lacks lustre. Iodine is a non-metal but has lustre. Direct opposite of expectations.</div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('corrosion',document.querySelector('[data-page=corrosion]'))">← Corrosion</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('examq',document.querySelector('[data-page=examq]'))">Examiner's Favourites →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: EXAMINER'S FAVOURITES ═══════════════ -->
+  <div id="page-examq" class="page">
+    <div class="page-eyebrow">Layer 2 · Exam Intelligence</div>
+    <h1 class="page-title">Examiner's Favourite Questions</h1>
+
+    <h2>🎯 High Probability MCQs</h2>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">1. Which metal is liquid at room temperature? → <strong style="color:var(--green)">Mercury (Hg)</strong></p></div>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">2. Which non-metal is liquid at room temperature? → <strong style="color:var(--green)">Bromine (Br₂)</strong></p></div>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">3. Which metal is the hardest natural substance? → <strong style="color:var(--green)">Diamond (Carbon — Non-metal!)</strong></p></div>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">4. Which metal is used to coat iron to prevent rusting? → <strong style="color:var(--green)">Zinc (Galvanisation)</strong></p></div>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">5. Which non-metal conducts electricity? → <strong style="color:var(--green)">Graphite</strong></p></div>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">6. 1 gram of gold can make wire of how many km? → <strong style="color:var(--green)">2 km</strong></p></div>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">7. What is the composition of Brass? → <strong style="color:var(--green)">Copper + Zinc</strong></p></div>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">8. What is Thermite reaction used for? → <strong style="color:var(--green)">Welding railway tracks</strong></p></div>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">9. Which metal is anode in electrolytic refining? → <strong style="color:var(--green)">Impure metal</strong></p></div>
+    <div class="card"><p style="margin:0;font-size:13px;color:var(--text-dim)">10. Monazite sand is found in which Indian states? → <strong style="color:var(--green)">Kerala & Tamil Nadu</strong></p></div>
+
+    <h2>🎯 Statement-Based & Assertion-Reason</h2>
+    <div class="alert alert-exam">
+      <strong>A:</strong> Sodium and Potassium are stored in kerosene.<br>
+      <strong>R:</strong> They react vigorously with water and air (highly exothermic, low density — they float).<br>
+      → Both A and R are correct, R is the correct explanation.
+    </div>
+    <div class="alert alert-exam">
+      <strong>A:</strong> Gold is used to make jewellery.<br>
+      <strong>R:</strong> Gold is the least reactive metal and does not tarnish.<br>
+      → Both A and R correct, R correctly explains A.
+    </div>
+
+    <h2>🎯 Match-the-Following Targets</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Ore</th><th>Metal</th></tr></thead>
+        <tbody>
+          <tr><td>Cinnabar</td><td>Mercury</td></tr>
+          <tr><td>Galena</td><td>Lead</td></tr>
+          <tr><td>Cassiterite</td><td>Tin</td></tr>
+          <tr><td>Pitchblende</td><td>Uranium</td></tr>
+          <tr><td>Bauxite</td><td>Aluminium</td></tr>
+          <tr><td>Haematite</td><td>Iron</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('traps',document.querySelector('[data-page=traps]'))">← Traps</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('quiz',document.querySelector('[data-page=quiz]'))">Active Recall Quiz →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: QUIZ ═══════════════ -->
+  <div id="page-quiz" class="page">
+    <div class="page-eyebrow">Layer 3 · Active Recall</div>
+    <h1 class="page-title">Active Recall Quiz</h1>
+    <p class="page-sub">Click an option to test yourself. Explanation appears after each answer.</p>
+
+    <!-- Q1 -->
+    <div class="quiz-q">
+      <div class="quiz-question">1. Which of the following is a liquid metal at room temperature?</div>
+      <div class="quiz-options">
+        <div class="quiz-opt" onclick="answer(this,'w','Q1')">Gallium</div>
+        <div class="quiz-opt" onclick="answer(this,'c','Q1')">Mercury</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q1')">Caesium</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q1')">Bromine</div>
+      </div>
+      <div class="quiz-explain" id="Q1">Mercury (Hg) is the only metal that is liquid at room temperature. Gallium and Caesium have very low melting points but are solid at room temperature. Bromine is a non-metal that is liquid.</div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q">
+      <div class="quiz-question">2. In electrolytic refining, the anode is made of ____.</div>
+      <div class="quiz-options">
+        <div class="quiz-opt" onclick="answer(this,'c','Q2')">Impure metal</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q2')">Pure metal</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q2')">Salt solution</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q2')">Carbon rod</div>
+      </div>
+      <div class="quiz-explain" id="Q2">Anode = impure metal (it dissolves). Cathode = pure metal (pure metal deposits here). Electrolyte = salt solution of that metal.</div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q">
+      <div class="quiz-question">3. Brass is an alloy of copper and ____.</div>
+      <div class="quiz-options">
+        <div class="quiz-opt" onclick="answer(this,'w','Q3')">Tin</div>
+        <div class="quiz-opt" onclick="answer(this,'c','Q3')">Zinc</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q3')">Lead</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q3')">Nickel</div>
+      </div>
+      <div class="quiz-explain" id="Q3">Brass = Cu + Zn. Bronze = Cu + Sn. Solder = Sn + Pb. This is one of the most common exam traps — always double check Brass vs Bronze.</div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q">
+      <div class="quiz-question">4. The thermite reaction is used for ____.</div>
+      <div class="quiz-options">
+        <div class="quiz-opt" onclick="answer(this,'w','Q4')">Extracting aluminium from ore</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q4')">Making solder alloy</div>
+        <div class="quiz-opt" onclick="answer(this,'c','Q4')">Welding railway tracks</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q4')">Anodising aluminium</div>
+      </div>
+      <div class="quiz-explain" id="Q4">Thermite = Fe₂O₃ + Al → Al₂O₃ + Fe + intense heat. The heat welds railway tracks together. Al acts as reducing agent.</div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q">
+      <div class="quiz-question">5. Which non-metal conducts electricity?</div>
+      <div class="quiz-options">
+        <div class="quiz-opt" onclick="answer(this,'w','Q5')">Sulphur</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q5')">Phosphorus</div>
+        <div class="quiz-opt" onclick="answer(this,'c','Q5')">Graphite</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q5')">Iodine</div>
+      </div>
+      <div class="quiz-explain" id="Q5">Graphite (an allotrope of Carbon, a non-metal) conducts electricity due to its layered structure and delocalized electrons. This is the most famous non-metal exception for conductivity.</div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-q">
+      <div class="quiz-question">6. Sodium Nitrite (NaNO₂) is used as a ____.</div>
+      <div class="quiz-options">
+        <div class="quiz-opt" onclick="answer(this,'w','Q6')">Explosive</div>
+        <div class="quiz-opt" onclick="answer(this,'c','Q6')">Food preservative</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q6')">Fertiliser</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q6')">Reducing agent</div>
+      </div>
+      <div class="quiz-explain" id="Q6">NaNO₂ = food preservative. NaNO₃ (sodium NITRATE) = explosive. One letter difference — always check if it's nitrate or nitrite!</div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-q">
+      <div class="quiz-question">7. Monazite sand, found on Kerala coast, is a source of which metal?</div>
+      <div class="quiz-options">
+        <div class="quiz-opt" onclick="answer(this,'w','Q7')">Uranium</div>
+        <div class="quiz-opt" onclick="answer(this,'c','Q7')">Thorium</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q7')">Aluminium</div>
+        <div class="quiz-opt" onclick="answer(this,'w','Q7')">Tin</div>
+      </div>
+      <div class="quiz-explain" id="Q7">Monazite sand on Kerala & Tamil Nadu coasts = source of Thorium (a rare earth element). Uranium's ore is Pitchblende (UO₂).</div>
+    </div>
+
+    <!-- FILL IN THE BLANKS -->
+    <h2>Fill in the Blanks</h2>
+
+    <div class="blank-q">
+      <p>1. The ore of Mercury is called ___________.</p>
+      <input class="blank-input" id="b1" placeholder="Type answer..." /><button class="check-btn" onclick="checkBlank('b1','cinnabar')">Check</button>
+    </div>
+    <div class="blank-q">
+      <p>2. In galvanisation, iron is coated with ___________ to prevent rusting.</p>
+      <input class="blank-input" id="b2" placeholder="Type answer..." /><button class="check-btn" onclick="checkBlank('b2','zinc')">Check</button>
+    </div>
+    <div class="blank-q">
+      <p>3. Metal + Acid → Salt + ___________</p>
+      <input class="blank-input" id="b3" placeholder="Type answer..." /><button class="check-btn" onclick="checkBlank('b3','hydrogen')">Check</button>
+    </div>
+    <div class="blank-q">
+      <p>4. The hardest natural substance is ___________.</p>
+      <input class="blank-input" id="b4" placeholder="Type answer..." /><button class="check-btn" onclick="checkBlank('b4','diamond')">Check</button>
+    </div>
+    <div class="blank-q">
+      <p>5. 1 gram of gold can be drawn into ___________ km of wire.</p>
+      <input class="blank-input" id="b5" placeholder="Type answer..." /><button class="check-btn" onclick="checkBlank('b5','2')">Check</button>
+    </div>
+
+    <!-- RAPID FIRE -->
+    <h2>Rapid Fire Round</h2>
+    <div id="rapid-fire">
+      <div class="rf-q"><span class="rf-num">01</span><span class="rf-text">Which metal has no lustre?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Lead (Pb)</div></div>
+      <div class="rf-q"><span class="rf-num">02</span><span class="rf-text">Which non-metal has lustre?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Iodine</div></div>
+      <div class="rf-q"><span class="rf-num">03</span><span class="rf-text">Which metal is brittle?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Zinc (Zn)</div></div>
+      <div class="rf-q"><span class="rf-num">04</span><span class="rf-text">Solder alloy = Sn + ?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Lead (Pb)</div></div>
+      <div class="rf-q"><span class="rf-num">05</span><span class="rf-text">Ore of lead?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Galena (PbS)</div></div>
+      <div class="rf-q"><span class="rf-num">06</span><span class="rf-text">Electrolyte used in copper refining?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Copper Sulphate (CuSO₄)</div></div>
+      <div class="rf-q"><span class="rf-num">07</span><span class="rf-text">Gas released at anode during anodising?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Oxygen (O₂)</div></div>
+      <div class="rf-q"><span class="rf-num">08</span><span class="rf-text">Which ore contains thorium?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Monazite Sand</div></div>
+      <div class="rf-q"><span class="rf-num">09</span><span class="rf-text">Metal oxide → acid/basic?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Basic</div></div>
+      <div class="rf-q"><span class="rf-num">10</span><span class="rf-text">Na & K stored in?</span><button class="rf-ans-btn" onclick="showRF(this)">Show Answer</button><div class="rf-ans">Kerosene</div></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('examq',document.querySelector('[data-page=examq]'))">← Examiner's Qs</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('highyield',document.querySelector('[data-page=highyield]'))">High-Yield Notes →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: HIGH-YIELD ═══════════════ -->
+  <div id="page-highyield" class="page">
+    <div class="page-eyebrow">Layer 2 · High-Yield Revision</div>
+    <h1 class="page-title">High-Yield Revision Notes</h1>
+    <p class="page-sub">Revisions 6–20: Read this instead of the full notes.</p>
+
+    <h2>Physical Property Exceptions — The Only Things That Matter</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Property</th><th>Metal Exception</th><th>Non-Metal Exception</th></tr></thead>
+        <tbody>
+          <tr><td>State</td><td>Hg = liquid; Ga, Cs = near-liquid; Na/K = soft</td><td>Br₂ = liquid</td></tr>
+          <tr><td>Lustre</td><td>Lead = no lustre</td><td>Iodine = lustrous</td></tr>
+          <tr><td>Hardness</td><td>Na, K = cut by knife; Zn = brittle</td><td>Diamond = hardest</td></tr>
+          <tr><td>Malleability</td><td>Zn = non-malleable (brittle)</td><td>None</td></tr>
+          <tr><td>Density</td><td>Na, K = float on water</td><td>Diamond = very dense</td></tr>
+          <tr><td>Conductivity</td><td>Pb, Hg = poor conductors</td><td>Graphite = good conductor</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Chemical Rules — The 3 You Must Know</h2>
+    <div class="alert alert-tip"><strong>1. MASH:</strong> Metal + Acid → Salt + Hydrogen</div>
+    <div class="alert alert-tip"><strong>2. Oxides:</strong> Metal oxide = Basic. Non-metal oxide = Acidic. Amphoteric (Jana Janabe Ali) = Zn, Al, Pb, Sn</div>
+    <div class="alert alert-tip"><strong>3. Thermite:</strong> Al + Fe₂O₃ → Al₂O₃ + Fe + heat = welding railway tracks</div>
+
+    <h2>Alloys — Must-Know 4</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Name</th><th>= Cu +</th></tr></thead>
+        <tbody>
+          <tr><td>Brass</td><td>Zn</td></tr>
+          <tr><td>Bronze</td><td>Sn</td></tr>
+          <tr><td>Bell Metal</td><td>Sn (different ratio from Bronze)</td></tr>
+          <tr><td>Solder</td><td>Sn + Pb (no Cu)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Ores — Top 6 for Exam</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metal</th><th>Ore</th><th>Formula</th></tr></thead>
+        <tbody>
+          <tr><td>Hg</td><td>Cinnabar</td><td>HgS</td></tr>
+          <tr><td>Pb</td><td>Galena</td><td>PbS</td></tr>
+          <tr><td>Sn</td><td>Cassiterite</td><td>SnO₂</td></tr>
+          <tr><td>U</td><td>Pitchblende</td><td>UO₂</td></tr>
+          <tr><td>Al</td><td>Bauxite</td><td>Al₂O₃</td></tr>
+          <tr><td>Th</td><td>Monazite Sand</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('quiz',document.querySelector('[data-page=quiz]'))">← Quiz</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('ultrafast',document.querySelector('[data-page=ultrafast]'))">Ultra-Fast →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: ULTRA-FAST ═══════════════ -->
+  <div id="page-ultrafast" class="page">
+    <div class="page-eyebrow">Layer 3 · Ultra-Fast</div>
+    <h1 class="page-title">Ultra-Fast Revision Sheet</h1>
+    <p class="page-sub">Revisions 21–50. Scan in under 5 minutes.</p>
+
+    <div class="uf-grid">
+      <div class="uf-item"><div class="uf-k">Liquid Metal</div><div class="uf-v">Mercury (Hg)</div></div>
+      <div class="uf-item"><div class="uf-k">Liquid Non-Metal</div><div class="uf-v">Bromine (Br₂)</div></div>
+      <div class="uf-item"><div class="uf-k">Hardest substance</div><div class="uf-v">Diamond (non-metal!)</div></div>
+      <div class="uf-item"><div class="uf-k">Conducts (non-metal)</div><div class="uf-v">Graphite</div></div>
+      <div class="uf-item"><div class="uf-k">Dull metal (no lustre)</div><div class="uf-v">Lead (Pb)</div></div>
+      <div class="uf-item"><div class="uf-k">Lustrous non-metal</div><div class="uf-v">Iodine</div></div>
+      <div class="uf-item"><div class="uf-k">Brittle metal</div><div class="uf-v">Zinc (Zn)</div></div>
+      <div class="uf-item"><div class="uf-k">Floats on water</div><div class="uf-v">Na, K</div></div>
+      <div class="uf-item"><div class="uf-k">Gold wire (1g)</div><div class="uf-v">2 km long</div></div>
+      <div class="uf-item"><div class="uf-k">Brass = Cu +</div><div class="uf-v">Zinc</div></div>
+      <div class="uf-item"><div class="uf-k">Bronze = Cu +</div><div class="uf-v">Tin</div></div>
+      <div class="uf-item"><div class="uf-k">Solder = Sn +</div><div class="uf-v">Lead</div></div>
+      <div class="uf-item"><div class="uf-k">MASH</div><div class="uf-v">Metal+Acid→Salt+H₂</div></div>
+      <div class="uf-item"><div class="uf-k">Thermite use</div><div class="uf-v">Railway track welding</div></div>
+      <div class="uf-item"><div class="uf-k">Thermite reaction</div><div class="uf-v">Fe₂O₃ + Al → Fe + Al₂O₃</div></div>
+      <div class="uf-item"><div class="uf-k">Amphoteric oxides</div><div class="uf-v">Zn, Al, Pb, Sn</div></div>
+      <div class="uf-item"><div class="uf-k">Galvanisation</div><div class="uf-v">Zinc coat on Iron</div></div>
+      <div class="uf-item"><div class="uf-k">Anodising</div><div class="uf-v">Electrolytic, Al as anode</div></div>
+      <div class="uf-item"><div class="uf-k">Anode gas (anodising)</div><div class="uf-v">Oxygen</div></div>
+      <div class="uf-item"><div class="uf-k">Cinnabar ore</div><div class="uf-v">Mercury (HgS)</div></div>
+      <div class="uf-item"><div class="uf-k">Galena ore</div><div class="uf-v">Lead (PbS)</div></div>
+      <div class="uf-item"><div class="uf-k">Monazite → metal</div><div class="uf-v">Thorium (Kerala coast)</div></div>
+      <div class="uf-item"><div class="uf-k">NaNO₂ use</div><div class="uf-v">Food preservative</div></div>
+      <div class="uf-item"><div class="uf-k">NaNO₃ use</div><div class="uf-v">Explosive</div></div>
+      <div class="uf-item"><div class="uf-k">Metal oxide nature</div><div class="uf-v">Basic</div></div>
+      <div class="uf-item"><div class="uf-k">Non-metal oxide nature</div><div class="uf-v">Acidic</div></div>
+      <div class="uf-item"><div class="uf-k">Anode in refining</div><div class="uf-v">Impure metal</div></div>
+      <div class="uf-item"><div class="uf-k">Cathode in refining</div><div class="uf-v">Pure metal deposits</div></div>
+    </div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('highyield',document.querySelector('[data-page=highyield]'))">← High-Yield</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('thirty',document.querySelector('[data-page=thirty]'))">30-Second Sheet →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: 30-SECOND ═══════════════ -->
+  <div id="page-thirty" class="page">
+    <div class="page-eyebrow">Layer 4 · 30-Second</div>
+    <h1 class="page-title">30-Second Revision Sheet</h1>
+    <p class="page-sub">Read this in literally 30 seconds. Use before each practice test.</p>
+
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>ONLY liquid metal:</strong> Mercury | ONLY liquid non-metal: Bromine</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>Hardest natural substance:</strong> Diamond (non-metal) | Only conducting non-metal: Graphite</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>No lustre metal:</strong> Lead | Lustrous non-metal: Iodine | Brittle metal: Zinc</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>MASH:</strong> Metal + Acid → Salt + H₂</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>Alloys:</strong> Brass=Cu+Zn | Bronze=Cu+Sn | Solder=Sn+Pb</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>Thermite:</strong> Fe₂O₃ + Al → Fe + heat → Railway welding</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>Galvanisation:</strong> Zn on Fe | Anodising: Al as anode, O₂ at anode, H₂ at cathode</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>Ores:</strong> Cinnabar=Hg | Galena=Pb | Cassiterite=Sn | Pitchblende=U | Monazite=Th</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>Refining:</strong> Anode=impure | Cathode=pure | Electrolyte=metal salt</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>NaNO₂</strong>=food preservative | <strong>NaNO₃</strong>=explosive</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>Amphoteric oxides:</strong> Zn, Al, Pb, Sn (Jana Janabe Ali)</div></div>
+    <div class="thirty-row"><div class="thirty-dot"></div><div class="thirty-text"><strong>1g gold</strong> = 2 km wire | Gold foil used by Rutherford</div></div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('ultrafast',document.querySelector('[data-page=ultrafast]'))">← Ultra-Fast</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('nightbefore',document.querySelector('[data-page=nightbefore]'))">Night Before →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PAGE: NIGHT BEFORE ═══════════════ -->
+  <div id="page-nightbefore" class="page">
+    <div class="page-eyebrow">Layer 5 · Final Night</div>
+    <h1 class="page-title">🌙 Night Before Exam Sheet</h1>
+    <p class="page-sub">You've revised 50 times. This is your final 3-minute reminder. Read slowly. Trust yourself.</p>
+
+    <div class="nb-item"><span class="nb-num">01</span><span class="nb-text"><strong>Mercury</strong> = only liquid metal. <strong>Bromine</strong> = only liquid non-metal. These will appear in the exam.</span></div>
+    <div class="nb-item"><span class="nb-num">02</span><span class="nb-text"><strong>Diamond</strong> is the hardest substance — it is a non-metal (carbon). <strong>Graphite</strong> is the only non-metal conductor.</span></div>
+    <div class="nb-item"><span class="nb-num">03</span><span class="nb-text"><strong>Brass</strong> = Cu + Zn. <strong>Bronze</strong> = Cu + Sn. DO NOT swap Zn and Sn. Solder = Sn + Pb.</span></div>
+    <div class="nb-item"><span class="nb-num">04</span><span class="nb-text"><strong>MASH:</strong> Metal + Acid = Salt + Hydrogen. Metal oxide = Basic. Non-metal oxide = Acidic.</span></div>
+    <div class="nb-item"><span class="nb-num">05</span><span class="nb-text"><strong>Thermite reaction:</strong> Fe₂O₃ + Al → Fe + heat. Used for welding railway tracks. Al is the reducing agent.</span></div>
+    <div class="nb-item"><span class="nb-num">06</span><span class="nb-text"><strong>Electrolytic refining:</strong> Anode = impure. Cathode = pure. Electrolyte = metal salt solution.</span></div>
+    <div class="nb-item"><span class="nb-num">07</span><span class="nb-text"><strong>Galvanisation</strong> = zinc coating on iron. <strong>Anodising</strong> = electrolysis with Al as anode. O₂ at anode. H₂ at cathode.</span></div>
+    <div class="nb-item"><span class="nb-num">08</span><span class="nb-text"><strong>NaNO₂</strong> = food preservative. <strong>NaNO₃</strong> = explosive. One letter difference!</span></div>
+    <div class="nb-item"><span class="nb-num">09</span><span class="nb-text"><strong>Monazite sand</strong> (Kerala, Tamil Nadu coast) = Thorium. <strong>Pitchblende</strong> = Uranium. <strong>Cinnabar</strong> = Mercury. <strong>Galena</strong> = Lead.</span></div>
+    <div class="nb-item"><span class="nb-num">10</span><span class="nb-text"><strong>Amphoteric oxides</strong> react with both acid and base: Zn, Al, Pb, Sn. (Jana Janabe Ali)</span></div>
+    <div class="nb-item"><span class="nb-num">11</span><span class="nb-text"><strong>Zinc</strong> is the brittle metal. <strong>Lead</strong> has no lustre. <strong>Iodine</strong> has lustre. Na/K float on water.</span></div>
+    <div class="nb-item"><span class="nb-num">12</span><span class="nb-text">You know this chapter inside out. <strong>Trust your revision. Stay calm. Read every option.</strong> You've got this. 🔥</span></div>
+
+    <div class="page-nav">
+      <button class="nav-btn" onclick="goto('thirty',document.querySelector('[data-page=thirty]'))">← 30-Second</button>
+      <button class="nav-btn primary ml-auto" onclick="goto('home',document.querySelector('[data-page=home]'))">↩ Start Over</button>
+    </div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+  const pages = ['home','bigpicture','palace','physical','chemical','reactivity','alloys','ores','corrosion','traps','examq','quiz','highyield','ultrafast','thirty','nightbefore'];
+  const breadcrumbs = {
+    home:'Home', bigpicture:'Big Picture', palace:'Memory Palace',
+    physical:'Physical Properties', chemical:'Chemical Properties',
+    reactivity:'Reactivity Series', alloys:'Alloys', ores:'Ores & Extraction',
+    corrosion:'Corrosion & Protection', traps:'Exam Traps', examq:"Examiner's Favourites",
+    quiz:'Active Recall Quiz', highyield:'High-Yield Notes', ultrafast:'Ultra-Fast Sheet',
+    thirty:'30-Second Sheet', nightbefore:'Night Before'
+  };
+
+  let current = 'home';
+
+  function goto(id, navEl) {
+    // hide current
+    document.getElementById('page-'+current).classList.remove('active');
+    // show new
+    document.getElementById('page-'+id).classList.add('active');
+    // update nav
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if(navEl) navEl.classList.add('active');
+    else {
+      const el = document.querySelector(`[data-page="${id}"]`);
+      if(el) el.classList.add('active');
+    }
+    // breadcrumb
+    document.getElementById('breadcrumb-text').textContent = breadcrumbs[id] || id;
+    // progress
+    const idx = pages.indexOf(id);
+    const pct = Math.round(((idx+1)/pages.length)*100);
+    document.getElementById('progress-fill').style.width = pct+'%';
+    document.getElementById('progress-text').textContent = (idx+1)+'/'+pages.length;
+    // scroll top
+    document.getElementById('main').scrollTo({top:0, behavior:'smooth'});
+    current = id;
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('collapsed');
+  }
+
+  function answer(el, type, qid) {
+    const container = el.closest('.quiz-q');
+    if(container.dataset.answered) return;
+    container.dataset.answered = 'true';
+    container.querySelectorAll('.quiz-opt').forEach(o => o.style.pointerEvents='none');
+    if(type === 'c') {
+      el.classList.add('correct');
+    } else {
+      el.classList.add('wrong');
+      // highlight correct
+      container.querySelectorAll('.quiz-opt').forEach(o => {
+        if(o.onclick.toString().includes("'c'")) o.classList.add('correct');
+      });
+    }
+    document.getElementById(qid).classList.add('show');
+  }
+
+  function checkBlank(id, answer) {
+    const inp = document.getElementById(id);
+    const val = inp.value.trim().toLowerCase();
+    inp.classList.remove('correct','wrong');
+    if(val === answer.toLowerCase() || val.includes(answer.toLowerCase())) {
+      inp.classList.add('correct');
+    } else {
+      inp.classList.add('wrong');
+      setTimeout(() => {
+        inp.value = answer.charAt(0).toUpperCase() + answer.slice(1);
+        inp.classList.remove('wrong');
+        inp.classList.add('correct');
+      }, 1200);
+    }
+  }
+
+  function showRF(btn) {
+    const ans = btn.nextElementSibling;
+    ans.classList.toggle('show');
+    btn.textContent = ans.classList.contains('show') ? 'Hide' : 'Show Answer';
+  }
+</script>
+</body>
+</html>
