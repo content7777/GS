@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC CGL Maths Rapid Revision</title>
+    <style>
+        /* CSS VARIABLES */
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #171b24;
+            --border: #2b3242;
+            --accent-primary: #4ade80; /* Light Green */
+            --accent-secondary: #38bdf8; /* Light Blue */
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --hover-bg: #1f2533;
+            --danger: #f87171;
+            --nav-width: 250px;
+        }
+
+        /* RESET & BASE */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* TYPOGRAPHY */
+        h1 { font-size: 2.2rem; color: var(--accent-primary); margin-bottom: 0.5rem; }
+        h2 { font-size: 1.5rem; color: var(--accent-secondary); margin: 1.5rem 0 1rem 0; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        h3 { font-size: 1.2rem; color: var(--text-main); margin-bottom: 0.5rem; }
+        p { color: var(--text-muted); margin-bottom: 1rem; }
+        .highlight { color: var(--accent-primary); font-weight: bold; }
+        .text-blue { color: var(--accent-secondary); font-weight: bold; }
+
+        /* LAYOUT */
+        #sidebar {
+            width: var(--nav-width);
+            background-color: var(--bg-card);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem 0;
+            z-index: 10;
+        }
+        #sidebar h2 { margin: 0 1.5rem 1.5rem 1.5rem; border: none; padding: 0; color: var(--text-main); }
+        
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 0.2rem; }
+        .nav-links li { padding: 0.8rem 1.5rem; cursor: pointer; color: var(--text-muted); transition: 0.2s; border-left: 3px solid transparent; }
+        .nav-links li:hover { background-color: var(--hover-bg); color: var(--text-main); }
+        .nav-links li.active { border-left-color: var(--accent-primary); color: var(--accent-primary); background-color: rgba(74, 222, 128, 0.05); font-weight: bold; }
+
+        #main-wrapper { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        
+        /* HEADER & PROGRESS */
+        header { padding: 1rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background-color: var(--bg-main); z-index: 5; }
+        .progress-wrapper { flex: 1; margin-right: 2rem; }
+        .progress-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem; }
+        .progress-bar-bg { background-color: var(--bg-card); border-radius: 4px; height: 6px; width: 100%; border: 1px solid var(--border); overflow: hidden; }
+        .progress-bar-fill { background-color: var(--accent-primary); height: 100%; width: 0%; transition: width 0.3s ease; }
+        
+        .btn { background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; transition: 0.2s; font-weight: bold; }
+        .btn:hover { background-color: var(--hover-bg); border-color: var(--accent-secondary); }
+        .btn-rapid { background-color: rgba(74, 222, 128, 0.1); border-color: var(--accent-primary); color: var(--accent-primary); }
+        .btn-rapid.active { background-color: var(--accent-primary); color: var(--bg-main); }
+
+        /* CONTENT AREA */
+        #content { flex: 1; overflow-y: auto; padding: 2rem; scroll-behavior: smooth; }
+        .page { display: none; animation: fadeIn 0.3s ease; max-width: 1200px; margin: 0 auto; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* CARDS & NOTES */
+        .card { background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .note-box { border-left: 4px solid var(--accent-secondary); background-color: rgba(56, 189, 248, 0.05); padding: 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem; }
+        .alert-box { border-left: 4px solid var(--danger); background-color: rgba(248, 113, 113, 0.05); padding: 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1.5rem; }
+        
+        /* TABLES */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .table-wrapper { overflow-x: auto; margin-bottom: 1.5rem; border-radius: 8px; border: 1px solid var(--border); }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { background-color: var(--bg-card); color: var(--accent-primary); padding: 0.75rem 1rem; position: sticky; top: 0; border-bottom: 2px solid var(--border); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+        tr:nth-child(even) td { background-color: rgba(255, 255, 255, 0.01); }
+        tr:hover td { background-color: rgba(255, 255, 255, 0.04); }
+
+        /* BOTTOM NAVIGATION (FOOTER) */
+        .footer-nav { background-color: var(--bg-main); border-top: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; z-index: 5; }
+        .footer-nav span { color: var(--text-muted); font-size: 0.85rem; }
+
+        /* MOBILE BOTTOM BAR */
+        #mobile-bottom-nav { display: none; background-color: var(--bg-card); border-top: 1px solid var(--border); position: fixed; bottom: 0; width: 100%; z-index: 20; justify-content: space-around; padding: 0.5rem 0; }
+        .mobile-nav-btn { display: flex; flex-direction: column; align-items: center; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; padding: 0.5rem; }
+        .mobile-nav-btn span { font-size: 1.2rem; margin-bottom: 0.2rem; }
+        .mobile-nav-btn.active { color: var(--accent-primary); }
+
+        /* RAPID REVISION MODE STYLES */
+        body.rapid-mode .hide-in-rapid { display: none !important; }
+        body.rapid-mode .card { padding: 1rem; margin-bottom: 1rem; }
+        body.rapid-mode table { font-size: 0.9rem; }
+        body.rapid-mode td { padding: 0.4rem 1rem; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            #sidebar { display: none; }
+            .footer-nav { display: none; }
+            header { padding: 1rem; flex-direction: column; gap: 1rem; align-items: stretch; }
+            .progress-wrapper { margin-right: 0; }
+            #content { padding: 1rem; padding-bottom: 5rem; } /* Leave space for mobile nav */
+            #mobile-bottom-nav { display: flex; }
+            .grid-container { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="sidebar">
+        <h2>SSC Maths</h2>
+        <ul class="nav-links" id="desktop-nav">
+            <li data-target="page-home">🏠 Home</li>
+            <li data-target="page-tables">1. Tables</li>
+            <li data-target="page-squares">2. Squares</li>
+            <li data-target="page-cubes">3. Cubes</li>
+            <li data-target="page-powers">4. Powers</li>
+            <li data-target="page-triplets">5. Triplets</li>
+            <li data-target="page-fractions">6. Fractions ↔ %</li>
+            <li data-target="page-roots">7. Roots</li>
+        </ul>
+    </nav>
+
+    <div id="main-wrapper">
+        <header>
+            <div class="progress-wrapper">
+                <div class="progress-label" id="progress-text">Progress: 0 / 7 Modules Completed</div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
+                </div>
+            </div>
+            <button class="btn btn-rapid" id="btn-rapid">⚡ Rapid Revision</button>
+        </header>
+
+        <main id="content">
+            
+            <section id="page-home" class="page active">
+                <h1>SSC CGL Maths Rapid Revision</h1>
+                <p class="hide-in-rapid">Welcome to your daily premium revision notebook. Spend 10-15 minutes here every day to lock these essential facts into your long-term memory.</p>
+                
+                <div class="card hide-in-rapid">
+                    <h3>⌨️ Keyboard Shortcuts</h3>
+                    <ul style="list-style-type: none; margin-top: 1rem; color: var(--text-muted);">
+                        <li style="margin-bottom: 0.5rem;"><kbd style="background: var(--border); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-main);">←</kbd> Previous Page</li>
+                        <li style="margin-bottom: 0.5rem;"><kbd style="background: var(--border); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-main);">→</kbd> Next Page</li>
+                        <li style="margin-bottom: 0.5rem;"><kbd style="background: var(--border); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-main);">H</kbd> Go to Home</li>
+                        <li><kbd style="background: var(--border); padding: 0.2rem 0.5rem; border-radius: 4px; color: var(--text-main);">R</kbd> Toggle Rapid Mode</li>
+                    </ul>
+                </div>
+
+                <div class="note-box hide-in-rapid">
+                    <strong>💡 Exam Tip:</strong> Toggle <strong>"Rapid Revision"</strong> (top right) to hide all explanations and view only the raw tables and formulas for final-week revision.
+                </div>
+            </section>
+
+            <section id="page-tables" class="page">
+                <h1>Multiplication Tables (1 to 25)</h1>
+                <p class="hide-in-rapid">Crucial for calculation speed in Simplification, DI, and Arithmetic. Scanning these daily builds instinctual reflex.</p>
+                <div class="grid-container" id="tables-container"></div>
+            </section>
+
+            <section id="page-squares" class="page">
+                <h1>Squares</h1>
+                <p class="hide-in-rapid">Most important base values for Compound Interest, Geometry, and Number Series.</p>
+                
+                <div class="note-box hide-in-rapid">
+                    <strong>🧠 Memory Trick (Base 50):</strong> To find the square of a number near 50 (e.g., $50 - x$), the first two digits are $25 - x$ and the last two digits are $x^2$. <br>
+                    <em>Example:</em> $48^2 \rightarrow x=2 \rightarrow (25-2) = 23$ and $2^2 = 04 \rightarrow 2304$.
+                </div>
+
+                <h2>Primary (1-30 & 36)</h2>
+                <div class="table-wrapper" id="squares-primary-container"></div>
+
+                <h2 class="hide-in-rapid">Overview (31-50)</h2>
+                <div class="table-wrapper hide-in-rapid" id="squares-overview-container"></div>
+            </section>
+
+            <section id="page-cubes" class="page">
+                <h1>Cubes</h1>
+                <p class="hide-in-rapid">Learn up to 15 perfectly. 21 is exclusively for 3-year Compound Interest questions at 5% rate.</p>
+
+                <div class="alert-box hide-in-rapid">
+                    <strong>⚠️ Most Frequently Asked:</strong> <br>
+                    $21^3 = 9261$. In SSC, a 5% rate for 3 years implies Principal : Amount ratio is $20^3 : 21^3 \rightarrow 8000 : 9261$.
+                </div>
+
+                <h2>Primary (1-15 & 21)</h2>
+                <div class="table-wrapper" id="cubes-primary-container"></div>
+
+                <h2 class="hide-in-rapid">Overview (16-19)</h2>
+                <div class="table-wrapper hide-in-rapid" id="cubes-overview-container"></div>
+            </section>
+
+            <section id="page-powers" class="page">
+                <h1>Important Powers</h1>
+                <p class="hide-in-rapid">Frequently used in Surds, Indices, and Simplification topics.</p>
+                <div class="grid-container" id="powers-container"></div>
+            </section>
+
+            <section id="page-triplets" class="page">
+                <h1>Pythagorean Triplets</h1>
+                <p class="hide-in-rapid">Do NOT memorize all. Only memorize these SSC-specific triplets. Used heavily in Trigonometry, Mensuration, and Geometry.</p>
+
+                <div class="note-box hide-in-rapid">
+                    <strong>💡 Pro Tip:</strong> Multiplying any triplet by a constant gives another triplet. <br>
+                    Example: $(3,4,5) \times 2 = (6,8,10)$. SSC loves using decimals like $(0.3, 0.4, 0.5)$.
+                </div>
+
+                <div class="grid-container">
+                    <div class="card">
+                        <h3 class="highlight">Tier 1: Most Frequent</h3>
+                        <p class="hide-in-rapid" style="font-size:0.85rem;">Appears in 80% of SSC Geometry/Trigo problems.</p>
+                        <table style="margin-top:1rem;">
+                            <tr><td>3</td><td>4</td><td>5</td></tr>
+                            <tr><td>5</td><td>12</td><td>13</td></tr>
+                            <tr><td>7</td><td>24</td><td>25</td></tr>
+                            <tr><td>8</td><td>15</td><td>17</td></tr>
+                            <tr><td>9</td><td>40</td><td>41</td></tr>
+                        </table>
+                    </div>
+                    <div class="card">
+                        <h3 class="text-blue">Tier 2: Secondary</h3>
+                        <p class="hide-in-rapid" style="font-size:0.85rem;">Appears mostly in Mains or specific Mensuration sets.</p>
+                        <table style="margin-top:1rem;">
+                            <tr><td>11</td><td>60</td><td>61</td></tr>
+                            <tr><td>12</td><td>35</td><td>37</td></tr>
+                            <tr><td>16</td><td>63</td><td>65</td></tr>
+                            <tr><td>20</td><td>21</td><td>29</td></tr>
+                            <tr><td>28</td><td>45</td><td>53</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="page-fractions" class="page">
+                <h1>Fraction ↔ Percentage</h1>
+                <p class="hide-in-rapid">The backbone of SSC Arithmetic (Profit/Loss, SI/CI, Time & Work).</p>
+
+                <div class="alert-box hide-in-rapid">
+                    <strong>⚠️ Common Mistake:</strong> Don't confuse $1/8$ ($12.5\%$) with $1/12$ ($8.33\%$). Be absolutely confident on $1/6$, $1/7$, $1/8$, $1/9$, $1/11$.
+                </div>
+
+                <div class="grid-container">
+                    <div class="card" style="grid-column: span 2;">
+                        <h3 class="highlight">Base Fractions (1/2 to 1/16)</h3>
+                        <div class="table-wrapper">
+                            <table>
+                                <tr>
+                                    <th>Fraction</th><th>Percentage</th>
+                                    <th>Fraction</th><th>Percentage</th>
+                                </tr>
+                                <tr><td>1/2</td><td>50%</td> <td>1/10</td><td>10%</td></tr>
+                                <tr><td>1/3</td><td>33.33% (33 1/3%)</td> <td>1/11</td><td>9.09% (9 1/11%)</td></tr>
+                                <tr><td>1/4</td><td>25%</td> <td>1/12</td><td>8.33% (8 1/3%)</td></tr>
+                                <tr><td>1/5</td><td>20%</td> <td>1/13</td><td>7.69% (7 9/13%)</td></tr>
+                                <tr><td>1/6</td><td>16.66% (16 2/3%)</td> <td>1/14</td><td>7.14% (7 1/7%)</td></tr>
+                                <tr><td>1/7</td><td>14.28% (14 2/7%)</td> <td>1/15</td><td>6.66% (6 2/3%)</td></tr>
+                                <tr><td>1/8</td><td>12.5% (12 1/2%)</td> <td>1/16</td><td>6.25% (6 1/4%)</td></tr>
+                                <tr><td>1/9</td><td>11.11% (11 1/9%)</td> <td>1/20</td><td>5%</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="text-blue">Crucial Multiples</h3>
+                        <p class="hide-in-rapid" style="font-size:0.85rem;">Derived values extremely common in SSC.</p>
+                        <table style="margin-top:1rem;">
+                            <tr><th>Fraction</th><th>Percentage</th></tr>
+                            <tr><td>2/3</td><td>66.66%</td></tr>
+                            <tr><td>3/4</td><td>75%</td></tr>
+                            <tr><td>3/8</td><td>37.5%</td></tr>
+                            <tr><td>5/8</td><td>62.5%</td></tr>
+                            <tr><td>7/8</td><td>87.5%</td></tr>
+                            <tr><td>5/6</td><td>83.33%</td></tr>
+                            <tr><td>4/7</td><td>57.14%</td></tr>
+                            <tr><td>2/5</td><td>40%</td></tr>
+                            <tr><td>3/5</td><td>60%</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="page-roots" class="page">
+                <h1>Important Root Values</h1>
+                <p class="hide-in-rapid">Approximations needed when options are close, especially in Mensuration (e.g., diagonal of a square $\sqrt{2}a$).</p>
+                
+                <div class="table-wrapper" style="max-width: 500px;">
+                    <table>
+                        <tr><th>Root</th><th>Value (Approx)</th><th class="hide-in-rapid">Context / Hint</th></tr>
+                        <tr><td class="highlight">√2</td><td class="highlight">1.414</td><td class="hide-in-rapid">Diagonal of Square</td></tr>
+                        <tr><td class="highlight">√3</td><td class="highlight">1.732</td><td class="hide-in-rapid">Equilateral Triangle Height/Area</td></tr>
+                        <tr><td>√4</td><td>2</td><td class="hide-in-rapid">-</td></tr>
+                        <tr><td class="text-blue">√5</td><td class="text-blue">2.236</td><td class="hide-in-rapid">Diagonal of Rectangle (1,2)</td></tr>
+                        <tr><td>√6</td><td>2.449</td><td class="hide-in-rapid">$\sqrt{2} \times \sqrt{3}$</td></tr>
+                        <tr><td>√7</td><td>2.645</td><td class="hide-in-rapid">-</td></tr>
+                        <tr><td>√8</td><td>2.828</td><td class="hide-in-rapid">$2\sqrt{2} = 2 \times 1.414$</td></tr>
+                        <tr><td>√10</td><td>3.162</td><td class="hide-in-rapid">Slightly more than $\pi$</td></tr>
+                    </table>
+                </div>
+
+                <div class="note-box hide-in-rapid">
+                    <strong>Quick Glance:</strong> Notice that $\sqrt{10} \approx 3.16$. This is sometimes useful because $\pi^2 \approx 9.87 \approx 10$, hence $\pi \approx \sqrt{10}$ for very rough estimations.
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="footer-nav">
+            <span class="hide-in-rapid">Tip: Use Arrow Keys ← → to navigate</span>
+            <div>
+                <button class="btn" id="btn-prev">← Previous</button>
+                <button class="btn" id="btn-home">⌂ Home</button>
+                <button class="btn" id="btn-next">Next →</button>
+            </div>
+        </footer>
+
+        <nav id="mobile-bottom-nav">
+            <div class="mobile-nav-btn" id="m-btn-prev">
+                <span>⬅️</span> Prev
+            </div>
+            <div class="mobile-nav-btn" id="m-btn-home">
+                <span>🏠</span> Home
+            </div>
+            <div class="mobile-nav-btn" id="m-btn-rapid">
+                <span>⚡</span> Rapid
+            </div>
+            <div class="mobile-nav-btn" id="m-btn-next">
+                <span>➡️</span> Next
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        // --- 1. DATA GENERATION SCRIPTS ---
+
+        // Generate Tables (1-25)
+        const tablesContainer = document.getElementById('tables-container');
+        let tablesHTML = '';
+        for (let i = 1; i <= 25; i++) {
+            tablesHTML += `<div class="card" style="padding: 1rem;"><h3 style="text-align:center; color: var(--accent-secondary); margin-bottom: 10px;">Table of ${i}</h3><table>`;
+            for (let j = 1; j <= 10; j++) {
+                tablesHTML += `<tr><td>${i} × ${j}</td><td style="text-align:right; font-weight:bold;">${i * j}</td></tr>`;
+            }
+            tablesHTML += `</table></div>`;
+        }
+        tablesContainer.innerHTML = tablesHTML;
+
+        // Generate Squares (Primary: 1-30, 36)
+        const sqPrimary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,36];
+        let sqPriHTML = '<table><tr><th>Number (x)</th><th>Square (x²)</th><th>Number (x)</th><th>Square (x²)</th></tr>';
+        for(let i=0; i<Math.ceil(sqPrimary.length/2); i++) {
+            let n1 = sqPrimary[i];
+            let n2 = sqPrimary[i + Math.ceil(sqPrimary.length/2)];
+            sqPriHTML += `<tr>
+                <td>${n1}</td><td class="highlight">${n1*n1}</td>
+                <td>${n2 || ''}</td><td class="highlight">${n2 ? n2*n2 : ''}</td>
+            </tr>`;
+        }
+        sqPriHTML += '</table>';
+        document.getElementById('squares-primary-container').innerHTML = sqPriHTML;
+
+        // Generate Squares (Overview: 31-35, 37-50)
+        let sqOverHTML = '<table><tr><th>x</th><th>x²</th><th>x</th><th>x²</th><th>x</th><th>x²</th><th>x</th><th>x²</th></tr><tr>';
+        let count = 0;
+        for(let i=31; i<=50; i++) {
+            if(i===36) continue;
+            sqOverHTML += `<td>${i}</td><td style="font-weight:bold;">${i*i}</td>`;
+            count++;
+            if(count % 4 === 0) sqOverHTML += '</tr><tr>';
+        }
+        sqOverHTML += '</tr></table>';
+        document.getElementById('squares-overview-container').innerHTML = sqOverHTML;
+
+        // Generate Cubes (Primary: 1-15, 21)
+        const cbPrimary = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,21];
+        let cbPriHTML = '<table><tr><th>x</th><th>x³</th><th>x</th><th>x³</th></tr>';
+        for(let i=0; i<cbPrimary.length/2; i++) {
+            let n1 = cbPrimary[i];
+            let n2 = cbPrimary[i + cbPrimary.length/2];
+            let hl1 = n1===21 ? 'style="color:var(--danger); font-weight:bold; font-size:1.1rem;"' : 'class="highlight"';
+            let hl2 = n2===21 ? 'style="color:var(--danger); font-weight:bold; font-size:1.1rem;"' : 'class="highlight"';
+            cbPriHTML += `<tr>
+                <td>${n1}</td><td ${hl1}>${n1*n1*n1}</td>
+                <td>${n2}</td><td ${hl2}>${n2*n2*n2}</td>
+            </tr>`;
+        }
+        cbPriHTML += '</table>';
+        document.getElementById('cubes-primary-container').innerHTML = cbPriHTML;
+
+        // Generate Cubes (Overview: 16-19)
+        let cbOverHTML = '<table><tr>';
+        for(let i=16; i<=19; i++) cbOverHTML += `<th>${i}</th>`;
+        cbOverHTML += '</tr><tr>';
+        for(let i=16; i<=19; i++) cbOverHTML += `<td>${i*i*i}</td>`;
+        cbOverHTML += '</tr></table>';
+        document.getElementById('cubes-overview-container').innerHTML = cbOverHTML;
+
+        // Generate Powers
+        const powersData = [
+            { base: 2, max: 12 },
+            { base: 3, max: 6 },
+            { base: 4, max: 6 },
+            { base: 5, max: 5 },
+            { base: 6, max: 4 }
+        ];
+        const powersContainer = document.getElementById('powers-container');
+        let powersHTML = '';
+        powersData.forEach(p => {
+            powersHTML += `<div class="card"><h3 style="color:var(--accent-secondary); text-align:center;">Base ${p.base}</h3><table>`;
+            for(let i=1; i<=p.max; i++) {
+                powersHTML += `<tr><td>${p.base}<sup>${i}</sup></td><td style="text-align:right; font-weight:bold;">${Math.pow(p.base, i)}</td></tr>`;
+            }
+            powersHTML += `</table></div>`;
+        });
+        powersContainer.innerHTML = powersHTML;
+
+        // --- 2. SPA NAVIGATION LOGIC ---
+
+        const pages = ['page-home', 'page-tables', 'page-squares', 'page-cubes', 'page-powers', 'page-triplets', 'page-fractions', 'page-roots'];
+        let currentIndex = 0;
+
+        const domPages = document.querySelectorAll('.page');
+        const desktopNavLinks = document.querySelectorAll('#desktop-nav li');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const contentArea = document.getElementById('content');
+
+        function updateUI() {
+            // Update Pages
+            domPages.forEach(p => p.classList.remove('active'));
+            document.getElementById(pages[currentIndex]).classList.add('active');
+
+            // Update Desktop Nav
+            desktopNavLinks.forEach(l => l.classList.remove('active'));
+            desktopNavLinks[currentIndex].classList.add('active');
+
+            // Update Progress
+            // We consider 'home' as index 0, so actual modules completed = currentIndex
+            const totalModules = pages.length - 1;
+            const progress = currentIndex === 0 ? 0 : (currentIndex / totalModules) * 100;
+            progressBar.style.width = `${progress}%`;
+            progressText.innerText = `Progress: ${currentIndex} / ${totalModules} Modules Revised`;
+
+            // Scroll to top
+            contentArea.scrollTop = 0;
+        }
+
+        function goNext() {
+            if (currentIndex < pages.length - 1) { currentIndex++; updateUI(); }
+        }
+        function goPrev() {
+            if (currentIndex > 0) { currentIndex--; updateUI(); }
+        }
+        function goHome() {
+            currentIndex = 0; updateUI();
+        }
+
+        // Sidebar Clicks
+        desktopNavLinks.forEach((link, idx) => {
+            link.addEventListener('click', () => {
+                currentIndex = idx;
+                updateUI();
+            });
+        });
+
+        // Desktop Footer Buttons
+        document.getElementById('btn-next').addEventListener('click', goNext);
+        document.getElementById('btn-prev').addEventListener('click', goPrev);
+        document.getElementById('btn-home').addEventListener('click', goHome);
+
+        // Mobile Bottom Bar Buttons
+        document.getElementById('m-btn-next').addEventListener('click', goNext);
+        document.getElementById('m-btn-prev').addEventListener('click', goPrev);
+        document.getElementById('m-btn-home').addEventListener('click', goHome);
+
+        // Rapid Revision Mode Toggle
+        let isRapid = false;
+        function toggleRapidMode() {
+            isRapid = !isRapid;
+            if(isRapid) {
+                document.body.classList.add('rapid-mode');
+                document.getElementById('btn-rapid').classList.add('active');
+                document.getElementById('btn-rapid').innerHTML = "⚡ Rapid Mode: ON";
+                document.getElementById('m-btn-rapid').classList.add('active');
+            } else {
+                document.body.classList.remove('rapid-mode');
+                document.getElementById('btn-rapid').classList.remove('active');
+                document.getElementById('btn-rapid').innerHTML = "⚡ Rapid Revision";
+                document.getElementById('m-btn-rapid').classList.remove('active');
+            }
+        }
+        
+        document.getElementById('btn-rapid').addEventListener('click', toggleRapidMode);
+        document.getElementById('m-btn-rapid').addEventListener('click', toggleRapidMode);
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ignore if user is typing in an input (though there are none in this app)
+            if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            if (e.key === 'ArrowRight') {
+                goNext();
+            } else if (e.key === 'ArrowLeft') {
+                goPrev();
+            } else if (e.key.toLowerCase() === 'h') {
+                goHome();
+            } else if (e.key.toLowerCase() === 'r') {
+                toggleRapidMode();
+            }
+        });
+
+        // Init
+        updateUI();
+
+    </script>
+</body>
+</html>
