@@ -3,311 +3,1006 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delhi Sultanate — Slave Dynasty | Revision Vault</title>
+<title>The Citadel of Slaves — Delhi Sultanate Revision System</title>
 <style>
   :root{
-    --bg: #0b0e14;
-    --bg-raised: #11151f;
-    --bg-card: #161b27;
-    --border: #232a3a;
-    --text: #d8dee9;
-    --text-dim: #8993a8;
-    --text-faint: #5b6478;
-    --gold: #e0b15a;
-    --gold-dim: #a9854a;
-    --ember: #d9694f;
-    --teal: #56b6a8;
-    --violet: #9d8cd9;
-    --danger: #e0667a;
-    --serif: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    --sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-    --mono: "JetBrains Mono", "SF Mono", Consolas, monospace;
+    --bg:#0f1117;
+    --bg-raised:#161922;
+    --bg-card:#1b1f2a;
+    --line:#2a3040;
+    --text:#e8edf4;
+    --muted:#9aa7bd;
+    --green:#7ee787;
+    --green-dim:#3fa35a;
+    --blue:#79c0ff;
+    --blue-dim:#3b7dc4;
+    --amber:#ffce6b;
+    --coral:#ff8b7e;
+    --violet:#c9a6ff;
+    --display: 'Iowan Old Style','Palatino Linotype',Georgia,serif;
+    --body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --mono: 'SF Mono', 'Consolas', 'Menlo', monospace;
   }
-
-  *{ box-sizing: border-box; }
-  html{ scroll-behavior: smooth; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
   body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    height:100vh;
+    overflow:hidden;
+  }
+  ::selection{background:var(--green-dim);color:#fff;}
+
+  /* ===== Layout shell ===== */
+  .shell{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    height:100vh;
+  }
+  /* ===== Sidebar ===== */
+  .sidebar{
+    background:var(--bg-raised);
+    border-right:1px solid var(--line);
+    overflow-y:auto;
+    padding:22px 16px 40px;
+  }
+  .brand{
+    padding:4px 10px 18px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:14px;
+  }
+  .brand .tag{
+    font-size:10.5px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--green);
+    font-weight:600;
+  }
+  .brand h1{
+    font-family:var(--display);
+    font-size:21px;
+    line-height:1.25;
+    margin:6px 0 4px;
+    color:#fff;
+    font-weight:600;
+  }
+  .brand p{
+    font-size:11.5px;
+    color:var(--muted);
     margin:0;
-    background: var(--bg);
-    background-image:
-      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(157,140,217,0.08), transparent),
-      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(224,177,90,0.06), transparent);
-    color: var(--text);
-    font-family: var(--sans);
-    line-height: 1.6;
-    padding-bottom: 80px;
+  }
+  .nav-group{margin-top:18px;}
+  .nav-group-label{
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    padding:0 10px 8px;
+    font-weight:700;
+  }
+  .nav-btn{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    text-align:left;
+    background:transparent;
+    border:none;
+    color:var(--muted);
+    padding:9px 10px;
+    border-radius:8px;
+    font-size:13.3px;
+    cursor:pointer;
+    line-height:1.3;
+    transition:background .15s, color .15s;
+    font-family:var(--body);
+  }
+  .nav-btn .ico{
+    width:18px;
+    flex:0 0 18px;
+    text-align:center;
+    font-size:13px;
+    opacity:.85;
+  }
+  .nav-btn:hover{background:var(--bg-card);color:var(--text);}
+  .nav-btn.active{
+    background:linear-gradient(90deg, rgba(126,231,135,.14), rgba(121,192,255,.07));
+    color:#fff;
+    box-shadow:inset 2px 0 0 var(--green);
   }
 
-  /* ===== TOP BAR ===== */
+  /* ===== Main ===== */
+  .main{
+    overflow-y:auto;
+    position:relative;
+  }
   .topbar{
-    position: sticky; top:0; z-index: 50;
-    background: rgba(11,14,20,0.88);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 20px;
-    display:flex; align-items:center; justify-content:space-between;
-    gap: 12px;
+    position:sticky;top:0;z-index:5;
+    background:linear-gradient(180deg, rgba(15,17,23,.97), rgba(15,17,23,.85));
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    padding:14px 36px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
   }
-  .topbar .brand{
-    font-family: var(--serif); font-size: 15px; color: var(--gold);
-    letter-spacing: 0.04em; white-space:nowrap;
+  .crumb{font-size:12px;color:var(--muted);letter-spacing:.04em;}
+  .crumb b{color:var(--blue);font-weight:600;}
+  .progress-pill{
+    font-size:11px;color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:4px 12px;
   }
-  .topbar .brand span{ color: var(--text-dim); font-family: var(--sans); font-size: 11px; display:block; letter-spacing:0.08em; }
-  .nav-scroll{
-    display:flex; gap:6px; overflow-x:auto; scrollbar-width:none;
-    flex: 1; padding: 2px 0;
+  .page{
+    display:none;
+    padding:8px 36px 90px;
+    max-width:980px;
   }
-  .nav-scroll::-webkit-scrollbar{ display:none; }
-  .nav-pill{
-    flex-shrink:0;
-    font-family: var(--sans); font-size: 11.5px; font-weight:600;
-    color: var(--text-dim); background: var(--bg-raised);
-    border: 1px solid var(--border); border-radius: 100px;
-    padding: 6px 13px; cursor:pointer; white-space:nowrap;
-    transition: all .15s ease; text-decoration:none;
-  }
-  .nav-pill:hover{ color: var(--gold); border-color: var(--gold-dim); }
+  .page.active{display:block;animation:fade .35s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 
-  .wrap{ max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  .eyebrow{
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--green);font-weight:700;margin:28px 0 8px;
+  }
+  h2.pagetitle{
+    font-family:var(--display);
+    font-size:34px;
+    margin:0 0 6px;
+    color:#fff;
+    font-weight:600;
+    letter-spacing:.2px;
+  }
+  .sub{color:var(--muted);font-size:14.5px;margin:0 0 28px;max-width:720px;line-height:1.6;}
 
-  /* ===== HERO ===== */
-  .hero{
-    padding: 56px 0 30px;
-    border-bottom: 1px solid var(--border);
+  h3.sec{
+    font-family:var(--display);
+    font-size:21px;color:var(--blue);
+    margin:34px 0 12px;
+    font-weight:600;
+    border-bottom:1px solid var(--line);
+    padding-bottom:8px;
   }
-  .hero .eyebrow{
-    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--violet); font-weight:600; margin-bottom: 14px;
+  h4.sub-sec{
+    font-size:14.5px;color:var(--green);
+    margin:20px 0 8px;
+    font-weight:700;
   }
-  .hero h1{
-    font-family: var(--serif); font-size: clamp(32px, 6vw, 50px);
-    margin: 0 0 10px; color: #f2f0e9; line-height:1.08; font-weight: 600;
-  }
-  .hero h1 em{ color: var(--gold); font-style: normal; }
-  .hero .sub{ color: var(--text-dim); font-size: 15.5px; max-width: 560px; }
-  .hero .timeline-strip{
-    margin-top: 26px; display:flex; gap:0; border-radius:10px; overflow:hidden;
-    border: 1px solid var(--border);
-  }
-  .ts-block{
-    flex:1; padding: 10px 6px; text-align:center; font-size:11.5px;
-    border-right: 1px solid var(--border); position:relative;
-  }
-  .ts-block:last-child{ border-right:none; }
-  .ts-block .yr{ font-family: var(--mono); color: var(--gold); font-size:11px; font-weight:700; }
-  .ts-block .nm{ color: var(--text-dim); margin-top:2px; }
-  .ts-block:nth-child(1){ background: rgba(157,140,217,0.08); }
-  .ts-block:nth-child(2){ background: rgba(86,182,168,0.06); }
-  .ts-block:nth-child(3){ background: rgba(224,177,90,0.07); }
-  .ts-block:nth-child(4){ background: rgba(217,105,79,0.06); }
-  .ts-block:nth-child(5){ background: rgba(224,102,122,0.06); }
+  p{line-height:1.7;font-size:14.7px;color:var(--text);}
+  .muted{color:var(--muted);}
+  ul,ol{line-height:1.75;font-size:14.7px;padding-left:22px;}
+  li{margin-bottom:5px;}
+  strong{color:#fff;}
+  .tag-must{color:var(--coral);font-weight:700;}
+  .tag-imp{color:var(--amber);font-weight:700;}
+  .tag-good{color:var(--blue);font-weight:700;}
 
-  /* ===== SECTION ===== */
-  section.layer{ padding: 46px 0 10px; border-bottom: 1px solid var(--border); }
-  .layer-head{ display:flex; align-items:baseline; gap:12px; margin-bottom: 6px; flex-wrap:wrap; }
-  .layer-head .tag{
-    font-family: var(--mono); font-size:11px; color: var(--bg); background: var(--gold);
-    padding: 2px 8px; border-radius:4px; font-weight:700; letter-spacing:0.03em;
-  }
-  .layer-head h2{
-    font-family: var(--serif); font-size: 27px; margin:0; color:#f2f0e9; font-weight:600;
-  }
-  .layer-desc{ color: var(--text-faint); font-size: 13.5px; margin-bottom: 26px; font-style:italic; }
-
-  /* ===== PRIORITY TAGS ===== */
-  .pri{ display:inline-block; font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:4px; margin-right:6px; vertical-align:middle; }
-  .pri.must{ background: rgba(217,105,79,0.18); color:#f0917b; }
-  .pri.imp{ background: rgba(224,177,90,0.18); color: var(--gold); }
-  .pri.good{ background: rgba(86,182,168,0.16); color: var(--teal); }
-
-  /* ===== MEMORY PALACE ===== */
-  .palace{
-    background: linear-gradient(160deg, rgba(157,140,217,0.07), rgba(11,14,20,0));
-    border: 1px solid rgba(157,140,217,0.25);
-    border-radius: 14px; padding: 26px 26px 22px; margin-bottom: 22px;
-  }
-  .palace h3{ font-family: var(--serif); color: var(--violet); margin:0 0 14px; font-size:19px; }
-  .palace .room{
-    display:flex; gap:14px; padding: 12px 0; border-top: 1px dashed rgba(157,140,217,0.2);
-  }
-  .palace .room:first-of-type{ border-top:none; }
-  .palace .room-icon{ font-size: 22px; flex-shrink:0; width:32px; text-align:center; padding-top:2px; }
-  .palace .room-body b{ color:#f2f0e9; }
-  .palace .room-body{ font-size: 14.5px; color: var(--text); }
-
-  /* ===== CARDS / TOPIC BLOCKS ===== */
   .card{
-    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
-    padding: 20px 22px; margin-bottom: 18px;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+    margin:14px 0;
   }
-  .card h3{ font-family: var(--serif); font-size: 19px; margin: 0 0 4px; color: #f2f0e9; }
-  .card h3 .yr{ font-family: var(--mono); font-size: 13px; color: var(--gold); font-weight:600; margin-left:8px; }
-  .card p{ margin: 8px 0; font-size: 14.5px; }
-  .card ul{ margin: 8px 0; padding-left: 20px; font-size: 14.5px; }
-  .card li{ margin-bottom: 5px; }
-  .card .hook{
-    margin-top:12px; background: rgba(224,177,90,0.07); border-left:3px solid var(--gold);
-    padding: 10px 14px; border-radius: 0 8px 8px 0; font-size:13.5px; color: var(--text-dim);
-  }
-  .card .hook b{ color: var(--gold); }
+  .card.hook{border-left:3px solid var(--green);}
+  .card.trap{border-left:3px solid var(--coral);background:linear-gradient(180deg, rgba(255,139,126,.06), transparent);}
+  .card.connect{border-left:3px solid var(--blue);}
+  .card.q{border-left:3px solid var(--violet);}
+  .card.palace{border-left:3px solid var(--amber);}
 
-  /* connection arrows */
-  .chain{
-    display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-size: 13.5px;
-    background: var(--bg-raised); border:1px solid var(--border); border-radius:10px;
-    padding: 12px 16px; margin-bottom:12px;
-  }
-  .chain .node{ background: var(--bg-card); border:1px solid var(--border); padding:4px 10px; border-radius:6px; color:#eef; }
-  .chain .arrow{ color: var(--gold); font-weight:700; }
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:760px){.grid2{grid-template-columns:1fr;}}
 
-  /* ===== EXAM TRAPS ===== */
-  .trap{
-    border: 1px solid rgba(224,102,122,0.35); background: rgba(224,102,122,0.06);
-    border-radius: 12px; padding: 16px 20px; margin-bottom: 14px;
-  }
-  .trap .trap-title{ color: var(--danger); font-weight:700; font-size:14px; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
-  .trap table{ width:100%; border-collapse:collapse; font-size:13.5px; margin-top:6px; }
-  .trap td{ padding: 5px 8px; border-bottom: 1px solid rgba(224,102,122,0.15); vertical-align:top; }
-  .trap td:first-child{ color: var(--text-dim); width:38%; font-weight:600; }
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;}
+  th{background:var(--bg-card);color:var(--green);font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;}
+  tr:nth-child(even) td{background:rgba(255,255,255,.015);}
 
-  /* ===== EXAMINER Q ===== */
-  .examq{
-    background: var(--bg-raised); border:1px solid var(--border); border-radius:10px;
-    padding:14px 18px; margin-bottom:10px; font-size:14px;
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px;}
+  .pill{
+    font-size:11.5px;border:1px solid var(--line);border-radius:20px;
+    padding:4px 12px;color:var(--muted);
   }
-  .examq .qtype{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color: var(--teal); font-weight:700; display:block; margin-bottom:5px; }
+  blockquote{
+    border-left:3px solid var(--green);
+    margin:14px 0;padding:6px 16px;
+    color:#cfe9d4;font-style:italic;
+    background:rgba(126,231,135,.06);
+    border-radius:0 8px 8px 0;
+    font-size:14px;
+  }
+  code{background:var(--bg-raised);border:1px solid var(--line);padding:1px 6px;border-radius:5px;font-family:var(--mono);font-size:12.7px;color:var(--blue);}
 
-  /* ===== ACTIVE RECALL / FLASHCARDS ===== */
-  .flash{
-    background: var(--bg-card); border:1px solid var(--border); border-radius:12px;
-    padding: 18px 20px; margin-bottom: 12px; cursor:pointer; position:relative;
-    transition: border-color .15s;
+  /* timeline */
+  .timeline{position:relative;margin:24px 0;padding-left:26px;border-left:2px solid var(--line);}
+  .t-item{position:relative;margin-bottom:20px;}
+  .t-item::before{
+    content:'';position:absolute;left:-32px;top:3px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--green);
   }
-  .flash:hover{ border-color: var(--gold-dim); }
-  .flash .q{ font-size:14.5px; color:#eef; font-weight:500; }
-  .flash .a{
-    display:none; margin-top:10px; padding-top:10px; border-top:1px dashed var(--border);
-    font-size:14px; color: var(--teal);
-  }
-  .flash.open .a{ display:block; }
-  .flash .hint{ font-size:11px; color: var(--text-faint); margin-top:6px; }
-  .flash.open .hint{ display:none; }
+  .t-year{color:var(--green);font-weight:700;font-size:13px;}
+  .t-body{font-size:14px;color:var(--text);margin-top:2px;}
+  .t-body span.who{color:var(--blue);}
 
   /* fill in blank */
-  .blank{ border-bottom: 2px solid var(--gold-dim); padding: 0 4px; color:transparent; }
-  .blank.reveal{ color: var(--gold); }
+  .blank{border-bottom:2px dotted var(--blue);color:transparent;padding:0 6px;cursor:pointer;border-radius:3px;transition:.15s;}
+  .blank:hover{background:rgba(121,192,255,.12);}
+  .blank.show{color:var(--amber);border-bottom-style:solid;}
+  .qa{cursor:pointer;}
+  .qa .a{
+    margin-top:6px;color:var(--green);display:none;
+    border-top:1px dashed var(--line);padding-top:8px;font-size:13.6px;
+  }
+  .qa.open .a{display:block;}
+  .qa .qline{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+  .qa .qline .car{color:var(--muted);font-size:12px;flex:0 0 auto;}
 
-  /* ===== HIGH YIELD TABLE ===== */
-  .hy-table{ width:100%; border-collapse:collapse; font-size: 14px; margin-bottom:24px; }
-  .hy-table th{
-    text-align:left; font-family: var(--sans); font-size:11px; text-transform:uppercase;
-    letter-spacing:0.05em; color: var(--text-faint); padding: 8px 10px; border-bottom: 2px solid var(--border);
-  }
-  .hy-table td{ padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align:top; }
-  .hy-table tr:hover td{ background: rgba(255,255,255,0.015); }
-  .hy-table td.yrcol{ font-family: var(--mono); color: var(--gold); white-space:nowrap; font-weight:600; }
+  /* layered cards (must/imp/good legend) */
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin:6px 0 22px;font-size:12.5px;color:var(--muted);}
+  .legend span{margin-right:5px;}
 
-  /* ===== ULTRA FAST SHEET ===== */
-  .ultra{
-    background: var(--bg-raised); border: 1px solid var(--border); border-radius: 12px;
-    padding: 22px 24px; font-size: 14px; columns: 2; column-gap: 36px;
+  /* citadel map */
+  .citadel-wrap{display:flex;justify-content:center;margin:18px 0 30px;}
+  .room{
+    cursor:pointer;
   }
-  .ultra .blk{ break-inside: avoid; margin-bottom: 16px; }
-  .ultra .blk h4{ font-family: var(--serif); color: var(--gold); font-size:14.5px; margin:0 0 6px; border-bottom:1px solid var(--border); padding-bottom:4px;}
-  .ultra .blk div{ color: var(--text-dim); font-size:13px; }
-  @media (max-width: 700px){ .ultra{ columns: 1; } }
+  .room rect, .room polygon{transition:filter .15s, stroke-width .15s;}
+  .room:hover rect, .room:hover polygon{filter:brightness(1.25);}
+  .room-label{font-size:12px;fill:var(--text);font-family:var(--body);font-weight:600;}
+  .room-sub{font-size:9.5px;fill:var(--muted);}
 
-  /* ===== 30 SEC SHEET ===== */
-  .thirty{
-    background: linear-gradient(160deg, rgba(224,177,90,0.1), rgba(11,14,20,0));
-    border: 1.5px solid var(--gold-dim); border-radius:14px; padding: 24px;
-    font-family: var(--mono); font-size: 13.5px; line-height: 1.9;
+  .qsheet{
+    columns:2;column-gap:30px;
   }
-  .thirty .row{ display:flex; gap:10px; margin-bottom:6px; }
-  .thirty .row .k{ color: var(--gold); font-weight:700; min-width: 130px; flex-shrink:0;}
-  .thirty .row .v{ color: var(--text); }
+  @media (max-width:760px){.qsheet{columns:1;}}
+  .qsheet .card{break-inside:avoid;}
 
-  /* ===== LAST NIGHT SHEET ===== */
-  .lastnight{
-    background: rgba(217,105,79,0.07); border: 2px solid var(--ember);
-    border-radius:14px; padding: 26px; text-align:center;
+  .finalcard{
+    background:radial-gradient(circle at 30% 0%, rgba(126,231,135,.10), transparent 60%), var(--bg-card);
+    border:1px solid var(--green-dim);
   }
-  .lastnight h3{ font-family:var(--serif); color: var(--ember); margin-top:0; }
-  .lastnight .grid7{ display:grid; grid-template-columns: repeat(auto-fit,minmax(120px,1fr)); gap:12px; margin-top:18px; text-align:left;}
-  .lastnight .g-item{ background: var(--bg-card); border:1px solid var(--border); border-radius:10px; padding:12px; }
-  .lastnight .g-item .num{ font-family:var(--mono); color:var(--ember); font-weight:700; font-size:12px; }
-  .lastnight .g-item .txt{ font-size:13px; margin-top:4px; }
 
-  /* misc */
-  .divider-quote{
-    font-family: var(--serif); font-style:italic; color: var(--text-faint);
-    text-align:center; font-size:15px; padding: 30px 0; max-width:500px; margin:0 auto;
+  .footer-nav{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:50px;padding-top:18px;border-top:1px solid var(--line);
   }
-  .progress-track{
-    position: fixed; top:0; left:0; height:2px; background: linear-gradient(90deg, var(--violet), var(--gold)); z-index:100; width:0%;
+  .nav-arrow{
+    background:var(--bg-card);border:1px solid var(--line);color:var(--text);
+    padding:10px 16px;border-radius:8px;font-size:13px;cursor:pointer;
+    display:flex;align-items:center;gap:8px;
   }
-  .toc-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap:8px; margin-top:18px;}
-  .toc-item{
-    background: var(--bg-raised); border:1px solid var(--border); border-radius:8px;
-    padding:10px 12px; font-size:12.5px; text-decoration:none; color:var(--text-dim);
-    transition: all .15s;
-  }
-  .toc-item:hover{ border-color: var(--gold-dim); color: var(--gold); transform: translateY(-1px); }
-  .toc-item .n{ display:block; font-family:var(--mono); font-size:10px; color:var(--text-faint); margin-bottom:2px;}
+  .nav-arrow:hover{border-color:var(--green);color:var(--green);}
 
-  footer{ text-align:center; padding: 50px 0 20px; color: var(--text-faint); font-size:12px; }
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:#2a3040;border-radius:6px;}
+  ::-webkit-scrollbar-thumb:hover{background:#3a4256;}
+
+  @media (max-width:880px){
+    .shell{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+    .page{padding:8px 18px 70px;}
+    .topbar{padding:14px 18px;}
+  }
 </style>
 </head>
 <body>
-<div class="progress-track" id="progressTrack"></div>
 
-<div class="topbar">
-  <div class="brand">⚔ DELHI SULTANATE <span>Revision Vault · Slave Dynasty</span></div>
-  <div class="nav-scroll">
-    <a class="nav-pill" href="#palace">🏰 Palace</a>
-    <a class="nav-pill" href="#complete">📖 Complete</a>
-    <a class="nav-pill" href="#hooks">🧠 Hooks</a>
-    <a class="nav-pill" href="#connections">🔗 Links</a>
-    <a class="nav-pill" href="#traps">⚠ Traps</a>
-    <a class="nav-pill" href="#examiner">🎯 Examiner</a>
-    <a class="nav-pill" href="#recall">❓ Recall</a>
-    <a class="nav-pill" href="#highyield">⭐ High-Yield</a>
-    <a class="nav-pill" href="#ultrafast">⚡ Ultra-Fast</a>
-    <a class="nav-pill" href="#thirtysec">⏱ 30-Sec</a>
-    <a class="nav-pill" href="#lastnight">🌙 Last Night</a>
-  </div>
-</div>
-
-<div class="wrap">
-
-  <div class="hero">
-    <div class="eyebrow">SSC CGL · Medieval History · Chapter 1 of 2</div>
-    <h1>Islamic Invasions & the <em>Slave Dynasty</em><br>(1206 – 1290 AD)</h1>
-    <p class="sub">From Muhammad bin Qasim's raid on Sindh to Balban's iron throne — the chapter where foreign raiders become the first rulers of Delhi. This is your permanent revision base. Built to survive 100 re-reads.</p>
-
-    <div class="timeline-strip">
-      <div class="ts-block"><div class="yr">712</div><div class="nm">Bin Qasim</div></div>
-      <div class="ts-block"><div class="yr">1000-27</div><div class="nm">Ghaznavi raids</div></div>
-      <div class="ts-block"><div class="yr">1175-94</div><div class="nm">Ghori conquest</div></div>
-      <div class="ts-block"><div class="yr">1206-90</div><div class="nm">Slave Dynasty</div></div>
-      <div class="ts-block"><div class="yr">1290</div><div class="nm">→ Khilji</div></div>
+<div class="shell">
+  <!-- ============ SIDEBAR ============ -->
+  <nav class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="tag">FRB 2.0 · Medieval History</div>
+      <h1>The Citadel of Slaves</h1>
+      <p>Delhi Sultanate Part&nbsp;1 — Islamic Invasions → Slave (Mamluk) Dynasty</p>
     </div>
 
-    <div class="toc-grid">
-      <a class="toc-item" href="#palace"><span class="n">01</span>Memory Palace</a>
-      <a class="toc-item" href="#complete"><span class="n">02</span>Complete Notes</a>
-      <a class="toc-item" href="#hooks"><span class="n">03</span>Memory Hooks</a>
-      <a class="toc-item" href="#connections"><span class="n">04</span>Concept Links</a>
-      <a class="toc-item" href="#traps"><span class="n">05</span>Exam Traps</a>
-      <a class="toc-item" href="#examiner"><span class="n">06</span>Examiner's Mind</a>
-      <a class="toc-item" href="#recall"><span class="n">07</span>Active Recall</a>
-      <a class="toc-item" href="#highyield"><span class="n">08</span>High-Yield Table</a>
-      <a class="toc-item" href="#ultrafast"><span class="n">09</span>Ultra-Fast Sheet</a>
-      <a class="toc-item" href="#thirtysec"><span class="n">10</span>30-Sec Sheet</a>
-      <a class="toc-item" href="#lastnight"><span class="n">11</span>Last Night Sheet</a>
+    <div class="nav-group">
+      <div class="nav-group-label">Orientation</div>
+      <button class="nav-btn" data-page="big-picture"><span class="ico">◆</span>Big Picture</button>
+      <button class="nav-btn" data-page="palace"><span class="ico">🏰</span>Memory Palace</button>
     </div>
-  </div>
 
+    <div class="nav-group">
+      <div class="nav-group-label">Complete Revision Notes</div>
+      <button class="nav-btn" data-page="notes-invasions"><span class="ico">①</span>Early Invasions</button>
+      <button class="nav-btn" data-page="notes-ghori"><span class="ico">②</span>Ghori &amp; Tarain</button>
+      <button class="nav-btn" data-page="notes-slaves"><span class="ico">③</span>Slave Dynasty Rulers</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Memory &amp; Connections</div>
+      <button class="nav-btn" data-page="hooks"><span class="ico">🧠</span>Smart Memory Hooks</button>
+      <button class="nav-btn" data-page="connections"><span class="ico">🔗</span>Concept Connections</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Exam Warfare</div>
+      <button class="nav-btn" data-page="traps"><span class="ico">⚠</span>Exam Traps</button>
+      <button class="nav-btn" data-page="examiner"><span class="ico">🎯</span>Examiner's Favourites</button>
+      <button class="nav-btn" data-page="recall"><span class="ico">❓</span>Active Recall</button>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Speed Revision</div>
+      <button class="nav-btn" data-page="highyield"><span class="ico">🔥</span>High-Yield Notes</button>
+      <button class="nav-btn" data-page="ultrafast"><span class="ico">⚡</span>Ultra-Fast Sheet</button>
+      <button class="nav-btn" data-page="thirtysec"><span class="ico">⏱</span>30-Second Sheet</button>
+      <button class="nav-btn" data-page="lastnight"><span class="ico">🌙</span>Last-Night Sheet</button>
+    </div>
+  </nav>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main" id="main">
+    <div class="topbar">
+      <div class="crumb">Delhi Sultanate · <b id="crumb-title">Big Picture</b></div>
+      <div class="progress-pill" id="page-counter">1 / 14</div>
+    </div>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: BIG PICTURE -->
+    <!-- ===================================================== -->
+    <section class="page active" data-page="big-picture">
+      <div class="eyebrow">Orientation</div>
+      <h2 class="pagetitle">What This Chapter Is Really About</h2>
+      <p class="sub">One sentence first, then the whole architecture of the chapter, so every fact you read after this has a slot to fall into.</p>
+
+      <blockquote>India had already absorbed foreign rulers before (Indo-Greeks, Parthians, Shakas, Kushans — all from Central Asia). This chapter is about the <strong>first time the invader brings a new religion with the new rule</strong>: Islam. Three waves of Islamic invasion finally produce a Sultanate seated in Delhi, and that Sultanate's first ruling family is — unusually — a family of <strong>former slaves</strong>.</blockquote>
+
+      <h3 class="sec">The Three Waves of Islamic Invasion</h3>
+      <table>
+        <tr><th>Wave</th><th>Invader</th><th>Identity</th><th>Result</th></tr>
+        <tr><td>1st Islamic invasion</td><td>Muhammad bin Qasim</td><td>Arab</td><td>Defeated King Dahir, took Sindh. No lasting empire.</td></tr>
+        <tr><td>2nd Islamic invasion (1st Turkish)</td><td>Mahmud of Ghazni</td><td>Turk</td><td>17 raids, pure loot. No lasting empire.</td></tr>
+        <tr><td>3rd Islamic invasion (2nd Turkish)</td><td>Mohammad Ghori</td><td>Turk</td><td>Defeats Prithviraj Chauhan → <strong>first Islamic rule actually established in India</strong></td></tr>
+      </table>
+      <p class="muted">Notice the upgrade in ambition across the three waves: <strong>Qasim</strong> wanted territory (Sindh) but left no dynasty here · <strong>Ghaznavi</strong> wanted only money and revenge, never territory · <strong>Ghori</strong> wanted to rule, and through his slave Qutubuddin Aibak, he succeeds.</p>
+
+      <h3 class="sec">From Invasion to Empire — the Single Thread</h3>
+      <p>Ghori never personally settles in India. He leaves his most trusted slave, <strong>Qutubuddin Aibak</strong>, behind in Delhi while he returns to his own kingdom — and is assassinated on the way. Aibak, already in control of Delhi, becomes the Sultan almost by default. Because the men who built this first dynasty were former slaves (Aibak, then his slave Iltutmish, then later Balban), historians call it the <strong>Slave Dynasty / Mamluk Dynasty (1206–1290)</strong>.</p>
+
+      <h3 class="sec">The Five Dynasties of the Delhi Sultanate</h3>
+      <p class="muted">This lecture covers only the first one in detail. Memorise the full sequence now — every later lecture builds on this skeleton.</p>
+      <table>
+        <tr><th>Dynasty</th><th>Period</th></tr>
+        <tr><td><strong>Slave / Mamluk</strong></td><td>1206 – 1290</td></tr>
+        <tr><td>Khilji</td><td>1290 – 1320</td></tr>
+        <tr><td>Tughlaq</td><td>1320 – 1414</td></tr>
+        <tr><td>Sayyid</td><td>1415 – 1451</td></tr>
+        <tr><td>Lodi</td><td>1451 – 1526</td></tr>
+      </table>
+      <div class="card hook">
+        <strong>🧠 Teacher's own hook:</strong> remember the five names as a sentence of "tough, dangerous guys" — <strong>S</strong>lave, <strong>K</strong>hilji, <strong>T</strong>ughlaq, <strong>S</strong>ayyid, <strong>L</strong>odi — each one literally seized the throne by force from the one before it.
+      </div>
+
+      <h3 class="sec">Why You Will Be Tested Heavily on This Chapter</h3>
+      <ul>
+        <li>SSC loves <strong>chronology</strong> questions (order of battles, order of rulers, order of dynasties).</li>
+        <li>SSC loves <strong>"who built / who wrote / who completed"</strong> pairs (Aibak started Qutub Minar, Iltutmish finished it).</li>
+        <li>SSC loves <strong>similar-sounding names</strong> traps (Shahnama vs Padshahnama, Tarain vs Chandawar vs Chanderi).</li>
+      </ul>
+
+      <div class="footer-nav">
+        <span></span>
+        <button class="nav-arrow" onclick="goPage('palace')">Next: Memory Palace →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: MEMORY PALACE -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="palace">
+      <div class="eyebrow">Memory &amp; Connections</div>
+      <h2 class="pagetitle">🏰 The Citadel of Slaves</h2>
+      <p class="sub">Walk through this citadel in your mind. Every room holds one block of the chapter. In the exam hall, you don't recall facts — you walk the corridor and pick them off the walls.</p>
+
+      <div class="citadel-wrap">
+        <svg viewBox="0 0 760 300" width="100%" style="max-width:760px;">
+          <!-- ground -->
+          <line x1="20" y1="250" x2="740" y2="250" stroke="#2a3040" stroke-width="2"/>
+          <!-- Gate -->
+          <g class="room" onclick="goPage('notes-invasions')">
+            <polygon points="20,250 20,160 70,110 120,160 120,250" fill="#1b1f2a" stroke="#9aa7bd" stroke-width="1.5"/>
+            <text x="70" y="200" text-anchor="middle" class="room-label">Outer Gate</text>
+            <text x="70" y="216" text-anchor="middle" class="room-sub">pre-Islamic foreigners</text>
+          </g>
+          <!-- Sindh courtyard -->
+          <g class="room" onclick="goPage('notes-invasions')">
+            <rect x="150" y="170" width="100" height="80" rx="6" fill="#1b1f2a" stroke="#79c0ff" stroke-width="1.5"/>
+            <text x="200" y="205" text-anchor="middle" class="room-label">Sindh Court</text>
+            <text x="200" y="220" text-anchor="middle" class="room-sub">bin Qasim · Dahir</text>
+          </g>
+          <!-- Treasury -->
+          <g class="room" onclick="goPage('notes-invasions')">
+            <rect x="270" y="150" width="110" height="100" rx="6" fill="#1b1f2a" stroke="#ffce6b" stroke-width="1.5"/>
+            <text x="325" y="190" text-anchor="middle" class="room-label">Looted Treasury</text>
+            <text x="325" y="206" text-anchor="middle" class="room-sub">Ghaznavi · 17 raids</text>
+            <text x="325" y="220" text-anchor="middle" class="room-sub">Somnath 1025</text>
+          </g>
+          <!-- Wedding hall -->
+          <g class="room" onclick="goPage('notes-ghori')">
+            <rect x="400" y="140" width="120" height="110" rx="6" fill="#1b1f2a" stroke="#c9a6ff" stroke-width="1.5"/>
+            <text x="460" y="180" text-anchor="middle" class="room-label">Wedding Hall</text>
+            <text x="460" y="196" text-anchor="middle" class="room-sub">Ghori vs Prithviraj</text>
+            <text x="460" y="210" text-anchor="middle" class="room-sub">Sanyogita · Jaichand</text>
+          </g>
+          <!-- Slave quarters -->
+          <g class="room" onclick="goPage('notes-slaves')">
+            <rect x="540" y="120" width="120" height="130" rx="6" fill="#1b1f2a" stroke="#7ee787" stroke-width="1.5"/>
+            <text x="600" y="160" text-anchor="middle" class="room-label">Slave Quarters</text>
+            <text x="600" y="176" text-anchor="middle" class="room-sub">Aibak · Iltutmish</text>
+            <text x="600" y="190" text-anchor="middle" class="room-sub">Razia</text>
+          </g>
+          <!-- Throne room / tower -->
+          <g class="room" onclick="goPage('notes-slaves')">
+            <polygon points="700,250 700,140 730,90 760,140 760,250" fill="#1b1f2a" stroke="#ff8b7e" stroke-width="1.5"/>
+            <text x="730" y="180" text-anchor="middle" class="room-label">Iron Throne</text>
+            <text x="730" y="196" text-anchor="middle" class="room-sub">Balban</text>
+          </g>
+        </svg>
+      </div>
+
+      <h3 class="sec">Walking the Corridor — Room by Room</h3>
+
+      <div class="card palace">
+        <h4 class="sub-sec">Room 1 — The Outer Gate (you only pass through, never stop)</h4>
+        <p>Before you even reach the citadel, you pass under an old stone gate carved with four faces looking toward Central Asia: <strong>Indo-Greeks, Parthians (Pahlavas), Shakas, Kushans</strong>. They are old foreign rulers — not Islamic, just background noise reminding you "foreign rule is not new here." You don't stop; you walk past them toward the first real door.</p>
+      </div>
+
+      <div class="card palace">
+        <h4 class="sub-sec">Room 2 — The Sindh Courtyard</h4>
+        <p>Picture a dusty desert courtyard. An Arab soldier, <strong>Muhammad bin Qasim</strong>, stands over a fallen Brahmin king, <strong>Dahir</strong>. Qasim plants a small flag labelled "Jaziya" — the very first tax-flag of its kind in India. The room is dim and the carvings on the wall are faded — a visual reminder that <strong>sources for this invasion are scarce</strong>, so SSC rarely tests deep detail here.</p>
+      </div>
+
+      <div class="card palace">
+        <h4 class="sub-sec">Room 3 — The Looted Treasury</h4>
+        <p>A vault with <strong>17 empty chests</strong> lined against the wall, numbered 1 to 17. Chest #1 has a broken statue of a man named <strong>Jaipal</strong> sitting on it — defeated at Peshawar, and so ashamed he destroyed himself. Chest #16, the biggest and most golden, is labelled <strong>Somnath, 1025</strong>. Behind chest #17, hiding in the shadows, are angry tribesmen — the <strong>Khokhars/Jats</strong> — who tried to rob the robber on his way home, so he came back one last time for chest #17, purely for revenge. On the vault door is carved <strong>"Mahmud — never wanted this house, only this gold."</strong> A scribe named <strong>Firdausi</strong> sits in the corner writing the <em>Shahnama</em>, and a scholar <strong>Alberuni</strong> stands measuring the room for his book, the <em>Tahqiq-e-Hind</em>.</p>
+      </div>
+
+      <div class="card palace">
+        <h4 class="sub-sec">Room 4 — The Wedding Hall</h4>
+        <p>This room is decorated for a wedding that nobody approved of. <strong>Prithviraj Chauhan</strong> stands at the altar with <strong>Sanyogita</strong>, who he carried off without her father <strong>Jaichand's</strong> blessing. Jaichand stands fuming at the door — and through that very door, he has secretly let in <strong>Mohammad Ghori</strong> for revenge. On the floor are two chalk circles marked <strong>Tarain I (1191) — Prithviraj wins</strong> and <strong>Tarain II (1192) — Ghori wins</strong>. A third, smaller circle in the corner reads <strong>Chandawar 1194 — Jaichand's own defeat</strong> (he invited the wolf, and the wolf ate him too). Note the door is marked "not Chanderi" — a decoy door that leads to a totally different room (Babur vs Medini Rai), centuries later.</p>
+      </div>
+
+      <div class="card palace">
+        <h4 class="sub-sec">Room 5 — The Slave Quarters (the heart of the citadel)</h4>
+        <p>Four bunks line this room, each occupied by a former slave who now wears a crown over his slave-chains: <strong>Qutubuddin Aibak</strong> (built the gate of the citadel itself — Qutub Minar's base — and died falling off a horse during a polo game), <strong>Iltutmish</strong> (his son-in-law, who moved the whole citadel's address from Lahore to Delhi and finished the tower Aibak started), <strong>Razia</strong> (the only woman's bunk in the room, with a curtain torn down — symbolising the Chahalgani nobles' resentment), and a fourth empty bunk waiting for <strong>Balban</strong>, who will not stay here — he is headed for the throne room next door.</p>
+      </div>
+
+      <div class="card palace">
+        <h4 class="sub-sec">Room 6 — The Iron Throne</h4>
+        <p>A tall, cold tower room. <strong>Balban</strong> sits on a throne made of iron chains he personally broke off the Chahalgani's wrists. Above him is carved <strong>"Zil-i-Illahi" — Shadow of God</strong>, and courtiers in the room are all bowing in <strong>Sijda</strong> and kissing his feet (<strong>Paibos</strong>). A festival banner reading <strong>Nauroz</strong> hangs from the ceiling. Through the tower's window, you can see a battlefield where a rebel banner marked <strong>Tughril Beg (Bengal)</strong> has just been cut down. This room has no door out — it is the dead end of this lecture; the next lecture's door (Khilji) is bricked up for now.</p>
+      </div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('big-picture')">← Back: Big Picture</button>
+        <button class="nav-arrow" onclick="goPage('notes-invasions')">Next: Early Invasions →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: NOTES - EARLY INVASIONS -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="notes-invasions">
+      <div class="eyebrow">Complete Revision Notes · Part 1</div>
+      <h2 class="pagetitle">Early Islamic Invasions</h2>
+      <p class="sub">Muhammad bin Qasim and Mahmud of Ghazni — neither stayed to rule. Both only set up what Ghori would later finish.</p>
+      <div class="legend"><span class="tag-must">🔥 Must Know</span><span class="tag-imp">⭐ Important</span><span class="tag-good">➕ Good to Know</span></div>
+
+      <h3 class="sec">Before Islam: Foreign Rule Already Existed</h3>
+      <p><span class="tag-good">➕</span> Earlier foreign invaders came from Central Asia but were <strong>not Islamic</strong>: Indo-Greeks → Parthians (Pahlavas) → Shakas → Kushans. This chapter's invasions are different because they bring a new religion along with new rule — that's why they're labelled "Islamic invasions," not just "foreign invasions."</p>
+
+      <h3 class="sec">1️⃣ Muhammad bin Qasim — the First Islamic Invasion</h3>
+      <ul>
+        <li><span class="tag-must">🔥</span> An <strong>Arab</strong> invader (not Turk) — this makes him the first Islamic invasion but <em>not</em> the first Turkish invasion.</li>
+        <li><span class="tag-must">🔥</span> Attacked the <strong>Sindh</strong> region; the ruling king was <strong>Dahir</strong>, who he defeated.</li>
+        <li><span class="tag-imp">⭐</span> Targeted Brahmins in his campaign.</li>
+        <li><span class="tag-imp">⭐</span> Believed to be the <strong>first ruler to impose Jaziya</strong> in India (a tax on non-Muslims).</li>
+        <li><span class="tag-good">➕</span> Very few reliable literary sources survive on this invasion, so it's rarely tested in deep detail.</li>
+      </ul>
+
+      <h3 class="sec">2️⃣ Mahmud of Ghazni — the First Turkish Invasion (2nd Islamic invasion overall)</h3>
+      <ul>
+        <li><span class="tag-must">🔥</span> Ruled from the <strong>Ghazni / Turkmenistan region</strong>; a Turk, not an Arab.</li>
+        <li><span class="tag-imp">⭐</span> Motive: <strong>loot and revenge</strong> — his father <strong>Subuktigin</strong> had been defeated and killed by rulers around Peshawar.</li>
+        <li><span class="tag-must">🔥</span> His goal was never to rule India — he needed money to fund his ambitions to rule in the <strong>Arab/Persian heartland</strong>.</li>
+        <li><span class="tag-must">🔥</span> Attacked India <strong>17 times</strong>.</li>
+      </ul>
+
+      <div class="timeline">
+        <div class="t-item"><div class="t-year">Attack 1</div><div class="t-body">Battle of <span class="who">Peshawar</span> — defeated <span class="who">Jaipal</span>, who later committed suicide out of shame.</div></div>
+        <div class="t-item"><div class="t-year">Attack 16 — 1025 AD</div><div class="t-body">The famous raid on the <span class="who">Somnath Temple</span> — biggest and most-tested raid of all 17.</div></div>
+        <div class="t-item"><div class="t-year">Attack 17 — 1027 AD (last)</div><div class="t-body">On his way back from Somnath with the loot, the <span class="who">Khokhar tribe (Jats)</span> attacked him — so he returned a 17th time purely for revenge.</div></div>
+        <div class="t-item"><div class="t-year">1030 AD</div><div class="t-body">Mahmud of Ghazni dies (3 years after his final attack).</div></div>
+      </div>
+
+      <div class="card connect">
+        <strong>🔗 Pattern to remember:</strong> The <strong>1st attack</strong> (Peshawar, revenge for his father) and the <strong>17th/last attack</strong> (revenge for the Khokhar ambush) were both <em>revenge</em> attacks. Every attack in between was for <em>loot</em>. First and last = revenge; the middle 15 = money.
+      </div>
+
+      <h4 class="sub-sec">Texts of the period — don't mix these up</h4>
+      <table>
+        <tr><th>Text</th><th>Author</th><th>About</th></tr>
+        <tr><td><strong>Shahnama</strong></td><td>Firdausi</td><td>Epic poem, court of Ghazni</td></tr>
+        <tr><td><strong>Padshahnama</strong></td><td>Abdul Hamid Lahori</td><td>Biography of Shah Jahan (Mughal era — centuries later!)</td></tr>
+        <tr><td><strong>Tahqiq-e-Hind</strong> (a.k.a. <em>Kitab-ul-Hind</em>)</td><td>Alberuni</td><td>Scholarly account of India, written during Ghaznavi's time</td></tr>
+      </table>
+
+      <div class="card trap">
+        <strong>⚠ Trap:</strong> <em>Shahnama</em> (Firdausi, Ghaznavi-era) vs <em>Padshahnama</em> (Abdul Hamid Lahori, Shah Jahan's biography) — almost identical-sounding names, completely different centuries and subjects. SSC loves swapping these in MCQs.
+      </div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('palace')">← Back: Memory Palace</button>
+        <button class="nav-arrow" onclick="goPage('notes-ghori')">Next: Ghori &amp; Tarain →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: NOTES - GHORI -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="notes-ghori">
+      <div class="eyebrow">Complete Revision Notes · Part 2</div>
+      <h2 class="pagetitle">Mohammad Ghori &amp; the Battles of Tarain</h2>
+      <p class="sub">The 3rd Islamic invasion (2nd Turkish invasion) — the one that actually plants Islamic rule in India.</p>
+      <div class="legend"><span class="tag-must">🔥 Must Know</span><span class="tag-imp">⭐ Important</span><span class="tag-good">➕ Good to Know</span></div>
+
+      <ul>
+        <li><span class="tag-must">🔥</span> Real name: <strong>Moizuddin Mohammad</strong> (of Ghor). Active in India roughly <strong>1175 – 1206</strong>.</li>
+        <li><span class="tag-good">➕</span> Memory peg: the current President of the Maldives is named <em>Mohamed Muizzu</em> — similar-sounding name, easy hook for "Moizuddin."</li>
+      </ul>
+
+      <h4 class="sub-sec">Ghori's Indian Campaigns — in order</h4>
+      <div class="timeline">
+        <div class="t-item"><div class="t-year">1175</div><div class="t-body">1st attack — <span class="who">Multan</span>. Not very successful.</div></div>
+        <div class="t-item"><div class="t-year">Soon after</div><div class="t-body">2nd attack — <span class="who">Gujarat</span>. Defeated by <strong>Bhima II</strong>; his mother, <strong>Queen Naiki Devi</strong>, led the resistance with him.</div></div>
+        <div class="t-item"><div class="t-year">1191</div><div class="t-body"><strong>First Battle of Tarain</strong> — <span class="who">Prithviraj Chauhan (Prithviraj III)</span> defeats Ghori.</div></div>
+        <div class="t-item"><div class="t-year">1192</div><div class="t-body"><strong>Second Battle of Tarain</strong> — Ghori defeats and kills Prithviraj Chauhan. This is the turning point — Islamic rule begins.</div></div>
+        <div class="t-item"><div class="t-year">1194</div><div class="t-body"><strong>Battle of Chandawar</strong> — Ghori turns on Jaichand (who had invited him) and defeats him too.</div></div>
+      </div>
+
+      <div class="card trap">
+        <strong>⚠ Trap:</strong> <strong>Chandawar (1194)</strong>, Ghori vs Jaichand — is NOT the same as <strong>Chanderi</strong>, Babur vs Medini Rai (Mughal period, much later). Same-sounding names, three centuries apart.
+      </div>
+
+      <h3 class="sec">The Delhi Backstory — Who Ruled Delhi Before Ghori</h3>
+      <p><span class="tag-must">🔥</span> Order of rule in Delhi: <strong>Tomar Dynasty (first to rule Delhi)</strong> → <strong>Chauhan Rajputs</strong> → Mohammad Ghori (first Islamic ruler established here).</p>
+      <p><span class="tag-imp">⭐</span> Prithviraj Chauhan = <strong>Prithviraj III</strong>, ruler of Delhi at the time of the Tarain battles.</p>
+
+      <h3 class="sec">The Sanyogita Drama — Why Jaichand Turned Traitor</h3>
+      <div class="card hook">
+        <p><strong>🧠 Story hook:</strong> Prithviraj Chauhan fell for <strong>Sanyogita</strong>, daughter of <strong>Jaichand</strong> (the Garhwal/Kannauj Rajput ruler). Jaichand refused the match — so Prithviraj <strong>abducted and married her without consent</strong>. Humiliated, Jaichand later <strong>invited Mohammad Ghori</strong> to fight the Second Battle of Tarain to settle the score. Ghori won — but didn't stop there: he then attacked Jaichand too, at Chandawar (1194). <em>Moral for memory: the man who called in the wolf to bite his enemy got bitten himself.</em></p>
+      </div>
+      <ul>
+        <li><span class="tag-imp">⭐</span> <strong>Prithviraj Raso</strong> — written by <strong>Chandrabardai</strong> — narrates the Prithviraj–Sanyogita story.</li>
+        <li><span class="tag-good">➕</span> A text associated with the period, attributed in this lecture to <strong>Karpoora Devi</strong> and linked with the name "Someshwara" — keep this loosely on your radar; revisit/cross-check this specific attribution against your main textbook before final revision, as it's less standard than the other named texts in this chapter.</li>
+      </ul>
+
+      <h3 class="sec">Ghori's Slaves — the Men Who Inherit His Conquest</h3>
+      <p>Ghori never personally settles in India — once victorious, he goes back to his own kingdom, leaving trusted slaves in charge of different regions:</p>
+      <table>
+        <tr><th>Slave</th><th>Role</th></tr>
+        <tr><td><strong>Qutubuddin Aibak</strong></td><td>Helped Ghori at Tarain; settles in and governs <strong>Delhi</strong></td></tr>
+        <tr><td><strong>Bakhtiyar Khilji</strong></td><td>Took the <strong>Bihar</strong> region; <strong>destroyed Nalanda University</strong></td></tr>
+        <tr><td>Yalduz</td><td>Another trusted slave/general of Ghori</td></tr>
+        <tr><td>Qubacha</td><td>Another trusted slave/general of Ghori</td></tr>
+      </table>
+      <div class="card connect">
+        <strong>🔗 Cause → Effect:</strong> Ghori returns to his own kingdom → is <strong>murdered in a camp</strong> on the way → Aibak, already settled and in control of Delhi, becomes the natural successor → <strong>founds the Slave Dynasty, 1206</strong>.
+      </div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('notes-invasions')">← Back: Early Invasions</button>
+        <button class="nav-arrow" onclick="goPage('notes-slaves')">Next: Slave Dynasty Rulers →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: NOTES - SLAVE DYNASTY -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="notes-slaves">
+      <div class="eyebrow">Complete Revision Notes · Part 3</div>
+      <h2 class="pagetitle">The Slave (Mamluk) Dynasty, 1206–1290</h2>
+      <p class="sub">Four rulers really matter for the exam: Aibak, Iltutmish, Razia, Balban. Everyone in between is a footnote of palace politics.</p>
+      <div class="legend"><span class="tag-must">🔥 Must Know</span><span class="tag-imp">⭐ Important</span><span class="tag-good">➕ Good to Know</span></div>
+
+      <div class="pill-row">
+        <span class="pill">Also called: Mamluk Dynasty</span>
+        <span class="pill">Tribe: Ilbari / Shamsi</span>
+        <span class="pill">Capital initially: Lahore</span>
+        <span class="pill">Why "Slave": Aibak, Iltutmish &amp; Balban were all former slaves</span>
+      </div>
+
+      <h3 class="sec">Qutubuddin Aibak (founder, r. 1206–1210)</h3>
+      <ul>
+        <li><span class="tag-must">🔥</span> Title: <strong>Lakh Baksh</strong> ("giver of lakhs" — known for generosity/charity).</li>
+        <li><span class="tag-must">🔥</span> Died in <strong>1210</strong> while playing <strong>polo (Chaugan)</strong> — fell from his horse.</li>
+        <li><span class="tag-must">🔥</span> Built <strong>Quwwat-ul-Islam mosque</strong> in Delhi, using the <strong>corbelled arch technique</strong>.</li>
+        <li><span class="tag-imp">⭐</span> Built <strong>Adhai Din ka Jhonpra</strong> in Ajmer.</li>
+        <li><span class="tag-must">🔥</span> <strong>Started</strong> the construction of the <strong>Qutub Minar</strong> — named after his Sufi spiritual guide, <strong>Khwaja Qutubuddin Bakhtiyar Kaki</strong> (NOT named after himself).</li>
+        <li><span class="tag-imp">⭐</span> Patronised <strong>Tajul Maasir</strong>, written by <strong>Hasan-i-Nizami</strong> during his reign. A related chronicle of the period, <strong>Tarikh-i-Mubarakshahi</strong>, is also associated with this era.</li>
+      </ul>
+
+      <h3 class="sec">Shamsuddin Iltutmish (r. 1210–1236)</h3>
+      <ul>
+        <li><span class="tag-must">🔥</span> <strong>Son-in-law of Aibak.</strong></li>
+        <li><span class="tag-must">🔥</span> Shifted the capital from <strong>Lahore → Delhi.</strong></li>
+        <li><span class="tag-must">🔥</span> Saved Delhi from a <strong>Genghis Khan (Mongol)</strong> invasion through careful diplomacy. (Genghis Khan died in <strong>1227 AD</strong>.)</li>
+        <li><span class="tag-imp">⭐</span> His <strong>Wazir</strong> (Prime Minister-equivalent) was <strong>Nizam-ul-Mulk</strong>.</li>
+        <li><span class="tag-must">🔥</span> Introduced coinage: silver <strong>Tanka</strong> and copper <strong>Jital</strong>.</li>
+        <li><span class="tag-must">🔥</span> Introduced the <strong>Iqta (Ikhta) system</strong> — land assigned to a noble/military commander in return for administering it and collecting revenue. Holder titled <strong>Iqtadar / Muqti / Wali</strong>.</li>
+        <li><span class="tag-must">🔥</span> Raised the <strong>Chahalgani / Chalisa</strong> — a group of <strong>40 loyal Turkish slaves</strong> who formed his power base (and would later make/break sultans).</li>
+        <li><span class="tag-imp">⭐</span> <strong>Completed</strong> the Qutub Minar that Aibak started.</li>
+        <li><span class="tag-good">➕</span> On succession: chronicler <strong>Minhaj-us-Siraj</strong>, in <strong>Tabaqat-i-Nasiri</strong>, records that Iltutmish considered his daughter more capable than his sons. ("Tarikh" = the general term for a historical/literary chronicle.)</li>
+      </ul>
+
+      <h3 class="sec">Razia Sultan (r. 1236–1240)</h3>
+      <ul>
+        <li><span class="tag-must">🔥</span> Daughter of Iltutmish; the <strong>first and only Muslim woman ruler in medieval Indian history.</strong></li>
+        <li><span class="tag-imp">⭐</span> Trusted an Ethiopian slave-official, <strong>Yaqut</strong>, closely — this provoked jealousy among the Turkish Chahalgani nobles, who turned against both of them.</li>
+        <li><span class="tag-imp">⭐</span> <strong>Altunia</strong>, governor/ruler of <strong>Bhatinda</strong>, rebelled, refusing to accept her authority.</li>
+        <li><span class="tag-imp">⭐</span> Razia and Yaqut marched against Altunia → <strong>Altunia killed Yaqut</strong> and imprisoned Razia at Bhatinda.</li>
+        <li><span class="tag-imp">⭐</span> Razia and Altunia then <strong>married</strong> and marched toward Delhi to rule jointly — but both were <strong>killed in a conspiracy</strong> (most likely engineered by the Chahalgani) in <strong>1240</strong>.</li>
+      </ul>
+
+      <h3 class="sec">The Chaos Years (1240–1266)</h3>
+      <p><span class="tag-good">➕</span> A series of short-lived, weak rulers occupied the throne, propped up or removed at the convenience of the Chahalgani nobles — e.g. <strong>Bahram Shah</strong>. None require deep individual study; know that this gap exists between Razia and Balban.</p>
+
+      <h3 class="sec">Ghiyasuddin Balban (r. 1266–1287)</h3>
+      <ul>
+        <li><span class="tag-must">🔥</span> Was himself originally a member of the <strong>Chahalgani</strong> — so he understood exactly how that group manipulated sultans.</li>
+        <li><span class="tag-must">🔥</span> Served as <strong>Naib (Naib-i-Mumlik, "deputy"/regent — effectively like a Wazir)</strong> under <strong>Nasiruddin Mahmud</strong> before taking the throne himself.</li>
+        <li><span class="tag-must">🔥</span> Once Sultan, he <strong>crushed the power of the Chahalgani</strong> and restored absolute authority to the throne/crown.</li>
+        <li><span class="tag-must">🔥</span> Established the <strong>Diwan-i-Arz</strong> (the military department).</li>
+        <li><span class="tag-must">🔥</span> Took the title <strong>Zil-i-Illahi</strong> ("Shadow of God") and claimed descent from the legendary <strong>Afrasiyab</strong> royal line — this underpinned his <strong>"policy of blood and iron."</strong></li>
+        <li><span class="tag-imp">⭐</span> Introduced strict court etiquette: <strong>Sijda</strong> (prostration before the king) and <strong>Paibos</strong> (kissing the king's feet).</li>
+        <li><span class="tag-imp">⭐</span> Introduced the <strong>Nauroz</strong> festival (originally a Parsi/Persian new-year festival) at the Delhi court.</li>
+        <li><span class="tag-imp">⭐</span> Put down a rebellion by <strong>Tughril Beg</strong>, the governor of <strong>Bengal</strong>, who was defeated and killed.</li>
+      </ul>
+
+      <div class="card connect">
+        <strong>🔗 Cross-era analogy (genuinely useful for GS):</strong> Balban centralising power away from his nobles and into the crown is structurally similar to <strong>Indira Gandhi's 1975 Emergency</strong> under Article 352 — imposed without formally consulting the Cabinet at the time. The aftermath, the <strong>42nd/44th Constitutional Amendments</strong>, later wrote the <strong>Cabinet's advisory role</strong> into law so that future Emergencies require Cabinet advice to the President. Both stories are about: <em>one strong ruler vs. the institutional body meant to check him.</em>
+      </div>
+
+      <h3 class="sec">End of the Slave Dynasty</h3>
+      <ul>
+        <li><span class="tag-imp">⭐</span> After Balban: <strong>Kaiqubad</strong> (also spelled Kaiqubad), Balban's grandson, ruled <strong>1287–1290</strong>.</li>
+        <li><span class="tag-must">🔥</span> Kaiqubad was murdered by <strong>Jalaluddin Khilji</strong>, who seized the throne and founded the <strong>Khilji Dynasty (1290)</strong> — the subject of the next lecture.</li>
+      </ul>
+
+      <h4 class="sub-sec">Qutub Minar — quick specs</h4>
+      <div class="pill-row">
+        <span class="pill">Started by: Aibak</span>
+        <span class="pill">Completed by: Iltutmish</span>
+        <span class="pill">Height: ≈ 73 m</span>
+        <span class="pill">Storeys: 5</span>
+      </div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('notes-ghori')">← Back: Ghori &amp; Tarain</button>
+        <button class="nav-arrow" onclick="goPage('hooks')">Next: Smart Memory Hooks →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: HOOKS -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="hooks">
+      <div class="eyebrow">Memory &amp; Connections</div>
+      <h2 class="pagetitle">🧠 Smart Memory Hooks</h2>
+      <p class="sub">No random acronyms — each hook below is a small mental movie that should outlast the exam by years.</p>
+
+      <div class="card hook">
+        <h4 class="sub-sec">The Three Waves, Ranked by Ambition</h4>
+        <p>Picture three men knocking on India's door. The first (<strong>bin Qasim</strong>) just wants to peek inside Sindh and leave. The second (<strong>Ghaznavi</strong>) wants to rob the house 17 times and never live there. The third (<strong>Ghori</strong>) breaks the lock, and even though he himself walks away, he leaves his own bodyguard (<strong>Aibak</strong>) standing inside — and that bodyguard never leaves. <em>Ambition rises with each wave: visit → rob → occupy.</em></p>
+      </div>
+
+      <div class="card hook">
+        <h4 class="sub-sec">"Lakh Baksh" → Generosity Image</h4>
+        <p>Aibak's title literally means "giver of lakhs." Picture him on horseback (the same horse he later falls from playing polo) throwing coins by the fistful into a crowd. <strong>Generous in life, careless in sport — and the sport killed him.</strong></p>
+      </div>
+
+      <div class="card hook">
+        <h4 class="sub-sec">Started vs Completed — the Qutub Minar Relay Race</h4>
+        <p>Picture a relay race baton shaped like the Qutub Minar. Aibak runs the first leg and starts laying bricks; he dies mid-race (polo accident). His son-in-law <strong>Iltutmish</strong> picks up the baton and crosses the finish line. <strong>Whoever starts isn't always who finishes — a classic SSC question shape.</strong></p>
+      </div>
+
+      <div class="card hook">
+        <h4 class="sub-sec">Tanka and Jital — Silver Up, Copper Down</h4>
+        <p>Tanka = silver = "heavier," shinier coin (think: <strong>Tank</strong>-sized value). Jital = copper = smaller everyday change. Iltutmish needed both: big-value silver for trade, small-value copper for daily transactions — a complete currency system, not just one coin.</p>
+      </div>
+
+      <div class="card hook">
+        <h4 class="sub-sec">Iqta = "Manager's Plot of Land"</h4>
+        <p>Imagine handing a trusted manager (Iqtadar/Muqti/Wali) the keys to a plot of land with a note: <strong>"Manage it, collect the rent, keep the army ready."</strong> He doesn't own it — he administers it for the crown. This is the medieval version of a franchise manager, not a landlord.</p>
+      </div>
+
+      <div class="card hook">
+        <h4 class="sub-sec">Chahalgani = the "Class of 40" That Grades the Sultan</h4>
+        <p>Picture 40 identical Turkish soldiers in a classroom, but instead of the sultan grading them, <strong>they grade the sultan</strong> — and if he fails, they replace him. They installed Iltutmish's heirs, turned on Razia, propped up weak puppets after her, and only met their match when one of their own — <strong>Balban</strong> — became sultan and dismantled the classroom from the inside.</p>
+      </div>
+
+      <div class="card hook">
+        <h4 class="sub-sec">Razia &amp; Yaqut — the Trust That Cost Two Lives</h4>
+        <p>Picture Razia handing her royal seal to Yaqut in front of a room full of glaring Turkish nobles. The nobles don't see "a trusted advisor" — they see "an outsider promoted above us." That single image of misplaced jealousy explains Yaqut's death, Razia's imprisonment, and ultimately both of their murders.</p>
+      </div>
+
+      <div class="card hook">
+        <h4 class="sub-sec">Balban's Iron Throne</h4>
+        <p>Balban literally melts down the chains of the Chahalgani's power and forges them into his throne. Above it: <strong>"Zil-i-Illahi"</strong> (Shadow of God) carved in gold. Around it: nobles bent in <strong>Sijda</strong>, lips on his feet (<strong>Paibos</strong>). This is the most theatrical, most memorable, and most-tested ruler in the dynasty for a reason — give this image the most "screen time" in your head.</p>
+      </div>
+
+      <div class="card hook">
+        <h4 class="sub-sec">Jaichand's Boomerang</h4>
+        <p>Jaichand throws a spear (inviting Ghori) at Prithviraj — but the spear curves around and comes back to hit Jaichand himself at Chandawar, 1194. <strong>Whoever invites the invader is rarely safe from him.</strong></p>
+      </div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('notes-slaves')">← Back: Slave Dynasty Rulers</button>
+        <button class="nav-arrow" onclick="goPage('connections')">Next: Concept Connections →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: CONNECTIONS -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="connections">
+      <div class="eyebrow">Memory &amp; Connections</div>
+      <h2 class="pagetitle">🔗 Concept Connections</h2>
+      <p class="sub">Nothing in this chapter is an isolated fact. Every block below shows the chain — memorise the chain, not the link.</p>
+
+      <div class="card connect"><strong>CAUSE → EFFECT:</strong> Subuktigin (Mahmud's father) defeated/killed near Peshawar → Mahmud's lifelong motive of loot + revenge against India, never conquest.</div>
+      <div class="card connect"><strong>EVENT → CONSEQUENCE:</strong> Khokhar/Jat tribe ambushes Mahmud returning from Somnath → triggers his 17th and final attack, purely for revenge.</div>
+      <div class="card connect"><strong>PROBLEM → SOLUTION:</strong> Ghori needs reliable men to hold conquered Indian territory while he returns home → distributes regions among trusted slaves (Aibak → Delhi, Bakhtiyar Khilji → Bihar).</div>
+      <div class="card connect"><strong>EVENT → CONSEQUENCE:</strong> Ghori assassinated on his way back to his kingdom → Aibak, already entrenched in Delhi, becomes sultan by default → Slave Dynasty founded, 1206.</div>
+      <div class="card connect"><strong>FEATURE → EXCEPTION:</strong> Prithviraj wins the First Battle of Tarain (1191) → wins the war, loses the rematch — Second Battle of Tarain (1192) goes to Ghori. <em>Winning once ≠ winning the chapter.</em></div>
+      <div class="card connect"><strong>EVENT → CONSEQUENCE:</strong> Prithviraj abducts Sanyogita without Jaichand's consent → Jaichand invites Ghori for revenge → Ghori wins, then also crushes Jaichand at Chandawar (1194). <em>Revenge backfires on the avenger.</em></div>
+      <div class="card connect"><strong>CONCEPT → APPLICATION:</strong> Iqta system (land-for-service) → lets the early Sultanate govern a large territory without a large bureaucracy, using military nobles as local administrators.</div>
+      <div class="card connect"><strong>FEATURE → EXCEPTION:</strong> Chahalgani (Iltutmish's loyal slave-corps) was built to protect the throne → later became the very body that destabilised it, removing/installing weak rulers after Razia.</div>
+      <div class="card connect"><strong>DISCOVERY → IMPACT:</strong> Balban, having been a Chahalgani member himself, understands their methods from the inside → uses that insider knowledge to dismantle their power once he becomes sultan.</div>
+      <div class="card connect"><strong>CONCEPT → APPLICATION:</strong> Balban's claim of descent from Afrasiyab + title Zil-i-Illahi → ideological justification for the "policy of blood and iron," i.e., absolute, divinely-sanctioned royal authority.</div>
+      <div class="card connect"><strong>FACT → RELATED FACT:</strong> Genghis Khan (the Mongol threat Iltutmish diplomatically avoided) dies in 1227 — roughly contemporary with Iltutmish's reign (1210–1236), useful for cross-checking dates.</div>
+      <div class="card connect"><strong>CROSS-ERA LINK:</strong> Balban centralising power away from nobles (medieval) ↔ the 1975 Emergency under Article 352 and the later Constitutional Amendment writing the Cabinet's advisory role into law (modern polity) — same underlying theme: one ruler vs. the institution meant to check him.</div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('hooks')">← Back: Smart Memory Hooks</button>
+        <button class="nav-arrow" onclick="goPage('traps')">Next: Exam Traps →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: TRAPS -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="traps">
+      <div class="eyebrow">Exam Warfare</div>
+      <h2 class="pagetitle">⚠ Exam Traps</h2>
+      <p class="sub">Every one of these has caught a topper before. Read this page slowly.</p>
+
+      <div class="card trap"><strong>Shahnama vs Padshahnama:</strong> Shahnama = Firdausi, Ghaznavi-era epic. Padshahnama = Abdul Hamid Lahori, biography of Shah Jahan (Mughal era). Different centuries entirely — don't let the similar spelling fool you.</div>
+      <div class="card trap"><strong>Tarain vs Chandawar vs Chanderi:</strong> Tarain I &amp; II (1191, 1192) = Ghori vs Prithviraj Chauhan. Chandawar (1194) = Ghori vs Jaichand. Chanderi = Babur vs Medini Rai (Mughal period — much later). Three similar-sounding places, three different stories.</div>
+      <div class="card trap"><strong>1st Islamic invasion ≠ 1st Turkish invasion:</strong> Muhammad bin Qasim was the 1st Islamic invader but he was an <strong>Arab</strong>. Mahmud of Ghazni was the <strong>1st Turkish</strong> invader, but the <strong>2nd</strong> Islamic invader overall.</div>
+      <div class="card trap"><strong>Who started vs who completed the Qutub Minar:</strong> Started by Aibak, completed by Iltutmish. SSC frequently flips this in options.</div>
+      <div class="card trap"><strong>Qutub Minar is named after a saint, not the founder:</strong> It honours the Sufi saint <strong>Khwaja Qutubuddin Bakhtiyar Kaki</strong> — it is easy to wrongly assume it's named after Qutubuddin Aibak himself.</div>
+      <div class="card trap"><strong>Tanka vs Jital:</strong> Tanka = silver. Jital = copper. Don't swap the metals.</div>
+      <div class="card trap"><strong>Iqtadar / Muqti / Wali</strong> are three names for the <em>same</em> position (the holder of an Iqta) — not three different ranks.</div>
+      <div class="card trap"><strong>Naib-i-Mumlik vs Wazir:</strong> In this lecture's framing, Balban's role as "Naib" under Nasiruddin Mahmud is described as functionally similar to a Wazir (chief minister/regent) — don't read "Naib" as a junior, unimportant post; it was the real seat of power before he became Sultan.</div>
+      <div class="card trap"><strong>Bakhtiyar Khilji ≠ Jalaluddin Khilji:</strong> Bakhtiyar Khilji (destroyed Nalanda, ruled Bihar under Ghori) is a different person from Jalaluddin Khilji (founded the Khilji Dynasty in 1290 after killing Kaiqubad). Same family name, two different eras and roles.</div>
+      <div class="card trap"><strong>Razia's husband-rebel sequence:</strong> Altunia rebels first → kills Yaqut → imprisons Razia → THEN marries her. Students often assume the marriage came before the rebellion — it's the reverse.</div>
+      <div class="card trap"><strong>"Slave Dynasty" doesn't mean every ruler was a slave:</strong> Aibak, Iltutmish, and Balban were former slaves — but the in-between short-term rulers (e.g. Bahram Shah) and later figures like Kaiqubad were not necessarily slaves themselves; the dynasty is named for its most prominent rulers.</div>
+      <div class="card trap"><strong>Nauroz is Parsi/Persian in origin</strong>, not an Islamic festival by religion — Balban adopted it at his Islamic court regardless. Don't assume every court ritual mentioned is religiously Islamic.</div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('connections')">← Back: Concept Connections</button>
+        <button class="nav-arrow" onclick="goPage('examiner')">Next: Examiner's Favourites →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: EXAMINER -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="examiner">
+      <div class="eyebrow">Exam Warfare</div>
+      <h2 class="pagetitle">🎯 Examiner's Favourite Questions</h2>
+      <p class="sub">If you were setting the paper on this chapter, this is exactly where you'd attack. Read each style and notice the trap built into it.</p>
+
+      <div class="card q"><strong>Chronology question:</strong> "Arrange in order: Battle of Chandawar, Second Battle of Tarain, First Battle of Tarain, Mahmud's attack on Somnath." <span class="muted">(Answer order: Somnath 1025 → Tarain I 1191 → Tarain II 1192 → Chandawar 1194)</span></div>
+      <div class="card q"><strong>Match-the-following:</strong> Pair rulers with their titles/works — Aibak↔Lakh Baksh, Balban↔Zil-i-Illahi, Iltutmish↔Tanka &amp; Jital, Firdausi↔Shahnama.</div>
+      <div class="card q"><strong>Statement-based question:</strong> "Statement I: Qutub Minar was built entirely by Qutubuddin Aibak. Statement II: It is named after Aibak." <span class="muted">(Both false in the way commonly framed — started by Aibak/completed by Iltutmish, and named after a Sufi saint, not Aibak.)</span></div>
+      <div class="card q"><strong>Assertion–Reason:</strong> "Assertion: The Sultanate (1206–1290) is called the 'Slave Dynasty.' Reason: Its first three major rulers — Aibak, Iltutmish, and Balban — were all originally slaves." <span class="muted">(Both true, Reason correctly explains Assertion.)</span></div>
+      <div class="card q"><strong>Confusing-facts question:</strong> "Who was the first to impose Jaziya in India?" — tests whether you correctly recall bin Qasim, not a more "famous" later ruler.</div>
+      <div class="card q"><strong>One-word/identification:</strong> "Which medieval Indian text records that Iltutmish considered his daughter more capable than his sons?" → Tabaqat-i-Nasiri (Minhaj-us-Siraj).</div>
+      <div class="card q"><strong>Odd-one-out:</strong> "Yalduz, Qubacha, Bakhtiyar Khilji, Jalaluddin Khilji — which one was NOT a slave of Mohammad Ghori?" → Jalaluddin Khilji (he came generations later, founding his own dynasty in 1290).</div>
+      <div class="card q"><strong>Cause-effect question:</strong> "Why did Jaichand invite Mohammad Ghori to India?" — tests the Sanyogita backstory, not just "he hated Prithviraj."</div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('traps')">← Back: Exam Traps</button>
+        <button class="nav-arrow" onclick="goPage('recall')">Next: Active Recall →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: ACTIVE RECALL -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="recall">
+      <div class="eyebrow">Exam Warfare</div>
+      <h2 class="pagetitle">❓ Active Recall</h2>
+      <p class="sub">Don't just read these — answer out loud before revealing. Click a blank to reveal it, click a question to reveal the answer.</p>
+
+      <h3 class="sec">Fill in the Blanks (click each underline)</h3>
+      <p>The first Islamic invasion of India was led by <span class="blank" onclick="this.classList.toggle('show')">Muhammad bin Qasim</span>, an <span class="blank" onclick="this.classList.toggle('show')">Arab</span> invader who defeated King <span class="blank" onclick="this.classList.toggle('show')">Dahir</span> in <span class="blank" onclick="this.classList.toggle('show')">Sindh</span>.</p>
+      <p>Mahmud of Ghazni attacked India <span class="blank" onclick="this.classList.toggle('show')">17</span> times; his famous 16th attack on <span class="blank" onclick="this.classList.toggle('show')">Somnath Temple</span> took place in <span class="blank" onclick="this.classList.toggle('show')">1025 AD</span>.</p>
+      <p>The Second Battle of Tarain was fought in <span class="blank" onclick="this.classList.toggle('show')">1192</span>, in which <span class="blank" onclick="this.classList.toggle('show')">Mohammad Ghori</span> defeated <span class="blank" onclick="this.classList.toggle('show')">Prithviraj Chauhan</span>.</p>
+      <p>The Qutub Minar was started by <span class="blank" onclick="this.classList.toggle('show')">Qutubuddin Aibak</span> and completed by <span class="blank" onclick="this.classList.toggle('show')">Iltutmish</span>.</p>
+      <p>Iltutmish introduced the silver <span class="blank" onclick="this.classList.toggle('show')">Tanka</span>, the copper <span class="blank" onclick="this.classList.toggle('show')">Jital</span>, and a group of 40 loyal slaves called the <span class="blank" onclick="this.classList.toggle('show')">Chahalgani / Chalisa</span>.</p>
+      <p>Razia Sultan was imprisoned at <span class="blank" onclick="this.classList.toggle('show')">Bhatinda</span> by its ruler, <span class="blank" onclick="this.classList.toggle('show')">Altunia</span>, after he killed her trusted official, <span class="blank" onclick="this.classList.toggle('show')">Yaqut</span>.</p>
+      <p>Balban took the title <span class="blank" onclick="this.classList.toggle('show')">Zil-i-Illahi</span> and established the military department called <span class="blank" onclick="this.classList.toggle('show')">Diwan-i-Arz</span>.</p>
+
+      <h3 class="sec">Rapid-Fire One-Liners (click to reveal)</h3>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Who imposed Jaziya for the first time in India?</span><span class="car">▾</span></div><div class="a">Muhammad bin Qasim</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Who built Quwwat-ul-Islam mosque?</span><span class="car">▾</span></div><div class="a">Qutubuddin Aibak (corbelled arch technique)</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>What was the title of Qutubuddin Aibak?</span><span class="car">▾</span></div><div class="a">Lakh Baksh ("giver of lakhs")</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>How did Aibak die?</span><span class="car">▾</span></div><div class="a">Fell off his horse while playing polo (chaugan), 1210 AD</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Who shifted the capital from Lahore to Delhi?</span><span class="car">▾</span></div><div class="a">Shamsuddin Iltutmish</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Who was Iltutmish's Wazir?</span><span class="car">▾</span></div><div class="a">Nizam-ul-Mulk</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>What is an Iqta-holder also called?</span><span class="car">▾</span></div><div class="a">Iqtadar / Muqti / Wali</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Who was the first and only Muslim woman ruler of medieval India?</span><span class="car">▾</span></div><div class="a">Razia Sultan</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Who destroyed Nalanda University?</span><span class="car">▾</span></div><div class="a">Bakhtiyar Khilji</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Who invited Mohammad Ghori for the Second Battle of Tarain, and why?</span><span class="car">▾</span></div><div class="a">Jaichand — to avenge Prithviraj's forced marriage to his daughter Sanyogita</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>What did Balban call himself ("Shadow of God")?</span><span class="car">▾</span></div><div class="a">Zil-i-Illahi</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Which dynasty followed the Slave Dynasty, and who founded it?</span><span class="car">▾</span></div><div class="a">Khilji Dynasty, founded by Jalaluddin Khilji in 1290 after killing Kaiqubad</div></div>
+
+      <h3 class="sec">Reverse Questions (answer → guess the question)</h3>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Answer: 1227 AD</span><span class="car">▾</span></div><div class="a">Question: In which year did Genghis Khan die?</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Answer: Khwaja Qutubuddin Bakhtiyar Kaki</span><span class="car">▾</span></div><div class="a">Question: After which Sufi saint is the Qutub Minar named?</div></div>
+      <div class="card q qa" onclick="this.classList.toggle('open')"><div class="qline"><span>Answer: Tomar Dynasty</span><span class="car">▾</span></div><div class="a">Question: Which was the first dynasty to rule Delhi (before the Chauhans and before Islamic rule)?</div></div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('examiner')">← Back: Examiner's Favourites</button>
+        <button class="nav-arrow" onclick="goPage('highyield')">Next: High-Yield Notes →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: HIGH YIELD -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="highyield">
+      <div class="eyebrow">Speed Revision · Layer 2</div>
+      <h2 class="pagetitle">🔥 High-Yield Revision Notes</h2>
+      <p class="sub">If you only have 10 minutes, read this page.</p>
+
+      <div class="qsheet">
+        <div class="card"><strong>Invasion order:</strong> bin Qasim (Arab, Sindh, Dahir) → Mahmud Ghazni (1st Turk, 17 raids, Somnath 1025) → Mohammad Ghori (2nd Turk, defeats Prithviraj, founds rule).</div>
+        <div class="card"><strong>Tarain:</strong> I = 1191 Prithviraj wins. II = 1192 Ghori wins &amp; kills Prithviraj. Chandawar 1194 = Ghori vs Jaichand.</div>
+        <div class="card"><strong>Ghori's slaves:</strong> Aibak → Delhi. Bakhtiyar Khilji → Bihar (destroyed Nalanda). Also: Yalduz, Qubacha.</div>
+        <div class="card"><strong>Dynasties &amp; dates:</strong> Slave 1206–90 · Khilji 1290–1320 · Tughlaq 1320–1414 · Sayyid 1415–51 · Lodi 1451–1526.</div>
+        <div class="card"><strong>Aibak:</strong> Lakh Baksh · died playing polo 1210 · built Quwwat-ul-Islam (Delhi) &amp; Adhai Din ka Jhonpra (Ajmer) · started Qutub Minar.</div>
+        <div class="card"><strong>Iltutmish:</strong> capital Lahore→Delhi · saved Delhi from Genghis Khan · Tanka (silver)/Jital (copper) · Iqta system · Chahalgani (40 slaves) · completed Qutub Minar.</div>
+        <div class="card"><strong>Razia:</strong> only Muslim woman ruler · trusted Yaqut (Ethiopian) → Chahalgani resentment · Altunia (Bhatinda) rebels, kills Yaqut, imprisons then marries Razia → both killed in conspiracy, 1240.</div>
+        <div class="card"><strong>Balban:</strong> ex-Chahalgani himself · Naib under Nasiruddin Mahmud · crushed Chahalgani · Diwan-i-Arz · Zil-i-Illahi · descent from Afrasiyab · Sijda/Paibos · Nauroz · crushed Tughril Beg (Bengal).</div>
+        <div class="card"><strong>End:</strong> Kaiqubad (Balban's grandson, 1287–90) → murdered by Jalaluddin Khilji → Khilji Dynasty begins, 1290.</div>
+        <div class="card"><strong>Texts:</strong> Shahnama–Firdausi · Tahqiq-e-Hind/Kitab-ul-Hind–Alberuni · Tajul Maasir–Hasan-i-Nizami · Tabaqat-i-Nasiri–Minhaj-us-Siraj · Prithviraj Raso–Chandrabardai.</div>
+        <div class="card"><strong>Qutub Minar:</strong> started Aibak, finished Iltutmish, named after saint Bakhtiyar Kaki, ≈73 m, 5 storeys.</div>
+      </div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('recall')">← Back: Active Recall</button>
+        <button class="nav-arrow" onclick="goPage('ultrafast')">Next: Ultra-Fast Sheet →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: ULTRA FAST -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="ultrafast">
+      <div class="eyebrow">Speed Revision · Layer 3</div>
+      <h2 class="pagetitle">⚡ Ultra-Fast Revision Sheet</h2>
+      <p class="sub">One scan, full chapter skeleton.</p>
+
+      <table>
+        <tr><th>Year</th><th>Event</th></tr>
+        <tr><td>1025</td><td>Mahmud's 16th raid — Somnath</td></tr>
+        <tr><td>1027</td><td>Mahmud's 17th (last) raid — revenge</td></tr>
+        <tr><td>1030</td><td>Mahmud of Ghazni dies</td></tr>
+        <tr><td>1175</td><td>Ghori's 1st attack — Multan</td></tr>
+        <tr><td>1191</td><td>Tarain I — Prithviraj wins</td></tr>
+        <tr><td>1192</td><td>Tarain II — Ghori wins</td></tr>
+        <tr><td>1194</td><td>Chandawar — Ghori defeats Jaichand</td></tr>
+        <tr><td>1206</td><td>Slave Dynasty founded — Aibak</td></tr>
+        <tr><td>1210</td><td>Aibak dies (polo)</td></tr>
+        <tr><td>1210–36</td><td>Iltutmish's reign</td></tr>
+        <tr><td>1227</td><td>Genghis Khan dies</td></tr>
+        <tr><td>1236–40</td><td>Razia Sultan's reign</td></tr>
+        <tr><td>1240–66</td><td>Weak rulers / Chahalgani control</td></tr>
+        <tr><td>1266–87</td><td>Balban's reign</td></tr>
+        <tr><td>1287–90</td><td>Kaiqubad's reign</td></tr>
+        <tr><td>1290</td><td>Jalaluddin Khilji founds Khilji Dynasty</td></tr>
+      </table>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('highyield')">← Back: High-Yield Notes</button>
+        <button class="nav-arrow" onclick="goPage('thirtysec')">Next: 30-Second Sheet →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: 30 SEC -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="thirtysec">
+      <div class="eyebrow">Speed Revision · Layer 4</div>
+      <h2 class="pagetitle">⏱ 30-Second Revision Sheet</h2>
+      <p class="sub">Read this and you've technically revised the whole chapter.</p>
+
+      <div class="card finalcard">
+        <p style="font-size:16px;line-height:1.9;">
+        <strong>bin Qasim</strong> (Arab, Sindh) → <strong>Ghaznavi</strong> (Turk, 17 raids, Somnath 1025) → <strong>Ghori</strong> (Turk, beats Prithviraj at Tarain II, 1192) → leaves slave <strong>Aibak</strong> in Delhi → Ghori dies → <strong>Slave Dynasty, 1206</strong>.<br><br>
+        <strong>Aibak</strong> (Lakh Baksh, dies on polo field, starts Qutub Minar) → <strong>Iltutmish</strong> (son-in-law, Delhi capital, Tanka/Jital, Iqta, Chahalgani, finishes Qutub Minar) → <strong>Razia</strong> (only woman ruler, Yaqut, Altunia, Bhatinda) → chaos → <strong>Balban</strong> (ex-Chahalgani himself, crushes Chahalgani, Zil-i-Illahi, Diwan-i-Arz) → Kaiqubad → <strong>Jalaluddin Khilji, 1290.</strong>
+        </p>
+      </div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('ultrafast')">← Back: Ultra-Fast Sheet</button>
+        <button class="nav-arrow" onclick="goPage('lastnight')">Next: Last-Night Sheet →</button>
+      </div>
+    </section>
+
+    <!-- ===================================================== -->
+    <!-- PAGE: LAST NIGHT -->
+    <!-- ===================================================== -->
+    <section class="page" data-page="lastnight">
+      <div class="eyebrow">Speed Revision · Layer 5</div>
+      <h2 class="pagetitle">🌙 Last-Night-Before-Exam Sheet</h2>
+      <p class="sub">Just the traps. Just the things you will absolutely lose marks on if you skip this.</p>
+
+      <div class="card trap">Shahnama (Firdausi) ≠ Padshahnama (Abdul Hamid Lahori, Shah Jahan)</div>
+      <div class="card trap">Tarain (Ghori vs Prithviraj) ≠ Chandawar (Ghori vs Jaichand) ≠ Chanderi (Babur vs Medini Rai)</div>
+      <div class="card trap">1st Islamic invader (bin Qasim, Arab) ≠ 1st Turkish invader (Ghaznavi)</div>
+      <div class="card trap">Qutub Minar: started by Aibak, FINISHED by Iltutmish — named after a saint, not Aibak</div>
+      <div class="card trap">Tanka = silver. Jital = copper.</div>
+      <div class="card trap">Iqtadar = Muqti = Wali (same post, three names)</div>
+      <div class="card trap">Bakhtiyar Khilji (Nalanda, Ghori's slave) ≠ Jalaluddin Khilji (founded Khilji dynasty, 1290)</div>
+      <div class="card trap">Altunia rebels FIRST, kills Yaqut, imprisons Razia — THEN marries her</div>
+      <div class="card trap">Dynasty order: Slave → Khilji → Tughlaq → Sayyid → Lodi (1206 → 1526)</div>
+      <div class="card trap">First dynasty to rule Delhi at all: Tomar (then Chauhan, then Islamic rule under Ghori)</div>
+
+      <div class="footer-nav">
+        <button class="nav-arrow" onclick="goPage('thirtysec')">← Back: 30-Second Sheet</button>
+        <button class="nav-arrow" onclick="goPage('big-picture')">Restart from Big Picture ↻</button>
+      </div>
+    </section>
+
+  </main>
 </div>
+
+<script>
+  const pages = Array.from(document.querySelectorAll('.page'));
+  const navBtns = Array.from(document.querySelectorAll('.nav-btn'));
+  const order = pages.map(p => p.dataset.page);
+  const titles = {
+    'big-picture':'Big Picture','palace':'Memory Palace','notes-invasions':'Early Invasions',
+    'notes-ghori':'Ghori & Tarain','notes-slaves':'Slave Dynasty Rulers','hooks':'Smart Memory Hooks',
+    'connections':'Concept Connections','traps':'Exam Traps','examiner':"Examiner's Favourites",
+    'recall':'Active Recall','highyield':'High-Yield Notes','ultrafast':'Ultra-Fast Sheet',
+    'thirtysec':'30-Second Sheet','lastnight':'Last-Night Sheet'
+  };
+
+  function goPage(id){
+    pages.forEach(p => p.classList.toggle('active', p.dataset.page === id));
+    navBtns.forEach(b => b.classList.toggle('active', b.dataset.page === id));
+    document.getElementById('crumb-title').textContent = titles[id] || id;
+    const idx = order.indexOf(id) + 1;
+    document.getElementById('page-counter').textContent = idx + ' / ' + order.length;
+    document.getElementById('main').scrollTo({top:0, behavior:'instant'});
+    try{ history.replaceState(null,'','#'+id); }catch(e){}
+  }
+
+  navBtns.forEach(btn => btn.addEventListener('click', () => goPage(btn.dataset.page)));
+
+  // init from hash if present
+  const initial = (location.hash || '').replace('#','');
+  if(initial && order.includes(initial)){ goPage(initial); } else { goPage('big-picture'); }
+</script>
 </body>
 </html>
