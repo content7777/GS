@@ -1597,14 +1597,8 @@ function resetQuiz() {
   renderQuiz();
 }
 
-// Render quiz when its page is first shown
-const origShowPage = showPage;
-function showPage(id) {
-  origShowPage(id);
-  if (id === 'quiz') renderQuiz();
-}
-
-// also render on load if quiz page is active (it's not by default)
+// Render quiz on first visit
+document.querySelector('.nav-btn[onclick*="quiz"]').addEventListener('click', renderQuiz);
 </script>
 </body>
 </html>
