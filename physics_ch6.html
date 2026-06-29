@@ -3,598 +3,1608 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gravitation &amp; Work-Energy | SSC CGL Memory System</title>
+<title>Gravitation & Work-Energy | SSC CGL Elite Notes</title>
 <style>
-  :root{
-    --bg: #0f1117;
-    --bg-raised: #161922;
-    --bg-card: #1a1e29;
-    --border: #2a2f3d;
-    --green: #7ee0a8;
-    --green-dim: #4f8d6c;
-    --blue: #7ec8f5;
-    --blue-dim: #4f7a99;
-    --text: #e8eaed;
-    --text-dim: #9aa3b2;
-    --text-faint: #6b7384;
-    --amber: #f2c572;
-    --red: #f29b9b;
-    --purple: #c9a8f0;
-    --radius: 14px;
-    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
-    --mono: "SF Mono", "JetBrains Mono", Consolas, monospace;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background: radial-gradient(circle at 15% 0%, #131725 0%, var(--bg) 45%) ;
-    color: var(--text);
-    font-family: var(--sans);
-    min-height:100vh;
-    overflow-x:hidden;
-  }
-  /* subtle starfield texture for gravitation theme */
-  body::before{
-    content:"";
-    position:fixed; inset:0;
-    background-image:
-      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.18) 0, transparent 60%),
-      radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.14) 0, transparent 60%),
-      radial-gradient(1px 1px at 60% 70%, rgba(255,255,255,0.12) 0, transparent 60%),
-      radial-gradient(1px 1px at 30% 85%, rgba(255,255,255,0.16) 0, transparent 60%),
-      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.10) 0, transparent 60%),
-      radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.14) 0, transparent 60%);
-    pointer-events:none;
-    z-index:0;
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --bg-deep: #0a0d14;
+    --bg-card: #111520;
+    --bg-hover: #161c2a;
+    --border: #1e2740;
+    --border-bright: #2a3556;
+    --green: #4ade80;
+    --green-dim: #22c55e55;
+    --green-glow: #4ade8033;
+    --blue: #60a5fa;
+    --blue-dim: #3b82f655;
+    --blue-glow: #60a5fa33;
+    --amber: #fbbf24;
+    --amber-dim: #f59e0b44;
+    --red: #f87171;
+    --red-dim: #ef444444;
+    --purple: #c084fc;
+    --purple-dim: #a855f744;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #475569;
+    --text-heading: #f8fafc;
   }
 
-  a{color:var(--blue);}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* ===== APP SHELL ===== */
-  #app{
-    display:flex;
-    min-height:100vh;
-    position:relative;
-    z-index:1;
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Space Grotesk', sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
   }
 
-  /* ===== SIDEBAR ===== */
-  #sidebar{
-    width:280px;
-    flex-shrink:0;
-    background: var(--bg-raised);
-    border-right:1px solid var(--border);
-    padding:22px 16px 16px;
-    position:fixed;
-    top:0; left:0; bottom:0;
-    overflow-y:auto;
-    z-index:30;
-    transition: transform 0.3s ease;
+  /* ── NAV BAR ── */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: #0a0d14ee;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0;
+    padding: 0 16px;
+    height: 52px;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-  #sidebar::-webkit-scrollbar{width:6px;}
-  #sidebar::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+  #navbar::-webkit-scrollbar { display: none; }
 
-  .brand{
-    display:flex; align-items:center; gap:10px;
-    padding:4px 8px 18px;
-    border-bottom:1px solid var(--border);
-    margin-bottom:14px;
-  }
-  .brand-orbit{
-    width:30px;height:30px;border-radius:50%;
-    border:2px solid var(--green);
-    position:relative;
-    flex-shrink:0;
-    box-shadow: 0 0 14px rgba(126,224,168,0.35);
-  }
-  .brand-orbit::after{
-    content:"";
-    position:absolute; top:50%; left:50%;
-    width:6px;height:6px;border-radius:50%;
-    background:var(--blue);
-    transform: translate(-50%,-50%) translateX(13px);
-    box-shadow: 0 0 8px var(--blue);
-  }
-  .brand-text{font-family:var(--serif);font-size:15px;line-height:1.25;color:var(--text);}
-  .brand-text span{display:block;font-size:10.5px;letter-spacing:0.12em;color:var(--text-faint);font-family:var(--sans);text-transform:uppercase;margin-top:2px;}
-
-  .nav-group{margin-bottom:4px;}
-  .nav-group-label{
-    font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase;
-    color:var(--text-faint); padding:14px 10px 6px; font-weight:600;
-  }
-  .nav-item{
-    display:flex; align-items:center; gap:10px;
-    width:100%; text-align:left;
-    background:none; border:none; cursor:pointer;
-    color:var(--text-dim);
-    padding:9px 10px; border-radius:9px;
-    font-size:13.5px;
-    font-family:var(--sans);
-    transition: background 0.15s, color 0.15s;
-    line-height:1.3;
-  }
-  .nav-item:hover{ background: rgba(126,200,245,0.08); color:var(--text); }
-  .nav-item.active{
-    background: rgba(126,224,168,0.12);
+  .nav-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; font-weight: 500;
     color: var(--green);
-    font-weight:600;
-  }
-  .nav-item .dot{
-    width:6px;height:6px;border-radius:50%;
-    background:var(--border); flex-shrink:0;
-    transition: background 0.15s;
-  }
-  .nav-item.active .dot{ background:var(--green); box-shadow:0 0 6px var(--green);}
-  .nav-item .ic{width:16px; text-align:center; flex-shrink:0; font-size:13px;}
-
-  #sidebar-footer{
-    margin-top:18px; padding:12px 10px;
-    border-top:1px solid var(--border);
-    font-size:11px; color:var(--text-faint); line-height:1.5;
+    white-space: nowrap;
+    padding-right: 16px;
+    border-right: 1px solid var(--border);
+    margin-right: 12px;
+    letter-spacing: 0.05em;
   }
 
-  /* mobile toggle */
-  #menu-toggle{
-    display:none;
-    position:fixed; top:14px; left:14px; z-index:40;
-    background:var(--bg-card); border:1px solid var(--border);
-    color:var(--text); border-radius:9px;
-    width:40px;height:40px; align-items:center; justify-content:center;
-    font-size:18px; cursor:pointer;
+  .nav-btn {
+    background: none; border: none;
+    color: var(--text-secondary);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11.5px; font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s;
+    letter-spacing: 0.02em;
   }
-  #sidebar-scrim{
-    display:none;
-    position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:25;
+  .nav-btn:hover { color: var(--text-primary); background: var(--bg-hover); }
+  .nav-btn.active { color: var(--green); background: var(--green-glow); }
+
+  /* ── PAGES ── */
+  #app {
+    position: fixed; top: 52px; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
   }
 
-  /* ===== MAIN ===== */
-  #main{
-    margin-left:280px;
-    flex:1;
-    min-width:0;
-    padding:36px 44px 80px;
-    max-width:980px;
+  .page {
+    display: none;
+    position: absolute; inset: 0;
+    overflow-y: auto;
+    padding: 32px 24px 60px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-bright) transparent;
+  }
+  .page.active { display: block; }
+  .page::-webkit-scrollbar { width: 4px; }
+  .page::-webkit-scrollbar-track { background: transparent; }
+  .page::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 4px; }
+
+  .page-inner {
+    max-width: 860px;
+    margin: 0 auto;
   }
 
-  .page{ display:none; animation: fadein 0.35s ease; }
-  .page.active{ display:block; }
-  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
-
-  .page-eyebrow{
-    font-size:11.5px; letter-spacing:0.16em; text-transform:uppercase;
-    color:var(--blue); font-weight:600; margin-bottom:8px;
+  /* ── TYPOGRAPHY ── */
+  .page-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px; font-weight: 700;
+    color: var(--text-heading);
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+    line-height: 1.2;
   }
-  .page-title{
-    font-family:var(--serif);
-    font-size:34px; line-height:1.18;
-    margin:0 0 6px;
-    color:var(--text);
-  }
-  .page-title em{ color:var(--green); font-style:normal; }
-  .page-sub{
-    color:var(--text-dim); font-size:15px; line-height:1.6;
-    margin:0 0 30px; max-width:680px;
+  .page-subtitle {
+    font-size: 13px; color: var(--text-muted);
+    margin-bottom: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.03em;
   }
 
-  h2.section-h{
-    font-family:var(--serif); font-size:22px; color:var(--text);
-    margin:38px 0 14px; padding-top:10px; border-top:1px solid var(--border);
+  h2 {
+    font-size: 16px; font-weight: 600;
+    color: var(--green);
+    margin: 28px 0 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
   }
-  h2.section-h:first-of-type{ border-top:none; margin-top:0; padding-top:0; }
-  h3.sub-h{
-    font-family:var(--serif); font-size:17px; color:var(--blue);
-    margin:22px 0 10px;
+  h2::before {
+    content: ''; display: block;
+    width: 3px; height: 16px;
+    background: var(--green);
+    border-radius: 2px;
   }
 
-  p{ line-height:1.7; color:var(--text); font-size:14.5px; }
-  .lead{ font-size:15.5px; color:var(--text-dim); }
+  h3 {
+    font-size: 14px; font-weight: 600;
+    color: var(--blue);
+    margin: 18px 0 8px;
+    letter-spacing: 0.02em;
+  }
 
-  /* ===== CARDS ===== */
-  .card{
-    background:var(--bg-card);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:18px 20px;
-    margin:14px 0;
+  p {
+    font-size: 14px; line-height: 1.75;
+    color: var(--text-primary);
+    margin-bottom: 10px;
   }
-  .card-tight{ padding:14px 16px; }
 
-  .tag{
-    display:inline-flex; align-items:center; gap:5px;
-    font-size:11px; font-weight:700; letter-spacing:0.03em;
-    padding:3px 9px; border-radius:20px;
-    margin:0 6px 6px 0;
+  /* ── CARDS ── */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    transition: border-color 0.2s;
   }
-  .tag-must{ background:rgba(242,155,155,0.14); color:var(--red); }
-  .tag-imp{ background:rgba(242,197,114,0.14); color:var(--amber); }
-  .tag-good{ background:rgba(126,200,245,0.14); color:var(--blue); }
-  .tag-trap{ background:rgba(242,155,155,0.18); color:var(--red); }
+  .card:hover { border-color: var(--border-bright); }
 
-  ul, ol{ padding-left:22px; line-height:1.75; color:var(--text); font-size:14.5px; }
-  li{ margin-bottom:6px; }
-  ul.tight li, ol.tight li{ margin-bottom:3px; }
+  .card-green { border-left: 3px solid var(--green); }
+  .card-blue { border-left: 3px solid var(--blue); }
+  .card-amber { border-left: 3px solid var(--amber); }
+  .card-red { border-left: 3px solid var(--red); }
+  .card-purple { border-left: 3px solid var(--purple); }
 
-  strong{ color:var(--green); font-weight:600; }
-  .blue-strong{ color:var(--blue); font-weight:600; }
-  code, .formula{
-    font-family:var(--mono); background:rgba(126,200,245,0.1);
-    color:var(--blue); padding:2px 7px; border-radius:6px; font-size:13.5px;
+  /* ── TAGS ── */
+  .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
   }
-  .formula-big{
-    display:block; text-align:center; font-family:var(--mono);
-    font-size:20px; color:var(--green); background:rgba(126,224,168,0.08);
-    border:1px solid rgba(126,224,168,0.25); border-radius:10px;
-    padding:14px; margin:14px 0;
-  }
-  .formula-big small{ display:block; font-size:11.5px; color:var(--text-faint); margin-top:6px; font-family:var(--sans); letter-spacing:0.03em;}
+  .tag-fire { background: #ef444422; color: var(--red); border: 1px solid #ef444444; }
+  .tag-star { background: #fbbf2422; color: var(--amber); border: 1px solid #fbbf2444; }
+  .tag-plus { background: #60a5fa22; color: var(--blue); border: 1px solid #60a5fa44; }
 
-  table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px; }
-  th,td{ padding:9px 12px; border-bottom:1px solid var(--border); text-align:left; }
-  th{ color:var(--blue); font-weight:600; font-size:12px; letter-spacing:0.04em; text-transform:uppercase; }
-  tr:last-child td{ border-bottom:none; }
-  td.num{ font-family:var(--mono); color:var(--green); }
+  /* ── FORMULA BOXES ── */
+  .formula {
+    background: #0d1424;
+    border: 1px solid var(--blue-dim);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--blue);
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+  }
 
-  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .grid-3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; }
-  @media (max-width:760px){ .grid-2,.grid-3{ grid-template-columns:1fr; } }
+  /* ── TRAP BOX ── */
+  .trap-box {
+    background: #1a0d0d;
+    border: 1px solid var(--red-dim);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .trap-box h4 {
+    font-size: 12px; font-weight: 600;
+    color: var(--red);
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .trap-box p { font-size: 13.5px; }
 
-  .callout{
-    border-left:3px solid var(--green); background:rgba(126,224,168,0.06);
-    border-radius:0 10px 10px 0; padding:12px 16px; margin:14px 0;
+  /* ── MEMORY HOOK ── */
+  .memory-hook {
+    background: linear-gradient(135deg, #0f1f10 0%, #0a1420 100%);
+    border: 1px solid var(--green-dim);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
   }
-  .callout-trap{ border-left-color:var(--red); background:rgba(242,155,155,0.07); }
-  .callout-blue{ border-left-color:var(--blue); background:rgba(126,200,245,0.06); }
-  .callout-title{ font-weight:700; font-size:13px; margin-bottom:4px; display:block; }
-  .callout-trap .callout-title{ color:var(--red); }
-  .callout .callout-title{ color:var(--green); }
-  .callout-blue .callout-title{ color:var(--blue); }
+  .memory-hook::before {
+    content: '🧠';
+    position: absolute; top: 14px; right: 16px;
+    font-size: 20px; opacity: 0.5;
+  }
+  .memory-hook h4 {
+    font-size: 12px; font-weight: 600;
+    color: var(--green);
+    margin-bottom: 8px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .memory-hook p { font-size: 13.5px; }
 
-  /* palace map */
-  .palace-map{
-    display:flex; flex-direction:column; gap:0; margin:18px 0;
+  /* ── QUIZ ── */
+  .quiz-q {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 10px;
   }
-  .palace-stop{
-    display:grid; grid-template-columns:46px 1fr; gap:14px;
-    position:relative; padding-bottom:26px;
+  .quiz-q .qtext {
+    font-size: 14px; font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    line-height: 1.5;
   }
-  .palace-stop:last-child{ padding-bottom:0; }
-  .palace-stop::before{
-    content:""; position:absolute; left:22px; top:46px; bottom:0;
-    width:2px; background:linear-gradient(var(--green-dim), var(--border));
-  }
-  .palace-stop:last-child::before{ display:none; }
-  .palace-num{
-    width:46px;height:46px;border-radius:50%;
-    background:var(--bg-card); border:2px solid var(--green);
-    display:flex; align-items:center; justify-content:center;
-    font-size:19px; flex-shrink:0; z-index:2;
-  }
-  .palace-body h4{ margin:4px 0 4px; color:var(--text); font-size:15px; font-family:var(--serif); }
-  .palace-body p{ margin:0; font-size:13.5px; color:var(--text-dim); }
-  .palace-body .recall{ color:var(--amber); font-size:12.5px; margin-top:4px; }
-
-  /* recall / flashcard */
-  .flip-card{
-    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius);
-    padding:16px 18px; margin:10px 0; cursor:pointer; transition:border-color 0.15s;
-  }
-  .flip-card:hover{ border-color: var(--blue-dim); }
-  .flip-q{ color:var(--blue); font-weight:600; font-size:14px; }
-  .flip-a{ color:var(--green); font-size:14px; margin-top:10px; padding-top:10px; border-top:1px dashed var(--border); display:none; }
-  .flip-card.open .flip-a{ display:block; }
-  .flip-hint{ font-size:11px; color:var(--text-faint); margin-top:6px; }
-
-  .blank{ border-bottom:2px dotted var(--text-faint); padding:0 4px; color:transparent; user-select:none; }
-  .blank.revealed{ color:var(--green); border-bottom-color:var(--green); }
-  .fib-row{ margin-bottom:10px; }
-  .reveal-btn{
-    background:rgba(126,200,245,0.1); border:1px solid var(--blue-dim); color:var(--blue);
-    font-size:11.5px; padding:4px 10px; border-radius:7px; cursor:pointer; margin-left:8px;
-  }
-  .reveal-btn:hover{ background:rgba(126,200,245,0.18); }
-
-  /* nav footer buttons */
-  .page-nav{
-    display:flex; justify-content:space-between; margin-top:50px;
-    padding-top:20px; border-top:1px solid var(--border);
-  }
-  .pnav-btn{
-    background:var(--bg-card); border:1px solid var(--border); color:var(--text-dim);
-    padding:10px 16px; border-radius:10px; font-size:13px; cursor:pointer;
-    display:flex; align-items:center; gap:8px; font-family:var(--sans);
+  .quiz-opt {
+    background: none; border: 1px solid var(--border);
+    border-radius: 6px; padding: 8px 14px;
+    color: var(--text-secondary);
+    font-size: 13px; cursor: pointer;
+    width: 100%; text-align: left;
+    margin-bottom: 6px;
+    font-family: 'Space Grotesk', sans-serif;
     transition: all 0.15s;
   }
-  .pnav-btn:hover{ border-color:var(--green-dim); color:var(--green); }
-  .pnav-btn.disabled{ opacity:0.3; pointer-events:none; }
-
-  .pill-row{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 18px; }
-  .ultra-pill{
-    background:var(--bg-card); border:1px solid var(--border); border-radius:10px;
-    padding:10px 14px; font-size:13.5px; flex:1 1 220px;
+  .quiz-opt:hover { border-color: var(--blue); color: var(--text-primary); background: var(--blue-glow); }
+  .quiz-opt.correct { border-color: var(--green); color: var(--green); background: var(--green-glow); }
+  .quiz-opt.wrong { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+  .quiz-opt:disabled { cursor: default; }
+  .quiz-feedback {
+    font-size: 12.5px; margin-top: 8px;
+    padding: 8px 12px; border-radius: 6px;
+    display: none;
   }
-  .ultra-pill b{ color:var(--green); }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: var(--green-glow); color: var(--green); }
+  .quiz-feedback.no { background: var(--red-dim); color: var(--red); }
 
-  .last-night-box{
-    background: linear-gradient(155deg, rgba(126,224,168,0.08), rgba(126,200,245,0.05));
-    border:1px solid var(--green-dim); border-radius:var(--radius);
-    padding:22px 24px;
+  /* ── TABLE ── */
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px; margin: 12px 0;
   }
-  .last-night-box h4{ color:var(--green); margin-top:0; font-family:var(--serif); font-size:16px; }
+  th {
+    background: var(--bg-hover); color: var(--text-secondary);
+    font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 8px 12px; text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 9px 12px; border-bottom: 1px solid var(--border);
+    vertical-align: top; line-height: 1.5;
+    color: var(--text-primary);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-hover); }
 
-  ::-webkit-scrollbar{ width:8px; height:8px; }
-  ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
+  /* ── LIST ── */
+  ul, ol { padding-left: 20px; }
+  li { font-size: 14px; line-height: 1.75; color: var(--text-primary); margin-bottom: 3px; }
+  li strong { color: var(--text-heading); }
 
-  @media (max-width:900px){
-    #sidebar{ transform:translateX(-100%); }
-    #sidebar.open{ transform:translateX(0); box-shadow:0 0 40px rgba(0,0,0,0.6); }
-    #sidebar-scrim.show{ display:block; }
-    #main{ margin-left:0; padding:70px 20px 60px; }
-    #menu-toggle{ display:flex; }
-    .page-title{ font-size:27px; }
-    .grid-3{ grid-template-columns:1fr; }
+  /* ── PILL TAGS ── */
+  .pill {
+    display: inline-block;
+    padding: 2px 10px; border-radius: 20px;
+    font-size: 11.5px; font-weight: 500;
+    margin: 2px;
+  }
+  .pill-green { background: var(--green-glow); color: var(--green); }
+  .pill-blue { background: var(--blue-glow); color: var(--blue); }
+  .pill-amber { background: var(--amber-dim); color: var(--amber); }
+  .pill-red { background: var(--red-dim); color: var(--red); }
+  .pill-purple { background: var(--purple-dim); color: var(--purple); }
+
+  /* ── PALACE STOPS ── */
+  .palace-stop {
+    display: flex; gap: 14px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+  .palace-num {
+    flex-shrink: 0;
+    width: 32px; height: 32px;
+    background: var(--green-glow);
+    border: 1px solid var(--green-dim);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: var(--green);
+  }
+  .palace-content { flex: 1; }
+  .palace-content strong { color: var(--green); display: block; margin-bottom: 4px; font-size: 13.5px; }
+  .palace-content span { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px; background: var(--border);
+    margin: 24px 0;
+  }
+
+  /* ── HOME PAGE ── */
+  .hero {
+    text-align: center;
+    padding: 40px 20px 32px;
+  }
+  .hero-icon { font-size: 56px; margin-bottom: 16px; display: block; }
+  .hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 34px; font-weight: 700;
+    color: var(--text-heading);
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .hero-title span { color: var(--green); }
+  .hero-subtitle {
+    font-size: 14px; color: var(--text-muted);
+    max-width: 500px; margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .nav-tile {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .nav-tile:hover {
+    border-color: var(--green-dim);
+    background: var(--bg-hover);
+    transform: translateY(-2px);
+  }
+  .nav-tile .tile-emoji { font-size: 22px; margin-bottom: 8px; display: block; }
+  .nav-tile .tile-name { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+  .nav-tile .tile-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.4; }
+
+  /* ── PROGRESS BAR ── */
+  .score-display {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px 20px;
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 20px;
+  }
+  .score-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px; font-weight: 600;
+    color: var(--green);
+  }
+  .score-label { font-size: 12px; color: var(--text-muted); }
+  .progress-bar {
+    flex: 1; height: 6px;
+    background: var(--border);
+    border-radius: 3px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--green), var(--blue));
+    border-radius: 3px; transition: width 0.4s ease;
+  }
+
+  /* ── FAST REVISION CHIPS ── */
+  .chip-grid {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .chip {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 12px;
+    font-size: 12.5px; color: var(--text-primary);
+    line-height: 1.4;
+  }
+  .chip strong { color: var(--amber); }
+
+  /* ── CONNECTION ARROWS ── */
+  .connection {
+    display: flex; align-items: center; gap: 0;
+    margin-bottom: 6px; flex-wrap: wrap;
+  }
+  .conn-box {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 6px; padding: 6px 12px;
+    font-size: 12.5px; color: var(--text-primary);
+  }
+  .conn-arrow {
+    padding: 0 8px; color: var(--green);
+    font-size: 14px;
+  }
+
+  /* ── COMPARISON TABLE ── */
+  .vs-card {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 14px;
+  }
+  .vs-left { background: #0a1420; border: 1px solid var(--blue-dim); border-radius: 8px; padding: 14px 16px; }
+  .vs-right { background: #100a20; border: 1px solid var(--purple-dim); border-radius: 8px; padding: 14px 16px; }
+  .vs-title { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 10px; }
+  .vs-left .vs-title { color: var(--blue); }
+  .vs-right .vs-title { color: var(--purple); }
+  .vs-item { font-size: 13px; color: var(--text-secondary); margin-bottom: 5px; line-height: 1.5; }
+
+  /* ── ULTRA FAST SHEET ── */
+  .ufs-row {
+    display: flex; gap: 8px; margin-bottom: 6px; align-items: flex-start;
+  }
+  .ufs-key {
+    flex-shrink: 0; width: 140px;
+    font-size: 12px; font-weight: 600; color: var(--amber);
+    font-family: 'JetBrains Mono', monospace;
+    padding-top: 2px;
+  }
+  .ufs-val { font-size: 13px; color: var(--text-primary); line-height: 1.6; }
+
+  /* ── LAST NIGHT SHEET ── */
+  .ln-block {
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 14px 16px;
+    margin-bottom: 8px;
+    background: var(--bg-card);
+  }
+  .ln-topic {
+    font-size: 11px; font-weight: 600;
+    color: var(--green); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .ln-facts { font-size: 13px; color: var(--text-primary); line-height: 1.8; }
+  .ln-facts em { color: var(--amber); font-style: normal; font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .vs-card { grid-template-columns: 1fr; }
+    .page { padding: 20px 14px 60px; }
+    .hero-title { font-size: 24px; }
+    .nav-grid { grid-template-columns: 1fr 1fr; }
   }
 </style>
 </head>
 <body>
 
-<button id="menu-toggle" aria-label="Toggle menu">☰</button>
-<div id="sidebar-scrim"></div>
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-logo">⚛ G·W·E</div>
+  <button class="nav-btn active" onclick="showPage('home')">🏠 Home</button>
+  <button class="nav-btn" onclick="showPage('bigpicture')">🌌 Big Picture</button>
+  <button class="nav-btn" onclick="showPage('palace')">🧠 Memory Palace</button>
+  <button class="nav-btn" onclick="showPage('notes')">📖 Full Notes</button>
+  <button class="nav-btn" onclick="showPage('hooks')">🪝 Memory Hooks</button>
+  <button class="nav-btn" onclick="showPage('connections')">🔗 Connections</button>
+  <button class="nav-btn" onclick="showPage('traps')">⚠ Traps</button>
+  <button class="nav-btn" onclick="showPage('examiner')">🎯 Examiner</button>
+  <button class="nav-btn" onclick="showPage('quiz')">❓ Self-Test</button>
+  <button class="nav-btn" onclick="showPage('highyield')">⭐ High-Yield</button>
+  <button class="nav-btn" onclick="showPage('ultrafast')">⚡ Ultra-Fast</button>
+  <button class="nav-btn" onclick="showPage('thirtyq')">⏱ 30-Second</button>
+  <button class="nav-btn" onclick="showPage('lastnight')">🌙 Last Night</button>
+</nav>
 
 <div id="app">
-  <nav id="sidebar"></nav>
-  <main id="main"></main>
+
+<!-- ══════════════════════════════ PAGE: HOME ══════════════════════════════ -->
+<div id="page-home" class="page active">
+<div class="page-inner">
+  <div class="hero">
+    <span class="hero-icon">🌍</span>
+    <div class="hero-title">Gravitation &amp; <span>Work–Energy</span></div>
+    <div class="hero-subtitle">SSC CGL Elite Revision System · 13 sections · Built for 100x revision · Zero forgetting</div>
+  </div>
+  <div class="nav-grid">
+    <div class="nav-tile" onclick="showPage('bigpicture')">
+      <span class="tile-emoji">🌌</span>
+      <div class="tile-name">Big Picture</div>
+      <div class="tile-desc">What this chapter is really about</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('palace')">
+      <span class="tile-emoji">🧠</span>
+      <div class="tile-name">Memory Palace</div>
+      <div class="tile-desc">Story-based walk through the chapter</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('notes')">
+      <span class="tile-emoji">📖</span>
+      <div class="tile-name">Full Notes</div>
+      <div class="tile-desc">Every concept, formula &amp; fact preserved</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('hooks')">
+      <span class="tile-emoji">🪝</span>
+      <div class="tile-name">Memory Hooks</div>
+      <div class="tile-desc">Vivid images &amp; stories for each cluster</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('connections')">
+      <span class="tile-emoji">🔗</span>
+      <div class="tile-name">Concept Connections</div>
+      <div class="tile-desc">Cause → Effect · Discovery → Impact</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('traps')">
+      <span class="tile-emoji">⚠</span>
+      <div class="tile-name">Exam Traps</div>
+      <div class="tile-desc">What students get wrong every time</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('examiner')">
+      <span class="tile-emoji">🎯</span>
+      <div class="tile-name">Examiner's Favourites</div>
+      <div class="tile-desc">High-probability question patterns</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('quiz')">
+      <span class="tile-emoji">❓</span>
+      <div class="tile-name">Self-Test Quiz</div>
+      <div class="tile-desc">Active recall training · instant feedback</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('highyield')">
+      <span class="tile-emoji">⭐</span>
+      <div class="tile-name">High-Yield Sheet</div>
+      <div class="tile-desc">Layer 2 · condensed revision</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('ultrafast')">
+      <span class="tile-emoji">⚡</span>
+      <div class="tile-name">Ultra-Fast Sheet</div>
+      <div class="tile-desc">Layer 3 · 5-minute revision</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('thirtyq')">
+      <span class="tile-emoji">⏱</span>
+      <div class="tile-name">30-Second Sheet</div>
+      <div class="tile-desc">Layer 4 · bullet brain dump</div>
+    </div>
+    <div class="nav-tile" onclick="showPage('lastnight')">
+      <span class="tile-emoji">🌙</span>
+      <div class="tile-name">Last Night Sheet</div>
+      <div class="tile-desc">Layer 5 · exam-eve checklist</div>
+    </div>
+  </div>
+</div>
 </div>
 
+<!-- ══════════════════════════════ PAGE: BIG PICTURE ══════════════════════════════ -->
+<div id="page-bigpicture" class="page">
+<div class="page-inner">
+  <div class="page-title">Big Picture</div>
+  <div class="page-subtitle">// what this chapter is really about</div>
+
+  <div class="card card-green">
+    <h3>The Core Thread</h3>
+    <p>This chapter is about <strong>forces that act at a distance</strong> (gravity) and what those forces <strong>do to matter in motion</strong> (work, energy). Everything here is connected: gravity pulls → displacement happens → work is done → energy converts. It is one long chain from Newton's Law to Pascal's Law.</p>
+  </div>
+
+  <h2>The 4 Acts of This Chapter</h2>
+
+  <div class="card card-blue">
+    <strong style="color:var(--blue);">ACT 1 — GRAVITY LAWS</strong>
+    <p style="margin-top:6px;">Newton's Universal Gravitation + Kepler's 3 Planetary Laws. The universe-level rules. <span class="tag tag-fire">🔥 Must Know</span></p>
+  </div>
+  <div class="card card-green">
+    <strong style="color:var(--green);">ACT 2 — GRAVITY VARIATIONS</strong>
+    <p style="margin-top:6px;">Why g changes at poles vs equator, with height, on Moon. Weight vs Mass. <span class="tag tag-fire">🔥 Must Know</span></p>
+  </div>
+  <div class="card card-amber">
+    <strong style="color:var(--amber);">ACT 3 — FLUID LAWS</strong>
+    <p style="margin-top:6px;">Archimedes, Bernoulli, Pascal, Density, Relative Density. Gravity applied to fluids. <span class="tag tag-star">⭐ Important</span></p>
+  </div>
+  <div class="card card-purple">
+    <strong style="color:var(--purple);">ACT 4 — WORK, ENERGY, POWER</strong>
+    <p style="margin-top:6px;">What work is, kinetic & potential energy, conservation law, energy converters (dynamo, motor etc.), Archimedes Principle, noble gases in bulbs. <span class="tag tag-fire">🔥 Must Know</span></p>
+  </div>
+
+  <div class="divider"></div>
+  <div class="card card-green">
+    <h3>Why Examiners Love This Chapter</h3>
+    <p>This chapter touches Physics + Chemistry + Geography all at once (gravity varies by shape of Earth; noble gases in bulbs; energy units). SSC CGL 2023 Mains already asked the PE→KE conversion question. Expect 2–4 questions from here every attempt.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: MEMORY PALACE ══════════════════════════════ -->
+<div id="page-palace" class="page">
+<div class="page-inner">
+  <div class="page-title">🧠 Memory Palace</div>
+  <div class="page-subtitle">// walk through a space museum to recall everything</div>
+
+  <div class="card card-green">
+    <p>You are visiting the <strong>National Museum of the Universe</strong>. Walk through 10 rooms in order. Each room = one major concept cluster. After memorising this walk, you can recall the entire chapter in sequence.</p>
+  </div>
+
+  <h2>The Museum Walk</h2>
+
+  <div class="palace-stop">
+    <div class="palace-num">1</div>
+    <div class="palace-content">
+      <strong>🚪 ENTRANCE GATE — "6.67 Gate"</strong>
+      <span>The gate number is <em>6.67</em>. A security guard (Henry Cavendish, 1798) stamps your ticket. This gate = Newton's Universal Law of Gravitation. G = 6.67×10⁻¹¹ N·m²/kg². Remember: the gate was built in 1798.</span>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">2</div>
+    <div class="palace-content">
+      <strong>🪐 ROOM 1 — Kepler's Ellipse Gallery (1609 art)</strong>
+      <span>Three paintings on the wall, all dated 1609. Painting 1 = an ellipse with sun at corner (Law of Orbit). Painting 2 = two triangles of equal size sweeping the ellipse (Law of Areas). Painting 3 = a clock tied to a giant ruler showing T²∝a³ (Law of Time Period).</span>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">3</div>
+    <div class="palace-content">
+      <strong>⚖ ROOM 2 — Mass vs Weight Scale</strong>
+      <span>A huge balance scale. Left pan = a rock labelled "MASS (kg) — never changes, even on Moon". Right pan = a spring scale labelled "WEIGHT = mg (Newtons) — changes everywhere". The rock stays still. The spring bounces.</span>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">4</div>
+    <div class="palace-content">
+      <strong>🌍 ROOM 3 — The Squashed Earth Globe</strong>
+      <span>A model Earth that is <em>flat at top (poles)</em> and <em>bulged at middle (equator)</em>. A label at poles says "r is SMALL → g is MORE". At equator: "r is BIG → g is LESS". Moon section shows "g/6 on Moon — weight becomes 1/6, mass stays same".</span>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">5</div>
+    <div class="palace-content">
+      <strong>🛁 ROOM 4 — Archimedes' Bathtub</strong>
+      <span>Archimedes is in a giant bathtub. He pushes a block into water. An arrow from below (BUOYANCY) pushes up = weight of water displaced. Beside him: a ship (floats, displaces lots) vs a nail (sinks, displaces little). Ice cube melting = no level change. Sea→River ship sinks lower (less salt = less buoyancy).</span>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">6</div>
+    <div class="palace-content">
+      <strong>💧 ROOM 5 — Density Corner</strong>
+      <span>A shelf: one jar labelled "Density = m/V (kg/m³)" and another jar labelled "Relative Density = density of substance ÷ density of WATER (1 kg/m³) = NO UNIT". The two units cancel, leaving an empty label.</span>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">7</div>
+    <div class="palace-content">
+      <strong>💪 ROOM 6 — Work-Out Room</strong>
+      <span>A coolie lifts luggage on his head and walks. A sign: "Force (mg) ↓, Displacement →, Angle = 90°, Work = ZERO". Beside him a man pushing a box that doesn't move: "Displacement = 0, Work = ZERO". Another man pushes a box that slides: "W = F·d·cosθ → POSITIVE". Work unit = Joule (named after James Prescott Joule).</span>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">8</div>
+    <div class="palace-content">
+      <strong>🎯 ROOM 7 — Energy Conversion Theatre</strong>
+      <span>A ball is thrown up. At top: "All PE (mgh), KE=0". Midway: "Half PE + Half KE". At bottom: "All KE (½mv²), PE=0". Big screen on wall shows: Dynamo/Generator = mechanical→electrical; Motor = electrical→mechanical; Microphone = sound→electrical; Loudspeaker = electrical→sound; Bulb = electrical→light+heat.</span>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">9</div>
+    <div class="palace-content">
+      <strong>💡 ROOM 8 — The Bulb Lab</strong>
+      <span>A giant glowing bulb. Inside = Tungsten filament (symbol W). Surrounding gas = ARGON (noble gas, Group 18/0). Beside it a neon sign. Noble gas family: "He Ne Ar Kr Xe Rn" — recall mnemonic "HiNa, AarKar Xena Raat mein". William Ramsay discovered all except Helium (Janssen + Lockyer). Argon in atmosphere = 0.9%. Also in double-pane windows.</span>
+    </div>
+  </div>
+
+  <div class="palace-stop">
+    <div class="palace-num">10</div>
+    <div class="palace-content">
+      <strong>🔧 ROOM 9 — Pascal's Garage + Bernoulli Pipe</strong>
+      <span>A mechanic lifts a car with one foot (Pascal's Law: pressure in incompressible fluid distributes equally). Brake pedal works same way. On the wall: a tube with varying width; P + ρgh + ½ρv² = constant (Bernoulli: sum of pressure + PE + KE is always same). Pressure unit = Pascal. Thrust = perpendicular force (airplane engines, rockets). Pressure = Force/Area.</span>
+    </div>
+  </div>
+
+  <div class="card card-green" style="margin-top:20px;">
+    <h3>Quick Palace Recall Cue</h3>
+    <p><strong>Gate → Kepler → Scale → Globe → Bathtub → Density → Work-Out → Theatre → Bulb Lab → Garage</strong> — 10 stops, entire chapter covered.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: FULL NOTES ══════════════════════════════ -->
+<div id="page-notes" class="page">
+<div class="page-inner">
+  <div class="page-title">Complete Revision Notes</div>
+  <div class="page-subtitle">// every fact from the lecture, nothing dropped</div>
+
+  <!-- GRAVITATION -->
+  <h2>1. Newton's Universal Law of Gravitation</h2>
+  <div class="card card-green">
+    <p><span class="tag tag-fire">🔥</span> Every object in the universe attracts every other object with a force that is:</p>
+    <ul style="margin-top:8px;">
+      <li><strong>Directly proportional</strong> to the product of their masses</li>
+      <li><strong>Inversely proportional</strong> to the square of the distance between their centres</li>
+    </ul>
+    <div class="formula">F = G · m₁ · m₂ / r²</div>
+    <p><strong>G</strong> = Gravitational Constant = <strong>6.67 × 10⁻¹¹ N·m²/kg²</strong></p>
+    <p>Discovered by <strong>Henry Cavendish in 1798</strong></p>
+    <p>Analogy: Same structure as Coulomb's Electrostatic Force (F = k·q₁q₂/r²), where k = 1/4πε₀</p>
+  </div>
+
+  <!-- MASS VS WEIGHT -->
+  <h2>2. Mass vs Weight</h2>
+  <div class="vs-card">
+    <div class="vs-left">
+      <div class="vs-title">Mass</div>
+      <div class="vs-item">• Amount of matter in an object</div>
+      <div class="vs-item">• SI unit: <strong>kg</strong></div>
+      <div class="vs-item">• Never changes (same on Moon, in space)</div>
+      <div class="vs-item">• Scalar quantity</div>
+      <div class="vs-item">• Directly proportional to <strong>inertia</strong> (Newton's 1st Law)</div>
+    </div>
+    <div class="vs-right">
+      <div class="vs-title">Weight</div>
+      <div class="vs-item">• Force by which Earth attracts a mass</div>
+      <div class="vs-item">• SI unit: <strong>Newton (N)</strong></div>
+      <div class="vs-item">• Changes with location</div>
+      <div class="vs-item">• Vector quantity</div>
+      <div class="vs-item">• W = mg (varies with g)</div>
+    </div>
+  </div>
+  <div class="card card-amber">
+    <p><strong>1 Newton = 10⁵ Dynes</strong> (Newton = SI unit, Dyne = CGS unit)</p>
+    <p>CGS = Centimetre Gram Second system</p>
+  </div>
+
+  <!-- DENSITY -->
+  <h2>3. Density &amp; Relative Density</h2>
+  <div class="card card-blue">
+    <div class="formula">Density = Mass / Volume → SI unit: kg/m³</div>
+    <div class="formula">Relative Density = Density of substance / Density of water</div>
+    <p>Density of water = <strong>1 kg/m³</strong> (reference)</p>
+    <p>Relative Density has <strong>NO UNIT</strong> (units cancel out)</p>
+  </div>
+
+  <!-- KEPLER'S LAWS -->
+  <h2>4. Kepler's Planetary Laws (1609)</h2>
+  <div class="card card-green">
+    <table>
+      <tr><th>Law</th><th>Name</th><th>Statement</th></tr>
+      <tr><td>1st</td><td>Law of Orbit</td><td>Planets move in <strong>elliptical orbit</strong> with Sun at the <strong>focus</strong></td></tr>
+      <tr><td>2nd</td><td>Law of Areas</td><td>Planet sweeps <strong>equal areas</strong> in equal time (speed ↑ near Sun)</td></tr>
+      <tr><td>3rd</td><td>Law of Time Period</td><td><strong>T² ∝ a³</strong> (square of time period ∝ cube of semi-major axis)</td></tr>
+    </table>
+    <p style="margin-top:8px;">All three laws given in <strong>1609</strong> by Johannes Kepler</p>
+  </div>
+
+  <!-- VARIATIONS OF G -->
+  <h2>5. Variation of Gravity (g)</h2>
+  <div class="card card-blue">
+    <div class="formula">g = GM / r²</div>
+    <p>g is <strong>inversely proportional to r²</strong></p>
+    <ul style="margin-top:8px;">
+      <li><strong>Poles:</strong> r is smaller (Earth is flat at poles) → <strong>g is MORE</strong></li>
+      <li><strong>Equator:</strong> r is larger (Earth bulges) → <strong>g is LESS</strong></li>
+      <li><strong>With altitude:</strong> g decreases as you go up</li>
+      <li><strong>On Moon:</strong> g = g(Earth)/6 = 9.8/6 ≈ 1.63 m/s²</li>
+      <li>Earth's shape = <strong>Geoid</strong> (oblate spheroid — flat at poles, bulged at equator)</li>
+    </ul>
+    <p style="margin-top:10px;">g on Earth = <strong>9.8 m/s²</strong> | Acceleration due to gravity is a <strong>vector quantity</strong></p>
+    <p>On Moon: <strong>mass unchanged</strong> (mass ∝ inertia) | <strong>weight becomes 1/6</strong> (W = mg, g → g/6)</p>
+  </div>
+
+  <!-- ARCHIMEDES -->
+  <h2>6. Archimedes' Principle</h2>
+  <div class="card card-green">
+    <p><span class="tag tag-fire">🔥</span> <strong>Buoyant force = weight of fluid displaced</strong></p>
+    <p>Any object submerged in fluid experiences an upward force (buoyancy) equal to the weight of fluid it displaces.</p>
+    <ul style="margin-top:8px;">
+      <li><strong>Ship floats</strong> → large volume displaced → large buoyant force</li>
+      <li><strong>Nail sinks</strong> → tiny volume displaced → negligible buoyancy vs. weight</li>
+      <li><strong>Ice cube melting</strong> → water level does NOT change (melted water exactly fills displaced volume)</li>
+      <li><strong>Ship: Sea → River</strong> → river water is less dense (less salt) → less buoyancy → ship sinks <em>lower</em></li>
+    </ul>
+  </div>
+
+  <!-- WORK -->
+  <h2>7. Work</h2>
+  <div class="card card-blue">
+    <p>Work is done when a force causes a <strong>displacement</strong> in the direction of force.</p>
+    <div class="formula">W = F · d · cosθ</div>
+    <p>Work is a <strong>scalar quantity</strong> | SI unit = <strong>Joule (J)</strong> = N·m | Named after <strong>James Prescott Joule</strong></p>
+    <table style="margin-top:10px;">
+      <tr><th>Condition</th><th>Work Done</th></tr>
+      <tr><td>Force parallel to displacement (θ=0°)</td><td>Positive</td></tr>
+      <tr><td>Force anti-parallel to displacement (θ=180°)</td><td>Negative</td></tr>
+      <tr><td>Displacement = 0 (box doesn't move)</td><td>Zero</td></tr>
+      <tr><td>θ = 90° (coolie carrying load sideways)</td><td>Zero</td></tr>
+    </table>
+  </div>
+
+  <!-- THRUST & PRESSURE -->
+  <h2>8. Thrust &amp; Pressure</h2>
+  <div class="card card-amber">
+    <p><strong>Thrust</strong> = Force applied perpendicularly (at 90°) to a surface. Vector quantity. Examples: hammer hitting nail, airplane engines, rockets.</p>
+    <div class="formula">Pressure = Thrust / Area → SI unit: Pascal (Pa) = N/m² = kg/m·s²</div>
+    <p>Pressure is a <strong>scalar quantity</strong>. Area ↑ → Pressure ↓ (inversely proportional)</p>
+    <p>Examples: lying in sand spreads area → less pressure → less sinking.</p>
+    <p><strong>Parsec ≠ Pascal</strong>: Parsec measures celestial distances (like light year). Pascal measures pressure.</p>
+  </div>
+
+  <!-- POWER -->
+  <h2>9. Power</h2>
+  <div class="card card-purple">
+    <div class="formula">Power = Work / Time = Force × Velocity</div>
+    <p>Rate of doing work. SI unit = <strong>Watt (W)</strong> = J/s</p>
+    <p><strong>1 Horsepower = 746 Watts = 0.746 kW</strong> (Horsepower is NOT SI unit)</p>
+  </div>
+
+  <!-- ENERGY -->
+  <h2>10. Energy</h2>
+  <div class="card card-green">
+    <p>Capacity to do work. SI unit = <strong>Joule (J)</strong> (same as work). Biggest source = <strong>Sun</strong>.</p>
+    <h3 style="margin-top:12px;">Kinetic Energy (KE)</h3>
+    <div class="formula">KE = ½mv² = p²/2m (where p = linear momentum = mv)</div>
+    <ul>
+      <li>If momentum doubles → KE becomes <strong>4 times</strong></li>
+      <li>If momentum halves → KE becomes <strong>1/4</strong></li>
+    </ul>
+    <h3 style="margin-top:12px;">Potential Energy (PE)</h3>
+    <div class="formula">PE = mgh (gravitational potential energy)</div>
+    <p>Energy stored due to position or state. Example: stretched bow, raised object.</p>
+  </div>
+
+  <!-- CONSERVATION OF ENERGY -->
+  <h2>11. Law of Conservation of Energy</h2>
+  <div class="card card-blue">
+    <p><span class="tag tag-fire">🔥</span> <em>"Energy can neither be created nor destroyed. It can only be converted from one form to another."</em></p>
+    <p style="margin-top:8px;">Ball in free fall (exam favourite — CGL Mains 2023):</p>
+    <table style="margin-top:8px;">
+      <tr><th>Position</th><th>PE</th><th>KE</th><th>Total</th></tr>
+      <tr><td>Top (just released)</td><td>mgh (100%)</td><td>0</td><td>mgh</td></tr>
+      <tr><td>Midpoint</td><td>mgh/2 (50%)</td><td>½mv² (50%)</td><td>mgh</td></tr>
+      <tr><td>Bottom (just touching)</td><td>0</td><td>½mv² (100%)</td><td>mgh</td></tr>
+    </table>
+  </div>
+
+  <!-- ENERGY CONVERSIONS -->
+  <h2>12. Energy Conversion Devices</h2>
+  <div class="card card-amber">
+    <table>
+      <tr><th>Device</th><th>Converts</th></tr>
+      <tr><td>Dynamo / Generator</td><td>Mechanical → Electrical</td></tr>
+      <tr><td>Motor</td><td>Electrical → Mechanical (opposite of dynamo)</td></tr>
+      <tr><td>Microphone</td><td>Sound → Electrical</td></tr>
+      <tr><td>Loudspeaker</td><td>Electrical → Sound (opposite of microphone)</td></tr>
+      <tr><td>Electric Bulb</td><td>Electrical → Light + Heat</td></tr>
+    </table>
+    <h3 style="margin-top:14px;">Bulb Details</h3>
+    <p>Filament = <strong>Tungsten (W)</strong> | Gas inside = <strong>Argon</strong> (inert gas, Group 18/Group 0)</p>
+  </div>
+
+  <!-- NOBLE GASES -->
+  <h2>13. Noble Gases (Related)</h2>
+  <div class="card card-purple">
+    <p>Order: <strong>He, Ne, Ar, Kr, Xe, Rn</strong></p>
+    <table style="margin-top:8px;">
+      <tr><th>Gas</th><th>Key Fact</th><th>Discoverer</th></tr>
+      <tr><td>Helium (He)</td><td>First discovered in Sun spectrum</td><td>Janssen &amp; Norman Lockyer</td></tr>
+      <tr><td>Neon (Ne)</td><td>Neon signs (glowing signs)</td><td>William Ramsay</td></tr>
+      <tr><td>Argon (Ar)</td><td>Used in electric bulbs; 0.9% in atmosphere; double-pane windows</td><td>William Ramsay</td></tr>
+      <tr><td>Krypton (Kr)</td><td>Produced in U-235 nuclear fission (with Barium)</td><td>William Ramsay</td></tr>
+      <tr><td>Xenon (Xe)</td><td>Known as "Stranger Gas"</td><td>William Ramsay</td></tr>
+      <tr><td>Radon (Rn)</td><td>Radioactive noble gas</td><td>William Ramsay</td></tr>
+    </table>
+    <p style="margin-top:8px;"><strong>William Ramsay</strong> discovered all noble gases EXCEPT Helium.</p>
+  </div>
+
+  <!-- BERNOULLI -->
+  <h2>14. Bernoulli's Principle</h2>
+  <div class="card card-green">
+    <div class="formula">P + ρgh + ½ρv² = constant</div>
+    <p>Sum of pressure energy + potential energy + kinetic energy remains constant at every point in a flowing fluid. Based on conservation of energy.</p>
+  </div>
+
+  <!-- PASCAL -->
+  <h2>15. Pascal's Law</h2>
+  <div class="card card-blue">
+    <p><span class="tag tag-fire">🔥</span> Pressure applied to an <strong>incompressible fluid</strong> in a closed container is transmitted <strong>equally in all directions</strong>.</p>
+    <ul style="margin-top:8px;">
+      <li>Car hydraulic lift: one foot press → whole car lifts</li>
+      <li>Hydraulic brakes: small foot force → large braking force</li>
+    </ul>
+  </div>
+
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: MEMORY HOOKS ══════════════════════════════ -->
+<div id="page-hooks" class="page">
+<div class="page-inner">
+  <div class="page-title">🪝 Smart Memory Hooks</div>
+  <div class="page-subtitle">// vivid images that stick for months</div>
+
+  <div class="memory-hook">
+    <h4>Hook 1 — G = 6.67 × 10⁻¹¹ (Cavendish 1798)</h4>
+    <p>Imagine a very OLD man (1798 = old) named <strong>Cavendish</strong> opening a lock. The lock number is <strong>667</strong>. He has a huge negative power (-11) tattooed on his forehead. Every time you see "G", picture this old man with the 667 lock. Done — you'll never forget G's value.</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 2 — Kepler's 3 Laws (1609)</h4>
+    <p>It's <strong>1609</strong> — a famous painter is painting <strong>3 pictures</strong> of his planet girlfriend: (1) She's running in an OVAL track (ellipse) — Orbit; (2) She sweeps the same floor area every hour — Areas; (3) Her watch (Time²) is tied to her long arm (a³) — Time Period. The year 1609 was when he painted all three.</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 3 — Poles MORE gravity, Equator LESS</h4>
+    <p>Earth is like a <strong>fat man sleeping</strong>. His belly (equator) sticks OUT — farther from centre → less gravity. His head and feet (poles) are squished FLAT — closer to centre → more gravity. Whenever you see "equator" think "belly OUT" = gravity down.</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 4 — 1 Newton = 10⁵ Dynes</h4>
+    <p>One NEWTON is a <strong>big powerful man</strong>. One DYNE is a tiny ant. It takes <strong>100,000 ants</strong> (10⁵) to equal one Newton. Picture Newton stepping on 100,000 ants.</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 5 — Ship Sea→River sinks LOWER</h4>
+    <p>Imagine a ship carrying <strong>salt</strong>. In the <strong>salty sea</strong>, the salt in the water holds the ship up like a pillow. When it enters the <strong>fresh river</strong>, the pillow disappears — the ship drops. Salt = support. No salt = no support = sink lower.</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 6 — Ice Cube in Water — Level Unchanged</h4>
+    <p>Imagine you paid for exactly 1 glass of water. The ice cube <em>was already</em> "charging" you for the space it was taking. When it melts, it just "pays back" the exact space it borrowed. Net change = zero. The ice was honest!</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 7 — Coolie's Work = Zero</h4>
+    <p>The coolie is walking <strong>sideways</strong> (horizontal) while gravity pulls <strong>down</strong> (vertical). Gravity and displacement are strangers — they're at 90° to each other. Strangers don't do business together. Work done by gravity = ZERO.</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 8 — Energy Converters (Microphone vs Speaker)</h4>
+    <p>Microphone: you <strong>SPEAK</strong> into it → Sound IN, Electrical OUT. Loudspeaker: sound comes <strong>OUT</strong> → Electrical IN, Sound OUT. <em>Micro = small input (your voice). Loud = big output (speaker sound).</em> They are mirror opposites. Same logic for Dynamo (mechanical→electrical) ↔ Motor (electrical→mechanical).</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 9 — Noble Gas Mnemonic</h4>
+    <p><strong>"HiNa, AarKar Xena Raat mein"</strong> = He, Ne, Ar, Kr, Xe, Rn. Imagine Hina from a Bollywood film telling Xena the warrior princess to "do something (Aar-Kar) at night (Raat mein)." All discovered by William Ramsay except Helium (Janssen + Lockyer found it in the Sun).</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 10 — KE = p²/2m (Momentum doubles → KE × 4)</h4>
+    <p>KE depends on p². If you <strong>double</strong> p, you square it: (2p)² = 4p². So KE becomes <strong>4× bigger</strong>. Think: doubling your speed on a scooter doesn't just double the crash damage — it <strong>quadruples</strong> it. That's why speeding kills.</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 11 — Tungsten in Bulb (symbol W)</h4>
+    <p>Tungsten's symbol is <strong>W</strong> because in German it's called <strong>Wolfram</strong>. The bulb has a <strong>W</strong>olf inside it (tungsten) that glows with anger (heat + light) when electricity flows. The wolf is surrounded by Argon gas — the bodyguard that prevents the wolf from reacting.</p>
+  </div>
+
+  <div class="memory-hook">
+    <h4>Hook 12 — Pascal's Law: Car Lift</h4>
+    <p>Imagine a mechanic lifting a <strong>2-tonne car</strong> with just ONE FOOT. He's not Hercules — he's using Pascal. In his hydraulic lift, the pressure from his little foot spreads equally through the fluid and comes out with massive force at the other piston. Pascal = pressure equaliser.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: CONNECTIONS ══════════════════════════════ -->
+<div id="page-connections" class="page">
+<div class="page-inner">
+  <div class="page-title">🔗 Concept Connections</div>
+  <div class="page-subtitle">// facts never live alone — here's the network</div>
+
+  <h2>Cause → Effect Chains</h2>
+
+  <div class="card card-green">
+    <h3>Chain 1 — Earth's Shape → Gravity Variation</h3>
+    <div class="connection">
+      <div class="conn-box">Earth = Geoid (oblate spheroid)</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">Poles: r is small</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">g = GM/r² is MORE at poles</div>
+    </div>
+    <div class="connection">
+      <div class="conn-box">Equator: r is large</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">g is LESS at equator</div>
+    </div>
+    <div class="connection">
+      <div class="conn-box">Altitude increases</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">r increases</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">g decreases</div>
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <h3>Chain 2 — Salt Content → Buoyancy → Ship Level</h3>
+    <div class="connection">
+      <div class="conn-box">Seawater has high salt</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">Density is HIGH</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">More buoyancy</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">Ship floats HIGHER</div>
+    </div>
+    <div class="connection">
+      <div class="conn-box">River water: no salt</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">Less density</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">Less buoyancy</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">Ship sinks LOWER</div>
+    </div>
+  </div>
+
+  <div class="card card-amber">
+    <h3>Chain 3 — Free Fall (PE → KE)</h3>
+    <div class="connection">
+      <div class="conn-box">Object held at height h</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">PE = mgh, KE = 0</div>
+    </div>
+    <div class="connection">
+      <div class="conn-box">Released — falls</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">PE ↓, KE ↑</div>
+    </div>
+    <div class="connection">
+      <div class="conn-box">Just touches ground</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">PE = 0, KE = mgh</div>
+    </div>
+    <p style="margin-top:8px; font-size:13px; color:var(--amber);">Total energy = constant throughout = Law of Conservation of Energy</p>
+  </div>
+
+  <div class="card card-purple">
+    <h3>Chain 4 — Mass → Inertia → Weight</h3>
+    <div class="connection">
+      <div class="conn-box">Mass (m)</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">Inertia (Newton 1st Law)</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">Stays constant everywhere</div>
+    </div>
+    <div class="connection">
+      <div class="conn-box">Weight = mg</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">g changes (Moon = g/6)</div>
+      <div class="conn-arrow">→</div>
+      <div class="conn-box">Weight changes</div>
+    </div>
+  </div>
+
+  <h2>Concept Opposites (Exam Loves These)</h2>
+  <div class="card card-green">
+    <table>
+      <tr><th>Device A</th><th>Converts</th><th>Device B (Reverse)</th><th>Converts</th></tr>
+      <tr><td>Dynamo / Generator</td><td>Mech → Elec</td><td>Motor</td><td>Elec → Mech</td></tr>
+      <tr><td>Microphone</td><td>Sound → Elec</td><td>Loudspeaker</td><td>Elec → Sound</td></tr>
+    </table>
+  </div>
+
+  <h2>Formula → Application Links</h2>
+  <div class="card card-blue">
+    <div class="formula">KE = p²/2m → If p doubles → KE × 4 | If p halves → KE × ¼</div>
+    <div class="formula">Pressure = F/A → Area ↑ → Pressure ↓ (lying in sand example)</div>
+    <div class="formula">W = Fd·cosθ → θ=90° → cos90°=0 → Work = 0 (coolie example)</div>
+  </div>
+
+  <h2>Newton ↔ Coulomb Analogy</h2>
+  <div class="card card-purple">
+    <p>Newton's Gravity Law and Coulomb's Electrostatic Law have <strong>identical mathematical structure</strong>:</p>
+    <div class="formula">F_gravity = G·m₁m₂/r²   ↔   F_electric = k·q₁q₂/r²</div>
+    <p>Both are inverse-square laws. Both have a constant of proportionality. This is not a coincidence — nature loves this pattern.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: TRAPS ══════════════════════════════ -->
+<div id="page-traps" class="page">
+<div class="page-inner">
+  <div class="page-title">⚠ Exam Traps</div>
+  <div class="page-subtitle">// what students get wrong every single time</div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 1 — Weight ≠ Mass</h4>
+    <p><strong>Mass</strong> is in kg and never changes. <strong>Weight</strong> is in Newton and changes with gravity. Exam question: "On Moon, a person's _______ stays same." Answer: MASS. "Weight on Moon becomes _______ of Earth weight." Answer: 1/6.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 2 — g is MORE at Poles (not Equator)</h4>
+    <p>Common confusion: students think equator is "closer to Earth's centre" because Earth is round. Actually the equator BULGES OUT — it is farther from the centre. Poles are closer to the centre → g is MORE at poles. Remember the "fat man sleeping" hook.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 3 — Relative Density has NO UNIT</h4>
+    <p>Students often write kg/m³ as the unit of relative density. Wrong. Relative density = density of substance / density of water. Both units cancel = dimensionless quantity. No unit.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 4 — Kepler's 3rd Law: T² ∝ a³ (not T³ ∝ a²)</h4>
+    <p>Easy to mix up: it is the SQUARE of T that is proportional to the CUBE of a (semi-major axis). Not the other way. T² ∝ a³. Exam writers will swap the exponents to trap you.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 5 — Parsec ≠ Pascal</h4>
+    <p><strong>Pascal (Pa)</strong> = unit of pressure (N/m²). <strong>Parsec</strong> = unit of astronomical distance (like light-year). Two completely different things. Exam loves to put them in a match-the-column.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 6 — Horsepower ≠ SI Unit</h4>
+    <p>Horsepower is NOT the SI unit of power. The SI unit is Watt. 1 HP = 746 W = 0.746 kW. Exam will ask "SI unit of power" — answer is Watt, not Horsepower.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 7 — Ice Melting in Water → Level UNCHANGED</h4>
+    <p>Intuition says water level should rise when ice melts. It does NOT. The ice was already displacing water equal to its mass. When it melts, it occupies that exact space. Level = constant. This is a classic MCQ trap.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 8 — Dynamo vs Motor Direction</h4>
+    <p>Dynamo: Mechanical → Electrical. Motor: Electrical → Mechanical. Students often swap them. Trick: a MOTOR moves things (mechanical output). A DYNAMO/GENERATOR generates electricity (electrical output).</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 9 — Microphone vs Loudspeaker</h4>
+    <p>Microphone: you speak INTO it (sound input → electrical output). Loudspeaker: sound comes OUT of it (electrical input → sound output). They are exact reverses. A common trap is asking "which converts electrical to sound?" → Loudspeaker (not microphone).</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 10 — Work Done by Coolie = Zero (not positive)</h4>
+    <p>Coolie carries load horizontally. Gravity acts downwards (vertical). Angle between force (gravity) and displacement (horizontal) = 90°. cos90° = 0. Work done by gravity = ZERO. But physically he IS doing work against his muscles — only gravitational work is zero.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 11 — Helium Discoverer is NOT Ramsay</h4>
+    <p>William Ramsay discovered Ne, Ar, Kr, Xe, Rn. But Helium was discovered by <strong>Janssen and Norman Lockyer</strong> (in the Sun's spectrum). Exam WILL ask who discovered Helium — don't write Ramsay.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 12 — Xenon = "Stranger Gas"</h4>
+    <p>Xenon is nicknamed "Stranger Gas." Don't confuse with any other noble gas. "Xenos" in Greek = stranger. Xenon = the strange noble gas with many unusual properties.</p>
+  </div>
+
+  <div class="trap-box">
+    <h4>⚠ Trap 13 — G vs g</h4>
+    <p><strong>G</strong> (capital) = Universal Gravitational Constant = 6.67×10⁻¹¹ N·m²/kg² — NEVER changes anywhere in the universe. <strong>g</strong> (small) = acceleration due to gravity = 9.8 m/s² on Earth — CHANGES with location. Classic trap: "Which of G/g is constant everywhere in the universe?" → G.</p>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: EXAMINER ══════════════════════════════ -->
+<div id="page-examiner" class="page">
+<div class="page-inner">
+  <div class="page-title">🎯 Examiner's Favourites</div>
+  <div class="page-subtitle">// how the paper setter attacks this chapter</div>
+
+  <h2>High Probability Questions</h2>
+
+  <div class="card card-green">
+    <p><span class="tag tag-fire">🔥</span> <strong>Q1:</strong> The value of G (gravitational constant) was first experimentally determined by whom and in which year?</p>
+    <p style="color:var(--green); margin-top:6px;">→ Henry Cavendish, 1798</p>
+  </div>
+  <div class="card card-green">
+    <p><span class="tag tag-fire">🔥</span> <strong>Q2:</strong> At which position on Earth is the value of g maximum?</p>
+    <p style="color:var(--green); margin-top:6px;">→ At the Poles</p>
+  </div>
+  <div class="card card-green">
+    <p><span class="tag tag-fire">🔥</span> <strong>Q3:</strong> According to Kepler's Third Law, T² is proportional to ___.</p>
+    <p style="color:var(--green); margin-top:6px;">→ a³ (cube of semi-major axis)</p>
+  </div>
+  <div class="card card-blue">
+    <p><span class="tag tag-star">⭐</span> <strong>Q4:</strong> A ship moves from seawater to river water. Its level will ___.</p>
+    <p style="color:var(--blue); margin-top:6px;">→ Go DOWN (sink lower) — river water has less density</p>
+  </div>
+  <div class="card card-blue">
+    <p><span class="tag tag-fire">🔥</span> <strong>Q5 (CGL Mains 2023):</strong> At which point during free fall is an object's kinetic energy maximum?</p>
+    <p style="color:var(--blue); margin-top:6px;">→ At the bottom (just before hitting ground) — all PE converted to KE</p>
+  </div>
+  <div class="card card-amber">
+    <p><span class="tag tag-star">⭐</span> <strong>Q6:</strong> If linear momentum doubles, kinetic energy becomes ___.</p>
+    <p style="color:var(--amber); margin-top:6px;">→ 4 times (since KE = p²/2m and p is squared)</p>
+  </div>
+  <div class="card card-amber">
+    <p><span class="tag tag-star">⭐</span> <strong>Q7:</strong> Which gas is used in electric bulbs?</p>
+    <p style="color:var(--amber); margin-top:6px;">→ Argon</p>
+  </div>
+  <div class="card card-purple">
+    <p><span class="tag tag-star">⭐</span> <strong>Q8:</strong> Who discovered all noble gases except Helium?</p>
+    <p style="color:var(--purple); margin-top:6px;">→ William Ramsay. Helium = Janssen &amp; Norman Lockyer</p>
+  </div>
+  <div class="card card-green">
+    <p><span class="tag tag-fire">🔥</span> <strong>Q9:</strong> Which device converts Electrical energy into Mechanical energy?</p>
+    <p style="color:var(--green); margin-top:6px;">→ Motor (Dynamo is the reverse: Mechanical → Electrical)</p>
+  </div>
+  <div class="card card-blue">
+    <p><span class="tag tag-star">⭐</span> <strong>Q10:</strong> SI unit of Pressure is ___.</p>
+    <p style="color:var(--blue); margin-top:6px;">→ Pascal (Pa) = N/m²</p>
+  </div>
+
+  <h2>Statement-Based / Assertion-Reason Patterns</h2>
+  <div class="card card-amber">
+    <p><strong>A:</strong> A person's weight becomes 1/6 on Moon. <strong>R:</strong> The Moon's gravity is 1/6 of Earth's.</p>
+    <p style="color:var(--green); margin-top:6px;">→ Both A and R are correct, and R is the correct explanation of A.</p>
+  </div>
+  <div class="card card-amber">
+    <p><strong>A:</strong> The work done by a coolie carrying luggage on his head is zero. <strong>R:</strong> The force of gravity acts perpendicular to the direction of motion.</p>
+    <p style="color:var(--green); margin-top:6px;">→ Both correct, R explains A. (Work = Fd cosθ, θ=90°, cos90°=0)</p>
+  </div>
+  <div class="card card-red">
+    <p><strong>A:</strong> When ice melts in a glass of water, the water level rises. <strong>R:</strong> Ice expands when it melts.</p>
+    <p style="color:var(--red); margin-top:6px;">→ A is WRONG (level unchanged). R is also wrong (ice contracts when it melts into water).</p>
+  </div>
+
+  <h2>Match the Following Possibilities</h2>
+  <div class="card card-green">
+    <table>
+      <tr><th>Column A</th><th>Column B</th></tr>
+      <tr><td>Dynamo</td><td>Electrical → Mechanical</td></tr>
+      <tr><td>Motor</td><td>Mechanical → Electrical</td></tr>
+      <tr><td>Microphone</td><td>Electrical → Sound</td></tr>
+      <tr><td>Loudspeaker</td><td>Sound → Electrical</td></tr>
+    </table>
+    <p style="color:var(--red); margin-top:8px;">Note: The columns above are INTENTIONALLY SWAPPED to simulate a trap. Correct: Dynamo = Mech→Elec, Motor = Elec→Mech, Microphone = Sound→Elec, Loudspeaker = Elec→Sound.</p>
+  </div>
+
+  <h2>Chronology Questions</h2>
+  <div class="card card-blue">
+    <ul>
+      <li><strong>1609</strong> — Kepler's 3 Planetary Laws published</li>
+      <li><strong>1687</strong> — Newton's Law of Universal Gravitation published (Principia)</li>
+      <li><strong>1798</strong> — Cavendish experimentally measured G</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: SELF-TEST ══════════════════════════════ -->
+<div id="page-quiz" class="page">
+<div class="page-inner">
+  <div class="page-title">❓ Self-Test Quiz</div>
+  <div class="page-subtitle">// active recall training — click to reveal answers</div>
+
+  <div id="score-board" class="score-display">
+    <div>
+      <div class="score-num" id="score-txt">0 / 0</div>
+      <div class="score-label">questions attempted</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="score-bar" style="width:0%"></div></div>
+    <button onclick="resetQuiz()" style="background:var(--bg-hover);border:1px solid var(--border);color:var(--text-secondary);padding:6px 14px;border-radius:6px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:12px;">Reset</button>
+  </div>
+
+  <div id="quiz-container"></div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: HIGH-YIELD ══════════════════════════════ -->
+<div id="page-highyield" class="page">
+<div class="page-inner">
+  <div class="page-title">⭐ High-Yield Revision Notes</div>
+  <div class="page-subtitle">// Layer 2 · condensed · 10-minute revision</div>
+
+  <h2>Universal Gravitation</h2>
+  <div class="card card-green">
+    <ul>
+      <li>F = Gm₁m₂/r² | G = <strong>6.67 × 10⁻¹¹</strong> N·m²/kg² | Measured by <strong>Cavendish 1798</strong></li>
+      <li>Mass stays same everywhere | Weight = mg (changes with g)</li>
+      <li>1 Newton = <strong>10⁵ Dynes</strong> | Newton = SI | Dyne = CGS</li>
+    </ul>
+  </div>
+
+  <h2>Kepler's Laws (1609)</h2>
+  <div class="card card-blue">
+    <ul>
+      <li>Law of Orbit: ellipse, Sun at focus</li>
+      <li>Law of Areas: equal areas in equal time</li>
+      <li>Law of Time Period: <strong>T² ∝ a³</strong></li>
+    </ul>
+  </div>
+
+  <h2>Gravity Variations</h2>
+  <div class="card card-amber">
+    <ul>
+      <li>g = GM/r² → poles: more g | equator: less g | altitude: decreasing g</li>
+      <li>Moon: g = g_Earth/6 | Weight = 1/6 | Mass unchanged</li>
+      <li>g = 9.8 m/s² on Earth</li>
+    </ul>
+  </div>
+
+  <h2>Density / Archimedes / Fluids</h2>
+  <div class="card card-green">
+    <ul>
+      <li>Density = m/V (kg/m³) | Relative density = no unit</li>
+      <li>Archimedes: Buoyancy = weight of fluid displaced</li>
+      <li>Ice melting: level unchanged | Sea→River: ship sinks lower</li>
+      <li>Pascal's Law: pressure in incompressible fluid = equally distributed</li>
+      <li>Bernoulli: P + ρgh + ½ρv² = constant</li>
+    </ul>
+  </div>
+
+  <h2>Work, Power, Energy</h2>
+  <div class="card card-blue">
+    <ul>
+      <li>W = Fd cosθ | Scalar | Unit = Joule (James Prescott Joule)</li>
+      <li>Work = 0 when θ=90° (coolie) or displacement = 0</li>
+      <li>Power = W/t = Fv | Unit = Watt | 1 HP = <strong>746 W</strong></li>
+      <li>KE = ½mv² = p²/2m | p doubles → KE×4</li>
+      <li>PE = mgh | Conservation: PE+KE = constant</li>
+    </ul>
+  </div>
+
+  <h2>Energy Converters</h2>
+  <div class="card card-amber">
+    <table>
+      <tr><th>Device</th><th>Conversion</th></tr>
+      <tr><td>Dynamo / Generator</td><td>Mech → Elec</td></tr>
+      <tr><td>Motor</td><td>Elec → Mech</td></tr>
+      <tr><td>Microphone</td><td>Sound → Elec</td></tr>
+      <tr><td>Loudspeaker</td><td>Elec → Sound</td></tr>
+      <tr><td>Bulb</td><td>Elec → Light + Heat</td></tr>
+    </table>
+    <p style="margin-top:8px;"><strong>Bulb:</strong> Filament = Tungsten (W) | Gas = Argon (Group 18)</p>
+  </div>
+
+  <h2>Noble Gases (Exam Tested)</h2>
+  <div class="card card-purple">
+    <ul>
+      <li>He, Ne, Ar, Kr, Xe, Rn — Group 18 / Group 0</li>
+      <li>William Ramsay discovered all EXCEPT Helium</li>
+      <li>Helium: Janssen + Norman Lockyer</li>
+      <li>Argon: 0.9% in atmosphere | used in bulbs + double-pane windows</li>
+      <li>Xenon = "Stranger Gas"</li>
+      <li>Krypton: produced in U-235 fission (with Barium)</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: ULTRA FAST ══════════════════════════════ -->
+<div id="page-ultrafast" class="page">
+<div class="page-inner">
+  <div class="page-title">⚡ Ultra-Fast Revision Sheet</div>
+  <div class="page-subtitle">// Layer 3 · scan in 5 minutes</div>
+
+  <div class="card">
+    <div class="ufs-row"><div class="ufs-key">G value</div><div class="ufs-val">6.67 × 10⁻¹¹ N·m²/kg² | Cavendish 1798</div></div>
+    <div class="ufs-row"><div class="ufs-key">g Earth</div><div class="ufs-val">9.8 m/s² | Vector quantity</div></div>
+    <div class="ufs-row"><div class="ufs-key">g Moon</div><div class="ufs-val">g/6 | Weight → 1/6 | Mass → same</div></div>
+    <div class="ufs-row"><div class="ufs-key">g more at</div><div class="ufs-val">Poles (r smaller) | Less at equator</div></div>
+    <div class="ufs-row"><div class="ufs-key">Newton</div><div class="ufs-val">10⁵ Dynes | SI unit of force</div></div>
+    <div class="ufs-row"><div class="ufs-key">Weight</div><div class="ufs-val">W = mg | Newtons | Varies</div></div>
+    <div class="ufs-row"><div class="ufs-key">Density</div><div class="ufs-val">m/V (kg/m³) | Relative density = no unit</div></div>
+    <div class="ufs-row"><div class="ufs-key">Kepler (1609)</div><div class="ufs-val">Orbit (ellipse) | Area (equal) | T² ∝ a³</div></div>
+    <div class="ufs-row"><div class="ufs-key">Archimedes</div><div class="ufs-val">Buoyancy = weight of fluid displaced</div></div>
+    <div class="ufs-row"><div class="ufs-key">Sea → River</div><div class="ufs-val">Ship sinks LOWER (less buoyancy)</div></div>
+    <div class="ufs-row"><div class="ufs-key">Ice melts</div><div class="ufs-val">Water level UNCHANGED</div></div>
+    <div class="ufs-row"><div class="ufs-key">Work</div><div class="ufs-val">Fd cosθ | Joule (J. P. Joule) | Scalar</div></div>
+    <div class="ufs-row"><div class="ufs-key">Work = 0</div><div class="ufs-val">θ=90° (coolie) or displacement=0</div></div>
+    <div class="ufs-row"><div class="ufs-key">Pressure</div><div class="ufs-val">F/A | Pascal (Pa) | Scalar</div></div>
+    <div class="ufs-row"><div class="ufs-key">Thrust</div><div class="ufs-val">⊥ force | Rockets, airplane engines, hammer</div></div>
+    <div class="ufs-row"><div class="ufs-key">Power</div><div class="ufs-val">W/t = Fv | Watt | 1 HP = 746 W</div></div>
+    <div class="ufs-row"><div class="ufs-key">KE</div><div class="ufs-val">½mv² = p²/2m | p×2 → KE×4</div></div>
+    <div class="ufs-row"><div class="ufs-key">PE</div><div class="ufs-val">mgh | Stretched bow example</div></div>
+    <div class="ufs-row"><div class="ufs-key">Free fall</div><div class="ufs-val">Top: all PE | Mid: ½PE+½KE | Bottom: all KE</div></div>
+    <div class="ufs-row"><div class="ufs-key">Dynamo</div><div class="ufs-val">Mech → Elec | Motor: Elec → Mech</div></div>
+    <div class="ufs-row"><div class="ufs-key">Microphone</div><div class="ufs-val">Sound → Elec | Speaker: Elec → Sound</div></div>
+    <div class="ufs-row"><div class="ufs-key">Bulb</div><div class="ufs-val">Elec → Light+Heat | W filament | Argon gas</div></div>
+    <div class="ufs-row"><div class="ufs-key">Noble gases</div><div class="ufs-val">He Ne Ar Kr Xe Rn | Ramsay (not He) | Xe = Stranger</div></div>
+    <div class="ufs-row"><div class="ufs-key">Helium</div><div class="ufs-val">Janssen + Norman Lockyer (NOT Ramsay)</div></div>
+    <div class="ufs-row"><div class="ufs-key">Argon</div><div class="ufs-val">0.9% atmosphere | Bulbs | Double-pane windows</div></div>
+    <div class="ufs-row"><div class="ufs-key">Pascal Law</div><div class="ufs-val">Incompressible fluid → pressure = uniform distribution</div></div>
+    <div class="ufs-row"><div class="ufs-key">Bernoulli</div><div class="ufs-val">P + ρgh + ½ρv² = constant (Energy conservation in fluids)</div></div>
+    <div class="ufs-row"><div class="ufs-key">Parsec</div><div class="ufs-val">Distance unit (≠ Pascal which is pressure)</div></div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: 30 SECOND ══════════════════════════════ -->
+<div id="page-thirtyq" class="page">
+<div class="page-inner">
+  <div class="page-title">⏱ 30-Second Revision Sheet</div>
+  <div class="page-subtitle">// Layer 4 · absolute minimum · 30 seconds per glance</div>
+
+  <div class="chip-grid">
+    <div class="chip">G = <strong>6.67×10⁻¹¹</strong> | Cavendish 1798</div>
+    <div class="chip">g poles > g equator</div>
+    <div class="chip">Moon: g/6, weight/6, mass same</div>
+    <div class="chip">1N = <strong>10⁵</strong> Dyne</div>
+    <div class="chip">Kepler: <strong>1609</strong> | T²∝a³</div>
+    <div class="chip">Buoyancy = displaced fluid weight</div>
+    <div class="chip">Sea→River: ship sinks lower</div>
+    <div class="chip">Ice melts: level UNCHANGED</div>
+    <div class="chip">Relative density: NO UNIT</div>
+    <div class="chip">Work = Fd cosθ | Joule</div>
+    <div class="chip">θ=90° → Work = 0</div>
+    <div class="chip">Pressure = F/A | Pascal</div>
+    <div class="chip">Power = W/t | Watt</div>
+    <div class="chip">1 HP = <strong>746 W</strong></div>
+    <div class="chip">KE = ½mv² = p²/2m</div>
+    <div class="chip">p×2 → KE×4</div>
+    <div class="chip">Top: all PE | Bottom: all KE</div>
+    <div class="chip">Dynamo: Mech→Elec</div>
+    <div class="chip">Motor: Elec→Mech</div>
+    <div class="chip">Mic: Sound→Elec</div>
+    <div class="chip">Speaker: Elec→Sound</div>
+    <div class="chip">Bulb: W filament + Argon</div>
+    <div class="chip">He: Janssen + Lockyer</div>
+    <div class="chip">Ne,Ar,Kr,Xe,Rn: Ramsay</div>
+    <div class="chip">Xe = Stranger gas</div>
+    <div class="chip">Ar = 0.9% atmosphere</div>
+    <div class="chip">Pascal Law: pressure uniform in fluid</div>
+    <div class="chip">Bernoulli: P+ρgh+½ρv²=C</div>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════ PAGE: LAST NIGHT ══════════════════════════════ -->
+<div id="page-lastnight" class="page">
+<div class="page-inner">
+  <div class="page-title">🌙 Last Night Sheet</div>
+  <div class="page-subtitle">// Layer 5 · exam-eve checklist · read once, sleep well</div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Universal Gravitation</div>
+    <div class="ln-facts">G = <em>6.67×10⁻¹¹</em> N·m²/kg² (Cavendish, <em>1798</em>). F∝m₁m₂, F∝1/r². Same form as Coulomb's Law.</div>
+  </div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Mass vs Weight</div>
+    <div class="ln-facts">Mass (kg) = constant. Weight (N) = mg = varies. On Moon: mass same, weight = <em>1/6</em>. 1N = <em>10⁵</em> Dyne.</div>
+  </div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Kepler's Laws — 1609</div>
+    <div class="ln-facts">1st = ellipse (Sun at focus). 2nd = equal areas. 3rd = <em>T² ∝ a³</em>. All three in <em>1609</em>.</div>
+  </div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Gravity Variation</div>
+    <div class="ln-facts">g = GM/r². Poles: <em>more g</em> (r small). Equator: <em>less g</em> (r big). Altitude: g decreases. Earth shape = Geoid.</div>
+  </div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Density / Archimedes</div>
+    <div class="ln-facts">Density = m/V. Relative density = <em>no unit</em>. Buoyancy = displaced weight. Ice melts = <em>no level change</em>. Sea→River = ship sinks <em>lower</em>.</div>
+  </div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Work, Pressure, Power</div>
+    <div class="ln-facts">W = Fd cosθ. Joule (scalar). θ=90° → W=0. Pressure = F/A = <em>Pascal</em>. Power = W/t = Watt. <em>1 HP = 746 W</em>.</div>
+  </div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Energy & Conservation</div>
+    <div class="ln-facts">KE = ½mv² = p²/2m. PE = mgh. p×2 → KE×<em>4</em>. Free fall: Top=all PE, Mid=half/half, Bottom=all KE. Energy neither created nor destroyed.</div>
+  </div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Energy Converters</div>
+    <div class="ln-facts">Dynamo/Generator: Mech→Elec. Motor: Elec→Mech. Mic: Sound→Elec. Speaker: Elec→Sound. Bulb: Elec→Light+Heat. Filament = <em>Tungsten (W)</em>. Gas = <em>Argon</em>.</div>
+  </div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Noble Gases (Critical)</div>
+    <div class="ln-facts">He Ne Ar Kr Xe Rn. <em>William Ramsay</em> = all except He. He = <em>Janssen + Lockyer</em>. Ar = bulbs + 0.9% atm. Xe = <em>Stranger gas</em>. Kr = U-235 fission product.</div>
+  </div>
+
+  <div class="ln-block">
+    <div class="ln-topic">Pascal & Bernoulli</div>
+    <div class="ln-facts">Pascal: incompressible fluid → pressure equally distributed (hydraulic lift, brakes). Bernoulli: P + ρgh + ½ρv² = <em>constant</em>.</div>
+  </div>
+
+  <div class="ln-block" style="border-color: var(--red-dim);">
+    <div class="ln-topic" style="color:var(--red);">⚠ Don't Confuse</div>
+    <div class="ln-facts">G ≠ g | Pascal ≠ Parsec | Ramsay ≠ Helium | Dynamo ≠ Motor | Mic ≠ Speaker | Ice melts → NO change. Horsepower ≠ SI unit. T² ∝ a³ (not T³ ∝ a²).</div>
+  </div>
+</div>
+</div>
+
+</div><!-- end #app -->
+
 <script>
-/* ============================================================
-   NAVIGATION + PAGE DATA
-   ============================================================ */
-const NAV = [
-  { group: "Start Here", items: [
-    { id: "overview", icon: "🌌", label: "Big Picture" },
-    { id: "palace", icon: "🧠", label: "Memory Palace" },
-  ]},
-  { group: "Complete Notes", items: [
-    { id: "gravitation", icon: "🪐", label: "Gravitation Laws" },
-    { id: "mass-weight", icon: "⚖️", label: "Mass, Weight & Density" },
-    { id: "kepler", icon: "☀️", label: "Kepler's Laws" },
-    { id: "archimedes", icon: "🛳️", label: "Archimedes & Floatation" },
-    { id: "gvariation", icon: "🌍", label: "Variation of g" },
-    { id: "work", icon: "📦", label: "Work Done" },
-    { id: "thrust", icon: "📐", label: "Thrust & Pressure" },
-    { id: "power", icon: "⚡", label: "Power" },
-    { id: "energy", icon: "🔋", label: "Energy & Conservation" },
-    { id: "freefall", icon: "🍎", label: "Free Fall Case Study" },
-    { id: "conversions", icon: "🔁", label: "Energy Conversions" },
-    { id: "gases", icon: "💡", label: "Noble Gases in Bulbs" },
-    { id: "fluids", icon: "🌊", label: "Bernoulli & Pascal" },
-  ]},
-  { group: "Exam Warfare", items: [
-    { id: "traps", icon: "⚠️", label: "Exam Traps" },
-    { id: "examiner", icon: "🎯", label: "Examiner's Favourites" },
-    { id: "recall", icon: "❓", label: "Active Recall" },
-  ]},
-  { group: "Revision Layers", items: [
-    { id: "highyield", icon: "⭐", label: "High-Yield Sheet" },
-    { id: "ultrafast", icon: "🚀", label: "Ultra-Fast Sheet" },
-    { id: "thirtysec", icon: "⏱️", label: "30-Second Sheet" },
-    { id: "lastnight", icon: "🌙", label: "Last Night Sheet" },
-  ]},
+// ─── PAGE ROUTER ───
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const btns = document.querySelectorAll('.nav-btn');
+  btns.forEach(b => { if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + id + "'")) b.classList.add('active'); });
+}
+
+// ─── QUIZ DATA ───
+const quizData = [
+  { q: "What is the value of the Universal Gravitational Constant G?", opts: ["6.67 × 10⁻¹¹ N·m²/kg²", "9.8 m/s²", "6.67 × 10⁻⁸ N·m²/kg²", "3.14 × 10⁻¹¹ N·m²/kg²"], ans: 0, exp: "G = 6.67 × 10⁻¹¹ N·m²/kg². Measured by Henry Cavendish in 1798." },
+  { q: "Who first experimentally measured the Gravitational Constant G?", opts: ["Isaac Newton", "Galileo Galilei", "Henry Cavendish", "Johannes Kepler"], ans: 2, exp: "Henry Cavendish measured G in 1798 using a torsion balance." },
+  { q: "According to Kepler's Third Law, T² is directly proportional to:", opts: ["a² (square of semi-major axis)", "a³ (cube of semi-major axis)", "a (semi-major axis)", "a⁴"], ans: 1, exp: "T² ∝ a³. The SQUARE of time period is proportional to CUBE of semi-major axis." },
+  { q: "All of Kepler's planetary laws were published in which year?", opts: ["1598", "1609", "1687", "1798"], ans: 1, exp: "All 3 Kepler laws were published in 1609." },
+  { q: "Where on Earth is the value of g maximum?", opts: ["At the Equator", "At the Poles", "At sea level anywhere", "At the Tropic of Cancer"], ans: 1, exp: "Poles: r is smallest → g = GM/r² is largest. Earth is flattened at poles." },
+  { q: "On the Moon, a person's weight becomes:", opts: ["Same as on Earth", "Double", "1/6 of Earth weight", "1/4 of Earth weight"], ans: 2, exp: "Moon's g = g_Earth/6. Since W = mg, weight becomes 1/6. Mass stays unchanged." },
+  { q: "1 Newton is equal to how many Dynes?", opts: ["10³ Dynes", "10⁴ Dynes", "10⁵ Dynes", "10⁶ Dynes"], ans: 2, exp: "1 Newton = 10⁵ Dynes. Newton is SI unit; Dyne is CGS unit." },
+  { q: "Relative Density has which SI unit?", opts: ["kg/m³", "g/cm³", "N/m²", "No unit (dimensionless)"], ans: 3, exp: "Relative Density = density of substance / density of water. Same units cancel → dimensionless." },
+  { q: "A ship moves from sea water to river water. Its level will:", opts: ["Rise", "Sink Lower (go down)", "Stay the same", "Oscillate"], ans: 1, exp: "River water has less salt → less density → less buoyancy → ship sinks lower." },
+  { q: "When an ice cube in a glass of water fully melts, the water level:", opts: ["Rises", "Falls", "Remains unchanged", "First rises then falls"], ans: 2, exp: "Ice displaces water equal to its mass. Melted ice fills exactly that space. Level unchanged." },
+  { q: "Work done by a coolie carrying luggage on his head horizontally is:", opts: ["Positive", "Negative", "Zero", "Depends on speed"], ans: 2, exp: "Gravity acts downward; displacement is horizontal. Angle = 90°. W = Fd cos90° = 0." },
+  { q: "The SI unit of Power is:", opts: ["Joule", "Newton", "Watt", "Horsepower"], ans: 2, exp: "Watt = Joule/second. Horsepower is not SI unit." },
+  { q: "1 Horsepower is equal to:", opts: ["500 Watts", "600 Watts", "746 Watts", "1000 Watts"], ans: 2, exp: "1 HP = 746 W = 0.746 kW. This is a common exam figure." },
+  { q: "If linear momentum (p) doubles, kinetic energy becomes:", opts: ["2 times", "3 times", "4 times", "½ times"], ans: 2, exp: "KE = p²/2m. If p → 2p, then KE → (2p)²/2m = 4p²/2m = 4 × KE." },
+  { q: "At the bottom of a free-falling object (just before hitting ground):", opts: ["All PE, no KE", "Half PE, half KE", "All KE, no PE", "Energy is lost"], ans: 2, exp: "Height h = 0 → PE = mgh = 0. All energy is now KE. Total energy conserved." },
+  { q: "Which device converts Mechanical energy to Electrical energy?", opts: ["Motor", "Dynamo/Generator", "Loudspeaker", "Microphone"], ans: 1, exp: "Dynamo/Generator: Mechanical → Electrical. Motor is the reverse: Electrical → Mechanical." },
+  { q: "Which device converts Electrical energy to Sound energy?", opts: ["Microphone", "Dynamo", "Loudspeaker", "Motor"], ans: 2, exp: "Loudspeaker: Electrical → Sound. Microphone is the reverse: Sound → Electrical." },
+  { q: "The filament of an electric bulb is made of:", opts: ["Copper", "Aluminium", "Tungsten (W)", "Iron"], ans: 2, exp: "Tungsten (symbol W, from German 'Wolfram') has very high melting point, ideal for filaments." },
+  { q: "Which gas is used inside electric bulbs?", opts: ["Neon", "Helium", "Krypton", "Argon"], ans: 3, exp: "Argon (inert gas, Group 18) is used in electric bulbs. It prevents filament oxidation." },
+  { q: "Who discovered all noble gases EXCEPT Helium?", opts: ["Antoine Lavoisier", "John Dalton", "William Ramsay", "Norman Lockyer"], ans: 2, exp: "William Ramsay discovered Ne, Ar, Kr, Xe, Rn. Helium was discovered by Janssen and Norman Lockyer." },
+  { q: "Helium was discovered by:", opts: ["William Ramsay", "Janssen and Norman Lockyer", "Henry Cavendish", "Dmitri Mendeleev"], ans: 1, exp: "Pierre Janssen and Norman Lockyer discovered Helium in the Sun's spectrum (1868)." },
+  { q: "Xenon (Xe) is also known as:", opts: ["Noble Gas", "Stranger Gas", "Lazy Gas", "Heavy Gas"], ans: 1, exp: "Xenon is called 'Stranger Gas'. 'Xenos' in Greek means stranger." },
+  { q: "Argon constitutes what percentage of Earth's atmosphere?", opts: ["0.04%", "0.5%", "0.9%", "1.5%"], ans: 2, exp: "Argon = 0.9% of Earth's atmosphere (third most abundant, after N₂ and O₂)." },
+  { q: "Pascal's Law applies to:", opts: ["Compressible gases", "Incompressible fluids", "Solids under tension", "Magnetic fields"], ans: 1, exp: "Pascal's Law: pressure applied to incompressible fluid is transmitted equally in all directions." },
+  { q: "Which is the SI unit of Pressure?", opts: ["Dyne", "Bar", "Pascal (Pa)", "Torr"], ans: 2, exp: "Pascal (Pa) = N/m². Named after Blaise Pascal. Used for pressure measurement." },
+  { q: "Thrust is defined as:", opts: ["Force parallel to surface", "Force perpendicular (90°) to surface", "Force at 45° to surface", "Net downward force"], ans: 1, exp: "Thrust = force applied perpendicularly at 90° to a surface. Examples: rocket engines, airplane thrust." },
+  { q: "Which noble gas is produced when Uranium-235 undergoes nuclear fission?", opts: ["Helium", "Neon", "Krypton", "Xenon"], ans: 2, exp: "U-235 + neutron → Barium + Krypton + neutrons (nuclear fission reaction)." },
+  { q: "Bernoulli's Principle states that in a flowing fluid:", opts: ["Pressure increases with velocity", "P + ρgh + ½ρv² = constant", "Density remains zero", "Work done is always negative"], ans: 1, exp: "Bernoulli: sum of pressure energy, potential energy, and kinetic energy remains constant. It's Conservation of Energy for fluids." }
 ];
 
-const PAGE_ORDER = NAV.flatMap(g => g.items.map(i => i.id));
+let correct = 0, attempted = 0;
+let quizRendered = false;
 
-function buildSidebar(){
-  const sb = document.getElementById('sidebar');
-  let html = `<div class="brand">
-    <div class="brand-orbit"></div>
-    <div class="brand-text">Gravitation &amp; Work-Energy<span>SSC CGL Memory System</span></div>
-  </div>`;
-  NAV.forEach(group => {
-    html += `<div class="nav-group"><div class="nav-group-label">${group.group}</div>`;
-    group.items.forEach(item => {
-      html += `<button class="nav-item" data-page="${item.id}" onclick="goTo('${item.id}')">
-        <span class="dot"></span><span class="ic">${item.icon}</span><span>${item.label}</span>
-      </button>`;
-    });
-    html += `</div>`;
+function renderQuiz() {
+  if (quizRendered) return;
+  quizRendered = true;
+  const c = document.getElementById('quiz-container');
+  quizData.forEach((q, i) => {
+    const d = document.createElement('div');
+    d.className = 'quiz-q';
+    d.innerHTML = `<div class="qtext"><span style="color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:11px;">Q${i+1}</span> ${q.q}</div>
+      ${q.opts.map((o, j) => `<button class="quiz-opt" onclick="answerQ(this, ${i}, ${j})">${o}</button>`).join('')}
+      <div class="quiz-feedback" id="qfb-${i}"></div>`;
+    c.appendChild(d);
   });
-  html += `<div id="sidebar-footer">Revise this system 20–100 times. Each pass should take less time than the last. Tap any flashcard to flip it.</div>`;
-  sb.innerHTML = html;
 }
 
-function goTo(id){
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const target = document.getElementById('page-' + id);
-  if(target) target.classList.add('active');
-  const navBtn = document.querySelector(`.nav-item[data-page="${id}"]`);
-  if(navBtn) navBtn.classList.add('active');
-  window.scrollTo(0,0);
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebar-scrim').classList.remove('show');
-  location.hash = id;
+function answerQ(btn, qi, selected) {
+  const q = quizData[qi];
+  const parent = btn.parentElement;
+  const opts = parent.querySelectorAll('.quiz-opt');
+  opts.forEach(b => b.disabled = true);
+  const fb = document.getElementById('qfb-' + qi);
+  attempted++;
+  if (selected === q.ans) {
+    btn.classList.add('correct');
+    fb.textContent = '✓ Correct! ' + q.exp;
+    fb.className = 'quiz-feedback show ok';
+    correct++;
+  } else {
+    btn.classList.add('wrong');
+    opts[q.ans].classList.add('correct');
+    fb.textContent = '✗ ' + q.exp;
+    fb.className = 'quiz-feedback show no';
+  }
+  updateScore();
 }
 
-function pageNav(currentId){
-  const idx = PAGE_ORDER.indexOf(currentId);
-  const prev = idx > 0 ? PAGE_ORDER[idx-1] : null;
-  const next = idx < PAGE_ORDER.length-1 ? PAGE_ORDER[idx+1] : null;
-  return `<div class="page-nav">
-    ${prev ? `<button class="pnav-btn" onclick="goTo('${prev}')">← Previous</button>` : `<span></span>`}
-    ${next ? `<button class="pnav-btn" onclick="goTo('${next}')">Next →</button>` : `<span></span>`}
-  </div>`;
+function updateScore() {
+  document.getElementById('score-txt').textContent = correct + ' / ' + attempted;
+  const pct = attempted > 0 ? (correct / attempted * 100) : 0;
+  document.getElementById('score-bar').style.width = pct + '%';
 }
 
-function flip(el){ el.classList.toggle('open'); }
-function reveal(id){
-  const el = document.getElementById(id);
-  el.classList.add('revealed');
-}
-function revealAll(container){
-  document.querySelectorAll('#'+container+' .blank').forEach(b => b.classList.add('revealed'));
+function resetQuiz() {
+  correct = 0; attempted = 0; quizRendered = false;
+  document.getElementById('quiz-container').innerHTML = '';
+  updateScore();
+  renderQuiz();
 }
 
-document.getElementById('menu-toggle').onclick = () => {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebar-scrim').classList.toggle('show');
-};
-document.getElementById('sidebar-scrim').onclick = () => {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebar-scrim').classList.remove('show');
-};
+// Render quiz when its page is first shown
+const origShowPage = showPage;
+function showPage(id) {
+  origShowPage(id);
+  if (id === 'quiz') renderQuiz();
+}
+
+// also render on load if quiz page is active (it's not by default)
 </script>
-
-<div id="page-overview" class="page">
-  <div class="page-eyebrow">Big Picture</div>
-  <h1 class="page-title">Why this chapter exists, in <em>one breath</em></h1>
-  <p class="page-sub">Everything here is one idea wearing different costumes: <strong>things pull on each other, and pulling can do work.</strong> Gravitation is the universe's favourite kind of pulling. Work &amp; Energy is the accounting system for what pulling (or pushing) accomplishes.</p>
-
-  <div class="card">
-    <h3 class="sub-h" style="margin-top:0;">The chapter in 4 dominoes</h3>
-    <div class="palace-map">
-      <div class="palace-stop">
-        <div class="palace-num">1</div>
-        <div class="palace-body">
-          <h4>Gravitation</h4>
-          <p>Every mass pulls every other mass. This pull is <strong>weight</strong>. Weight changes with location; mass never does.</p>
-        </div>
-      </div>
-      <div class="palace-stop">
-        <div class="palace-num">2</div>
-        <div class="palace-body">
-          <h4>Fluids feel gravity too</h4>
-          <p>Because gravity pulls fluids down, fluids push back up on anything inside them — that's <strong>Archimedes' buoyancy</strong>, and it's why ships float and nails sink.</p>
-        </div>
-      </div>
-      <div class="palace-stop">
-        <div class="palace-num">3</div>
-        <div class="palace-body">
-          <h4>Pulling = potential to do Work</h4>
-          <p>If gravity pulls something through a distance, <strong>work is done</strong>. Work is just "force successfully causing displacement."</p>
-        </div>
-      </div>
-      <div class="palace-stop">
-        <div class="palace-num">4</div>
-        <div class="palace-body">
-          <h4>Energy is the ledger</h4>
-          <p>Work done = energy transferred. Energy never disappears — it only changes costume (potential ↔ kinetic ↔ electrical ↔ sound ↔ heat). This is the <strong>Law of Conservation of Energy</strong>.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="callout callout-blue">
-    <span class="callout-title">💡 How to use this system</span>
-    Don't read this top to bottom once. Visit <strong>Memory Palace</strong> first to load the story. Then read <strong>Complete Notes</strong> section by section (each is its own "page" in the sidebar). In the final weeks, live only in <strong>Revision Layers</strong> — High-Yield → Ultra-Fast → 30-Second → Last Night.
-  </div>
-
-  <h2 class="section-h">What SSC CGL actually tests from this chapter</h2>
-  <div class="grid-2">
-    <div class="card card-tight">
-      <strong>Direct formula plugs</strong>
-      <p style="margin:6px 0 0;">g variation, KE-momentum relation, power conversions (HP → W), Pascal's law applications.</p>
-    </div>
-    <div class="card card-tight">
-      <strong>Conceptual traps</strong>
-      <p style="margin:6px 0 0;">Mass vs weight, work = zero situations, coolie problem, ship vs nail floating.</p>
-    </div>
-    <div class="card card-tight">
-      <strong>Cross-chapter links</strong>
-      <p style="margin:6px 0 0;">Noble gases (Chemistry) inside bulb questions, uranium fission producing krypton/barium.</p>
-    </div>
-    <div class="card card-tight">
-      <strong>One famous PYQ</strong>
-      <p style="margin:6px 0 0;">CGL Mains 2023 asked the free-fall energy distribution at top/mid/bottom — appears later as its own case study page.</p>
-    </div>
-  </div>
-
-  <div class="page-nav">
-    <span></span>
-    <button class="pnav-btn" onclick="goTo('palace')">Next →</button>
-  </div>
-</div>
-
-<div id="page-palace" class="page">
-  <div class="page-eyebrow">Chapter Memory Palace</div>
-  <h1 class="page-title">The <em>Space Station → Ocean → Workshop</em> Journey</h1>
-  <p class="page-sub">Walk this journey in your head before every revision. Each location is a fact-cluster. If you forget a fact, ask "where in the journey was I standing?" — the location will hand the fact back to you.</p>
-
-  <div class="card">
-    <p class="lead" style="margin-top:0;">Picture yourself as an astronaut-cum-physics-inspector doing one tour: you start <strong>in orbit</strong>, fall <strong>down to Earth</strong>, walk into the <strong>ocean</strong>, dry off in a <strong>workshop</strong>, and end the day in a <strong>glowing room full of gas bulbs</strong>. Six stops. Six fact-clusters.</p>
-  </div>
-
-  <div class="palace-map" style="margin-top:24px;">
-    <div class="palace-stop">
-      <div class="palace-num">🪐</div>
-      <div class="palace-body">
-        <h4>Stop 1 — Orbit Control Room (Gravitation + Kepler)</h4>
-        <p>You float in space holding two objects of different mass. They drift toward each other — <strong>Newton's Universal Law</strong>: F ∝ m₁m₂/r². The constant <strong>G = 6.67×10⁻¹¹</strong> was nailed down by <strong>Cavendish in 1798</strong> (note: "100 cubic meters" in the transcript is a mis-transcription of "Cavendish" — lock in the correct name). Through the window you watch a planet trace an <strong>ellipse</strong> around the Sun sitting at one <strong>focus</strong> — that's Kepler's <strong>Law of Orbits (1609)</strong>. A radar sweep shows the planet covering <strong>equal areas in equal times</strong> — <strong>Law of Areas</strong>. A flight computer beeps: T² ∝ a³ — <strong>Law of Periods</strong>.</p>
-          <p class="recall">🔑 Recall trigger: "floating + ellipse + radar sweep + beeping computer" = Newton's law + Kepler's 3 laws.</p>
-      </div>
-    </div>
-    <div class="palace-stop">
-      <div class="palace-num">⚖️</div>
-      <div class="palace-body">
-        <h4>Stop 2 — The Re-Entry Capsule (Mass vs Weight, g-variation)</h4>
-        <p>You re-enter Earth's atmosphere. Your <strong>mass</strong> hasn't changed one gram since launch — but your body suddenly feels <strong>heavier</strong> because <strong>weight = mg</strong> and g just jumped up. You land near a <strong>pole</strong> (not the equator) — poles are closer to Earth's center because Earth bulges at the equator (geoid shape), so <strong>g is higher at poles, lower at equator, and lower at altitude</strong>. A note on your capsule wall reminds you: on the <strong>Moon, g is 1/6th</strong>, so your weight is 1/6th too, but your mass is identical.</p>
-        <p class="recall">🔑 Recall trigger: "landing capsule, feeling heavier, pole vs equator sign" = mass-weight + g variation cluster.</p>
-      </div>
-    </div>
-    <div class="palace-stop">
-      <div class="palace-num">🌊</div>
-      <div class="palace-body">
-        <h4>Stop 3 — The Harbour (Archimedes, Floatation, Fluids)</h4>
-        <p>You walk to a harbour. A <strong>spring balance</strong> shows a stone weighing 7 N in air, then only 3 N underwater — the missing <strong>4 N is the buoyant force</strong>, equal to the weight of water displaced. Nearby, a <strong>ship</strong> floats easily (large displaced volume → large buoyancy spread over a big hull) while a dropped <strong>nail sinks</strong> instantly (tiny displaced volume, can't support its own weight). A worker tells you a ship sailing from <strong>sea → river</strong> sinks slightly lower (river water is less salty/dense, less buoyant force). An <strong>ice cube melts</strong> in a glass and the water level <strong>doesn't change</strong> — what it displaced as ice equals the space it fills as water.</p>
-        <p class="recall">🔑 Recall trigger: "harbour, spring balance, ship vs nail, ice cube" = the entire Archimedes cluster.</p>
-      </div>
-    </div>
-    <div class="palace-stop">
-      <div class="palace-num">📦</div>
-      <div class="palace-body">
-        <h4>Stop 4 — The Loading Dock (Work, Thrust, Pressure)</h4>
-        <p>At the dock, you push a heavy crate that <strong>doesn't move</strong> — physics says <strong>zero work</strong> despite your sweat. A <strong>coolie</strong> walks past carrying a load on his head — force is vertical (mg), motion is horizontal, angle = 90°, so gravity does <strong>zero work</strong> on the load too. A worker <strong>hammers a nail perpendicular</strong> to a block — that perpendicular push is <strong>thrust</strong>. You notice footprints: standing (small area, you sink deep — <strong>high pressure</strong>) vs lying down (large area, shallow sink — <strong>low pressure</strong>), because pressure = thrust/area.</p>
-        <p class="recall">🔑 Recall trigger: "dock, immovable crate, coolie, hammer, footprints in sand" = work/thrust/pressure cluster.</p>
-      </div>
-    </div>
-    <div class="palace-stop">
-      <div class="palace-num">⚡</div>
-      <div class="palace-body">
-        <h4>Stop 5 — The Engine Room (Power, Energy, Conservation)</h4>
-        <p>The dock's crane engine display reads power in <strong>watts</strong> (J/s) and also in <strong>horsepower (746 W)</strong>. You drop a 10 kg wrench from 10 m — it carries <strong>1000 J of potential energy</strong> that converts smoothly into kinetic energy as it falls, total energy constant throughout — the <strong>Law of Conservation of Energy</strong>. A stretched bow nearby stores <strong>potential energy</strong> that becomes the arrow's <strong>kinetic energy</strong> on release.</p>
-        <p class="recall">🔑 Recall trigger: "engine room display, falling wrench, stretched bow" = power + energy + conservation cluster.</p>
-      </div>
-    </div>
-    <div class="palace-stop">
-      <div class="palace-num">💡</div>
-      <div class="palace-body">
-        <h4>Stop 6 — The Bulb Storage Room (Energy Conversions + Noble Gases)</h4>
-        <p>The final room is lined with devices: a <strong>dynamo/generator</strong> (mechanical→electrical), a <strong>motor</strong> (electrical→mechanical, the reverse), a <strong>microphone</strong> (sound→electrical) and a <strong>loudspeaker</strong> right next to it doing the reverse (electrical→sound). In the centre, a <strong>bulb</strong> glows — <strong>tungsten (W) filament</strong> inside <strong>argon gas</strong>, converting electrical energy into light + heat. A poster on the wall lists the noble gas family with <strong>William Ramsay's</strong> name attached to neon, argon, krypton, xenon, radon (only helium breaks the pattern — discovered by Janssen &amp; Lockyer).</p>
-        <p class="recall">🔑 Recall trigger: "bulb room with paired machines on the walls" = all energy conversion pairs + noble gas discoverers.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="callout">
-    <span class="callout-title">🧠 Memory technique</span>
-    Close your eyes and walk Orbit → Capsule → Harbour → Dock → Engine Room → Bulb Room. If you can narrate the journey in 90 seconds, you have just recalled the entire chapter's skeleton.
-  </div>
-
-  <div class="page-nav">
-    <button class="pnav-btn" onclick="goTo('overview')">← Previous</button>
-    <button class="pnav-btn" onclick="goTo('gravitation')">Next →</button>
-  </div>
-</div>
-
-<!-- PAGE_CONTENT_INJECTION_POINT -->
-
-<script>
-buildSidebar();
-const startId = (location.hash || '#overview').replace('#','');
-goTo(PAGE_ORDER.includes(startId) ? startId : 'overview');
-</script>
-
 </body>
 </html>
