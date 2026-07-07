@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>March Current Affairs - SSC CGL</title>
+<style>
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body {
+    background:#0f1117;
+    color:#e6e6e6;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    display:flex;
+    height:100vh;
+    overflow:hidden;
+  }
+  /* Sidebar */
+  #sidebar {
+    width:230px;
+    background:#141824;
+    padding:20px 10px;
+    overflow-y:auto;
+    border-right:1px solid #232838;
+    flex-shrink:0;
+  }
+  #sidebar h1 {
+    font-size:16px;
+    color:#8be9fd;
+    padding:0 10px 15px 10px;
+    border-bottom:1px solid #232838;
+    margin-bottom:10px;
+  }
+  .nav-btn {
+    display:block;
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    color:#c9d1d9;
+    padding:10px 12px;
+    margin-bottom:4px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:14px;
+    transition:0.2s;
+  }
+  .nav-btn:hover { background:#1f2433; color:#a6f3a6; }
+  .nav-btn.active {
+    background:linear-gradient(90deg,#1f2433,#182034);
+    color:#8be9fd;
+    border-left:3px solid #8be9fd;
+    font-weight:600;
+  }
+  .nav-count {
+    float:right;
+    background:#232838;
+    color:#a6f3a6;
+    font-size:11px;
+    padding:2px 7px;
+    border-radius:10px;
+  }
+  /* Main */
+  #main {
+    flex:1;
+    overflow-y:auto;
+    padding:30px 40px;
+  }
+  #main h2 {
+    color:#a6f3a6;
+    font-size:26px;
+    margin-bottom:5px;
+    border-bottom:2px solid #232838;
+    padding-bottom:12px;
+  }
+  .section-sub {
+    color:#8892a0;
+    font-size:13px;
+    margin-bottom:20px;
+  }
+  .grid {
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap:18px;
+    padding-bottom:40px;
+  }
+  .card {
+    background:#161a24;
+    border:1px solid #232838;
+    border-radius:12px;
+    padding:18px;
+    transition:0.2s;
+  }
+  .card:hover {
+    transform:translateY(-3px);
+    border-color:#8be9fd;
+    box-shadow:0 4px 20px rgba(139,233,253,0.08);
+  }
+  .card.high {
+    border-left:4px solid #ff8c42;
+    background:linear-gradient(135deg,#1a1c26,#171a22);
+  }
+  .card h3 {
+    font-size:16px;
+    color:#8be9fd;
+    margin-bottom:10px;
+    line-height:1.35;
+  }
+  .badge {
+    display:inline-block;
+    font-size:11px;
+    background:#ff8c42;
+    color:#1a1200;
+    font-weight:700;
+    padding:3px 8px;
+    border-radius:20px;
+    margin-bottom:8px;
+  }
+  .card ul {
+    padding-left:18px;
+    font-size:13.5px;
+    line-height:1.6;
+    color:#d5dbe3;
+  }
+  .card ul li { margin-bottom:5px; }
+  .card ul li b { color:#a6f3a6; }
+  ::-webkit-scrollbar { width:8px; }
+  ::-webkit-scrollbar-thumb { background:#232838; border-radius:4px; }
+  #main::-webkit-scrollbar-track, #sidebar::-webkit-scrollbar-track { background:#0f1117; }
+
+  .home-hero {
+    text-align:center;
+    padding:60px 20px;
+  }
+  .home-hero h1 {
+    font-size:38px;
+    background:linear-gradient(90deg,#8be9fd,#a6f3a6);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:10px;
+  }
+  .home-hero p { color:#8892a0; margin-bottom:30px; }
+  .home-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:16px;
+    max-width:900px;
+    margin:0 auto;
+  }
+  .home-card {
+    background:#161a24;
+    border:1px solid #232838;
+    border-radius:14px;
+    padding:22px;
+    cursor:pointer;
+    transition:0.2s;
+  }
+  .home-card:hover { border-color:#a6f3a6; transform:translateY(-4px); }
+  .home-card .emoji { font-size:28px; margin-bottom:8px; }
+  .home-card h4 { color:#e6e6e6; font-size:15px; margin-bottom:4px; }
+  .home-card span { color:#8892a0; font-size:12px; }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <h1>📘 March CA — SSC CGL</h1>
+  <button class="nav-btn active" onclick="showSection('home')">🏠 Home</button>
+  <button class="nav-btn" onclick="showSection('national')">🇮🇳 National <span class="nav-count" id="c-national"></span></button>
+  <button class="nav-btn" onclick="showSection('state')">🗺️ State News <span class="nav-count" id="c-state"></span></button>
+  <button class="nav-btn" onclick="showSection('international')">🌍 International <span class="nav-count" id="c-international"></span></button>
+  <button class="nav-btn" onclick="showSection('appointments')">🧑‍💼 Appointments <span class="nav-count" id="c-appointments"></span></button>
+  <button class="nav-btn" onclick="showSection('defence')">🛡️ Defence <span class="nav-count" id="c-defence"></span></button>
+  <button class="nav-btn" onclick="showSection('scitech')">🚀 Science & Tech <span class="nav-count" id="c-scitech"></span></button>
+  <button class="nav-btn" onclick="showSection('schemes')">🏛️ Govt Schemes <span class="nav-count" id="c-schemes"></span></button>
+  <button class="nav-btn" onclick="showSection('bills')">⚖️ Bills & Acts <span class="nav-count" id="c-bills"></span></button>
+  <button class="nav-btn" onclick="showSection('reports')">📊 Reports & Rankings <span class="nav-count" id="c-reports"></span></button>
+  <button class="nav-btn" onclick="showSection('sports')">🏆 Sports <span class="nav-count" id="c-sports"></span></button>
+  <button class="nav-btn" onclick="showSection('awards')">🏅 Awards <span class="nav-count" id="c-awards"></span></button>
+  <button class="nav-btn" onclick="showSection('books')">📚 Books & Authors <span class="nav-count" id="c-books"></span></button>
+</div>
+
+<div id="main"></div>
+
+<script>
+const data = {
+  national: {
+    title: "National News",
+    sub: "Ministries, launches, national initiatives",
+    items: [
+      {h:"Global Conference on Women in Agri-Food Systems", high:true, points:[
+        "Hosted by <b>New Delhi</b> at <b>ICAR Convention Centre</b>",
+        "Coincided with UN-declared <b>International Year of Women Farmers</b>",
+        "ICAR = Indian Council for Agricultural Research (HQ: New Delhi)",
+        "Inaugurated by President <b>Droupadi Murmu</b>"
+      ]},
+      {h:"India–Japan Bilateral Swap Agreement", high:true, points:[
+        "Trade in own currencies, no third currency needed",
+        "Acts as second line of defence for economy / forex buffer",
+        "Deal size: ~<b>$75 billion</b>"
+      ]},
+      {h:"New GDP Measurement Series (MoSPI)", high:true, points:[
+        "MoSPI = Ministry of Statistics & Programme Implementation (releases GDP & CPI)",
+        "New base year: <b>2011-12 → 2022-23</b> (GDP, WPI)",
+        "CPI new base year: <b>2024</b>",
+        "WPI released by <b>Ministry of Commerce & Industry</b> (via Dept. of Economic Affairs)"
+      ]},
+      {h:"WHO Global Strategy to Eliminate Cervical Cancer", high:true, points:[
+        "Endorsed by Union Health Minister <b>JP Nadda</b>",
+        "Target: <b>90-70-90</b> by 2030",
+        "90% girls vaccinated, 70% women screened, 90% diagnosed treated",
+        "Caused by HPV (Human Papilloma Virus)",
+        "Aims to vaccinate 12 million girls aged 14 years"
+      ]},
+      {h:"SFURTI Scheme launched", points:[
+        "Nation-wide program to empower women entrepreneurs & business owners",
+        "Launched by Smt. Annpurna Devi on Women's Day"
+      ]},
+      {h:"Madurai Airport declared International", points:[
+        "Union Cabinet approved; gateway to southern Tamil Nadu",
+        "Remember: Green Field vs Brown Field airport difference"
+      ]},
+      {h:"VO Chidambaranar Port (Tuticorin) — Digital Twin", high:true, points:[
+        "First Indian port to launch <b>Digital Twin Initiative</b>",
+        "Real-time virtual replica of infrastructure & maritime ecosystem",
+        "One of 3 major ports in Tamil Nadu (others: Chennai, Kamarajar/Ennore)",
+        "Kamarajar Port = India's only major corporatized port",
+        "Budget 2026-27 allocated ₹1000 crore to Maritime Development Fund"
+      ]},
+      {h:"AAHAR 2026 (40th edition)", points:[
+        "Inaugurated by Piyush Goyal in New Delhi",
+        "B2B trade platform for food & hospitality industry",
+        "Jointly organized by Ministry of Food Processing (MoFPI) & ITPO",
+        "Partner country: <b>Italy</b>"
+      ]},
+      {h:"First National Conference on Cold Water Fisheries", points:[
+        "Held at Sher-i-Kashmir International Conference Centre, Srinagar",
+        "Under PM Matsya Sampada Yojana",
+        "₹299 crore sanctioned for cold water fisheries (J&K, Ladakh, HP)"
+      ]},
+      {h:"Samriddhi Kendra launched", points:[
+        "Launched by Jyotiraditya Scindia at Umri village, Guna district, MP",
+        "Under Samriddh Gram — tests 'phygital' (physical+digital) services"
+      ]},
+      {h:"India's First National Report on Nagoya Protocol", high:true, points:[
+        "Submitted by Ministry of Environment, Forest & Climate Change",
+        "Nagoya Protocol (2010): fair & equitable sharing of benefits from genetic resources",
+        "Related: Vienna Convention → Ozone layer; Minamata Convention → Mercury poisoning; Stockholm Convention → Persistent Organic Pollutants (POPs)"
+      ]},
+      {h:"RISA - 'Timeless Tribal' brand launched", points:[
+        "Launched by Tribal Affairs Minister Jual Oram",
+        "Risa = hand-woven cloth from Tripura (Tripuri women)",
+        "Launched during Bharat Tex phase"
+      ]},
+      {h:"Bharat Electricity Summit 2026", points:[
+        "Inaugurated by Manohar Lal Khattar at Yashobhoomi, New Delhi"
+      ]},
+      {h:"New Income Tax Rules 2026 (effective 1 April)", points:[
+        "Stricter disclosures + simplified procedures (fewer rules)",
+        "Strengthened stock exchange compliances",
+        "'Prarambh 2026' — nationwide awareness campaign by Income Tax Dept about new Income Tax Act 2025"
+      ]},
+      {h:"GARBHINI Initiative", high:true, points:[
+        "Launched by <b>Department of Biotechnology</b> (NOT Women & Child ministry)",
+        "Largest pregnancy cohort study — 12,000 women",
+        "Aim: AI-driven solutions to address pre-term births",
+        "India's bioeconomy: ~$195 billion in 2025 (up from $10 billion in 2014)"
+      ]},
+      {h:"BIMSTEC Youth Heritage & Sustainability Immersion Program", points:[
+        "Hosted by India in Madhya Pradesh (Bhopal & Panchmarhi)",
+        "BIMSTEC est. 1997, HQ: Dhaka, Bangladesh",
+        "Stands for: Bay of Bengal Initiative for Multi-Sectoral Technical & Economic Cooperation",
+        "Members: Bangladesh, India, Myanmar, Sri Lanka, Thailand, Nepal, Bhutan",
+        "6th BIMSTEC Summit was held in Thailand"
+      ]},
+      {h:"Indus River Green Corridor Eco-Restoration Project", high:true, points:[
+        "Launched by Ladakh LG V.K. Saxena near Leh on World Forest Day",
+        "Cold desert river bank restoration project",
+        "World Forest Day = 21 March; World Water Day = 22 March; Earth Day = 22 April; Biodiversity Day = 22 May",
+        "Indus originates from Bokhar Chu glacier (Tibet), also called Singhi Khamban (Lion's Mouth)"
+      ]},
+      {h:"India's NDC approved (2031-35)", points:[
+        "NDC = Nationally Determined Contribution under UNFCCC & Paris Agreement",
+        "Operationalized via National Action Plan on Climate Change (9 national missions)",
+        "Kyoto Protocol = first legally binding treaty to reduce GHG emissions"
+      ]},
+      {h:"Bhashini + PFRDA MoU", points:[
+        "Digital India Bhashini Division signed MoU with PFRDA",
+        "Bhashini = Bhasha Interface for India (democratizing digital content access)",
+        "For multilingual AI in pension services"
+      ]},
+      {h:"Rare Earth Permanent Magnets & Critical Minerals", points:[
+        "India targeting 5000 tonnes capacity by 2030",
+        "National Critical Mineral Mission launched Jan 2025 (30 vital minerals incl. Lithium — 'White Gold')",
+        "Total Rare Earth Elements = 17 (15 Lanthanides + Scandium + Yttrium)"
+      ]},
+      {h:"BRICS Youth Coordination Meeting", points:[
+        "Hosted virtually by Department of Youth Affairs",
+        "Theme: Building for Resilience, Innovation, Cooperation & Sustainability"
+      ]},
+      {h:"Great Indian Bustard chick hatched", high:true, points:[
+        "Hatched in Gujarat's Kutch district — first birth in region in a decade",
+        "GIB status: Critically Endangered (IUCN Red List)",
+        "Wildlife Protection Act 1972 — Schedule I (highest protection)",
+        "CITES status: Appendix I",
+        "IUCN HQ: Gland, Switzerland"
+      ]},
+      {h:"12th Asia Pacific Regional Conference (Intl Assoc. of Prosecutors)", points:[
+        "Held in New Delhi; Theme: Transcending Borders, Securing Justice"
+      ]},
+      {h:"PRISM SG Portal launched", points:[
+        "By Nitin Gadkari & Ashwini Vaishnaw",
+        "Portal for Rail-Road Inspection & Stage-management (steel girders)"
+      ]},
+      {h:"India's first LPG ATM", points:[
+        "Launched by BPCL in Gurugram, Haryana"
+      ]},
+      {h:"Operation Urja Suraksha", high:true, points:[
+        "Launched by <b>Indian Navy</b> (not Petroleum Ministry!)",
+        "To secure oil & gas shipments amid West Asia tensions (Strait of Hormuz blocked by Iran)"
+      ]},
+      {h:"Griha Sugam Portal", points:[
+        "By National Housing Bank — helps defence/govt personnel get home loans at posting location",
+        "NHB established 1988 under National Housing Bank Act 1987 (statutory body)"
+      ]},
+      {h:"NCW + Truecaller collaboration", points:[
+        "Digital toolkit created for women's safety awareness",
+        "Current NCW Chairperson: Vijaya Kishore Rahatkar"
+      ]},
+      {h:"Stuti Pradhan (Sikkim)", points:[
+        "Selected to represent Sikkim at World Youth Parliament"
+      ]}
+    ]
+  },
+  state: {
+    title: "State News",
+    sub: "State-level launches and events",
+    items: [
+      {h:"MP's First Agriculture Cabinet", high:true, points:["Held in tribal region of Barwani, Madhya Pradesh"]},
+      {h:"UP creates Guinness World Record", points:["~2.51 lakh saplings planted in 1 hour in Varanasi (mega plantation drive)"]},
+      {h:"Mumbai Suburban - SAKSHAM Skill Survey", points:["First-of-its-kind survey of skills of youth aged 18-40"]},
+      {h:"Elections announced in 5 states/UTs", high:true, points:[
+        "Assam, Kerala, Puducherry, Tamil Nadu, West Bengal",
+        "3 UTs with Legislative Assembly: Delhi, Puducherry, Jammu & Kashmir",
+        "Seats: Assam 126, Kerala 140, Puducherry 30, TN 234, WB 294",
+        "Puducherry spread across 3 states: Yanam (Andhra Pradesh), Karaikal (Tamil Nadu), Mahe (Kerala)"
+      ]},
+      {h:"Bihar's 144th Foundation Day", points:["Celebrated 22 March; commemorates 1912 separation from Bengal","Theme: Unnat Bihar, Ujjwal Bihar"]},
+      {h:"Manipur — Ningol Van Initiative", points:["Launched on International Day of Forests to strengthen community participation in forest conservation"]},
+      {h:"Gujarat passes Uniform Civil Code Bill", high:true, points:[
+        "Gujarat becomes 2nd state after Uttarakhand to implement UCC",
+        "Exceptions: Scheduled Tribes (to protect customary constitutional rights)",
+        "Article 44 (DPSP) — Liberal & Intellectual category"
+      ]},
+      {h:"Tamil Nadu's first Dark Sky Park", high:true, points:[
+        "At Aroshola Reserve Forest, Kolli Hills",
+        "'Shola' = temperate grassland/forest of Western Ghats",
+        "India's first Dark Sky Observatory: Hanle Observatory, Ladakh (nicknamed 'Pichku')"
+      ]},
+      {h:"Maharashtra's first Integrated Divyang Sahayak Portal", points:["Streamlines welfare schemes for persons with disabilities"]},
+      {h:"Andhra Pradesh — Hanuman Project", points:["Launched to reduce human-wildlife conflict"]},
+      {h:"Chhattisgarh — Gaudhaam Yojana", points:["Launched by CM Vishnu Deo Sai at Lakhasar village, Bilaspur district — shelter for stray cattle"]},
+      {h:"Puducherry University — Blue Voice App", points:["Mobile app to enhance safety & disaster preparedness among coastal fishing communities"]},
+      {h:"Telangana — Indiramma Family Life Insurance Scheme 2026", points:["Launches 2 June 2026 (Telangana Formation Day)","₹5 lakh insurance per family; ~1.15 crore families to benefit"]},
+      {h:"Khelo India Tribal Games", high:true, points:[
+        "Held 25 March–3 April in Chhattisgarh (Raipur, Jagdalpur, Sarguja)",
+        "Mascot: <b>Morveer</b> (Mor=our/apna, Veer=bravery)",
+        "7 medal sports: Athletics, Football, Hockey, Weightlifting, Archery, Swimming, Wrestling",
+        "Demonstration events: Mallakhamb (MP), Kabaddi",
+        "Medal Tally: 1st Karnataka (23 gold), 2nd Odisha, 3rd Jharkhand, host Chhattisgarh 9th"
+      ]}
+    ]
+  },
+  international: {
+    title: "International News",
+    sub: "Global summits, conflicts, and agreements",
+    items: [
+      {h:"WTO E-commerce Agreement", points:[
+        "66 members (~70% global trade) adopted pathway at 14th Ministerial Conference in Yaoundé, Cameroon",
+        "WTO replaced GATT (General Agreement on Trade & Tariff) in 1995"
+      ]},
+      {h:"Jyotiraditya Scindia at Mobile World Congress 2026", points:["Held in Barcelona, Spain"]},
+      {h:"S Jaishankar visits France", points:["For G7 Foreign Ministers' Meeting"]},
+      {h:"US-Israel-Iran conflict", high:true, points:[
+        "US launched airstrikes on Iran — <b>Operation Epic Fury</b>",
+        "Israel launched — <b>Operation Rising Lion</b>",
+        "Both against Iran amid nuclear/uranium enrichment tensions",
+        "Different from 'Midnight Hammer' (June 2025 — B-2 bomber strikes on Iran's nuclear sites Natanz/Fordow)"
+      ]},
+      {h:"UN Tourism Ministers Summit 2026", points:["Held in Berlin, Germany; Theme: Empowering Emerging Destinations"]},
+      {h:"Chile eliminates Leprosy", points:[
+        "First American country (North+South America) to eliminate leprosy",
+        "2nd country in world (Jordan was 1st, in 2016)",
+        "Caused by bacterium Mycobacterium leprae; also called Hansen's Disease"
+      ]},
+      {h:"India-UK Conference on Green Hydrogen Standards", points:["Held in New Delhi"]},
+      {h:"Bhumika Shrestha (Nepal)", points:["Made history as first transgender woman lawmaker of Nepal"]}
+    ]
+  },
+  appointments: {
+    title: "Appointments",
+    sub: "Key personnel changes",
+    items: [
+      {h:"NCBC Chairperson", high:true, points:[
+        "Sadhvi Niranjan Jyoti appointed chairperson of National Commission for Backward Classes",
+        "Member: Kiran Umesh Mahale",
+        "NCBC became a Constitutional Body via 102nd Amendment (2018)",
+        "Article 338 (SC), 338A (ST), 338B (Backward Classes)"
+      ]},
+      {h:"New Governors appointed", points:[
+        "West Bengal: C.V. Ananda Bose→ replaced (Arun Rao — check exact name)",
+        "Maharashtra, Tamil Nadu, Nagaland, Himachal Pradesh, Ladakh, Delhi, A&N Islands — new governors appointed (names as per lecture)"
+      ]},
+      {h:"Kaushal Das passes away", points:["Former AIFF (All India Football Federation) Secretary General","AIFF established 1937","Related trophies: Santosh Trophy, Durand Cup, Kalinga Super Cup"]}
+    ]
+  },
+  defence: {
+    title: "Defence",
+    sub: "Contracts, exercises, indigenous systems",
+    items: [
+      {h:"₹583 crore helicopter contract", points:[
+        "6 Advanced Light Helicopter Mark III for Indian Coast Guard",
+        "Surface-to-air VL-SRSAM missiles for Indian Navy",
+        "Vhulstil = Russian-developed medium-range naval SAM system"
+      ]},
+      {h:"Exercise Lamitiye", points:["Between India & Seychelles defence forces","India: Assam Regiment, INS Trikand, IAF C-130J aircraft (tri-service exercise)"]},
+      {h:"South Korea-US Exercise 'Freedom Shield'", points:["Massive joint military exercise"]},
+      {h:"DRDO + Navy: ADC-150 trials", points:["Air Droppable Container, delivers up to 150kg payload","Tested from P8i aircraft (Boeing 737-800 based Maritime Patrol Aircraft) off Goa coast"]},
+      {h:"14th Defence India Startup Challenge", points:["Launched by Rajnath Singh + 4th ADITI Challenge under iDEX framework","ADITI = Acing Development of Innovative Technologies","iDEX = Innovations for Defence Excellence"]},
+      {h:"INS Tarangiri (F41)", high:true, points:[
+        "4th ship of Project 17A (Nilgiri class), built by Mazagon Dock",
+        "5th ship: INS Dunagiri (built by Garden Reach Shipbuilders)",
+        "Order: Nilgiri, Mahendragiri, Vindhyagiri, Tarangiri, Dunagiri"
+      ]},
+      {h:"Army Central Command Strategic Communication Conclave", points:["First ever; held in Lucknow"]},
+      {h:"₹858 crore Tunguska Air Defence System contract", points:["Russian-made, for low-altitude aerial threats (drones/helicopters/missiles)"]},
+      {h:"Naval ship movements", points:[
+        "INS Tarangini — training visit to Trincomalee, Sri Lanka",
+        "INS Sudarshini — arrived Alexandria Port, Egypt (Expedition Lokayan-26)",
+        "INS Trikand — port call at Port Louis, Mauritius"
+      ]},
+      {h:"Adani Defence delivers 2000 PRAHAR light machine guns", points:[]},
+      {h:"INS Nilgiri — Exercise Kakadu", points:["Multinational exercise in Australia"]},
+      {h:"INS Sanchi launched", points:["Yard No. 1280, first of 11 next-gen shore patrol vessels, built at Goa Shipyard"]},
+      {h:"INS Malvan", points:["2nd of 8 anti-submarine warfare shallow watercraft, built by Cochin Shipyard","Named after Malvan region, Maharashtra (linked to Chhatrapati Shivaji)"]},
+      {h:"Sandhayak-class survey vessel", points:["Last (4th) of the class, built by Garden Reach Shipbuilders","Previous ships: Sandhak, Nirdeshak, Ikshak"]}
+    ]
+  },
+  scitech: {
+    title: "Science & Technology",
+    sub: "ISRO, NASA, research breakthroughs",
+    items: [
+      {h:"ISRO — C20 Cryogenic Engine ground test", points:["Higher thrust to enhance LVM3 heavy-lift rocket performance"]},
+      {h:"IIT Guwahati — MXene-based material", points:["Generates clean hydrogen fuel + efficient seawater desalination"]},
+      {h:"NASA Artemis II Mission", high:true, points:[
+        "Launched from Kennedy Space Center, Florida via Space Launch System",
+        "Crew (Orion capsule): Reid Wiseman (Commander), Victor Glover (Pilot), Christina Koch & Jeremy Hansen (Mission Specialists)",
+        "Will orbit Moon's far side (south pole) but NOT land, returns to Pacific Ocean",
+        "Artemis I launched 2022; considered successor to Apollo Mission (1967)",
+        "Launched 2 April 2026"
+      ]},
+      {h:"ISRO + European Space Agency agreement", points:["Signed 4 March to enhance cooperation in Earth Observation missions"]},
+      {h:"Scotland legalizes water cremation", points:["First part of UK to legalize (Alkaline Hydrolysis / Aquamation) — eco-friendly alternative to fire cremation"]},
+      {h:"Agnikul Cosmos — Agnibaan engine", points:["Tested world's largest 3D printed single-piece booster engine"]}
+    ]
+  },
+  schemes: {
+    title: "Government Schemes",
+    sub: "Cabinet approvals & scheme extensions",
+    items: [
+      {h:"Jal Jeevan Mission Extension", high:true, points:[
+        "Extended till <b>December 2028</b>",
+        "Outlay: ₹8.69 lakh crore; Centrally Sponsored Scheme",
+        "Launched 2019 by Jal Shakti Ministry; linked to SDG 6 (Water & Sanitation)"
+      ]},
+      {h:"Bharat Audyogik Vikas Yojana", points:["₹33,660 crore for 100+ plug-and-play Industrial Parks nationwide"]},
+      {h:"Small Hydro Power Development Scheme", points:["FY 2026-27 to 2031; ₹500 crore outlay; 1500 MW capacity target","Focus: hilly & north-eastern states"]},
+      {h:"RELIEF Scheme (Export Promotion Mission)", points:[
+        "Resilience and Logistics Intervention for Export",
+        "Supports exporters facing West Asia geopolitical disruptions; MSME focus"
+      ]},
+      {h:"IVFRT Scheme continuation", points:["Immigration, Visa, Foreigners Registration & Tracking","Extended 2026-2031; ₹1800 crore budget"]},
+      {h:"Modified UDAN Scheme", high:true, points:[
+        "Regional Connectivity Scheme; original UDAN launched 2016 (Ude Desh ka Aam Nagrik)",
+        "₹28,840 crore outlay for 10 years (FY 2026-27 onwards)",
+        "100 airports + 200 modern helipads to be developed",
+        "Conceptualized under National Civil Aviation Policy 2016"
+      ]}
+    ]
+  },
+  bills: {
+    title: "Bills & Acts",
+    sub: "Legislative changes",
+    items: [
+      {h:"Transgender Persons (Protection of Rights) Amendment Bill 2026", high:true, points:[
+        "Amends original 2019 Act",
+        "Recognition & gender change certification done by <b>District Magistrate (DM)</b> after medical board review",
+        "Offences: bonded labour, denying right of passage, forcing to leave household, causing harm — punishable 6 months to 2 years + fine",
+        "Kidnapping/grievous hurt to force transgender identity: 10 years to life imprisonment",
+        "Min fine ₹2 lakh (adult victim), ₹5 lakh (child victim)"
+      ]}
+    ]
+  },
+  reports: {
+    title: "Reports & Rankings",
+    sub: "Indices and rankings — remember exact numbers where given",
+    items: [
+      {h:"India's 7th National Report to CBD", points:["Assessing progress on 23 national targets; prepared by MoEFCC"]},
+      {h:"NHAI - National Highways Green Cover Index 2025-26", points:["First annual report; prepared with ISRO's National Remote Sensing Centre"]},
+      {h:"NITI Aayog — Fiscal Health Index", high:true, points:[
+        "Top: Odisha (73.1 score), Goa, Jharkhand — best fiscal health (achievers)",
+        "Front runners: UP and others",
+        "Bottom (aspirational): Punjab, Andhra Pradesh, West Bengal, Kerala"
+      ]},
+      {h:"PLFS Data (NSO/MoSPI)", high:true, points:[
+        "Overall LFPR (Labour Force Participation Rate): <b>44.9%</b>",
+        "Overall WPR (Worker Population Ratio): <b>43.5%</b>",
+        "Overall Unemployment Rate: <b>3.1%</b>",
+        "(Male/Female/Rural/Urban breakdowns less critical to memorize)"
+      ]},
+      {h:"MoSPI SDG Bulletins", points:["'Planet in Focus' and 'Delivering Prosperity at Scale' released by MoSPI"]},
+      {h:"World Happiness Report 2026 (14th edition)", high:true, points:[
+        "Released by Oxford Wellbeing Research Centre + Gallup + UN SDSN",
+        "1st: Finland; also Iceland, Denmark, Costa Rica in top ranks",
+        "India ranked <b>116 out of 147</b> countries",
+        "Pakistan ranks above India; Nepal (99) also above India",
+        "6 variables: GDP per capita, social support, healthy life expectancy, freedom, generosity, perception of corruption"
+      ]},
+      {h:"NITI Aayog — Export Potential of Sports Equipment Manufacturing Sector", points:[]},
+      {h:"SIPRI Report (Stockholm International Peace Research Institute)", high:true, points:[
+        "Volume of international transfers of major arms 2021-25 was 9.2% higher than 2016-20",
+        "Top 5 suppliers: USA, France, Russia, Germany, China",
+        "Top 2 recipients: Saudi Arabia (1st), India (2nd)",
+        "Arms imports to Asia & Oceania decreased by 20%"
+      ]},
+      {h:"UNESCO — UN World Water Development Report 2025", high:true, points:[
+        "Title: 'Mountains and Glaciers: Water Towers'",
+        "Rapid glacier melt threatens water supply of 2 billion people",
+        "UNESCO HQ: Paris, France"
+      ]},
+      {h:"Global Terrorism Index (Institute for Economics & Peace)", high:true, points:[
+        "Pakistan ranked #1 for the first time (previously Burkina Faso was #1)",
+        "6% increase in terrorism-related fatalities",
+        "India's rank: 13th out of 163 countries"
+      ]},
+      {h:"MoSPI Annual Survey of Unincorporated Sector Enterprises 2025", points:["Employment in the sector grew ~6.18%"]}
+    ]
+  },
+  sports: {
+    title: "Sports",
+    sub: "Tournaments, wins, records",
+    items: [
+      {h:"India Women's Hockey Team qualifies for World Cup 2026", high:true, points:[
+        "Beat Italy to qualify",
+        "World Cup: 15-30 August 2026, co-hosted by Belgium & Netherlands (16th edition)"
+      ]},
+      {h:"Mayank Chakravarty (Assam)", points:["Becomes North East's first Grandmaster (India's 94th GM)"]},
+      {h:"World Para Athletics Grand Prix 2026", points:["India topped medal tally with 208 medals; 2nd leg held in New Delhi (1st was UAE)"]},
+      {h:"Indian Wells Open (Tennis)", points:[
+        "Men's: Jannik Sinner (Italy) defeated Daniil Medvedev",
+        "Sinner became only 3rd man in history to win all 6 hard-court ATP Masters titles (joins Roger Federer & Novak Djokovic)",
+        "Women's: Aryna Sabalenka defeated Elena Rybakina"
+      ]},
+      {h:"World Athletics Indoor Championships (Poland)", points:["USA topped medal tally","Next edition (2028) to be hosted by India at Kalinga Stadium, Bhubaneswar, Odisha","2030 edition in Kazakhstan"]},
+      {h:"Sikkim to host 49th Yonex-Sunrise Junior National Badminton Championship", points:["14-21 November 2026"]},
+      {h:"All England Open Badminton Championship", high:true, points:[
+        "Men's Singles: Lin Chun-Yi (Chinese Taipei) defeated Lakshya Sen (2 sets)",
+        "Women's Singles: Wang Zhiyi (China) defeated An Se-young (South Korea)",
+        "Held at Utilita Arena, Birmingham",
+        "First AEO winner from India: Prakash Padukone (now Lakshya Sen's coach)"
+      ]},
+      {h:"Badminton Olympic history (quick facts)", points:[
+        "Saina Nehwal — first Indian woman to win Olympic medal in badminton (Bronze, London 2012)",
+        "PV Sindhu — Silver (Rio 2016), Bronze (Tokyo 2020); first female player with 2 Olympic medals",
+        "Manu Bhaker also won 2 medals in same Olympics recently"
+      ]},
+      {h:"Table Tennis — Manav Thakkar & Yashaswini Ghorpade", points:["Won mixed singles titles at 87th Senior National TT Championship"]},
+      {h:"Kipa Mero (Arunachal Pradesh)", points:["Won gold in Women's Javelin Throw F12 category (Para Athletics)"]},
+      {h:"LeBron James breaks NBA record", points:["1612th game played, surpassing Robert Parish's record (1997); plays for LA Lakers"]},
+      {h:"Squash — Anahat Singh & Abhay Singh", points:["Won women's & men's singles titles at Indian Open Squash Tournament, Mumbai"]},
+      {h:"Gurjant Singh retires", points:["Indian hockey player; part of Tokyo & Paris Olympics bronze medal-winning teams"]}
+    ]
+  },
+  awards: {
+    title: "Awards",
+    sub: "National & international honours",
+    items: [
+      {h:"Abhijeet Bhattacharya (Volleyball)", high:true, points:[
+        "Former Indian Men's Volleyball captain",
+        "Won 2025 IOC Gender Equality, Diversity and Inclusion Champions Award",
+        "Volleyball facts: 6 players/team; net pole color = red & white"
+      ]},
+      {h:"BCCI Naman Awards 2026", high:true, points:[
+        "Best International Cricketer (Men) — Polly Umrigar Award: <b>Shubman Gill</b>",
+        "Best International Cricketer (Women): <b>Smriti Mandhana</b>",
+        "CK Nayudu Lifetime Achievement Award (Men): Roger Binny & Rahul Dravid",
+        "Lifetime Achievement Award (Women): Mithali Raj"
+      ]},
+      {h:"98th Academy Awards (Oscars)", high:true, points:[
+        "Best Actor: Michael Jordan (film Sinners)",
+        "Best Actress: Jessie Buckley (Hamlet)",
+        "Best Supporting Actor: Sean Penn (One Battle After Another)",
+        "Best Supporting Actress: Emmy Madigan (Weapons)",
+        "Best Director: Paul Thomas Anderson (One Battle After Another)"
+      ]},
+      {h:"Sahitya Akademi Award", points:[
+        "India's 2nd highest literary award (after Jnanpith); given in 24 Indian languages (22 scheduled + English + Rajasthani)",
+        "Poetry category most important to remember by language",
+        "Marathi: Kalyani Ilya Resha"
+      ]},
+      {h:"Jnanpith Award (60th edition)", high:true, points:[
+        "Given to <b>Ra. Vairamuthu</b> (Tamil writer)",
+        "India's highest literary award; only given in 22 scheduled languages",
+        "3rd Tamil writer to receive it (after Akhilan 1975, Jayakanthan 2002)",
+        "Oldest Tamil text: Tolkappiyam (composed in 2nd Sangam)"
+      ]},
+      {h:"Hockey India 8th Annual Awards", high:true, points:[
+        "Player of the Year (Men): Hardik Singh",
+        "Player of the Year (Women): Navneet Kaur",
+        "Goalkeeper of the Year: Bichhu Devi Kharibam",
+        "Major Dhyan Chand Lifetime Achievement Award: Zafar Iqbal (part of India's 1980 Moscow Olympics gold-winning team)",
+        "India has won 8 hockey Olympic golds total (6 consecutive 1928-56, then 1980)"
+      ]},
+      {h:"Stockholm Water Prize 2026", points:["Awarded to Professor Kaveh Madani"]},
+      {h:"Javed Ashraf — Commander Rank of Legion d'Honneur", points:["Current ITPO Chairman & former diplomat; France's highest civilian/military honour"]},
+      {h:"N Chandrasekaran (Tata Group Chairman)", points:["Awarded Knight Commander of the Most Excellent Order of the British Empire by UK Govt"]},
+      {h:"Karnataka Gramin Bank", points:["National Award for outstanding performance in SHG-Bank Linkage Programme (started 1991 by NABARD)"]},
+      {h:"NHRC 11th Annual Short Film Competition", points:["First prize (₹2 lakh): 'Rani' (UP)","2nd: Kerala; 3rd: 'The Delivery' (Tamil Nadu)","NHRC established 1993 (statutory body)"]},
+      {h:"Ritwarna Sen Gupta", points:["Honoured with Women Entrepreneur Award for Art & Culture at House of Commons, UK"]},
+      {h:"Nandamuri Balakrishna", points:["Lifetime Achievement Award at IFFD (International Film Festival of Delhi) for 50-year career"]}
+    ]
+  },
+  books: {
+    title: "Books & Authors",
+    sub: "Recent publications",
+    items: [
+      {h:"'Mahatma: A Great Communicator'", points:["By Mansukh Mandaviya, authored by Dr. Dheeraj Kakadia"]},
+      {h:"William Dalrymple — 'The Golden Road'", high:true, points:["Awarded 2026 Marc Linton History Prize","Subtitle: How Ancient India Transformed the World"]},
+      {h:"Kailash Satyarthi — 'Karuna: The Power of Compassion'", points:["Nobel Peace Laureate (2014, jointly with Malala Yousafzai)","Unveiled by CJI Justice Suryakant & Dr. Kiran Bedi"]},
+      {h:"'Janjati Gaurav'", points:["Published by Indira Gandhi National Centre for Arts (organization, not individual author)"]},
+      {h:"'Hara Parvati Katha' (Bengali novel)", points:["By author Ramkumar Mukhopadhyay","Selected for Saraswati Samman (given by KK Birla Foundation, 22 languages)"]}
+    ]
+  }
+};
+
+function renderHome(){
+  const main = document.getElementById('main');
+  main.innerHTML = `
+    <div class="home-hero">
+      <h1>March 2026 Current Affairs</h1>
+      <p>Curated from live class — SSC CGL exam-relevant only</p>
+      <div class="home-grid" id="homeGrid"></div>
+    </div>
+  `;
+  const grid = document.getElementById('homeGrid');
+  const meta = {
+    national:['🇮🇳','National'], state:['🗺️','State News'], international:['🌍','International'],
+    appointments:['🧑‍💼','Appointments'], defence:['🛡️','Defence'], scitech:['🚀','Science & Tech'],
+    schemes:['🏛️','Govt Schemes'], bills:['⚖️','Bills & Acts'], reports:['📊','Reports & Rankings'],
+    sports:['🏆','Sports'], awards:['🏅','Awards'], books:['📚','Books & Authors']
+  };
+  Object.keys(data).forEach(key=>{
+    const d = data[key];
+    const div = document.createElement('div');
+    div.className='home-card';
+    div.onclick=()=>{ showSection(key); document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); [...document.querySelectorAll('.nav-btn')].find(b=>b.getAttribute('onclick')===`showSection('${key}')`)?.classList.add('active'); };
+    div.innerHTML = `<div class="emoji">${meta[key][0]}</div><h4>${meta[key][1]}</h4><span>${d.items.length} items</span>`;
+    grid.appendChild(div);
+  });
+}
+
+function renderSection(key){
+  const d = data[key];
+  const main = document.getElementById('main');
+  let html = `<h2>${d.title}</h2><div class="section-sub">${d.sub}</div><div class="grid">`;
+  d.items.forEach(item=>{
+    html += `<div class="card ${item.high?'high':''}">`;
+    if(item.high) html += `<div class="badge">🔥 High Priority</div>`;
+    html += `<h3>${item.h}</h3><ul>`;
+    item.points.forEach(p=> html += `<li>${p}</li>`);
+    html += `</ul></div>`;
+  });
+  html += `</div>`;
+  main.innerHTML = html;
+}
+
+function showSection(key){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const btns = document.querySelectorAll('.nav-btn');
+  btns.forEach(b=>{
+    if(b.getAttribute('onclick') === `showSection('${key}')`) b.classList.add('active');
+  });
+  if(key==='home'){ renderHome(); }
+  else { renderSection(key); }
+}
+
+// init counts
+Object.keys(data).forEach(k=>{
+  const el = document.getElementById('c-'+k);
+  if(el) el.textContent = data[k].items.length;
+});
+
+renderHome();
+</script>
+</body>
+</html>
