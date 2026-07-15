@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>December Current Affairs — SSC CGL Study Tool</title>
+<style>
+  :root{
+    --bg: #14181f;
+    --bg-alt: #1a1f28;
+    --card: #1d232d;
+    --card-border: #2a313d;
+    --text-main: #e3e7ee;
+    --text-dim: #9aa5b3;
+    --accent: #7fa8c9;
+    --accent-soft: #5b7d99;
+    --high: #d9a66c;
+    --high-bg: rgba(217,166,108,0.12);
+    --high-border: rgba(217,166,108,0.45);
+    --scroll: #333c48;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background: radial-gradient(circle at top left, #171c24, #12151b 70%);
+    color: var(--text-main);
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    display:flex;
+    min-height:100vh;
+    overflow:hidden;
+  }
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-thumb{background:var(--scroll);border-radius:4px;}
+
+  /* Sidebar */
+  #sidebar{
+    width:250px;
+    min-width:250px;
+    background: var(--bg-alt);
+    border-right:1px solid var(--card-border);
+    display:flex;
+    flex-direction:column;
+    padding:22px 14px;
+    overflow-y:auto;
+  }
+  #sidebar h1{
+    font-size:16px;
+    font-weight:600;
+    color: var(--accent);
+    letter-spacing:0.3px;
+    margin: 4px 8px 22px 8px;
+    line-height:1.4;
+  }
+  #sidebar h1 span{display:block;font-size:12px;color:var(--text-dim);font-weight:400;margin-top:4px;}
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px 12px;
+    border-radius:10px;
+    color: var(--text-dim);
+    cursor:pointer;
+    font-size:14px;
+    margin-bottom:4px;
+    transition: background 0.2s ease, color 0.2s ease;
+    user-select:none;
+  }
+  .nav-item:hover{ background: #232a35; color: var(--text-main); }
+  .nav-item.active{
+    background: linear-gradient(90deg, rgba(127,168,201,0.18), rgba(127,168,201,0.03));
+    color: var(--accent);
+    border-left: 3px solid var(--accent);
+    padding-left:9px;
+    font-weight:600;
+  }
+  .nav-icon{font-size:16px;width:20px;text-align:center;}
+  .nav-count{
+    margin-left:auto;
+    font-size:10.5px;
+    color: var(--text-dim);
+    background: #262d38;
+    padding:1px 7px;
+    border-radius:8px;
+  }
+
+  #sidebar-footer{
+    margin-top:auto;
+    padding:10px;
+    font-size:11px;
+    color:#5a6373;
+    text-align:center;
+    border-top:1px solid var(--card-border);
+    padding-top:14px;
+  }
+
+  /* Main */
+  #main{
+    flex:1;
+    overflow-y:auto;
+    padding: 34px 46px 60px 46px;
+  }
+  .page{ display:none; animation: fadeIn 0.35s ease; }
+  .page.active{ display:block; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  .page-header{
+    margin-bottom: 26px;
+    padding-bottom:16px;
+    border-bottom:1px solid var(--card-border);
+  }
+  .page-header h2{
+    margin:0 0 6px 0;
+    font-size: 24px;
+    color: var(--text-main);
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .page-header p{
+    margin:0;
+    color: var(--text-dim);
+    font-size: 13.5px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap:18px;
+  }
+
+  .card{
+    background: var(--card);
+    border:1px solid var(--card-border);
+    border-radius:14px;
+    padding:18px 20px;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .card:hover{ transform: translateY(-2px); border-color:#3a4451; }
+  .card.high{
+    border-color: var(--high-border);
+    background: linear-gradient(180deg, var(--high-bg), var(--card) 55%);
+  }
+  .card-title{
+    font-size:15.5px;
+    font-weight:600;
+    color: var(--text-main);
+    margin:0 0 10px 0;
+    line-height:1.4;
+  }
+  .badge{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-size:10.5px;
+    font-weight:700;
+    padding:3px 9px;
+    border-radius:20px;
+    margin-bottom:10px;
+    letter-spacing:0.3px;
+  }
+  .badge.high{
+    background: rgba(217,166,108,0.18);
+    color: var(--high);
+    border:1px solid var(--high-border);
+  }
+  .card ul{
+    margin:0;
+    padding-left:18px;
+    color: var(--text-dim);
+    font-size:13.5px;
+    line-height:1.65;
+  }
+  .card ul li{ margin-bottom:5px; }
+  .card ul li b, .card ul li strong{ color: var(--text-main); font-weight:600; }
+
+  .section-sub{
+    font-size:12.5px;
+    text-transform:uppercase;
+    letter-spacing:0.8px;
+    color: var(--accent-soft);
+    margin: 30px 0 12px 2px;
+    font-weight:700;
+  }
+  .section-sub:first-of-type{ margin-top:0; }
+
+  #search-wrap{
+    margin: 0 0 24px 0;
+  }
+  #search{
+    width:100%;
+    max-width:420px;
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid var(--card-border);
+    background: var(--bg-alt);
+    color: var(--text-main);
+    font-size:13.5px;
+    outline:none;
+  }
+  #search:focus{ border-color: var(--accent-soft); }
+  #search::placeholder{ color:#5a6373; }
+
+  .hide{ display:none !important; }
+
+  @media (max-width: 900px){
+    body{flex-direction:column; overflow:auto;}
+    #sidebar{width:100%; min-width:0; flex-direction:row; flex-wrap:wrap; overflow-x:auto;}
+    #sidebar h1{display:none;}
+    #main{padding:22px;}
+    #sidebar-footer{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <h1>📘 Dec Current Affairs<span>SSC CGL Quick Revision</span></h1>
+  <div id="nav-list"></div>
+  <div id="sidebar-footer">Source: Parmar SSC — Monthly CA Session<br>Notes distilled to exam-relevant points only</div>
+</div>
+
+<div id="main">
+  <div id="search-wrap">
+    <input id="search" type="text" placeholder="🔍 Search topics, names, keywords...">
+  </div>
+  <div id="pages"></div>
+</div>
+
+<script>
+const DATA = [
+{
+  key:"national",
+  icon:"🇮🇳",
+  title:"National News",
+  desc:"Key national events, initiatives, appointments & schemes",
+  items:[
+    {t:"Gyanesh Kumar — Chair of IIDEA", high:true, points:[
+      "26th CEC <b>Gyanesh Kumar</b> assumed chairmanship of International IDEA (International Institute for Democracy and Electoral Assistance) on behalf of India for 2026",
+      "Event date: 3rd December; Location: Stockholm, Sweden",
+      "<b>IIDEA established in 1995</b> — remember this, asked before in SSC",
+      "ECI: single-member body originally → multi-member after 61st Amendment (1989, temporary) → permanent multi-member from <b>1993</b>",
+      "ECI: Part <b>15</b>, Articles <b>324–329</b> of Constitution"
+    ]},
+    {t:"Kashi Tamil Sangam 4.0", high:true, points:[
+      "Began <b>December 2, 2025</b> — carries forward cultural link between Tamil Nadu & Kashi",
+      "Theme: 'Let us learn Tamil — Tamil Tarkalam'"
+    ]},
+    {t:"Dakshina Kannada declared District Export Hub", points:[
+      "Under 'Districts as Export Hubs' initiative (launched 2019)",
+      "Aim: promote export, manufacturing & employment generation at grassroot level"
+    ]},
+    {t:"20th Session — Intergovernmental Committee (Intangible Cultural Heritage)", high:true, points:[
+      "Hosted by India, 8–13 December 2025 at <b>Red Fort</b> — first time India hosted this ICH committee",
+      "India has served on this UNESCO committee 3 times",
+      "<b>Diwali inscribed</b> on UNESCO Representative List of Intangible Cultural Heritage of Humanity during this session",
+      "National Inventory of ICH maintained by <b>Sangeet Natak Akademi</b> (Ministry of Culture)"
+    ]},
+    {t:"India AI Impact Summit 2026 — Pre-Summit Event", points:[
+      "Hosted by Centre for Responsible AI, IIT Madras, in Chennai (Dec 11)",
+      "Main summit: 19–20 Feb 2026 at Bharat Mandapam",
+      "India AI Mission approved by Cabinet in March 2024, outlay ₹1371 crore over 5 years"
+    ]},
+    {t:"TB Mukt Bharat Mission — Strategy Dialogue", high:true, points:[
+      "JP Nadda held dialogue with Gujarat MPs on accelerating TB Mukt Bharat",
+      "Implemented under National Health Mission",
+      "India achieved 21% decline in TB incidence: 237/lakh (2015) → 187/lakh (2024)",
+      "TB caused by bacteria: <i>Mycobacterium tuberculosis</i>",
+      "Treatment coverage improved: 53% (2015) → 92% (2024)",
+      "Original programme (National TB Elimination Programme) traced to <b>1962</b>; revised 1997, then 2017; 2025 elimination target not fully met"
+    ]},
+    {t:"Microsoft–Ministry of Labour & Employment MoU", high:true, points:[
+      "Signed with Microsoft CEO Satya Nadella",
+      "Aim: expand employment linkages, AI-led skilling",
+      "To onboard 15,000+ global employees to National Career Service Platform"
+    ]},
+    {t:"Vaigyanika — Science Literature Festival 2025", points:[
+      "Organised by CSIR-NIISCPR, New Delhi — part of India International Science Festival",
+      "In association with Vigyan Bharati (Vibha), Indian Institute of Tropical Meteorology Pune, Panjab University Chandigarh",
+      "Dates: 8–9 December"
+    ]},
+    {t:"Census of India 2027", high:true, points:[
+      "Approved by Union Cabinet (PM Modi) — cost ₹11,718 crore",
+      "Will be the <b>16th Census</b>, 8th since Independence",
+      "First census: 1872 (Mayo); first complete/synchronized census: 1881 (Ripon)",
+      "Father of Indian Census: <b>Henry Walter</b> (first census was of Dhaka city)",
+      "Two phases: House-listing phase (Apr–Sep 2026) & Population Enumeration phase (Feb 2027)",
+      "For Ladakh, J&K, Himachal Pradesh & Uttarakhand snow-bound areas: population enumeration in <b>September 2026</b>",
+      "First <b>digital census</b> of India",
+      "Caste enumeration to be included — decided by Cabinet Committee on Political Affairs (30 April 2025)"
+    ]},
+    {t:"National Makhana Board — First Board Meeting", high:true, points:[
+      "First meeting held at Krishi Bhawan, New Delhi, chaired by Dr. Devesh Chaturvedi (Secretary, Dept of Agriculture & Farmers Welfare)",
+      "Board announced in Budget 2025-26; officially launched by PM in Bihar on 15 Sept 2025",
+      "Central Sector Scheme approved for Makhana development — outlay ₹476 crore (2025-26 to 2030-31)"
+    ]},
+    {t:"Bharatiya Bhasha Utsav — Valedictory Function", points:[
+      "Held 11 December at National Bal Bhavan, New Delhi",
+      "By Dept of School Education & Literacy, Ministry of Education"
+    ]},
+    {t:"Parliament Attack Anniversary (2001)", points:[
+      "Discussed context — no specific exam-important new facts beyond general awareness"
+    ]},
+    {t:"First Investors' Meet on Fisheries & Aquaculture", high:true, points:[
+      "First-ever such meet; by Dept of Fisheries, Animal Husbandry & Dairying with Lakshadweep Administration",
+      "Venue: <b>Bangaram Island</b>, Lakshadweep"
+    ]},
+    {t:"Viksit Bharat Shiksha Adhishthan Bill 2025", high:true, points:[
+      "Introduced by Union Education Minister Dharmendra Pradhan in Lok Sabha",
+      "Purpose: empower higher education institutions to achieve excellence via coordination & standard-setting",
+      "Linked to Chapter 18 of NEP 2020 (transformation of higher education regulatory system)",
+      "Introduced under Entry 66, Union List, 7th Schedule — <b>note: Education is a Concurrent List subject, NOT Union List</b>"
+    ]},
+    {t:"2nd WHO Global Summit on Traditional Medicine", points:[
+      "Inaugurated by JP Nadda & Prataprao Jadhav at Bharat Mandapam, New Delhi"
+    ]},
+    {t:"India–Argentina Agriculture Work Plan", high:true, points:[
+      "ICAR & National Institute of Agriculture Technology, Argentina signed work plan (2025–27)",
+      "Aim: strengthen bilateral cooperation in agriculture research",
+      "ICAR HQ: Pusa Road, New Delhi"
+    ]},
+    {t:"Rising North East Investors Summit 2025", points:[
+      "By Ministry of Development of North East Region (DoNER) — to catalyse trade & investment in NE region"
+    ]},
+    {t:"MY Bharat Portal — Republic Day Youth Competitions", points:[
+      "Ministry of Youth Affairs & Sports launched dedicated web page for national youth competitions (essay, painting, slogan) via MY Bharat portal, as part of Republic Day 2026 celebrations"
+    ]},
+    {t:"India–Netherlands MoU on Maritime Heritage", high:true, points:[
+      "Step towards National Maritime Heritage Complex (NMHC) at <b>Lothal, Gujarat</b> (ancient Indus Valley dockyard/port)",
+      "NMHC developed by Ministry of Ports, Shipping & Waterways, with Gujarat govt & Indian Navy support"
+    ]},
+    {t:"New Logo for Regional Rural Banks (RRBs)", high:true, points:[
+      "Unveiled by Finance Ministry — 'One State One RRB' principle, single unified brand identity",
+      "First RRB set up 2 Oct 1975 on Narasimham Committee recommendation; statutory status via RRB Act 1976",
+      "Shareholding: Central Govt 50%, State Govt 15%, Sponsor Bank 35%",
+      "RRBs regulated by RBI, supervised by NABARD",
+      "NABARD established 12 July 1982 on B. Shivaraman Committee recommendation",
+      "First RRB: Prathama Grameen Bank, Moradabad, UP",
+      "Common logo unveiled for 28 RRBs after amalgamation; blue = finance/trust, green = life/growth"
+    ]},
+    {t:"10th Edition — Swachh Survekshan Toolkit", points:[
+      "Released in Bhopal, MP by Manohar Lal (Housing & Urban Affairs)",
+      "Theme: 'Swachhata ki Nai Pehal — Badhayein Haath, Karein Safai Saath'",
+      "Assessing 4,900 Urban Local Bodies (up from 73 in 2016)"
+    ]},
+    {t:"28th Meeting — National Tiger Conservation Authority / Project Elephant", high:true, points:[
+      "Held at Sundarbans Tiger Reserve, West Bengal, 21 December",
+      "Chaired by Environment Minister Bhupender Yadav",
+      "(Note: Steering Committee of Constituent Assembly was headed by Dr. Rajendra Prasad)"
+    ]},
+    {t:"Supreme Court — Aravalli Hills definition", high:true, points:[
+      "SC stayed its earlier judgment that landforms below 100m would not be considered part of Aravallis",
+      "Highest peak of Aravalli Range: <b>Guru Shikhar</b> (1722 m), at Mount Abu Hills",
+      "Highest peak India: K2 (Godwin Austen, in PoK); often also cited: Kanchenjunga (8586 m)",
+      "South India highest peak: Anaimudi, Anamalai Hills (2637 m)",
+      "Andaman & Nicobar highest peak: Saddle Peak"
+    ]},
+    {t:"MISHTI Initiative & ISFR", high:true, points:[
+      "MISHTI = Mangrove Initiative for Shoreline Habitats & Tangible Incomes (mangrove conservation)",
+      "ISFR 2023: highest forest cover — Madhya Pradesh (also highest decrease in MP)",
+      "Highest increase in forest & tree cover — Chhattisgarh",
+      "CAMPA = Compensatory Afforestation Fund Management and Planning Authority"
+    ]},
+    {t:"Vinod Kumar Shukla — Passed Away", high:true, points:[
+      "Gyanpeeth Award winner, passed away at age 88",
+      "Received 59th Gyanpeeth Award — first from Chhattisgarh for lifetime contribution",
+      "Sahitya Akademi Award 1999 for novel 'Deewar Mein Ek Khidki Rehti Hai'",
+      "PEN Pinter Prize 2023 — first Indian recipient (Arundhati Roy received it later)"
+    ]},
+    {t:"Subansiri Lower Hydro Power Project", points:[
+      "Unit-2 (200 MW) commercial operations inaugurated by Manohar Lal",
+      "Subansiri is a tributary of Brahmaputra, located on Arunachal–Assam border"
+    ]},
+    {t:"Renewable Energy & Green Hydrogen targets", high:true, points:[
+      "India added record 44.5 GW renewable energy capacity in 2025",
+      "Govt target: 500 GW non-fossil fuel energy capacity (outlined at COP26, Glasgow, Scotland/UK)",
+      "National Green Hydrogen Mission (launched 2023): target 5 million metric tonnes/annum by 2030, budget outlay ~₹19,744 crore (~₹20,000 crore)",
+      "COP27 was held in Egypt"
+    ]},
+    {t:"PM KUSUM Scheme extended", high:true, points:[
+      "PM KUSUM = Pradhan Mantri Kisan Urja Suraksha evam Utthaan Mahabhiyan, launched 2019",
+      "Extended till <b>March 2026</b>",
+      "For solar pumps in agriculture"
+    ]},
+    {t:"PRAGATI — 50th meeting", points:[
+      "ICT-enabled platform for Proactive Governance and Timely Implementation, chaired by PM Modi, launched 2015"
+    ]},
+    {t:"IGI Airport — Water Positive status", high:true, points:[
+      "First airport in India to achieve Water Positive status (restores more fresh water than it uses)"
+    ]},
+    {t:"State Level Watershed Mahotsav 2025 / Mission Watershed Punarutthan", points:[
+      "Launched at Naga Solidarity Park, Kohima, Nagaland",
+      "Watershed = land between two river basins/channels"
+    ]},
+    {t:"Sujalam Bharat App", high:true, points:[
+      "Launched by Jal Shakti Minister C.R. Patil",
+      "Aim: transform rural drinking water governance"
+    ]},
+    {t:"Bharat Taxi", points:[
+      "Govt-launched taxi service (own version of Ola/Uber)",
+      "Involves Ministry of Cooperation (Amit Shah)"
+    ]}
+  ]
+},
+{
+  key:"state",
+  icon:"🗺️",
+  title:"State News",
+  desc:"State-specific developments and observances",
+  items:[
+    {t:"Nagaland — Statehood Day", high:true, points:[
+      "Celebrated 1 December — became India's 16th state on 1 Dec 1972",
+      "Highest peak: <b>Mount Saramati</b> (3841 m)"
+    ]},
+    {t:"Assam — Statehood Day (2 Dec) context", points:[
+      "Assam has 43 UNESCO World Heritage-related mentions incl. Moidams (burial system of Ahom dynasty) in Charaideo, Assam"
+    ]},
+    {t:"Brownfield Ammonia-Urea Complex — Assam", points:[
+      "Inaugurated by PM Modi at existing Brahmaputra Valley Fertilizer Corporation Ltd, Namrup, Assam",
+      "Investment >₹10,000 crore; will boost urea production by 12.7 lakh MT annually",
+      "Brownfield = built on/with existing infrastructure (vs Greenfield = built from scratch)"
+    ]},
+    {t:"Bhopal Metro Inaugurated", high:true, points:[
+      "By Manohar Lal & CM Mohan Yadav — Bhopal becomes <b>26th city</b> in India with metro",
+      "Total metro network in India now ~1090 km; Bhopal Metro length 30.8 km (2 corridors: Orange & Blue)"
+    ]},
+    {t:"PESA Mahotsav", high:true, points:[
+      "Organised by Ministry of Panchayati Raj at Visakhapatnam, Andhra Pradesh; DCM Pawan Kalyan involved",
+      "PESA = Panchayat Extension to Scheduled Areas Act, 1996 — extends Part IX provisions to 5th Scheduled Areas",
+      "Currently applicable in 10 states",
+      "First Panchayat implementation: 2 Oct 1959, Nagaur, Rajasthan; second state was Andhra Pradesh",
+      "73rd Amendment gave Part IX constitutional status, made mandatory for all states"
+    ]},
+    {t:"Parvati-Arga Bird Sanctuary (UP) — Eco-Sensitive Zone", points:[
+      "Declared under Environment Protection Act, 1986",
+      "Both are Ramsar sites, Oxbow lakes (Gokhur Jheel), near Gonda district, UP"
+    ]},
+    {t:"Bihar — related news", high:true, points:[
+      "Bihar Police launched <b>Abhay Brigade</b> to protect women & girl students (each team: 1 female officer, 2 female constables, 1 male constable)",
+      "Bihar to establish India's first <b>Power Museum</b> at decommissioned Kargibaria Thermal Power Station, Patna"
+    ]},
+    {t:"Mizoram — Ginger Capital of India", high:true, points:[
+      "Declared by NITI Aayog",
+      "Geography: also known as Molasses Basin; Mizo Hills / Lushai Hills present"
+    ]},
+    {t:"Gujarat — Smart Blue Harbours", points:[
+      "Initiated under PM Matsya Sampada Yojana (launched 2020) — for fisheries infra, coastal economic growth, food security",
+      "'Matsya' means fish"
+    ]},
+    {t:"India's revised coastline length", high:true, points:[
+      "New re-verified coastline: <b>11,098 km</b> (earlier figure was 7,516 km, from 1970 survey)",
+      "Gujarat has the longest coastline among states",
+      "Shortest coastline among states: Goa (~193 km)",
+      "Overall highest (incl. UTs): Andaman & Nicobar (~1,382 km)",
+      "Overall lowest: Puducherry (~42 km)"
+    ]},
+    {t:"Chhattisgarh — Kobra Reservoir", points:[
+      "First Ramsar site of the state, in Bilaspur",
+      "Tamil Nadu has the most Ramsar sites (20)"
+    ]},
+    {t:"Haryana — New district Hansi", high:true, points:[
+      "CM Nayab Singh Saini announced (16 Dec 2025) Hansi will become the state's <b>23rd district</b>"
+    ]}
+  ]
+},
+{
+  key:"international",
+  icon:"🌍",
+  title:"International News",
+  desc:"World events, summits & diplomacy",
+  items:[
+    {t:"7th Session — UN Environment Assembly (UNEA)", high:true, points:[
+      "Convened 8–12 December 2025 at UNEP HQ, <b>Nairobi, Kenya</b>",
+      "UNEP HQ located in Kenya — rare African HQ, remember this"
+    ]},
+    {t:"Bondi Beach Attack, Sydney, Australia", points:[
+      "ISIS-inspired terrorist attack, 14 December — during Hanukkah (Jewish festival)",
+      "15 people killed — second deadliest attack in Australian history"
+    ]},
+    {t:"India–New Zealand Free Trade Agreement", high:true, points:[
+      "Negotiations concluded 22 December 2025, in a record <b>9 months</b>",
+      "FTA facilitates trade by reducing/removing tariffs on customs clearance"
+    ]},
+    {t:"Mount Etna Eruption", high:true, points:[
+      "In Sicily, Italy — most active <b>stratovolcano</b> in Europe",
+      "Stratovolcano = produces highly viscous (thick) lava, high silica content → acidic, steep-sided",
+      "'Lighthouse of the Mediterranean' = Stromboli (also in Italy)",
+      "Highest active volcano in world: Ojos del Salado (Chile–Argentina border)",
+      "Hotspot volcanoes (e.g. Hawaii/Mauna Loa) form NOT at plate boundaries — lava rises from outer core area, not asthenosphere; important — asked in Delhi Police exam"
+    ]},
+    {t:"Photonics Odyssey — NASA Space App Challenge 2025", points:[
+      "Chennai-based team won global winner of NASA's 2025 International Space App Challenge (Satellite Internet concept)"
+    ]},
+    {t:"India to chair Kimberley Process (Diamonds)", high:true, points:[
+      "India to assume chairmanship from 1 January 2026",
+      "Kimberley Process: making of diamonds traceable, effective since 2003 under UN mandate",
+      "Unites govt, diamond industry & civil society to curb 'conflict diamonds' (used to fund rebel conflicts)",
+      "~85% of world's polished diamonds processed in Surat, India"
+    ]},
+    {t:"Denmark ends letter delivery", points:[
+      "Ended 400-year-old postal tradition"
+    ]},
+    {t:"Israel–Egypt Gas Deal", points:[
+      "PM Netanyahu announced $35 billion gas deal with Egypt"
+    ]},
+    {t:"'Homebound' — Oscars shortlist", high:true, points:[
+      "India's entry shortlisted for 98th Academy Awards",
+      "Directed by Neeraj Ghaywan (also directed 'Masaan')"
+    ]},
+    {t:"India–Oman CEPA", points:[
+      "Comprehensive Economic Partnership Agreement signed",
+      "Oman rep: Qais bin Mohammed Al Yousef; India: Piyush Goyal, under PM Modi leadership"
+    ]},
+    {t:"PM Modi — Order of Oman", points:[
+      "Received First Class of the Order of Oman, highest civilian honour"
+    ]},
+    {t:"PM Modi visits Ethiopia", high:true, points:[
+      "First bilateral visit; conferred with 'Grand Ornament of Ethiopia' (highest honour) at Addis Ababa",
+      "Ethiopia is landlocked; neighbours: Eritrea, Djibouti, Somalia",
+      "Region called 'Horn of Africa'",
+      "Bab-el-Mandeb strait (between Red Sea & Gulf of Aden) called 'Gate of Tears' — pirate activity",
+      "Strait of Hormuz — between Persian Gulf & Gulf of Oman"
+    ]},
+    {t:"PM Modi visits Jordan", points:[
+      "MoUs signed: technical cooperation in new & renewable energy; water resource management & development",
+      "Twinning agreement between Petra (Jordan) and Ellora Caves"
+    ]}
+  ]
+},
+{
+  key:"awards",
+  icon:"🏅",
+  title:"Awards & Honours",
+  desc:"National & international recognitions",
+  items:[
+    {t:"C-DOT — IEEE Awards", points:[
+      "Two awards from IEEE (Institute of Electrical and Electronics Engineers)",
+      "Event: New Jersey, USA",
+      "Received by Dr. Rajkumar Upadhyay (CEO, C-DOT)",
+      "Standards Medallion 2025 awarded to Sandeep Kumar Agarwal (Scientist, C-DOT)"
+    ]},
+    {t:"National Council of Science Museums — PRSI Awards", high:true, points:[
+      "Two prestigious PRSI (Public Relations Society of India) National Awards 2025",
+      "1) 'Har Ghar Museum' initiative — Best Use of Social Media & Cooperative Campaign category",
+      "2) 'Waste to Art' publication — Special Prestige Publication category",
+      "NCSM under Ministry of Culture"
+    ]},
+    {t:"Vantara — Global Humanitarian Award for Animal Welfare", points:[
+      "Anant Ambani's animal welfare initiative received this award"
+    ]},
+    {t:"Vaibhav Suryavanshi — Pradhan Mantri Rashtriya Bal Puraskar", high:true, points:[
+      "Fastest century by an Indian; awarded by Ministry of Women & Child Development (for children aged 5–18)"
+    ]},
+    {t:"Dr. Tessy Thomas — Dr. Paulos Mar Gregorios Award", high:true, points:[
+      "Known as 'Missile Woman of India'",
+      "DRDO scientist, former Director General; was part of Agni-4 missile project team led by APJ Abdul Kalam",
+      "Award given at Tyagaraj Sports Complex, New Delhi"
+    ]},
+    {t:"Raveena Tandon — PETA India Person of the Year", points:[
+      "PETA = People for the Ethical Treatment of Animals"
+    ]},
+    {t:"Praveen Sheikh — Sanctuary Wildlife Service Award '25", points:[
+      "Bombay Natural History Society scientist, for protecting endangered Indian Skimmer at National Chambal Sanctuary",
+      "Chambal River: tributary of Yamuna, originates from Mhow Plateau",
+      "Famous for badland topography (ravines) & <b>Gharials</b> (clean water due to no religious/pollution activity)"
+    ]},
+    {t:"Supriya Sahu — UNEP Champions of the Earth 2025", high:true, points:[
+      "UNEP HQ in Kenya — 2025 Champions of Earth award"
+    ]},
+    {t:"National Energy Conservation Awards", points:[
+      "President Droupadi Murmu felicitated winners, 14 December (National Energy Conservation Day)",
+      "Institution category winners by group: Group1-Karnataka, Group2-Andhra, Group3-Kerala, Group4-Assam, Group5-Chandigarh"
+    ]},
+    {t:"Sai Jadhav — First woman officer to graduate from IMA Dehradun", high:true, points:[
+      "From Maharashtra"
+    ]}
+  ]
+},
+{
+  key:"sports",
+  icon:"🏆",
+  title:"Sports",
+  desc:"Tournaments, records & achievements",
+  items:[
+    {t:"Hockey — Men's Junior World Cup", high:true, points:[
+      "Held in Tamil Nadu; India won <b>Bronze</b> defeating Argentina",
+      "Germany won Gold, defeating Spain (3-2 shootout after 1-1)"
+    ]},
+    {t:"Squash World Cup 2025", points:[
+      "India won title at Express Avenue Mall, Chennai",
+      "Key players: Joshna Chinappa, Abhay Singh, Anahat Singh, Velavan Senthil Kumar",
+      "Squash to make Olympic debut at LA 2028 (along with baseball/softball, T20 cricket, flag football, lacrosse)"
+    ]},
+    {t:"5th Asian Youth Para Games — Dubai", points:[
+      "India won 102 medals: 36 Gold, 28 Silver, 38 Bronze"
+    ]},
+    {t:"Chess — World Rapid Chess Championship 2025 (Doha, Qatar)", high:true, points:[
+      "Arjun Erigaisi won Bronze (Men's); Gold won by Magnus Carlsen",
+      "Koneru Humpy won Bronze in Women's Rapid"
+    ]},
+    {t:"Sultan Azlan Shah Cup — Hockey (Malaysia)", points:[
+      "India won Silver; Belgium won Gold"
+    ]},
+    {t:"Sarvagya Singh Kushwaha — Youngest FIDE-rated player", high:true, points:[
+      "From Sagar district, Madhya Pradesh; rapid rating 1515/72",
+      "Age: 3 years 7 months"
+    ]},
+    {t:"Arjun Erigaisi — Jerusalem Masters 2025 Chess Title", high:true, points:[
+      "Defeated former World Champion Viswanathan Anand",
+      "Note: hosted in <b>Rajasthan</b> (Jaipur, Ajmer, Udaipur, Jodhpur, Bikaner, Kota, Bharatpur) — NOT Jerusalem, Israel",
+      "5th edition; mascot: 'Khamma & Ghani'"
+    ]},
+    {t:"ISSF World Cup Final", points:[
+      "Hosted in Doha, Qatar",
+      "Gold medals: Simranjeet Kaur Bhullar / Surochi Singh — 25m pistol & 10m air pistol events",
+      "India won total 6 medals: 2 Gold, 3 Silver, 1 Bronze"
+    ]},
+    {t:"FC Goa — AIFF Super Cup 2025-26 Champions", points:[
+      "Won via penalty shootout at PJN Stadium, Fatorda, Goa"
+    ]},
+    {t:"Pakistan — Men's U19 Asia Cup", points:[
+      "Won in Dubai; Player of the Match: Sameer Minhas"
+    ]},
+    {t:"Lionel Messi Statue unveiled — Kolkata", points:[
+      "70-foot iron statue, world's largest of the Argentine icon holding FIFA WC trophy"
+    ]},
+    {t:"Ashish Limaye — Equestrian Individual Gold (Thailand)", points:[
+      "From Pune, 2nd edition event",
+      "Divyakriti Singh Rathore: first female equestrian to receive Arjuna Award"
+    ]},
+    {t:"Commonwealth Kho-Kho Championship", high:true, points:[
+      "India to host first-ever edition, 9–14 March",
+      "India was inaugural champion in both Men's & Women's Kho-Kho World Cup 2025 (England) — defeated Nepal",
+      "Kho-Kho: 9 players per team (3 letters × 3)"
+    ]},
+    {t:"72nd National Volleyball Tournament", points:[
+      "Varanasi, UP will host, 4–11 January; mascot: Nandu & Neera",
+      "Volleyball: 6 players (Basketball-5, Handball/Netball-7, Baseball-9)"
+    ]},
+    {t:"Ayush Mhatre — Captain, India U19 World Cup squad", points:[]},
+    {t:"68th National Shooting Championship", points:[
+      "Gold medalists: Manu Bhaker (Sr Women 25m sports pistol), Ajay Kumar (Men 10m air pistol), Simranpreet Kaur Badal (Jr Women 25m sports pistol), Neeru Danda, Ameera Arshad"
+    ]},
+    {t:"Sayed Mushtaq Ali Trophy", high:true, points:[
+      "Jharkhand won, defeated Haryana, at Pune",
+      "Player of Match: Ishan Kishan — 101 runs off 49 balls"
+    ]},
+    {t:"East Bengal FC — SAFF Women's Club Championship", points:[
+      "Won defeating Nepal Armed Police Forces, at Dasharath Stadium, Kathmandu, Nepal"
+    ]},
+    {t:"Smriti Mandhana — 4000 runs in Women's T20I", high:true, points:[
+      "First batter to complete 4000 runs in Women's T20 Internationals, during series vs Sri Lanka"
+    ]},
+    {t:"First Khelo India Tribal Games", high:true, points:[
+      "Chhattisgarh to host; mascot: 'Mor Veer' (Mor = tribal pride/own land, Veer = courage)"
+    ]},
+    {t:"PV Sindhu — Chair, Badminton World Federation", high:true, points:[
+      "Two-time Olympic medalist (Silver-Rio, Bronze-Tokyo), former World Champion",
+      "India's first women's double Olympic medalist (later matched by Manu Bhaker with two medals in single Olympics — Paris)"
+    ]}
+  ]
+},
+{
+  key:"appointments",
+  icon:"🧑‍💼",
+  title:"Appointments",
+  desc:"Key official appointments",
+  items:[
+    {t:"New Chief Justices appointed", high:true, points:[
+      "Kerala HC: Justice Sushrut Arvind Dharmadhikari — <i>(name per transcript: Soman Sen)</i>",
+      "Patna HC: Justice Sangam Kumar Sahu",
+      "Meghalaya HC: Justice Rewati Prashant Mohite Dere"
+    ]},
+    {t:"Rajkumar Goyal — Chief Information Commissioner (CIC)", high:true, points:[
+      "Retired IAS officer sworn in",
+      "CIC established under RTI Act 2005 — it is a <b>Statutory Body</b>, NOT Constitutional"
+    ]},
+    {t:"Anu Garg — Chief Secretary, Odisha", points:[
+      "1991 batch IAS officer"
+    ]},
+    {t:"Sangeeta Barooah Pisharoty — First Woman President, Press Club of India", high:true, points:[
+      "From Assam, associated with 'The Wire'"
+    ]},
+    {t:"Air Marshal Tejbir Singh", points:[
+      "Assumed Director General Inspection & Safety, Indian Air Force"
+    ]}
+  ]
+},
+{
+  key:"defence",
+  icon:"🛡️",
+  title:"Defence",
+  desc:"Exercises, inductions & missile tests",
+  items:[
+    {t:"Exercise Ekuverin (India–Maldives)", points:[
+      "Concluded in Kerala; India represented by battalion of Garhwal Rifles",
+      "Remember: with whom + where (dates not critical)"
+    ]},
+    {t:"Operation Sagar Bandhu", high:true, points:[
+      "Indian Navy response to Cyclone Ditwah (Bay of Bengal, hit Sri Lanka)",
+      "3 ships deployed: INS Vikrant, Udaygiri, Sukanya",
+      "Ditwah = tropical cyclone named by Yemen"
+    ]},
+    {t:"Exercise Harimau Shakti (India–Malaysia)", points:[
+      "5th edition concluded; at Mahajan Field Firing Range, Rajasthan"
+    ]},
+    {t:"Vijay Diwas — 16 December", high:true, points:[
+      "1971 War victory anniversary (creation of Bangladesh from East Pakistan); IAF conducted displays"
+    ]},
+    {t:"Indian Navy — 2nd MH-60R Helicopter Squadron", high:true, points:[
+      "INAS 335 'Ostus' commissioned 17 Dec at INS Hansa, Goa",
+      "1st squadron based at Kochi, Kerala"
+    ]},
+    {t:"Exercise Ekatha (India–Maldives)", points:[
+      "Annual bilateral maritime exercise between navies/defence forces; Vice Admiral Tarun Sobti attended closing ceremony"
+    ]},
+    {t:"Diving Support Craft A20 commissioned", points:[
+      "First of five DSCs, commissioned at Naval Base Kochi (16 Dec)",
+      "Built indigenously by Titagarh Rail Systems Ltd"
+    ]},
+    {t:"ICGS Sarthak — visit to Chabahar Port, Iran", high:true, points:[
+      "First-ever visit by an Indian Coast Guard ship to Chabahar Port",
+      "India developed Chabahar Port (Iran) — counter to China-developed Gwadar Port (Pakistan) — gives India access to Central Asia via Afghanistan",
+      "Zaranj–Delaram Highway (Afghanistan) also built by India — asked recently in Delhi Police exam",
+      "Kaladan Multimodal Project — links Sittwe Port (Myanmar) with Kolkata Port"
+    ]},
+    {t:"Exercise Desert Cyclone (India–UAE)", points:[
+      "2nd edition; Indian Army contingent of 45 personnel from mechanised infantry regiment",
+      "Note: Exercise 'Cyclone' (without Desert) is India–Egypt"
+    ]},
+    {t:"ICGS Amulya", points:[
+      "3rd in series of 8 new-gen Aadamya-class Fast Patrol Vessels; designed by Goa Shipyard Limited"
+    ]},
+    {t:"Anjadeep — 3rd of 8 Anti-Submarine Warfare Shallow Water Craft (ASW SWC)", points:[
+      "Delivered to Navy at Chennai; built indigenously by Garden Reach Shipbuilders & Engineers Ltd",
+      "Named after Anjadeep Island, Karwar, Karnataka"
+    ]},
+    {t:"DRDO — Next-gen Akash Missile", high:true, points:[
+      "User evaluation trials completed successfully",
+      "Advanced medium-range surface-to-air missile, developed by DRDO"
+    ]},
+    {t:"ICG — Samudra Pratap commissioned", points:[
+      "First Pollution Control Vessel (PCV project, Goa Shipyard Ltd)",
+      "1 Feb = Indian Coast Guard Day"
+    ]},
+    {t:"Pinaka & Pralay Missile Tests", high:true, points:[
+      "Pinaka long-range guided rocket successfully tested at Chandipur ITR (Odisha), max range 120 km",
+      "DRDO conducted salvo launch (back-to-back launches) of Pralay missiles from same launcher, off Odisha coast"
+    ]},
+    {t:"Defence Acquisition Council clears proposals worth ₹79,000 crore", points:[]}
+  ]
+},
+{
+  key:"scitech",
+  icon:"🔬",
+  title:"Science & Tech",
+  desc:"Space, research breakthroughs & innovation",
+  items:[
+    {t:"DRDO — Fighter Aircraft Escape System Test", points:[
+      "High-speed rocket sled test conducted at Terminal Ballistics Research Laboratory, Chandigarh"
+    ]},
+    {t:"First direct high-resolution measurement of vertical air motion", points:[
+      "By Aryabhatta Research Institute of Observational Sciences (ARIES), Nainital + ISRO Space Physics Lab, Thiruvananthapuram"
+    ]},
+    {t:"ISRO — Blue Bird Block 2 satellite launch", high:true, points:[
+      "Successful mission (after PSLV C61 & C62 failures)",
+      "Launch vehicle: LVM3-M6, from Sriharikota, Andhra Pradesh",
+      "Communication satellite — part of global Low Earth Orbit (LEO) constellation for direct-to-mobile connectivity"
+    ]},
+    {t:"HANSA-3NG Aircraft — Production version launched", points:[
+      "By Dr. Jitendra Singh; India's first all-composite airframe two-seater aircraft, fully indigenous"
+    ]},
+    {t:"Alaknanda — new spiral galaxy discovered", high:true, points:[
+      "By National Centre for Radio Astrophysics (TIFR), Pune",
+      "Grand-design spiral galaxy resembling Milky Way",
+      "Named after Alaknanda river (originates from Satopanth Glacier, meets Bhagirathi at Devprayag)"
+    ]},
+    {t:"GLO-Cas9 — glowing CRISPR protein", points:[
+      "Developed by Kolkata-based Bose Institute",
+      "Lights up while performing gene editing"
+    ]},
+    {t:"India's first hydrogen-powered water taxi service", high:true, points:[
+      "Launched in Varanasi, Uttar Pradesh"
+    ]},
+    {t:"Dhruv 64 — India's first indigenous microprocessor", high:true, points:[
+      "1.0 GHz, 64-bit dual-core, developed by C-DAC (Centre for Development of Advanced Computing)"
+    ]},
+    {t:"NASA MAVEN — lost contact", points:[
+      "Mars Atmosphere and Volatile Evolution mission (launched 2013) lost contact 6 Dec 2025",
+      "India's Mars missions: Mars Orbiter Mission (MOM/Mangalyaan) — launched & successful in 2014",
+      "Mangalyaan-2 (Mars Lander mission) planned ~2030"
+    ]},
+    {t:"PARAM Rudra — Bihar's first supercomputer", high:true, points:[
+      "Inaugurated by IIT Patna",
+      "India's first supercomputer: PARAM 8000, developed by C-DAC",
+      "Father of Supercomputing in India: Dr. Vijay Bhatkar (Vijay Pandurang Bhatkar)"
+    ]}
+  ]
+},
+{
+  key:"books",
+  icon:"📚",
+  title:"Books & Authors",
+  desc:"New releases relevant for exams",
+  items:[
+    {t:"Notable Books", points:[
+      "'The One: Cricket, My Life and More' — Shikhar Dhawan",
+      "'Bharat: India Reclaiming Our Real Identity' — Abhijit Jog (launched by IGNCA)",
+      "'The Wrong Way Home' — Sonali Khullar Shroff",
+      "'Sultan of Bollywood' (on Salman Khan) — Mohar Basu",
+      "'Kesariya' and 'The Odd Order of the Karamsa Rathores' — Urvashi Singh (500-year history of Karamsa Rathores of Khinasar, Marwar, Rajasthan)",
+      "'Economic Empowerment of Bharat in the Modi Era' — Prof. Sikandar Kumar"
+    ]}
+  ]
+},
+{
+  key:"schemes",
+  icon:"🏛️",
+  title:"Govt Schemes & Bills",
+  desc:"Legislation, policy details & schemes",
+  items:[
+    {t:"Atal Pension Yojana", high:true, points:[
+      "As on 30 Nov 2025: 8 crore 45 lakh subscribers enrolled",
+      "Launched 2015; aim: universal social security system",
+      "Eligibility age: 18–40 years; pension eligibility at 60 years",
+      "Flexible minimum guaranteed pension: ₹1000/2000/3000/4000/5000 per month (based on deposit)"
+    ]},
+    {t:"Pradhan Mantri Gram Sadak Yojana", points:[
+      "Launched 25 December 2000 — 25th anniversary observed"
+    ]},
+    {t:"8 Bills passed — 6th Session of 18th Lok Sabha", high:true, points:[
+      "Manipur GST Bill 2025, Central Excise Bill, Health Service Security bill, National Security Assets bill, Appropriation Bill 2025, Repealing & Amending Bill 2025, Sabka Bima Sabki Raksha Bill 2025, Sustainable Harnessing & Advancement of Nuclear Energy for Transforming India Bill (SHANTI Bill), Viksit Bharat Guarantee for Rozgar aur Aajeevika Mission (JI-RAM-JI Bill)"
+    ]},
+    {t:"SHANTI Bill (Nuclear Energy)", high:true, points:[
+      "By Ministry of Science & Tech + Earth Sciences",
+      "Replaces Atomic Energy Act 1962 & Civil Liability for Nuclear Damage Act 2010",
+      "Enables LIMITED private participation in nuclear sector under regulatory oversight",
+      "Gives statutory recognition to Atomic Energy Regulatory body",
+      "Supports target: 100 GW nuclear energy capacity by 2047",
+      "Introduced in LS 15 Dec, passed LS 17 Dec, passed RS 18 Dec"
+    ]},
+    {t:"Seeds Bill 2025 (draft)", points:[
+      "By Dept of Agriculture & Farmers Welfare",
+      "Protects farmers' rights per Protection of Plant Varieties & Farmers' Rights Act 2001 — to grow, sow, save, exchange & sell farm seeds"
+    ]},
+    {t:"Sabka Bima Sabki Raksha (Insurance) Amendment Bill 2025", high:true, points:[
+      "Passed both houses",
+      "Seeks to amend Insurance Act 1938, LIC Act 1956, IRDA Act",
+      "<b>FDI limit in Indian insurance companies increased from 74% to 100%</b> — fully via automatic route now",
+      "Net Owned Fund requirement for foreign reinsurance entities reduced from ₹5000 crore to ₹1000 crore"
+    ]},
+    {t:"Viksit Bharat Guarantee for Rozgar aur Aajeevika Mission (Ji-RAM-Ji Bill)", high:true, points:[
+      "By Ministry of Agriculture & Farmers Welfare — replaces MGNREGA",
+      "NREGA introduced 2005, implemented 2006; renamed MGNREGA (Mahatma Gandhi added) on 2 Oct 2009",
+      "Guarantees at least <b>125 days</b> employment/year (earlier 100 days)",
+      "Scheme transitions from state-centric to <b>Centrally Sponsored Scheme</b> (central contribution now included)",
+      "States must announce in advance (up to 60 days) periods when work won't be undertaken",
+      "Provides for biometric authentication, geospatial tech for planning/monitoring, weekly public disclosure, mobile app dashboard for real-time tracking",
+      "Introduced 16 Dec, passed LS 18 Dec, passed RS 18 Dec"
+    ]},
+    {t:"General note on Bills", points:[
+      "A pending Bill does NOT lapse on prorogation of the House (only pending notices lapse)"
+    ]}
+  ]
+},
+{
+  key:"reports",
+  icon:"📊",
+  title:"Reports & Rankings",
+  desc:"Indices, summits & global reports",
+  items:[
+    {t:"Women, Peace & Security Index 2025-26", points:[
+      "Denmark topped; India ranked 131 (not heavily important report per educator)"
+    ]},
+    {t:"Asia Power Index", high:true, points:[
+      "USA ranked #1 in Asia too; India ranked 3rd",
+      "Released by Lowy Institute"
+    ]},
+    {t:"Global Environment Outlook", points:[
+      "Released by UNEP; report titled 'Future We Choose'"
+    ]},
+    {t:"'Bhasha Matters' & 'Internationalization of Higher Education in India'", points:[
+      "'Bhasha Matters' — released by UNESCO",
+      "'Internationalization of Higher Education in India: Prospects, Potential and Policy Recommendation' — released by NITI Aayog",
+      "'Right to Education: Past, Present and Future' — UNESCO"
+    ]},
+    {t:"Summits (brief mentions — low detail needed)", points:[
+      "Anti-Terrorism Conference — New Delhi",
+      "7th International Seaweed Expo — Kochi",
+      "Global Energy Leaders Summit — Odisha",
+      "World Summit on Disaster Management — Dehradun",
+      "Regional Conference on Environment — Chennai",
+      "Earth Summit — Gandhinagar"
+    ]}
+  ]
+}
+];
+
+// ---------- Render ----------
+const navList = document.getElementById('nav-list');
+const pagesEl = document.getElementById('pages');
+
+DATA.forEach((sec, idx) => {
+  // nav item
+  const nav = document.createElement('div');
+  nav.className = 'nav-item' + (idx===0 ? ' active' : '');
+  nav.dataset.key = sec.key;
+  nav.innerHTML = `<span class="nav-icon">${sec.icon}</span><span>${sec.title}</span><span class="nav-count">${sec.items.length}</span>`;
+  nav.addEventListener('click', () => showPage(sec.key));
+  navList.appendChild(nav);
+
+  // page
+  const page = document.createElement('div');
+  page.className = 'page' + (idx===0 ? ' active' : '');
+  page.id = 'page-' + sec.key;
+
+  let cardsHtml = '';
+  sec.items.forEach(item => {
+    const highClass = item.high ? ' high' : '';
+    const badge = item.high ? `<span class="badge high">🔥 High Priority</span>` : '';
+    const bullets = item.points.map(p => `<li>${p}</li>`).join('');
+    cardsHtml += `
+      <div class="card${highClass}" data-search="${(item.t + ' ' + item.points.join(' ')).toLowerCase().replace(/"/g,'')}">
+        ${badge}
+        <p class="card-title">${item.t}</p>
+        <ul>${bullets}</ul>
+      </div>`;
+  });
+
+  page.innerHTML = `
+    <div class="page-header">
+      <h2>${sec.icon} ${sec.title}</h2>
+      <p>${sec.desc}</p>
+    </div>
+    <div class="grid">${cardsHtml}</div>
+  `;
+  pagesEl.appendChild(page);
+});
+
+function showPage(key){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + key).classList.add('active');
+  document.querySelector(`.nav-item[data-key="${key}"]`).classList.add('active');
+  document.getElementById('main').scrollTop = 0;
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('hide'));
+}
+
+// Search across all pages (searches within current active page's cards; if typed, shows all pages' matches by switching to a unified search mode)
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  if(!q){
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('hide'));
+    return;
+  }
+  // reveal all pages when searching, filter cards
+  document.querySelectorAll('.page').forEach(p => p.classList.add('active'));
+  document.querySelectorAll('.page').forEach(p => {
+    let anyVisible = false;
+    p.querySelectorAll('.card').forEach(c => {
+      const match = c.dataset.search.includes(q);
+      c.classList.toggle('hide', !match);
+      if(match) anyVisible = true;
+    });
+    p.style.display = anyVisible ? '' : 'none';
+  });
+});
+searchInput.addEventListener('blur', () => {
+  if(!searchInput.value.trim()){
+    document.querySelectorAll('.page').forEach(p => p.style.display = '');
+    const activeKey = document.querySelector('.nav-item.active').dataset.key;
+    showPage(activeKey);
+  }
+});
+</script>
+</body>
+</html>
