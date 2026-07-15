@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>April Current Affairs — SSC CGL Study Deck</title>
+<style>
+  :root{
+    --bg: #10141a;
+    --bg-soft: #151a22;
+    --panel: #1a212b;
+    --panel-hover: #1f2733;
+    --border: #2a3341;
+    --text: #e7e6e2;
+    --text-dim: #9aa6b3;
+    --text-faint: #6b7684;
+    --sage: #7fa593;
+    --sage-dim: #5c8272;
+    --gold: #c9a969;
+    --gold-dim: #8a7343;
+    --gold-glow: rgba(201,169,105,0.15);
+    --serif: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 1200px 700px at 15% -10%, rgba(127,165,147,0.07), transparent 60%),
+      radial-gradient(ellipse 900px 600px at 100% 0%, rgba(201,169,105,0.05), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--gold-glow);color:var(--text);}
+
+  /* Layout */
+  .app{display:flex; min-height:100vh;}
+
+  .sidebar{
+    width:260px;
+    flex-shrink:0;
+    background:var(--bg-soft);
+    border-right:1px solid var(--border);
+    padding:28px 18px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    transition:transform .3s ease;
+    z-index:50;
+  }
+  .brand{padding:0 8px;}
+  .brand .eyebrow{
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--sage); font-weight:600; margin-bottom:6px;
+  }
+  .brand h1{
+    font-family:var(--serif); font-size:22px; font-weight:600; margin:0 0 4px 0; color:var(--text); line-height:1.25;
+  }
+  .brand .sub{font-size:12.5px; color:var(--text-faint); line-height:1.5;}
+
+  .navlist{display:flex; flex-direction:column; gap:3px; margin-top:4px;}
+  .navitem{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 12px; border-radius:9px; cursor:pointer;
+    color:var(--text-dim); font-size:14px; border:1px solid transparent;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .navitem .nl{display:flex; align-items:center; gap:10px;}
+  .navitem .ic{font-size:15px; width:20px; text-align:center; opacity:.85;}
+  .navitem:hover{background:var(--panel); color:var(--text);}
+  .navitem.active{
+    background:linear-gradient(90deg, var(--gold-glow), transparent);
+    color:var(--text); border-color:rgba(201,169,105,0.25);
+  }
+  .navitem.active .ic{color:var(--gold);}
+  .navitem .count{
+    font-size:10.5px; color:var(--text-faint); background:rgba(255,255,255,0.04);
+    padding:2px 7px; border-radius:20px; border:1px solid var(--border);
+  }
+  .navitem.active .count{color:var(--gold); border-color:rgba(201,169,105,0.3);}
+
+  .sidebar-foot{
+    margin-top:auto; padding:14px 10px 4px; border-top:1px solid var(--border);
+    font-size:11px; color:var(--text-faint); line-height:1.6;
+  }
+
+  .menu-toggle{
+    display:none; position:fixed; top:16px; left:16px; z-index:60;
+    background:var(--panel); border:1px solid var(--border); color:var(--text);
+    width:42px; height:42px; border-radius:10px; font-size:18px; cursor:pointer;
+    align-items:center; justify-content:center;
+  }
+  .backdrop{display:none;}
+
+  /* Main */
+  .main{flex:1; min-width:0; padding:40px 48px 80px; max-width:1180px;}
+  .topline{
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:30px; gap:16px; flex-wrap:wrap;
+  }
+  .search-wrap{
+    position:relative; flex:1; min-width:220px; max-width:380px;
+  }
+  .search-wrap input{
+    width:100%; background:var(--panel); border:1px solid var(--border); color:var(--text);
+    padding:10px 14px 10px 36px; border-radius:10px; font-size:13.5px; font-family:var(--sans);
+    outline:none; transition:border-color .15s ease;
+  }
+  .search-wrap input:focus{border-color:var(--sage-dim);}
+  .search-wrap input::placeholder{color:var(--text-faint);}
+  .search-wrap .sic{position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--text-faint); font-size:14px;}
+
+  .filter-pills{display:flex; gap:8px;}
+  .pill{
+    font-size:12px; padding:8px 13px; border-radius:20px; border:1px solid var(--border);
+    background:var(--panel); color:var(--text-dim); cursor:pointer; white-space:nowrap;
+    transition:all .15s ease;
+  }
+  .pill:hover{color:var(--text); border-color:var(--sage-dim);}
+  .pill.on{background:var(--gold-glow); border-color:rgba(201,169,105,0.4); color:var(--gold);}
+
+  /* Views */
+  .view{display:none; animation:fade .35s ease;}
+  .view.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  .section-head{margin-bottom:26px;}
+  .section-head .eyebrow{font-size:11px; letter-spacing:.13em; text-transform:uppercase; color:var(--sage); font-weight:600; margin-bottom:8px;}
+  .section-head h2{font-family:var(--serif); font-size:32px; margin:0 0 8px; font-weight:600;}
+  .section-head p{color:var(--text-dim); font-size:14px; max-width:640px; line-height:1.6; margin:0;}
+
+  /* Home view */
+  .hero{
+    padding:38px 40px; border-radius:18px; margin-bottom:38px;
+    background:linear-gradient(135deg, rgba(127,165,147,0.10), rgba(201,169,105,0.05));
+    border:1px solid var(--border);
+    position:relative; overflow:hidden;
+  }
+  .hero::after{
+    content:""; position:absolute; right:-60px; top:-60px; width:220px; height:220px; border-radius:50%;
+    background:radial-gradient(circle, rgba(201,169,105,0.12), transparent 70%);
+  }
+  .hero .eyebrow{font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:12px;}
+  .hero h2{font-family:var(--serif); font-size:38px; margin:0 0 14px; line-height:1.2; max-width:620px;}
+  .hero p{color:var(--text-dim); font-size:15px; max-width:560px; line-height:1.7; margin:0 0 22px;}
+  .hero-stats{display:flex; gap:34px; flex-wrap:wrap;}
+  .hero-stat .num{font-family:var(--serif); font-size:30px; color:var(--gold); font-weight:600;}
+  .hero-stat .lab{font-size:11.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.06em; margin-top:2px;}
+
+  .grid-tiles{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:16px;}
+  .tile{
+    background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:22px;
+    cursor:pointer; transition:transform .18s ease, border-color .18s ease, background .18s ease;
+    position:relative;
+  }
+  .tile:hover{transform:translateY(-3px); border-color:var(--sage-dim); background:var(--panel-hover);}
+  .tile .tic{font-size:22px; margin-bottom:14px; display:block;}
+  .tile h3{font-family:var(--serif); font-size:18px; margin:0 0 6px; font-weight:600;}
+  .tile .meta{font-size:12px; color:var(--text-faint); display:flex; gap:10px; align-items:center;}
+  .tile .meta .hp{color:var(--gold);}
+
+  /* Cards */
+  .cards{display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:18px;}
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:20px 22px 18px;
+    border-left:3px solid var(--border);
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .card:hover{transform:translateY(-2px);}
+  .card.hp{border-left-color:var(--gold);}
+  .card-top{display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:10px;}
+  .card h4{font-family:var(--serif); font-size:17px; margin:0; font-weight:600; line-height:1.35; color:var(--text);}
+  .badge{
+    flex-shrink:0; font-size:10.5px; font-weight:700; letter-spacing:.03em; padding:4px 9px; border-radius:20px;
+    background:var(--gold-glow); color:var(--gold); border:1px solid rgba(201,169,105,0.35); white-space:nowrap;
+  }
+  .card ul{margin:0; padding:0; list-style:none;}
+  .card li{
+    position:relative; padding:5px 0 5px 16px; font-size:13.5px; color:var(--text-dim); line-height:1.55;
+  }
+  .card li::before{
+    content:"—"; position:absolute; left:0; color:var(--sage-dim);
+  }
+  .card li b, .card li strong{color:var(--text); font-weight:600;}
+
+  .empty-state{
+    text-align:center; padding:60px 20px; color:var(--text-faint); font-size:14px;
+  }
+
+  footer.page-foot{margin-top:50px; padding-top:20px; border-top:1px solid var(--border); color:var(--text-faint); font-size:12px; text-align:center;}
+
+  @media (max-width: 900px){
+    .sidebar{position:fixed; left:0; transform:translateX(-100%); box-shadow:0 0 40px rgba(0,0,0,0.5);}
+    .sidebar.open{transform:translateX(0);}
+    .menu-toggle{display:flex;}
+    .backdrop.show{display:block; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:40;}
+    .main{padding:80px 20px 60px;}
+    .hero{padding:26px 22px;}
+    .hero h2{font-size:28px;}
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+<div class="backdrop" id="backdrop"></div>
+
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="eyebrow">Monthly Digest</div>
+      <h1>April Current Affairs</h1>
+      <div class="sub">Curated for SSC CGL &amp; allied exams — only what the instructor flagged as exam‑worthy.</div>
+    </div>
+    <nav class="navlist" id="navlist"></nav>
+    <div class="sidebar-foot">Session recorded 3 May · Prepared as a revision deck.<br>🔥 = explicitly stressed by the instructor</div>
+  </aside>
+
+  <main class="main">
+    <div class="topline">
+      <div class="search-wrap">
+        <span class="sic">🔎</span>
+        <input type="text" id="searchInput" placeholder="Search this deck — e.g. BIMSTEC, RBI, Kathak…">
+      </div>
+      <div class="filter-pills">
+        <div class="pill on" data-filter="all">All items</div>
+        <div class="pill" data-filter="hp">🔥 High priority only</div>
+      </div>
+    </div>
+
+    <section class="view active" id="view-home">
+      <div class="hero">
+        <div class="eyebrow">Exam Focus · April 2026 Wrap</div>
+        <h2>Everything the instructor said "remember this" about — nothing he said to skip.</h2>
+        <p>Nine sections, condensed straight from the live session. Off‑topic chatter, jokes and live‑chat replies have been stripped out. Click a section to start, or search across the whole deck above.</p>
+        <div class="hero-stats" id="heroStats"></div>
+      </div>
+      <div class="grid-tiles" id="homeGrid"></div>
+    </section>
+
+    <div id="sectionsRoot"></div>
+
+    <footer class="page-foot">Study deck generated from the instructor's live April current‑affairs session · for personal revision use</footer>
+  </main>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const DATA = [
+  {
+    id:"national", label:"National", icon:"🏛️",
+    desc:"Central schemes, launches and infrastructure milestones from across the country.",
+    items:[
+      {t:"Vibrant Villages Programme — 2nd Edition", hp:true, pts:[
+        "Central govt initiative for villages on the <b>Northern (India–China) Border</b>; ₹839 crore allocated, valid till <b>FY 2028‑29</b>.",
+        "1st edition ran FY 2022‑23 to 2025‑26 with ₹4,800 crore allocation.",
+        "Northern Border is split into 3 sectors: <b>Western, Central, Eastern</b> (Arunachal).",
+        "Objective: develop border villages <b>NOT covered</b> under the 1st edition.",
+        "Remember: it is a <b>Central Sector Scheme</b> — fully funded by the Centre (no state contribution)."
+      ]},
+      {t:"'Hamari Parampara Hamari Virasat' launched", hp:false, pts:[
+        "Launched by the <b>Ministry of Panchayati Raj</b>, New Delhi.",
+        "Dedicated to the 150th birth anniversary of <b>Bhagwan Birsa Munda</b> (falls 15 Nov — Janjatiya Gaurav Diwas)."
+      ]},
+      {t:"PM Modi visits Wat Arun Temple, Bangkok", hp:true, pts:[
+        "Famous for its architecture and reclining Buddha statue.",
+        "Located in <b>Thailand</b>; capital Bangkok."
+      ]},
+      {t:"New Pamban Bridge inaugurated", hp:true, pts:[
+        "Inaugurated by PM Modi in <b>Rameswaram, Tamil Nadu</b>.",
+        "India's <b>first vertical‑lift railway sea bridge</b>.",
+        "Total cost: ₹550 crore."
+      ]},
+      {t:"Tri‑Services all‑women circumnavigation", hp:false, pts:[
+        "'Samudra Parikrama' sailing expedition, flagged off by Lt Gen A.K. Ramesh.",
+        "Route: <b>Mumbai → Seychelles → back</b>."
+      ]},
+      {t:"Poshan Abhiyaan — 7th edition launched", hp:true, pts:[
+        "Focus: nutrition for pregnant/lactating women, adolescent girls, children under 6.",
+        "Originally launched 2018 from <b>Jhunjhunu, Rajasthan</b>.",
+        "POSHAN = <b>P</b>rime Minister's <b>O</b>ver‑arching <b>S</b>cheme for <b>H</b>olistic <b>N</b>utrition.",
+        "Constitutional link: Early Childhood Care falls under <b>Article 45</b> — its subject matter was changed by the <b>86th Amendment</b> (earlier Article 21A covered only ages 6–14)."
+      ]},
+      {t:"First Himalayan High‑Altitude Climate Research Centre", hp:false, pts:[
+        "Inaugurated by Union Minister Jitendra Singh in <b>Jammu & Kashmir</b>.",
+        "Located at an altitude of 250 metres."
+      ]},
+      {t:"Dr. Bhimrao Ambedkar Wildlife Sanctuary", hp:true, pts:[
+        "Established in <b>Madhya Pradesh</b> — the state's <b>25th</b> wildlife sanctuary.",
+        "Notified on <b>14 April</b> (Ambedkar Jayanti).",
+        "Recall: Jim Corbett National Park (Uttarakhand, 1936) is India's first national park; Project Tiger was launched there in 1973.",
+        "Ambedkar recall points: led the <b>Mahad Satyagraha</b> and the <b>Temple Entry Movement</b> from Kalaram Temple, Nashik — both in <b>1927</b>."
+      ]},
+      {t:"World's highest 3D‑printed military bunker", hp:false, pts:[
+        "Built by <b>IIT Hyderabad</b> with the Indian Army.",
+        "Located in <b>Leh</b> — highest‑altitude 3D‑printed bunker."
+      ]},
+      {t:"India's largest cruise terminal opens", hp:false, pts:[
+        "Mumbai International Cruise Terminal — inaugurated by Union Minister Sarbananda Sonowal.",
+        "Capacity: 1 million passengers/year; can handle 5 cruise ships at once."
+      ]},
+      {t:"Project Cheetah — new import planned", hp:false, pts:[
+        "India planning to import 8 cheetahs from <b>Botswana</b>.",
+        "To be relocated to <b>Gandhisagar Wildlife Sanctuary, MP</b> (earlier cheetahs went to Kuno, Gwalior, from South Africa & Namibia)."
+      ]},
+      {t:"India's longest rail tunnel (under construction)", hp:true, pts:[
+        "Tunnel <b>T8</b>, part of the Rishikesh–Karnaprayag Rail Project.",
+        "Length: <b>14.58 km</b>.",
+        "Current longest road tunnel: <b>Atal Tunnel</b>, 9.02 km, at <b>Rohtang Pass</b>.",
+        "Karnaprayag = confluence (sangam) of the <b>Pindar</b> and <b>Alaknanda</b> rivers."
+      ]},
+      {t:"Campaign to eliminate Measles & Rubella", hp:false, pts:[
+        "Initiated by Union Health Minister <b>JP Nadda</b>.",
+        "Target: zero cases / elimination from India by <b>2026</b>."
+      ]}
+    ]
+  },
+  {
+    id:"state", label:"State News", icon:"🗺️",
+    desc:"State‑government schemes, portals and regional launches.",
+    items:[
+      {t:"Regional New Year festivals (know the pairing, not the dates)", hp:false, pts:[
+        "Sajibu Cheiraoba — Manipur (Meitei community).",
+        "Cheti Chand — Sindhi community.",
+        "Losoong — Sikkim; Pana Sankranti/Navroz (Pateti) — Parsi community.",
+        "Poila Boishakh — West Bengal; Puthandu — Tamil Nadu; Vishu — Kerala.",
+        "Gudi Padwa — Maharashtra; Ugadi — Telugu‑speaking regions.",
+        "Losar — Tibetan Buddhist community (Arunachal / Ladakh)."
+      ]},
+      {t:"NITI‑NCAER State Economic Forum Portal", hp:false, pts:[
+        "Launched by Finance Minister <b>Nirmala Sitharaman</b> in New Delhi.",
+        "Aggregates and analyses state‑finance data.",
+        "Jointly developed by <b>NITI Aayog</b> and <b>NCAER</b>."
+      ]},
+      {t:"MP Government — 3 new education initiatives", hp:false, pts:[
+        "School Chale Hum Campaign, CM Rise Schools, Education Portal 3.0."
+      ]},
+      {t:"Zero Poverty 'P4' Initiative — Andhra Pradesh", hp:true, pts:[
+        "Launched by CM <b>Chandrababu Naidu</b>; aims to eradicate poverty in the state by <b>2047</b>.",
+        "P4 = <b>P</b>ublic <b>P</b>rivate <b>P</b>eople <b>P</b>artnership.",
+        "Linked to <b>SDG 1 — No Poverty</b> (SDG order to recall: 1 Poverty, 2 Hunger, 3 Health, 4 Education, 5 Gender/Women…)."
+      ]},
+      {t:"Mukhyamantri Mahila Udyamita Abhiyan — Assam", hp:false, pts:[
+        "Launched by CM <b>Himanta Biswa Sarma</b> to empower women SHG members as entrepreneurs.",
+        "India's first SHG: <b>SEWA</b> (Self Employed Women's Association), established 1974 in Ahmedabad.",
+        "An SHG typically has 10–20 members.",
+        "Bank–SHG Linkage Programme launched by <b>NABARD</b> in 1991‑92."
+      ]},
+      {t:"Bhagirath Mobile App — Uttarakhand", hp:false, pts:[
+        "Launched by CM Pushkar Singh Dhami as part of the state's <b>water conservation (Jal Sanrakshan) campaign</b>."
+      ]},
+      {t:"Zero Poverty Mission — Uttar Pradesh", hp:false, pts:[
+        "Launched by CM Yogi Adityanath, named after <b>Dr. Ambedkar</b>.",
+        "Launched on <b>14 April</b> (Ambedkar Jayanti)."
+      ]},
+      {t:"Bhu Bharati Portal — Telangana", hp:false, pts:[
+        "For land‑record management; replaces the earlier <b>Dharani Portal</b>.",
+        "Comparable to the Centre's <b>Swamitva Scheme</b> (launched 24 April 2020, on National Panchayati Raj Diwas)."
+      ]},
+      {t:"Triple Elimination Initiative — West Bengal", hp:true, pts:[
+        "Aims to stop mother‑to‑child transmission of <b>HIV, Syphilis and Hepatitis B</b>.",
+        "Syphilis is a bacterial STD; HIV (a virus) causes AIDS — tested via the <b>ELISA</b> test.",
+        "Gonorrhoea is also a bacterial STD, for recall."
+      ]}
+    ]
+  },
+  {
+    id:"international", label:"International", icon:"🌍",
+    desc:"Global summits, treaties and diplomatic developments.",
+    items:[
+      {t:"Operation Brahma — Myanmar earthquake relief", hp:true, pts:[
+        "India launched Operation Brahma to assist Myanmar after the earthquake.",
+        "Myanmar's old name: <b>Burma</b>; capital: <b>Naypyidaw</b>.",
+        "Recall other operations: Vande Bharat (Covid), Ganga (Ukraine evacuation), Dost (Turkey/Syria), Karuna (Cyclone Mocha, Myanmar 2023), Ajay (Israel evacuation)."
+      ]},
+      {t:"6th BIMSTEC Summit — Bangkok, Thailand", hp:true, pts:[
+        "BIMSTEC = <b>B</b>ay of Bengal <b>I</b>nitiative for <b>M</b>ulti‑<b>S</b>ectoral <b>T</b>echnical and <b>E</b>conomic <b>C</b>ooperation.",
+        "7 members: Bangladesh, India, Sri Lanka, Thailand, Nepal, Bhutan, Myanmar.",
+        "Secretariat/HQ: <b>Dhaka, Bangladesh</b>; established <b>1997</b>.",
+        "Bangladesh assumes BIMSTEC chairmanship from Thailand for the next 2 years.",
+        "Muhammad Yunus (Bangladesh) — known as 'Father of Microfinance', founder of Grameen Bank."
+      ]},
+      {t:"Hungary exits the International Criminal Court", hp:false, pts:[
+        "First European country to withdraw from the <b>ICC</b>.",
+        "ICC HQ: <b>The Hague, Netherlands</b> (same city as, but distinct from, the ICJ).",
+        "ICC established <b>2002</b>; a UN organ."
+      ]},
+      {t:"Japan builds world's first 3D‑printed railway station", hp:false, pts:[
+        "For recall: India's first 3D‑printed post office is in <b>Bengaluru</b>."
+      ]},
+      {t:"BRICS — 15th Agriculture Ministers' Meeting, Brasília", hp:true, pts:[
+        "BRICS now has <b>10 member countries</b> (originally 5: Brazil, Russia, India, China, South Africa — SA joined last, 2010).",
+        "'BRICS Plus' added 5 new members: <b>Saudi Arabia, UAE, Egypt, Ethiopia, Iran</b> (Argentina was offered but declined).",
+        "BRICS bank: <b>New Development Bank (NDB)</b>, established 2014, HQ <b>Shanghai</b>.",
+        "BRICS 2025 chair/host: <b>Brazil</b>."
+      ]},
+      {t:"India ends Bangladesh transshipment facility", hp:false, pts:[
+        "Facility (started 2020) had let Bangladeshi exports pass through Indian ports & airports — now withdrawn."
+      ]},
+      {t:"India suspends the Indus Waters Treaty", hp:true, pts:[
+        "Signed <b>September 1960 in Karachi</b>; mediated by the <b>World Bank</b>.",
+        "Signed by PM Nehru and Pakistan President <b>Ayub Khan</b>.",
+        "Suspended <b>22 April 2025</b>, following the Pahalgam terror attack.",
+        "Western rivers (Pakistan ~80%, India ~20%): <b>Indus, Jhelum, Chenab</b>.",
+        "Eastern rivers (India ~80%, Pakistan ~20%): <b>Ravi, Beas, Sutlej</b>.",
+        "Shahpur Kandi Barrage (Punjab) built on the Ravi to help India use its full share."
+      ]},
+      {t:"Pakistan suspends the Shimla Agreement (retaliation)", hp:true, pts:[
+        "Shimla Agreement signed <b>1972</b> between PM Indira Gandhi and Pakistan President <b>Zulfikar Ali Bhutto</b>.",
+        "Bangladesh (formerly East Pakistan) was liberated in <b>1971</b> with India's support; Sheikh Mujibur Rahman is its founding father."
+      ]}
+    ]
+  },
+  {
+    id:"awards", label:"Awards & Honours", icon:"🏆",
+    desc:"Prizes, honours and recognitions — including sport, literature and civilian awards.",
+    items:[
+      {t:"Gold Mercury International Award", hp:false, pts:[
+        "Given to the <b>14th Dalai Lama</b>."
+      ]},
+      {t:"Mitra Vibhushan Award", hp:true, pts:[
+        "Given to <b>PM Modi</b> by Sri Lanka.",
+        "Sri Lanka's highest award given to a non‑citizen."
+      ]},
+      {t:"Fred Darrington Sand Art Award (UK)", hp:false, pts:[
+        "<b>Sudarshan Patnaik</b> became the first Indian to win it.",
+        "Made a 10‑foot Lord Ganesha sand statue symbolising world peace.",
+        "He received the Padma Shri in 2014."
+      ]},
+      {t:"President Murmu — international honours", hp:false, pts:[
+        "Received 'City of Honour' from the Mayor of <b>Lisbon, Portugal</b>.",
+        "Received an honorary doctorate from <b>Slovakia</b> (Constantine the Philosopher University)."
+      ]},
+      {t:"SCOCH Award — UP Police IPC Portal", hp:false, pts:[
+        "Awarded to UP Police's <b>Investigation, Prosecution & Conviction (IPC)</b> portal."
+      ]},
+      {t:"World's Best Airport / South Asia rankings", hp:true, pts:[
+        "World's Best Airport: <b>Singapore Changi</b> (awarded by <b>Skytrax</b>).",
+        "Best Airport in South Asia: <b>Delhi International Airport</b>.",
+        "Cleanest Airport in India & South Asia: <b>Goa's Manohar International Airport (Mopa)</b>."
+      ]},
+      {t:"Saraswati Samman 2025", hp:true, pts:[
+        "Given to <b>Bhadresh Das Swami ji</b> for the Sanskrit work 'Swaminarayan Siddhant Suddh'.",
+        "Saraswati Samman is given across <b>22 languages</b>.",
+        "Contrast: the <b>Sahitya Akademi Award</b> is given in <b>24 languages</b> (22 scheduled languages + English + Rajasthani)."
+      ]},
+      {t:"National Panchayat Awards 2025", hp:false, pts:[
+        "Climate Action Special Panchayat Award — Dawa S Gram, Gondia district, Maharashtra.",
+        "Aatmanirbhar Panchayat Special Award — Mol Gram Panchayat, Maharashtra.",
+        "Best institution for panchayat capacity building — Kerala Institute of Local Administration."
+      ]},
+      {t:"Payal Kapadia honoured by France", hp:true, pts:[
+        "Received 'Officer of the Order of Arts and Letters' from the <b>French Government</b>.",
+        "Recall: won at the 77th Cannes Film Festival for 'All We Imagine As Light'."
+      ]},
+      {t:"Wisden Leading Cricketers 2025", hp:true, pts:[
+        "Men: <b>Jasprit Bumrah</b>. Women: <b>Smriti Mandhana</b>.",
+        "Leading T20 cricketer in the world: <b>Nicholas Pooran</b>."
+      ]},
+      {t:"Laureus World Sports Awards 2025", hp:true, pts:[
+        "Sportsman of the Year: <b>Armand Duplantis</b> (Sweden, athletics).",
+        "Sportswoman of the Year: <b>Simone Biles</b> (USA, gymnastics).",
+        "World Team of the Year: <b>Real Madrid</b> (football).",
+        "Sporting Icon Award: <b>Rafael Nadal</b> (Spain).",
+        "Lifetime Achievement Award: <b>Kelly Slater</b> (USA, surfing)."
+      ]}
+    ]
+  },
+  {
+    id:"sports", label:"Sports", icon:"🏅",
+    desc:"National records, tournament winners and rising athletes.",
+    items:[
+      {t:"New national record — Men's 100m", hp:true, pts:[
+        "<b>Gurvinder Singh</b> clocked <b>10.20 seconds</b>.",
+        "Previous national record: 10.25 sec (Amlan Borgohain).",
+        "World record: 9.58 sec (Usain Bolt)."
+      ]},
+      {t:"Sporting autobiographies (name recall)", hp:false, pts:[
+        "Milkha Singh — 'The Race of My Life'.",
+        "PT Usha ('Payyoli Express') — 'The Test of My Life'."
+      ]},
+      {t:"Anahat Singh — India's No.1 women's squash player", hp:false, pts:[
+        "Around 15–16 years old.",
+        "Won the Women's Singles title at the Indian Open 2025."
+      ]},
+      {t:"Miami Open (Tennis) 2025 winners", hp:true, pts:[
+        "Men's Singles: <b>Jakub Menšík</b> (Czech Republic).",
+        "Women's Singles: <b>Aryna Sabalenka</b> (Belarus)."
+      ]},
+      {t:"Hitesh Golia creates history in boxing", hp:false, pts:[
+        "First Indian boxer to win <b>gold at the World Boxing Cup 2025</b>."
+      ]},
+      {t:"21st Asian Wrestling Championship 2025", hp:false, pts:[
+        "Held in <b>Amman, Jordan</b>.",
+        "India won 10 medals: 1 gold, 3 silver, 6 bronze.",
+        "Manisha Bhanwala won India's only gold — Women's 62 kg."
+      ]},
+      {t:"ISL 2025 — Mohun Bagan Super Giant champions", hp:false, pts:[
+        "Won the Indian Super League by defeating Bengaluru FC."
+      ]},
+      {t:"Carlos Alcaraz wins Monte Carlo Masters 2025", hp:false, pts:[
+        "Spanish tennis player."
+      ]},
+      {t:"Khelo India Youth Games — first time in Bihar", hp:true, pts:[
+        "Mascot: <b>Gaj Singh</b> (a lion).",
+        "Theme song: 'Khel Ke Rang Bihar Ke Sang'."
+      ]},
+      {t:"Hockey Punjab — Senior Men National Champions", hp:false, pts:[
+        "Won the 15th Hockey Senior Men National Championship 2025, beating Hockey MP 4‑1."
+      ]},
+      {t:"New world record — Men's Discus Throw", hp:false, pts:[
+        "<b>Mykolas Alekna</b> (Lithuania) set the record at <b>75.56 m</b>.",
+        "He also won silver at the Paris Olympics."
+      ]},
+      {t:"2025 ISSF World Cup — Lima, Peru", hp:true, pts:[
+        "India won <b>7 medals</b> (2 gold, 4 silver, 1 bronze); finished <b>3rd overall</b>, behind China & USA.",
+        "<b>Suruchi Singh</b> won gold in 10m Air Pistol (Manu Bhaker won bronze in the same event at the Olympics).",
+        "1st leg of this World Cup was in Buenos Aires, Argentina — India finished 2nd with 8 medals (4 gold, 2 silver, 2 bronze), behind China."
+      ]},
+      {t:"Sourav Kothari wins World Billiards Title 2025", hp:false, pts:[
+        "IBSF World Billiards Championship — defeated <b>Pankaj Advani</b>."
+      ]},
+      {t:"Hockey Haryana — first National Women's Hockey League", hp:false, pts:[
+        "Won the final; Odisha finished runner‑up."
+      ]},
+      {t:"Formula 1 — Saudi Arabian & Bahrain Grand Prix", hp:false, pts:[
+        "Both won by <b>Oscar Piastri</b> (Australia); Max Verstappen finished 2nd in Saudi Arabia."
+      ]},
+      {t:"Koneru Humpy wins FIDE Women's Grand Prix — Pune leg", hp:false, pts:[
+        "Defeated Bulgaria's Nurgyul Salimova."
+      ]},
+      {t:"India's first Woman Grand Master", hp:true, pts:[
+        "<b>S. Vijayalakshmi</b> — this exact fact has appeared before in SSC CGL 2024 Prelims."
+      ]},
+      {t:"Vaibhav Suryavanshi — fastest IPL century by an Indian", hp:true, pts:[
+        "14‑year‑old (Rajasthan Royals) scored a century in <b>35 balls</b> — his 3rd match.",
+        "Fastest ever IPL century remains Chris Gayle's — 30 balls."
+      ]}
+    ]
+  },
+  {
+    id:"appointments", label:"Appointments", icon:"🧑‍💼",
+    desc:"Key leadership and institutional appointments.",
+    items:[
+      {t:"C.S. Shetty — Chairman, Indian Banks' Association", hp:false, pts:[]},
+      {t:"Shirley Botchwey — Commonwealth Secretary‑General", hp:true, pts:[
+        "First <b>African woman</b> to hold this post."
+      ]},
+      {t:"Poonam Gupta — new RBI Deputy Governor", hp:true, pts:[
+        "3‑year term.",
+        "RBI facts to recall: established <b>1 April 1935</b> on the recommendation of the Hilton Young Commission (1926); nationalised in 1949; RBI Act, <b>1934</b>.",
+        "First Indian RBI Governor: <b>C.D. Deshmukh</b>."
+      ]},
+      {t:"Cricket administration — names to know", hp:true, pts:[
+        "Mohsin Naqvi (Pakistan) — President, Asian Cricket Council.",
+        "Roger Binny — President, BCCI.",
+        "Jay Shah — Chairman, International Cricket Council (ICC)."
+      ]},
+      {t:"Justice B.R. Gavai — next Chief Justice of India", hp:true, pts:[
+        "To become the <b>52nd CJI</b>, succeeding Sanjiv Khanna.",
+        "India's first CJI: <b>H.J. Kania</b> (Hiralal Jekisundas Kania)."
+      ]},
+      {t:"Mirabai Chanu — new Chairperson, Indian Weightlifting Federation", hp:false, pts:[
+        "Won India's first medal (silver) at the Tokyo Olympics 2020."
+      ]},
+      {t:"Dr. Mangi Lal Jat — Director General, ICAR", hp:false, pts:[
+        "ICAR HQ: Pusa Road, New Delhi."
+      ]},
+      {t:"Justice Dinesh Maheshwari — Chairperson, 23rd Law Commission", hp:false, pts:[
+        "Law Commission is a <b>non‑statutory body</b>, constituted by government order.",
+        "First set up on the basis of the <b>Charter Act, 1833</b>.",
+        "First Law Commission Chairman: <b>Thomas Babington Macaulay</b>."
+      ]}
+    ]
+  },
+  {
+    id:"defence", label:"Defence", icon:"🛡️",
+    desc:"Procurement deals, naval assets and joint exercises.",
+    items:[
+      {t:"₹62,700 crore deal — 156 Prachand Helicopters", hp:true, pts:[
+        "MoD signed the deal with <b>HAL (Hindustan Aeronautics Limited)</b>.",
+        "For operations along the <b>China and Pakistan borders</b>."
+      ]},
+      {t:"INIOCHOS 25 — multinational air exercise, Greece", hp:false, pts:[
+        "Hosted by the Hellenic Air Force.",
+        "Participants: Indian Air Force, US, Israel, France."
+      ]},
+      {t:"SAGAR Mission — new naval asset launched", hp:false, pts:[
+        "Launched by Defence Minister Rajnath Singh.",
+        "SAGAR = <b>S</b>ecurity <b>a</b>nd <b>G</b>rowth for <b>A</b>ll in the <b>R</b>egion.",
+        "For recall — INS Surat: Visakhapatnam‑class destroyer; INS Nilgiri: Nilgiri class; INS Vagsheer: 6th & final Scorpene‑class submarine under Project 75."
+      ]},
+      {t:"DRDO — glide bomb 'Gaurav' release trial", hp:false, pts:[
+        "Indigenously developed long‑range glide bomb, tested via a Sukhoi‑30 MKI.",
+        "DRDO: established 1958, HQ New Delhi; Chairman: <b>Samir V. Kamat</b>."
+      ]},
+      {t:"Kalam & Kavach 2.0 Defence Literature Festival", hp:false, pts:[
+        "Held at the <b>Manekshaw Centre, New Delhi</b>."
+      ]},
+      {t:"Project Varsha — India's first nuclear submarine base", hp:true, pts:[
+        "Being developed at <b>Rambilli, a coastal village in Andhra Pradesh</b>.",
+        "Will house India's nuclear submarines: <b>INS Arihant, Arighat and Aridhaman</b>."
+      ]},
+      {t:"Exercise Desert Flag 10 — UAE", hp:false, pts:[
+        "Indian Air Force joined with MiG‑29 and Jaguar aircraft.",
+        "A total of 11 nations participated."
+      ]}
+    ]
+  },
+  {
+    id:"scitech", label:"Science & Tech", icon:"🔬",
+    desc:"Research milestones, defence tech and physics recap.",
+    items:[
+      {t:"9th Global Technology Summit — New Delhi", hp:false, pts:[
+        "Hosted by EAM <b>S. Jaishankar</b>.",
+        "A multilateral summit (many countries) — not a bilateral one, so the country list itself isn't worth memorising."
+      ]},
+      {t:"Intermediate‑mass black hole discovered", hp:false, pts:[
+        "Discovered using the <b>3.6‑metre Devasthal Optical Telescope</b> in galaxy <b>NGC 4395</b>."
+      ]},
+      {t:"DRDO — Scramjet combustor ground test milestone", hp:true, pts:[
+        "Active cool‑hold scramjet subscale combustor tested successfully for <b>over 1000 seconds</b>.",
+        "Scramjets are air‑breathing jet engines designed for <b>hypersonic speed</b>.",
+        "Speed bands to remember — Transonic ≈ Mach 1; Supersonic = Mach 1–5; Hypersonic = Mach 5–10.",
+        "Mach number = speed of the object ÷ speed of sound (sound travels at ~343 m/s in air)."
+      ]},
+      {t:"Sarvam AI to build India's first AI platform", hp:false, pts:[
+        "Just the fact of the platform — founder details not needed."
+      ]}
+    ]
+  },
+  {
+    id:"books", label:"Books & Obituaries", icon:"📚",
+    desc:"Literary prizes, notable publications and people in the news who passed away.",
+    items:[
+      {t:"'Heart Lamp' shortlisted for the International Booker Prize 2025", hp:true, pts:[
+        "Written by <b>Banu Mustaq</b>, translated from Kannada to English by <b>Deepa Bhasthi</b>.",
+        "2024 International Booker Prize winner: Samantha Harvey, for 'Orbital'.",
+        "First Indian to win the (Man) Booker Prize: <b>Arundhati Roy</b>, for 'The God of Small Things'."
+      ]},
+      {t:"Bhagavad Gita & Natyashastra enter UNESCO register", hp:true, pts:[
+        "Both inscribed in UNESCO's <b>Memory of the World Register</b>.",
+        "Bharat Muni's Natyashastra is also known as the <b>'5th Veda'</b>."
+      ]},
+      {t:"New books — author recall only", hp:false, pts:[
+        "'The Great Conciliator: Lal Bahadur Shastri and the Transformation of India' — Sanjeev Chopra.",
+        "'March of Glory' — K. Arumugam & journalist Errol D'Souza.",
+        "Book on Dr. Manmohan Singh launched by Montek Singh Ahluwalia; written by Gurmeet Singh."
+      ]},
+      {t:"Kumudini Lakhia passes away", hp:true, pts:[
+        "Renowned <b>Kathak</b> legend and choreographer.",
+        "Padma Shri (1987), Padma Bhushan (2010), Padma Vibhushan (2025).",
+        "Developed the '<b>Kadamb</b>' Centre for Dance, Ahmedabad.",
+        "Contrast: 'Kalashram' (Delhi) was developed by <b>Birju Maharaj</b>, of the Lucknow Kalka‑Bindadin gharana; founder of the Lucknow Kathak gharana was <b>Ishwari Prasad</b>."
+      ]},
+      {t:"Miscellaneous current items", hp:false, pts:[
+        "India becomes the 17th country to establish an Athlete Passport Management Unit.",
+        "CBI launches <b>Operation Chakra V</b> to tackle transnational organised cyber crime.",
+        "Anuradha Garg wins Mrs. Globe International 2025 — a first for India in this title.",
+        "Simlipal officially declared a National Park by the Odisha government (formerly Similipal Tiger Reserve — India's first melanistic tiger reserve; Odisha's 2nd National Park after Bhitarkanika)."
+      ]}
+    ]
+  }
+];
+
+/* ---------------- RENDER ---------------- */
+const sectionsRoot = document.getElementById('sectionsRoot');
+const navlist = document.getElementById('navlist');
+const homeGrid = document.getElementById('homeGrid');
+const heroStats = document.getElementById('heroStats');
+
+let totalItems = 0, totalHP = 0;
+DATA.forEach(sec=>{
+  totalItems += sec.items.length;
+  totalHP += sec.items.filter(i=>i.hp).length;
+});
+
+heroStats.innerHTML = `
+  <div class="hero-stat"><div class="num">${DATA.length}</div><div class="lab">Sections</div></div>
+  <div class="hero-stat"><div class="num">${totalItems}</div><div class="lab">Topics covered</div></div>
+  <div class="hero-stat"><div class="num">${totalHP}</div><div class="lab">🔥 High priority</div></div>
+`;
+
+// Nav (Home + sections)
+navlist.innerHTML = `<div class="navitem active" data-target="home"><span class="nl"><span class="ic">🏠</span>Home</span></div>` +
+  DATA.map(sec=>{
+    const hp = sec.items.filter(i=>i.hp).length;
+    return `<div class="navitem" data-target="${sec.id}">
+      <span class="nl"><span class="ic">${sec.icon}</span>${sec.label}</span>
+      <span class="count">${sec.items.length}${hp?' · 🔥'+hp:''}</span>
+    </div>`;
+  }).join('');
+
+// Home tiles
+homeGrid.innerHTML = DATA.map(sec=>{
+  const hp = sec.items.filter(i=>i.hp).length;
+  return `<div class="tile" data-target="${sec.id}">
+    <span class="tic">${sec.icon}</span>
+    <h3>${sec.label}</h3>
+    <div class="meta"><span>${sec.items.length} topics</span>${hp?`<span class="hp">🔥 ${hp} priority</span>`:''}</div>
+  </div>`;
+}).join('');
+
+// Section views
+sectionsRoot.innerHTML = DATA.map(sec=>`
+  <section class="view" id="view-${sec.id}" data-section="${sec.id}">
+    <div class="section-head">
+      <div class="eyebrow">${sec.icon} Section</div>
+      <h2>${sec.label}</h2>
+      <p>${sec.desc}</p>
+    </div>
+    <div class="cards" id="cards-${sec.id}"></div>
+    <div class="empty-state" style="display:none;">No matching topics — try clearing filters or search.</div>
+  </section>
+`).join('');
+
+DATA.forEach(sec=>{
+  const holder = document.getElementById(`cards-${sec.id}`);
+  holder.innerHTML = sec.items.map(item=>`
+    <article class="card ${item.hp?'hp':''}" data-title="${item.t.toLowerCase()}" data-hp="${item.hp?1:0}" data-text="${(item.t+' '+item.pts.join(' ')).toLowerCase().replace(/"/g,'')}">
+      <div class="card-top">
+        <h4>${item.t}</h4>
+        ${item.hp?'<span class="badge">🔥 High Priority</span>':''}
+      </div>
+      ${item.pts.length? `<ul>${item.pts.map(p=>`<li>${p}</li>`).join('')}</ul>` : ''}
+    </article>
+  `).join('');
+});
+
+/* ---------------- NAVIGATION ---------------- */
+function goTo(target){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+target).classList.add('active');
+  document.querySelectorAll('.navitem').forEach(n=>n.classList.toggle('active', n.dataset.target===target));
+  window.scrollTo({top:0, behavior:'smooth'});
+  closeSidebarMobile();
+}
+document.addEventListener('click', (e)=>{
+  const nav = e.target.closest('[data-target]');
+  if(nav){ goTo(nav.dataset.target); }
+});
+
+/* ---------------- SEARCH & FILTER ---------------- */
+const searchInput = document.getElementById('searchInput');
+let currentFilter = 'all';
+
+function applyFilters(){
+  const q = searchInput.value.trim().toLowerCase();
+  document.querySelectorAll('.card').forEach(card=>{
+    const matchesText = !q || card.dataset.text.includes(q);
+    const matchesHP = currentFilter==='all' || card.dataset.hp==='1';
+    card.style.display = (matchesText && matchesHP) ? '' : 'none';
+  });
+  // toggle empty states
+  document.querySelectorAll('.view[data-section]').forEach(v=>{
+    const visible = v.querySelectorAll('.card').length && Array.from(v.querySelectorAll('.card')).some(c=>c.style.display!=='none');
+    v.querySelector('.empty-state').style.display = visible ? 'none' : 'block';
+  });
+}
+searchInput.addEventListener('input', applyFilters);
+document.querySelectorAll('.pill').forEach(p=>{
+  p.addEventListener('click', ()=>{
+    document.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));
+    p.classList.add('on');
+    currentFilter = p.dataset.filter;
+    applyFilters();
+  });
+});
+
+/* ---------------- MOBILE SIDEBAR ---------------- */
+const sidebar = document.getElementById('sidebar');
+const backdrop = document.getElementById('backdrop');
+document.getElementById('menuToggle').addEventListener('click', ()=>{
+  sidebar.classList.toggle('open');
+  backdrop.classList.toggle('show');
+});
+backdrop.addEventListener('click', closeSidebarMobile);
+function closeSidebarMobile(){
+  sidebar.classList.remove('open');
+  backdrop.classList.remove('show');
+}
+</script>
+</body>
+</html>
