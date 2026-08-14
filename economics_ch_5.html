@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banking System Notes | RBI, NABARD, MFI, NBFC</title>
+<style>
+  :root{
+    --bg:#0f1117;
+    --bg-panel:#161923;
+    --bg-card:#1b1f2b;
+    --border:#262b3a;
+    --green:#8ee6a3;
+    --green-dim:#5fbf7a;
+    --blue:#8ecdf2;
+    --white:#eef1f7;
+    --muted:#a3aab8;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background:var(--bg);
+    color:var(--white);
+    display:flex;
+    min-height:100vh;
+    overflow:hidden;
+  }
+  /* Sidebar */
+  #sidebar{
+    width:280px;
+    min-width:280px;
+    background:var(--bg-panel);
+    border-right:1px solid var(--border);
+    height:100vh;
+    overflow-y:auto;
+    padding:20px 0 40px;
+    transition:transform .3s ease;
+    z-index:100;
+  }
+  #sidebar h1{
+    font-size:1.15rem;
+    color:var(--green);
+    padding:0 20px 16px;
+    margin:0 0 10px;
+    border-bottom:1px solid var(--border);
+    letter-spacing:.5px;
+  }
+  #sidebar h1 span{display:block;font-size:.75rem;color:var(--muted);font-weight:400;margin-top:4px;}
+  .nav-group{margin-bottom:6px;}
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px 20px;
+    cursor:pointer;
+    color:var(--muted);
+    font-size:.92rem;
+    border-left:3px solid transparent;
+    transition:all .15s ease;
+  }
+  .nav-item:hover{background:rgba(142,230,163,0.06);color:var(--white);}
+  .nav-item.active{
+    background:rgba(142,230,163,0.1);
+    color:var(--green);
+    border-left:3px solid var(--green);
+    font-weight:600;
+  }
+  .nav-icon{font-size:1rem;width:20px;text-align:center;}
+  /* Main */
+  #main{
+    flex:1;
+    height:100vh;
+    overflow-y:auto;
+    padding:36px 48px 80px;
+    position:relative;
+  }
+  .page{display:none;animation:fadeIn .35s ease;}
+  .page.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .page-title{
+    font-size:1.9rem;
+    color:var(--green);
+    margin:0 0 6px;
+    border-bottom:2px solid var(--border);
+    padding-bottom:14px;
+  }
+  .page-subtitle{color:var(--muted);margin:0 0 28px;font-size:.95rem;}
+  .card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px 24px;
+    margin-bottom:20px;
+  }
+  .card h3{color:var(--blue);margin-top:0;font-size:1.1rem;}
+  .card h4{color:var(--green);margin:14px 0 8px;font-size:1rem;}
+  p{line-height:1.7;color:var(--white);}
+  ul,ol{line-height:1.8;padding-left:22px;}
+  li{margin-bottom:6px;}
+  strong{color:var(--green);}
+  .blue-text{color:var(--blue);}
+  .tag{
+    display:inline-block;
+    background:rgba(142,205,242,0.12);
+    color:var(--blue);
+    border:1px solid rgba(142,205,242,0.3);
+    padding:2px 10px;
+    border-radius:20px;
+    font-size:.78rem;
+    margin:2px 4px 2px 0;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:14px 0;
+    font-size:.92rem;
+  }
+  th,td{
+    padding:10px 14px;
+    border:1px solid var(--border);
+    text-align:left;
+  }
+  th{background:rgba(142,230,163,0.08);color:var(--green);}
+  tr:nth-child(even){background:rgba(255,255,255,0.02);}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  @media(max-width:800px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+  .highlight-box{
+    background:linear-gradient(135deg, rgba(142,230,163,0.08), rgba(142,205,242,0.06));
+    border-left:4px solid var(--green);
+    padding:14px 18px;
+    border-radius:8px;
+    margin:16px 0;
+  }
+  .timeline{border-left:2px solid var(--green-dim);margin-left:10px;padding-left:24px;}
+  .timeline-item{position:relative;margin-bottom:20px;}
+  .timeline-item::before{
+    content:'';
+    position:absolute;
+    left:-30px;
+    top:4px;
+    width:12px;height:12px;
+    background:var(--green);
+    border-radius:50%;
+    box-shadow:0 0 0 4px rgba(142,230,163,0.15);
+  }
+  .timeline-year{color:var(--green);font-weight:700;font-size:1.02rem;}
+  .nav-buttons{
+    display:flex;justify-content:space-between;margin-top:40px;
+    border-top:1px solid var(--border);padding-top:20px;
+  }
+  .nav-buttons button{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    color:var(--white);
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:.9rem;
+    transition:all .2s;
+  }
+  .nav-buttons button:hover{border-color:var(--green);color:var(--green);}
+  #menu-toggle{
+    display:none;
+    position:fixed;
+    top:16px;left:16px;
+    z-index:200;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    color:var(--green);
+    font-size:1.3rem;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  #overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;}
+  @media(max-width:900px){
+    #sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);box-shadow:4px 0 20px rgba(0,0,0,.4);}
+    #sidebar.open{transform:translateX(0);}
+    #menu-toggle{display:block;}
+    #main{padding:70px 20px 60px;}
+    #overlay.show{display:block;}
+  }
+  ::-webkit-scrollbar{width:8px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--green-dim);}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+<div id="overlay" onclick="toggleSidebar()"></div>
+
+<nav id="sidebar">
+  <h1>🏦 Banking System<span>Lecture Notes</span></h1>
+  <div class="nav-group" id="nav-container"></div>
+</nav>
+
+<main id="main">
+  <!-- 1. History -->
+  <section class="page" id="page-history">
+    <h1 class="page-title">📜 History of Banking in India</h1>
+    <p class="page-subtitle">Origins of banking and how RBI evolved from private banks</p>
+
+    <div class="card">
+      <h3>Earliest Banks</h3>
+      <p>Banking in India traces back to a few early, less significant setups before the major ones:</p>
+      <ul>
+        <li><strong>1680</strong> — A bank set up in <strong>Madras</strong></li>
+        <li><strong>1720</strong> — A bank set up in <strong>Bombay</strong> (Bombay Bank)</li>
+      </ul>
+      <p>These were not very significant. The first <strong>truly significant bank</strong> was:</p>
+      <div class="highlight-box"><strong>Bank of Hindustan — 1770</strong>, considered the first significant bank in India.</div>
+    </div>
+
+    <div class="card">
+      <h3>The Presidency Banks</h3>
+      <p>Calcutta, Bombay, and Madras were important centers because they were centers of <strong>British power</strong>. Calcutta was the most important (capital of Bengal), so the first major bank was set up there.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="timeline-year">1806</span> — Imperial Bank of Calcutta (Bank of Calcutta)</div>
+        <div class="timeline-item"><span class="timeline-year">1840</span> — Imperial Bank of Bombay</div>
+        <div class="timeline-item"><span class="timeline-year">1843</span> — Imperial Bank of Madras</div>
+        <div class="timeline-item"><span class="timeline-year">1921</span> — These three merged to form the <strong>Imperial Bank of India</strong></div>
+        <div class="timeline-item"><span class="timeline-year">1955</span> — Renamed to <strong>State Bank of India (SBI)</strong></div>
+      </div>
+      <div class="highlight-box">SBI is currently India's oldest operational bank, with roots traceable back to <strong>1806</strong>.</div>
+    </div>
+  </section>
+
+  <!-- 2. RBI -->
+  <section class="page" id="page-rbi">
+    <h1 class="page-title">🏛️ Reserve Bank of India (RBI)</h1>
+    <p class="page-subtitle">India's Central Bank — history, structure & role</p>
+
+    <div class="card">
+      <h3>Formation History</h3>
+      <ul>
+        <li>Originally started as an <strong>independent body</strong> — owned by its shareholders.</li>
+        <li><strong>Hilton Young Commission (1926)</strong> recommended establishing a central bank to regulate other banks.</li>
+        <li><strong>RBI Act, 1934</strong> was passed based on this recommendation.</li>
+        <li>RBI began its actual working from <strong>1st April 1935</strong>.</li>
+      </ul>
+      <table>
+        <tr><th>Detail</th><th>Info</th></tr>
+        <tr><td>Original Headquarters</td><td>Kolkata</td></tr>
+        <tr><td>Current Headquarters</td><td>Mumbai (from 1937)</td></tr>
+        <tr><td>First RBI Governor</td><td>Osborne Smith (British)</td></tr>
+        <tr><td>Second RBI Governor</td><td>James Braid Taylor</td></tr>
+        <tr><td>First Indian Governor</td><td>C.D. Deshmukh</td></tr>
+        <tr><td>Governor from 1949 mentioned</td><td>Sir Benegal Rama Rau (referred as "Subbarao" in transcript)</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Nationalization of RBI</h3>
+      <p>RBI was nationalized on <strong>1st January 1949</strong>. This meant the <strong>Central Government</strong> took over full share-holding (ownership) from private shareholders by paying them for their shares — hence full control moved to the government.</p>
+    </div>
+
+    <div class="card">
+      <h3>Why is RBI called the "Central Bank"?</h3>
+      <p>Because RBI <strong>regulates all other banks</strong> in the country. This power comes from the <strong>Banking Regulation Act, 1949</strong>, which gives RBI authority to:</p>
+      <ul>
+        <li>Issue banking licenses</li>
+        <li>Set CRR (Cash Reserve Ratio) and SLR (Statutory Liquidity Ratio) — banks must maintain a certain amount of deposits as reserves</li>
+      </ul>
+      <div class="highlight-box">Because RBI regulates all other banks, it is known as the <strong>"Bank of Banks."</strong></div>
+    </div>
+
+    <div class="card">
+      <h3>Functions of RBI</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Currency & Regulation</h4>
+          <ul>
+            <li>Regulates banks</li>
+            <li>Prints/issues all currency notes <strong>except the ₹1 note</strong></li>
+            <li>The ₹1 note is issued by the <strong>Ministry of Finance</strong> (Government), not RBI</li>
+            <li>Notes are signed by the RBI Governor with the promise: <em>"I promise to pay the bearer this sum"</em> — this makes them <strong>Legal Tender</strong></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Monetary Policy</h4>
+          <ul>
+            <li>Formulates Monetary Policy (tools: CRR, SLR)</li>
+            <li>Acts as <strong>"Lender of Last Resort"</strong> — banks in financial trouble can approach RBI for funds when no one else lends to them</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Types of Money</h3>
+      <table>
+        <tr><th>Term</th><th>Meaning</th></tr>
+        <tr><td><strong>Fiat Money</strong></td><td>Legal money / legal tender backed by the government (e.g., by RBI). Cannot be refused as payment.</td></tr>
+        <tr><td><strong>Plastic Money</strong></td><td>Credit cards, debit cards</td></tr>
+        <tr><td><strong>Hot Money</strong></td><td>Assets such as stocks, deposits, bonds — highly volatile/speculative money that can move or crash quickly (e.g., stock market crashes tied to election result speculation)</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Currency & Coin Printing Locations</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Currency Note Printing</h4>
+          <ul>
+            <li>Nashik (Maharashtra)</li>
+            <li>Dewas (Madhya Pradesh)</li>
+            <li>Mysore (Karnataka)</li>
+            <li>Salboni (West Bengal)</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Coin Minting</h4>
+          <ul>
+            <li>Mumbai</li>
+            <li>Hyderabad</li>
+            <li>Kolkata</li>
+            <li>Noida</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Bank Classification -->
+  <section class="page" id="page-classification">
+    <h1 class="page-title">🗂️ Classification of Banks</h1>
+    <p class="page-subtitle">Based on the Second Schedule of the RBI Act, 1934</p>
+
+    <div class="card">
+      <h3>Scheduled vs Non-Scheduled Banks</h3>
+      <p>The <strong>Second Schedule</strong> of the <strong>RBI Act, 1934</strong> classifies banks into:</p>
+      <ul>
+        <li><strong>Scheduled Banks</strong></li>
+        <li><strong>Non-Scheduled Banks</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Commercial vs Cooperative Banks</h3>
+      <p>Scheduled banks are further classified based on their <strong>motive</strong>:</p>
+      <div class="grid-2">
+        <div>
+          <h4>Commercial Banks</h4>
+          <p>Main motive is <strong>profit</strong>.</p>
+        </div>
+        <div>
+          <h4>Cooperative Banks</h4>
+          <p>Depositors themselves are the owners; motive is more <strong>social development</strong> than profit.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Public Sector vs Private Sector Banks</h3>
+      <p>Commercial banks are further classified into:</p>
+      <table>
+        <tr><th>Type</th><th>Ownership</th><th>Examples</th></tr>
+        <tr><td>Public Sector Banks</td><td>Government owned</td><td>SBI, PNB</td></tr>
+        <tr><td>Private Sector Banks</td><td>Privately owned</td><td>HDFC, Kotak Bank</td></tr>
+        <tr><td>Foreign (Private) Banks</td><td>Privately owned, foreign</td><td>Citi Group, HSBC, Deutsche Bank</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Nationalization of Banks</h3>
+      <div class="timeline">
+        <div class="timeline-item"><span class="timeline-year">1969</span> — <strong>14 banks</strong> nationalized under Indira Gandhi's government</div>
+        <div class="timeline-item"><span class="timeline-year">1980</span> — Second round of nationalization</div>
+      </div>
+      <p>Post amalgamation over time, there are currently <strong>12 nationalized banks</strong> where the Central Government holds share ownership.</p>
+    </div>
+  </section>
+
+  <!-- 4. RRB -->
+  <section class="page" id="page-rrb">
+    <h1 class="page-title">🌾 Regional Rural Banks (RRB)</h1>
+    <p class="page-subtitle">ग्रामीण बैंक — serving rural India</p>
+
+    <div class="card">
+      <h3>Formation</h3>
+      <ul>
+        <li>First RRB set up on <strong>2nd October 1975</strong> in <strong>Moradabad, UP</strong></li>
+        <li><strong>RRB Act, 1976</strong> gave RRBs statutory recognition</li>
+        <li>Recommended by the <strong>Narasimham Committee</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Shareholding Pattern</h3>
+      <table>
+        <tr><th>Stakeholder</th><th>Share</th></tr>
+        <tr><td>Central Government</td><td><strong>50%</strong></td></tr>
+        <tr><td>State Government</td><td><strong>15%</strong></td></tr>
+        <tr><td>Sponsor Bank</td><td><strong>35%</strong></td></tr>
+      </table>
+      <p>A <strong>Sponsor Bank</strong> (e.g., SBI, PNB) is assigned to operate/run the RRB since they are professionals in banking, whereas Central/State Governments are not banking experts. Sponsor banks also get shareholding as an incentive to manage it well.</p>
+    </div>
+  </section>
+
+  <!-- 5. SIDBI & MSME -->
+  <section class="page" id="page-sidbi">
+    <h1 class="page-title">🏭 SIDBI & MSME</h1>
+    <p class="page-subtitle">Small Industries Development Bank of India</p>
+
+    <div class="card">
+      <h3>SIDBI</h3>
+      <p><strong>SIDBI</strong> = Small Industrial Development Bank of India</p>
+      <ul>
+        <li>Established: <strong>2nd April 1990</strong></li>
+        <li>Headquarters: <strong>Lucknow</strong></li>
+        <li>Main role: Development of <strong>MSMEs</strong> (Micro, Small & Medium Enterprises)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>MSME Classification Criteria</h3>
+      <p>MSME = Micro, Small & Medium Enterprises</p>
+      <table>
+        <tr><th>Category</th><th>Investment</th><th>Turnover</th></tr>
+        <tr><td><strong>Micro</strong></td><td>Less than ₹1 crore</td><td>Less than ₹5 crore</td></tr>
+        <tr><td><strong>Small</strong></td><td>Less than ₹10 crore</td><td>Less than ₹50 crore</td></tr>
+        <tr><td><strong>Medium</strong></td><td>Less than ₹20 crore</td><td>Less than ₹100 crore</td></tr>
+      </table>
+      <div class="highlight-box">
+        <strong>Memory trick:</strong> Start with Micro = Investment ₹1 crore, Turnover ₹5 crore.<br>
+        Multiply by 10 → get Small figures.<br>
+        Multiply by 2 (from Small) → get Medium figures.
+      </div>
+      <p><em>Note: "Turnover" is total business transacted in a financial year — not profit.</em></p>
+    </div>
+  </section>
+
+  <!-- 6. Other Institutions -->
+  <section class="page" id="page-institutions">
+    <h1 class="page-title">🏢 Other Financial Institutions</h1>
+    <p class="page-subtitle">IRDAI, SEBI & National Housing Bank</p>
+
+    <div class="card">
+      <h3>IRDAI</h3>
+      <p><strong>IRDAI</strong> = Insurance Regulatory and Development Authority of India</p>
+      <ul>
+        <li>Established through the <strong>IRDA Act, 1999</strong> as a statutory body</li>
+        <li>Actually formed/functional from <strong>2000</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>SEBI</h3>
+      <p><strong>SEBI</strong> = Securities and Exchange Board of India</p>
+      <ul>
+        <li>Main function: <strong>Protect the interests of investors</strong> (in shares, mutual funds, etc.) and curb fraud</li>
+        <li>Actually established in <strong>1988</strong>, but got statutory body status via an <strong>Act in 1992</strong></li>
+        <li>Headquarters: <strong>Mumbai</strong></li>
+        <li>Current Chairperson: <strong>Madhabi Puri Buch</strong> — first woman chairperson and first non-IAS chairperson</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>National Housing Bank (NHB)</h3>
+      <ul>
+        <li>Established in <strong>1988</strong></li>
+        <li>Set up through an Act of <strong>1987</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 7. NABARD -->
+  <section class="page" id="page-nabard">
+    <h1 class="page-title">🌱 NABARD</h1>
+    <p class="page-subtitle">National Bank for Agriculture and Rural Development</p>
+
+    <div class="card">
+      <h3>Formation</h3>
+      <ul>
+        <li>Committee formed in <strong>1979</strong></li>
+        <li>Recommended by the <strong>B. Sivaraman Committee</strong></li>
+        <li>Established on <strong>12th July 1982</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Role of NABARD</h3>
+      <div class="highlight-box">NABARD does <strong>not</strong> deal directly with the public. Unlike RRBs (which deal directly with people), NABARD <strong>supervises RRBs</strong>.</div>
+      <table>
+        <tr><th>Function</th><th>Performed By</th></tr>
+        <tr><td>Regulates RRBs</td><td><strong>RBI</strong></td></tr>
+        <tr><td>Supervises RRBs (lending practices, etc.)</td><td><strong>NABARD</strong></td></tr>
+        <tr><td>Direct dealing with people (loans)</td><td><strong>RRB</strong></td></tr>
+      </table>
+      <p>NABARD provides financing through schemes like the <strong>Kisan Credit Card / Rupay Kisan Card</strong>, but this financing is channeled through RRBs to reach people — not given directly.</p>
+      <p>Main focus: financing <strong>agriculture and rural development</strong>.</p>
+    </div>
+  </section>
+
+  <!-- 8. Microfinance -->
+  <section class="page" id="page-mfi">
+    <h1 class="page-title">💰 Microfinance Institutions (MFI)</h1>
+    <p class="page-subtitle">Financial services for low-income populations</p>
+
+    <div class="card">
+      <h3>What is Microfinance?</h3>
+      <p>MFIs offer financial services to <strong>low-income populations</strong> — households with annual income <strong>less than ₹3 lakh</strong> are eligible for micro loans (this limit was earlier ₹1.25 lakh, revised to ₹3 lakh; some are proposing revision to ₹5 lakh).</p>
+      <p>Includes: micro loans, micro savings, micro insurance.</p>
+    </div>
+
+    <div class="card">
+      <h3>Origins</h3>
+      <ul>
+        <li>Concept originated in <strong>Bangladesh</strong> in <strong>1970</strong></li>
+        <li><strong>Mohammad Yunus</strong> — considered the "Father of Microfinance," founded the first MFI: <strong>Grameen Bank, Bangladesh</strong> (won the Nobel Prize for this)</li>
+        <li>First MFI in India: <strong>SEVA</strong> (Self Employed Women's Association) — formed in <strong>Bombay</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>PM MUDRA Scheme</h3>
+      <p><strong>MUDRA</strong> = Micro Units Development and Refinance Agency</p>
+      <p>Provides micro loans, categorized as:</p>
+      <table>
+        <tr><th>Category</th><th>Loan Amount</th></tr>
+        <tr><td><strong>Shishu</strong></td><td>Up to ₹50,000</td></tr>
+        <tr><td><strong>Kishor</strong></td><td>₹50,000 – ₹5 lakh</td></tr>
+        <tr><td><strong>Tarun</strong></td><td>₹5 lakh – ₹10 lakh</td></tr>
+      </table>
+      <div class="highlight-box">These are <strong>collateral-free loans</strong> — no security/pledge needed to take these loans.</div>
+    </div>
+
+    <div class="card">
+      <h3>SHG vs JLG — Business Models</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Self Help Group (SHG)</h4>
+          <ul>
+            <li><strong>10–20 people</strong> per group</li>
+            <li>Informal group structure</li>
+            <li>Usually people <strong>Below Poverty Line (BPL)</strong></li>
+            <li>Common in <strong>rural areas</strong></li>
+            <li>Goal: improve living conditions (e.g., Lijjat Papad)</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Joint Liability Group (JLG)</h4>
+          <ul>
+            <li><strong>4–10 people</strong> per group</li>
+            <li>Small business venture, <strong>for-profit</strong></li>
+            <li>Common in <strong>semi-urban and urban</strong> areas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="highlight-box">⚠️ Exam tip: JLG group size (4–10 people) was asked in CGL 2022.</div>
+    </div>
+  </section>
+
+  <!-- 9. NBFC -->
+  <section class="page" id="page-nbfc">
+    <h1 class="page-title">🏢 NBFC & NBFC-MFI</h1>
+    <p class="page-subtitle">Non-Banking Financial Companies</p>
+
+    <div class="card">
+      <h3>What is an NBFC?</h3>
+      <p><strong>NBFC</strong> = Non-Banking Financial Company — a financial company that does <strong>not have a banking license</strong>.</p>
+      <ul>
+        <li>Registered under the <strong>Companies Act, 1956</strong> or <strong>Companies Act, 2013</strong></li>
+        <li>Examples: <strong>Bajaj Finance, Muthoot Finance</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Key Differences: NBFC vs Bank</h3>
+      <table>
+        <tr><th>Feature</th><th>Bank</th><th>NBFC</th></tr>
+        <tr><td>Demand Deposits</td><td>✅ Accepted</td><td>❌ Not accepted</td></tr>
+        <tr><td>Time/Term Deposits</td><td>✅ Accepted</td><td>✅ Accepted</td></tr>
+        <tr><td>Deposit Insurance</td><td>✅ Insured (up to ₹5 lakh)</td><td>❌ Not insured/guaranteed</td></tr>
+        <tr><td>Regulated by</td><td>RBI</td><td>RBI</td></tr>
+        <tr><td>CRR / SLR requirement</td><td>✅ Mandatory</td><td>❌ Not required</td></tr>
+      </table>
+      <div class="highlight-box">💡 Deposit insurance covers a <strong>maximum of ₹5 lakh</strong> per depositor per bank — regardless of how much was actually deposited (e.g., even if ₹50 crore was deposited, max payout is still ₹5 lakh).</div>
+    </div>
+
+    <div class="card">
+      <h3>NBFC-MFI</h3>
+      <ul>
+        <li>Recommended by the <strong>Malegam Committee (2010)</strong></li>
+        <li>Criteria: NBFC must have given out at least <strong>75% of its total assets</strong> as microfinance loans to be classified as <strong>NBFC-MFI</strong></li>
+      </ul>
+      <p><em>Note: For a bank, deposits it receives are its "liability," while loans it gives out are its "assets."</em></p>
+    </div>
+  </section>
+
+  <!-- 10. Summary -->
+  <section class="page" id="page-summary">
+    <h1 class="page-title">✅ Quick Revision Summary</h1>
+    <p class="page-subtitle">Key facts, dates & full forms at a glance</p>
+
+    <div class="card">
+      <h3>Important Full Forms</h3>
+      <div class="grid-2">
+        <ul>
+          <li><strong>RBI</strong> — Reserve Bank of India</li>
+          <li><strong>RRB</strong> — Regional Rural Bank</li>
+          <li><strong>SIDBI</strong> — Small Industrial Development Bank of India</li>
+          <li><strong>NABARD</strong> — National Bank for Agriculture and Rural Development</li>
+          <li><strong>IRDAI</strong> — Insurance Regulatory and Development Authority of India</li>
+        </ul>
+        <ul>
+          <li><strong>SEBI</strong> — Securities and Exchange Board of India</li>
+          <li><strong>MSME</strong> — Micro, Small & Medium Enterprises</li>
+          <li><strong>MUDRA</strong> — Micro Units Development and Refinance Agency</li>
+          <li><strong>SEVA</strong> — Self Employed Women's Association</li>
+          <li><strong>NBFC</strong> — Non-Banking Financial Company</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Key Dates Timeline</h3>
+      <table>
+        <tr><th>Year</th><th>Event</th></tr>
+        <tr><td>1770</td><td>Bank of Hindustan (first significant bank)</td></tr>
+        <tr><td>1806</td><td>Imperial Bank of Calcutta</td></tr>
+        <tr><td>1921</td><td>Imperial Bank of India formed (merger)</td></tr>
+        <tr><td>1926</td><td>Hilton Young Commission</td></tr>
+        <tr><td>1934</td><td>RBI Act passed</td></tr>
+        <tr><td>1935</td><td>RBI starts functioning</td></tr>
+        <tr><td>1949</td><td>RBI Nationalized; Banking Regulation Act</td></tr>
+        <tr><td>1955</td><td>Imperial Bank renamed to SBI</td></tr>
+        <tr><td>1969</td><td>14 Banks Nationalized</td></tr>
+        <tr><td>1975</td><td>First RRB set up (Moradabad)</td></tr>
+        <tr><td>1976</td><td>RRB Act</td></tr>
+        <tr><td>1979</td><td>NABARD Committee (B. Sivaraman)</td></tr>
+        <tr><td>1980</td><td>Second round of bank nationalization</td></tr>
+        <tr><td>1982</td><td>NABARD established</td></tr>
+        <tr><td>1987/1988</td><td>National Housing Bank</td></tr>
+        <tr><td>1988/1992</td><td>SEBI established / gets statutory status</td></tr>
+        <tr><td>1990</td><td>SIDBI established</td></tr>
+        <tr><td>1999/2000</td><td>IRDAI Act / establishment</td></tr>
+        <tr><td>2010</td><td>Malegam Committee (NBFC-MFI)</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>Committees to Remember</h3>
+      <table>
+        <tr><th>Committee</th><th>Recommendation</th></tr>
+        <tr><td>Hilton Young Commission (1926)</td><td>Establishment of a Central Bank (RBI)</td></tr>
+        <tr><td>Narasimham Committee</td><td>Establishment of RRBs</td></tr>
+        <tr><td>B. Sivaraman Committee (1979)</td><td>Establishment of NABARD</td></tr>
+        <tr><td>Malegam Committee (2010)</td><td>Establishment of NBFC-MFI category</td></tr>
+      </table>
+    </div>
+
+    <div class="highlight-box">📝 Homework from the lecture: Find out <strong>when MSME Day</strong> is celebrated in India.</div>
+  </section>
+
+</main>
+
+<script>
+const pages = [
+  {id:'page-history', label:'History of Banking', icon:'📜'},
+  {id:'page-rbi', label:'RBI', icon:'🏛️'},
+  {id:'page-classification', label:'Bank Classification', icon:'🗂️'},
+  {id:'page-rrb', label:'Regional Rural Banks', icon:'🌾'},
+  {id:'page-sidbi', label:'SIDBI & MSME', icon:'🏭'},
+  {id:'page-institutions', label:'IRDAI, SEBI, NHB', icon:'🏢'},
+  {id:'page-nabard', label:'NABARD', icon:'🌱'},
+  {id:'page-mfi', label:'Microfinance (MFI)', icon:'💰'},
+  {id:'page-nbfc', label:'NBFC & NBFC-MFI', icon:'🏢'},
+  {id:'page-summary', label:'Quick Revision', icon:'✅'},
+];
+
+const navContainer = document.getElementById('nav-container');
+pages.forEach((p, idx) => {
+  const div = document.createElement('div');
+  div.className = 'nav-item';
+  div.dataset.target = p.id;
+  div.innerHTML = `<span class="nav-icon">${p.icon}</span><span>${p.label}</span>`;
+  div.onclick = () => showPage(p.id);
+  navContainer.appendChild(div);
+});
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector(`.nav-item[data-target="${id}"]`).classList.add('active');
+  document.getElementById('main').scrollTop = 0;
+  localStorage.setItem('lastPage', id); // best-effort; ignored if unsupported
+  if(window.innerWidth <= 900){ closeSidebar(); }
+  addNavButtons(id);
+}
+
+function addNavButtons(id){
+  const idx = pages.findIndex(p => p.id === id);
+  const page = document.getElementById(id);
+  let existing = page.querySelector('.nav-buttons');
+  if(existing) existing.remove();
+  const nav = document.createElement('div');
+  nav.className = 'nav-buttons';
+  const prev = idx > 0 ? pages[idx-1] : null;
+  const next = idx < pages.length-1 ? pages[idx+1] : null;
+  nav.innerHTML = `
+    <button ${!prev?'disabled style="visibility:hidden"':''} onclick="showPage('${prev?prev.id:''}')">← ${prev?prev.label:''}</button>
+    <button ${!next?'disabled style="visibility:hidden"':''} onclick="showPage('${next?next.id:''}')">${next?next.label:''} →</button>
+  `;
+  page.appendChild(nav);
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+// init
+showPage('page-history');
+</script>
+</body>
+</html>
