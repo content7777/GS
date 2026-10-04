@@ -134,14 +134,41 @@
     <main class="grid-container" id="repository-grid"></main>
 
     <script>
-        // Standardized subject configurations and exact topic counts
         const subjects = [
             { id: 'physics', displayName: 'PHYSICS', count: 7 },
             { id: 'chemistry', displayName: 'CHEMISTRY', count: 7 },
             { id: 'biology', displayName: 'BIOLOGY', count: 13 },
             { id: 'economics', displayName: 'ECONOMICS', count: 10 },
             { id: 'polity', displayName: 'POLITY', count: 15 },
-            { id: 'history', displayName: 'HISTORY', count: 23 },
+            { 
+                id: 'history', 
+                displayName: 'HISTORY', 
+                chapters: [
+                    'Advent of Europeans',
+                    'Socio-Religious Reform Movements',
+                    'Revolt of 1857',
+                    'Indian National Congress & Governor Generals',
+                    'Bengal Partition',
+                    'Gandhian Era',
+                    '1924–1930',
+                    '1930–1947',
+                    'Stone Age + Indus Valley Civilization (IVC)',
+                    'Vedic Age',
+                    'Jainism and Buddhism',
+                    'Mahajanpadas',
+                    'Mauryan Empire',
+                    'Post-Mauryan Empire',
+                    'Sangam Age',
+                    'Gupta Era',
+                    'Post-Gupta Era',
+                    'Cholas & Tripartite Struggle',
+                    'Islamic Invasion',
+                    'Delhi Sultanate',
+                    'Vijayanagara Empire & Bahmani Kingdom',
+                    'Bhakti and Sufi Movements',
+                    'Mughal Dynasty'
+                ]
+            },
             { id: 'geography', displayName: 'GEOGRAPHY', count: 17 },
             { id: 'static', displayName: 'STATIC', count: 5 },
             { id: 'ca', displayName: 'Current Affairs', count: 17 },
@@ -154,20 +181,29 @@
             const card = document.createElement('div');
             card.className = 'subject-card';
 
+            // Calculate total chapters
+            const totalCount = subject.chapters ? subject.chapters.length : subject.count;
+
             const header = document.createElement('h2');
-            header.innerHTML = `${subject.displayName} <span class="topic-count">${subject.count} Chapters</span>`;
+            header.innerHTML = `${subject.displayName} <span class="topic-count">${totalCount} Chapters</span>`;
             card.appendChild(header);
 
             const linksContainer = document.createElement('div');
             linksContainer.className = 'links-container';
 
-            // Dynamically generate standard links: e.g., physics_ch1.html
-            for (let i = 1; i <= subject.count; i++) {
+            for (let i = 1; i <= totalCount; i++) {
                 const link = document.createElement('a');
                 link.className = 'topic-link';
                 
+                // Links stay history_ch1.html, history_ch2.html, etc.
                 link.href = `${subject.id}_ch${i}.html`;
-                link.textContent = `${subject.displayName} - Chapter ${i}`;
+                
+                // If chapter names are provided, show the real name. Otherwise default to "Chapter X"
+                if (subject.chapters && subject.chapters[i - 1]) {
+                    link.textContent = `Ch ${i}: ${subject.chapters[i - 1]}`;
+                } else {
+                    link.textContent = `${subject.displayName} - Chapter ${i}`;
+                }
                 
                 linksContainer.appendChild(link);
             }
