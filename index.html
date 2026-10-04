@@ -135,11 +135,88 @@
 
     <script>
         const subjects = [
-            { id: 'physics', displayName: 'PHYSICS', count: 7 },
-            { id: 'chemistry', displayName: 'CHEMISTRY', count: 7 },
-            { id: 'biology', displayName: 'BIOLOGY', count: 13 },
-            { id: 'economics', displayName: 'ECONOMICS', count: 10 },
-            { id: 'polity', displayName: 'POLITY', count: 15 },
+            { 
+                id: 'physics', 
+                displayName: 'PHYSICS', 
+                chapters: [
+                    'Motion & Its Laws',
+                    'Gravity & Work Done',
+                    'Sound',
+                    'Refraction & Reflection',
+                    'Eye & Colourful World',
+                    'Electricity',
+                    'Magnetic Effect of Electric Current'
+                ]
+            },
+            { 
+                id: 'chemistry', 
+                displayName: 'CHEMISTRY', 
+                chapters: [
+                    'Matter',
+                    'Atom & Its Structure',
+                    'Periodic Table',
+                    'Chemical Reactions',
+                    'Metals & Non-Metals',
+                    'Acids, Bases & Salts',
+                    'Carbon & Its Compounds'
+                ]
+            },
+            { 
+                id: 'biology', 
+                displayName: 'BIOLOGY', 
+                chapters: [
+                    'Cell',
+                    'Plant Tissue',
+                    'Animal Tissue',
+                    'Plant Kingdom',
+                    'Animal Kingdom',
+                    'Digestion & Respiration',
+                    'Circulatory & Excretory System',
+                    'Reproduction',
+                    'Nervous System',
+                    'Skeletal & Hereditary System',
+                    'Nutrients',
+                    'Diseases',
+                    'Glands & Hormones'
+                ]
+            },
+            { 
+                id: 'economics', 
+                displayName: 'ECONOMICS', 
+                chapters: [
+                    'Basics of Economy',
+                    'National Income',
+                    'Budget & Taxation',
+                    'Inflation & Unemployment',
+                    'Banking',
+                    'Monetary Policy',
+                    'Banking (Last Lecture)',
+                    'Demand & Supply',
+                    'Five-Year Plans',
+                    'Balance of Payments & Poverty'
+                ]
+            },
+            { 
+                id: 'polity', 
+                displayName: 'POLITY', 
+                chapters: [
+                    'Making of Constitution',
+                    'Salient Features & Preamble',
+                    'Part I & Part II of Constitution',
+                    'Fundamental Rights',
+                    'Directive Principles of State Policy (DPSP) & Fundamental Duties',
+                    'President & Vice President',
+                    'Prime Minister & Council of Ministers',
+                    'Parliament',
+                    'Parliament & Its Committees',
+                    'State Legislature',
+                    'Supreme Court',
+                    'Local Bodies',
+                    'Important Acts',
+                    'Constitutional & Non-Constitutional Bodies',
+                    'Important Amendments in the Indian Constitution'
+                ]
+            },
             { 
                 id: 'history', 
                 displayName: 'HISTORY', 
@@ -169,8 +246,40 @@
                     'Mughal Dynasty'
                 ]
             },
-            { id: 'geography', displayName: 'GEOGRAPHY', count: 17 },
-            { id: 'static', displayName: 'STATIC', count: 5 },
+            { 
+                id: 'geography', 
+                displayName: 'GEOGRAPHY', 
+                chapters: [
+                    'Solar System',
+                    'Latitude, Longitude, Solstice & Eclipse',
+                    'Earth Interior',
+                    'Rocks, Continents & Oceans',
+                    'Geomorphology',
+                    'Atmosphere',
+                    'Winds, Cyclones & Ocean Currents',
+                    'India & Its Location',
+                    'Himalayas',
+                    'Peninsular Plateau',
+                    'Himalayan River System',
+                    'Peninsular Rivers',
+                    'Dams, Waterfalls & Lakes',
+                    'Monsoon',
+                    'Forests & Grasslands',
+                    'Soil & Agriculture',
+                    'Minerals'
+                ]
+            },
+            { 
+                id: 'static', 
+                displayName: 'STATIC', 
+                chapters: [
+                    'Music Instruments',
+                    'Festivals',
+                    'Folk Dances',
+                    'Classical Dances',
+                    'Census 2011'
+                ]
+            },
             { id: 'ca', displayName: 'Current Affairs', count: 17 },
             { id: 'math', displayName: 'Math', count: 1 }
         ];
@@ -181,7 +290,6 @@
             const card = document.createElement('div');
             card.className = 'subject-card';
 
-            // Calculate total chapters
             const totalCount = subject.chapters ? subject.chapters.length : subject.count;
 
             const header = document.createElement('h2');
@@ -195,10 +303,8 @@
                 const link = document.createElement('a');
                 link.className = 'topic-link';
                 
-                // Links stay history_ch1.html, history_ch2.html, etc.
                 link.href = `${subject.id}_ch${i}.html`;
                 
-                // If chapter names are provided, show the real name. Otherwise default to "Chapter X"
                 if (subject.chapters && subject.chapters[i - 1]) {
                     link.textContent = `Ch ${i}: ${subject.chapters[i - 1]}`;
                 } else {
