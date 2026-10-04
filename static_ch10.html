@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Center-State Relations | SSC CGL Smart Revision Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0b0f19;
+      --bg-secondary: #111827;
+      --bg-card: #1f2937;
+      --border-color: #374151;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --badge-high-bg: rgba(239, 68, 68, 0.15);
+      --badge-high-border: #ef4444;
+      --badge-high-text: #fca5a5;
+      --badge-std-bg: rgba(59, 130, 246, 0.15);
+      --badge-std-border: #3b82f6;
+      --badge-std-text: #93c5fd;
+      --badge-extra-bg: rgba(16, 185, 129, 0.15);
+      --badge-extra-border: #10b981;
+      --badge-extra-text: #6ee7b7;
+      --badge-verify-bg: rgba(245, 158, 11, 0.15);
+      --badge-verify-border: #f59e0b;
+      --badge-verify-text: #fcd34d;
+      --table-header: #1e293b;
+      --table-row-alt: #182234;
+      --sidebar-width: 280px;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #f1f5f9;
+      --border-color: #cbd5e1;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --accent-blue: #2563eb;
+      --accent-cyan: #0891b2;
+      --badge-high-bg: #fee2e2;
+      --badge-high-border: #dc2626;
+      --badge-high-text: #991b1b;
+      --badge-std-bg: #dbeafe;
+      --badge-std-border: #2563eb;
+      --badge-std-text: #1e40af;
+      --badge-extra-bg: #d1fae5;
+      --badge-extra-border: #059669;
+      --badge-extra-text: #065f46;
+      --badge-verify-bg: #fef3c7;
+      --badge-verify-border: #d97706;
+      --badge-verify-text: #92400e;
+      --table-header: #e2e8f0;
+      --table-row-alt: #f1f5f9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar Navigation */
+    aside {
+      width: var(--sidebar-width);
+      background-color: var(--bg-secondary);
+      border-right: 1px solid var(--border-color);
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 1rem;
+      z-index: 50;
+      transition: transform 0.3s ease;
+    }
+
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--accent-blue);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .brand span {
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .search-box {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.55rem 0.85rem;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex-grow: 1;
+      overflow-y: auto;
+    }
+
+    .nav-item a {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item a:hover, .nav-item.active a {
+      background-color: var(--bg-card);
+      color: var(--accent-blue);
+    }
+
+    .sidebar-footer {
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Main Container */
+    main {
+      margin-left: var(--sidebar-width);
+      padding: 2.5rem 3.5rem;
+      width: calc(100% - var(--sidebar-width));
+      max-width: 1100px;
+    }
+
+    header {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.5rem;
+    }
+
+    .meta-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--accent-cyan);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 0.75rem;
+    }
+
+    .subheading {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .badge-high {
+      background-color: var(--badge-high-bg);
+      border-color: var(--badge-high-border);
+      color: var(--badge-high-text);
+    }
+
+    .badge-standard {
+      background-color: var(--badge-std-bg);
+      border-color: var(--badge-std-border);
+      color: var(--badge-std-text);
+    }
+
+    .badge-extra {
+      background-color: var(--badge-extra-bg);
+      border-color: var(--badge-extra-border);
+      color: var(--badge-extra-text);
+    }
+
+    .badge-verify {
+      background-color: var(--badge-verify-bg);
+      border-color: var(--badge-verify-border);
+      color: var(--badge-verify-text);
+    }
+
+    /* Sections and Cards */
+    section {
+      margin-bottom: 3rem;
+      scroll-margin-top: 2rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+
+    .card {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 0.75rem;
+      color: var(--text-main);
+    }
+
+    .exam-note {
+      border-left: 3px solid var(--accent-blue);
+      background-color: var(--bg-card);
+      padding: 0.85rem 1.15rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    .exam-note strong {
+      color: var(--accent-cyan);
+    }
+
+    .verification-box {
+      border-left: 3px solid var(--badge-verify-border);
+      background-color: var(--badge-verify-bg);
+      padding: 0.85rem 1.15rem;
+      border-radius: 0 6px 6px 0;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    /* Table Design */
+    .table-container {
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background-color: var(--table-header);
+      padding: 0.85rem 1rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--table-row-alt);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+    }
+
+    /* Mobile trigger */
+    .mobile-menu-btn {
+      display: none;
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background-color: var(--accent-blue);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.25rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 100;
+    }
+
+    @media (max-width: 900px) {
+      aside {
+        transform: translateX(-100%);
+      }
+      aside.open {
+        transform: translateX(0);
+      }
+      main {
+        margin-left: 0;
+        width: 100%;
+        padding: 1.5rem;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Toggle -->
+  <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle Navigation">☰</button>
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <div class="brand">
+      CGL POLITY <span>// Parmar Hot-Shot</span>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search articles, acts..." onkeyup="filterContent()">
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item"><a href="#framework">1. Core Constitutional Triad</a></li>
+      <li class="nav-item"><a href="#statutory-acts">2. Reorganisation Acts</a></li>
+      <li class="nav-item"><a href="#dispute-bodies">3. Inter-State Mechanisms</a></li>
+      <li class="nav-item"><a href="#elimination-drill">4. Elimination Drill (Homework)</a></li>
+      <li class="nav-item"><a href="#revision-cheatsheet">5. 60-Second Rapid Recall</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="theme-toggle-btn" onclick="toggleTheme()">🌓 Toggle Mode</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+    <header>
+      <span class="meta-tag">Indian Polity — Module 23</span>
+      <h1>Center-State Relations</h1>
+      <p class="subheading">Curated strictly for rapid SSC CGL/CHSL retention from Parmar Sir's Hot-Shot series.</p>
+    </header>
+
+    <!-- SECTION 1 -->
+    <section id="framework">
+      <h2>1. The Constitutional Framework (Parts & Articles)</h2>
+      <div class="card">
+        <div class="card-title">
+          <span>The Three Branches of Center-State Relations</span>
+          <span class="badge badge-high">[HIGH YIELD / REPEATED]</span>
+        </div>
+        <p>The Constitution primarily divides relations between the Union and the States into <strong>three distinct dimensions</strong> spanning across Part XI and Part XII:</p>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Relation Dimension</th>
+                <th>Part</th>
+                <th>Article Span</th>
+                <th>Exam Priority</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Legislative Relations</strong></td>
+                <td><span class="mono">Part XI (11)</span></td>
+                <td><span class="mono">Art. 245 – 255</span></td>
+                <td><span class="badge badge-high">[HIGH YIELD / REPEATED]</span></td>
+              </tr>
+              <tr>
+                <td><strong>Administrative Relations</strong></td>
+                <td><span class="mono">Part XI (11)</span></td>
+                <td><span class="mono">Art. 256 – 263</span></td>
+                <td><span class="badge badge-high">[HIGH YIELD / REPEATED]</span></td>
+              </tr>
+              <tr>
+                <td><strong>Financial Relations</strong></td>
+                <td><span class="mono">Part XII (12)</span></td>
+                <td><span class="mono">Art. 268 – 293</span></td>
+                <td><span class="badge badge-standard">[STANDARD EXAM FACT]</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="exam-note">
+          <strong>Teacher's Exact Cue:</strong> Emphasized repeatedly in lecture. Memorize the exact boundaries: Part 11 splits at <strong>255/256</strong>. Part 12 picks up at <strong>268</strong>.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>Residuary Powers of Legislation</span>
+          <span class="badge badge-standard">[STANDARD EXAM FACT]</span>
+        </div>
+        <p>The power to legislate on <strong>residuary subjects</strong> (subjects not enumerated in Union, State, or Concurrent Lists) rests exclusively with the <strong>Parliament</strong>.</p>
+        
+        <div class="exam-note">
+          <strong>Adjacent Constitutional Provision:</strong>
+          <br>• <strong>Article 248</strong>: Exclusive power of Parliament with respect to Residuary Powers.
+          <br>• <strong>Entry 97 (Union List)</strong>: Any other matter not enumerated in List II or List III.
+          <br>• <em>Source of borrowing:</em> Canada (vesting residuary powers in the Center).
+          <span class="badge badge-extra" style="margin-top: 4px;">[EXTRA SSC PYQ / FACT]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section id="statutory-acts">
+      <h2>2. Out-of-the-Box Reorganisation Act PYQ</h2>
+      <div class="card">
+        <div class="card-title">
+          <span>Punjab Reorganisation Act</span>
+          <span class="badge badge-standard">[STANDARD EXAM FACT]</span>
+        </div>
+        <p><strong>Year of Passage:</strong> <span class="mono">1966</span></p>
+        <p>Passed following the recommendations of the <strong>Shah Commission</strong>. Resulted in the trifurcation into the Hindi-speaking state of <strong>Haryana</strong>, Punjabi-speaking state of <strong>Punjab</strong>, and the Union Territory of <strong>Chandigarh</strong> (plus transfer of hilly regions to Himachal Pradesh).</p>
+        
+        <div class="exam-note">
+          <strong>Teacher's Exact Cue:</strong> Flagged as an "out-of-the-box" question that frequently catches candidates off guard in SSC tier-1/tier-2.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section id="dispute-bodies">
+      <h2>3. Inter-State Dispute Mechanisms & Coordination</h2>
+      
+      <div class="card">
+        <div class="card-title">
+          <span>Inter-State River Water Disputes</span>
+          <span class="badge badge-high">[HIGH YIELD / REPEATED]</span>
+        </div>
+        <p>Adjudication of disputes relating to waters of inter-state rivers or river valleys:</p>
+        <ul style="padding-left: 1.25rem; margin-bottom: 0.75rem;">
+          <li><strong>Empowered Authority:</strong> <strong>Parliament</strong> may by law provide for adjudication.</li>
+          <li><strong>Judicial Exclusion:</strong> Parliament can exclude the Supreme Court and all other courts from having jurisdiction over such disputes.</li>
+        </ul>
+
+        <div class="verification-box">
+          <span class="badge badge-extra">[EXTRA SSC PYQ / FACT]</span> <strong>Article 262:</strong> The exact constitutional article governing Inter-State Water Disputes. Parliament enacted the <em>Inter-State River Water Disputes Act, 1956</em> under this power.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>Inter-State Council</span>
+          <span class="badge badge-high">[HIGH YIELD / REPEATED]</span>
+        </div>
+        <p><strong>Appointing Authority:</strong> The <strong>President of India</strong> has the sole constitutional authority to establish and appoint an Inter-State Council to promote Center-State coordination.</p>
+        
+        <div class="verification-box">
+          <span class="badge badge-extra">[EXTRA SSC PYQ / FACT]</span> 
+          <br>• <strong>Article:</strong> <strong>Article 263</strong>.
+          <br>• <strong>Commission:</strong> Established on the recommendations of the <strong>Sarkaria Commission (1987-88)</strong>; officially set up by Presidential Order in <strong>1990</strong>.
+          <br>• <strong>Chairman:</strong> Prime Minister of India.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section id="elimination-drill">
+      <h2>4. Parmar Sir's Elimination Technique (Homework Question)</h2>
+      <div class="card">
+        <div class="card-title">
+          <span>Bracket Elimination Strategy for SSC Options</span>
+          <span class="badge badge-high">[HIGH YIELD / REPEATED]</span>
+        </div>
+        <p>In the lecture, Parmar Sir introduced the final homework question and stressed that knowing the <strong>article brackets</strong> alone eliminates at least two distractors instantly.</p>
+        
+        <div class="exam-note">
+          <strong>The Bracket Filter Logic:</strong>
+          <br>1. If a question is about <strong>law-making / territories / subject distribution</strong>, the answer MUST fall in <span class="mono">Art. 245–255</span>.
+          <br>2. If a question is about <strong>executive directions / coordination / disputes</strong>, the answer MUST fall in <span class="mono">Art. 256–263</span>.
+          <br>3. If a question is about <strong>grants / taxes / finance / borrowing</strong>, eliminate Part XI immediately and look only at <span class="mono">Art. 268–293</span>.
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section id="revision-cheatsheet">
+      <h2>5. 60-Second Rapid Recall Sheet</h2>
+      <div class="card">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Topic / Question</th>
+                <th>Constitutional Anchor</th>
+                <th>Key Fact / Exam Pointer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Legislative Relations</strong></td>
+                <td>Part XI, Art. 245–255</td>
+                <td>Territorial extent and subject matter of laws</td>
+              </tr>
+              <tr>
+                <td><strong>Administrative Relations</strong></td>
+                <td>Part XI, Art. 256–263</td>
+                <td>Obligation of States, Centre directions to States</td>
+              </tr>
+              <tr>
+                <td><strong>Financial Relations</strong></td>
+                <td>Part XII, Art. 268–293</td>
+                <td>Taxes, revenue distribution, grants-in-aid</td>
+              </tr>
+              <tr>
+                <td><strong>Residuary Powers</strong></td>
+                <td>Article 248</td>
+                <td>Vested exclusively in <strong>Parliament</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Inter-State Water Dispute</strong></td>
+                <td>Article 262</td>
+                <td>Parliament enacts; can bar Supreme Court jurisdiction</td>
+              </tr>
+              <tr>
+                <td><strong>Inter-State Council</strong></td>
+                <td>Article 263</td>
+                <td>Established by the <strong>President</strong></td>
+              </tr>
+              <tr>
+                <td><strong>Punjab Reorganisation Act</strong></td>
+                <td>Statutory Act</td>
+                <td>Passed in <strong>1966</strong> (created Haryana & Chandigarh UT)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      const current = document.body.getAttribute('data-theme');
+      if (current === 'light') {
+        document.body.removeAttribute('data-theme');
+      } else {
+        document.body.setAttribute('data-theme', 'light');
+      }
+    }
+
+    // Mobile sidebar toggle
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // Instant search filter
+    function filterContent() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.card');
+      
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        if (text.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Active nav tracking
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-item');
+      
+      let currentSection = '';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 100;
+        if (pageYOffset >= top) {
+          currentSection = sec.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(li => {
+        const anchor = li.querySelector('a');
+        if (anchor.getAttribute('href') === `#${currentSection}`) {
+          li.classList.add('active');
+        } else {
+          li.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
